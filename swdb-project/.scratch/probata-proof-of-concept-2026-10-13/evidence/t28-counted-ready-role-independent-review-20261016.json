@@ -1,0 +1,185 @@
+{
+  "date_et": "2026-10-16",
+  "disposition": "PASS_SCOPED_PROTOTYPE_ONLY",
+  "freeze": "8b2f192d1373befdcadc918af3f878706f4506cd",
+  "base": "9ef66e4e8ff6d20c413bd4a741e998627522f67d",
+  "review_md": {
+    "path": "/private/tmp/probata-t28-counted-ready-role-independent-review-20261016.md",
+    "bytes": 3814,
+    "sha256": "0d302d58dfb7e8c8a48b0e4de628a4ed4b28a647f7671f68283533edc56c644d"
+  },
+  "source_pins": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-counted-ready-role-controls-20261016.json",
+      "sha256": "7bbda3611eacdbdbcc4175898612b9d35858db617e3b210329a1b4c66160193b",
+      "bytes": 117302
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-counted-ready-role-controls-20261016.md",
+      "sha256": "f6d0f22a4ac39d328b3106db1f71049d03586892f3e3632da26597bea8b5dba6",
+      "bytes": 1064
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/28-proof-semantics-remaining-calls.md",
+      "sha256": "55d990daa5b398cc6da25510ced9a43e877d114f7df460aeacbbdc09c19d2473",
+      "bytes": 25056
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/README.md",
+      "sha256": "85a21d2026d2c97d65afde4e2b2351f226ebfc66af9d96c700a39fe52e9e26d0",
+      "bytes": 13807
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/command_state.py",
+      "sha256": "e50b667cb0bfe4f25fa01cbdb892f2bac35135073b01b4bf582835c6e7931670",
+      "bytes": 11226
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/deferred-state-design.md",
+      "sha256": "0907881c13122106dc85b320523a40b2eb0738814509fee732db065dc12031a7",
+      "bytes": 19980
+    },
+    {
+      "path": "swdb-project/tests/test_dx100_deferred_state.py",
+      "sha256": "619eda204b70bdc2cc62b40a95bc6e313d666da5b80cb381c9427df415e3f397",
+      "bytes": 44783
+    }
+  ],
+  "upstream_source_pins": [
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/MAA.cc",
+      "bytes": 72419,
+      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/SPD.cc",
+      "bytes": 10059,
+      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/IF.cc",
+      "bytes": 23772,
+      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/CpuSidePort.cc",
+      "bytes": 22141,
+      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/MAA_gem5.hpp",
+      "bytes": 27473,
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    }
+  ],
+  "cold_audit": {
+    "tip": "8b2f192d1373befdcadc918af3f878706f4506cd",
+    "receipt_sha256": "7bbda3611eacdbdbcc4175898612b9d35858db617e3b210329a1b4c66160193b",
+    "pin_reference_instances": 10633,
+    "unique_pin_paths": 463,
+    "errors": [],
+    "profiles": {
+      "red": {
+        "cases": 5,
+        "failures": 3,
+        "errors": 0,
+        "skips": 0,
+        "resources": {
+          "exit_code": 1,
+          "peak_rss_bytes": 209453056,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 2.7660117499763146,
+          "cpu_seconds": 2.142089
+        },
+        "native_receipts": 5
+      },
+      "green": {
+        "cases": 96,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0,
+        "resources": {
+          "exit_code": 0,
+          "peak_rss_bytes": 222969856,
+          "out_of_memory": false,
+          "timed_out": false,
+          "wall_seconds": 34.2277006660006,
+          "cpu_seconds": 26.489361000000002
+        },
+        "native_receipts": 96
+      }
+    },
+    "changed_git_pins": [
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-counted-ready-role-controls-20261016.json",
+        "sha256": "7bbda3611eacdbdbcc4175898612b9d35858db617e3b210329a1b4c66160193b",
+        "bytes": 117302
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-counted-ready-role-controls-20261016.md",
+        "sha256": "f6d0f22a4ac39d328b3106db1f71049d03586892f3e3632da26597bea8b5dba6",
+        "bytes": 1064
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/28-proof-semantics-remaining-calls.md",
+        "sha256": "55d990daa5b398cc6da25510ced9a43e877d114f7df460aeacbbdc09c19d2473",
+        "bytes": 25056
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/README.md",
+        "sha256": "85a21d2026d2c97d65afde4e2b2351f226ebfc66af9d96c700a39fe52e9e26d0",
+        "bytes": 13807
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/command_state.py",
+        "sha256": "e50b667cb0bfe4f25fa01cbdb892f2bac35135073b01b4bf582835c6e7931670",
+        "bytes": 11226
+      },
+      {
+        "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/deferred-state-design.md",
+        "sha256": "0907881c13122106dc85b320523a40b2eb0738814509fee732db065dc12031a7",
+        "bytes": 19980
+      },
+      {
+        "path": "swdb-project/tests/test_dx100_deferred_state.py",
+        "sha256": "619eda204b70bdc2cc62b40a95bc6e313d666da5b80cb381c9427df415e3f397",
+        "bytes": 44783
+      }
+    ],
+    "production_library_diff_empty": true,
+    "no_actual_tools_or_probes_by_reviewer": true,
+    "diffcheck_pass": true
+  },
+  "source_role_map": [
+    {
+      "source": "MAA.cc:563-580,605-620",
+      "rule": "src1/src2/dst1/dst2 increment/decrement counters; condition-only excluded"
+    },
+    {
+      "source": "SPD.cc:120-137",
+      "rule": "word_size8 includes t+1; ready iff counter0"
+    },
+    {
+      "source": "IF.cc:66-151",
+      "rule": "resolved source/destination type widths; indices/conditions/comparison outputs4, data4or8; role priority must be checked"
+    },
+    {
+      "source": "IF.cc:193-218",
+      "rule": "dispatch compares destination starts with old explicit role starts incl condition; no implied second-half dispatch stall"
+    },
+    {
+      "source": "CpuSidePort.cc:295-314",
+      "rule": "ready-range read blocks until ready and returns literal1; no header logical demonic query"
+    }
+  ],
+  "boundaries": [
+    "Private prototype separates ready_roles from condition-inclusive hazards and explicit dispatch starts. Subset guard does not prove source role mapping; checked source wrappers remain required.",
+    "dxc_prepare convenience is condition-free only; condition consumers use precise counted mask. No production source call is admitted by these helper arguments.",
+    "Logical get_tile_ready remains prototype-only, with0/1 pending choices and no termination claim; actual source blocking read is distinct.",
+    "Native ASan/UBSan results are finite implementation controls, not formal proof or whole28 closure; expected RF alignmentUB exit1 retained in existing control.",
+    "Frozen selector21ed and installed0.1 remain unchanged; all ticket acceptance boxes stay open."
+  ],
+  "retraction": "Historical86-control expectation that waiting on second half of8byte counted role does not cover is wrong and retracted. Historical source/raw/receipts unchanged;96native successor corrects rule. Dispatch-start half noncover remains correct.",
+  "no_actual_tools_probes_compiler_formal_or_ssh": true
+}

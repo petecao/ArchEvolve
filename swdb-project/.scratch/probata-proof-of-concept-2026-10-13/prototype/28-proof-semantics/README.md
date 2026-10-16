@@ -129,7 +129,7 @@ typed DX100 state/value/history model or close ticket28.
 Deferred-state prototype — 2026-10-15 ET: the first generated C model APIs now
 capture immutable history reads and producer versions, defer index selection,
 skip inactive value operands, distinguish command completion from known output
-values, and check global ownership, physical tile pairs, explicit waits, region
+values, and check global ownership, physical tile pairs, ready-counter waits, region
 stalls, nondeterministic readiness and full physical-line CPU hazards. Final22
 native controls pass with retained actual C dependencies and compiler/runtime
 receipts; no actual formal tool or public proof acceptance is claimed.
@@ -192,3 +192,11 @@ starting-tile updates and noncovering CPU size queries. Metadata physical bounds
 remain independent of the value prefix; initial valid/quiescent state is an
 explicit unadmitted correspondence domain. No public/actual acceptance is claimed.
 [Exact evidence](../../evidence/t28-size-state-controls-20261016.json).
+
+
+2026-10-16 correction: readiness uses the physical src/dst role counters, unlike
+explicit-start dispatch matching. Either half of an8-byte counted role covers;
+a condition-only role does not count. See `deferred-state-design.md` and
+`t28-counted-ready-role-controls-20261016.json` for the source-backed RED/GREEN
+and the retraction of the prior86-control expectation. Logical polling remains
+separate from the real blocking ready-range read.

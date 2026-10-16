@@ -1,0 +1,34 @@
+# Rank mathematical gate: supplemental retained-output and context audit
+
+2026-10-16 ET. **All eight actual calls completed; original entry/guard/root exit 1 is preserved. No rerun.** The entry stopped only when its offline reader rejected the negative answer's formatting. This supplemental pure audit supports the scoped mathematical observations below; independent merger review of the contexts remains pending. No hardware/source/public-composition/ticket-closure claim follows.
+
+The [cold audit JSON](/private/tmp/probata-t28-rank-whole-cold-audit-v3-20261016.json), SHA-256 `7d3fe76d61b52381279b8e0e264b670079b00539da8ab7e37c26c585a898d984`, passes **826 checks** and retains all 11 exact task-context crosswalks, ordered native results, actual submitted command/input identities, native output hashes, source/runtime pins, guard and settlement receipts. It preserves original actual result, recipe, entry and readers byte-for-byte.
+
+| Whole module | Actual emitted/submitted tasks | Direct native result |
+|---|---:|---|
+| ConditionalReadiness | 5 | All Valid, healthy solver exit 0 |
+| ArbitraryFiniteDelay | 4 | All Valid, healthy solver exit 0 |
+| AllFalseCounterexample | 1 | Valid, healthy solver exit 0 |
+| AbsentPremiseNegative | 1 | Exact `Unknown\n(sat)`, healthy solver exit 0; expected nonproof |
+
+The four task emissions returned 0; three positive proof commands returned 0; the independent negative proof command returned its expected 2. All ten positive native output files start `unsat`; the negative output starts `sat`. No native result is relabeled `Invalid`. Guard wall time was 2.4229361667 seconds, sampled peak RSS 147.25 MiB, under 900 seconds/8 GiB, with no watchdog, inspection, cleanup or unconfirmed-child issue. Root's three finite post-exit UID/name/PID/birth observations found no selected verifier or denial, and no shared lease remained. This supports owned-job settlement within the documented sampled boundary, not current universal process absence.
+
+## Retained-output correction
+
+Original result still reports `AssertionError: negative has unexpected answer`, entry/guard/root exit 1, `complete:false`. The raw negative JSON answer is exactly `Unknown` + LF + `(sat)`. Why3 1.8.2 `src/driver/call_provers.ml:150–158` prints `Unknown@ (%s)` and `175–190` serializes it with `Format.asprintf`. The installed primary OCaml `format.mli:1284;1318–1326` documents `@ ` as a break hint, which can render a space or line break. The original reader incorrectly assumed a literal space.
+
+The separate [v3 pure retained reader](/private/tmp/probata-t28-rank-retained-vc-reader-v3-20261016.py) preserves the raw answer and adds a narrow classification: `Unknown` followed by ASCII formatting whitespace and exactly `(sat)` or `(unknown)`. It still refuses `Valid` for the negative, malformed/trailing text, `Fail`, tool/resource/error reasons and unhealthy solver statuses. Primary selected driver `smt-libv2.gen` maps `sat` to `Unknown` with reason `sat`; this classification is expected for this default driver. [Exact actual/synthetic formatting controls](/private/tmp/probata-t28-rank-retained-vc-format-controls-v3-20261016.json) pass 29/29, including old-reader RED on actual output, all four actual module datasets and the previously unprocessed negative submission inventory. [Base reader controls](/private/tmp/probata-t28-rank-retained-vc-reader-base-controls-v3-20261016.json) also pass 29/29. These controls invoke no tools or entry/main.
+
+## Context and dependency audit
+
+The [hand-reviewed expectation crosswalk](/private/tmp/probata-t28-rank-context-expectations-v1-20261016.py) states every declaration/definition, assumption and negated goal for all 11 retained SMT tasks. The audit compares these structured formulas to the actual submitted bytes, which exactly match the separately emitted complete-task multiset. Ordered CLI results bind to ordered actual submissions through the serial `prove_task`/`wait_on_call` implementation; repeated goal names are preserved with full multiplicity, rather than collapsed. All actual inputs/outputs are retained, including the negative input that the original entry had not inventoried semantically before its reader failure.
+
+The five core obligations are: false-branch nonnegative-next/strict-decrease assertion; nonnegative-old/strictly-smaller recursive variant; both recursive preconditions restricted to future indices at `start+1`; and the final existential postcondition. Only the final postcondition context uses the recursive contract, guarded by the false branch and at `o=start+1`. Its assertion, variant and two recursive preconditions are separately directly Valid. No global eventual-ready premise or unchecked well-foundedness axiom appears. Source branches only on the fixed `ready start` observation; rank does not determine readiness. Visible trace/rank values are immutable arrays over mathematical Int/Bool; no machine-integer or bit-vector bound appears in these contexts.
+
+The four family obligations verify nonnegative `max(0,n-poll)`, strict drop on false observations, false readiness for `0<=poll<n`, and true readiness at `poll=n`, for arbitrary mathematical `n>=0`. Readiness is independently defined by `n<=poll`. Later postcondition contexts reuse earlier independently proved clauses; the dependency edges are explicit and acyclic, and no clause assumes itself. Every exact definition is checked, not merely its name.
+
+The positive all-false lemma has no progress/rank/earlier-theorem premise and proves no future readiness. The separate negative likewise has only `start:Int` and the negation of its deliberately false eventual-ready goal; no positive lemma or induction hypothesis enters it. Its native `sat` result is retained as configured-driver `Unknown(sat)` nonproof, alongside the directly proved all-false complement.
+
+Runtime/config/detection-data/standard-library/driver/selected-binary/guard-support/source bytes and all actual raw artifacts are rehashed; configured solver version remains a label, not a fresh version probe. The three staged sources exactly match clean frozen commit `9704c54b838863dd838d18a20dd0ade1633d5027`; root pre/post receipts and a separate current read-only Git HEAD/status check agree. Only `int.Int` is imported by these mathematical sources. No source or configuration was changed, no new premise was inserted and no prover/config/version/native job was launched by the audit.
+
+Independent merger review must still accept the complete recursion/variant/context/dependency interpretation before publication. The result is a conditional mathematical progress artifact and consistency/negative controls. MMIO/hardware fairness, source-to-observable-trace simulation, public proof composition, method 0.2 and full ticket 28 remain outside this audit.

@@ -1,0 +1,2412 @@
+{
+  "created": "2026-10-16 ET",
+  "ticket": "28",
+  "status": "prototype-only; not installed proof semantics or actual proof",
+  "base_revision": "4bb53cd7ddab6400def1cb0ea840038223a6a8aa",
+  "source_revision": "6bfcfa96a3150155ee92e2d33f138d42ff1dda68",
+  "sources": [
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/action_state.py",
+      "bytes": 4390,
+      "sha256": "4567eba2086c435104f6f280d37096471d86df16e8600771a4cd79f91872028b"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/command_state.py",
+      "bytes": 11226,
+      "sha256": "e50b667cb0bfe4f25fa01cbdb892f2bac35135073b01b4bf582835c6e7931670"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/deferred_state.py",
+      "bytes": 14920,
+      "sha256": "7dd77d2d5ff38391ab1475d5a0695279ead70fc96ee5a4db4ba17f6679ec9c01"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/numeric_values.py",
+      "bytes": 15575,
+      "sha256": "f49ebff7a85a88d93c20c78ad313b67a3459f0620254bba9b3cd91fcbd3ba018"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/region_state.py",
+      "bytes": 4011,
+      "sha256": "c80bc03d0045b47fa680a14fd0ca9d42602920e5322337cb4f85d31a9ea9e017"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/register_state.py",
+      "bytes": 7934,
+      "sha256": "52ea1cdac02b843f6eb096b2d520bf8431577af073a66fb99410c62187eca07d"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/setup_state.py",
+      "bytes": 3992,
+      "sha256": "ffd98ba40539751783eb7abf5f956a2472851468f42e23895b80628fb42cd8b3"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/size_state.py",
+      "bytes": 2232,
+      "sha256": "a68668b6b9eeb60e3e151dec49206854783a4e3f9cbb92b62027c82115ee86e5"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/tile_image.py",
+      "bytes": 7515,
+      "sha256": "867234cb4f9ee1ba63d614bb1535a0e80e6b07740fb8b341a461651328ac5ac6"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/typed_state.py",
+      "bytes": 2068,
+      "sha256": "28a2864142ac8575c8eba54033c5a129395162ae446f7892bf34e346ca3525a2"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/tests/test_dx100_deferred_state.py",
+      "bytes": 44783,
+      "sha256": "619eda204b70bdc2cc62b40a95bc6e313d666da5b80cb381c9427df415e3f397"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/checks/rf-source-excerpt.hpp",
+      "bytes": 1304,
+      "sha256": "c98ff061d6f87b72d9cf83e2cc00efcb9ed332685a1275cd1df1774a75a69f88"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/checks/rf-source-excerpt.json",
+      "bytes": 1026,
+      "sha256": "68a45a53d77fdf0bd9dc5365bee0614e556bdd89ef07831f95a0b0dd2e14a938"
+    }
+  ],
+  "upstream": [
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/MAA.cc",
+      "bytes": 72419,
+      "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/SPD.cc",
+      "bytes": 10059,
+      "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/IF.cc",
+      "bytes": 23772,
+      "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/CpuSidePort.cc",
+      "bytes": 22141,
+      "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/MAA_gem5.hpp",
+      "bytes": 27473,
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    }
+  ],
+  "source_role_map": [
+    {
+      "source": "MAA.cc:563-580,605-620",
+      "rule": "src1/src2/dst1/dst2 increment/decrement counters; condition-only excluded"
+    },
+    {
+      "source": "SPD.cc:120-137",
+      "rule": "word_size8 includes t+1; ready iff counter0"
+    },
+    {
+      "source": "IF.cc:66-151",
+      "rule": "resolved source/destination type widths; indices/conditions/comparison outputs4, data4or8; role priority must be checked"
+    },
+    {
+      "source": "IF.cc:193-218",
+      "rule": "dispatch compares destination starts with old explicit role starts incl condition; no implied second-half dispatch stall"
+    },
+    {
+      "source": "CpuSidePort.cc:295-314",
+      "rule": "ready-range read blocks until ready and returns literal1; no header logical demonic query"
+    }
+  ],
+  "red": {
+    "raw": "/private/tmp/probata-t28-counted-ready-halves-red",
+    "case_count": 5,
+    "failure_count": 3,
+    "resources": {
+      "exit_code": 1,
+      "peak_rss_bytes": 209453056,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 2.7660117499763146,
+      "cpu_seconds": 2.142089
+    },
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/command.json",
+        "bytes": 364,
+        "sha256": "0327363dd8705d1b29234f83e49c1deb52462f37b4514cc85c6a6fc46512fe16"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/resources.json",
+        "bytes": 165,
+        "sha256": "ac43aca6c97142987396e4a6c7f74d9233cbdd215dd3d370abf637b15b60f384"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/control.log",
+        "bytes": 22229,
+        "sha256": "32821b3260cbe4b075281298b1231bd79668aae57d579710c02a8cf09656bdfa"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/junit.xml",
+        "bytes": 23507,
+        "sha256": "fe72f658ef49f6eeab4f7eda980b76343b33a88d8143f01d89f0e770ca559293"
+      }
+    ],
+    "native_receipts": [
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_8byte_second_half_readine0/native-receipt.json",
+        "bytes": 26658,
+        "sha256": "93da194366d9a27bbf6c95f69f0bb37519cec5a611e9b76f58cbca2e38541b69"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_8byte_second_half_readine1/native-receipt.json",
+        "bytes": 26590,
+        "sha256": "9e85eb23cc346ea60ae08a6a21fedccde6121af275044d2d53f80b6bf9aa45c7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers0/native-receipt.json",
+        "bytes": 26571,
+        "sha256": "05342ebce422aa5815cd0cc490d0912b5604c37fb135e9c3364af075a1776583"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers1/native-receipt.json",
+        "bytes": 26590,
+        "sha256": "0381dbdf73b5067c31be00da93e1cc0f99b0560865b674464ad66735f723c8ab"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers2/native-receipt.json",
+        "bytes": 26571,
+        "sha256": "3d4aeac62f3c13e57ae423b7f468be2186b22ae79b9e32f5b28ae36684557ea6"
+      }
+    ],
+    "native_receipt_count": 5,
+    "expected_native_exits": [
+      0
+    ]
+  },
+  "green": {
+    "raw": "/private/tmp/probata-t28-counted-ready-roles-green-guarded",
+    "case_count": 96,
+    "failure_count": 0,
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 222969856,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 34.2277006660006,
+      "cpu_seconds": 26.489361000000002
+    },
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/command.json",
+        "bytes": 325,
+        "sha256": "954915ca7b90dfde17ccc89411d2b1eed46b68f4903dcc7265aa029dce39b53d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/resources.json",
+        "bytes": 173,
+        "sha256": "f7a054aaf284154272fcc7aa5a4e4b858588efaa979f4a0f1536e31fe79ce0a5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/control.log",
+        "bytes": 180,
+        "sha256": "5cccb5c62adf8719c5756c9f6dbd0b31d8d6dab311336f3a6bb9a32df2332966"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/junit.xml",
+        "bytes": 16329,
+        "sha256": "6aca869fa9d59bd449bea4d278eabca0cb7c0ac669f86d983e3de6ae1f7f2189"
+      }
+    ],
+    "native_receipts": [
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_4byte_neighbor_ready_quer0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "772eecbe21b818a1b7f0cadea19a2ac41b80fbccd02c86fa0299f4d23250b020"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_8byte_second_half_readine0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "2409f6001ac66e39fcaf0898e79b372a19b000a1a46736c44beb3c4263a3925a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_8byte_second_half_readine1/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "8f00093822951f6574092a1cce9f7a5aac0a75603c1db1375b6955cc0b953738"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_a_dependent_command_captu0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "bbd51e36e4ceaf4f9dbf632e4a8823bd3bc1bfb4fcdf1ef5f235e5c8eb100c19"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_all_six_typed_cpu_views_c0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "0e51ac70a8d711cbc2e3f2a91709fba1a31e6aea84c3cfa3839dd1b8587cc7c6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_comparison_ready_roles_us0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "4f7b9a4aed815f21f51f567cf2fe740604060aa22c2bdeca3d2056a481e43dd4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "919b10ea507de5e51fb03510bc1bc7310555a984f021ceeed791045e5d2d6e0c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_1/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "6bd71558e0e93b2ae88c6d153a2605d09e0c8f6fc227354a87f2f1f633a87c6b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_2/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "4b5cdf8f8f020fb51e230af4a1fbd43a2de0301db8b0b3b8f239b5fff9ea9bc8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser0/native-receipt.json",
+        "bytes": 27279,
+        "sha256": "1f67723ab77448db07088581754aa028bff933ce30268b0451aee2cc5cd4c5c8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser1/native-receipt.json",
+        "bytes": 27303,
+        "sha256": "0b367dbb870caa75a1f71448419acc59fb8105eeee71b2c4e0b4c7050723572f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser2/native-receipt.json",
+        "bytes": 27279,
+        "sha256": "ad79c6705fdd5b0b6a37232660b6a53aa22e4959931919f56fb8bc0d1654ca7e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_consumer_completion_cover0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "38e43ccbc26d02710f0b46695e920441d242ec2a0df372391fa07d10bb013d9e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_0/native-receipt.json",
+        "bytes": 26656,
+        "sha256": "9a82a02ca630dc31f78225cbb2e330f9d3602527de0a09cfc9549757a7ba3c77"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_1/native-receipt.json",
+        "bytes": 26656,
+        "sha256": "82ec63d18c8741df42550958c6b6336ec8dacd6284e40f3879c2eed956760f9f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_2/native-receipt.json",
+        "bytes": 26656,
+        "sha256": "ec4ba8593ea0efb89c1d03b8306c340845000bcd6ffe4afc09aff40ea5231c6f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_conditions_do_no0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "d8791238ebbd7050d67f881ac7340d257294fe1ea478e5ce4f6adbc76a38415b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_conditions_do_no1/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "150afac60299bc3f2a29f489317536bfaeda7275b8507ec4407c253109669278"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k0/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "570fd214e1b178a19caa37f0577cb2e654582adff0de6f0f594578ed7a5a1f0d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k1/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "b5d6bddf0f3c54569d0172e529874aa544547eecceaf74780746e7f61bdcde1d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k2/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "a9e929e5a7964d003a5b776848f224185f325b98cd0277f4eb5e75b48d988cc4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k3/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "cdf8863fafa9f16e43dce6c97213a32b6fb116885a0f9aacc562dcd663dbd0be"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k4/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "759ca60ebe1954195293598a963833b3eafcc463f364f7f80f8a752ec8857bbd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k5/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "6d329a5fd54cbee297ca69b64268019a81bb426e0fd0bec98c95cec8ac24d4e2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_dependent_size_versions_s0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "3d0ee2a5c35b3b95aec000bef3ba3e80c4a75492afca2afaff181e35103c02df"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_device_output_bytes_captu0/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "84b16b130644080fed9b016d7f9bb65b9880451de18b8af57f3e5b8ceff1a89f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_different_regions_do_not_0/native-receipt.json",
+        "bytes": 26668,
+        "sha256": "838128cbea1a86ed5a53fdf5dd9c2188c6c659622a666f82a9cd6eed086ec610"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_duplicate_rmw_old_results0/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "ebc0bb6395f13c7fb5de51b2fc22d79896b80acefb71d0ded8f103ab21ed631d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_exact_rf_source_excerpt_r0/native-receipt.json",
+        "bytes": 31919,
+        "sha256": "f46e620fd8feb93731ddf7711b8c3bb852e7f83ced45eb31c982963f9b0768db"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_failed_cas_expected_and_d0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "468221ac0e27d6c6b8ec1921a0b2aec431b315464ba90f8ef2e73e01b56b4b06"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_gather_interval_values_fr0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "c5c7998b4611f01908ad0fddf4c426b31e3e411cb3256749ac4a64cd53e36672"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_get_tile_size_never_suppl0/native-receipt.json",
+        "bytes": 27295,
+        "sha256": "851a1362863ed93e02c2604a86bfcd115878afc2f4e902d5a697e76686d8b09e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_get_tile_size_never_suppl1/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "c36083d21cdb6adcb494da5d2e04a9fbe82937f8a82343a11259cd163a2ab26b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_global_tile_ownership_rej0/native-receipt.json",
+        "bytes": 26650,
+        "sha256": "097923e28907b78c72a263906ec2311114e118f7e0c74822f3dc5c6dfe02fdd1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_arithmetic_skips0/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "d3d030fc93addb31470558f5c80da264bb03a293a02bb377539aff40de1a92ef"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_arithmetic_skips1/native-receipt.json",
+        "bytes": 30391,
+        "sha256": "7fd25925eb91597bf6af27135e9f566c58c89122d79e9834bbce3f021648c3d8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_rmw_preserves_un0/native-receipt.json",
+        "bytes": 30377,
+        "sha256": "7e7e7482ae6dcb1eb957e24df0540772b0ff74da5e62c50125879af9b1f89130"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_rmw_preserves_un1/native-receipt.json",
+        "bytes": 30401,
+        "sha256": "b03840680b5aa6f4fd5f5b09b701c2e5de92a35bd43cf4d948b60363d25496cf"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "592502566fe737c382ac9e98547b10604668ae7512f392d0efd874f36d3d7d99"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo1/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "45c006dc34eae6e7afd22add4813664a08c0791d9800fde89cb96a73bb8c61b5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo2/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "1342a04e06f9c31deba3b47847b94443958cc7c19876e86900dffb23e17d85a1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo3/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "72c53578af41dd88b1893454138619a7b89ca16ab35b55bd9a79235dc143e3c1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo4/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "2b8ab8da2d9c4c6fabd8c2a4e79ff5acc949bcfd4439668c53ad0b787f74b387"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo5/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "46139bbac2d3ba8ffb85408a92c8b4055d157ee5ab6d2837c7ec8fadafc03eb2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_logical_region_assignment0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "52dc6966282e83bcbf4bdb2e39f8d7f388002c01289a8cda47368dd605b37af9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_logical_region_assignment1/native-receipt.json",
+        "bytes": 26668,
+        "sha256": "3ad3b8e2995af0f7b4240ad6a90a10ad351b718cb36b2460107f0fb0fa4dc68c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_new_explicit_destination_0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "39c8c1a5d9d07f7439118fead0dd9c29aada8ad6107b79b7860c090b5d61f2f5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_new_explicit_destination_1/native-receipt.json",
+        "bytes": 26654,
+        "sha256": "f94b7d09414e4b83c9d1f3c0a9e1cef16354305aa53fe591b0c86d787bd6418c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_one_commands_distinct_sta0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "53d9ee28c888a3ff21fd37c2c525b4aa7d2319595d63fb8a680085ccd7a8555f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_one_commands_distinct_sta1/native-receipt.json",
+        "bytes": 26664,
+        "sha256": "6976429d6c0acf5002d13098620de496a1641aaa674aff683ea0d68dfb3e7c07"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_output_binding_and_cpu_vi0/native-receipt.json",
+        "bytes": 27299,
+        "sha256": "c72d40559726d402b40f1cb129299a1f6ac1775510ae4e64d3ea8747eebb22f5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_output_binding_and_cpu_vi1/native-receipt.json",
+        "bytes": 27290,
+        "sha256": "bdcf33f91d3a24d59f3c3577f1fd8b1a4d525373165de9905aca03dabf01392d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_pending_8byte_destination0/native-receipt.json",
+        "bytes": 26654,
+        "sha256": "88ff921fcdef3fa7b3304060f04bb4749acf81c3db6a582b90b428da56380d34"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is0/native-receipt.json",
+        "bytes": 26663,
+        "sha256": "9ce2e0d8fd014250daa4f05732a2469fbb9afcd7ed738547c816b0ff5404649d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is1/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "54295c45b4f10204d8c8e58d09a71f16f4ddcf8cb49923595d4dc6b45f53c22b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is2/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "6b2cc413cd9ba3fb358eea19d2b703d0dab5767efc304ee3a2c590fc2a0752a3"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_read_read_overlap_and_oth0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "a9816b69e60c008c7a83276f0684662675f970710b848de1122ceee5cce544d7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "203f91c5ff6459daba75c857fdaaf152d6918d250894b86c2df8f42a66b40dff"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers1/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "c34f75d3fac8623509b7bf3a2724c0efedd3407f74920b823d02e85d0b76a1a2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers2/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "a306a56a95a326ebde86f7e21331d394c7846f62ae7adc6e4850d3c6f327855f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_query_can_return_ei0/native-receipt.json",
+        "bytes": 26654,
+        "sha256": "53476ecf3f27225012b69023612d95929dc33914e0bd6e08c2f09ae22ddb232c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_query_can_return_ei1/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "13b6893a3a638f38a534b1a5ff0d603e11563cd10de93093cf85c3ed6e8fd075"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_assignment_uses_fi0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "5f32d309ba4cd45f7f995b46bbb91628895134b9373ccffea2bcb9afb3cb18cd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_assignment_uses_fi1/native-receipt.json",
+        "bytes": 26667,
+        "sha256": "9bae741ad88fbe36a04db4906f8b46a910d2c421e1b36c2785c56ca8efac196b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "34e2173690a7356f6f36eabc239eff87fd8662349530d9721a40ab53ac84c513"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross1/native-receipt.json",
+        "bytes": 26654,
+        "sha256": "cae8501995ef175c73932ca69e076dff4e055770582ff83a9fdf56a16deebab4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross2/native-receipt.json",
+        "bytes": 26654,
+        "sha256": "5188d5bd55d0e4525b0f2d6ea0fbb0c58f5e29c321e01dc199d75dcacb94e168"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_does_0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "8457b06960c891d1e7315b2b96ce275b497f82a79813365c531eab960d61d007"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai0/native-receipt.json",
+        "bytes": 26662,
+        "sha256": "2f0916d3cabe61237e9a07e6c2e0f03a9523a6d0e8f3b293c6cdb2ee39f7c96b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai1/native-receipt.json",
+        "bytes": 26654,
+        "sha256": "8e94ed0a3b350c8b37dee0789046a31c43eeb7bee1c82f5adaf76f47aca67a0a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai2/native-receipt.json",
+        "bytes": 26656,
+        "sha256": "7834d90b6e1a0db737af67acb3a7fec5161ab677cedb6d65a6a420b8e581a190"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_cpu_read_of_pend0/native-receipt.json",
+        "bytes": 26658,
+        "sha256": "5a5b673c53a78c638c95c81624ff88f9d70b625f71f9fcf14909ea8326720691"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_cpu_read_of_pend1/native-receipt.json",
+        "bytes": 26658,
+        "sha256": "2be3c5a5a5593adcbc95c647ac0e9b9e3e3ef020de2caec9264870fbc4bb5289"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_pair_views_share0/native-receipt.json",
+        "bytes": 26667,
+        "sha256": "addc47d97658ba09510f19edeb32d69581ccfdab8a2c218e7d799f741cf8c593"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_second_half_conf0/native-receipt.json",
+        "bytes": 26657,
+        "sha256": "26769bb6926f1f5cec7457cf9a45bcd1a87868567172f30349e49b936ea02757"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_second_half_conf1/native-receipt.json",
+        "bytes": 26657,
+        "sha256": "ae52820c3af4beab2a9fb23b1a6b071a2342b23d2e09f2d42944636dffeff915"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_write_covers_a_p0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "c083ed69c15ff1406725180939356f614cf4465a4b94c34c445e1f43ab9a8d11"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_rmw_publishes_old_value_o0/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "9011c834e44d97a02744b89e07adec141584e000131849d9459c134b73968957"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_rmw_publishes_old_value_o1/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "276ec1d3a1af75b0e6225ba7ed37c791371d4894568aaeb5a97bb31ac0f3385d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_setup_preserves_source_in0/native-receipt.json",
+        "bytes": 27296,
+        "sha256": "cf264714e1900379c1d1ad95b87bd01abf6c703f3446152f207bc19c5737b927"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_setup_registers_six_real_0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "a06cbfd1497bc5068f1acfc290dc02e178f47f87eb943bb6a0324c09304ccd4d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_size_metadata_is_not_limi0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "bd7f7b9d29d114e292f7af8dd8303b763c1c80f5e5bec843b96120a387db031a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_counter_reset_and_0/native-receipt.json",
+        "bytes": 27288,
+        "sha256": "2bbdfffbba267091684ab6e321d515d206dc5c8166cf2b708e6e5d55f56769b2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_counter_reset_and_1/native-receipt.json",
+        "bytes": 27286,
+        "sha256": "c4c34db0b9d0964eddc60aee1110bc977b70611a524bc18479c90eb2385ef495"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_init_resets_counte0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "1a4a84777f5eedfe22e0b0286d43b5aef746daf6a8133bbd76665f16fea1781a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_tile_allocation_us0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "38a6be49066095ff9860155a9fed2dfd74bb2bbc01e35550c1141b828fdf27b6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_sparse_image_capacity_ref0/native-receipt.json",
+        "bytes": 27291,
+        "sha256": "4e2ffcf661338e021f5f90cf7c93f52af68031830a6f995e7f98bdd8f8e02485"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_effect_waits_for_ca0/native-receipt.json",
+        "bytes": 30368,
+        "sha256": "889c3e1aaa7f9c3d12673d25f032db62d2c1ea45fe0fbeffc2f6742067eac714"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_hazards_cover_the_f0/native-receipt.json",
+        "bytes": 26662,
+        "sha256": "4ea73e9543497d41a3c6ea428855cb134a1f1a82e4f1a802018b5e7a540a8498"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_hazards_cover_the_f1/native-receipt.json",
+        "bytes": 26662,
+        "sha256": "2962d2d50fa8c13ef44869139edc7f9a1773ba7dd82ef1e8cb74af776833e5c7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_the_issuing_thread_cannot0/native-receipt.json",
+        "bytes": 26668,
+        "sha256": "2dc58fd5f68204e2ca8f62c5751ed7fd1589400959ccdd1f2bad6ea3b52a07c2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_tile_size_is_an_independe0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "57b9d41c392ea6863fd33774aa19fc8a37c78e84a769a7642e5d1f217a6c136b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_image_does_not_inve0/native-receipt.json",
+        "bytes": 27294,
+        "sha256": "2c1628d8ec443dc6be96ef51ea589c4e95673d9aa228bb48edea4bd699fa2334"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_image_scalar_memcpy0/native-receipt.json",
+        "bytes": 30740,
+        "sha256": "ebed423c828050fbd38e743c4196e21a530ee912814197b4deed46d3bd3d1c7d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_tile_views_share_ph0/native-receipt.json",
+        "bytes": 27270,
+        "sha256": "4fc913f4abdba1c2667dca841527600228a1fbb7414544b087054830b685770b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_unresolved_indices_captur0/native-receipt.json",
+        "bytes": 26634,
+        "sha256": "b58286ac29024875537afc1930dc444f871ac78846281b85980489fc587c1b22"
+      }
+    ],
+    "native_receipt_count": 96,
+    "expected_native_exits": [
+      0,
+      1,
+      42
+    ]
+  },
+  "physical_reference_audit": {
+    "unique_count": 333,
+    "errors": [],
+    "references": [
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+        "bytes": 139144,
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_8byte_second_half_readine0/model.c",
+        "bytes": 24711,
+        "sha256": "ef0175da0363dc622454e9637afdd3c6c457a6a1492db41371d57f7acd6de7cb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_8byte_second_half_readine0/model.bin",
+        "bytes": 72616,
+        "sha256": "c9f6abc95f38285c6347fe44b0e4daba48ebd648e87d07b60786fda8c401ccca"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/Availability.h",
+        "bytes": 28849,
+        "sha256": "d39d74d343b5f3dc147525c5f4ba99c1ae9133bccc57eb6205a74d0ba99d92cb"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/AvailabilityInternal.h",
+        "bytes": 68834,
+        "sha256": "4b7f7e27b33d7ccdcc21654b0016eaa4187ce63387eb135babf269cddedcb9b0"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/AvailabilityInternalLegacy.h",
+        "bytes": 414416,
+        "sha256": "4c15ffce0467946a20beaa2eb25eba2cbe1788c620aaeb2516c39436a88fe276"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/AvailabilityVersions.h",
+        "bytes": 33346,
+        "sha256": "e9f8f7e0eb62c904cf7dca1fd6ba2fe28ba7a382cd9b5339fd03f6de13e66d02"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_abort.h",
+        "bytes": 1163,
+        "sha256": "ad37627745fd324a640fa93c5f9909250c036d577457090a1e72ee939cd7fc7b"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_assert.h",
+        "bytes": 3405,
+        "sha256": "ccdc2096f863f41cd0d4ffda8e737ad211a15a3b72b3cc9046376e142aa36d9b"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_bounds.h",
+        "bytes": 2276,
+        "sha256": "3d9f049f5fac54421170fa34a845b244dce7b83a3c68ddd589909df759854700"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_ctermid.h",
+        "bytes": 1328,
+        "sha256": "73ac20b763ff6e1c328563bbd125e3eaa78a367eb92c867626a047ae4ab391b3"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_printf.h",
+        "bytes": 1196,
+        "sha256": "d90a7023063c22dfb77d3034163d2c35908f3103b458a83659b7f7b38d2d0cb2"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_static_assert.h",
+        "bytes": 1205,
+        "sha256": "8b2be61bd4bc65c9ad62a661a98165a34414ce962aff97e563f876ea2efa42c3"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_stdio.h",
+        "bytes": 20526,
+        "sha256": "8417242466f6df6890587974393e97bb0aeac8caeb80cdf82a4e03a97e6d4660"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_stdlib.h",
+        "bytes": 17262,
+        "sha256": "19041cffa8a37743cc48561f75eccd96917125a7dc4d785a78049972ab1a911c"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_types.h",
+        "bytes": 2285,
+        "sha256": "532c4b0f11274f6b10875db65e154e6cedaa20fdd189f5f40a8780c9a4c39449"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_types/_intmax_t.h",
+        "bytes": 1579,
+        "sha256": "215f90a4efdca4991735be55a1ff701964dde07d8b4a8382ec8ed41ecbf5f115"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_types/_uint16_t.h",
+        "bytes": 1417,
+        "sha256": "adf29323b0ecb87cbc43ac3ff25c096de7a214ceb90007c2828616151c66ad37"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_types/_uint32_t.h",
+        "bytes": 1415,
+        "sha256": "951131475ec815813c8ff40d5e875029cd968334fd3a42d5a65fbe7851d1718c"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_types/_uint64_t.h",
+        "bytes": 1421,
+        "sha256": "a5692cddb9c42d1b55ebcd6fa445b212c4b0c46db4583aaf3293ed6386d3d0d6"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_types/_uint8_t.h",
+        "bytes": 1412,
+        "sha256": "0a5c0353c8410f5e502db7971d987ac83a9ec3148905f10984c78152f541de68"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_types/_uintmax_t.h",
+        "bytes": 1606,
+        "sha256": "0b154b16a3945edff78f00321d90a662d522e197c08e7de3b68f0ea44ae0d042"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/alloca.h",
+        "bytes": 1450,
+        "sha256": "5e956d0cffbf6d069d2cc9cee52686e1e7b73e3e2939cfb3fd3a7ca096bd8980"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/_endian.h",
+        "bytes": 5063,
+        "sha256": "488530aceccfa1f364f2850a5f2956e22436db8b12b33d2a41567c4ac9d60788"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/_limits.h",
+        "bytes": 318,
+        "sha256": "b64325f6b5aba08a361b7b8e537df3d8d193538c1d6329a4c4a7e72f5aa63478"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/_mcontext.h",
+        "bytes": 2963,
+        "sha256": "6af56aec1a82613dbd54b09d95eaf96fa7b9443a4cf4c7e9ba689f6de6047186"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/_types.h",
+        "bytes": 4470,
+        "sha256": "4f0bde85f9a41cc7d30fff22ebd7e8f4eb206a55a926eda012a2e7481e3524fa"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/endian.h",
+        "bytes": 2622,
+        "sha256": "60bd5d1363d89d52e5cfc95b83a35d392a8315835f9d60089d4e05b8f4d1cc68"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/limits.h",
+        "bytes": 5700,
+        "sha256": "dcfa3b29f6a6c6fda1ce6f362a6eb2b27cc756ef5051c3a48641365660265139"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/signal.h",
+        "bytes": 393,
+        "sha256": "de0bc923b92bd88f3bd8bcd38b20f8123277732d7d3309cb2a5bdc60bb4dd8c6"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/arm/types.h",
+        "bytes": 4135,
+        "sha256": "b9eccd5a3feb3a62e22e42936656c8822e7e3e8708d759b1512deee05f682f0d"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/assert.h",
+        "bytes": 3162,
+        "sha256": "99eb1c676b0204cc8856f747d151f743383167506168424138c97166b9423717"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/libkern/_OSByteOrder.h",
+        "bytes": 3989,
+        "sha256": "f0febaef6f9ec75339ebdd896dab2a6d1a1934628d76098f165f1db1b4b74c14"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/libkern/arm/_OSByteOrder.h",
+        "bytes": 2801,
+        "sha256": "7c686aa04afa38a20a0163eccca9941aeb8328779884c2603d8a9a773896a677"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/limits.h",
+        "bytes": 5910,
+        "sha256": "4e09d7a2307887fe787c65e31d63747720c4d462b7ba3bf8f45e401d74f0b246"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/mach/arm/_structs.h",
+        "bytes": 32091,
+        "sha256": "30e201a2bf77b2b09163250db64760f303903590904a3daabd9b96cbcba19b7e"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/mach/machine/_structs.h",
+        "bytes": 1633,
+        "sha256": "410350f04225bf139bd89f1a99418a55734e4ab2101bb93dc301f790a130f59c"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/machine/_endian.h",
+        "bytes": 1685,
+        "sha256": "17eb7d38845502ce04aac3ab709dffeb4ec253781051b5d7894703e9786730de"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/machine/_mcontext.h",
+        "bytes": 1630,
+        "sha256": "9d3425653d2a1623d785dee4601c3c00e05f4797d7e840b00f17d529f8c6c51e"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/machine/_types.h",
+        "bytes": 1614,
+        "sha256": "f27264f8fdec9f164b4fc2b556f666ed7c5c0e5b88fd9f23db0b731ffa6cf864"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/machine/endian.h",
+        "bytes": 1680,
+        "sha256": "37f9e1c8599a729e605477a5b6a77cea727fa66816e4585d0dd32e3ba377f450"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/machine/limits.h",
+        "bytes": 511,
+        "sha256": "50345f1ab843fca787a38c552a84177e678d79dab86e714434f94f2546839357"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/machine/signal.h",
+        "bytes": 1614,
+        "sha256": "09b1798034cf3b5217df3e415d6053df9c2e16b858036fc11888e63f4493f53f"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/machine/types.h",
+        "bytes": 1675,
+        "sha256": "76e7c59451d996fe674a6fc7e518366609a95875c9b9aec9fd590a3ac138dddd"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/malloc/_malloc.h",
+        "bytes": 7220,
+        "sha256": "582378b3f3074aa1aa831dd0c378d4dc71cfdd77d1840ca6291fca5a85f95abe"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/malloc/_malloc_type.h",
+        "bytes": 9933,
+        "sha256": "637f4e32fed7f9005738b465b124f388458270855001d68ec3ce92e643171cae"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/malloc/_ptrcheck.h",
+        "bytes": 1459,
+        "sha256": "d3c4e809117b24467e9313cc348c0495aad8780cea6bf58177743b9be09c3591"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/stdint.h",
+        "bytes": 5556,
+        "sha256": "9d070aad02d9f2ba1f2248d093b4194b62cf8d363778c737d1110f4736e5ed3c"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/stdio.h",
+        "bytes": 3069,
+        "sha256": "d2220614f42d3cb678ae0de176ba0ab3256e15fb45b3efdb5d17b8ac1f6a4b54"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/stdlib.h",
+        "bytes": 2980,
+        "sha256": "7995a2df951dd1fdbd9fd4ec38900b79ef1797655ff239728fdbac56bb9bd7ff"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/__endian.h",
+        "bytes": 5302,
+        "sha256": "8697850f0ec13e9082081e9b8dda8f94053970f3546e4a8d42738b16400eac91"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_endian.h",
+        "bytes": 6555,
+        "sha256": "fcb57b694d555b2a8646e35bc68cc6864deecbc8d5528cd40bf764b1ff14d3fd"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_posix_availability.h",
+        "bytes": 2905,
+        "sha256": "452bff9ae32655a49b65802e29b21c67a546be1446553f908ef9850a694746bd"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_pthread/_pthread_attr_t.h",
+        "bytes": 1522,
+        "sha256": "987973d4e4f0c84a929fb1288755637453d88bf1410b778f81b2550ea4ad211c"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_pthread/_pthread_types.h",
+        "bytes": 3855,
+        "sha256": "741433612525badf767d48b1924d4c7ba564ccc5c1bab5cb7045c238850fa86b"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_symbol_aliasing.h",
+        "bytes": 43981,
+        "sha256": "be0bd8cbed76094f86924f0e24c8bbf7b4f2020e95b480966cad14a5c1138ecd"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types.h",
+        "bytes": 4133,
+        "sha256": "863c4f07045775002b63b7e616742d9f746e4a02da4441442d8fe1138bbd0ff9"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_ct_rune_t.h",
+        "bytes": 1474,
+        "sha256": "17b8b91c92c4929111a4e854a38a04c3d07fe0da2a31f3692e1407db6a69de63"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_dev_t.h",
+        "bytes": 1481,
+        "sha256": "4ba3d19759544b9f7bf424d2a16a518ff586e31ed968d525440e678cfbb07a5d"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_id_t.h",
+        "bytes": 1494,
+        "sha256": "fb7255c9872e2a805c206796326e21d47146e22c93c09752126d7166bdaba5e5"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_int16_t.h",
+        "bytes": 1417,
+        "sha256": "e40d40ad59c6dc98577b2c7cfdba1121ebfee17b29e093cbd10b7936df496d8e"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_int32_t.h",
+        "bytes": 1417,
+        "sha256": "77127195e57f1690402377ddd72e3dcda684ddf591346f08ef4772dddcbbc281"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_int64_t.h",
+        "bytes": 1417,
+        "sha256": "a2427b34e5e83996bd28d83cec920cf3b82a366af90e767234557bd11fa33a18"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_int8_t.h",
+        "bytes": 1411,
+        "sha256": "607f6beede0251eb801e763493df26fd45d46eb951e4ff9cac17f1ac951b8cc0"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_intptr_t.h",
+        "bytes": 1479,
+        "sha256": "b2a7ba9b9b2d357d75e59114874658f893b23ea6d1357815b027d8189075daba"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_mode_t.h",
+        "bytes": 1465,
+        "sha256": "7c4261bde41387fc23aefe5dee1e6298ae6b6f5592bca51947fdd9736e0640a6"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_null.h",
+        "bytes": 1724,
+        "sha256": "3e021525d2a711070e9c78ea2791e020ef6105c51121d8496d617f89a83d2f92"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_off_t.h",
+        "bytes": 1460,
+        "sha256": "7b07626d71084f1b3220e045089f54fd30f4d736be9cd0449042c5fe411fc569"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_pid_t.h",
+        "bytes": 1458,
+        "sha256": "052a6dbbec8e30623c2d33dd373992f6c5d0c57c57ed4949d2b48c4ab0976487"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_rune_t.h",
+        "bytes": 1455,
+        "sha256": "36cd7e6c6ce34e125b4c52f005262d38eba8ef8486c7cac7adedcc5d37cc3b49"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_seek_set.h",
+        "bytes": 2123,
+        "sha256": "353b2276ef8132f625b1b780e7593a43183fbf054c1bc906c0515f89dad335c8"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_sigaltstack.h",
+        "bytes": 1992,
+        "sha256": "2bc87d34186fe6524fe89fa1e2d878462c6688134d03880b8bfa1486db297687"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_sigset_t.h",
+        "bytes": 1483,
+        "sha256": "df99c73ecdbde1fcb3a4a22169871e036240452472b8ea70f287456d42593972"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_size_t.h",
+        "bytes": 1775,
+        "sha256": "3e1bcf6c23ad00e0fe2b5a4683e687299baf51cf26b0a4ebc73db6140378acc2"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_ssize_t.h",
+        "bytes": 1473,
+        "sha256": "58eb3bdea24b27e6b5fb45e203e476faf2510b5c0aa81a0b45c17b528aa9c192"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_timeval.h",
+        "bytes": 1667,
+        "sha256": "f723018fec267200e915777897515b5d7ed20901bcb294873f94b1d835f9ae45"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_u_int16_t.h",
+        "bytes": 1433,
+        "sha256": "9dabbd8280c28416a5ba115355678d2540588df1a7251bd9b4a13e30c309a71b"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_u_int32_t.h",
+        "bytes": 1425,
+        "sha256": "196cba7a865c086bba457758d3b2605a4c1299c54a758366b7d420a585895f1d"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_u_int64_t.h",
+        "bytes": 1425,
+        "sha256": "d096eee54a5acc2c3cd5cf71256d69198ada8f8d82cdb0a717bc8ed65650ad93"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_u_int8_t.h",
+        "bytes": 1421,
+        "sha256": "7505dbbdf3ecca2b8e585871ad81c0e67a3cb63c97c47abe73fe262e071a3ebb"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_ucontext.h",
+        "bytes": 2466,
+        "sha256": "d67fecbd5fba1fc876b41b0a69ff080e3d47c9884f3ea4012f8a334ffda62681"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_uid_t.h",
+        "bytes": 1458,
+        "sha256": "d2140a65a17943a857381757c0b73a920f35ade41dc9809437c168be457c276a"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_uintptr_t.h",
+        "bytes": 1534,
+        "sha256": "f435cf25e4f06dace9c1884c066392bafd204c6d71f16696e71acde5912bc81f"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_va_list.h",
+        "bytes": 1714,
+        "sha256": "688c84ca73e82898609ae7282c820e896e4b82b7dc14f4fc92b4263df5827de2"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/_types/_wchar_t.h",
+        "bytes": 1857,
+        "sha256": "f0c3da0beecb5feb19ddede0ea9d5fbb9274e7b1de1b7cb91f64196ac1395008"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/appleapiopts.h",
+        "bytes": 2065,
+        "sha256": "efd9793f56c08917cf1ddf5108b78240ede88a5bbc8977d6fdaf1684b6b01c1c"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/cdefs.h",
+        "bytes": 42609,
+        "sha256": "ac1a889ee7e6f3025e01be9981d26751489b9e63e926035201cae07ab9e6576f"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/resource.h",
+        "bytes": 20410,
+        "sha256": "1067178025c5fd88c9a1b8206a07c2695ef94dd471fe2783f06c512995382961"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/signal.h",
+        "bytes": 16830,
+        "sha256": "46001a703a66591b9adc873dcdfe4a545bb26cd5fc52b31ede9e0cda9ddbac7a"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/stdio.h",
+        "bytes": 2415,
+        "sha256": "a8078ae1cba1a46a66d0de6fe7f13bbc969cdb7e78fc2d4b9a5c5cdaaf16126b"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/syslimits.h",
+        "bytes": 6296,
+        "sha256": "170629c923b4ef2b7132dc8a9d71e9f010332bada56363f619b7c758e17d2c83"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/sys/wait.h",
+        "bytes": 10351,
+        "sha256": "59742f1ebee76c58ce7c36a44f4ee7cbf4faa6edfaad7a32208190e193d76bf6"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/limits.h",
+        "bytes": 3794,
+        "sha256": "6b59cc1b6f86c901bf41ce942b8434530e852eb16e79e6e9287f89441f71efca"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/stdint.h",
+        "bytes": 27519,
+        "sha256": "f43783466c93f77a6464274ebf18f9e4cc46f0d90770ddee2993c6cf39f7514f"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/share/asan_ignorelist.txt",
+        "bytes": 703,
+        "sha256": "f0180e94133315446c6e45287e1801e70ea94de1905a237c974627a732ebeadc"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_8byte_second_half_readine1/model.c",
+        "bytes": 24711,
+        "sha256": "3afa7c084bab967c1933bc259fefaf02941306cef6e311ec615194d0e9672bb6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_8byte_second_half_readine1/model.bin",
+        "bytes": 72392,
+        "sha256": "e8fc0ce949d7b0ba6910b24a304f889cbee3b525c1179f9fc2c407270a9e45c4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers0/model.c",
+        "bytes": 24672,
+        "sha256": "c16b73500bf4c7ba307a8bde08ea080e6ceb258625f87656c2cb66ccbd5dc954"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers0/model.bin",
+        "bytes": 72312,
+        "sha256": "2945f6461fa75500e7919a662e19666e2ce3f3673d79bdafc0df81fa059eaeba"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers1/model.c",
+        "bytes": 24672,
+        "sha256": "813f27c3541abada4ab5d5273f21c12f6064610fc38782d39322e4c4d36ab7b1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers1/model.bin",
+        "bytes": 72312,
+        "sha256": "d46974847a00bb019f7026ec45064bce5f1ccf1680fa2d9df303ddb86a7172de"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers2/model.c",
+        "bytes": 24672,
+        "sha256": "327405c52ead3f4a23ea77a78887047eb80fd70835d1f0dcf530077e943e6663"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-halves-red/pytest/test_ready_counter_wait_covers2/model.bin",
+        "bytes": 72200,
+        "sha256": "080d3f0bd13789c8c3a041bb797b64c4f3a03999ba860ef6ff9b87df29718e43"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_4byte_neighbor_ready_quer0/model.c",
+        "bytes": 25796,
+        "sha256": "2232525f8083286572f414a616f0ec427225bc889a7f8684d35b52e8f169e203"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_4byte_neighbor_ready_quer0/model.bin",
+        "bytes": 72520,
+        "sha256": "589070bdc5a5ae1ab17f6cdf8141055b84c96ef2a6854026faf4bc4dc4b4f727"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_8byte_second_half_readine0/model.c",
+        "bytes": 25822,
+        "sha256": "bdbee868a0951590bb9c04cc61a2c49573b91cf05d0b667b6fbc972cc3bb3eb2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_8byte_second_half_readine0/model.bin",
+        "bytes": 72616,
+        "sha256": "f81e5a0405fadd55c849f30dba4b5891bc3dab0b663f089c97da01cc6a3ca257"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_8byte_second_half_readine1/model.c",
+        "bytes": 25822,
+        "sha256": "fe1c0316282495e6fafb910dea8764395c66e1f3271e7380567ae58ed47ac4ba"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_8byte_second_half_readine1/model.bin",
+        "bytes": 72392,
+        "sha256": "76d9e50f2696f2aec38c15628141c90890e6b09db732c2e9fe37c76f3cf68288"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_a_dependent_command_captu0/model.c",
+        "bytes": 15470,
+        "sha256": "f5b98f2346bdde02128f58b8afeb96146dcf754fa4667419dcd38a9c651d528a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_a_dependent_command_captu0/model.bin",
+        "bytes": 72392,
+        "sha256": "7306061029ab531c8650d27f0ba2810c95f81474e7505b2e4fdb23977e505a0d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_all_six_typed_cpu_views_c0/model.c",
+        "bytes": 36143,
+        "sha256": "9c3848160cbe8f4a062784f3d4e0e3cc7640545d8551b3a041ae3dcfff71356b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_all_six_typed_cpu_views_c0/model.bin",
+        "bytes": 72840,
+        "sha256": "8f6dad82dd0a2fca92fb1847ff593cc3a50bc3e8d88343162c42bbae56b45133"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_string.h",
+        "bytes": 9281,
+        "sha256": "18ce21b76c6876087aae9053dcdb81182adbdb0405afc82f36d8edc000c06b3a"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/_strings.h",
+        "bytes": 4401,
+        "sha256": "76b984c39538b145bcb8a930538e07ce446e9d4ace00916d6110c775151d800e"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/string.h",
+        "bytes": 2975,
+        "sha256": "4b1b9c05bfe370d423d7a6bf9e74b189bcc7f59c1cd97f23d6d94f2f3df6a4bc"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_comparison_ready_roles_us0/model.c",
+        "bytes": 25837,
+        "sha256": "9497718479a17866f683e12c2955a8d21b23553f89639f904ef0273c76dd3a3a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_comparison_ready_roles_us0/model.bin",
+        "bytes": 72664,
+        "sha256": "4d47cb19e500f042f0cc3e58c9ec43afd7da4742700af0375c282eb40ad6ba36"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_0/model.c",
+        "bytes": 25827,
+        "sha256": "9e743fa81c93e39717d07289f8d946e7db7dac77404eb1b9c424895345f0fa2e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_0/model.bin",
+        "bytes": 72568,
+        "sha256": "d47cd682fbcb19bf367001306429fd02487d84ad8299601d2b5dced9b1f2d043"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_1/model.c",
+        "bytes": 25843,
+        "sha256": "9b1d173878eda160c1f5578cbd6095bd4a67143e14ebfdd4161a02e9d8a7441b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_1/model.bin",
+        "bytes": 72664,
+        "sha256": "a2bd9e5cf406671b5e0dcee56beae4786bd1c43a976e72aad8525e99e0a9162b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_2/model.c",
+        "bytes": 25889,
+        "sha256": "b9e727bcc551aec0a93c5eb87db4a4df0ebc89dcd744886b46e296aa099f2f32"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_condition_only_role_does_2/model.bin",
+        "bytes": 72936,
+        "sha256": "56a17d14b6a4fce850f92c257a9537b74aabec775ba5bfbb6fee9c59a9daf259"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser0/model.c",
+        "bytes": 36034,
+        "sha256": "d8c7074a504b1061772fa72d289b804179389baaed0cce14ee33777952d74308"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser0/model.bin",
+        "bytes": 90760,
+        "sha256": "01344d1dd6619d74b672ebcfdea88f3d8b4b5c1d64af5f9a83d7270fc8e9c550"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser1/model.c",
+        "bytes": 36094,
+        "sha256": "a7bb0ab43403ccf03846489bdaee8672cc1a259eb68a5e0a40302531f2dbe35e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser1/model.bin",
+        "bytes": 91016,
+        "sha256": "06ad689fdcfc61665bf69cbdc18f59722d782c6828ba2559f1279b99333a6975"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser2/model.c",
+        "bytes": 36125,
+        "sha256": "61dd639cb1a5fb9771c98e02983319281307cca1c565050de49e06a11a8f2e6c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_conditional_output_preser2/model.bin",
+        "bytes": 91016,
+        "sha256": "1dc82bf17d8c6e85adf420152f78503cbab80d3e23a407ba673afe9d1cb146b7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_consumer_completion_cover0/model.c",
+        "bytes": 26414,
+        "sha256": "93b617fb7b3fe2760a452f36be645bb6f518bf7f20680374237ce04d6ecf97b7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_consumer_completion_cover0/model.bin",
+        "bytes": 74392,
+        "sha256": "0ea12a53f5bcda582dc118ff607acc2adc29e70ab3df8238e1d0c54307dbb0a3"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_0/model.c",
+        "bytes": 25711,
+        "sha256": "6285cb4e494c8ac93cfbe1556d3e65d65eee8f3f089bbe04738b18e79c056d6e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_0/model.bin",
+        "bytes": 52088,
+        "sha256": "97b276adb137e8e63ffba451995b261abdf81f1485666a78f3c73b3943efdd15"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_1/model.c",
+        "bytes": 25711,
+        "sha256": "f142d637c9d06d397a6012a776466412a086150ad54d3988baa679c49dbc05be"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_1/model.bin",
+        "bytes": 52088,
+        "sha256": "19ed1480deab7a241e1b2f57c25a71ae45d27e8c60a75fc5ab64d0ba9dcf1faa"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_2/model.c",
+        "bytes": 25712,
+        "sha256": "1ea918e63f4a38d55ac8abdb365fcc75080b4cfecd208ac325c9f0c655448b03"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_counted_role_mask_cannot_2/model.bin",
+        "bytes": 52088,
+        "sha256": "47232f5296b8601a3ee1d1b6720798870d633db281887988b104c2dfb44021ca"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_conditions_do_no0/model.c",
+        "bytes": 15074,
+        "sha256": "bb8a1da4702c082709e5e6f6d2e998ea757d0607918dd8724a40c6374effd221"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_conditions_do_no0/model.bin",
+        "bytes": 71928,
+        "sha256": "19549013a9d18b893e6d1a0dbbbd572d7034c2aecc2700ed1382a3e8cc6b39c1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_conditions_do_no1/model.c",
+        "bytes": 15072,
+        "sha256": "8c64bb67537997294ffa732898a9a372213fb678ea7b216bf06b7e314047d0ef"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_conditions_do_no1/model.bin",
+        "bytes": 71928,
+        "sha256": "cad25e9ffe5726940f318ab673b5a7b8b58c8f1d7311b845cf2a539dbc801c20"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k0/model.c",
+        "bytes": 31448,
+        "sha256": "4f2dc919b0f707e1d890b866bab0bc98c1caf0dd3ee8f7508c6ead778fa7e9cc"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k0/model.bin",
+        "bytes": 73672,
+        "sha256": "aa33401600408af763510d603fa1caff1630eed70ff622708bdc1ebef541b3f8"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/fenv.h",
+        "bytes": 19641,
+        "sha256": "810c6384b279de3c3f49889bcec98dccec98062fc6757d4ab42b1e6e9aa61292"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/float.h",
+        "bytes": 4498,
+        "sha256": "4346c126d6f51ea8b63ea394f609f2474b26fdb9257c65cf3d2b43aaef36cd3e"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/math.h",
+        "bytes": 36109,
+        "sha256": "29257328cdb3459ed98ac8ff2d1feae14e5c7caaf3f90d62dd24c22849c75b00"
+      },
+      {
+        "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk/usr/include/stddef.h",
+        "bytes": 3816,
+        "sha256": "1e871643e931a1fe9ba76c2cc55dd32aa1a4b4cdf4584901b65b6203db321d2b"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__float_float.h",
+        "bytes": 5890,
+        "sha256": "bde8d423099e3bba501018bdde141cf2edea549ba528733d43dc534694181935"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__float_header_macro.h",
+        "bytes": 449,
+        "sha256": "7ee2302b023d41fd787a326059980800594c6e2cbac134b3167947d0025a72d7"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__stddef_header_macro.h",
+        "bytes": 417,
+        "sha256": "4cf46e8fbb809df048eecbbd63686fa741da27afa8db4245bd1f61c1fb1611dc"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__stddef_max_align_t.h",
+        "bytes": 857,
+        "sha256": "3c1e4de47f4f06b35e2c5890d670052e84f716760505ff51b022fc8b21a9400f"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__stddef_null.h",
+        "bytes": 875,
+        "sha256": "b1d71b08563ab3d2c22a1e4f8ddf4d9a1111c89e9404b859a45c307e8ebc6c69"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__stddef_offsetof.h",
+        "bytes": 708,
+        "sha256": "e5f0f4ff8ff5fc6a1cc8b535f5065f1728eadd2bf1e1401f021f803ec7b4222f"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__stddef_ptrdiff_t.h",
+        "bytes": 717,
+        "sha256": "b4178a57f3711b7013cba747a72a2f178c29fa9364e77d75b2159754072ced43"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__stddef_size_t.h",
+        "bytes": 708,
+        "sha256": "d86ddc0238da09b385846ebef814ffc50a44e40cf85d4e3793f485952b7e73ad"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/__stddef_wchar_t.h",
+        "bytes": 853,
+        "sha256": "1900d4998aef3698b06399ed686db0c21e26509b08638a25734fb97ae89b1001"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/float.h",
+        "bytes": 1416,
+        "sha256": "0242ed0a0c17fb6c24ef6953c51d02d28eadb067dfa41d7ef59fe230caee3a10"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/stddef.h",
+        "bytes": 5053,
+        "sha256": "b3e62a046ddf28d09eedebe6eb9461cb7060e47cad2c69964b222c4eea10347e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k1/model.c",
+        "bytes": 31448,
+        "sha256": "2c7e2e410e8ab58c083546a61fc15876da068f255f433c3fff5caa70cb14bbef"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k1/model.bin",
+        "bytes": 73672,
+        "sha256": "1c76a25cd3ccec5f39830dd99e613cb5eee9aa065a1913ceb85393fb00b32b11"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k2/model.c",
+        "bytes": 31466,
+        "sha256": "08f971a0794a3b9d10d3d99dbdc6d19c6e381166fae6d9c45f4ccc32ff7b64b2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k2/model.bin",
+        "bytes": 73672,
+        "sha256": "3b07612c1a2ddf0dc7270dfc7f847ae5c7a323197bc470a97f4cbb5a0a7f5fe8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k3/model.c",
+        "bytes": 31456,
+        "sha256": "dcb5c730063f66c2b129a62723facdff2b42120326e5d9b176ab0749aa0a3b97"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k3/model.bin",
+        "bytes": 73672,
+        "sha256": "0b5c99e42a6d8a30b2534b5921461f9abd6b4e42cc80dd3f3118ebe4c8dc6e55"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k4/model.c",
+        "bytes": 31456,
+        "sha256": "992a112ba22f834c67162aa8fda034bd31e199805c05724fda34639114a9e182"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k4/model.bin",
+        "bytes": 73672,
+        "sha256": "eb5c235dc6d7371e41d10d8d3f910acbfd9d8f337f3a7b6e3e775dd2d74510c5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k5/model.c",
+        "bytes": 31490,
+        "sha256": "509f8c2377873a0c9edbf39fe6c3d5bbad9473b997a136b0b5e1694f2c948c46"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_deferred_numeric_values_k5/model.bin",
+        "bytes": 73672,
+        "sha256": "9476f97d0459624c7095928d8eb4df62dddf8e12c5645f9b1043cef5d1604e39"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_dependent_size_versions_s0/model.c",
+        "bytes": 36514,
+        "sha256": "9f317c71f388843fad648b6347061f5aec9e22d39cc57c7970894518cb2ea60b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_dependent_size_versions_s0/model.bin",
+        "bytes": 74808,
+        "sha256": "1720563925fc77ecab0fa2069565cd0a073807f2b64063a61cb1588a7a23e5b7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_device_output_bytes_captu0/model.c",
+        "bytes": 52929,
+        "sha256": "788c082579b7da0a9f90a66da7a7dad1fc8ca9e2132ef50eb765d8514ebc6e63"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_device_output_bytes_captu0/model.bin",
+        "bytes": 94360,
+        "sha256": "5e114774fd5554dde036848fbe49d39bfe81833fdd3cd97b8ea7b628178ce2ea"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_different_regions_do_not_0/model.c",
+        "bytes": 25802,
+        "sha256": "79273639056a159f878a09136e8665c16b4d6d2d289c2ca0de9211d19f19871a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_different_regions_do_not_0/model.bin",
+        "bytes": 72712,
+        "sha256": "bc0d4136ebdb44cb12a5b4e405d74325441f9e1000537a41030a5c4e4574f487"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_duplicate_rmw_old_results0/model.c",
+        "bytes": 46615,
+        "sha256": "4e75c5af747b2d14ed6d0e32fd857497e36abbc505241e3dbb4abff93f3339b2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_duplicate_rmw_old_results0/model.bin",
+        "bytes": 93576,
+        "sha256": "a95aa7ef531d19a8015ba50e331656caf6fdc32403dd2b58e85258b9174a4e5d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_exact_rf_source_excerpt_r0/model.c",
+        "bytes": 16097,
+        "sha256": "07b889e1cda3a9e2f4584b8aca4b1685d7efab4b1ef7ab6b3c0cc87a249a3b75"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_exact_rf_source_excerpt_r0/model.bin",
+        "bytes": 52824,
+        "sha256": "758aee5a3006555505246571e776a6a3e6862187e0065488eb937fe6f877aaf6"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__config",
+        "bytes": 45597,
+        "sha256": "74c873013495a1f6e4b14f1dfd67c39a6cd027028b4c3473c5287b8ddd22e3c2"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__config_site",
+        "bytes": 1925,
+        "sha256": "3ac5af56abfebec68f3ddc02f17f2312687441a5c3e0b11a450ef51480902413"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__configuration/abi.h",
+        "bytes": 6317,
+        "sha256": "58a7f864095cf65cbeb2345735d540fed641c5609eb4d856d97953336076dffe"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__configuration/availability.h",
+        "bytes": 20047,
+        "sha256": "ef92cff30b4b245cc5f6bdc7dcfb122f2eff2f474fd7475c7a36a19034989de6"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__configuration/compiler.h",
+        "bytes": 1693,
+        "sha256": "0f04ae9d9082389e0e92e08645f7412b13ad8e0c2c19f6989698f699921006f5"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__configuration/experimental.h",
+        "bytes": 1485,
+        "sha256": "591854d7040d9f0cf672ebb5c85d7b9ddd0daab7bc18286a3dff8eaa7024da53"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__configuration/hardening.h",
+        "bytes": 12450,
+        "sha256": "9759cbf013585a210d6d55be10828cd37c0ec17662c9877d8a48c2880f5d1045"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__configuration/language.h",
+        "bytes": 1485,
+        "sha256": "5ed01fa1a4c2470b977a5f3412fb9da2534fa1137179701435c4d996fd2f7d54"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__configuration/platform.h",
+        "bytes": 1884,
+        "sha256": "4439c19928256118efd471f9c6f03876203fde9234137c13ab26795ebbacbb6f"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__cstddef/size_t.h",
+        "bytes": 678,
+        "sha256": "24fcce5e6d3c4a731254461a28148abe1f571c2e8790ab50442446ded352846b"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__math/abs.h",
+        "bytes": 2082,
+        "sha256": "341636b5293360e5251d138fe4743f0d3a29f09068070ef4d34be40b0750ad84"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__type_traits/enable_if.h",
+        "bytes": 1221,
+        "sha256": "e1146435700e53985c2ddf9b6218dd3ad6c71743688a1ee037881b68447de4ca"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__type_traits/integral_constant.h",
+        "bytes": 1412,
+        "sha256": "bc1a92ae8550e3c480d90ea583b79524d6c0ba0ef5faa4c3abf4afd1378437ea"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__type_traits/is_constant_evaluated.h",
+        "bytes": 1001,
+        "sha256": "8da9d47af89ceae85e2b395dab809cedf98c9dfa8837d96804ab449c037bd8c3"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__type_traits/is_integral.h",
+        "bytes": 3249,
+        "sha256": "1519de36ca5d6edf62871b2c080a91065f460ea48e6af38daeb5b1aaa9865d86"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/__type_traits/remove_cv.h",
+        "bytes": 1092,
+        "sha256": "76d2bcf641580f423c25d50b16088ee8cb880d20f80a511f1ffe03483035b7cf"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/cstring",
+        "bytes": 3720,
+        "sha256": "10b4706bcd146b141389fa8952dd496e685883b40a0ff5e4b76304be459ca9ba"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/stdio.h",
+        "bytes": 3894,
+        "sha256": "d45aa558595b463846f22d137eea6cda32b50805c393ecccd731b54bd13edf5d"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/stdlib.h",
+        "bytes": 4820,
+        "sha256": "9c4f5e0b45402e668facad3a0e0531c8f6b6aac99fad4cdc07d9aa83f6489d9c"
+      },
+      {
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/include/c++/v1/string.h",
+        "bytes": 4361,
+        "sha256": "9e6f3b3d0a59f913f6a193b8689d3f77e7b23418dc124cfdeb8028eb7c1a5dfe"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_failed_cas_expected_and_d0/model.c",
+        "bytes": 15104,
+        "sha256": "f2a29b861f0f8794ffbb92cf0a43700a879332ae70e211837d7dab7ea3675a7c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_failed_cas_expected_and_d0/model.bin",
+        "bytes": 72360,
+        "sha256": "acb07896fe931b326368b654595b60070d7eee2d8b11ae8b9f08a362f745f3ae"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_gather_interval_values_fr0/model.c",
+        "bytes": 15122,
+        "sha256": "1c6c1df04aae0de3545510153edb0930a6bc26e2fac9e6a03cf473a3fc8de584"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_gather_interval_values_fr0/model.bin",
+        "bytes": 72072,
+        "sha256": "9a1390625a8363ef8f5df05886ab785e1760cd16fc97cfbb7879ddab7a09e32e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_get_tile_size_never_suppl0/model.c",
+        "bytes": 35800,
+        "sha256": "1620e973db3d73c5a8a936a488b7b2b84004d48576ef0483f301acdbe0c4c58f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_get_tile_size_never_suppl0/model.bin",
+        "bytes": 73224,
+        "sha256": "577a65461cc04da17d9c6bf75fcc806d56d85abc1f49a2a8a143af99045680f1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_get_tile_size_never_suppl1/model.c",
+        "bytes": 35817,
+        "sha256": "f3fdff71da3e2410d2a68c1b64576b95ff2571827dfc870456dcbf0bcb858615"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_get_tile_size_never_suppl1/model.bin",
+        "bytes": 73256,
+        "sha256": "3831d7f220b959a4a275452d0f9553fc94b7c48cccb96b216696aafee7d8bc22"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_global_tile_ownership_rej0/model.c",
+        "bytes": 14876,
+        "sha256": "17e0477348247cb9451bde43115f9b448a5aecbcfe37efc75eeb938208151069"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_global_tile_ownership_rej0/model.bin",
+        "bytes": 51800,
+        "sha256": "24de774a7f3cfc796e97e7b7cf3e17c980b51bd1d02b23110e717e4288a178d1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_arithmetic_skips0/model.c",
+        "bytes": 31480,
+        "sha256": "969871bf1c61c068fed919b70cfea7c47b4d53d6cc70c1e0b65433f9553eda7d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_arithmetic_skips0/model.bin",
+        "bytes": 73512,
+        "sha256": "4992a965a576d6308aa994470b182c44a638aa5965b6c77f09430302ef31b644"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_arithmetic_skips1/model.c",
+        "bytes": 31481,
+        "sha256": "3b46a2f73cf3500d1327d5072cbd1ffb4102b0b34c4bd4053c0606f8d1329bf2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_arithmetic_skips1/model.bin",
+        "bytes": 51976,
+        "sha256": "bc840f21d43def341b77bd5d3e7c3211d6cffcf463362e590a34f9161fc2a230"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_rmw_preserves_un0/model.c",
+        "bytes": 56385,
+        "sha256": "fe4d79bf52ae495e59db5af516fbc880f517aec1a5accf9fd6bf4d669257c359"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_rmw_preserves_un0/model.bin",
+        "bytes": 93992,
+        "sha256": "56b553c1f3a42726a15275fb4aa42568a5ced0ae2ebe63977a763d648dcaf5d1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_rmw_preserves_un1/model.c",
+        "bytes": 56411,
+        "sha256": "2f1419609e2b7f1a57886be1ba0379d0442c88570c2e78f75c4bdaa6c05efb3a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_inactive_rmw_preserves_un1/model.bin",
+        "bytes": 94200,
+        "sha256": "0e45e5b5813d7435e269be0bd7c9e99d6dfa496ead459971db57c489518adae8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo0/model.c",
+        "bytes": 32746,
+        "sha256": "6271ff52591bf9b03e2733491cee135b63b36e6beba73a7390bb9a9125ff2f78"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo0/model.bin",
+        "bytes": 72296,
+        "sha256": "71a118b8faa1e7b950ff8df57faefda1900a3acb061f5cccccfb2a326ec5f0e1"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo1/model.c",
+        "bytes": 32746,
+        "sha256": "75af9eddb5e6ccc47750aa6e92177258ccddeb2d05fc9e40d109e2253b45a13a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo1/model.bin",
+        "bytes": 72408,
+        "sha256": "0c82e9f800fdda148843e8136f83595ae5dea6b822962c67a67ea84f79ad3b7a"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo2/model.c",
+        "bytes": 32746,
+        "sha256": "a41d5d0632464bcd07ce0dcd34c9234cbfada68ac8d170fb6a72013d19573629"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo2/model.bin",
+        "bytes": 72408,
+        "sha256": "414636709c2320b441890a595635f24b4d0535155188b24e7acccad5af213edd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo3/model.c",
+        "bytes": 32766,
+        "sha256": "aa15bf9710dcf486b72cba7f134ae5d52210380cd0c6b8afaa9e13206f52bcb4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo3/model.bin",
+        "bytes": 72520,
+        "sha256": "ae25ede6de85a67b24ae67c2c5f97c60d17ae4e1faa60e389bb5ccca464ed2b8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo4/model.c",
+        "bytes": 32764,
+        "sha256": "8f098211e30e337ee24dba19b0e1eba4537f173dc621ed92a76a01c6dcdd16ae"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo4/model.bin",
+        "bytes": 72520,
+        "sha256": "fd1592ed6727a2d541959d8d291726e75871d4a99994d03848184763b4b8adbf"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo5/model.c",
+        "bytes": 32764,
+        "sha256": "2cdbec16d0692c4323d258a43a0598aafc1f8c9f47eac3bbe5d2b3c96040c964"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_initialized_register_allo5/model.bin",
+        "bytes": 72520,
+        "sha256": "40982a5eaf8e98087b8c18942552a1fb15be720c79791295655aa26089382673"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_logical_region_assignment0/model.c",
+        "bytes": 29503,
+        "sha256": "8755e8e5c27f46a727b06d2e97fbbf62c05a12c4cf7fac43569b926252cd8327"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_logical_region_assignment0/model.bin",
+        "bytes": 73448,
+        "sha256": "796ac7ac7763042f68880b2ffba546ce17946dd9e13edd778218d743b1dd41aa"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_logical_region_assignment1/model.c",
+        "bytes": 29503,
+        "sha256": "78e8a723c62765e81493bc8084ebab453941786bbe3e543cc57e4ad3fe4365d2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_logical_region_assignment1/model.bin",
+        "bytes": 73448,
+        "sha256": "de8b5bcdf52bdb30807f8433faf64a7bf641bf38b032fd101e4890529d47f189"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_new_explicit_destination_0/model.c",
+        "bytes": 25900,
+        "sha256": "d5a3cf87126f2db97f3ec51f5c1f7ee1249881a29c5b47ee43e7631f4458e62e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_new_explicit_destination_0/model.bin",
+        "bytes": 72472,
+        "sha256": "ea58adac788918ddce9fc29310113bc890bdd1b88f02d382059960c4f0d1a9e5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_new_explicit_destination_1/model.c",
+        "bytes": 25900,
+        "sha256": "4d5c6ae4b476307b3e4b40b7db0fe146d7fd14fdb6e6101a9fb4afd3033866c4"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_new_explicit_destination_1/model.bin",
+        "bytes": 72472,
+        "sha256": "567339018fc99dbb9d3bd6e4b91edbd3e41c731c69504caea1533d4217359198"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_one_commands_distinct_sta0/model.c",
+        "bytes": 25709,
+        "sha256": "335e60825e342cf1e749f4745b71208615eee11160f51babad7f28d5ac14dc22"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_one_commands_distinct_sta0/model.bin",
+        "bytes": 72280,
+        "sha256": "49a2cb9c2e2cd077d1da4a706cc25dc1da94866e117b1c30de4705e05f4afbe0"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_one_commands_distinct_sta1/model.c",
+        "bytes": 25709,
+        "sha256": "aa31852fcdb866b664d569864d34ba6f9aa05932eb6be0671583bcde9f739870"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_one_commands_distinct_sta1/model.bin",
+        "bytes": 52072,
+        "sha256": "047fe464bfb40c09fedd732653e9e828a2ea56730c0977d764e1c0e2a57a6260"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_output_binding_and_cpu_vi0/model.c",
+        "bytes": 35825,
+        "sha256": "c3a34c0ef2c39797c1403789f515b5c9e1e1e3b39042bf6c4665fae2e14d4d1c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_output_binding_and_cpu_vi0/model.bin",
+        "bytes": 73192,
+        "sha256": "a639f9d4dd7196c2f109c517c36370eee1e03c03e9570a228e0abd2c7647e6d7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_output_binding_and_cpu_vi1/model.c",
+        "bytes": 35825,
+        "sha256": "c08a448ceaa09e206d9b9392f935035cf987ef69eb689270d86cce9edac0f637"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_output_binding_and_cpu_vi1/model.bin",
+        "bytes": 73288,
+        "sha256": "dcc9badc7aa8fccef6901ae1fe4cbf5ed8fdb0438207dcce4238d6334b755bda"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_pending_8byte_destination0/model.c",
+        "bytes": 25763,
+        "sha256": "14c1da8f859d678a5f9e2616cd77a6788c160e99d5b718ee1b2f2a833ad60b3d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_pending_8byte_destination0/model.bin",
+        "bytes": 72280,
+        "sha256": "c11ae0af24d6b3d3a3e2365f413dfda7e8374e51516d0cb1a4096dff6d08f38b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is0/model.c",
+        "bytes": 29295,
+        "sha256": "ce1254f76eac37570156249e17c999d6e5f1a5d874575119d76ca02994a85a0d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is0/model.bin",
+        "bytes": 51672,
+        "sha256": "6050a4c891c2808f06752cf976e045abfb477244251dd95ed1642abb83613842"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is1/model.c",
+        "bytes": 29277,
+        "sha256": "dd8d316add18e64db4b04e2b34d135f5bbafc93acc07e3f92dc8d7d61a14fe4c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is1/model.bin",
+        "bytes": 51160,
+        "sha256": "61272cc135c9d0e96b620cab1b20ba8ffc0eec4463c46fee502a8ba7eb3a38b0"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is2/model.c",
+        "bytes": 29292,
+        "sha256": "a79a563ff1c252a2eb4364824611bcb18704d3fe96dc7b86134bf6e489d7d1ae"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_raw_device_offset_wrap_is2/model.bin",
+        "bytes": 51160,
+        "sha256": "217f1fb330e567d040699d10de4b57144a88137988efbb89fab460d1f5ec8520"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_read_read_overlap_and_oth0/model.c",
+        "bytes": 26006,
+        "sha256": "6254cc88b145fb047903d25c0f02544d65605f965d65047751a4daad2875b3cc"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_read_read_overlap_and_oth0/model.bin",
+        "bytes": 73688,
+        "sha256": "4fe4dd49352e8d99baa3544c1c416f141c69734a031da869d7cc4a44c562a241"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers0/model.c",
+        "bytes": 25783,
+        "sha256": "9bc3bf243039fdc359b957b12e6888ad792022cdb39eb92abe555a0c9c7f8ceb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers0/model.bin",
+        "bytes": 72312,
+        "sha256": "43653b3fc19873c849a8f9a14935c68e92659315682757946d96374935e3d8b2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers1/model.c",
+        "bytes": 25783,
+        "sha256": "1f91f356762e55a1b019fbf30cd59fda03955ed9ed853005c9c2ba6d320a70b8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers1/model.bin",
+        "bytes": 72312,
+        "sha256": "72f11c6e2d686ca04a00973f43c793e33d65309da4f8e375e5d31a6b2cd13b0e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers2/model.c",
+        "bytes": 25783,
+        "sha256": "b2dea2adbf3aa06fbd5783d4dea2196b87e2546ab642789ce835a4c81e457c9d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_counter_wait_covers2/model.bin",
+        "bytes": 72200,
+        "sha256": "711e43a6c1432686011523532aaaa4a34752e1baee4c6cad5bb34aee57428e24"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_query_can_return_ei0/model.c",
+        "bytes": 25794,
+        "sha256": "11583b5f6cabc794e2e1177fac68fcc157f0ea8993cfe72446a2fd6c46fbcd24"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_query_can_return_ei0/model.bin",
+        "bytes": 72424,
+        "sha256": "aae79116fb4f127c9444f41d3506c6594844d2ae56ce6ac99dcaf6c292825164"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_query_can_return_ei1/model.c",
+        "bytes": 25794,
+        "sha256": "9c39fbc8e7efc8d00d944f0cca342b6e0f759263658f319f5c15301c9ec84bea"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_ready_query_can_return_ei1/model.bin",
+        "bytes": 72296,
+        "sha256": "8aff45b85f6123a293a08a2c312ca3a13e2f58ef1672b8ee7a677c9a003485af"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_assignment_uses_fi0/model.c",
+        "bytes": 29366,
+        "sha256": "594b45f8860c6fcd2dc99b977f80f6e9a71df7f465fc4d56e4e791137d2f9ba8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_assignment_uses_fi0/model.bin",
+        "bytes": 52632,
+        "sha256": "2cef3520140d32e3de98728da2960d0ae6aa3caf1f901e33a7709b61d371b94f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_assignment_uses_fi1/model.c",
+        "bytes": 29366,
+        "sha256": "7185a61b09ea4ca65256c3ceb099da990b32aa49a0fc3f7139c2fa7d5127e3b8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_assignment_uses_fi1/model.bin",
+        "bytes": 52632,
+        "sha256": "a0bfc3b603bc73aca3d578f534444531fabff7d11926f915bd4f770d120d406e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross0/model.c",
+        "bytes": 25918,
+        "sha256": "7ac88df3d3c51b178bcb2378f11c1eaad01867584a52611d0de7b90755f2a3b7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross0/model.bin",
+        "bytes": 73656,
+        "sha256": "d2c66e78dd067675d40af05e141574577267ac98db596c096d42d5b86c01f111"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross1/model.c",
+        "bytes": 25918,
+        "sha256": "5756562729b6f74402a83910c8ebc0f37f62a711abd9ac123c490fd74db528d9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross1/model.bin",
+        "bytes": 73656,
+        "sha256": "e9d08fe9de7ed9da6c169bc87a6d637ab1d3222fc4804e3f5583ea2d99f768e3"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross2/model.c",
+        "bytes": 25918,
+        "sha256": "f15605cecb8ede433d2e85d00a61ccd9c8994279a323053e2720053acf546a3e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_region_stall_covers_cross2/model.bin",
+        "bytes": 73656,
+        "sha256": "e9e75e5e3137840eff8af17370b73bb0b4dd5a78683025522090996914fa7118"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_does_0/model.c",
+        "bytes": 32915,
+        "sha256": "4d2682c6aa7f8e087f56dc45c1bbf1962a72dd92b1fd2374f11a170c9de2f0da"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_does_0/model.bin",
+        "bytes": 72568,
+        "sha256": "c6646fa69a0e8145dc579d639490f42551b33b6e30e61202548d54a4de33b6ed"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai0/model.c",
+        "bytes": 32631,
+        "sha256": "fa22de116c165417ad78b72c58c299ebf474e69f59620faccb4b76777c27b98f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai0/model.bin",
+        "bytes": 71848,
+        "sha256": "675a5e395bcc7696833fb4971d463a6375e1f79193c0ec00333b3e6fa4c54acd"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai1/model.c",
+        "bytes": 32645,
+        "sha256": "b48de91fffb81e6322a8a0a0b25c1eddb0e1eaf0c0ddffa5a7c43636c3ae1974"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai1/model.bin",
+        "bytes": 71944,
+        "sha256": "7f9c5db7741c422b885b3223f9c35c97b1a002ef6908a79421d41c490334d4e2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai2/model.c",
+        "bytes": 32659,
+        "sha256": "3ed56b84e31271e7f18d8fab54c59c0ed9ef5ba06fddc2d9d184477ed39a0a06"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_allocation_retai2/model.bin",
+        "bytes": 52744,
+        "sha256": "9d6a57f27024e115d59e3bbcc127157491e2f86a86e65877944e55e8cd81aaa7"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_cpu_read_of_pend0/model.c",
+        "bytes": 32895,
+        "sha256": "c4d3fa9df63da9d783fb7ae8b13380f41d356ae7af4f666360c779e8a146cd90"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_cpu_read_of_pend0/model.bin",
+        "bytes": 73768,
+        "sha256": "7782f953245a8ace5e2678157eeed5449181f0447e6ae949f4959fbd56e37614"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_cpu_read_of_pend1/model.c",
+        "bytes": 32895,
+        "sha256": "85123bd6fb0959595470ec2e28efe683981410ebb8bae0946d2376f85020f1de"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_cpu_read_of_pend1/model.bin",
+        "bytes": 74024,
+        "sha256": "2f3734b0d41bf7464ccf965078e04a3f58f0eef1eb9f6ed43d27379a99e36445"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_pair_views_share0/model.c",
+        "bytes": 32855,
+        "sha256": "7321605bb641c15c30a9942bd0f5773f0cc8241a1948c0409082d96d403d0b68"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_pair_views_share0/model.bin",
+        "bytes": 72728,
+        "sha256": "65a25136221151ebf249a112a29f9b1c108a57ca93fda767fc08f1d4cdf0b47d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_second_half_conf0/model.c",
+        "bytes": 32896,
+        "sha256": "ba57106063e81839c00db0467a71be635c44b4ac30235a7786ee63ab109b8f69"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_second_half_conf0/model.bin",
+        "bytes": 73448,
+        "sha256": "f7ad705ad82091f4ff7363a50a4c196d54e38cb65cd5e8accc44b450ad0a5f43"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_second_half_conf1/model.c",
+        "bytes": 32896,
+        "sha256": "d4085b7398b0b58cc54da2c215999b3543008cb08bca6a2ccc87dd1c20a6ab52"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_second_half_conf1/model.bin",
+        "bytes": 73336,
+        "sha256": "49c5eedaf509ad6f0469ded0485ef8ddc91ed66b2d6a80df484153b97e545e60"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_write_covers_a_p0/model.c",
+        "bytes": 32983,
+        "sha256": "fcc0305956959363769dcc5152f1f397495d9ab4f6846be4c69dd7fb1f64a4c8"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_register_write_covers_a_p0/model.bin",
+        "bytes": 74024,
+        "sha256": "ba180ffc285fc1dd1a19fb28b09b149b35478d4457d536897fd7fa00d1dd0086"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_rmw_publishes_old_value_o0/model.c",
+        "bytes": 46452,
+        "sha256": "b65de8d4705ac1fc0569569777dbd2d1086d9b4c3d974810fcae0ba1c1621f5b"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_rmw_publishes_old_value_o0/model.bin",
+        "bytes": 93352,
+        "sha256": "cd80974a0a87ce1e0cad3229730e8e298aaafba6b8657e0c00320e03533260d5"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_rmw_publishes_old_value_o1/model.c",
+        "bytes": 46452,
+        "sha256": "e7e38bd883dde128ba3550f947ba060f5752bd3d06662bcdee9f01c05ed80cec"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_rmw_publishes_old_value_o1/model.bin",
+        "bytes": 93352,
+        "sha256": "77c079893f268d2c1d47d40717b0ddc137ef68893d654bd4cfdeac7a27a6ef4f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_setup_preserves_source_in0/model.c",
+        "bytes": 49417,
+        "sha256": "b771870a05f8c4e2cb571861c85e4a9e92130b1ac20fae92403ce31429f17d29"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_setup_preserves_source_in0/model.bin",
+        "bytes": 53352,
+        "sha256": "54fd13c73749ff99e4ccaab1ac937fe1a164e7404d458eae3bf2d13190ebf778"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_setup_registers_six_real_0/model.c",
+        "bytes": 49703,
+        "sha256": "f483abe5fdf6ed23bea7b56238dfa191e2ff280b6bb947f4aa16fda8580685a0"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_setup_registers_six_real_0/model.bin",
+        "bytes": 54168,
+        "sha256": "792375746bc658ae0f4b3274d1906a4c8509fdb2e788d1f04d8b1f0631cd1605"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_size_metadata_is_not_limi0/model.c",
+        "bytes": 35871,
+        "sha256": "cf1ceaa2e4dab04461f93cbc75a3e4aa9496451086920a1f4a08b533bed4308d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_size_metadata_is_not_limi0/model.bin",
+        "bytes": 73384,
+        "sha256": "9cdbab5afad6b14f63150abc7ac7b4474f312f78d5c1d4151c9ed16f994f5d60"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_counter_reset_and_0/model.c",
+        "bytes": 49270,
+        "sha256": "6ed32ad3b4fe98f582ef4aea77f3df567b83ad9b72f078ff5998fd0c9effeecb"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_counter_reset_and_0/model.bin",
+        "bytes": 52968,
+        "sha256": "a89b6fca3db57089325e131d00bdba1b8e28de0bcb4a3980bc7e693faf54f72e"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_counter_reset_and_1/model.c",
+        "bytes": 49255,
+        "sha256": "0566623efd95f553c22c65207777bddaef415a442cbc9abe45f22d0979947908"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_counter_reset_and_1/model.bin",
+        "bytes": 52776,
+        "sha256": "7b27a38478cc57cee1357b0ba46c36cd8320d688cfc2658a1ec70040a1f10606"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_init_resets_counte0/model.c",
+        "bytes": 49948,
+        "sha256": "b0c0fac5a1d0f8e0d741cfc13b5507e2688bf591ba7854789c7bc3522036e151"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_init_resets_counte0/model.bin",
+        "bytes": 93016,
+        "sha256": "7b5a727d1fcd7d3d54310535b6a555bfd8be9726ae2330eaa12d90b2a0868404"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_tile_allocation_us0/model.c",
+        "bytes": 49572,
+        "sha256": "fc8c8197c6ae260e5637498bdb6fe3d41e56f18a3ef19e7fc89d177bec086980"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_source_tile_allocation_us0/model.bin",
+        "bytes": 73640,
+        "sha256": "1cb4fa01440dd64343770af7697956575ebb60cba93e011daa450fb9e611ab8d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_sparse_image_capacity_ref0/model.c",
+        "bytes": 35671,
+        "sha256": "70045ebf89baa1a6cf0006108d4322a9e4d9f25f0e23ec27475528a3ceb3c1e3"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_sparse_image_capacity_ref0/model.bin",
+        "bytes": 52920,
+        "sha256": "32fe87b5d31579b205c7f5c7ab5a991ac51bd177df4f368e7f0f7b2d4f7a952d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_effect_waits_for_ca0/model.c",
+        "bytes": 46654,
+        "sha256": "f8ca96a63538933deb6e0b45578a9285918afb394ffefef3ec6ec0dacfeeb9b2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_effect_waits_for_ca0/model.bin",
+        "bytes": 94040,
+        "sha256": "55993ccb0e2f17519777ba24fe6946dd81f045b5872527f99818a53a1bff02ab"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_hazards_cover_the_f0/model.c",
+        "bytes": 25838,
+        "sha256": "c950a884fb3b1b7497625f967ba2c5b45b2ed23c456356a32cce9b25e63cd47d"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_hazards_cover_the_f0/model.bin",
+        "bytes": 72072,
+        "sha256": "83d119361a2a9ec0f96066e46365b26e16c87d7fbf57a38172d045f26beaa7d9"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_hazards_cover_the_f1/model.c",
+        "bytes": 25838,
+        "sha256": "dd6ff22225bba151bb8a76870d4b53d2273eb791a2736f469bf7b45919d9b3c6"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_store_hazards_cover_the_f1/model.bin",
+        "bytes": 72072,
+        "sha256": "a8fa689d6f833cadc18d9a4dc562354bde05eef7b12e5f1fd827bca354f7dabc"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_the_issuing_thread_cannot0/model.c",
+        "bytes": 14828,
+        "sha256": "a82c973ce46229c66eb70e03c7c0d2f8c272db9c53b0d2afc852f953831b16af"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_the_issuing_thread_cannot0/model.bin",
+        "bytes": 52648,
+        "sha256": "6ea2447443d7f88c49a2bc3bdcbf46351c5bbaa3e2d062a7ae7dfe808769b00f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_tile_size_is_an_independe0/model.c",
+        "bytes": 35963,
+        "sha256": "6fa8dbf01e1f38d7a9bfbcb7befe42bef1825f26923edebb06440364854c378f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_tile_size_is_an_independe0/model.bin",
+        "bytes": 74216,
+        "sha256": "95544c11b8dfc3b286c8f7b1be93b3e1af1614f73d801fe6e6f2bf44da2b0c95"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_image_does_not_inve0/model.c",
+        "bytes": 35674,
+        "sha256": "8c686c125a755460a754b30a94882969be654cfae3a68abfb346c2f5be6f0604"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_image_does_not_inve0/model.bin",
+        "bytes": 71848,
+        "sha256": "fbe92e85606dc91de4176500aaa43bbd5dafb0b201072e72153393660a706b3f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_image_scalar_memcpy0/model.c",
+        "bytes": 35874,
+        "sha256": "4a9c2d573725892368a16482aa0fdc0338dbd80d2b1edc88de0996ca9009ee04"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_image_scalar_memcpy0/model.bin",
+        "bytes": 72712,
+        "sha256": "49229cd9b31cf33ca4cb80955b747790679c4ccdc1649a8682c5c4a0a4058d8f"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_tile_views_share_ph0/model.c",
+        "bytes": 36302,
+        "sha256": "6c7dabe4d376db60893a535ffff822a16ea010e350a18437a1b5d9ae8a2c0be2"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_typed_tile_views_share_ph0/model.bin",
+        "bytes": 72808,
+        "sha256": "416acefd8cf5b1c6dc2baa633554bef37e52147c6569cb2374a1cbf7bc6e1016"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_unresolved_indices_captur0/model.c",
+        "bytes": 15735,
+        "sha256": "bae0d8581646d0a659ee1114d8f7e17af944fa6c37f22d94f9bdf4214f867d0c"
+      },
+      {
+        "path": "/private/tmp/probata-t28-counted-ready-roles-green-guarded/pytest/test_unresolved_indices_captur0/model.bin",
+        "bytes": 72328,
+        "sha256": "3390b8869b7a23b2de9702f92bcff04bc61f695cdef7c240aa86d16192929e5f"
+      }
+    ]
+  },
+  "guards": [
+    {
+      "path": "/private/tmp/probata-t28-readiness-guard.py",
+      "bytes": 889,
+      "sha256": "da5adecbcba50769f301e98ff1666b54ecb784e38beac7cdf1b4571f602a1351"
+    },
+    {
+      "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+      "bytes": 695,
+      "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+    },
+    {
+      "path": "/private/tmp/probata-t28-readiness-role-repair/swdb-project/swdb/rss_watchdog.py",
+      "bytes": 7623,
+      "sha256": "8cbe4f803951cee080581862b69a0b7bf21e35c554dc5cfde4db7d9f2779e5b6"
+    }
+  ],
+  "retraction": "Historical86-control expectation that waiting on second half of8byte counted role does not cover is wrong and retracted. Historical source/raw/receipts unchanged;96native successor corrects rule. Dispatch-start half noncover remains correct.",
+  "scope": [
+    "Private prototype separates ready_roles from condition-inclusive hazards and explicit dispatch starts. Subset guard does not prove source role mapping; checked source wrappers remain required.",
+    "dxc_prepare convenience is condition-free only; condition consumers use precise counted mask. No production source call is admitted by these helper arguments.",
+    "Logical get_tile_ready remains prototype-only, with0/1 pending choices and no termination claim; actual source blocking read is distinct.",
+    "Native ASan/UBSan results are finite implementation controls, not formal proof or whole28 closure; expected RF alignmentUB exit1 retained in existing control.",
+    "Frozen selector21ed and installed0.1 remain unchanged; all ticket acceptance boxes stay open."
+  ],
+  "diagnostic_exclusion": {
+    "raw": "/private/tmp/probata-t28-counted-ready-roles-green",
+    "reason": "Initial sandboxed RSS watchdog sysctl permission failure; no resources result or qualifying control pass. Retained log/command only; resubmitted with approved RSS access."
+  }
+}

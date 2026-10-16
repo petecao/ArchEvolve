@@ -204,3 +204,45 @@ interface acceptance is claimed. The unchanged-source positive/wrong-enum
 coordinator-only actual runner is committed, awaiting independent review and
 root admission. A stateful size/readiness vertical follows this first gate.
 All whole-ticket acceptance boxes remain open.
+
+
+2026-10-16 readiness correction checkpoint (prototype only): the prior86-native
+packet incorrectly expected an8-byte role's second-half wait not to cover. That
+expectation is retracted; historical raw files and receipts remain unchanged.
+Pinned MAA dispatch/finish and SPD counter code count both halves of src/dst
+roles, excluding condition-only roles. The successor separates counted masks
+from condition-inclusive hazards and starting-ID dispatch stalls. Source-backed
+RED3fail/2pass becomes96native GREEN under ASan/UBSan. A checked source-role
+wrapper, actual stateful proof and full interface acceptance are still open.
+The real header supplies a blocking ready-range read returning1, not the logical
+demonic query used by this prototype. All acceptance boxes remain unchecked.
+
+## Conditional mathematical rank gate and selector publication — 2026-10-16 01:49 ET
+
+The whole-module rank gate at exact `9704c54b838863dd838d18a20dd0ade1633d5027` completed all eight actual Why3 calls. Core5, arbitrary-finite-delay family4 and all-false1 are directly Valid; the separate absent-premise negative retains native sat, healthy solver exit0, Why3 `Unknown` + LF + `(sat)` and expected proof-command exit2. Original actual entry/guard/root exit1 and complete=false remain immutable: the original offline reader rejected that formatting before recording its negative submission receipt. Independent cold reconstruction binds all11 actual submitted SMT inputs to complete emitted bytes and native outputs. [Actual and complete reviews](../evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [independent mathematical/context audit](../evidence/t28-rank-whole-independent-cold-review-20261016.md), [supplemental v3 cold audit](../evidence/t28-rank-whole-cold-audit-v3-20261016.md).
+
+The conditional result assumes a fixed trace and a mathematical rank nonnegative on future polls, strictly decreasing whenever not ready. All core assertion/variant/recursive-precondition/postcondition tasks and the acyclic four-post family were independently reviewed; no desired-result axiom or imported unconditional progress theorem is admitted. The family supports every mathematical n>=0, without a finite C-counter bound. It does not prove a device/environment supplies the rank or fairness premise. Separate pure formatting controls/cold audit repair only retained-output interpretation; no rerun or historical exit upgrade. Whole2.423s/147.25MiB, no resource/inspection/child failure; finite settlement limits retained. No MMIO/source-to-trace/public-composition/current0.2/full-ticket claim follows.
+
+Final source-selector freeze `21edecf2d8a06234290e06861b6724dc76dd346e` is published as an ancestor of integration `4bb53cd7`. [Independent review](../evidence/t28-selector-first-vertical-independent-review-20261016.md) accepted the original-main-TU certificate, exact ABI/callee/source pins, partial26-name/27-declaration fixture and refusal boundaries. Wrong-enum acceptance now rejects vacuous_pass and requires all smoke statuses valid (retained RED2/GREEN4 plus2 actual skips). The original68-pass/2-skip compiler/scripted receipt remains historical and unchanged. At this01:49 checkpoint external entry/admission remained pending; root subsequently reports node1G615 exact21ed launched01:51 ET and ended01:52:23 ET with actual guard exit1 before WP invocation: fixture method Z3/Alt-Ergo pins4.8.14/2.6.0 mismatch admitted Linux5.1.0/2.6.4. Source stayed clean and leases released; separate fixture metadata repair is pending. Launcher exit0 and the independent local JSON pretty-printer exit1 remain distinct. No actual selector proof result follows. No production current0.2 acceptance follows. Ticket28 remains claimed with whole-ticket boxes open.
+
+2026-10-16 actual-selector fixture repair checkpoint: after the historical21ed
+pre-WP version mismatch, the fixture now requires an explicit four-tool actual
+lineup from its coordinator, with missing/partial/duplicate/malformed inputs
+refused before fixture work. Only copied method version fields change; all
+production, installed0.1, source/model contracts, mandatory flags and backend
+runtime comparisons remain unchanged. The runner validates before compiler
+bootstrap and persists the map. RED19fail/1pass becomes28pass/2actualSKIP, plus
+three existing public compiler/stand-in regressions. A named exit99 public
+control pins the explicit Linux method versions and remains not_proven/tool_crash.
+No actual proof result or whole-ticket acceptance follows. See
+`evidence/t28-selector-explicit-lineup-controls-20261016.{json,md}`. Root owns a
+fresh reviewed clean-source actual gate; the old raw failure is unchanged.
+
+
+## Selector failure preserved; explicit fixture lineup prepared — 2026-10-16 02:00 ET
+
+The final495-check [cold failure audit](../evidence/t28-selector-prelaunch-failure-21edecf2-20261016.md) preserves exact21ed node1G615: zero WP proof records, wrong-enum unexecuted, Mac fixture Z3/Alt-Ergo4.8.14/2.6.0 mismatched Linux5.1.0/2.6.4. Guard exit1/23.6279450804s/1,743,654,912B, no OOM/timeout; launcher0 and the independent local pretty-print wrapper1 are distinct. The raw77 files/375,635B remain remote;202 physical/Git bootstrap modules,29 selected source pins, reviewed entry/tool/config/57-file stdlib and runtime identities match with zero errors. Three finite same-UID process observations and released leases are not universal absence. [Admission snapshot](../evidence/reviewed-t28-selector-v1-launch-21edecf2-20261015.json) retains its mutable lane-hash boundary and historical date; the later cold audit is the final failure/settlement record, not an upgrade to success.
+
+[Reviewed fixture repair](../evidence/t28-selector-lineup-independent-review-20261016.md) at executable source`770df40eeb5e3034862f61b79b6bcaad5fa620a7`, packaged in`b618b44c`, requires an explicit strict four-tool actual map before fixture/compiler provenance work. It changes only the copied method's four version fields, keeping normal production runtime matching, budgets, flags, source/contract and smoke/nonvacuity assertions unchanged. Missing/duplicate/partial/unknown/malformed input refuses; stand-in mode retains its old versions. Retained RED19fail/1pass becomes final28pass/2actualSKIP, with3 additional legacy controls;957 local reference pins including all919 producer physical references rehash without mismatch. These are pure/compiler/named-stand-in controls, not a new actual proof.
+
+[External entryv3 static review](../evidence/t28-selector-entry-v3-independent-review-20261016.md) passes with30 exact770 source pins, reviewed Linux map and unchanged nested output/collection/runtime/guard checks. Exact770 remains the prospective actual producer; no new run is admitted by this checkpoint and no old21ed result is relabeled. Root owns fresh preflight, dispatch and independent settled actual audit. Status remains claimed; no installed current0.2, stateful-source or whole-ticket acceptance.
