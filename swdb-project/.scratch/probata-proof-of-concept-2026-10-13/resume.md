@@ -244,7 +244,7 @@ lanes after the active jobs; every launch still needs fresh all-lease/resource
 admission. Historical weights are not a fresh ETA or success guarantee.
 [Selected schedule and exact commands](evidence/t27-selected-safe-shard-schedule-20261015.json).
 No full ticket or method success is claimed from these checkpoints. This chat's
-30-minute heartbeat stays active; last full table 20:49 ET, next due 21:19 ET.
+30-minute heartbeat stays active; last full table 21:19 ET, next due 21:49 ET.
 Root live readback at 19:50 ET: both lanes held (580/604), exact detached source
 identities unchanged, active solver processes on both profiles, load 2.81 and
 12 GiB free on `/data1` / 94 GiB on `/data`. No third evaluation job.
