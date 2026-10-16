@@ -1,0 +1,139 @@
+{
+  "actual_solver_or_compiler_run": false,
+  "allocator_boundary": {
+    "path": "prototype/25-closed-caller-allocator-boundary-20261016.md",
+    "sha256": "b0ad34942bc21989d28025e390263cef0904744f8e3bb8c0973f9a3e8a49dc45"
+  },
+  "assumption": "Under the user delegation, choose an isolated canonical packet prepare/check seam; no shared adapter/lowering/setup integration.",
+  "caller_acceptance": false,
+  "created": "2026-10-16 ET",
+  "design": "Retain release/end_automatic explicitly. Preserve all incoming live object identity, contents and initialization; hide only fresh private identity/history. Capture scalar before cleanup. Conditional local states and allocator effects still require actual source/Typed and existing TCB discharge.",
+  "existing_body_and_caller_packet_counts_changed": false,
+  "independent_review": {
+    "spec": {
+      "decision": "PASS for isolated pending preparation",
+      "path": "evidence/t25-private-lifetime-frame-spec-review-20261016.md",
+      "sha256": "7e9c0a6356adb6c098a86158dede51dd8aab4efcc4e905f6faf79938d489043b"
+    },
+    "standards": {
+      "decision": "PASS for isolated pending preparation",
+      "path": "evidence/t25-private-lifetime-frame-standards-review-20261016.md",
+      "sha256": "4ab56478c3f17c3021dec2468548bb0185fce27f37ecef787fad0ddbcd6b7ee5"
+    }
+  },
+  "inert_mathematical_packet": {
+    "bytes": 26042,
+    "external_children": 0,
+    "files": [
+      {
+        "bytes": 6782,
+        "path": "manifest.json",
+        "sha256": "70bedf4ecb49e993719f4be3a480fcc1d29ab8e877a58a4b2cc427b9f706c346"
+      },
+      {
+        "bytes": 955,
+        "path": "obligations/000-t25_private_entry_reflexive.c",
+        "sha256": "5998b73632c81c97aeaa2cf383315be526a94570f248dca029fb79447e871f78"
+      },
+      {
+        "bytes": 1072,
+        "path": "obligations/001-t25_private_automatic_frame.c",
+        "sha256": "6324aed8153be9f5a7dda9b66a5d72a78c53b0228a9ed40a68327acdef8b0571"
+      },
+      {
+        "bytes": 1112,
+        "path": "obligations/002-t25_private_allocation_frame.c",
+        "sha256": "dadf3cf983f34461dcb084c0bf88de22cb7bf3409ba7e0cbb8b50febcdc7e489"
+      },
+      {
+        "bytes": 1078,
+        "path": "obligations/003-t25_private_integer_store_frame.c",
+        "sha256": "8b22188dcff983758ad4a738bd95638623454e5c9cf777babaa3f931fcc558e0"
+      },
+      {
+        "bytes": 1102,
+        "path": "obligations/004-t25_private_pointer_store_frame.c",
+        "sha256": "be07d38896958af227b41eda58cf677fa4da599aab3b7a7c13de423be98b481a"
+      },
+      {
+        "bytes": 1060,
+        "path": "obligations/005-t25_private_release_frame.c",
+        "sha256": "dd64ff3d4f99544ed3e206e48a426a468757239f5c8a44d1800cdc642652e810"
+      },
+      {
+        "bytes": 1072,
+        "path": "obligations/006-t25_private_automatic_end_frame.c",
+        "sha256": "aede762faf9c388a1525d9bfef95a69814908ca5ce2e81101a34c6922d29e703"
+      },
+      {
+        "bytes": 1146,
+        "path": "obligations/007-t25_private_cleanup_observation.c",
+        "sha256": "8b0041e29c2a2cff5cfccea2c0ff47d9c705f6d6a21801f5c7e2c1ffcf45bdb6"
+      },
+      {
+        "bytes": 1463,
+        "path": "obligations/008-t25_private_cleanup_exists_scalar.c",
+        "sha256": "3862ad897bdaa760a0a78e97cf2752daaba13e747d134c5cd8aad4395fa5bebb"
+      },
+      {
+        "bytes": 814,
+        "path": "prelude.acsl",
+        "sha256": "46f111a50bc3228be9f8fbb3a68b8bd04f3d85a71844f255625719170c30a0bc"
+      },
+      {
+        "bytes": 8386,
+        "path": "theory/heap_reallocation.mlw",
+        "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+      }
+    ],
+    "path": "prototype/25-private-lifetime-frame-20261016/inert-reviewed-working-source",
+    "project_imports": 0,
+    "source_context": "reviewed working module bytes; unchanged c978 heap theory; no source/caller bridge or actual run"
+  },
+  "obligations": 9,
+  "proof_acceptance": false,
+  "source_commit_context": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "source_pins": [
+    {
+      "bytes": 8197,
+      "path": "swdb/vector_reallocation_private_frame.py",
+      "sha256": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da"
+    },
+    {
+      "bytes": 3086,
+      "path": "tests/test_vector_reallocation_private_frame.py",
+      "sha256": "57201957c346f832b7f63bd48d92714171ff876beb3a062d6bae905ff389be5e"
+    },
+    {
+      "bytes": 3704,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_private_frame.py",
+      "sha256": "6cf188aba554c575d41a9bfb407784f258fedb498241e78d85f96d7478d6b287"
+    },
+    {
+      "bytes": 8386,
+      "path": "swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    }
+  ],
+  "source_typed_bridge_established": false,
+  "tests": [
+    {
+      "external_native_attempts": [],
+      "failed": 5,
+      "passed": 0,
+      "path": "/private/tmp/probata-resume-20261016-t25-private-frame-red/result.json",
+      "raw_bytes": 3086,
+      "sha256": "88f7c7e3ec31e40cfa1b89f6f16962c168fa116ff89deea3b8105e84ca067aad",
+      "stage": "red"
+    },
+    {
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 5,
+      "path": "/private/tmp/probata-resume-20261016-t25-private-frame-green/result.json",
+      "raw_bytes": 149228,
+      "sha256": "e0c035f27893fae4cc027d4edf450205eda1ea8a67200e654a60c08ad947a55b",
+      "stage": "green"
+    }
+  ]
+}

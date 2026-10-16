@@ -1,0 +1,125 @@
+{
+  "actual_parser_or_native_validation": false,
+  "adapter_or_setup_changed": false,
+  "caller_acceptance": false,
+  "check_launch": "unconditional refusal until actual source/runtime/lifetime bridge is implemented",
+  "created": "2026-10-16 ET",
+  "independent_spec_review": {
+    "bytes": 5330,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-no-growth-source-view-spec-review-20261016.md",
+    "sha256": "f88bcc81a7b257a18bc911fefd8054e0d2a707b775c955993d3e9ebda0a7ef07"
+  },
+  "independent_standards_review": {
+    "bytes": 3310,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-no-growth-source-view-standards-review-20261016.md",
+    "sha256": "aad6d15ff19cb0376f42e710ae73485c33a877985ada15d3940f2cabfe754d6c"
+  },
+  "inverse_original_lowering_exact": true,
+  "model_acceptance": false,
+  "owned_sources": [
+    {
+      "bytes": 10196,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_caller_view.py",
+      "sha256": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413"
+    },
+    {
+      "bytes": 5434,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_caller_view.py",
+      "sha256": "b2bec084f1f3f9386b3e81a39c2772473b4ee7560e439143aea99a87c002f3c1"
+    }
+  ],
+  "preserved": [
+    "complete construction/fill model body",
+    "actual captured alias",
+    "guarded scalar capture before cleanup",
+    "reachable destructor and scalar return",
+    "unreachable fallthrough destructor",
+    "all original dependency models",
+    "original three caller clauses"
+  ],
+  "public_dispatcher_changed": false,
+  "review_preparation_correction": "C ABI assertions now include int4/size_t8/pointer8 alignments as well as sizes/struct offsets; this closes all numeric alignment values already declared in the coordinate metadata. Final5pure controls pass.",
+  "runs": {
+    "alignment_complete_final_green": {
+      "errors": [],
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 5,
+      "pin": {
+        "bytes": 3874,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-view-green-v4/result.json",
+        "sha256": "e6ec6618fb920ac5bc35f230839ab8c403d9ef1a417127af5abada6a59b94c0d"
+      }
+    },
+    "body_drift_red": {
+      "errors": [
+        "Failed: DID NOT RAISE <class 'swdb.vector_reallocation_caller_view.Refused'>"
+      ],
+      "external_native_attempts": [],
+      "failed": 1,
+      "passed": 4,
+      "pin": {
+        "bytes": 4981,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-view-red-v3/result.json",
+        "sha256": "d56bd72e1600581db7e083d1f0dcb2d2e479c03eec3584857bd79206e9668fb1"
+      }
+    },
+    "final_green": {
+      "errors": [],
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 5,
+      "pin": {
+        "bytes": 3874,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-view-green-v3/result.json",
+        "sha256": "58415bec1a288635f815c98977c6fbb926921a088d4b052cab3e88720cc05b7c"
+      }
+    },
+    "initial_green": {
+      "errors": [],
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 4,
+      "pin": {
+        "bytes": 3746,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-view-green/result.json",
+        "sha256": "b3979cf567e52e1d7fa964cafbcf9f36f0ae5db16dad779e51fbee0c2fa408f4"
+      }
+    },
+    "initial_red": {
+      "errors": [
+        "ImportError: cannot import name 'vector_reallocation_caller_view' from 'swdb' (/private/tmp/probata-resume-20261016-t25-caller-view-red/swdb/__init__.py)",
+        "ImportError: cannot import name 'vector_reallocation_caller_view' from 'swdb' (/private/tmp/probata-resume-20261016-t25-caller-view-red/swdb/__init__.py)",
+        "ImportError: cannot import name 'vector_reallocation_caller_view' from 'swdb' (/private/tmp/probata-resume-20261016-t25-caller-view-red/swdb/__init__.py)",
+        "ImportError: cannot import name 'vector_reallocation_caller_view' from 'swdb' (/private/tmp/probata-resume-20261016-t25-caller-view-red/swdb/__init__.py)"
+      ],
+      "external_native_attempts": [],
+      "failed": 4,
+      "passed": 0,
+      "pin": {
+        "bytes": 6940,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-view-red/result.json",
+        "sha256": "59358a53c48fb53cc3f73d30319fcc70e395a2577530c4a130a70385d1d0e1af"
+      }
+    }
+  },
+  "runtime_requirements": [
+    "Typed+Var+Machine",
+    "MemTyped/MemVar/MemLoader/Ctypes/Cint/Factory exact selected sources",
+    "actual generated task-term and address-identity correspondence pending"
+  ],
+  "scope": "Source-derived no-growth diagnostic C view; actual runtime bridge and public admission remain unsupported.",
+  "seam": "prepare/check/check_launch with retained actual no-growth parser-output replay; ordinary test fixture separately invokes selected real lowerer when admitted",
+  "second_red_capture_history": "Initial red-v2 correctly hit pytest Failed for accepted extra reserve effect but harness did not catch pytest BaseException. Corrected result collector reran unchanged production/test bytes at red-v3 and recorded4pass1fail. No formal/source-runtime inference follows.",
+  "source_runtime_design_note": {
+    "bytes": 4260,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-var-caller-bridge-20261016.md",
+    "sha256": "178729b5ff08b34acef7b786ef8aea53dc62d0ce270b740578255bc96f969f99"
+  },
+  "source_transform": [
+    "replace the exact source reserve call with exact whole original model body instantiated on pure unchanged arguments",
+    "insert named no-growth assertion as a proof duty, never as assumption",
+    "add target ABI static assertions; record distinct Typed logical-cell and native byte coordinates"
+  ],
+  "ticket_closure": false
+}
