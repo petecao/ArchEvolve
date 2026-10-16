@@ -1,52 +1,65 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 01:24 ET.
+Updated: 2026-10-16 01:49 ET.
 
 ## Current state
 
-Updated: 2026-10-16 01:24 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Updated: 2026-10-16 01:49 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
 Implementation remains active on `codex/probata-resume-20261015`, published
-`65bb4b1f`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
+`4bb53cd7`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
 other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Run 26 remains UNPROVEN. Helper generation v4 passed cold review for all 19 bodies and 245 goals/352 properties. A separate helper proof now runs at exact `7930f3a1` under the reviewed v2 packet: 900s outer/880s inner, one 8 GiB worker, wp-par1 and full three-prover 30s portfolio. | Await final guard settlement and independent complete ordinary/smoke/dependency audit. Early snapshots and journals are provisional; no helper, TD, full C RTE or counted-provider acceptance. [Admission](evidence/t07-helper-stage2-v2-admission-20261016.json), [static review](evidence/probata-t07-helper-stage2-independent-static-review-v2-20261016.md). |
-| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All 84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
-| **28 claimed** | Setup/size prototypes and rank syntax/type gate are accepted only in scope. Four read-only Why3 metadata calls exited 0; the original entry/guard exit 1 is preserved. A corrected offline Rc reader passes 25 pure controls and a 483-check cold audit, accepting all ten expanded prover variants and driver closures as metadata only. | Review a separate whole-module rank VC recipe with complete positive and absent-premise negative tasks. No solver/version/VC/proof result follows from metadata; source/IEEE/caller correspondence and current 0.2 remain open. [Actual and correction](evidence/t28-rank-config-actual-and-reader-correction-20261016.json), [cold audit](evidence/probata-t28-rank-config-cold-audit-v1-20261016.md). |
+| **07 claimed** | Run26 remains UNPROVEN. The separate exact7930 helper run completed: 209/212 ordinary goals Valid, three open; all33 smoke rows have fresh external nonvalid outcomes and raw passed=true. All19 bodies/245 goals/352 properties/31 init properties remain inventoried. Whole383.135s/1261.625MiB sampled RSS, exit1 from open goals; four transient AccessDenied events recovered, final inspection failure null. | Review the separate fresh out-slot/source-domain repair and its source-equivalence map before any new admission. Alignment, caller/allocator correspondence, TD and full C RTE remain open. [Settled actual](evidence/t07-helper-stage2-v2-settled-actual-20261016.json), [independent cold review](evidence/t07-helper-stage2-v2-independent-cold-review-20261016.md). |
+| **25 claimed** | Pair `1278f2d9` and public heap CEA are accepted in scope. Fresh original count constructor at exact `bb7170ac` also passes independent cold review: one record, 27 targets, 36 ordinary Valid plus one smoke; 1,031 checks/342 references with zero mismatch. All84 tasks are identical universal-value streams or exact zero specialization. | Continue separate growth/receiver/storage ownership and caller work. No generic caller, production-store, formal C++ or whole-ticket acceptance follows. [Count cold review](evidence/t25-count-ctor-cold-review-bb7170ac-20261016.md), [heap cold review](evidence/t25-public-heap-cold-review-cea5652b-20261016.md). |
+| **28 claimed** | Exact9704 mathematical rank gate has core5/family4/all-false1 directly Valid and an independent negative with native sat/Why3 Unknown LF(sat). All11 submitted tasks match emitted bytes; independent complete context/variant audit accepts only the conditional mathematical theorem. Original entry/guard exit1 remains unchanged; pure v3 reader correction needs no rerun. Source-bound selector21ed is published through4bb; root reports node1G615 ended01:52:23 ET, refusing before WP launch because fixture method tool-version pins mismatch Linux; no proof result. | Review the separate fixture metadata repair and fresh entry/source freeze; retain the original pre-WP refusal. No hardware fairness, source-to-trace/public composition, current0.2 or whole28 claim. [Rank actual and reviews](evidence/t28-rank-whole-actual-and-cold-acceptance-20261016.json), [selector review](evidence/t28-selector-first-vertical-independent-review-20261016.md). |
 | **24 / 27 / 36 resolved** | Published29709232/af10a946/8b0c2e27 with scoped acceptance; ticket36 retains its historical checker identity. | Preserve exact evidence for final integration review. |
 
 Root owns actual admissions: at most two remote measurements, one per socket,
-and one actual Mac verifier. Count-only node 0 generation 587 naturally released
-at 01:10:04 ET after 371.990 seconds under the whole guard; source remained exact
-and clean. Its final finite observation also records node 1 and legacy leases
-released, with process-inspection limits retained. Pair generation 586 and heap
-generation 614 remain completed. No new remote job is admitted by this checkpoint.
-The count run used one 8 GiB-RSS worker and an actual monitored 8 GiB raw-output
-allowance, not a filesystem quota. The [budget clarification](evidence/t25-count-ctor-admission-budget-clarification-20261016.md)
-retains the earlier 1 GiB proposal; all 614 raw files remain remote for readers.
+and one actual Mac verifier. Count-only node0 generation587 naturally released
+at01:10:04 ET after371.990 seconds; its final finite observation also records
+node1 and legacy leases released, with inspection limits retained. Pair586 and
+heap614 remain completed. At the01:49 table checkpoint no selector job was admitted. Root subsequently
+reports node1G615 exact21ed launched01:51 ET (launcher0) and ended01:52:23 ET
+(actual guard1), before any WP launch: fixture method Z3/Alt-Ergo pins4.8.14/2.6.0
+mismatched admitted Linux5.1.0/2.6.4. The separate admission audit reports202
+physical/Git module checks with zero errors; source remained clean and root
+reports all leases released. These are admission/refusal observations, not a
+selector proof result. The local pretty-print wrapper's separate exit1 came from
+worktree-add text prefixed before launcher JSON; no relaunch occurred. A separate
+fixture metadata repair is pending. Recheck live state before another dispatch.
 
-The separate Mac helper v2 proof is active following the 01:21 ET root preflight
-with no competing selected verifier, both shared leases absent and 74% memory
-free at that finite observation. It freshly compiles both observer/report modules
-inside the same 900s/8 GiB guard and retains every obligation; no early artifact
-is final proof evidence. Inner 880s and wp-par1/30s solver limits remain unchanged.
-Root alone owns guard/child settlement and final cold review; no provider/TD or
-automatic later stage is admitted.
+The helper v2 run and short mathematical rank run have both settled under their
+own exact source/runtime identities. Helper guard383.135s retained four transient
+AccessDenied events; rank guard2.423s/147.25MiB had no inspection/resource/child
+failure. Finite root settlement sweeps record no selected verifier or shared
+lease, not universal current process absence. No automatic later stage is admitted.
 
-The rank type gate remains syntax/type acceptance only. Expanded-config collection
-retains its original exit 1 after a multiline Rc-reader failure; a separately
-corrected pure reader accepts the four captured exit-0 metadata observations
-without rerunning collection. No solver, version probe or rank VC proof follows.
-Recheck live leases, processes, memory and storage before every dispatch.
+The helper's three open goals concern constructor domain initializedness,
+flush copy_start initializedness and the std_copy byte-offset bound. Passive
+[triage](evidence/t07-helper-three-open-source-triage-20261016.md),
+[sound repair design](evidence/t07-helper-sound-repair-options-20261016.md) and
+[alignment/caller scope](evidence/t07-source-model-alignment-caller-domain-20261016.md)
+retain the missing full VC-task boundary. A separate output-slot repair is underway;
+no new implementation/proof acceptance is included here. Unknown/timeout smoke
+outcomes with passed=true mean no detected contradiction, not proved satisfiability.
+
+Rank acceptance is conditional on a fixed trace admitting a nonnegative,
+strictly decreasing mathematical rank when not ready. The arbitrary-n family
+establishes consistency without a finite C-counter ceiling; it does not supply
+hardware fairness or a source correspondence theorem. Original actual entry and
+guard exit1, complete=false and missing original negative-submission receipt are
+preserved. Independent cold reconstruction binds that negative to retained native
+sat output and actual submitted bytes; supplemental v3 is a pure formatting-reader
+correction, not a rerun or historical exit upgrade.
 
 Raw remote evidence stays on `/data`; source moves by Git with full protocolv3
-layouts. No sparse proposal, draft3, final ticket59 freeze or held-out campaign is
-admitted. Every result keeps its exact source/checker/runtime; runtime-dependent
-translator composites are not source-only identities. No completed checkpoint
-resolves the three frontier tickets.
+layouts. Every result retains its exact source/checker/runtime; runtime-dependent
+translator composites are not source-only identities. No sparse proposal, draft3,
+final ticket59 freeze or held-out campaign is admitted. No frontier ticket resolves.
 
-[Current resume](resume.md). Last full status table:01:19 ET; next:**01:49 ET**.
+[Current resume](resume.md). Last full status table:01:49 ET; next:**02:19 ET**.
 
 ## Historical actual checkpoints
 
