@@ -1,0 +1,63 @@
+{
+  "verdict": "FIX before composed approval",
+  "base": "af10a946aae2a4026dc3346d521bb2e2a6b40133",
+  "source_files": [
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD23.md",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/METHOD23.md",
+      "sha256": "404a7895bc8d91830906c02ed5b4109380a4aa8f0f223eebcc5a9cf93ee85a50"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/edit_loop.py",
+      "sha256": "e44e81711abec69e3ae5366e6ad18c6a7cfb158715eb7130d871f12d995946bd"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/edit_tool_mcp.py",
+      "sha256": "0970401be5a77bd0a3b08c509bd3a1ef358d186e671cd1394fd03756cfdc3b1b"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/goal_print.py",
+      "sha256": "084256c407e9e61bef9bec4f3510f1fa75fa09be253b0a88bab5ce964c582979"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/terminal_plan.py",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/terminal_plan.py",
+      "sha256": "80199f5995ebd1f95ef0e623693d1812e5cd5f1ce329d969fd121d461f3eaa4d"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/wp_run.sh",
+      "sha256": "97130fcc3d087961484cddaad7b4ab798f7cf00920eab8b94ecdb64a285f9f1f"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/Probata_task_export.ml",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/Probata_task_export.ml",
+      "sha256": "992ac39507b60bb41e75fa1e67a1133fc7b56bb6ab20f87c4556b1ba06181134"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/baseline_start.py",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/baseline_start.py",
+      "sha256": "ded474019ae803ec7de76d4bada211abb6e8b279254bd0fa85e7fead48d182fb"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_baseline_start.py",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/test_baseline_start.py",
+      "sha256": "cdbffec4624395777af5f0d0d80c768cf81b8d68755d433a89ce4826315a5161"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-method23/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_exact_tasks.py",
+      "snapshot": "/private/tmp/probata-t07-method23-static-initial-source/test_exact_tasks.py",
+      "sha256": "646cba94c0461e2defd5f6762c25de058bb27a092404079f66a556b9bc807e0b"
+    }
+  ],
+  "findings": [
+    "Baseline retained verification must bind current expected out/run identity rather than derive old self-consistent identity from best.dir.",
+    "show_goal must censor result after observed proof deadline, including compiler/generation/cleanup elapsed time.",
+    "Machine task pages must revalidate retained actual generation source/headers/copied exporter after generation and on cache reuse."
+  ],
+  "tests_executed": false,
+  "actual_tools_executed": false
+}

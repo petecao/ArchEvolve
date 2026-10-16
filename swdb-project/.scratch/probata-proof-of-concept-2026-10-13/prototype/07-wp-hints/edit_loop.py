@@ -35,6 +35,7 @@ import focused_probe as F
 import run_report as R
 import terminal_plan as T
 import provider_origin as O
+import baseline_start as B
 
 HERE = Path(__file__).resolve().parent
 OPS_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["ops", "notes"],
@@ -318,7 +319,7 @@ def tool_state(out, r, a, t0, mode, allowed):
         "baseline_passed": sorted(L.BASELINE_PASSED), "two_phase": E.TWO_PHASE[0], "show_goal": a.show_goal,
         "live_file": str(state / "lockwait_live.json") if (a.budget_deadline or a.bounded_debt or a.staged_induction) else None,
         "bounded_debt": a.bounded_debt, "staged_search": E.STAGED[0], "method20": a.design_probes,
-        "method22": a.terminal_full30, "proof_search_stop_min": T.PROOF_STOP_MIN if a.terminal_full30 else None,
+        "method22": a.terminal_full30, "method23": a.fresh_baseline_start, "proof_search_stop_min": T.PROOF_STOP_MIN if a.terminal_full30 else None,
         "clock_kind": L.CLOCK_KIND[0], "clock_info": S.clock_info() if a.staged_induction else None}, indent=1))
     return state
 
@@ -355,7 +356,7 @@ def budget_s(t0):
 def final_replay(out, r, best, a, t0, final_mode):
     if a.terminal_full30:
         try:
-            T.verify_incumbent(best)
+            T.verify_incumbent(best, expected_out=out)
         except (RuntimeError, OSError, ValueError) as exc:
             return {"proven": False, "outcome": str(exc)}
     d = L.run_dir(out, f"final-r{r}", (Path(best["dir"]) / L.UNIT).read_text())
@@ -405,7 +406,10 @@ def main():
     ap.add_argument("--dev-no-codex", action="store_true", help="DEV ONLY: stop after the seed round")
     ap.add_argument("--dev-skip-round0", action="store_true", help="DEV ONLY: no no-hint run (no REGRESSION marks)")
     ap.add_argument("--terminal-full30", action="store_true", help="method22: zero-seed Codex-only paging/complete receipts; terminal full30 plus negative inside60")
+    ap.add_argument("--fresh-baseline-start", action="store_true", help="method23: exact machine task reader and fresh full baseline empty diagnostic initialization")
     a = ap.parse_args()
+    if a.fresh_baseline_start and not a.terminal_full30:
+        ap.error("method23 fresh-baseline-start requires terminal-full30")
     if a.terminal_full30 and (not a.diagnostic_baseline10 or a.seeds or a.frame_filter or a.examples):
         ap.error("method22 requires diagnostic-baseline10 and forbids seeds, frame-filter and examples")
     if a.design_probes and not a.staged_induction:
@@ -462,6 +466,8 @@ def main():
         files += ["run_report.py", "test_baseline_plan.py"]
     if a.terminal_full30:
         files += ["terminal_plan.py", "provider_origin.py", "test_terminal_plan.py"]
+    if a.fresh_baseline_start:
+        files += ["baseline_start.py", "Probata_task_export.ml", "test_exact_tasks.py", "test_baseline_start.py", "test_inspection_retry.py"]
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "ghost_hint_guard": H.GHOST_HINT_RULE,
@@ -519,6 +525,12 @@ def main():
             "all_provider_receipts_required": True, "completion_receipt_required": True,
             "timed_admission_boundary": "after required accounting and summary/completion receipt persistence; final informational logging afterward",
             "allocation_sufficiency": "unproven; chosen prospectively"}
+    if a.fresh_baseline_start:
+        meta["method23"] = {"id": B.METHOD, "exact_machine_goal_tasks": True,
+            "initial_incumbent": "fresh full baseline TDStep/global-lemma non-smoke subset; no second round",
+            "cross_mode_formula_equivalence_claimed": False,
+            "confound": "Baseline mode/status projection replaces initial round-s; scheduling and initial diagnostic pass-set provenance change.",
+            "all_final_obligations_mandatory": True}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     # Round 0 is outside the legacy budget; methods18/19 count the fresh baseline.
     # Own run, or reused from an
@@ -575,48 +587,58 @@ def main():
         L.LOCKWAIT[0] = 0.0
     E.COUNTED_S[0] = lambda: budget_s(t0)
     E.SEARCH_REMAINING_S[0] = lambda: (T.PROOF_STOP_MIN if a.terminal_full30 else a.budget_min - a.final_reserve_min) * 60 - budget_s(t0)
-    seeds = []
-    if a.seeds:
-        seeds = FS.seeds(L.STANDIN_DIR / L.UNIT)
-    if a.frame_filter:
-        tag = hashlib.sha256((HERE / "edit_loop.py").read_bytes()).hexdigest()[:12]
-        seeds += [{"id": f"seedF{i}", "anchor": "global", "kind": k, "text": t,
-                   "provenance": f"seed: edit_loop.py FRAME_FILTER {tag} (generic)"} for i, (k, t) in enumerate(FRAME_FILTER, 1)]
-    L.log(out, f"seed round: {len(seeds)} seeds; counted minutes {budget_s(t0) / 60:.2f}")
-    rec = {"round": "seeds", "started": L.now(), "hints": seeds}
-    chk = {}
-    d = L.precheck(out, "seeds", standin, seeds, chk,
-                   **({"remaining_s": E.SEARCH_REMAINING_S[0]} if (a.bounded_debt or a.staged_induction) else {}))
-    if d is None:
-        rec.update(outcome="seeds rejected by the proof hint check", check=chk)
+    if a.fresh_baseline_start:
+        best, initial = B.initialize(out)
+        E.save_best(out, best)
+        rec = {"round": "baseline-initial", "hints": [], "diagnostic_origin": initial,
+               "outcome": f"fresh full baseline projection: {best['n_open']} of {best['n_goals']} diagnostic goals open; no round launched",
+               "elapsed_min": round(budget_s(t0) / 60, 2)}
         history.append(rec)
         (out / "history.json").write_text(json.dumps(history, indent=1))
-        raise SystemExit("seed check failed: " + json.dumps(chk)[:2000])
-    if (a.bounded_debt or a.staged_induction) and E.SEARCH_REMAINING_S[0]() <= 0:
-        raise SystemExit("seed round exhausted search time; no provider launch")
-    wlog, ws = L.verifier(out, d, mode, timeout=(max(1, E.SEARCH_REMAINING_S[0]()) if (a.bounded_debt or a.staged_induction) else 3600),
-                          extra=(out / "round-cache", a.round_timeout))
-    if a.staged_induction:
-        try:
-            rec["checked_run"] = S.check_run(d, wlog, round_mode=True)
-            if E.SEARCH_REMAINING_S[0]() <= 0:
-                raise RuntimeError("method19 checked run refused: seed completed after search deadline")
-        except RuntimeError as exc:
-            rec.update(outcome=str(exc), proven=False)
+        L.log(out, rec["outcome"] + f" at {rec['elapsed_min']} min")
+    else:
+        seeds = []
+        if a.seeds:
+            seeds = FS.seeds(L.STANDIN_DIR / L.UNIT)
+        if a.frame_filter:
+            tag = hashlib.sha256((HERE / "edit_loop.py").read_bytes()).hexdigest()[:12]
+            seeds += [{"id": f"seedF{i}", "anchor": "global", "kind": k, "text": t,
+                       "provenance": f"seed: edit_loop.py FRAME_FILTER {tag} (generic)"} for i, (k, t) in enumerate(FRAME_FILTER, 1)]
+        L.log(out, f"seed round: {len(seeds)} seeds; counted minutes {budget_s(t0) / 60:.2f}")
+        rec = {"round": "seeds", "started": L.now(), "hints": seeds}
+        chk = {}
+        d = L.precheck(out, "seeds", standin, seeds, chk,
+                       **({"remaining_s": E.SEARCH_REMAINING_S[0]} if (a.bounded_debt or a.staged_induction) else {}))
+        if d is None:
+            rec.update(outcome="seeds rejected by the proof hint check", check=chk)
             history.append(rec)
             (out / "history.json").write_text(json.dumps(history, indent=1))
-            raise SystemExit(str(exc)) from None
-    ar = L.assess_round(d, wlog)
-    best = {"hints": seeds, "failing_goals": ar["failing_goals"], "n_open": len(ar["failing_goals"]),
-            "n_goals": ar["n_goals"], "dir": str(d), "from": "seeds", "history": ["seeds"]}
-    E.save_best(out, best)
-    rec.update(round_wp={"exit": ws["exit_code"], "wall_s": ws["wall_s"], "peak_rss_mb": ws["peak_rss_mb"],
-                         "n_goals": ar["n_goals"], "n_failing": best["n_open"], "log_sha256": ws["log_sha256"]},
-               outcome=f"seed round: {best['n_open']} of {ar['n_goals']} goals open",
-               elapsed_min=round(budget_s(t0) / 60, 2))
-    history.append(rec)
-    (out / "history.json").write_text(json.dumps(history, indent=1))
-    L.log(out, rec["outcome"] + f" at {rec['elapsed_min']} min")
+            raise SystemExit("seed check failed: " + json.dumps(chk)[:2000])
+        if (a.bounded_debt or a.staged_induction) and E.SEARCH_REMAINING_S[0]() <= 0:
+            raise SystemExit("seed round exhausted search time; no provider launch")
+        wlog, ws = L.verifier(out, d, mode, timeout=(max(1, E.SEARCH_REMAINING_S[0]()) if (a.bounded_debt or a.staged_induction) else 3600),
+                              extra=(out / "round-cache", a.round_timeout))
+        if a.staged_induction:
+            try:
+                rec["checked_run"] = S.check_run(d, wlog, round_mode=True)
+                if E.SEARCH_REMAINING_S[0]() <= 0:
+                    raise RuntimeError("method19 checked run refused: seed completed after search deadline")
+            except RuntimeError as exc:
+                rec.update(outcome=str(exc), proven=False)
+                history.append(rec)
+                (out / "history.json").write_text(json.dumps(history, indent=1))
+                raise SystemExit(str(exc)) from None
+        ar = L.assess_round(d, wlog)
+        best = {"hints": seeds, "failing_goals": ar["failing_goals"], "n_open": len(ar["failing_goals"]),
+                "n_goals": ar["n_goals"], "dir": str(d), "from": "seeds", "history": ["seeds"]}
+        E.save_best(out, best)
+        rec.update(round_wp={"exit": ws["exit_code"], "wall_s": ws["wall_s"], "peak_rss_mb": ws["peak_rss_mb"],
+                             "n_goals": ar["n_goals"], "n_failing": best["n_open"], "log_sha256": ws["log_sha256"]},
+                   outcome=f"seed round: {best['n_open']} of {ar['n_goals']} goals open",
+                   elapsed_min=round(budget_s(t0) / 60, 2))
+        history.append(rec)
+        (out / "history.json").write_text(json.dumps(history, indent=1))
+        L.log(out, rec["outcome"] + f" at {rec['elapsed_min']} min")
     if a.staged_induction:
         if E.SEARCH_REMAINING_S[0]() <= 0:
             raise SystemExit("seed round exhausted search time; no provider launch")
@@ -744,6 +766,8 @@ def main():
                "focused_calls": sum((h.get("tool") or {}).get("focused_calls",0) for h in history),
                "design_calls": sum((h.get("tool") or {}).get("design_calls",0) for h in history),
                "debt_events_sha256": L.sha(out / "debt-events.jsonl") if (out / "debt-events.jsonl").exists() else None}
+    if a.fresh_baseline_start:
+        summary["method23"] = True
     if a.terminal_full30:
         summary.update(method22=True, provider_usage=provider_usage, provider_origin=origin_audit, negative=negative)
     for h in history:

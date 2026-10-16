@@ -194,7 +194,7 @@ def show(out, best, goal_name, tag, timeout_s=600):
     return head + "\n\n".join(parts), rec
 
 
-def show_paged(out, best, goal_name, tag, *, offset=0, task_sha256=None, timeout_s=600):
+def show_paged(out, best, goal_name, tag, *, offset=0, task_sha256=None, timeout_s=600, machine_ids=False):
     """Method22: bounded pages of one fresh active task, never arbitrary paths.
 
     Created: 2026-10-15 ET. A page receipt pins the complete selected task and
@@ -218,6 +218,8 @@ def show_paged(out, best, goal_name, tag, *, offset=0, task_sha256=None, timeout
     candidate_sha = hashlib.sha256(json.dumps(best["hints"], sort_keys=True).encode()).hexdigest()
     headers = {h: L.sha(L.STANDIN_DIR / h) for h in L.HEADERS}
     identity = {"source_sha256": source_sha, "candidate_sha256": candidate_sha, "headers_sha256": headers}
+    if machine_ids:
+        identity["exporter_source_sha256"] = L.sha(L.HERE / "Probata_task_export.ml")
     key = hashlib.sha256(json.dumps([identity, goal_name], sort_keys=True).encode()).hexdigest()
     cache = Path(out) / "goal-pages"
     cache.mkdir(exist_ok=True)
@@ -227,25 +229,71 @@ def show_paged(out, best, goal_name, tag, *, offset=0, task_sha256=None, timeout
             return refused("task identity is stale or no first page was requested")
         d = L.run_dir(Path(out), f"goal-{tag}", merged)
         sel = selection(goal_name, g.get("kind") or H.goal_kind(goal_name))
-        log, ws = L.verifier(Path(out), d, "print", timeout=timeout_s, extra=(sel,))
-        selected = pick_exact(blocks(log.read_text(errors="replace")), g)
-        if ws["exit_code"] != 0 or not selected:
+        log, ws = L.verifier(Path(out), d, "print-exact" if machine_ids else "print", timeout=timeout_s, extra=(sel,))
+        machine_receipt = {}
+        if ws["exit_code"] != 0:
             return refused("fresh WP task generation failed")
-        task = "\n\n".join(header + "\n" + body for header, body in selected)
+        if machine_ids:
+            index = d / "wp-task-index.json"
+            try:
+                def unique_object(pairs):
+                    result = {}
+                    for key, value in pairs:
+                        if key in result:
+                            raise ValueError("duplicate task-index key")
+                        result[key] = value
+                    return result
+                payload = json.loads(index.read_text(), object_pairs_hook=unique_object)
+                tasks = payload["tasks"]
+                if (payload.get("schema") != "probata-wpo-tasks-v1" or not isinstance(tasks, dict)
+                        or not tasks or any(not isinstance(v, str) or not v.strip() for v in tasks.values())
+                        or (d / "Probata_task_export.ml").read_bytes() != (L.HERE / "Probata_task_export.ml").read_bytes()):
+                    raise ValueError("invalid task index or exporter source")
+                generated_inputs = {L.UNIT: source_sha, **headers,
+                                    "Probata_task_export.ml": identity["exporter_source_sha256"]}
+                if any(L.sha(d / name) != digest for name, digest in generated_inputs.items()):
+                    raise ValueError("generated task inputs changed")
+                task = tasks[goal_name]
+                machine_receipt = {"machine_goal_id": goal_name,
+                    "generated_inputs_sha256": generated_inputs,
+                    "task_index_sha256": L.sha(index), "task_index": str(index),
+                    "exporter_binary_sha256": L.sha(d / "task-export.cmxs")}
+            except (OSError, ValueError, KeyError, TypeError):
+                return refused("exact machine task is missing or malformed")
+        else:
+            selected = pick_exact(blocks(log.read_text(errors="replace")), g)
+            if not selected:
+                return refused("fresh WP task generation failed")
+            task = "\n\n".join(header + "\n" + body for header, body in selected)
         artifact.write_text(task)
-        receipt = {**identity, "goal": goal_name, "dir": str(d), "selection": sel,
+        receipt = {**identity, **machine_receipt, "goal": goal_name, "dir": str(d), "selection": sel,
                    "log_sha256": ws["log_sha256"], "log": str(log),
                    "full_task_sha256": L.sha(artifact), "full_task_artifact": str(artifact),
                    "total_chars": len(task)}
         metadata.write_text(json.dumps(receipt, indent=1))
-    receipt = json.loads(metadata.read_text())
-    if any(receipt.get(k) != v for k, v in identity.items()) or receipt.get("goal") != goal_name:
-        return refused("stored task candidate identity mismatch")
-    if L.sha(artifact) != receipt["full_task_sha256"] or L.sha(Path(receipt["log"])) != receipt["log_sha256"]:
-        return refused("retained task artifact changed")
-    if task_sha256 is not None and task_sha256 != receipt["full_task_sha256"]:
-        return refused("requested task hash differs from active task")
-    task = artifact.read_text()
+    try:
+        receipt = json.loads(metadata.read_text())
+        if any(receipt.get(k) != v for k, v in identity.items()) or receipt.get("goal") != goal_name:
+            return refused("stored task candidate identity mismatch")
+        if L.sha(artifact) != receipt["full_task_sha256"] or L.sha(Path(receipt["log"])) != receipt["log_sha256"]:
+            return refused("retained task artifact changed")
+        if machine_ids:
+            generated = Path(receipt["dir"])
+            expected_inputs = {L.UNIT: source_sha, **headers,
+                               "Probata_task_export.ml": identity["exporter_source_sha256"]}
+            if (generated.parent.resolve() != Path(out).resolve() or not generated.name.startswith("goal-")
+                    or Path(receipt["task_index"]) != generated / "wp-task-index.json"
+                    or Path(receipt["log"]) != generated / "print-exact.log"
+                    or receipt.get("generated_inputs_sha256") != expected_inputs
+                    or any(L.sha(generated / name) != digest for name, digest in expected_inputs.items())
+                    or L.sha(Path(receipt["task_index"])) != receipt["task_index_sha256"]
+                    or L.sha(generated / "task-export.cmxs") != receipt["exporter_binary_sha256"]):
+                return refused("retained machine task index, inputs or exporter changed")
+        if task_sha256 is not None and task_sha256 != receipt["full_task_sha256"]:
+            return refused("requested task hash differs from active task")
+        task = artifact.read_text()
+    except (OSError, ValueError, KeyError, TypeError):
+        return refused("retained task artifact is missing or malformed")
     if offset > len(task):
         return refused("offset exceeds task length")
     end = min(len(task), offset + MAX_CHARS)
