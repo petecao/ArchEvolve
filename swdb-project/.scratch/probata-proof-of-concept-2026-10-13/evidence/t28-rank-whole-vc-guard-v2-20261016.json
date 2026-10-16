@@ -1,0 +1,39 @@
+{
+ "cmd": [
+  "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+  "/private/tmp/probata-t28-rank-whole-vc-entry-v2-20261016.py",
+  "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/component"
+ ],
+ "exit_code": 1,
+ "wall_s": 2.4229361666948535,
+ "peak_rss_mb": 147.25,
+ "cap_gb": 8.0,
+ "killed_by_watchdog": false,
+ "timed_out": false,
+ "queue_timed_out": false,
+ "timeout_s": 900.0,
+ "queue_timeout_s": 30.0,
+ "lock_wait_s": 0.0006648749695159495,
+ "runner_pid": 57561,
+ "clock": "continuous_monotonic",
+ "clock_info": {
+  "kind": "continuous_monotonic",
+  "implementation": "mach_continuous_time",
+  "includes_sleep": true,
+  "numer": 125,
+  "denom": 3
+ },
+ "log": "/private/tmp/probata-t28-rank-whole-vc-v2-9704c54b-20261016/guard.log",
+ "inspection_events": [],
+ "inspection_failure": null,
+ "primary_inspection_failure": null,
+ "cleanup_inspection_failure": null,
+ "cleanup_inspection_failures": [],
+ "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+ "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+ "unconfirmed_children": [],
+ "error": null,
+ "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+ "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+ "finished": "2026-10-16 01:36:36 EDT"
+}
