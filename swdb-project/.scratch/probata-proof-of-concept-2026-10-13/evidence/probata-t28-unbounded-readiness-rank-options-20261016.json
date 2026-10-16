@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-16 ET",
+  "scope": "read-only source/documentation audit; no executable verification",
+  "recommendation": "separate conditional WhyML rank VC with explicit environment rely premise and checked source simulation",
+  "source_pins": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/cfgAnnot.ml",
+      "sha256": "b28d95a0f032d23b6bb56908fc30c19fecf8a265d6d0536ebfe9703d68e55602"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicCompiler.ml",
+      "sha256": "8ee6edaed1854351826c357b6e54a74a80275fc3ec895adc643bb5f83ec5e2c0"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/RefUsage.ml",
+      "sha256": "b3b881dde39be5e08b2b5ff635f50a3670c7f6d2cf3fd19e7bdc380efe9361a9"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ref.mlw",
+      "sha256": "f54413bf62b69bbfb996bd7d6a8098c18e4663f95f788623f729dd8eb5a60bea"
+    }
+  ],
+  "references": [
+    "https://www.frama-c.com/download/frama-c-acsl-implementation.pdf",
+    "https://why3.org/doc/syntaxref.html"
+  ],
+  "confirmed_mutable_math_ghost_in_stock_wp": false,
+  "formal_result": null
+}

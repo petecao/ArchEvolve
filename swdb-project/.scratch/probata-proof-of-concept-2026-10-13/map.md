@@ -5,25 +5,35 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-16 00:19 ET. **Active: 35 resolved / 25 ready-for-agent / 3 claimed.**
-Integration: `codex/probata-resume-20261015`, published `6533b819`; base `yanrujhou_main`.
-Active frontier: **07, 25, 28**. Each actual evaluation retains exact source/checker/runtime.
-Current lowerer file SHA256 remains `e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c`;
-composite translator digests also depend on runtime context. Earlier actual records are unchanged.
-[Current resume](resume.md). [All63 statuses and dependency graph](ticket-status-20261015.md).
+Updated: 2026-10-16 00:40 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Implementation remains active on `codex/probata-resume-20261015`, published
+`52d89469`, based on `yanrujhou_main`. The eligible frontier is **07, 25, 28**;
+other unresolved tickets retain their dependencies. [All 63 statuses](ticket-status-20261015.md).
 
-- **24 / 27 / 36 resolved:** published29709232 / af10a946 / 8b0c2e27; scoped independent acceptance and immutable raw/source records retained. No broad rerun required now.
-- **07 claimed:** run26 remains UNPROVEN42.22counted minutes; final397-goal replay stopped on native proc_environ SystemError, no complete positive/smoke/negative verdict. Method24 guard repair is published with60independent controlled passes, not actual readmission. Root took over two-file source-domain repair after worker tool interruptions: correct full-storage beginp/endp restored against exact DX100 headers, unsigned modular arithmetic/common-allocation/initialization/capacity-history domains added. Frozen bytes are undergoing static re-review; a finite no-hint helper/RTE component precedes a counted run. [Run26](evidence/t07-counted-run26-20261015.json), [source audit](evidence/t07-source-feasibility-review-20261015.md).
-- **25 claimed:** full42capabilityv5 at exacte56/node1G613 finished23:42:11ET:42/42expectations,37positive globalValid/fournegative global nonproof, numeric10ordinaryValid+onepassing smoke. Independent508physical-reference and132SMTtask closure accepted; no production c_model record or generic caller acceptance. Public heap-model core31798 is frozen for independent review,40controls+oneactualskip, no actual run yet. First six-record pair profile launched00:17:48ET on node0G586 at exact1278:7500whole/7620outer,one worker8GiB,public7200,198physical/GitmodulechecksPASS. No pair result yet. [Full42](evidence/t25-full42-cold-closure-review-e56c62dd-20261015.md), [pair entry review](evidence/probata-t25-pair-entry-static-review-v3-20261016.md), [pair admission](evidence/reviewed-t25-pair-public-v1-launch-1278f2d9-20261015.json).
-- **28 claimed:** complete interface/typed routing/trust/checker prerequisites published; numeric648924, state739ed, actionsac899, region13225 and typed byte-image45e163 now published. Typed image has53nativeASan/UBSancontrols and independent source/artifact review. Inactive byte-preservation successor6533b819 has58nativecontrols and independent review. Source geometry/ABI/pointer routing/full wrappers/IEEE and current0.2 public proof remain open. [Typed image](evidence/t28-tile-byte-image-controls-20261016.json), [merger review](evidence/probata-t28-tile-image-merger-review-20261016.md). Conditional readiness termination uses an explicit newly declared finite-progress premise, pending59humanfreeze; [decision](evidence/t28-finite-progress-decision-20261016.md).
+| Ticket | Current evidence | Next gate |
+| --- | --- | --- |
+| **07 claimed** | Run 26 remains **UNPROVEN** after 42.22 counted minutes; its final replay stopped on a native process-inspection error. Guard repair passed 60 controls. The source-domain successor is published at `20764a3e`; executable C is unchanged and six corrected native checks passed. Helper generation v2 produced 245 goals / 352 properties, then refused undefined `pointer_comparable` and retained unsupported RTE limits. | Replace the unsupported redundant domain predicate soundly, audit alignment/function-pointer coverage, then repeat the finite no-prover component. No new counted run or helper proof is admitted. [Source review](evidence/probata-t07-source-domain-successor-independent-review-20261016.md), [retained generation](evidence/t07-helper-stage1-v2-retained-20261016.json). |
+| **25 claimed** | Pair profile at exact `1278f2d9` passed: four original bodies and safe caller prove; wrong-field caller retains one ordinary timeout with passing smoke. Independent audit: 2,359 checks, zero errors; six records and exact dependencies/runtime match. Full heap capability at `e56c62dd` is independently audited. The corrected public heap route is published at `66e49ae6`; actual two-model evaluation runs at exact `cea5652b` on node 1, generation 614. | Complete and cold-audit 27 constructor + 11 destructor targets and two persisted records. Constructor record persisted and schema-valid: all 27 targets, 36 ordinary goals and one smoke check pass. Destructor is active; the cold audit continues. Generic callers, other members/types and whole-ticket acceptance remain open. [Pair acceptance](evidence/probata-t25-pair-actual-audit-20261016.md), [heap admission](evidence/reviewed-t25-public-heap-v1-launch-cea5652b-20261015.json). |
+| **28 claimed** | Interface/typed routing/trust/checker prerequisites are published. Numeric, command history, deferred actions, region mapping, byte-image, inactive preservation and register prototypes have scoped reviews; latest register slice has 75 native controls. Setup successor has 81 controls and is published after review; its negative-ID refusal is a software guard before invalid source indexing. No current 0.2 or public formal acceptance. | Finish source call/ABI mapping and wrappers, IEEE relation, and explicit conditional progress composition. A separate mathematical-rank artifact is being prepared without actual tool execution. [Register review](evidence/t28-register-merger-review-20261016.md), [progress premise](evidence/t28-finite-progress-decision-20261016.md). |
+| **24 / 27 / 36 resolved** | Published `29709232` / `af10a946` / `8b0c2e27`, with scoped independent acceptance and immutable source/raw records retained. Ticket 36 acceptance remains tied to its historical checker. | Preserve evidence for final integration review; no broad rerun required now. |
 
-Root owns actual admissions: max two remote measurements, one per socket, and one actual Mac verifier.
-Mac actual slot is free; node0 has pair profileG586; node1 last full42G613 released.
-Fresh00:17ET preflight: allthreeleases initially released, no selected verifier/compiler processes,
-99.92% aggregate CPUidle,32.1GiB/data1 and68.7GiB/data free before newsourcecheckout.
-Recheck leases/resources for each dispatch. Full protocolv3 layouts remain required; no sparse
-proposal deployed. Raw/source remain retained for audit/resumption. No draft3/final59/held-out
-campaign admitted. Last full status00:19ET; next00:49ET.
+Root owns actual admissions: at most two remote measurements, one per socket,
+and one actual Mac verifier job. Node 1 runs the public heap profile under a
+4,500-second whole guard, 4,620-second outer cap and one 8 GiB worker; public
+profile 4,200 seconds, at most 1,800 seconds per model. Its 201 physical/Git module
+checks pass. Node 0 pair generation 586 naturally released at 00:22:33 ET.
+The two Mac generation attempts ended without external provers; no Mac actual job
+is currently admitted. Recheck leases, processes and resources before every dispatch.
+
+At 00:32 ET, before the new CEA checkout, all three remote leases were released,
+no selected verifier/compiler process was observed, CPU was 99.98% idle, and
+free space was 30.6 GiB on `/data1`, 68.7 GiB on `/data`. Raw remains on `/data`;
+source moves by Git. Full protocol v3 layouts are required. No sparse proposal,
+draft 3, final ticket 59 freeze or held-out campaign is admitted. Every actual
+record keeps its exact source, checker and runtime; runtime-dependent translator
+digests must not be treated as source-only identities.
+
+[Current resume](resume.md). Last full status table: 00:19 ET; next: **00:49 ET**.
 
 ## Historical remote checkpoints
 
