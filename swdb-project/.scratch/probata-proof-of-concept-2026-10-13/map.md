@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 20:19 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 20:49 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
@@ -20,10 +20,11 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   unchanged MAA caller witness (6 ordinary + 5 smoke Valid); seed remains not_proven.
   Continuation at `23933f8a` runs on node 0
   generation 580: 12 retained rows + 24 fresh rows (15 WP / 9 deliberate refusals).
-  Twelve fresh rows independently pass: MAA/DXC/Ring/classes/OMP pairs plus remaining
-  summary dependencies. Eight caller pairs + 14 models + 3 summaries = 33/36
-  qualifying actual WP rows. Allocation pair, dedicated bounds negative and
-  nine lifetime refusals remain. Full continuation is pending. Finite evidence stays finite.
+  All36 actual target rows independently pass their criteria: nine caller pairs,
+  14models,3summaries,1dedicated bounds negative. Five of nine deliberate lifetime
+  refusals are accepted; four remain, then ended resources/source-after and
+  combined eleven-item closure review. Full continuation remains pending.
+  Finite evidence stays finite.
   [Qualified std](evidence/t24-std-object-domain-v2-20261015.json),
   [continuation launch](evidence/reviewed-t24-continuation-launch-23933f8a-20261015.json).
 - **27:** Current negative profile accepted 13/13 at exact `0e7f2327`: all 13
@@ -31,8 +32,9 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   bounded/native 35/35 and repaired capacity 3/3 remain accepted. First current
   safe CPU case proves 58 ordinary + 19 smoke goals; store-source proves 90 ordinary
   + 29 smoke; A-rest4 is independently accepted with 316 ordinary + 100 smoke
-  goals, all Valid, 6,027-reference / 925-file audit clean. Six safe units remain.
-  B1 runs three cases on node 1 generation 605 from 20:17:15 ET; B2 three queued.
+  goals, all Valid, 6,027-reference / 925-file audit clean. B1three also accepted:
+  189ordinary+67smoke Valid,3,447references/897files clean, naturalrelease20:43:22 ET.
+  Three safe units remain. FinalB2 runs on node1 generation606 from20:44:49 ET.
   These are balanced 3 + 3
   partitions. Original A5/B6 jobs are unlaunched; selected disjoint union is
   1 + 4 + 3 + 3 = 11. Historical `717` safe evidence is separate.
@@ -63,6 +65,13 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   accepted Codex candidate has 102 open / 5 records; second proposal active.
   Four goal pages safely refused on real call-header formats; two later pages
   succeeded. This availability gap is retained; frozen method/source unchanged.
+  **Run25 ended20:38:30 ET /39.48counted minutes, UNPROVEN.** Complete natural
+  provider usage and all12Codex-origin records pass independent audit. Full30
+  positive resource-aborted after383.62s on a recent same-UID candidate's
+  environAccessDenied (ownership/cause unknown), no complete goal report; negative
+  not run. This was not a60minuteoverrun. Independent poststop scans pass and
+  Macslot is released. Frozen798/source34 unchanged; compact closeout pending.
+  Controlled prospective guard/reader work only; no fresh actual admission.
   [Launch identity and preflight](evidence/t07-run25-launch-20261015.json).
 - **36:** Dependency-gated by 27. Its 122 focused controls exclude 13 actual-WP
   cases. Drafts 1/2 remain immutable; final method freeze and held-out gates remain.
