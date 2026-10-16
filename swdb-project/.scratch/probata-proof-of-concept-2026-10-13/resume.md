@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 20:53 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 21:03 ET. **Implementation is active under the user's ongoing approval.**
 Integration `codex/probata-resume-20261015` is based on `yanrujhou_main` at `d94d629b`.
 Audited run23 documentation is published at `6dc94905`; reviewed method21 prototype
 is published at `14c2a298`. Only `swdb/c_lowering.py`
@@ -19,8 +19,8 @@ Drafts 1/2 remain immutable. No draft 3 or final production freeze exists.
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 07 / `ticket07` | Run 25 ended UNPROVEN at 20:38:30 ET / 39.48 counted minutes. Complete usage and exact 12-record Codex origin pass. Full30 positive aborted on an inspection denial, no complete report; negative not run. Closeout published at `07e9c08f`. | Frozen `798e9bb3`; all 34 source pins retained. Independent three-scan poststop audit passes; both leases absent, Mac slot free. Controlled method23 guard/reader diagnosis only; no fresh actual admission. |
-| 24 / `ticket24` | Nine caller pairs, 14 models, 3 summaries and dedicated bounds negative independently accepted: 36/36 actual WP rows. Six published lifetime refusals have no verifier launch/goals. Original std gap and qualified domains remain explicit. | Node 0 generation 580 continues at `23933f8a`: 12 reused + 21 fresh rows accepted. Three lifetime refusals remain, then ended resources/source-after and combined 36-actual/9-refusal/11-item review. Ticket remains claimed. |
-| 27 / `ticket27` | Negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. CPU + A-rest4 + B1's three cases accepted: 8/11 fresh safe units. B1 proves 189 ordinary + 67 smoke, retaining 37 init/29 RTE; full audit clean. | Node 1 generation 606 runs final B2, started 20:44:49 ET: three_reads/value_gather/footprint. Disjoint union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Three safe units pending. |
+| 24 / `ticket24` | Nine caller pairs, 14 models, 3 summaries and dedicated bounds negative independently accepted: 36/36 actual WP rows. All nine lifetime refusals have no verifier launch/goals. Original std gap and qualified domains remain explicit. | Node 0 generation 580 naturally released at 20:58:07 ET, exact `23933f8a`: 12 reused + 24 fresh rows accepted; resources/source-after pass. Combined 36-actual/9-refusal/11-item cold review pending. Initial root process scan sees the read-only cold reader and unrelated visibility denials; no universal cleanup claim. |
+| 27 / `ticket27` | Negative 13/13, bounded/native 35/35 and repaired capacity 3/3 accepted. CPU + A-rest4 + B1 + B2 three_reads accepted: 9/11 fresh safe units. Three_reads proves 112 ordinary + 31 smoke, retaining 18 init/27 RTE; prefix audit clean. | Node 1 generation 606 runs final B2, started 20:44:49 ET; gather and footprint remain. Disjoint union 1 + 4 + 3 + 3 = 11; original A5/B6 unlaunched. Whole-B2 and 62-case closure remain pending. |
 | 36 / dependency-gated | 122 compiler/scripted controls pass; 13 actual-WP cases excluded. | Waits on 27; runtime fallback research remains prospective. |
 
 At17:43:14 ET node0 generation572 released after the standard caller safe timeout;

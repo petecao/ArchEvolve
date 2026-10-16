@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 20:53 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 21:03 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; audited run 23 is published at
 `6dc94905`; method21 prototype merged at `14c2a298`. Remote actual jobs retain
 exact `0e7f2327` and `23933f8a` source freezes; production lowerer SHA256
@@ -18,12 +18,15 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   ordinary timeouts and two failed smoke checks. The original standard caller
   gap stays unchanged. Reviewed no-op policy now has its independently audited
   unchanged MAA caller witness (6 ordinary + 5 smoke Valid); seed remains not_proven.
-  Continuation at `23933f8a` runs on node 0
-  generation 580: 12 retained rows + 24 fresh rows (15 WP / 9 deliberate refusals).
+  Continuation at `23933f8a` naturally finished on node 0
+  generation 580 at 20:58:07 ET: 12 retained rows + 24 fresh rows (15 WP / 9 deliberate refusals).
   All 36 actual target rows independently pass their criteria: nine caller pairs,
-  14 models, 3 summaries, 1 dedicated bounds negative. Six of nine deliberate lifetime
-  refusals are accepted; three remain, then ended resources/source-after and
-  combined eleven-item closure review. Full continuation remains pending.
+  14 models, 3 summaries, 1 dedicated bounds negative. All nine deliberate lifetime
+  refusals are accepted. Ended inner/outer resources pass without OOM or timeout;
+  source-after remains clean and exact. The combined cold replay and eleven-item
+  closure review remain pending. Root's first poststop scan observes the active
+  read-only cold reader and unrelated process-visibility limits; no zero-denial
+  cleanup claim is made.
   Finite evidence stays finite.
   [Qualified std](evidence/t24-std-object-domain-v2-20261015.json),
   [continuation launch](evidence/reviewed-t24-continuation-launch-23933f8a-20261015.json).
@@ -35,7 +38,8 @@ remains `0e185baaf5b0e926d2155a5c94cb61037e9d22bee2b5ee8d47424a2824fe4422`.
   goals, all Valid, 6,027-reference / 925-file audit clean. B1's three cases also pass:
   189 ordinary + 67 smoke Valid, 3,447 references / 897 files clean, natural
   release at 20:43:22 ET. Final B2 runs on node 1 generation 606 from 20:44:49 ET.
-  Its three safe units remain pending. Original A5/B6 jobs are unlaunched; selected union is
+  Its three_reads case proves 112 ordinary + 31 smoke goals, all Valid;
+  fresh safe coverage is 9/11, with gather and footprint pending. Original A5/B6 jobs are unlaunched; selected union is
   1 + 4 + 3 + 3 = 11. Historical `717` safe evidence is separate.
   [Final negatives](evidence/t27-composed-negative-completed-independent-20261015.json),
   [selected schedule](evidence/t27-selected-safe-shard-schedule-20261015.json).
