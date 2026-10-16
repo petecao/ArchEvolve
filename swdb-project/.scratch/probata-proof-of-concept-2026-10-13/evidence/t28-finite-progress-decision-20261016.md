@@ -1,0 +1,9 @@
+# DX100 readiness finite-progress premise
+
+Updated: 2026-10-16 00:19 ET. Prospective coordinator decision for ticket28. No actual proof or source liveness theorem is asserted.
+
+A readiness result may remain zero for an arbitrary finite logical delay. An unrestricted demonic sequence of zeros cannot prove total termination of a busy wait. For conditional total-correctness fixtures, add an explicit environment assumption: a fair device/scheduler and eventual memory responses make each issued command and its acyclic dependency closure finish after some finite delay. The logical delay is unbounded; a zero observation consumes positive well-founded rank, and one covers the command's dependency closure. Dependency acyclicity and ordering/visibility remain separate obligations. No wait call or candidate precondition is inserted to force success.
+
+Assumption owner: Probata proof-semantics maintainer. Human acceptance is pending Yan-Ru's final source/method freeze review in ticket59. This is a newly declared liveness assumption, not an established gem5 fact or previously approved Yan-Ru decision. The pinned event/memory-response implementation may support part of the premise, but no fairness theorem has been proved. Records using this total-correctness rule must list and hash the assumption.
+
+Without the premise, retain the demonic partial-correctness semantics and refuse a total-termination claim. Add a negative control demonstrating that absent-premise total termination is not admitted. Existing visibility/MMIO/one-instance assumptions are neither replaced nor implied. Native finite runs are controls only; full public proof fixtures and assumption-record checks remain required.

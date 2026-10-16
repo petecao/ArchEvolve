@@ -155,3 +155,18 @@ full physical-line hazards. Raw unsigned32 offset and unsigned64 Addr wrap remai
 defined; ordinary-array correspondence is a separate checked domain. Complete
 source wrappers, MMIO setup, typed geometry and proof integration remain open.
 [Exact source/RED/native evidence](../../evidence/t28-region-address-controls-20261015.json).
+
+Typed byte-image successor — 2026-10-16 ET:53/53 native controls cover shared
+cross-width physical bytes, separate source stride/value prefix, six legal scalar
+views, deferred command output versions, physical-half alias refusal, missing
+initializedness and image-capacity boundaries. C11 and C++17 builds use ASan/UBSan.
+No public/actual proof or source typed-pointer admission is claimed. The native
+geometry is explicitly8sourcewords/6prefixelements, not a hardware configuration.
+[Exact sources/RED/native/resource evidence](../../evidence/t28-tile-byte-image-controls-20261016.json).
+
+Inactive byte preservation — 2026-10-16 ET:58/58 native controls now preserve
+undefined output payload without eagerly reading it at inactive completion, while
+later observations still check initializedness. Byte-wise conditional versions
+retain initialized32-bit subviews of a partially initialized64-bit output.
+[Exact RED/GREEN and physical pins](../../evidence/t28-inactive-byte-preservation-controls-20261016.json).
+Whole-call/source/public proof acceptance remains open.

@@ -24,6 +24,16 @@ extern const unsigned SWDB_CHUNK_SIZE;        /* knob: symbolic, 1 .. TILE_SIZE 
 /*@ requires guard_sizes: 0 <= num_nodes <= 1073741823 && 0 <= num_edges <= 1073741823;
     requires knobs: 1 <= SWDB_FRONTIER_THRESHOLD && 1 <= SWDB_CHUNK_SIZE <= TILE_SIZE <= 65535;
     requires \valid_read(g) && \valid(VertexOffsets) && \valid(parent) && \valid(queue);
+    // Only fields/cells actually read need initialized values; padding is irrelevant.
+    requires initialized_metadata: \initialized(&g->out_neighbors_) &&
+      \initialized(&VertexOffsets->start_) && \initialized(&VertexOffsets->end_size_) &&
+      \initialized(&VertexOffsets->end_capacity_) && \initialized(&parent->start_) &&
+      \initialized(&parent->end_size_) && \initialized(&parent->end_capacity_);
+    requires initialized_inputs: \initialized(VertexOffsets->start_ + (0 .. num_nodes)) &&
+      \initialized(g->out_neighbors_ + (0 .. num_edges - 1)) &&
+      \initialized(parent->start_ + (0 .. num_nodes - 1));
+    requires initialized_queue_prefix: gapbs_queue_domain(queue) &&
+      \initialized(queue->shared + (0 .. queue->shared_in - 1));
     requires csr_offsets: \valid(VertexOffsets->start_ + (0 .. num_nodes)) &&
       VertexOffsets->start_[0] == 0 && VertexOffsets->start_[num_nodes] == num_edges &&
       (\forall integer v; 0 <= v <= num_nodes ==> 0 <= VertexOffsets->start_[v] <= num_edges) &&
@@ -31,9 +41,34 @@ extern const unsigned SWDB_CHUNK_SIZE;        /* knob: symbolic, 1 .. TILE_SIZE 
     requires csr_neighbors: \valid_read(g->out_neighbors_ + (0 .. num_edges - 1)) &&
       (\forall integer e; 0 <= e < num_edges ==> 0 <= g->out_neighbors_[e] < num_nodes);
     requires parent_valid: \valid(parent->start_ + (0 .. num_nodes - 1));
+    // Representation of the live pvector ranges used by registration/accessors.
+    requires vector_ranges: gapbs_nodeid_span(VertexOffsets->start_, (integer)num_nodes + 1) &&
+      VertexOffsets->end_size_ == VertexOffsets->start_ + num_nodes + 1 &&
+      \object_pointer(VertexOffsets->end_capacity_) &&
+      \base_addr(VertexOffsets->start_) == \base_addr(VertexOffsets->end_capacity_) &&
+      \pointer_comparable(VertexOffsets->start_, VertexOffsets->end_capacity_) &&
+      VertexOffsets->end_size_ <= VertexOffsets->end_capacity_ &&
+      \offset(VertexOffsets->end_capacity_) - \offset(VertexOffsets->start_) <= (integer)PTRDIFF_MAX * sizeof(SGOffset) &&
+      gapbs_nodeid_span(parent->start_, num_nodes) &&
+      parent->end_size_ == parent->start_ + num_nodes &&
+      \object_pointer(parent->end_capacity_) &&
+      \base_addr(parent->start_) == \base_addr(parent->end_capacity_) &&
+      \pointer_comparable(parent->start_, parent->end_capacity_) &&
+      parent->end_size_ <= parent->end_capacity_ &&
+      \offset(parent->end_capacity_) - \offset(parent->start_) <= (integer)PTRDIFF_MAX * sizeof(NodeID) &&
+      gapbs_nodeid_span(g->out_neighbors_, num_edges);
     requires queue_window: \valid(queue->shared + (0 .. queue->shared_max_size - 1)) &&
       queue->shared_out_start <= queue->shared_out_end <= queue->shared_in <= queue->shared_max_size <= 1073741823 &&
       (\forall integer p; queue->shared_out_start <= p < queue->shared_out_end ==> 0 <= queue->shared[p] < num_nodes);
+    // DOBFS allocates num_nodes slots. Its occupied prefix contains distinct
+    // already-visited vertices; newly claimed vertices consume the remaining
+    // finite vertex domain. This is a caller-history domain, not a promised
+    // final occupancy or a precomputed proof hint (source repair 2026-10-16 ET).
+    requires queue_storage: gapbs_queue_domain(queue) && queue->shared_max_size == num_nodes;
+    requires occupied_visited: \forall integer p; 0 <= p < queue->shared_in ==>
+      0 <= queue->shared[p] < num_nodes && parent->start_[queue->shared[p]] >= 0;
+    requires occupied_distinct: \forall integer p, q; 0 <= p < q < queue->shared_in ==>
+      queue->shared[p] != queue->shared[q];
     requires separation: bfs_distinct_blocks(\base_addr(VertexOffsets->start_), \base_addr(g->out_neighbors_),
       \base_addr(parent->start_), \base_addr(queue->shared), \base_addr(&swdb_lqueue_storage[0]),
       \base_addr(g), \base_addr(VertexOffsets), \base_addr(parent), \base_addr(queue));

@@ -1603,3 +1603,22 @@ capacity/caller-domain, unsigned arithmetic and helper-domain defects still bloc
 a new actual admission. They require their own source-faithful repair, counterstate
 controls, helper/RTE verification plan and independent review. Ticket07 remains
 claimed with the original scientific acceptance unsatisfied.
+
+
+## Source-domain prerequisite — 2026-10-16 00:22 ET
+
+The independently reviewed two-file repair preserves all executable C tokens and
+TDStep postconditions. Exact modified DX100 beginp/endp expose full allocation;
+the earlier active-window native oracle is excluded. Atomic addition specifies
+unsigned modular arithmetic, queue-capacity credit follows occupied distinct
+visited vertices, and pointer/init/read/write domains are explicit. One thread-zero
+fixed-buffer lifetime is a declared restricted stand-in boundary, not a general
+allocator theorem. Six native API/queue boundary controls meet their expectations
+under the repaired8GiB guard; the historical out-of-domain copy remains a sanitizer
+negative, not an admitted-state failure. All raw checks and hashes are retained.
+[Independent static review and finite helper/RTE plan](../evidence/probata-t07-source-domain-successor-independent-review-20261016.md),
+[native receipt](../evidence/t07-source-domain-native-correct-api-20261016.json).
+
+No actual component or new counted run follows from these checks. Next: fresh
+all19helper no-hint/RTE component, with no function/property filters and complete
+ordinary/init/smoke inventory. Run26 remains UNPROVEN and ticket stays claimed.

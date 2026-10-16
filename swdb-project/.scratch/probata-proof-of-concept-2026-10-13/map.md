@@ -5,72 +5,25 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 23:40 ET. **Active: 35 resolved / 25 ready-for-agent / 3 claimed.**
-Integration: `codex/probata-resume-20261015`, published `e56c62dd`; base `yanrujhou_main`.
-Active frontier: **07, 25, 28**. Each actual evaluation retains its exact source,
-checker and runtime. Current lowerer file SHA256 is `e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c`;
-new ticket28 repairs do not upgrade earlier actual records.
-[Current resume](resume.md). [All63 ticket statuses and dependency graph](ticket-status-20261015.md).
+Updated: 2026-10-16 00:19 ET. **Active: 35 resolved / 25 ready-for-agent / 3 claimed.**
+Integration: `codex/probata-resume-20261015`, published `6533b819`; base `yanrujhou_main`.
+Active frontier: **07, 25, 28**. Each actual evaluation retains exact source/checker/runtime.
+Current lowerer file SHA256 remains `e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c`;
+composite translator digests also depend on runtime context. Earlier actual records are unchanged.
+[Current resume](resume.md). [All63 statuses and dependency graph](ticket-status-20261015.md).
 
-- **24 / 27 / 36 resolved:** Published29709232 / af10a946 / 8b0c2e27. Their independently
-  reviewed scoped acceptance, exact sources, immutable failures and raw evidence remain retained.
-  Ticket36 closure is scoped2033/74+B493; later checker76e1 and final source/reproduction
-  freeze are separate. [24](evidence/t24-combined-current-independent-review-20261015.md),
-  [27](evidence/t27-ticket-closure-independent-review-20261015.md),
-  [36](evidence/t36-final-acceptance-independent-review-20261015.md).
-- **07 claimed:** Run26 ended **UNPROVEN**22:58:02ET after42.22counted minutes.
-  One natural Codex turn completed before33min with full observed usage; all eight
-  candidate checks completed. The incumbent has four Codex-authored hints/102open
-  diagnostic goals. Final all-function replay scheduled397goals, then stopped on native
-  `proc_environ` SystemError after569.146s. Partial log58Timeout lines, no complete final
-  goals/smoke verdict and no negative run. PID/phase/ownership/OS cause unknown.
-  All42 source pins unchanged; three finite poststop metadata scans pass, Mac actual
-  slot released. Closeout published0b315646; separate control-only method24 diagnostics
-  have49 prior controlled passes; independent review exposed a secondary-identity
-  retry/privacy edge, with fail-closed repair in progress. Static source audit found
-  a queue-capacity counterstate and incorrect unsigned arithmetic/copy domains; sound
-  caller-backed stand-in repair precedes any new admission. No proof-sufficiency claim.
-  [Run26](evidence/t07-counted-run26-20261015.json),
-  [review](evidence/t07-run26-final-independent-review-20261015.md),
-  [source/domain audit](evidence/t07-source-feasibility-review-20261015.md).
-- **25 claimed:** The exact9d heap theory passed actual Why3 syntax/types; cold audit
-  verifies70physical references/eight raw pins. Full42 replayv4 ran23:13:41–23:13:45ET
-  at9d8ca764/node1G612. All198 source/runtime checks pass; theory imported, then unsupported
-  `-wp-dkey` stopped option parsing before goals, producing no v4 proof. The
-  supported diagnostic flags are repaired at9881/publishede56c62dd. A representative
-  actual9d/newrecipe ONElemma proves by CVC5, with four SMT taskfiles; independent task
-  audit verifies no desired project theorem hypothesis. Explicit standard TCB includes
-  Why3 Int/Abs/ComputerDivision/Real and Frama-C Qed support, not just int/map shorthand.
-  Fresh full42v5 started23:38:01ET on node1G613 atclean e56,9000whole/9120outer/one worker8GiB;
-  all198 source/runtime checks pass. Latest owner reports21 matched rows/noerrors,
-  with per-task audit pending; this is partial progress, not wholebody acceptance.
-  Original37positive/4negative check lemmas+one numeric packet and premises remain fixed.
-  [Type/entry review](evidence/t25-typecheck-cold-and-v4-entry-review-20261015.md),
-  [v4 admission](evidence/reviewed-t25-heap-capability-v4-launch-9d8ca764-20261015.json),
-  [representative](evidence/reviewed-t25-heap-wp-representative-v2-launch-9d8ca764-20261015.json),
-  [v5 admission](evidence/reviewed-t25-heap-capability-v5-launch-e56c62dd-20261015.json).
-- **28 claimed:** Complete26name/27declaration interface, ABI/typed routing, trust-rule
-  recording and checker-dependency guards are published. Latest source-typedef repair
-  has49 focused compiler/native controls and independent review; old0.1 unchanged.
-  Numeric prototype published648924d7:9 controls,128opcode cases/486signed boundary
-  cases, independent345pin audit. Formalfloatrelation remains absent. Command/history/
-  ownership primitives published739ed2bc:22native controls, snapshot/history/DAG
-  evidence reviewed. Deferredstore/RMW/command integration continues. Formalfloat and
-  physical/source mapping/fullwrappers remain open; no current0.2 or actual admission.
-  [Typed review](evidence/t28-typed-instance-merger-review-20261015.md),
-  [typedef repair](evidence/t28-source-typedef-merger-review-20261015.md),
-  [numeric](evidence/t28-numeric-merger-review-20261015.md),
-  [deferred-state](evidence/t28-deferred-state-merger-review-20261015.md).
+- **24 / 27 / 36 resolved:** published29709232 / af10a946 / 8b0c2e27; scoped independent acceptance and immutable raw/source records retained. No broad rerun required now.
+- **07 claimed:** run26 remains UNPROVEN42.22counted minutes; final397-goal replay stopped on native proc_environ SystemError, no complete positive/smoke/negative verdict. Method24 guard repair is published with60independent controlled passes, not actual readmission. Root took over two-file source-domain repair after worker tool interruptions: correct full-storage beginp/endp restored against exact DX100 headers, unsigned modular arithmetic/common-allocation/initialization/capacity-history domains added. Frozen bytes are undergoing static re-review; a finite no-hint helper/RTE component precedes a counted run. [Run26](evidence/t07-counted-run26-20261015.json), [source audit](evidence/t07-source-feasibility-review-20261015.md).
+- **25 claimed:** full42capabilityv5 at exacte56/node1G613 finished23:42:11ET:42/42expectations,37positive globalValid/fournegative global nonproof, numeric10ordinaryValid+onepassing smoke. Independent508physical-reference and132SMTtask closure accepted; no production c_model record or generic caller acceptance. Public heap-model core31798 is frozen for independent review,40controls+oneactualskip, no actual run yet. First six-record pair profile launched00:17:48ET on node0G586 at exact1278:7500whole/7620outer,one worker8GiB,public7200,198physical/GitmodulechecksPASS. No pair result yet. [Full42](evidence/t25-full42-cold-closure-review-e56c62dd-20261015.md), [pair entry review](evidence/probata-t25-pair-entry-static-review-v3-20261016.md), [pair admission](evidence/reviewed-t25-pair-public-v1-launch-1278f2d9-20261015.json).
+- **28 claimed:** complete interface/typed routing/trust/checker prerequisites published; numeric648924, state739ed, actionsac899, region13225 and typed byte-image45e163 now published. Typed image has53nativeASan/UBSancontrols and independent source/artifact review. Inactive byte-preservation successor6533b819 has58nativecontrols and independent review. Source geometry/ABI/pointer routing/full wrappers/IEEE and current0.2 public proof remain open. [Typed image](evidence/t28-tile-byte-image-controls-20261016.json), [merger review](evidence/probata-t28-tile-image-merger-review-20261016.md). Conditional readiness termination uses an explicit newly declared finite-progress premise, pending59humanfreeze; [decision](evidence/t28-finite-progress-decision-20261016.md).
 
-Root owns actual admissions: at most two remote measurements, one per socket, and
-one actual Mac verifier job. Mac actual slot is free; remote node1 has full42v5.
-Recheck all leases/resources before every dispatch. Pre-replay23:05:51ET disk observation
-was36GiB/data1 and69GiB/data. Root performed no cleanup and does not attribute that
-external capacity change. The reviewed/data raw target reserves/data1 for source,
-toolchain and a potential two-lane budget above its20GiB floor. Full layouts remain
-required; sparse/positive-layout proposals are inert. Raw/producers stay retained
-for acceptance, independent audit and resumption. No draft3/final source59 or held-out
-campaign is admitted. Last full status23:17ET; next23:48ET.
+Root owns actual admissions: max two remote measurements, one per socket, and one actual Mac verifier.
+Mac actual slot is free; node0 has pair profileG586; node1 last full42G613 released.
+Fresh00:17ET preflight: allthreeleases initially released, no selected verifier/compiler processes,
+99.92% aggregate CPUidle,32.1GiB/data1 and68.7GiB/data free before newsourcecheckout.
+Recheck leases/resources for each dispatch. Full protocolv3 layouts remain required; no sparse
+proposal deployed. Raw/source remain retained for audit/resumption. No draft3/final59/held-out
+campaign admitted. Last full status00:19ET; next00:49ET.
 
 ## Historical remote checkpoints
 

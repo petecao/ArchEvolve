@@ -28,7 +28,7 @@ def compiler_context(tool):
     return runtime_identity(tool)
 
 
-def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False):
+def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeric=False, actions=False, regions=False, image=False, cpp=False):
     spec = importlib.util.spec_from_file_location('dx_deferred_state', ROOT / 'deferred_state.py')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -56,6 +56,11 @@ def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeri
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         header = module.render_header(header)
+    if image:
+        spec = importlib.util.spec_from_file_location('dx_tile_image', ROOT / 'tile_image.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        header = module.render_header(header, source_tile_words=8, value_bound=6, byte_order='little')
     unit = tmp_path / 'model.c'
     unit.write_text('#include <assert.h>\n#include <stdint.h>\n#include <stdlib.h>\n#include <stdio.h>\n'
                     '#define DXM_CHECK(c,r) do { if (!(c)) { fputs(r,stderr); exit(42); } } while (0)\n'
@@ -66,7 +71,7 @@ def run_model(tmp_path, body, *, exit_code=0, prelude='', commands=False, numeri
     compiler = c_lowering.locate()
     assert not compiler.missing, compiler.missing
     exe = tmp_path / 'model.bin'
-    command = [*compiler.command, '-x', 'c', '-std=c11', '-O1', '-Wall', '-Werror',
+    command = [*compiler.command, '-x', 'c++' if cpp else 'c', '-std=c++17' if cpp else '-std=c11', '-O1', '-Wall', '-Werror',
                '-Wno-unused-function', '-fsanitize=address,undefined', '-MD', '-MF', str(tmp_path / 'model.d'),
                str(unit), '-o', str(exe)]
     built = subprocess.run(command,
@@ -522,6 +527,185 @@ int main(void) {{
 }}
 ''', commands=True, regions=True, exit_code=exit_code)
     assert result.stderr == ('device-memory-footprint-conflict' if exit_code else '')
+
+
+def test_typed_tile_views_share_physical_bytes_with_source_stride_and_freeze_captured_versions(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_cpu_write_bits(0,1,0,0,UINT64_C(0x55667788));
+  dxp_cpu_write_bits(0,1,1,0,UINT64_C(0x11223344));
+  assert(dxp_cpu_read_bits(0,1,0,3) == UINT64_C(0x1122334455667788));
+  unsigned saved=dxp_capture_bits(1,0,3); dxm_cover(saved);
+  dxp_cpu_write_bits(0,1,1,0,UINT64_C(0xaabbccdd));
+  assert(dxm_value(saved) == UINT64_C(0x1122334455667788));
+  assert(dxp_cpu_read_bits(0,1,0,3) == UINT64_C(0xaabbccdd55667788));
+  /* Source stride8 words, model prefix6 values: lane4 crosses to physical t+1. */
+  dxp_cpu_write_bits(0,1,4,3,UINT64_C(0x0102030405060708));
+  assert(dxp_cpu_read_bits(0,2,0,0) == UINT64_C(0x05060708));
+  assert(dxp_cpu_read_bits(0,2,1,0) == UINT64_C(0x01020304));
+  return 0;
+}
+''', commands=True, image=True)
+
+
+def test_all_six_typed_cpu_views_copy_bits_through_legal_scalar_objects(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_f32(0,1,0,1.5f);
+  assert(dxp_load_u32(0,1,0) == UINT32_C(0x3fc00000));
+  dxp_store_u32(0,1,0,UINT32_C(0xc0000000));
+  assert(dxp_load_f32(0,1,0) == -2.0f);
+  dxp_store_i32(0,1,0,-3);
+  assert(dxp_load_u32(0,1,0) == UINT32_C(0xfffffffd));
+  dxp_store_f64(0,1,0,1.5);
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0x3ff8000000000000));
+  dxp_store_u64(0,1,0,UINT64_C(0xc000000000000000));
+  assert(dxp_load_f64(0,1,0) == -2.0);
+  dxp_store_i64(0,1,0,-3);
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0xfffffffffffffffd));
+  return 0;
+}
+''', commands=True, image=True)
+
+
+@pytest.mark.parametrize('bytes,exit_code', [(4,0),(8,42)])
+def test_one_commands_distinct_start_ids_still_require_disjoint_physical_read_write_halves(tmp_path, bytes, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  unsigned command=dxc_prepare(0,-1,0,4,2,4,dxc_tile_mask(1,{bytes}),0,0);
+  dxc_bind(command,dxm_constant(1));
+  return 0;
+}}
+''', commands=True, exit_code=exit_code)
+    assert result.stderr == ('intra-command-physical-alias' if exit_code else '')
+
+
+def test_device_output_bytes_capture_unsettled_versions_across_64_to_32bit_consumers(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  for (unsigned pick=0; pick<2; ++pick) {
+    dxc_reset(); chosen=pick;
+    dxm_claim_tile(0,1,8); dxm_claim_tile(0,3,4);
+    dxm_cpu_write(1,7,UINT64_C(0x1122334455667788));
+    unsigned producer=dxc_prepare(0,0,1,0,2,0,dxc_tile_mask(1,8),56,64);
+    unsigned read=dxm_issue_read(0,7);
+    dxp_bind_output(producer,1,0,3,read); dxc_bind(producer,read);
+    unsigned consumer=dxc_prepare(0,-1,0,2,8,2,8,0,0);
+    unsigned input=dxp_capture_bits(1,0,0), one=dxm_constant(1);
+    unsigned sum=dxt_binary(0,0,0,input,one);
+    dxp_bind_output(consumer,3,0,0,sum); dxc_bind(consumer,sum);
+    uint64_t expected=UINT64_C(0x1122334455667788);
+    assert(dxc_cpu_cas(1,7,56,64,&expected,UINT64_C(0xaabbccdd01020304)));
+    dxc_wait_tile(3);
+    uint32_t result=pick == 0 ? UINT32_C(0x55667789) : UINT32_C(0x01020305);
+    assert(dxp_load_u32(0,3,0) == result);
+    dxp_store_u64(0,1,0,0);
+    assert(dxp_load_u32(0,3,0) == result);
+  }
+  return 0;
+}
+''', commands=True, numeric=True, image=True)
+
+
+def test_typed_image_does_not_invent_initial_values(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_u32(0,1,0,7);
+  (void)dxp_load_u64(0,1,0);
+  return 0;
+}
+''', commands=True, image=True, exit_code=42)
+    assert result.stderr == 'tile-value-initialized'
+
+
+@pytest.mark.parametrize('wide_output,expected', [(True, 'image-command-output-domain'), (False, 'pending-tile-write')])
+def test_output_binding_and_cpu_views_enforce_the_same_physical_pair(tmp_path, wide_output, expected):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  unsigned root=dxm_constant(UINT64_C(0x1122334455667788));
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,{2 if wide_output else 6},0,0);
+  dxp_bind_output(command,1,0,3,root);
+  dxc_bind(command,root);
+  (void)dxp_load_u32(0,2,0);
+  return 0;
+}}
+''', commands=True, image=True, exit_code=42)
+    assert result.stderr == expected
+
+
+def test_sparse_image_capacity_refuses_before_partial_wide_installation(tmp_path):
+    result = run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_u64(0,1,0,7);
+  return 0;
+}
+''', commands=True, image=True, prelude='#define DXP_IMAGE_BYTES 4\n', exit_code=42)
+    assert result.stderr == 'tile-image-capacity'
+
+
+def test_typed_image_scalar_memcpy_views_also_compile_as_cpp17(tmp_path):
+    run_model(tmp_path, r'''
+int main(void) {
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_f64(0,1,0,-0.0);
+  assert(dxp_load_u64(0,1,0) == UINT64_C(0x8000000000000000));
+  dxp_store_i64(0,1,0,INT64_MIN);
+  assert(dxp_load_i64(0,1,0) == INT64_MIN);
+  dxp_store_f32(0,1,0,-0.0f);
+  assert(dxp_load_u32(0,1,0) == UINT32_C(0x80000000));
+  return 0;
+}
+''', commands=True, image=True, cpp=True)
+
+
+@pytest.mark.parametrize('observe,exit_code', [(False, 0), (True, 42)])
+def test_inactive_rmw_preserves_undefined_tile_bytes_without_reading_them_at_completion(tmp_path, observe, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); chosen=0;
+  dxm_claim_tile(0,1,4); dxm_claim_tile(0,2,4);
+  dxm_cpu_write(1,0,10);
+  unsigned command=dxc_prepare(0,0,2,2,4,2,4,64,128);
+  unsigned inactive=dxm_constant(0), unused=dxm_result();
+  unsigned preserved=dxp_capture_bits(2,0,0), old=dxm_result();
+  unsigned root=dxa_rmw(command,0,0,0,1,unused,unused,inactive,old,preserved);
+  dxp_bind_output(command,2,0,0,old); dxc_bind(command,root);
+  dxc_wait_tile(2);
+  assert(dxc_cpu_read(1,0,64,68) == 10);
+  puts("COVERED");
+  {'(void)dxp_load_u32(0,2,0);' if observe else ''}
+  return 0;
+}}
+''', commands=True, numeric=True, actions=True, image=True, exit_code=exit_code)
+    assert result.stdout == 'COVERED\n'
+    assert result.stderr == ('tile-value-initialized' if observe else '')
+
+
+@pytest.mark.parametrize('active,wide_read,exit_code', [(0,False,0),(0,True,42),(1,True,0)])
+def test_conditional_output_preserves_initializedness_independently_for_each_physical_byte(tmp_path, active, wide_read, exit_code):
+    result = run_model(tmp_path, f'''
+int main(void) {{
+  dxc_reset(); dxm_claim_tile(0,1,8);
+  dxp_store_u32(0,1,0,UINT32_C(0x12345678));
+  unsigned command=dxc_prepare(0,-1,0,0,2,0,6,0,0);
+  unsigned condition=dxm_constant({active});
+  unsigned payload={f'dxm_constant(UINT64_C(0xaabbccdd55667788))' if active else 'dxm_result()'};
+  unsigned root=dxm_select(0,condition,payload,dxm_constant(0));
+  dxp_bind_conditional_output(command,1,0,3,condition,payload); dxc_bind(command,root);
+  dxc_wait_tile(1); puts("COVERED");
+  assert(dxp_load_u32(0,1,0) == UINT32_C({0x55667788 if active else 0x12345678}));
+  {'assert(dxp_load_u64(0,1,0) == UINT64_C(0xaabbccdd55667788));' if wide_read else ''}
+  return 0;
+}}
+''', commands=True, image=True, exit_code=exit_code)
+    assert result.stdout == 'COVERED\n'
+    assert result.stderr == ('tile-value-initialized' if exit_code else '')
 
 
 def test_failed_cas_expected_and_desired_values_do_not_enter_gather_history(tmp_path):

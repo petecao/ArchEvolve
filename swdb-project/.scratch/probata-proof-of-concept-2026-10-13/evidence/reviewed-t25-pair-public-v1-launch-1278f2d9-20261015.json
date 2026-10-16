@@ -1,0 +1,263 @@
+{
+  "at_utc": "2026-10-16T04:18:08.734900+00:00",
+  "audit_script": {
+    "path": "/private/tmp/probata-reviewed-launch-audit-v3.py",
+    "sha256": "59bf1d40f27be316d98fc8acc39fa0339207c94bda9a9954ec145513025100ef"
+  },
+  "date_et": "2026-10-15",
+  "errors": [],
+  "files": {
+    "dispatch-argv.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/dispatch-argv.json",
+      "sha256": "9e6cdff87a884d84e809da4aeda34fa3bf194fd7ec34290c28c826614590d53a"
+    },
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "mutable_until_exit": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/lane.json",
+      "sha256_at_snapshot": "61adf6fa3a954509aea215fcd8181ed2e6331d4ff9d1f2096c2ac8e965915308"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/launch.json",
+      "sha256": "4463e3a155e368dd79d4c190dc477f03f992015564b2d11918e9aa853afef48e"
+    },
+    "preflight.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/preflight.json",
+      "sha256": "c400973d96368718d78403b9729b53f612a5a418b5a454aa96c8b50365ef356f"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/run.sh",
+      "sha256": "c4bf1eeef17938561004fc5964dc2e076559bb04681857e7474c860584a225b5"
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/runtime-provenance.json",
+      "sha256": "1dd1acc3fbb36618dd7b44d872f182fcad7a51e0417e0d53ce0386cfddb37870"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/source-manifest.json",
+      "sha256": "6f3311193d2cb9773b6c8b1a58be435fd71d6b5e74ec4156e29d383d43d4a2d3"
+    },
+    "watch.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/watch.py",
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "7620",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "",
+      "exit_code": -1,
+      "host": "mbit10",
+      "job": "probata-reviewed-1278f2d9-t25-pair-public-v1",
+      "lease_generation": 586,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.08,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T04:17:49Z"
+    }
+  },
+  "launch": {
+    "command": [
+      "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+      "exec",
+      "--switch=framac-33",
+      "--",
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "-c",
+      "\"\"\"2026-10-16 ET. Exact-source pair public WP profile entry, root-reviewed recipe.\n\nOne selected pytest produces four original pair c_model records then a safe\ncaller and wrong-field ordinary nonproof. Cold audit remains mandatory.\n\"\"\"\nimport contextlib,hashlib,json,os,pathlib,shutil,subprocess,sys\nEXPECTED={'tools': {'opam': {'path': '/data1/yanruj/probata-verifiers/opam-2.6.1/opam', 'sha256': 'b533d393a6967150d6ef41cb3d71e147e93ecbabeb59e921aa412c0ae79ebe3d'}, 'frama-c': {'path': '/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c', 'sha256': '39368e41f6a0edbd3902fa0e7b119689a7281fd25965c74b53abd88adeca9ea7'}, 'why3': {'path': '/data1/yanruj/probata-verifiers/opam/framac-33/bin/why3', 'sha256': '98c58e874b1e3ac0baef8d288f4ce93f1333907995f1db2844116521fd3ce858'}, 'alt-ergo': {'path': '/data1/yanruj/probata-verifiers/opam/framac-33/bin/alt-ergo', 'sha256': 'ef5b893597fedd2bc5b215a40118b6a2297e1d9293d3a5296f4fe5bf7e43b6af'}, 'z3': {'path': '/data1/yanruj/probata-verifiers/z3-5.1.0/z3-5.1.0-x64-glibc-2.39/bin/z3', 'sha256': 'b4e0b3483ce37817230b20d6cad48390eb6a3aefde1d93342ad6dc763f24bc23'}, 'cvc5': {'path': '/data1/yanruj/probata-verifiers/cvc5-1.2.1/cvc5-Linux-x86_64-static/bin/cvc5', 'sha256': 'ee4c6787a95218a571080a599bdf579aca5b0f1e4f27687f70f46d4d12148974'}, 'ocamlfind': {'path': '/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlfind', 'sha256': '285b6b308c7dd042bd87d918a67fecbb3346435c86d9da49c06c8b815f8beddc'}, 'ocamlopt': {'path': '/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlopt.opt', 'sha256': 'f8976bb7b53ca30ec4bda901dda00ca354abf571ab292aea70cf29f984e06d0d'}, 'gcc': {'path': '/usr/bin/x86_64-linux-gnu-gcc-13', 'sha256': '1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26'}}, 'wp_artifacts': {'/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/META': '625b065287acb2a364e9579e11ab0b9716e30265fa4c8bfc5f8be9dce7063873', '/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wp.cmxs': '223ac46a1fb7cf6ce142d9621c5e9a06cc328d241f9a82309be4b8d64215c86d'}, 'why3_stdlib': '/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib', 'config': {'path': '/data1/yanruj/probata-verifiers/home/.why3.conf', 'sha256': '50061c22ad10615b4cd0103721869646155b681e0317a679682aed719f0967c9'}, 'stdlib_count': 57, 'stdlib_sha256': '520d9875983b41da80b89d7809cff4c76370e8445f8b49147f1423cfb7404c31', 'source_commit': '1278f2d9f24015c62b13d5da48a8a7f45600570f', 'source_files': {'scripts/probata_pair_profile.py': 'c80c0566fde1f0925c3332d09b75a87d6723990a5a6c4696fa653e8acd180ded', 'tests/test_pair_workflow.py': 'baa2882950feb9ccd5da6bbec973dc6735e66120ad5b6e835bf79b0680dacb24', 'tests/fixtures/proof/lowering/pair_only.cc': '60452123141c7603c633c1128536ec1397173b459045bedeceb63fb0d4801569', 'swdb/bounded_std_initialization.py': '480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607', 'swdb/bounded_initialization.py': '12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d', 'swdb/std_models.py': 'cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2', 'swdb/c_lowering.py': 'e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c', 'swdb/wp_adapter.py': 'aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43', 'swdb/proof_setup.py': 'dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11', 'library/methods/probata-draft-1.yaml': '497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5', 'tests/fixtures/proof/methods/contract-fixture-1.yaml': 'a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29'}, 'models': {'std_pair_int_int_ctor_default': '2d6cacca8d32276da7d48cffd24c5efde0f95838ded3086364045a2327ab93e8', 'std_pair_int_int_ctor': '7f000ab6ce06710ec0054bed42f16b045d4ef6b237c8d16b3feaa80b922ed335', 'std_pair_int_int_copy_ctor': '1f1f9ebf452c7d86ee02c3f6c496bde748c0cc2f3efea1cc7275f57370ca92d2', 'std_pair_int_int_operator_assign': '2405af576ec5aea5f043f42b01adaa1193a3ef1cfd846c2fecd09fa7cd10c2e9'}, 'naming': {'id': 'kept-names.3', 'sha256': '64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4'}}\nproject=pathlib.Path(sys.argv[1]).resolve();output=pathlib.Path(sys.argv[2]).resolve();repo=project.parent\nif output.is_relative_to(repo) or not output.is_dir():raise SystemExit('raw root must exist outside checkout')\nos.chdir(project);sys.path.insert(0,str(project))\ndef pin(p):\n p=pathlib.Path(p);return {'path':str(p.resolve()),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}\ndef source_check():\n head=subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True,timeout=30).strip()\n dirty=subprocess.check_output(['git','-C',str(repo),'status','--porcelain','--untracked-files=all'],text=True,timeout=30)\n if head!=EXPECTED['source_commit'] or dirty.strip():raise SystemExit('pair source is not exact clean admitted commit')\n for name,sha in EXPECTED['source_files'].items():\n  if pin(project/name)['sha256']!=sha:raise SystemExit('pair profile source hash changed: '+name)\nsource_check()\nambient=sorted(k for k in os.environ if k.startswith('FRAMAC_WP'))\nif ambient:raise SystemExit('forbidden ambient WP names: '+','.join(ambient))\nverified={}\nfor name,want in EXPECTED['tools'].items():\n path=shutil.which(name)\n if path is None or pathlib.Path(path).resolve()!=pathlib.Path(want['path']).resolve():raise SystemExit('tool selection mismatch: '+name)\n got=pin(path)\n if got['sha256']!=want['sha256']:raise SystemExit('tool bytes changed: '+name)\n verified[name]=got\nartifacts=[]\nfor path,sha in EXPECTED['wp_artifacts'].items():\n got=pin(path)\n if got['sha256']!=sha:raise SystemExit('WP artifact bytes changed')\n artifacts.append(got)\nstdlib=pathlib.Path(EXPECTED['why3_stdlib'])\nstdrows=[{'path':str(p.relative_to(stdlib)),'sha256':pin(p)['sha256']} for p in sorted(stdlib.rglob('*.mlw'))]\nstdsha=hashlib.sha256(json.dumps(stdrows,sort_keys=True,separators=(',',':')).encode()).hexdigest()\nif len(stdrows)!=EXPECTED['stdlib_count'] or stdsha!=EXPECTED['stdlib_sha256']:raise SystemExit('standard library changed')\nconfig=pin(EXPECTED['config']['path'])\nif config['sha256']!=EXPECTED['config']['sha256']:raise SystemExit('Why3 configuration changed')\nos.environ.update(SWDB_FRAMA_C=verified['frama-c']['path'],SWDB_OCAMLFIND=verified['ocamlfind']['path'],WHY3CONFIG=config['path'],SWDB_CBMC='none',SWDB_PAIR_ACTUAL='1',SWDB_VERIFIER_RSS_CAP_BYTES='8589934592',PYTHONDONTWRITEBYTECODE='1')\npackages={};prefix=pathlib.Path(verified['frama-c']['path']).parent.parent\nfor name in ('frama-c.kernel','frama-c-wp.core','findlib'):\n done=subprocess.run([verified['ocamlfind']['path'],'query',name],capture_output=True,text=True,timeout=10)\n path=pathlib.Path(done.stdout.strip()).resolve()\n valid=done.returncode==0 and path.is_dir() and path.is_relative_to((prefix/'lib').resolve())\n if name=='frama-c-wp.core':valid=valid and path==pathlib.Path(next(p for p in EXPECTED['wp_artifacts'] if p.endswith('/core/wp.cmxs'))).parent.resolve()\n packages[name]={'path':str(path),'accepted':valid,'exit_code':done.returncode}\n if not valid:raise SystemExit('OCaml binding mismatch: '+name)\n(output/'selected-pair-tool-metadata.json').write_text(json.dumps({'created':'2026-10-16 ET','source_commit':EXPECTED['source_commit'],'tools':verified,'wp_artifacts':artifacts,'config':config,'stdlib':{'path':str(stdlib),'count':len(stdrows),'sha256':stdsha},'packages':packages,'ambient_wp_names':ambient,'source_files':EXPECTED['source_files'],'scope':'Admission metadata, not six proof results.'},indent=2,sort_keys=True)+'\\n')\nfrom swdb import c_lowering,stdlib_provenance\nfor name,sha in EXPECTED['models'].items():\n if hashlib.sha256(c_lowering.model_text(name).encode()).hexdigest()!=sha:raise SystemExit('original pair model text changed: '+name)\nimport pytest\nselection='tests/test_pair_workflow.py::test_actual_four_pair_bodies_then_unchanged_caller_pin_current_proof_dependencies'\nclass Count:\n selected=None\n @pytest.hookimpl(trylast=True)\n def pytest_collection_finish(self,session):self.selected=[row.nodeid for row in session.items]\ncount=Count()\nwith (output/'pair-collection.log').open('x') as log:\n with contextlib.redirect_stdout(log),contextlib.redirect_stderr(log):\n  result=int(pytest.main(['--collect-only','-q','-p','no:cacheprovider',selection],plugins=[count]))\n(output/'pair-collection.json').write_text(json.dumps({'cwd':str(project),'expected':[selection],'selected':count.selected,'exit_code':result},indent=2)+'\\n')\nif result or count.selected!=[selection]:raise SystemExit('exact actual pair collection refused')\ntool=c_lowering.locate();identity=c_lowering.identity()\nif identity['naming_rules']!=EXPECTED['naming']:raise SystemExit('pair naming identity changed')\n# The composite includes runtime context. Exact committed module hashes above\n# admit source; this project-context identity is frozen here and must equal every\n# actual record's lowerer pins in the independent cold audit.\nlowerer=identity.get('c_lowering')\nif not isinstance(lowerer,dict) or lowerer.get('id')!='swdb-c-lowering-9' or not isinstance(lowerer.get('sha256'),str) or len(lowerer['sha256'])!=64 or any(c not in '0123456789abcdef' for c in lowerer['sha256']):raise SystemExit('missing actual composite translator identity')\nruntime={'cwd':str(project),'lowering_identity':identity,'runtime':stdlib_provenance.runtime_identity(tool),'admission_basis':'Exact source commit and 11 physical source hashes; naming pin; selected tool/plugin/config/header runtime checks. No Mac composite used as Linux expectation.','cold_audit_requirement':'Every actual record must carry this exact lowering identity and its project-context runtime; bootstrap monorepo context stays separate.','scope':'Actual project-context provenance; not a proof result.'}\n(output/'pair-project-runtime-provenance.json').write_text(json.dumps(runtime,indent=2,sort_keys=True)+'\\n')\nsource_check()\ncommand=[sys.executable,str(project/'scripts/probata_pair_profile.py'),'--mode','actual-wp','--seconds','7200','--output',str(output/'pair-profile')]\n(output/'pair-exec-argv.json').write_text(json.dumps(command,indent=2)+'\\n')\nos.execv(command[0],command)\n",
+      "/data1/yanruj/probata-reviewed-1278f2d9/swdb-project",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-1278f2d9-t25-pair-public-v1"
+    ],
+    "created_utc": "2026-10-16T04:17:48.917331+00:00",
+    "log_name": "acceptance.log",
+    "node": 0,
+    "planned_raw_budget_bytes": 8589934592,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket24",
+      "merger",
+      "independent reviewer"
+    ],
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "source": "/data1/yanruj/probata-reviewed-1278f2d9",
+    "source_commit": "1278f2d9f24015c62b13d5da48a8a7f45600570f",
+    "timeout_seconds": 7500,
+    "workers": 1
+  },
+  "launcher": {
+    "path": "/private/tmp/probata-launch-reviewed-profile-v3.py",
+    "sha256": "e3992bcd0fc508963b6535bea42ab63629f5ce83ac8bb6402ccf1589536e1457"
+  },
+  "module_physical_and_git_checks": 198,
+  "reviewed_source_changes": {
+    "content": {
+      "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+      "date_et": "2026-10-16",
+      "entry": {
+        "command_sha256": "c536891fef6e9830a567d176406fe9a7da52decb7e41286bd538349bbc8e9419",
+        "sha256": "26d1fecaf3244725de7e53c844836f8553033a302f35d61bad36aa2f75564cd3"
+      },
+      "files_after": {
+        "swdb-project/swdb/bounded_std_initialization.py": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+        "swdb-project/swdb/c_lowering.py": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+        "swdb-project/swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+        "swdb-project/swdb/dx100_interface.py": "9a50ad98a26169b2ff60766e351a3be28e2b511901edd09701489720c8e9a451",
+        "swdb-project/swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+        "swdb-project/swdb/proof_semantics.py": "2354b1be662a4a9fe4985110ce657c9a432b27f288639f661e13aa5bad5ea5b6",
+        "swdb-project/swdb/proof_setup.py": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+        "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+        "swdb-project/swdb/wp_adapter.py": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43"
+      },
+      "readers": [
+        "root",
+        "ticket24",
+        "merger",
+        "independent reviewer"
+      ],
+      "review_evidence": {
+        "path": "/private/tmp/probata-t25-source-allowlist-1278f2d9-root-review-20261016.md",
+        "sha256": "f2dc478634c0c1d7f8694fad4dbf17748900b287840b4e5c0af966960a781566"
+      },
+      "scope": "Six-record original pair bodies then contract fixture safe/wrong-field WP profile; no full25 closure.",
+      "source_commit": "1278f2d9f24015c62b13d5da48a8a7f45600570f"
+    },
+    "path": "/private/tmp/probata-t25-source-change-review-1278f2d9-20261016.json",
+    "sha256": "f1c6ab80016f15048098ae14b840f35b3c8d2969f830f554088ac2d3b3f16e33"
+  },
+  "runtime": {
+    "lowering_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "dc6fbca21c4b9537aa76a913158c32a77e89f66d26f27d8db61a3857ce3e5161"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime": {
+      "check": {
+        "id": "swdb-stdlib-provenance-1",
+        "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+      },
+      "command": [
+        "clang++"
+      ],
+      "command_executable": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "driver": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+      },
+      "frontend": [
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "-cc1",
+        "-triple",
+        "x86_64-unknown-linux-gnu",
+        "-fsyntax-only",
+        "-disable-free",
+        "-clear-ast-before-backend",
+        "-disable-llvm-verifier",
+        "-discard-value-names",
+        "-main-file-name",
+        "-",
+        "-mrelocation-model",
+        "pic",
+        "-pic-level",
+        "2",
+        "-pic-is-pie",
+        "-mframe-pointer=all",
+        "-fmath-errno",
+        "-ffp-contract=on",
+        "-fno-rounding-math",
+        "-mconstructor-aliases",
+        "-funwind-tables=2",
+        "-target-cpu",
+        "x86-64",
+        "-tune-cpu",
+        "generic",
+        "-debugger-tuning=gdb",
+        "-fdebug-compilation-dir=/data1/yanruj/probata-reviewed-1278f2d9",
+        "-fcoverage-compilation-dir=/data1/yanruj/probata-reviewed-1278f2d9",
+        "-resource-dir",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+        "-internal-isystem",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/x86_64-unknown-linux-gnu/c++/v1",
+        "-internal-isystem",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/c++/v1",
+        "-internal-isystem",
+        "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include",
+        "-internal-isystem",
+        "/usr/local/include",
+        "-internal-isystem",
+        "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include",
+        "-internal-externc-isystem",
+        "/usr/include/x86_64-linux-gnu",
+        "-internal-externc-isystem",
+        "/include",
+        "-internal-externc-isystem",
+        "/usr/include",
+        "-fdeprecated-macro",
+        "-ferror-limit",
+        "19",
+        "-fgnuc-version=4.2.1",
+        "-fskip-odr-check-in-gmf",
+        "-fcxx-exceptions",
+        "-fexceptions",
+        "-faddrsig",
+        "-fdwarf2-cfi-asm",
+        "-x",
+        "c++",
+        "-"
+      ],
+      "headers": {
+        "files": 1983,
+        "id": "llvm-standard-resource-headers",
+        "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+      },
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+      }
+    },
+    "tool": {
+      "command": [
+        "clang++"
+      ],
+      "missing": "",
+      "version": "22.1.8"
+    }
+  },
+  "source_branch": "HEAD",
+  "source_commit": "1278f2d9f24015c62b13d5da48a8a7f45600570f",
+  "tracked_changes": ""
+}
