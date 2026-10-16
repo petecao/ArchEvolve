@@ -136,3 +136,14 @@ affected controls pass, but no actual component, complete model or caller
 result is established. The separate local caller checkpoint `df8dda2f` contains
 two additional pending application duties and is not merged into this method.
 See `evidence/t25-cell-conjunction-preparation-controls-20261016.json`.
+
+
+Merged source046f now has independent exact-definition review and 51 passing
+affected controls. Root's three scripted public/native controls persist all24
+runs/setup checks and34 synthetic goals (33 ordinary, one smoke), with parser
+error and prelaunch tamper refusals. Passive451-artifact/268-report pin checks
+find no mismatch. These are workflow controls only, not actual formal proofs.
+The separately reviewed external four-leaf diagnostic v4 and complete fresh
+24-target public model remain pending; no original-v2/caller/ticket promotion.
+See `evidence/t25-grow24-scripted-public-cold-v1-20261016.json` and the046f
+independent source/entry reviews. The pending caller checkpoint remains separate.
