@@ -1,0 +1,303 @@
+{
+  "TD_source_count_admission": false,
+  "all_helpers": 19,
+  "allocator_correspondence_accepted": false,
+  "artifact_group_counts": {
+    "external_receipts": 9,
+    "raw_artifacts": 63,
+    "source": 10
+  },
+  "artifact_instances_checked": 82,
+  "artifact_manifest_sha256": "ccb2aad673123fa4ba02855e1deb3333fcda329dbca8276b35092febe7beeb8b",
+  "blockers": [
+    {
+      "generator_executed": false,
+      "id": "B1",
+      "kind": "physical-byte-source-gate-not-enforced",
+      "raw_crlf_sha256": "14d5f2392f87bfde7f9bebcaa3774362f63bb7d3858503d9bc7b654166ca6c1e",
+      "raw_lf_sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+      "source": "outslot_lowering.py:build",
+      "text_normalized_sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c"
+    }
+  ],
+  "body_interfaces": 15,
+  "contract_maps": [
+    {
+      "body": false,
+      "file": "gapbs_models.h",
+      "name": "__sync_bool_compare_and_swap_NodeID",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, ptr);\n requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr, *swdb_out;\n    ensures \\initialized(ptr);\n    ensures ((*swdb_out) != 0) <==> (\\old(*ptr) == oldval);\n    ensures \\old(*ptr) == oldval ==> *ptr == newval;\n    ensures \\old(*ptr) != oldval ==> *ptr == \\old(*ptr);\n    exits \\false; \n    ensures \\initialized(swdb_out);",
+      "new_name": "__sync_bool_compare_and_swap_NodeID_out",
+      "original_contract": "requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr;\n    ensures \\initialized(ptr);\n    ensures (\\result != 0) <==> (\\old(*ptr) == oldval);\n    ensures \\old(*ptr) == oldval ==> *ptr == newval;\n    ensures \\old(*ptr) != oldval ==> *ptr == \\old(*ptr);\n    exits \\false;",
+      "result_type": "bool"
+    },
+    {
+      "body": false,
+      "file": "gapbs_models.h",
+      "name": "__atomic_load_n_NodeID",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, ptr);\n requires \\valid_read(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == *ptr;\n    exits \\false; \n    ensures \\initialized(swdb_out);",
+      "new_name": "__atomic_load_n_NodeID_out",
+      "original_contract": "requires \\valid_read(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == *ptr;\n    exits \\false;",
+      "result_type": "NodeID"
+    },
+    {
+      "body": false,
+      "file": "gapbs_models.h",
+      "name": "__sync_fetch_and_add_size_t",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, ptr);\n requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr, *swdb_out;\n    ensures \\initialized(ptr);\n    ensures *ptr == ((integer)\\old(*ptr) + value) % ((integer)SIZE_MAX + 1);\n    ensures (*swdb_out) == \\old(*ptr);\n    exits \\false; \n    ensures \\initialized(swdb_out);",
+      "new_name": "__sync_fetch_and_add_size_t_out",
+      "original_contract": "requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr;\n    ensures \\initialized(ptr);\n    ensures *ptr == ((integer)\\old(*ptr) + value) % ((integer)SIZE_MAX + 1);\n    ensures \\result == \\old(*ptr);\n    exits \\false;",
+      "result_type": "size_t"
+    },
+    {
+      "body": false,
+      "file": "gapbs_models.h",
+      "name": "swdb_new_NodeID_array",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, swdb_lqueue_storage + (0 .. SWDB_LQUEUE_CAPACITY - 1));\n requires n <= SWDB_LQUEUE_CAPACITY;\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == &swdb_lqueue_storage[0];\n    exits \\false; \n    ensures \\initialized(swdb_out);",
+      "new_name": "swdb_new_NodeID_array_out",
+      "original_contract": "requires n <= SWDB_LQUEUE_CAPACITY;\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == &swdb_lqueue_storage[0];\n    exits \\false;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": false,
+      "file": "gapbs_models.h",
+      "name": "std_copy_NodeID",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, first + (0 .. swdb_count - 1), d_first + (0 .. swdb_count - 1));\n requires gapbs_nodeid_span((NodeID *)first, swdb_count);\n    requires last == first + swdb_count;\n    requires \\valid_read(first + (0 .. swdb_count - 1));\n    requires \\initialized(first + (0 .. swdb_count - 1));\n    requires gapbs_nodeid_span(d_first, swdb_count);\n    requires \\valid(d_first + (0 .. swdb_count - 1));\n    requires \\separated(first + (0 .. swdb_count - 1), d_first + (0 .. swdb_count - 1));\n    terminates \\true;\n    assigns d_first[0 .. swdb_count - 1], *swdb_out;\n    ensures \\forall integer i; 0 <= i < swdb_count ==> d_first[i] == \\old(first[i]);\n    ensures (*swdb_out) == d_first + (swdb_count);\n    ensures \\initialized(d_first + (0 .. swdb_count - 1));\n    exits \\false; \n    ensures \\initialized(swdb_out);",
+      "new_name": "std_copy_NodeID_out",
+      "original_contract": "requires \\object_pointer(first) && \\object_pointer(last);\n    requires \\base_addr(first) == \\base_addr(last);\n    requires first <= last;\n    requires \\offset(last) - \\offset(first) <= (integer)PTRDIFF_MAX * sizeof(NodeID);\n    requires \\valid_read(first + (0 .. last - first - 1));\n    requires \\initialized(first + (0 .. last - first - 1));\n    requires gapbs_nodeid_span(d_first, last - first);\n    requires \\valid(d_first + (0 .. last - first - 1));\n    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n    terminates \\true;\n    assigns d_first[0 .. last - first - 1];\n    ensures \\forall integer i; 0 <= i < last - first ==> d_first[i] == \\old(first[i]);\n    ensures \\result == d_first + (last - first);\n    ensures \\initialized(d_first + (0 .. last - first - 1));\n    exits \\false;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "compare_and_swap",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, x);\n requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x, *swdb_out;\n    ensures \\initialized(x);\n    ensures ((*swdb_out) != 0) <==> (\\old(*x) == old_val);\n    ensures \\old(*x) == old_val ==> *x == new_val;\n    ensures \\old(*x) != old_val ==> *x == \\old(*x); \n    ensures \\initialized(swdb_out);",
+      "new_name": "compare_and_swap_out",
+      "original_contract": "requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x;\n    ensures \\initialized(x);\n    ensures (\\result != 0) <==> (\\old(*x) == old_val);\n    ensures \\old(*x) == old_val ==> *x == new_val;\n    ensures \\old(*x) != old_val ==> *x == \\old(*x);",
+      "result_type": "bool"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "fetch_and_add_size_t",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, x);\n requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x, *swdb_out;\n    ensures \\initialized(x);\n    ensures *x == ((integer)\\old(*x) + inc) % ((integer)SIZE_MAX + 1);\n    ensures (*swdb_out) == \\old(*x); \n    ensures \\initialized(swdb_out);",
+      "new_name": "fetch_and_add_size_t_out",
+      "original_contract": "requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x;\n    ensures \\initialized(x);\n    ensures *x == ((integer)\\old(*x) + inc) % ((integer)SIZE_MAX + 1);\n    ensures \\result == \\old(*x);",
+      "result_type": "size_t"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "std_min_size_t",
+      "new_contract": "requires \\valid(swdb_out); \n assigns *swdb_out;\n    ensures a <= b ==> (*swdb_out) == a;\n    ensures a > b ==> (*swdb_out) == b; \n    ensures \\initialized(swdb_out);",
+      "new_name": "std_min_size_t_out",
+      "original_contract": "assigns \\nothing;\n    ensures a <= b ==> \\result == a;\n    ensures a > b ==> \\result == b;",
+      "result_type": "size_t"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "omp_get_thread_num",
+      "new_contract": "requires \\valid(swdb_out); \n assigns *swdb_out;\n    ensures (*swdb_out) == 0; \n    ensures \\initialized(swdb_out);",
+      "new_name": "omp_get_thread_num_out",
+      "original_contract": "assigns \\nothing;\n    ensures \\result == 0;",
+      "result_type": "int"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_NodeID_operator_index",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_ + n; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_NodeID_operator_index_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns \\nothing; ensures \\result == self->start_ + n;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_NodeID_data",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_NodeID_data_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_NodeID_beginp",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_NodeID_beginp_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_NodeID_endp",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    assigns *swdb_out; ensures (*swdb_out) == self->end_size_; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_NodeID_endp_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    assigns \\nothing; ensures \\result == self->end_size_;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_SGOffset_operator_index",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_ + n; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_SGOffset_operator_index_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns \\nothing; ensures \\result == self->start_ + n;",
+      "result_type": "SGOffset *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_SGOffset_data",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_SGOffset_data_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;",
+      "result_type": "SGOffset *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_SGOffset_beginp",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_SGOffset_beginp_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;",
+      "result_type": "SGOffset *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "pvector_SGOffset_endp",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    assigns *swdb_out; ensures (*swdb_out) == self->end_size_; \n    ensures \\initialized(swdb_out);",
+      "new_name": "pvector_SGOffset_endp_out",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    assigns \\nothing; ensures \\result == self->end_size_;",
+      "result_type": "SGOffset *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "SlidingQueue_NodeID_beginp",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires gapbs_queue_domain(self);\n    assigns *swdb_out; ensures (*swdb_out) == self->shared; \n    ensures \\initialized(swdb_out);",
+      "new_name": "SlidingQueue_NodeID_beginp_out",
+      "original_contract": "requires gapbs_queue_domain(self);\n    assigns \\nothing; ensures \\result == self->shared;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "SlidingQueue_NodeID_endp",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires gapbs_queue_domain(self);\n    assigns *swdb_out; ensures (*swdb_out) == self->shared + self->shared_max_size; \n    ensures \\initialized(swdb_out);",
+      "new_name": "SlidingQueue_NodeID_endp_out",
+      "original_contract": "requires gapbs_queue_domain(self);\n    assigns \\nothing; ensures \\result == self->shared + self->shared_max_size;",
+      "result_type": "NodeID *"
+    },
+    {
+      "body": true,
+      "file": "gapbs_models.h",
+      "name": "SlidingQueue_NodeID_size",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires gapbs_queue_domain(self);\n    assigns *swdb_out;\n    ensures (*swdb_out) == self->shared_out_end - self->shared_out_start; \n    ensures \\initialized(swdb_out);",
+      "new_name": "SlidingQueue_NodeID_size_out",
+      "original_contract": "requires gapbs_queue_domain(self);\n    assigns \\nothing;\n    ensures \\result == self->shared_out_end - self->shared_out_start;",
+      "result_type": "size_t"
+    },
+    {
+      "body": false,
+      "file": "dxc_summaries.h",
+      "name": "__dxc_tile_size",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, dxc_tile_len + (0 .. DXC_NUM_TILES - 1), dxc_tile_data + (0 .. DXC_NUM_TILES - 1), dxc_pending + (0 .. DXC_NUM_TILES - 1));\n requires dxc_tile_ok(tile);\n    requires hazard_tile_size_ready: dxc_pending[tile] == 0;\n    requires 0 <= dxc_tile_len[tile] <= TILE_SIZE;\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == dxc_tile_len[tile];\n    exits \\false; \n    ensures \\initialized(swdb_out);",
+      "new_name": "__dxc_tile_size_out",
+      "original_contract": "requires dxc_tile_ok(tile);\n    requires hazard_tile_size_ready: dxc_pending[tile] == 0;\n    requires 0 <= dxc_tile_len[tile] <= TILE_SIZE;\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == dxc_tile_len[tile];\n    exits \\false;",
+      "result_type": "uint16_t"
+    },
+    {
+      "body": false,
+      "file": "dxc_summaries.h",
+      "name": "__dxc_tile_pointer",
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, dxc_tile_len + (0 .. DXC_NUM_TILES - 1), dxc_tile_data + (0 .. DXC_NUM_TILES - 1), dxc_pending + (0 .. DXC_NUM_TILES - 1));\n requires dxc_tile_ok(tile);\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == dxc_tile_data[tile];\n    exits \\false; \n    ensures \\initialized(swdb_out);",
+      "new_name": "__dxc_tile_pointer_out",
+      "original_contract": "requires dxc_tile_ok(tile);\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == dxc_tile_data[tile];\n    exits \\false;",
+      "result_type": "int *"
+    }
+  ],
+  "control_count": 30,
+  "evidence_sha256": "152d41c46e01829b00678fb235485d62d102c67b80a84db88f3e5900f465c4dc",
+  "finding": {
+    "generator_executed": false,
+    "id": "B1",
+    "kind": "physical-byte-source-gate-not-enforced",
+    "raw_crlf_sha256": "14d5f2392f87bfde7f9bebcaa3774362f63bb7d3858503d9bc7b654166ca6c1e",
+    "raw_lf_sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+    "source": "outslot_lowering.py:build",
+    "text_normalized_sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c"
+  },
+  "generator_or_actual_tools_executed": false,
+  "guard": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_controls.py",
+      "--output",
+      "/private/tmp/probata-t07-outslot-controls-final-20261016"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "finished": "2026-10-16 02:00:02 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.0002975416136905551,
+    "log": "/private/tmp/probata-t07-outslot-controls-final-20261016.log",
+    "log_sha256": "29cf1ef4454415a00ee97f7ed2be861de78f5a48ff2c172a4aa6b4312eb772c7",
+    "peak_rss_mb": 41.671875,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 60.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 73909,
+    "timed_out": false,
+    "timeout_s": 120.0,
+    "unconfirmed_children": [],
+    "wall_s": 1.197764125012327
+  },
+  "hash_errors": [],
+  "interface_count": 22,
+  "lexical_occurrences_checked": 53,
+  "new_source_pins": {
+    "bfs_unit.h": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+    "dxc_summaries.h": "6b109e09239be71e252ee25e4cfa720c1cf37b651a8f586423f0c8d43f2b37e5",
+    "gapbs_models.h": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
+    "tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa"
+  },
+  "old_source_pins": {
+    "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+    "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+    "gapbs_models.h": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+    "tdstep_standin.c": "f24d4fbac9646f3eb28637c591c8cef83a529d96907b1d3071bfadccc3a24de7"
+  },
+  "partial_preparation_only": true,
+  "remaining": [
+    "raw-byte source gate correction and genuine public CRLF refusal",
+    "new-method normal-reader helper/init/RTE/smoke proof duties",
+    "opaque defined-return/store ABI trust audit",
+    "new TD loop/hint anchor mapping",
+    "allocator/source/default-producer/caller/physical-span/lifetime/device correspondence"
+  ],
+  "repository_edits": false,
+  "review_md_sha256": "308575d7a17c3420200ecf3e535ad757e0ae6b81115cf1583da9c9d639e5b087",
+  "source": "1c018f1162cdef8fa97d70908a44f1a9bd2f7d5b",
+  "verdict": "REQUEST_CHANGES"
+}

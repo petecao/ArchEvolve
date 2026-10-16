@@ -1,0 +1,367 @@
+{
+  "date_et": "2026-10-16",
+  "status": "passive_design_only_not_formally_qualified",
+  "source_commit_supplied_by_root": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "actions": {
+    "primary_source_read": true,
+    "external_notes_written": true,
+    "repository_edits": false,
+    "git": false,
+    "ssh": false,
+    "compiler_or_verifier_or_version_calls": false,
+    "native_controls": false,
+    "formal_jobs": false
+  },
+  "recommendation": {
+    "scope": "one thread-zero TDStep QueueBuffer successful normal allocation of exactly 16384 NodeID elements; lexical lifetime; no escaped alias or allocation-address observation",
+    "representation": "compiler-created automatic NodeID array without initializer, constructor receives fresh storage through extra private ABI argument; allocation adapter binds pointer through explicitly initialized private pointer output slot",
+    "not_a_general_allocator": true,
+    "sliding_queue": "incoming symbolic num_nodes typed new-array producer outside TDStep; retain capacity, initialized prefix, distinctness and producer history obligations; no 16384 substitution"
+  },
+  "proof_acceptance": false,
+  "remaining_obligations": [
+    "independent source/refinement and private ABI review",
+    "exact local array initializedness semantics and no binit/global-zero leakage",
+    "same-path positive and omitted-store/payload-read/source-uninitialized-return negatives under retained RTE init",
+    "physical alignment via exact typed source producer; backend alignment limitation retained",
+    "exact same live array identity and extent before subtraction",
+    "adjacent destructor/scope retirement and no alias escape or address-sensitive observations",
+    "helper-only modular proof separated from allocation-site caller witness",
+    "full TD original posts, frames, all helper/RTE/init/smoke inventory under a new source/method"
+  ],
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+      "bytes": 15802,
+      "excerpts": [
+        {
+          "start": 14,
+          "end": 65,
+          "text": "typedef int32_t NodeID;    /* benchmark.h:29 */\ntypedef int32_t SGOffset;  /* graph.h:90 */\n\n/* CSRGraph<NodeID> (graph.h:93); Graph is its typedef (benchmark.h:33). */\ntypedef struct CSRGraph_NodeID {\n  bool directed_;\n  int64_t num_nodes_;\n  int64_t num_edges_;\n  NodeID **out_index_;\n  NodeID *out_neighbors_;\n  NodeID **in_index_;\n  NodeID *in_neighbors_;\n} Graph;\n\nstruct pvector_NodeID { NodeID *start_; NodeID *end_size_; NodeID *end_capacity_; };\nstruct pvector_SGOffset { SGOffset *start_; SGOffset *end_size_; SGOffset *end_capacity_; };\n\nstruct SlidingQueue_NodeID {\n  NodeID *shared;\n  size_t shared_in;\n  size_t shared_out_start;\n  size_t shared_out_end;\n  size_t shared_max_size;\n};\n\nstruct QueueBuffer_NodeID {\n  size_t in;\n  NodeID *local_queue;\n  struct SlidingQueue_NodeID *sq;  /* SlidingQueue<T> &sq */\n  size_t local_size;               /* const size_t */\n};\n\n/* Source-domain repair, 2026-10-16 ET. These are representation/call domains,\n   not loop proof hints. Empty spans permit a live one-past endpoint, never a\n   null or expired pointer. This is the restricted C hand model, not a complete\n   contract for every C++11 iterator accepted by the standard library. */\n/*@\n  predicate gapbs_nodeid_span{L}(NodeID *base, integer count) =\n    0 <= count <= PTRDIFF_MAX && \\object_pointer(base) &&\n    \\object_pointer(base + count) && \\base_addr(base) == \\base_addr(base + count);\n\n  predicate gapbs_queue_domain{L}(struct SlidingQueue_NodeID *self) =\n    \\valid(self) &&\n    \\initialized(&self->shared) && \\initialized(&self->shared_in) &&\n    \\initialized(&self->shared_out_start) && \\initialized(&self->shared_out_end) &&\n    \\initialized(&self->shared_max_size) &&\n    self->shared_out_start <= self->shared_out_end <= self->shared_in <= self->shared_max_size &&\n    gapbs_nodeid_span(self->shared, self->shared_max_size) &&\n    \\valid(self->shared + (0 .. self->shared_max_size - 1)) &&\n    \\separated(self, self->shared + (0 .. self->shared_max_size - 1));\n*/\n"
+        },
+        {
+          "start": 97,
+          "end": 128,
+          "text": "/* operator new NodeID[n] for the QueueBuffer of thread 0. WP does not implement \\fresh\n   (\"Allocation ... not yet implemented\"), so the lowering gives each thread's QueueBuffer its\n   own storage block; TDStep's precondition separates it from the unit's arrays.\n   Scope: exactly one thread-zero QueueBuffer construction/destruction lifetime\n   per TDStep, no escaped local-buffer view, no overlapping live construction and\n   no repeated destruction. This fixed-storage abstraction does not model a\n   general allocator, dangling pointers or reuse across simultaneous instances. */\n#define SWDB_LQUEUE_CAPACITY 16384\nNodeID swdb_lqueue_storage[SWDB_LQUEUE_CAPACITY];\n/*@\n  predicate gapbs_buffer_domain{L}(struct QueueBuffer_NodeID *self) =\n    \\valid(self) &&\n    \\initialized(&self->sq) && \\initialized(&self->local_size) &&\n    \\initialized(&self->in) && \\initialized(&self->local_queue) &&\n    gapbs_queue_domain(self->sq) &&\n    1 <= self->local_size <= SWDB_LQUEUE_CAPACITY && self->in <= self->local_size &&\n    self->local_queue == &swdb_lqueue_storage[0] &&\n    \\separated(self, self->sq,\n      self->local_queue + (0 .. self->local_size - 1),\n      self->sq->shared + (0 .. self->sq->shared_max_size - 1));\n*/\n/*@ requires n <= SWDB_LQUEUE_CAPACITY;\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == &swdb_lqueue_storage[0];\n    exits \\false; */\nNodeID *swdb_new_NodeID_array(size_t n);\n\n/*@ requires p == &swdb_lqueue_storage[0];\n    terminates \\true;\n    assigns \\nothing;\n    exits \\false; */"
+        },
+        {
+          "start": 258,
+          "end": 280,
+          "text": "/* sliding_queue.h:89-94 */\n/*@ requires \\valid(self) && gapbs_queue_domain(master);\n    requires 1 <= given_size <= SWDB_LQUEUE_CAPACITY;\n    requires \\separated(self, master, swdb_lqueue_storage + (0 .. SWDB_LQUEUE_CAPACITY - 1),\n      master->shared + (0 .. master->shared_max_size - 1));\n    assigns self->sq, self->local_size, self->in, self->local_queue;\n    ensures self->sq == master && self->local_size == given_size && self->in == 0;\n    ensures self->local_queue == &swdb_lqueue_storage[0];\n    ensures gapbs_buffer_domain(self); */\nvoid QueueBuffer_NodeID_QueueBuffer(struct QueueBuffer_NodeID *self, struct SlidingQueue_NodeID *master, size_t given_size) {\n  self->sq = master;\n  self->local_size = given_size;\n  self->in = 0;\n  self->local_queue = swdb_new_NodeID_array(self->local_size);\n}\n\n/* sliding_queue.h:96-98 */\n/*@ requires gapbs_buffer_domain(self);\n    assigns \\nothing; */\nvoid QueueBuffer_NodeID_destroy(struct QueueBuffer_NodeID *self) {\n  swdb_delete_NodeID_array(self->local_queue);\n}\n"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "f24d4fbac9646f3eb28637c591c8cef83a529d96907b1d3071bfadccc3a24de7",
+      "bytes": 14479,
+      "excerpts": [
+        {
+          "start": 64,
+          "end": 94,
+          "text": "    // final occupancy or a precomputed proof hint (source repair 2026-10-16 ET).\n    requires queue_storage: gapbs_queue_domain(queue) && queue->shared_max_size == num_nodes;\n    requires occupied_visited: \\forall integer p; 0 <= p < queue->shared_in ==>\n      0 <= queue->shared[p] < num_nodes && parent->start_[queue->shared[p]] >= 0;\n    requires occupied_distinct: \\forall integer p, q; 0 <= p < q < queue->shared_in ==>\n      queue->shared[p] != queue->shared[q];\n    requires separation: bfs_distinct_blocks(\\base_addr(VertexOffsets->start_), \\base_addr(g->out_neighbors_),\n      \\base_addr(parent->start_), \\base_addr(queue->shared), \\base_addr(&swdb_lqueue_storage[0]),\n      \\base_addr(g), \\base_addr(VertexOffsets), \\base_addr(parent), \\base_addr(queue));\n    requires context: \\forall integer a; 0 <= a < 8 ==>\n      dxc_tile_ok(swdb_contexts[0].tile[a]) && dxc_reg_ok(swdb_contexts[0].reg[a]) &&\n      (\\forall integer b; 0 <= b < a ==> swdb_contexts[0].tile[a] != swdb_contexts[0].tile[b] &&\n                                         swdb_contexts[0].reg[a] != swdb_contexts[0].reg[b]);\n    requires spd: \\forall integer t; 0 <= t < DXC_NUM_TILES ==>\n      \\valid(dxc_tile_data[t] + (0 .. TILE_SIZE - 1)) && 0 <= dxc_tile_len[t] <= TILE_SIZE &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(VertexOffsets->start_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(g->out_neighbors_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(parent->start_) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(queue->shared) &&\n      \\base_addr(dxc_tile_data[t]) != \\base_addr(&swdb_lqueue_storage[0]) &&\n      (\\forall integer t2; 0 <= t2 < t ==> \\base_addr(dxc_tile_data[t]) != \\base_addr(dxc_tile_data[t2]));\n    requires dx100_idle: dxc_idle;\n    assigns parent->start_[0 .. num_nodes - 1], queue->shared_in, queue->shared[queue->shared_in .. 36893488147419103231],\n      swdb_lqueue_storage[0 .. SWDB_LQUEUE_CAPACITY - 1],\n      dxc_tile_data[0 .. DXC_NUM_TILES - 1][0 .. TILE_SIZE - 1], dxc_tile_len[0 .. DXC_NUM_TILES - 1],\n      dxc_reg[0 .. DXC_NUM_REGS - 1], dxc_pending[0 .. DXC_NUM_TILES - 1],\n      dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];\n    ensures visited_parent_unchanged: \\forall integer v; 0 <= v < num_nodes && \\old(parent->start_[v]) >= 0 ==>\n      parent->start_[v] == \\old(parent->start_[v]);\n    ensures visited_iff_reachable: \\forall integer v; 0 <= v < num_nodes && \\old(parent->start_[v]) < 0 ==>\n      (parent->start_[v] >= 0 <==> bfs_reach{Pre}(queue, VertexOffsets->start_, g->out_neighbors_, v));"
+        },
+        {
+          "start": 119,
+          "end": 128,
+          "text": "  /* #pragma omp parallel: threads = 1, so the region body runs once, on thread 0 */\n  {\n    struct QueueBuffer_NodeID lqueue;\n    QueueBuffer_NodeID_QueueBuffer(&lqueue, queue, 16384);\n    /* @anchor stmt:after_lqueue */\n    const bool accelerate = swdb_acceleration_enabled && SlidingQueue_NodeID_size(queue) >= (size_t)SWDB_FRONTIER_THRESHOLD;\n    /* @anchor stmt:after_accelerate */\n    if (accelerate) {\n      dxc_context c = swdb_contexts[omp_get_thread_num()];\n      __dxc_const_i32(1, c.reg[2]);"
+        },
+        {
+          "start": 221,
+          "end": 230,
+          "text": "    /* @anchor stmt:before_flush */\n    QueueBuffer_NodeID_flush(&lqueue);\n    /* @anchor stmt:after_flush */\n    QueueBuffer_NodeID_destroy(&lqueue);\n  }\n  /* #ifdef GEM5: clear_mem_region() */\n  clear_mem_region();\n  /* @anchor stmt:exit */\n}"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/libc/stdlib.h",
+      "sha256": "0c15b8caa3f8622d2abdbee5d84d309c4cfd28621722b968e3dbc5462c22f9af",
+      "bytes": 46198,
+      "excerpts": [
+        {
+          "start": 580,
+          "end": 601,
+          "text": "\n/* ISO C: 7.20.3.1 */\n/*@\n  allocates \\result;\n  assigns __fc_heap_status \\from indirect:nmemb, indirect:size, __fc_heap_status;\n  assigns \\result, __fc_errno \\from indirect:nmemb, indirect:size,\n                                    indirect:__fc_heap_status;\n\n  behavior allocation:\n    assumes can_allocate: is_allocable(nmemb * size);\n    ensures allocation: \\fresh(\\result, nmemb * size);\n    ensures alignment: \\aligned(\\result, alignof(max_align_t));\n    ensures initialization: \\initialized(((char *)\\result)+(0..nmemb*size-1));\n    ensures zero_initialization: \\subset(((char *)\\result)[0..nmemb*size-1], {0});\n    ensures errno_same: __fc_errno == \\old(__fc_errno);\n\n  behavior no_allocation:\n    assumes cannot_allocate: !is_allocable(nmemb * size);\n    allocates \\nothing;\n    assigns \\result \\from \\nothing;\n    ensures null_result: \\result == \\null;\n    ensures errno_set: __fc_errno == ENOMEM;"
+        },
+        {
+          "start": 607,
+          "end": 641,
+          "text": "/*@ allocates \\result;\n  @ assigns __fc_heap_status \\from size, __fc_heap_status;\n  @ assigns \\result, __fc_errno \\from indirect:size, indirect:__fc_heap_status;\n  @ behavior allocation:\n  @   assumes can_allocate: is_allocable(size);\n  @   assigns __fc_heap_status \\from size, __fc_heap_status;\n  @   assigns \\result \\from indirect:size, indirect:__fc_heap_status;\n  @   ensures allocation: \\fresh(\\result,size);\n  @   ensures alignment: \\aligned(\\result, alignof(max_align_t));\n  @   ensures errno_same: __fc_errno == \\old(__fc_errno);\n  @ behavior no_allocation:\n  @   assumes cannot_allocate: !is_allocable(size);\n  @   allocates \\nothing;\n  @   assigns \\result \\from \\nothing;\n  @   ensures null_result: \\result==\\null;\n  @   ensures errno_set: __fc_errno == ENOMEM;\n  @ complete behaviors;\n  @ disjoint behaviors;\n  @*/\nextern void *malloc(size_t size);\n\n/*@ requires freeable: p==\\null || \\freeable(p);\n  @ frees p;\n  @ assigns  __fc_heap_status \\from __fc_heap_status;\n  @ behavior deallocation:\n  @   assumes  nonnull_p: p!=\\null;\n  @   assigns  __fc_heap_status \\from __fc_heap_status;\n  @   ensures  freed: \\allocable(p);\n  @ behavior no_deallocation:\n  @   assumes  null_p: p==\\null;\n  @   frees    \\nothing;\n  @   assigns  \\nothing;\n  @ complete behaviors;\n  @ disjoint behaviors;\n  @*/"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03",
+      "bytes": 41615,
+      "excerpts": [
+        {
+          "start": 871,
+          "end": 886,
+          "text": "    | Pinitialized(label, t) -> initialized env label t\n\n    | Paligned (_t, _n) ->\n      Warning.error\n        \"\\\\aligned not yet implemented\"\n\n    | Pvalid_function _t ->\n      Warning.error\n        \"\\\\valid_function not yet implemented@\\n\\\n         @[<hov 0>(%a)@]\" Printer.pp_predicate p\n\n    | Pallocable _ | Pfreeable _ | Pfresh _ | Pdangling _ ->\n      Warning.error\n        \"Allocation, initialization and danglingness not yet implemented@\\n\\\n         @[<hov 0>(%a)@]\" Printer.pp_predicate p\n"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cvalues.ml",
+      "sha256": "c04b39f6a15932715d694b9679a4fcae88c4b8ae45979ee60977efebf9fb6b80",
+      "bytes": 31893,
+      "excerpts": [
+        {
+          "start": 108,
+          "end": 124,
+          "text": "  | C_int _ | C_float _ | C_pointer _ -> value\n  | C_comp ci -> init_comp_value value ci\n  | C_array _ as arr ->\n    Lang.F.e_const Lang.t_int\n      (init_value value (object_of_array_elem arr))\nand init_comp_value value ci =\n  match ci.cfields with\n  | None -> initialized_value_opaque_comp value ci\n  | Some fields ->\n    let make f = cfield ~kind:KInit f, init_value value (object_of f.ftype) in\n    Lang.F.e_record (List.map make fields)\n\nlet initialized_obj = init_value e_true\nlet uninitialized_obj = init_value e_false\n\nlet always_initialized x =\n  (x.vformal || x.vglob) && not @@ Ast_types.is_struct_or_union x.vtype"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5",
+      "bytes": 40201,
+      "excerpts": [
+        {
+          "start": 64,
+          "end": 95,
+          "text": "         - an allocation table A : base -> int\n         - for each kind of cell (char,int,float,pointer(ptr)) with type T, a map (M_T) : addr -> T\n\n    - a pointer is record { base ; offset }, offset are in number of cells\n\n    - allocation table: indicate the size (in number of cell not sizeof)\n       allocated of each base.\n         - = 0 : free\n         - > 0 : allocated read-write\n         - < 0 : allocated read only\n\n   semantic of all these functions:\n\n    - region(base -> int): the regions represent the natural partition of the memory\n       by the time when it have been allocated. So the regions are\n       identified by a number. So the addresses in one base are all in\n       the same region. Caveat the [region] function doesn't associate\n       the base to its region directly but to a congruence class that\n       depend of each function but which keeps the order:\n        - = 1 : regions corresponds to formals\n        - = 2 : regions corresponds to locals\n        - > 2 : freshly allocated bases (malloc)\n        - = 0 : globals (except string literals)\n        - < 0 : string literals (-its id)\n\n    - framed(M_ptr): All pointer values accessible from the memory M (of pointers),\n      lives in region <= 0. Hence separated from locals, formals, and\n      freshly allocated in the current function.\n\n    - linked(A): The proposition [linked] indicate that an allocation\n      table were the globals are allocated.\n"
+        },
+        {
+          "start": 531,
+          "end": 574,
+          "text": "      let region prefix x base =\n        let name = prefix ^ \"_region\" in\n        let re = if x.vglob then 0 else if x.vformal then 1 else 2 in\n        Definitions.define_lemma {\n          l_kind = Admit ;\n          l_name = name ; l_triggers = [] ; l_forall = [] ;\n          l_lemma = F.p_equal (MemAddr.region base) (F.e_int re) ;\n          l_cluster = cluster_globals () ;\n        }\n\n      let sizeof x =\n        Warning.handle\n          ~handler:(fun _ -> None)\n          ~fallback:(Printf.sprintf \"No allocation size for variable '%s'\" x.vname)\n          (fun t -> Some (length_of_object @@ Ctypes.object_of t))\n          x.vtype\n\n      let linked prefix x base =\n        let name = prefix ^ \"_linked\" in\n        let size = if x.vglob then sizeof x else Some F.e_zero in\n        match size with\n        | None -> ()\n        | Some size ->\n          let a = Lang.freshvar ~basename:\"alloc\" t_malloc in\n          let m = F.e_var a in\n          let m_linked = MemAddr.linked m in\n          let base_size = F.p_equal (F.e_get m base) size in\n          Definitions.define_lemma {\n            l_kind = Admit ;\n            l_name = name ;\n            l_triggers = [] ; l_forall = [] ;\n            l_lemma = F.p_forall [a] (F.p_imply m_linked base_size) ;\n            l_cluster = cluster_globals () ;\n          }\n\n      let binit prefix x base =\n        if Cvalues.always_initialized x then\n          let name = prefix ^ \"_binit\" in\n          Definitions.define_lemma {\n            l_kind = Admit ;\n            l_name = name ; l_triggers = [] ; l_forall = [] ;\n            l_lemma = MemAddr.binit base ;\n            l_cluster = cluster_globals () ;\n          }"
+        },
+        {
+          "start": 1073,
+          "end": 1094,
+          "text": "    else []\n  in\n  wellformed_frame MemAddr.linked T_alloc @\n  wellformed_frame MemMemory.scinit T_init @\n  wellformed_frame MemMemory.sconst (M_int (Ctypes.c_char ())) @\n  wellformed_frame MemMemory.framed M_pointer\n\nlet alloc sigma xs =\n  if xs = [] then sigma else Sigma.havoc_chunk sigma (State.chunk T_alloc)\n\nlet scope seq scope xs =\n  if xs = [] then [] else\n    let alloc =\n      List.fold_left\n        (fun m x ->\n           let size = match scope with\n             | Memory.Leave -> F.e_zero\n             | Memory.Enter -> length_of_typ x.vtype\n           in F.e_set m (BASE.get x) size)\n        (State.value seq.pre T_alloc) xs in\n    [ F.p_equal (State.value seq.post T_alloc) alloc ]\n"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6",
+      "bytes": 48928,
+      "excerpts": [
+        {
+          "start": 270,
+          "end": 277,
+          "text": "  let is_heap_allocated = function\n    | CREF | CVAL -> false | HEAP | CTXT _ | CARR _ -> true\n\n  type loc =\n    | Ref of varinfo\n    | Val of mem * varinfo * ofs list (* The varinfo has {i not} been contextualized yet *)\n    | Loc of M.loc (* Generalized In-Heap pointer *)\n"
+        },
+        {
+          "start": 530,
+          "end": 542,
+          "text": "        (M.load sigma obj (mloc_of_path m x ofs))\n\n  let load_init sigma obj = function\n    | Ref _ ->\n      e_true\n    | Val((CREF|CVAL),x,_) when Cvalues.always_initialized x ->\n      Cvalues.initialized_obj obj\n    | Val((CREF|CVAL),x,ofs) ->\n      access_init (SINIT.value sigma x) ofs\n    | Loc l ->\n      M.load_init sigma obj l\n    | Val((CTXT _|CARR _|HEAP) as m,x,ofs) ->\n      M.load_init sigma obj (mloc_of_path m x ofs)"
+        },
+        {
+          "start": 973,
+          "end": 1036,
+          "text": "\n  let is_mem x = match V.param x with\n    | ByAddr -> true\n    | _ -> false\n\n  let is_mvar_alloc x =\n    match V.param x with\n    | ByRef | InContext _ | InArray _ | NotUsed -> false\n    | ByValue | ByShift | ByAddr -> true\n\n  let alloc sigma xs =\n    let xm = List.filter is_mem xs in\n    let sigma = M.alloc sigma xm in\n    let xv = List.filter is_mvar_alloc xs in\n    let domain = Sigma.Domain.of_list @@ List.map SALLOC.chunk xv in\n    Sigma.havoc sigma domain\n\n  let scope_vars seq scope xs =\n    let xs = List.filter is_mvar_alloc xs in\n    if xs = [] then []\n    else\n      let t_in = seq.pre in\n      let t_out = seq.post in\n      let v_in  = match scope with Enter -> e_false | Leave -> e_true in\n      let v_out = match scope with Enter -> e_true | Leave -> e_false in\n      List.map\n        (fun x ->\n           F.p_and\n             (F.p_equal (SALLOC.value t_in x) v_in)\n             (F.p_equal (SALLOC.value t_out x) v_out)\n        ) xs\n\n  let scope_init seq scope xs =\n    match scope with\n    | Leave -> []\n    | Enter ->\n      let init_status v =\n        if v.vdefined || Cvalues.always_initialized v || not@@ is_mvar_alloc v\n        then None\n        else\n          let i = Cvalues.uninitialized_obj (Ctypes.object_of v.vtype) in\n          Some (Lang.F.p_equal (access_init (SINIT.value seq.post v) []) i)\n      in\n      List.filter_map init_status xs\n\n  let is_nullable m v =\n    let addr = nullable_address v in\n    p_or\n      (M.is_null @@ M.pointer_loc addr)\n      (p_equal (M.pointer_val @@ M.cvar (vbase m v)) addr)\n\n  let nullable_scope v =\n    match V.param v with\n    | InContext Nullable -> Some (is_nullable (CTXT Nullable) v)\n    | InArray Nullable -> Some (is_nullable (CARR Nullable) v)\n    | _ -> None\n\n  let scope seq scope xs =\n    let xm = List.filter is_mem xs in\n    let hmem = M.scope seq scope xm in\n    let hvars = scope_vars seq scope xs in\n    let hinit = scope_init seq scope xs in\n    let hcontext = List.filter_map nullable_scope xs in\n    hvars @ hinit @ hmem @ hcontext"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CfgWP.ml",
+      "sha256": "490ab8a263f85e50e304d6cd4ee9ff7a5137f1c7f00e4ec7cd7555b68483256c",
+      "bytes": 63415,
+      "excerpts": [
+        {
+          "start": 769,
+          "end": 785,
+          "text": "      Cil.isVolatileLval lv && Cvalues.volatile ~warn ()\n    in\n    if is_volatile \"write\" lv then None\n    else\n      let value = match expr.enode with\n        | Lval lv when not @@ is_volatile \"read\" lv ->\n          M.copied seq obj loc (C.lval seq.pre lv)\n        | _ ->\n          M.stored seq obj loc (C.val_of_exp seq.pre expr)\n      in\n      let init = match expr.enode with\n        | Lval lv when not @@ is_volatile \"read\" lv ->\n          M.copied_init seq obj loc (C.lval seq.pre lv)\n        | _ ->\n          M.stored_init seq obj loc (Cvalues.initialized_obj obj)\n      in\n      Some (value @ init)"
+        },
+        {
+          "start": 1443,
+          "end": 1464,
+          "text": "  let wp_scope env wp ~descr scope xs =\n    let sigma = L.current env in\n    let pre = M.alloc sigma xs in\n    let hs = M.scope { pre ; post = sigma } scope xs in\n    let vcs = gmap (assume_vc ~descr hs) wp.vcs in\n    { wp with sigma = Some pre ; vcs = vcs }\n\n  let scope wenv xs sc wp = in_wenv wenv wp\n      begin fun env wp ->\n        match sc with\n        | Mcfg.SC_Global ->\n          let hs = M.frame (L.current env) in\n          let vcs = gmap (assume_vc ~descr:\"Heap\" ~domain:true hs) wp.vcs in\n          { wp with vcs }\n        | Mcfg.SC_Frame_in ->\n          wp_scope env wp ~descr:\"Frame In\" Enter xs\n        | Mcfg.SC_Frame_out ->\n          wp_scope env wp ~descr:\"Frame Out\" Leave xs\n        | Mcfg.SC_Block_in ->\n          wp_scope env wp ~descr:\"Block In\" Enter xs\n        | Mcfg.SC_Block_out ->\n          wp_scope env wp ~descr:\"Block Out\" Leave xs"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CodeSemantics.ml",
+      "sha256": "433e507b252ce54eaded3f801b5fdd9aa21d8c781aff7eb4ecf6275d6d8ba728",
+      "bytes": 25072,
+      "excerpts": [
+        {
+          "start": 415,
+          "end": 438,
+          "text": "  let init_value ~sigma lv typ init =\n    let obj = Ctypes.object_of typ in\n    let outcome = Warning.catch\n        ~severe:false ~fallback:\"Skip initializer\"\n        (fun () ->\n           let l = lval sigma lv in\n           let value_hyp = match init with\n             | Some e ->\n               let v = M.load sigma obj l in\n               F.p_equal (val_of_exp sigma e) (cval v)\n             | None -> is_zero sigma obj l\n           in\n           let init_hyp = match init with\n             | Some { enode = Lval lv_init }\n               when Ast_types.is_struct_or_union (Cil.typeOfLval lv_init) ->\n               let l_initializer = lval sigma lv_init in\n               F.p_equal\n                 (M.load_init sigma obj l)\n                 (M.load_init sigma obj l_initializer)\n             | _ ->\n               M.initialized sigma (Rloc(obj, l))\n           in\n           value_hyp, init_hyp\n        ) () in"
+        },
+        {
+          "start": 616,
+          "end": 625,
+          "text": "  let init ~sigma v = function\n    | None -> [init_value ~sigma (Cil.var v) v.vtype None]\n    | Some (CInit init) -> List.rev (init_variable ~sigma (Cil.var v) init [])\n    | Some (StrInit s) ->\n      if Wp_parameters.Literals.get () then\n        init_string_literal ~sigma v s\n      else\n        [init_value ~sigma (Cil.var v) v.vtype None]\n\nend"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+      "sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9",
+      "bytes": 2160,
+      "excerpts": [
+        {
+          "start": 17,
+          "end": 25,
+          "text": "\n  predicate sconst (map addr int)\n  predicate framed (m : map addr addr) =\n    forall p:addr [m[p]]. region(p.base) <= 0 -> region(m[p].base) <= 0\n\n  predicate scinit (m : map addr bool) =\n    forall b:int [binit b]. binit b ->\n    forall p [m[p]]. p.base = b -> m[p]\n"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-outslot/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/OUTSLOT-ABI-20261016.md",
+      "sha256": "484b3a225108b9f1b49c814fd20d75ceb07817501703a7f2cb64f59238da5f89",
+      "bytes": 11562,
+      "excerpts": []
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-outslot/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/abi-map.json",
+      "sha256": "5c280a18d4efdeb8fbf3b7b833c7f550bc74121a54838a9b02a78556254ad578",
+      "bytes": 32210,
+      "excerpts": []
+    },
+    {
+      "path": "/private/tmp/probata-t07-pinned-headers-20261016/benchmarks/gapbs/src/sliding_queue.h",
+      "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+      "bytes": 2502,
+      "excerpts": [
+        {
+          "start": 24,
+          "end": 86,
+          "text": "template <typename T>\nclass SlidingQueue {\npublic:\n    T *shared;\n    size_t shared_in;\n    size_t shared_out_start;\n    size_t shared_out_end;\n    size_t shared_max_size;\n    friend class QueueBuffer<T>;\n\n    explicit SlidingQueue(size_t shared_size) {\n        shared_max_size = shared_size;\n        shared = new T[shared_size];\n        reset();\n    }\n\n    ~SlidingQueue() {\n        delete[] shared;\n    }\n\n    void push_back(T to_add) {\n        shared[shared_in++] = to_add;\n    }\n\n    bool empty() const {\n        return shared_out_start == shared_out_end;\n    }\n\n    void reset() {\n        shared_out_start = 0;\n        shared_out_end = 0;\n        shared_in = 0;\n    }\n\n    void slide_window() {\n        shared_out_start = shared_out_end;\n        shared_out_end = shared_in;\n    }\n\n    typedef T *iterator;\n\n    iterator begin() const {\n        return shared + shared_out_start;\n    }\n\n    iterator end() const {\n        return shared + shared_out_end;\n    }\n\n    T *beginp() const {\n        return shared;\n    }\n\n    T *endp() const {\n        return shared + shared_max_size;\n    }\n\n    size_t size() const {\n        return end() - begin();\n    }\n\n    int begin_idx() const {\n        return shared_out_start;"
+        },
+        {
+          "start": 91,
+          "end": 120,
+          "text": "class QueueBuffer {\n    size_t in;\n    T *local_queue;\n    SlidingQueue<T> &sq;\n    const size_t local_size;\n\npublic:\n    explicit QueueBuffer(SlidingQueue<T> &master, size_t given_size = 16384)\n        : sq(master), local_size(given_size) {\n        in = 0;\n        local_queue = new T[local_size];\n    }\n\n    ~QueueBuffer() {\n        delete[] local_queue;\n    }\n\n    void push_back(T to_add) {\n        if (in == local_size)\n            flush();\n        local_queue[in++] = to_add;\n    }\n\n    void flush() {\n        T *shared_queue = sq.shared;\n        size_t copy_start = fetch_and_add(sq.shared_in, in);\n        std::copy(local_queue, local_queue + in, shared_queue + copy_start);\n        in = 0;\n    }\n};"
+        }
+      ],
+      "fork_path": "benchmarks/gapbs/src/sliding_queue.h",
+      "git_blob_sha1": "fed319ea556423c55db8d995a97ea21a0f950da8",
+      "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/sliding_queue.h",
+      "retained_metadata_match": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-alignment-source-20261016/bfs.cc",
+      "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465",
+      "bytes": 20517,
+      "excerpts": [
+        {
+          "start": 227,
+          "end": 259,
+          "text": "void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {\n#ifdef GEM5\n    clear_mem_region();\n    add_mem_region(queue.beginp(), queue.endp());                   // 6\n    add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7\n    add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8\n    add_mem_region(parent.beginp(), parent.endp());                 // 9\n#endif\n#pragma omp parallel\n    {\n        QueueBuffer<NodeID> lqueue(queue);\n#pragma omp for nowait\n        for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {\n            NodeID u = queue.shared[i];\n            for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {\n                NodeID v = g.out_neighbors_[j];\n                NodeID curr_val = parent[v];\n                if (curr_val < 0) {\n                    // indirect write (parent, v_tile, u_tile)\n                    // core fetch v tile\n                    if (compare_and_swap(parent[v], curr_val, u)) {\n                        parent[v] = u;\n                        lqueue.push_back(v);\n                    }\n                }\n            }\n        }\n        lqueue.flush();\n    }\n#ifdef GEM5\n    clear_mem_region();\n#endif\n}"
+        },
+        {
+          "start": 314,
+          "end": 334,
+          "text": "pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,\n                      int alpha = 1, int beta = 18) {\n    int num_nodes = g.num_nodes();\n    int num_edges = g.num_edges_directed();\n    if (logging_enabled)\n        PrintStep(\"Source\", static_cast<int64_t>(source));\n    pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();\n    Timer t;\n    alloc_MAA();\n    init_MAA();\n    t.Start();\n    pvector<NodeID> parent = InitParent(g);\n    t.Stop();\n    if (logging_enabled)\n        PrintStep(\"i\", t.Seconds());\n    parent[source] = source;\n    SlidingQueue<NodeID> queue(g.num_nodes());\n    queue.push_back(source);\n    queue.slide_window();\n    Bitmap curr(g.num_nodes());\n    curr.reset();"
+        }
+      ],
+      "fork_path": "benchmarks/gapbs/src/bfs.cc",
+      "git_blob_sha1": "3f6d91b29dca5c2a42e918795f3f59e0f1bc630f",
+      "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bfs.cc",
+      "retained_metadata_match": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-alignment-source-20261016/benchmark.h",
+      "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f",
+      "bytes": 3565,
+      "excerpts": [
+        {
+          "start": 27,
+          "end": 39,
+          "text": "\n// Default type signatures for commonly used types\ntypedef int32_t NodeID;\ntypedef int32_t WeightT;\ntypedef NodeWeight<NodeID, WeightT> WNode;\n\ntypedef CSRGraph<NodeID> Graph;\ntypedef CSRGraph<NodeID, WNode> WGraph;\n\ntypedef BuilderBase<NodeID, NodeID, WeightT> Builder;\ntypedef BuilderBase<NodeID, WNode, WeightT> WeightedBuilder;\n\ntypedef WriterBase<NodeID, NodeID> Writer;"
+        }
+      ],
+      "fork_path": "benchmarks/gapbs/src/benchmark.h",
+      "git_blob_sha1": "1e305e5e7a6297ae5d96f5a50dc72fe8e3e1c651",
+      "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/benchmark.h",
+      "retained_metadata_match": true
+    },
+    {
+      "path": "/private/tmp/probata-t07-pinned-headers-20261016/pins.json",
+      "sha256": "88554fb3e9b4d21ceaa9d4cb4697d7ee3f70b237fd5b0570dbf80a15b383a4b6",
+      "bytes": 2402,
+      "excerpts": []
+    },
+    {
+      "path": "/private/tmp/probata-t07-alignment-source-20261016/pins.json",
+      "sha256": "25c048fa292746d5043f22f8706a30fd4de859a8b3047c8d23d755719571e8e0",
+      "bytes": 2917,
+      "excerpts": []
+    },
+    {
+      "path": "/private/tmp/probata-t07-pinned-headers-20261016/report.md",
+      "sha256": "cdb8e74cad8dadf2deb327b15e1a928ecd15566ebfdf3c3195745c8c061a1e12",
+      "bytes": 8284,
+      "excerpts": []
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/library/dx100/bfs_read_offload.inc",
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+      "bytes": 3157,
+      "excerpts": [
+        {
+          "start": 11,
+          "end": 22,
+          "text": "void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {\n#ifdef GEM5\n clear_mem_region();\n add_mem_region(queue.beginp(), queue.endp());\n add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());\n add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]);\n add_mem_region(parent.beginp(), parent.endp());\n#endif\n#pragma omp parallel\n {\n  QueueBuffer<NodeID> lqueue(queue);\n  const bool accelerate=swdb_acceleration_enabled&&queue.size()>=SWDB_FRONTIER_THRESHOLD;"
+        },
+        {
+          "start": 27,
+          "end": 44,
+          "text": "   for(size_t begin=queue.shared_out_start;begin<queue.shared_out_end;begin+=SWDB_CHUNK_SIZE){\n    const size_t end=std::min(begin+size_t(SWDB_CHUNK_SIZE),size_t(queue.shared_out_end));\n    __dxc_const_i32(begin,c.reg[0]);__dxc_const_i32(end,c.reg[1]);\n    __dxc_stream_load(queue.shared,c.reg[0],c.reg[1],c.reg[2],c.tile[0]);\n    __dxc_gather(VertexOffsets.data(),c.tile[0],c.tile[1]);\n    __dxc_gather(VertexOffsets.data()+1,c.tile[0],c.tile[2]);\n    __dxc_const_i32(0,c.reg[4]);__dxc_const_i32(-1,c.reg[5]);\n    __dxc_accelerated_chunk();\n    for(;;){\n     __dxc_range_loop(c.reg[4],c.reg[5],c.tile[1],c.tile[2],c.reg[2],c.tile[6],c.tile[7]);\n     __dxc_wait(c.tile[7]);\n     const unsigned count=__dxc_tile_size(c.tile[7]);if(count==0)break;\n     __dxc_gather(g.out_neighbors_,c.tile[7],c.tile[0]);\n     __dxc_gather(queue.shared+begin,c.tile[6],c.tile[3]);\n     __dxc_gather(parent.data(),c.tile[0],c.tile[5]);\n     __dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);\n     int*vertices=__dxc_tile_pointer<int>(c.tile[0]);int*frontier=__dxc_tile_pointer<int>(c.tile[3]);\n     int*hints=__dxc_tile_pointer<int>(c.tile[5]);"
+        },
+        {
+          "start": 45,
+          "end": 72,
+          "text": "     for(unsigned k=0;k<count;++k){\n      const NodeID v=vertices[k],u=frontier[k];const NodeID hint=hints[k];\n      const bool claimed=hint<0&&compare_and_swap(parent[v],hint,u);\n#ifdef SWDB_DXC_DIAGNOSTIC\n       const int fresh=__atomic_load_n(&parent[v],__ATOMIC_RELAXED);\n       const int degree=g.out_degree(v);\n       __dxc_cas_probe(v,hint,claimed,degree?-degree:-1,fresh,num_nodes);\n#endif\n      if(claimed){parent[v]=u;lqueue.push_back(v);}\n     }\n    }\n   }\n  }else{\n#pragma omp for nowait\n   for(size_t i=queue.shared_out_start;i<queue.shared_out_end;++i){\n    const NodeID u=queue.shared[i];\n    for(int j=VertexOffsets[u];j<VertexOffsets[u+1];++j){\n     const NodeID v=g.out_neighbors_[j],value=__atomic_load_n(&parent[v],__ATOMIC_RELAXED);\n     if(value<0&&compare_and_swap(parent[v],value,u)){parent[v]=u;lqueue.push_back(v);}\n    }\n   }\n  }\n  lqueue.flush();\n }\n#ifdef GEM5\n clear_mem_region();\n#endif\n}"
+        }
+      ],
+      "origin": "project-authored offloaded proof unit, not a blob claimed from DX100 fork",
+      "project_checkout_supplied_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c"
+    }
+  ],
+  "outslot_implementation_supplied_by_parent": {
+    "commit": "1c018f1162cdef8fa97d70908a44f1a9bd2f7d5b",
+    "allocator_gate": "REFUSED_PENDING_SEPARATE_REPAIR",
+    "next_interface": "Add private typed storage and capacity arguments to constructor and swdb_new_NodeID_array_out, replace bodyless static-global allocator summary with ordinary proved pointer-binding store; retain allocator/source gate until independent source and formal qualification."
+  },
+  "revision": "v2-exact-DX100-fork-and-project-offload-source",
+  "supersedes": {
+    "md": "/private/tmp/probata-t07-fresh-array-domain-design-20261016.md",
+    "md_sha256": "92dc3a7b6dc4da5dce9f91e86a3f4a528e34fb90cb87b5c194418969d4329012",
+    "json": "/private/tmp/probata-t07-fresh-array-domain-design-20261016.json",
+    "json_sha256": "3ef4fc5703452ca20f3a963f2fce87580bc6babbf6eb43c5c6a991a5c5530b51",
+    "reason": "Earlier source allocation citations used local upstream apps/gapbs rather than retained exact DX100 fork. Those earlier citations do not establish fork correspondence."
+  },
+  "fork_repository": "arkhadem/DX100",
+  "fork_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "passive_rechecks": {
+    "fork_files": [
+      {
+        "path": "benchmarks/gapbs/src/sliding_queue.h",
+        "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+        "git_blob_sha1": "fed319ea556423c55db8d995a97ea21a0f950da8",
+        "match": true
+      },
+      {
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465",
+        "git_blob_sha1": "3f6d91b29dca5c2a42e918795f3f59e0f1bc630f",
+        "match": true
+      },
+      {
+        "path": "benchmarks/gapbs/src/benchmark.h",
+        "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f",
+        "git_blob_sha1": "1e305e5e7a6297ae5d96f5a50dc72fe8e3e1c651",
+        "match": true
+      }
+    ],
+    "metadata_checks": 9,
+    "mismatches": 0,
+    "network_refetch": false,
+    "git_command": false
+  },
+  "bounded_nonescape_findings": {
+    "offload_unit": "bfs_read_offload.inc:21 constructs lqueue with default size;53/63 push scalar v;67 flush;68 closes scope. Registration14-17 and device/gather30-44 use queue.shared/graph/vector/tile buffers, never lqueue/local_queue.",
+    "fork_header": "local_queue is private field93; only allocation101, delete105, indexed store111 and std::copy117 use it. No getter or field exposure.",
+    "limits": "Structural source inspection is not whole-program escape proof. Standard allocator/copy/deallocator contracts, exceptions/hooks, replacement allocation and exact include/macro context remain qualification gates."
+  }
+}
