@@ -1300,3 +1300,9 @@ Independent review and a separately admitted four-leaf diagnostic must precede
 any full24 replay. No current proof record, caller dispatcher, model verdict or
 ticket acceptance is granted by this preparation. All previous inputs, outcomes
 and the old 017/2e01 partial producers remain unchanged.
+
+### 2026-10-16 06:06 ET — fresh grow21 partial cold and dtor settlement
+
+[Final grow21 cold closeout](../evidence/t25-grow21-partial-final-cold-audit-v1-20261016.md) at exact2e01 accepts partial classification only:two CVC5 Valid leaves and Z3 representation Valid; cells retains Alt-Ergo Timeout/CVC5 Unknown/Z3 Unknown,17targets unexecuted,0Csmokes. Root5653checks3272indexed refs plus1582opaque consumers0errors;397current raw and378prior017files retained. The20materialized SMTs do not certify submissions. Full model/caller/original-v2/refutation and the representation/cells AND group remain false. [Integration reconciliation](../evidence/grow21-e4-independent-integration-review-20261016.md) rehashes15local artifact references without remote repetition.
+
+Separate exact2e01/node1G619 dtor11 settled05:48:41 ET:producer11/11nativeValid,0Csmokes,guard95.784901578s971689984B/outer97.817638761s1025167360B,exit0/noOOMtimeout. [Metadata](../evidence/t25-dtor11-actual-metadata-v1-20261016.json) and [admission only](../evidence/reviewed-t25-qualified-dtor11-public-v1-launch-2e01d27d-20261016.json) remain distinct; independent complete cold/model acceptance is pending. All417rawfiles24,183,685B and exact2e01/oldML229 source remain unchanged. No full25 closure.

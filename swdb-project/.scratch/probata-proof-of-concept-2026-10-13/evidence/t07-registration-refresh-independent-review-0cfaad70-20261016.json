@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS prospective source/API review; native compile and fresh output GREEN pending root",
+  "source_commit": "0cfaad70854eaf8c836445f3bc3db1e8e0378d6d",
+  "reporter_sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+  "primary_source_pins": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property.ml",
+      "sha256": "de1b4754b20782e7a372519e5cd04341594c3221bbbf29d11b9e17b161600ed9",
+      "bytes": 53089
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property.mli",
+      "sha256": "0efc963d735bef59ab0cc2b6e75382a0c20c79e58bac87dd1e4e3eb09be6d9ed",
+      "bytes": 17642
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property_status.ml",
+      "sha256": "b2ac8acc3644512aac671748c19a6c2e646bd19ad9a8d44e8e5f0930d580f57e",
+      "bytes": 56506
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/statuses_by_call.ml",
+      "sha256": "8e69c695b146abb8e9d68848afbf7682353c652500cc33be31144ce3640d2a90",
+      "bytes": 6109
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/cil_types.ml",
+      "sha256": "b393ac623b124dbcf79adb1725bc32f273e9e1fc1a4d61cb3cf6a68cabc6c47a",
+      "bytes": 83963
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.ml",
+      "sha256": "eb637a45864b07030a826d3a5657634fad3db07304bd5eb2a9d30f7dd3fcb0b5",
+      "bytes": 39344
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.mli",
+      "sha256": "5f0f5e89d47e946f3d8c3e94001bfe808e61e1eae45bd863bec77b652e3bd12f",
+      "bytes": 10429
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/cfgAnnot.ml",
+      "sha256": "b28d95a0f032d23b6bb56908fc30c19fecf8a265d6d0536ebfe9703d68e55602",
+      "bytes": 23525
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/kernel_function.mli",
+      "sha256": "6698efc6f84449b81bb38c4007d18d05e35a6e30df8e1a98f10622c621a4e1fa",
+      "bytes": 11857
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_data/property_status.mli",
+      "sha256": "5622c48bf8bfae6622dc9ab31f3ca028cc8b48117873a53f4e6bb1009faba609",
+      "bytes": 10723
+    }
+  ],
+  "reviewed_preparation_references": 11,
+  "reviewer_execution": "Passive frozen Git/installed primary source/text/hash/JSON only; no compiler/native/tests/tool/probe/SSH/actual calls",
+  "fixedpoint_analysis": [
+    "Status.iter callback only updates localSet/Queue/pathmetadata, no Feedback/status lookup during mutable table iteration",
+    "Dependency/origin queue handles cycles with exportedSet; refreshes registeredmembership after each batch of registered-only consolidation",
+    "Consolidates each newly reached registered property once; rereads raw dependencies/origins; loops until no todo/newmembership/pending",
+    "Final serializer uses cached registered Extern results, no fresh Feedback/get_status on unregistered reference; does not claim allkernelstate purity or mathematical final-status invariance"
+  ],
+  "narrow_fallback": [
+    "UnregisteredIPOther must be actual live WPsmoke and rawdependencyempty, externfalse",
+    "UnregisteredIPPropertyInstance must be actual liveWpo, originregistered requires/nonAdmit, actual sameAST directVar/ConsInit callee and enclosingcaller, existing Some transposedpredicate/rawdependencyempty, externfalse",
+    "Allother unregistered families refuse with exact variant/file/line/property/description",
+    "Source-local statementIDs and predicates are metadata; coldcorrespondence required, no invented assumption or proven callprecondition"
+  ],
+  "actual_RED_boundary": [
+    "1395actual missing-store refusal retained; exact firstunknownvariant remains unconfirmed",
+    "0cfa changes noC/header/observer/prover/formula/policy; oldactuals never promoted",
+    "ZeroWpo phase completefalse prevents preWP report from supplying final completeness",
+    "51public reader-data controls are not OCamlserializer execution; root native/API and next scientifically warranted wrongcell export remain separate gates",
+    "Future reader must preserve rawIDs and validate strict same-source structural bijection, not generic aliases or reconstructed fresh rows"
+  ],
+  "fullticket_or_proof_acceptance": false,
+  "merge_advisory": "Candidate basedd1d9 predatesT25source; merge only exactreporter/evidence paths preserving current2e01 production, never checkout candidate over integration."
+}

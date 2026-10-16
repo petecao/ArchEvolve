@@ -837,7 +837,15 @@ class WpAdapter:
             semantics['unit_correctness_policy']=policy
             semantics['unit_requires'],semantics['unit_ensures']=[],[]
             rewritten=[re.sub(r"\bassigns\s+\\nothing\s*;",'assigns __swdb_dx_stream_meta;',text) for text in texts]
-            rewritten.append(r'terminates \false;')
+            # Formal halves may contain several clauses in one text. ACSL33
+            # requires requires -> terminates -> simple clauses, independently
+            # of those original text boundaries. Preserve predicate tokens;
+            # semicolon splitting would break quantified expressions.
+            from swdb.acsl_subset import tokens
+            original=tokens('\n'.join(sorted(rewritten,key=lambda t:0 if t.startswith('requires')else 1)))
+            at=next((i for i,t in enumerate(original)if t.kind=='id'and t.text in ('assigns','ensures')),len(original))
+            rewritten=[' '.join(t.text for t in original[:at])+r' terminates \false; '+
+                       ' '.join(t.text for t in original[at:])]
             return rewritten,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
         if dx100_size_source.size_layout(data):
             semantics['unit_requires'],semantics['unit_ensures']=[],[]

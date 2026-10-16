@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS preservation/prepublic-refusal only",
+  "source_commit": "e4cd1a6ed78e61394275af297c25557e14a2d228",
+  "local_checks": {
+    "selected_source_Git_sha256_oid_length": 464,
+    "consumer_Git_tree_ids": 11,
+    "compact_externalpointer_hashes": 7,
+    "packet_reference_hashes": 14,
+    "raw_ledger_counts": [
+      92,
+      1
+    ],
+    "consumer_ledger_files": 1540,
+    "mismatches": 0
+  },
+  "root_audit_attributed": {
+    "checks": 4582,
+    "indexed_references": 2734,
+    "wall_seconds": 3.508544442243874,
+    "peak_RSS_bytes": 43806720
+  },
+  "reviewer_execution": "Passive local metadata/Git/hash/text only; no remote raw rehash/SSH/probes/compiler/test/jobs",
+  "root_ledger": {
+    "bytes": 787922,
+    "path": "/private/tmp/probata-t28-stream-refusal-cold-root-execution-v3-20261016.json",
+    "sha256": "aee78179ad36870e6dd62b48871b3a5dde4cd07a3d76ecf08d62fb6e5ffa03f3"
+  },
+  "classification": {
+    "failure_stage": "catalog validation before WP",
+    "line_count": 17,
+    "reason": "terminates after post-condition, assigns or allocates",
+    "sites": [
+      {
+        "formal_half_line": 12,
+        "function": "get_tile_size",
+        "matching_log_lines": [
+          6
+        ],
+        "reason": "terminates after post-condition, assigns or allocates",
+        "site": "calls9"
+      },
+      {
+        "formal_half_line": 19,
+        "function": "maa_stream_load",
+        "matching_log_lines": [
+          7
+        ],
+        "reason": "terminates after post-condition, assigns or allocates",
+        "site": "calls21"
+      },
+      {
+        "formal_half_line": 17,
+        "function": "wait_ready",
+        "matching_log_lines": [
+          8
+        ],
+        "reason": "terminates after post-condition, assigns or allocates",
+        "site": "calls25"
+      }
+    ]
+  },
+  "boundaries": {
+    "actual_WP_artifacts": 0,
+    "formal_acceptance": false,
+    "hardware_liveness": false,
+    "model_acceptance": false,
+    "new_proof_records": 0,
+    "source_refinement": false,
+    "ticket28_resolved": false,
+    "wrong_size_executed": false
+  },
+  "preservation_requirement": "Before anysourcecheckoutcleanup rootmustpreserve exactGitref/reachableobjects/sourcefulltree/recoveryrecipe andallraw. Thisreviewdoesnotperformcleanup orattestremoteGitref existence.",
+  "old_refusals": "V1readeromittedsubjectkindsvocab andfailedidentity; V2typedASTdependencyrepairpolicyidentical. RootdispatcherV1inertargvbug retained; no actualstreamrerun."
+}
