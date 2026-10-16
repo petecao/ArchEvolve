@@ -174,7 +174,7 @@ def main():
     ap.add_argument("--budget-min", type=float, default=60.0)
     ap.add_argument("--rounds", type=int, default=10)
     a = ap.parse_args()
-    out = Path(a.out)
+    out = Path(a.out).resolve()
     if out.exists() and any(out.iterdir()):
         sys.exit(f"refusing: {out} is not empty")
     out.mkdir(parents=True, exist_ok=True)

@@ -374,8 +374,12 @@ def ctype(ty):
 
 def convert(ty, v):
     """C conversion of an integer value to type ty (modular for unsigned, wrap for signed: the x86_64 rule)."""
+    if isinstance(v, Ptr):
+        if ty[1] and ty[0].replace("const ", "").strip() not in ("int", "NodeID", "SGOffset", "int32_t"):
+            raise Unknown("pointer cast to another pointee type")
+        return v
     t = ctype(ty)
-    if t is None or not isinstance(v, (int, bool)) or isinstance(v, Ptr):
+    if t is None or not isinstance(v, (int, bool)):
         return v
     v = int(v)
     if t[0] == "bool":
@@ -548,6 +552,8 @@ def compare(op, a, b):
     if isinstance(b, bool):
         b = int(b)
     if isinstance(a, (Ptr, Base)) or isinstance(b, (Ptr, Base)):
+        if any(isinstance(x, (Ptr, Base)) and x.b == "?" for x in (a, b)):
+            raise Unknown("pointer outside the recorded blocks")
         if op in ("==", "!="):
             eq = a == b
             return eq if op == "==" else not eq

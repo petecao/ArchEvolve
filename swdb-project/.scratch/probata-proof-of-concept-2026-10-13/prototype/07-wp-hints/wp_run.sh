@@ -87,10 +87,14 @@ case "$mode" in
   # sequentially per process, so the partition shortens the wall time (run 27 best set: 360 s -> 219 s;
   # a 4-way split gave 215 s, CPU-bound). Never a verdict.
   round24p) [ -n "$cache_arg" ] || { echo "round24p needs <cache_dir>"; exit 2; }
+    # Selector 2 excludes @invariant so a check-kind invariant cannot land in two parts (review 2026-10-16).
+    k=0
+    for sel in "@invariant" "@requires,@check,@terminates,-@invariant" "-@invariant,-@requires,-@check,-@terminates"; do
+      k=$((k+1)); rm -rf "part$k" && mkdir -p "part$k/session" "$cache_arg/part$k" && cp ./*.c ./*.h "part$k/" || exit 2
+    done
     pids=""; k=0
-    for sel in "@invariant" "@requires,@check,@terminates" "-@invariant,-@requires,-@check,-@terminates"; do
-      k=$((k+1)); sub="part$k"; rm -rf "$sub" && mkdir -p "$sub/session" "$cache_arg/part$k" || exit 2
-      cp ./*.c ./*.h "$sub/" || exit 2
+    for sel in "@invariant" "@requires,@check,@terminates,-@invariant" "-@invariant,-@requires,-@check,-@terminates"; do
+      k=$((k+1)); sub="part$k"
       lem=""; [ $k -eq 3 ] && lem="-then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json"
       ( cd "$sub" && exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
         -wp -wp-fct TDStep -wp-prop="$sel" -wp-split-conj -wp-cache update -wp-cache-dir "$cache_arg/part$k" -wp-session session \
@@ -103,6 +107,8 @@ case "$mode" in
 g=[]
 for k in (1,2,3):
     g+=json.load(open(f"part{k}/goals.json"))
+names=[x["goal"] for x in g]
+assert len(names)==len(set(names)), "goal in two parts"
 json.dump(g,open("goals.json","w"))' || rc=1
     [ -f part3/lemmas.json ] && cp part3/lemmas.json lemmas.json
     exit $rc ;;
