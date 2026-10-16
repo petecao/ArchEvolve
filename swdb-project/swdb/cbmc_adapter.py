@@ -185,6 +185,18 @@ class CbmcAdapter:
         covered = proof_semantics.covered_names(self.library)
         declarations = (entry.get('proof_unit') or {}).get('array_domains')
         source_kwargs = dict(defines=self.defines, **proof_semantics.lowering_options(self.library))
+        # The exact synthetic trace imports scalar bodyless ghost queries only.
+        # Reuse the established full-TU callee/signature checker, without adding
+        # any pointer-domain or real-header exemption to the generic path.
+        from swdb import bounded_initialization
+        trace_policy = None
+        if bounded_initialization.DX100_TRACE_ENTRY in proof_semantics.current(self.library):
+            trace_model = proof_semantics.model_for(self.library, bounded_initialization.DX100_TRACE_ENTRY, self.defines)
+            trace_policy = bounded_initialization._dx100_trace_policy(self.library, trace_model, self.defines)
+            if trace_policy is not None:
+                source_kwargs['semantics']['audited_imports'] = {
+                    name: row for name, row in proof_semantics.imported_call_policies(self.library, self.defines).items()
+                    if name in trace_policy['calls']}
         if declarations:
             source_kwargs.update(array_domains=json.loads(json.dumps(declarations)),
                 array_domain_contract={'id': self.contract, 'sha256': job.unit.contract_sha256})
@@ -224,6 +236,30 @@ class CbmcAdapter:
             if proof_semantics.instance_bindings(lowering):
                 context['settings']['proof_semantics']['instances'] = proof_semantics.instance_bindings(lowering)
             context["model"] = model
+            if model.entry == bounded_initialization.DX100_TRACE_ENTRY:
+                settings = context['settings']['proof_semantics']
+                settings.update(scope='synthetic abstract scalar event trace only',
+                    exit_check='no pending abstract command at unit exit',
+                    native_address_abi='scalar abstract cell/region/tile IDs; no caller pointer mapping',
+                    counterexample_scope='abstract-model trace only; no hardware counterexample or source refinement')
+                from swdb import wp_pointer_bounds
+                try:
+                    import_report = wp_pointer_bounds.check(lowering)
+                    wp_pointer_bounds.check_semantic_origins(lowering, self.library, self.defines)
+                except wp_pointer_bounds.Refused as exc:
+                    context['settings']['verifier_launched'] = False
+                    return self._not_proven('unsupported_construct', str(exc), context)
+                imports = [row for row in import_report['sites'] if row.get('kind') == 'import'
+                           and row.get('call') in (trace_policy or {}).get('calls', [])]
+                settings['source_imports'] = [{k: v for k, v in row.items() if not k.startswith('_')} for row in imports]
+                bound_names = {(row.get('binding') or {}).get('name') for row in imports
+                               if row.get('binding') and not row.get('reason')}
+                if (trace_policy is None or not set(externals) <= bound_names
+                        or any(not row.get('binding') or row.get('reason') for row in imports)):
+                    context['settings']['verifier_launched'] = False
+                    return self._not_proven('unsupported_construct',
+                        'synthetic scalar queries need exact bodyless full-TU imports and model policy', context)
+                context['synthetic_trace_source_plan'] = {'source': str(source), 'kwargs': source_kwargs}
         problem = std_models.method_problem(self.method, lowering)
         if problem:
             raise AdapterError(problem)
@@ -291,6 +327,17 @@ class CbmcAdapter:
 
     def check_entry_windows(self, job, context, inputs=()):
         """Regenerate source, planner and both checked views immediately before launch."""
+        trace_plan = context.get('synthetic_trace_source_plan')
+        if trace_plan is not None:
+            from swdb import bounded_initialization, bounded_entry_windows, wp_pointer_bounds
+            model = context.get('model')
+            if bounded_initialization._dx100_trace_policy(self.library, model, self.defines) is None:
+                raise bounded_entry_windows.Refused('synthetic scalar model policy changed before launch')
+            try:
+                wp_pointer_bounds.recheck_source(context['lowering'], trace_plan)
+                wp_pointer_bounds.check_semantic_origins(context['lowering'], self.library, self.defines)
+            except wp_pointer_bounds.Refused as exc:
+                raise bounded_entry_windows.Refused(str(exc)) from None
         entry = self.library.get(self.contract) or {}
         declarations = (entry.get('proof_unit') or {}).get('array_domains')
         runtime = context.get('array_domain_runtime')
@@ -674,20 +721,29 @@ class CbmcAdapter:
         model = context.get("model")
         if model is not None:                        # ticket 27: the proof semantics and the reduction it rests on
             assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
-            assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
-                                "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
-                                            "command's values as if it finished at issue, hazards as its rules state."})
-            assumptions.append({"kind": "assumed_clause", "reference": {"id": model.entry, "sha256": model.sha256},
-                "sentence": "Native agreement and replay use Clang's flat 64-bit uintptr_t data-address ABI "
-                            "with 32-bit int; the model checks these widths at compilation. CBMC separately "
-                            "uses allocation-object IDs and offsets for footprint membership."})
-            reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
-            if not reduction.is_file():
-                reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
-            assumptions.append({"kind": "reduction", "reference": {
-                "id": "rocq.probata.dx100_reduction", "sha256": _sha256(reduction)},
-                "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket 43): a hazard-free "
-                            "at-issue run matches every timing gem5 allows."})
+            from swdb import bounded_initialization
+            if model.entry == bounded_initialization.DX100_TRACE_ENTRY:
+                assumptions.append({'kind': 'proof_semantics',
+                    'reference': {'id': model.entry, 'sha256': model.sha256},
+                    'sentence': 'This is a synthetic abstract scalar trace. Deferred history, ownership, '
+                                'region and pair checks describe its exact pinned model only; there is no '
+                                'real-header, CPU-access, typed-value, physical-address or hardware refinement '
+                                'certificate and no at-issue reduction claim.'})
+            else:
+                assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
+                                    "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
+                                                "command's values as if it finished at issue, hazards as its rules state."})
+                assumptions.append({"kind": "assumed_clause", "reference": {"id": model.entry, "sha256": model.sha256},
+                    "sentence": "Native agreement and replay use Clang's flat 64-bit uintptr_t data-address ABI "
+                                "with 32-bit int; the model checks these widths at compilation. CBMC separately "
+                                "uses allocation-object IDs and offsets for footprint membership."})
+                reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
+                if not reduction.is_file():
+                    reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
+                assumptions.append({"kind": "reduction", "reference": {
+                    "id": "rocq.probata.dx100_reduction", "sha256": _sha256(reduction)},
+                    "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket 43): a hazard-free "
+                                "at-issue run matches every timing gem5 allows."})
         if context.get("lowering") is not None:                                  # ticket 25
             ident, sha, _version = identities["c_lowering"]
             assumptions += std_models.assumptions(context["lowering"], identities["clang"][2],

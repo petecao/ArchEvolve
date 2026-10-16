@@ -276,6 +276,49 @@ DX100_CALLS = {"add_mem_region", "clear_mem_region", "get_cacheable_tile_pointer
                "maa_range_loop", "maa_stream_load", "swdb_dx_in_footprint", "wait_ready"}
 
 
+# 2026-10-16 ET. Exact synthetic scalar trace only; no hardware/source call exemption.
+DX100_TRACE_ENTRY = 'semantics.dx100_memory_trace_fixture_0_2'
+DX100_TRACE_ID = 'dx100-synthetic-scalar-memory-trace-1'
+DX100_TRACE_COMPONENTS = {'ghost': 'a71409828badd1e0cab4e2a73e2c1053caeaebba1dbd0fdb8a66709226231816', 'state': 'ffddb9894fb78489edc9a97361d2b401c4d3c9a4036af67b115142765dea4bca', 'c': '2fe44f7fea203d1f7914db6077b999d03f64a2e43472bd2884eb8e534e775be8', 'logic': 'cee8b8a666997386cd213c9708ffb78b33e8d521f2859bc3ac853f8bd3db112e'}
+DX100_TRACE_CONSTANTS = {'DX_K': 2, 'DX_NT': 4, 'DX_NR': 1, 'DX_NM': 2, 'DX_TS': 1}
+DX100_TRACE_QUERIES = {'swdb_t28_claim': 'int swdb_t28_claim(int thread, int tile, int bytes)', 'swdb_t28_cpu_write': 'int swdb_t28_cpu_write(int thread, int cell, int value)', 'swdb_t28_cpu_read': 'int swdb_t28_cpu_read(int thread, int cell)', 'swdb_t28_cpu_cas': 'int swdb_t28_cpu_cas(int thread, int cell, int expected, int desired)', 'swdb_t28_issue': 'int swdb_t28_issue(int thread, int access, int region, int cell, int tile, int bytes, int value)', 'swdb_t28_wait': 'int swdb_t28_wait(int tile)', 'swdb_t28_tile_read': 'int swdb_t28_tile_read(int thread, int tile, int bytes)', 'swdb_t28_pending': 'int swdb_t28_pending(int command)', 'swdb_t28_result': 'int swdb_t28_result(int command)', 'swdb_t28_ready': 'int swdb_t28_ready(int tile)'}
+DX100_TRACE_SHAPE_SHA256 = '8c1d71f33cfd1ee2d596a63bf7efec9d5bf75b9bb7830cf933a456c4fb46bdf0'
+DX100_TRACE_SCOPE = 'Synthetic scalar event traces use abstract cells and tile masks only, with four independently drawn initialized scalar choice cells and a fatal checked choice budget; all real DX100 calls are unsupported. This fixture supplies no header-body, CPU-access, address-translation, typed-value, hardware-counterexample, interleaving-completeness or current-version refinement certificate.'
+
+
+def _dx100_trace_policy(library, model, defines):
+    """Exact initialized scalar trace closure; no parameterized/arbitrary model admission."""
+    if library is None or model is None or model.entry != DX100_TRACE_ENTRY:
+        return None
+    from swdb import artifacts, proof_semantics
+    try:
+        entry = library.get(model.entry) or {}
+        if (_hash(entry) != DX100_TRACE_SHAPE_SHA256
+                or proof_semantics._constants(entry, defines) != DX100_TRACE_CONSTANTS
+                or any(type(value) is not int for value in entry['constants'].values())
+                or set(entry['model']) != {'state', 'c', 'logic'}
+                or entry['ghost'].get('capacity') != {'commands': 2}):
+            return None
+        references = {'ghost': entry['ghost']['acsl'], **entry['model']}
+        for reference in references.values():
+            library._pin(reference)
+        actual = {key: hashlib.sha256(library.resolve(ref).read_bytes()).hexdigest()
+                  for key, ref in references.items()}
+        if (actual != DX100_TRACE_COMPONENTS
+                or artifacts.file_hash(library.files[model.entry]) != model.sha256
+                or proof_semantics.model_for(library, model.entry, defines) != model
+                or set(model.queries) != set(DX100_TRACE_QUERIES)
+                or not set(model.queries) <= set(model.functions)
+                or set(model.calls) & set(model.functions)):
+            return None
+    except (OSError, KeyError, TypeError, ValueError, AttributeError):
+        return None
+    return {'id': DX100_TRACE_ID, 'entry': model.entry, 'entry_sha256': model.sha256,
+            'components': actual, 'generated_sha256': hashlib.sha256(model.c_text.encode()).hexdigest(),
+            'tile_objects': [{'name': name, 'elements': extent} for name, extent in model.tile_objects],
+            'calls': sorted(DX100_TRACE_QUERIES), 'scope': DX100_TRACE_SCOPE}
+
+
 def _dx100_policy(library, model, defines):
     if library is None or model is None:
         return None
@@ -287,7 +330,7 @@ def _dx100_policy(library, model, defines):
         actual = {key: hashlib.sha256(library.resolve(ref).read_bytes()).hexdigest()
                   for key, ref in references.items()}
         if actual != DX100_CONTENT or artifacts.file_hash(library.files[model.entry]) != model.sha256:
-            return None
+            return _dx100_trace_policy(library, model, defines)
         fresh = proof_semantics.model_for(library, model.entry, defines)
         if fresh != model:
             return None

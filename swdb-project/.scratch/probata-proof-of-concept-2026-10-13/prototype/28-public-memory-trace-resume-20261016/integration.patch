@@ -1,0 +1,175 @@
+--- a/swdb-project/swdb/bounded_initialization.py
++++ b/swdb-project/swdb/bounded_initialization.py
+@@ -276,6 +276,49 @@
+                "maa_range_loop", "maa_stream_load", "swdb_dx_in_footprint", "wait_ready"}
+ 
+ 
++# 2026-10-16 ET. Exact synthetic scalar trace only; no hardware/source call exemption.
++DX100_TRACE_ENTRY = 'semantics.dx100_memory_trace_fixture_0_2'
++DX100_TRACE_ID = 'dx100-synthetic-scalar-memory-trace-1'
++DX100_TRACE_COMPONENTS = {'ghost': 'a71409828badd1e0cab4e2a73e2c1053caeaebba1dbd0fdb8a66709226231816', 'state': 'ffddb9894fb78489edc9a97361d2b401c4d3c9a4036af67b115142765dea4bca', 'c': '2fe44f7fea203d1f7914db6077b999d03f64a2e43472bd2884eb8e534e775be8', 'logic': 'cee8b8a666997386cd213c9708ffb78b33e8d521f2859bc3ac853f8bd3db112e'}
++DX100_TRACE_CONSTANTS = {'DX_K': 2, 'DX_NT': 4, 'DX_NR': 1, 'DX_NM': 2, 'DX_TS': 1}
++DX100_TRACE_QUERIES = {'swdb_t28_claim': 'int swdb_t28_claim(int thread, int tile, int bytes)', 'swdb_t28_cpu_write': 'int swdb_t28_cpu_write(int thread, int cell, int value)', 'swdb_t28_cpu_read': 'int swdb_t28_cpu_read(int thread, int cell)', 'swdb_t28_cpu_cas': 'int swdb_t28_cpu_cas(int thread, int cell, int expected, int desired)', 'swdb_t28_issue': 'int swdb_t28_issue(int thread, int access, int region, int cell, int tile, int bytes, int value)', 'swdb_t28_wait': 'int swdb_t28_wait(int tile)', 'swdb_t28_tile_read': 'int swdb_t28_tile_read(int thread, int tile, int bytes)', 'swdb_t28_pending': 'int swdb_t28_pending(int command)', 'swdb_t28_result': 'int swdb_t28_result(int command)', 'swdb_t28_ready': 'int swdb_t28_ready(int tile)'}
++DX100_TRACE_SHAPE_SHA256 = '8c1d71f33cfd1ee2d596a63bf7efec9d5bf75b9bb7830cf933a456c4fb46bdf0'
++DX100_TRACE_SCOPE = 'Synthetic scalar event traces use abstract cells and tile masks only, with four independently drawn initialized scalar choice cells and a fatal checked choice budget; all real DX100 calls are unsupported. This fixture supplies no header-body, CPU-access, address-translation, typed-value, hardware-counterexample, interleaving-completeness or current-version refinement certificate.'
++
++
++def _dx100_trace_policy(library, model, defines):
++    """Exact initialized scalar trace closure; no parameterized/arbitrary model admission."""
++    if library is None or model is None or model.entry != DX100_TRACE_ENTRY:
++        return None
++    from swdb import artifacts, proof_semantics
++    try:
++        entry = library.get(model.entry) or {}
++        if (_hash(entry) != DX100_TRACE_SHAPE_SHA256
++                or proof_semantics._constants(entry, defines) != DX100_TRACE_CONSTANTS
++                or any(type(value) is not int for value in entry['constants'].values())
++                or set(entry['model']) != {'state', 'c', 'logic'}
++                or entry['ghost'].get('capacity') != {'commands': 2}):
++            return None
++        references = {'ghost': entry['ghost']['acsl'], **entry['model']}
++        for reference in references.values():
++            library._pin(reference)
++        actual = {key: hashlib.sha256(library.resolve(ref).read_bytes()).hexdigest()
++                  for key, ref in references.items()}
++        if (actual != DX100_TRACE_COMPONENTS
++                or artifacts.file_hash(library.files[model.entry]) != model.sha256
++                or proof_semantics.model_for(library, model.entry, defines) != model
++                or set(model.queries) != set(DX100_TRACE_QUERIES)
++                or not set(model.queries) <= set(model.functions)
++                or set(model.calls) & set(model.functions)):
++            return None
++    except (OSError, KeyError, TypeError, ValueError, AttributeError):
++        return None
++    return {'id': DX100_TRACE_ID, 'entry': model.entry, 'entry_sha256': model.sha256,
++            'components': actual, 'generated_sha256': hashlib.sha256(model.c_text.encode()).hexdigest(),
++            'tile_objects': [{'name': name, 'elements': extent} for name, extent in model.tile_objects],
++            'calls': sorted(DX100_TRACE_QUERIES), 'scope': DX100_TRACE_SCOPE}
++
++
+ def _dx100_policy(library, model, defines):
+     if library is None or model is None:
+         return None
+@@ -287,7 +330,7 @@
+         actual = {key: hashlib.sha256(library.resolve(ref).read_bytes()).hexdigest()
+                   for key, ref in references.items()}
+         if actual != DX100_CONTENT or artifacts.file_hash(library.files[model.entry]) != model.sha256:
+-            return None
++            return _dx100_trace_policy(library, model, defines)
+         fresh = proof_semantics.model_for(library, model.entry, defines)
+         if fresh != model:
+             return None
+--- a/swdb-project/swdb/cbmc_adapter.py
++++ b/swdb-project/swdb/cbmc_adapter.py
+@@ -185,6 +185,18 @@
+         covered = proof_semantics.covered_names(self.library)
+         declarations = (entry.get('proof_unit') or {}).get('array_domains')
+         source_kwargs = dict(defines=self.defines, **proof_semantics.lowering_options(self.library))
++        # The exact synthetic trace imports scalar bodyless ghost queries only.
++        # Reuse the established full-TU callee/signature checker, without adding
++        # any pointer-domain or real-header exemption to the generic path.
++        from swdb import bounded_initialization
++        trace_policy = None
++        if bounded_initialization.DX100_TRACE_ENTRY in proof_semantics.current(self.library):
++            trace_model = proof_semantics.model_for(self.library, bounded_initialization.DX100_TRACE_ENTRY, self.defines)
++            trace_policy = bounded_initialization._dx100_trace_policy(self.library, trace_model, self.defines)
++            if trace_policy is not None:
++                source_kwargs['semantics']['audited_imports'] = {
++                    name: row for name, row in proof_semantics.imported_call_policies(self.library, self.defines).items()
++                    if name in trace_policy['calls']}
+         if declarations:
+             source_kwargs.update(array_domains=json.loads(json.dumps(declarations)),
+                 array_domain_contract={'id': self.contract, 'sha256': job.unit.contract_sha256})
+@@ -224,6 +236,30 @@
+             if proof_semantics.instance_bindings(lowering):
+                 context['settings']['proof_semantics']['instances'] = proof_semantics.instance_bindings(lowering)
+             context["model"] = model
++            if model.entry == bounded_initialization.DX100_TRACE_ENTRY:
++                settings = context['settings']['proof_semantics']
++                settings.update(scope='synthetic abstract scalar event trace only',
++                    exit_check='no pending abstract command at unit exit',
++                    native_address_abi='scalar abstract cell/region/tile IDs; no caller pointer mapping',
++                    counterexample_scope='abstract-model trace only; no hardware counterexample or source refinement')
++                from swdb import wp_pointer_bounds
++                try:
++                    import_report = wp_pointer_bounds.check(lowering)
++                    wp_pointer_bounds.check_semantic_origins(lowering, self.library, self.defines)
++                except wp_pointer_bounds.Refused as exc:
++                    context['settings']['verifier_launched'] = False
++                    return self._not_proven('unsupported_construct', str(exc), context)
++                imports = [row for row in import_report['sites'] if row.get('kind') == 'import'
++                           and row.get('call') in (trace_policy or {}).get('calls', [])]
++                settings['source_imports'] = [{k: v for k, v in row.items() if not k.startswith('_')} for row in imports]
++                bound_names = {(row.get('binding') or {}).get('name') for row in imports
++                               if row.get('binding') and not row.get('reason')}
++                if (trace_policy is None or not set(externals) <= bound_names
++                        or any(not row.get('binding') or row.get('reason') for row in imports)):
++                    context['settings']['verifier_launched'] = False
++                    return self._not_proven('unsupported_construct',
++                        'synthetic scalar queries need exact bodyless full-TU imports and model policy', context)
++                context['synthetic_trace_source_plan'] = {'source': str(source), 'kwargs': source_kwargs}
+         problem = std_models.method_problem(self.method, lowering)
+         if problem:
+             raise AdapterError(problem)
+@@ -291,6 +327,17 @@
+ 
+     def check_entry_windows(self, job, context, inputs=()):
+         """Regenerate source, planner and both checked views immediately before launch."""
++        trace_plan = context.get('synthetic_trace_source_plan')
++        if trace_plan is not None:
++            from swdb import bounded_initialization, bounded_entry_windows, wp_pointer_bounds
++            model = context.get('model')
++            if bounded_initialization._dx100_trace_policy(self.library, model, self.defines) is None:
++                raise bounded_entry_windows.Refused('synthetic scalar model policy changed before launch')
++            try:
++                wp_pointer_bounds.recheck_source(context['lowering'], trace_plan)
++                wp_pointer_bounds.check_semantic_origins(context['lowering'], self.library, self.defines)
++            except wp_pointer_bounds.Refused as exc:
++                raise bounded_entry_windows.Refused(str(exc)) from None
+         entry = self.library.get(self.contract) or {}
+         declarations = (entry.get('proof_unit') or {}).get('array_domains')
+         runtime = context.get('array_domain_runtime')
+@@ -674,20 +721,29 @@
+         model = context.get("model")
+         if model is not None:                        # ticket 27: the proof semantics and the reduction it rests on
+             assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
+-            assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
+-                                "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
+-                                            "command's values as if it finished at issue, hazards as its rules state."})
+-            assumptions.append({"kind": "assumed_clause", "reference": {"id": model.entry, "sha256": model.sha256},
+-                "sentence": "Native agreement and replay use Clang's flat 64-bit uintptr_t data-address ABI "
+-                            "with 32-bit int; the model checks these widths at compilation. CBMC separately "
+-                            "uses allocation-object IDs and offsets for footprint membership."})
+-            reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
+-            if not reduction.is_file():
+-                reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
+-            assumptions.append({"kind": "reduction", "reference": {
+-                "id": "rocq.probata.dx100_reduction", "sha256": _sha256(reduction)},
+-                "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket 43): a hazard-free "
+-                            "at-issue run matches every timing gem5 allows."})
++            from swdb import bounded_initialization
++            if model.entry == bounded_initialization.DX100_TRACE_ENTRY:
++                assumptions.append({'kind': 'proof_semantics',
++                    'reference': {'id': model.entry, 'sha256': model.sha256},
++                    'sentence': 'This is a synthetic abstract scalar trace. Deferred history, ownership, '
++                                'region and pair checks describe its exact pinned model only; there is no '
++                                'real-header, CPU-access, typed-value, physical-address or hardware refinement '
++                                'certificate and no at-issue reduction claim.'})
++            else:
++                assumptions.append({"kind": "proof_semantics", "reference": {"id": model.entry, "sha256": model.sha256},
++                                    "sentence": f"The DX100 behaves as its proof semantics {model.entry} says: each "
++                                                "command's values as if it finished at issue, hazards as its rules state."})
++                assumptions.append({"kind": "assumed_clause", "reference": {"id": model.entry, "sha256": model.sha256},
++                    "sentence": "Native agreement and replay use Clang's flat 64-bit uintptr_t data-address ABI "
++                                "with 32-bit int; the model checks these widths at compilation. CBMC separately "
++                                "uses allocation-object IDs and offsets for footprint membership."})
++                reduction = Path(self.library.root) / "rocq" / "probata" / "Reduction.v"
++                if not reduction.is_file():
++                    reduction = paths.HOME / "library" / "rocq" / "probata" / "Reduction.v"
++                assumptions.append({"kind": "reduction", "reference": {
++                    "id": "rocq.probata.dx100_reduction", "sha256": _sha256(reduction)},
++                    "sentence": "The DX100 reduction lemma (Reduction.v, statement only; proof: ticket 43): a hazard-free "
++                                "at-issue run matches every timing gem5 allows."})
+         if context.get("lowering") is not None:                                  # ticket 25
+             ident, sha, _version = identities["c_lowering"]
+             assumptions += std_models.assumptions(context["lowering"], identities["clang"][2],

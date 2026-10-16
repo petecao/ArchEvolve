@@ -1,0 +1,44 @@
+{
+  "calls_supported": [],
+  "components": {
+    "c": "2fe44f7fea203d1f7914db6077b999d03f64a2e43472bd2884eb8e534e775be8",
+    "ghost": "a71409828badd1e0cab4e2a73e2c1053caeaebba1dbd0fdb8a66709226231816",
+    "logic": "cee8b8a666997386cd213c9708ffb78b33e8d521f2859bc3ac853f8bd3db112e",
+    "state": "ffddb9894fb78489edc9a97361d2b401c4d3c9a4036af67b115142765dea4bca"
+  },
+  "constants": {
+    "DX_K": 2,
+    "DX_NM": 2,
+    "DX_NR": 1,
+    "DX_NT": 4,
+    "DX_TS": 1
+  },
+  "date": "2026-10-16 ET",
+  "entry": "semantics.dx100_memory_trace_fixture_0_2",
+  "id": "dx100-synthetic-scalar-memory-trace-1",
+  "pointer_calls": [],
+  "queries": {
+    "swdb_t28_claim": "int swdb_t28_claim(int thread, int tile, int bytes)",
+    "swdb_t28_cpu_cas": "int swdb_t28_cpu_cas(int thread, int cell, int expected, int desired)",
+    "swdb_t28_cpu_read": "int swdb_t28_cpu_read(int thread, int cell)",
+    "swdb_t28_cpu_write": "int swdb_t28_cpu_write(int thread, int cell, int value)",
+    "swdb_t28_issue": "int swdb_t28_issue(int thread, int access, int region, int cell, int tile, int bytes, int value)",
+    "swdb_t28_pending": "int swdb_t28_pending(int command)",
+    "swdb_t28_ready": "int swdb_t28_ready(int tile)",
+    "swdb_t28_result": "int swdb_t28_result(int command)",
+    "swdb_t28_tile_read": "int swdb_t28_tile_read(int thread, int tile, int bytes)",
+    "swdb_t28_wait": "int swdb_t28_wait(int tile)"
+  },
+  "query_contract": "requires \\false; assigns \\nothing;",
+  "requires_exact_complete_inventory": true,
+  "requires_fresh_entry_sha256": true,
+  "requires_fresh_model_equality": true,
+  "scope": "Synthetic scalar event traces use abstract cells and tile masks only, with four independently drawn initialized scalar choice cells and a fatal checked choice budget; all real DX100 calls are unsupported. This fixture supplies no header-body, CPU-access, address-translation, typed-value, hardware-counterexample, interleaving-completeness or current-version refinement certificate.",
+  "source_pins": {
+    "apps/dx100/benchmarks/API/MAA.hpp": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+    "apps/dx100/benchmarks/API/MAA_gem5.hpp": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "tests/fixtures/proof/dx100/gem5-e4fc4af/IF.cc": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+    "tests/fixtures/proof/dx100/gem5-e4fc4af/SPD.cc": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a",
+    "tests/fixtures/proof/dx100/interface-declarations-e4fc4af.json": "d48a3971f2e9421e736d72ff160074f22e9cbbb7c9c756ef52457a5c4314b3b6"
+  }
+}

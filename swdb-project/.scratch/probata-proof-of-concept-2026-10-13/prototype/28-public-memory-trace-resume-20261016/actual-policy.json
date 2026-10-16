@@ -1,0 +1,189 @@
+{
+  "cases": [
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "same_thread_read_read",
+      "sha256": "e6302e738d0d56438bf86f50858ed3e69bacd240789fdf9beeea30e08ba31c01",
+      "source": "cases/same_thread_read_read.cc"
+    },
+    {
+      "expected_property": "same_thread_read_footprint_write",
+      "expected_verdict": "refuted",
+      "name": "same_thread_write_during_gather",
+      "sha256": "0bdbe1e669356c5b2b2bec3bc39fc265fb18da015896fe8674235ddac7eb0d0d",
+      "source": "cases/same_thread_write_during_gather.cc"
+    },
+    {
+      "expected_property": "store_footprint_cpu_access",
+      "expected_verdict": "refuted",
+      "name": "same_thread_read_during_store",
+      "sha256": "34b4a3a1840893bd31c0e68c9e51b02ab54f5d3b7699cd9e66bc36f6dfc0c877",
+      "source": "cases/same_thread_read_during_store.cc"
+    },
+    {
+      "expected_property": "store_footprint_cpu_access",
+      "expected_verdict": "refuted",
+      "name": "other_thread_read_during_store",
+      "sha256": "64d9a0a484ada4ebe73f8007aa3bc11e0891785bae62912b26c9f20aecf51cf6",
+      "source": "cases/other_thread_read_during_store.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "other_thread_cas_history_union",
+      "sha256": "1edbcb377b7320d5f384a4db0b0830472893bb150bfb91d133b4b525ec48dbf4",
+      "source": "cases/other_thread_cas_history_union.cc"
+    },
+    {
+      "expected_property": "postcondition",
+      "expected_verdict": "refuted",
+      "name": "other_thread_cas_issue_only",
+      "sha256": "abe83eececc2a1b5d4a8ef34ac509ab325a224a68b3ec79cef8dcb47a95defa4",
+      "source": "cases/other_thread_cas_issue_only.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "failed_cas_adds_no_history",
+      "sha256": "033f208f3ff56325fd53e6e03ba4f67cd31555297e6c1bb686192f4914a5856e",
+      "source": "cases/failed_cas_adds_no_history.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "preissue_visibility_excludes_older_value",
+      "sha256": "26293933283c0009b80f430f21adad4f50efe6c7bbd95e3862bbfd6279a10767",
+      "source": "cases/preissue_visibility_excludes_older_value.cc"
+    },
+    {
+      "expected_property": "postcondition",
+      "expected_verdict": "refuted",
+      "name": "preissue_visibility_old_value",
+      "sha256": "6568848beb0dfb0bd1ec98b0b5d4fb3c2c56ec00d1447176988677bca01c33a5",
+      "source": "cases/preissue_visibility_old_value.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "history_result_freezes_at_cover",
+      "sha256": "2c9f8ad0bf4d81b3b4c7e061ab4cf4d276e499dea6138ab17cb460a58139929b",
+      "source": "cases/history_result_freezes_at_cover.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "region_stall_cross_thread_covers_store",
+      "sha256": "de4fae7e08157be09e5a9bcece13a5126f8deaf7c1a20abfcee51d23d437df71",
+      "source": "cases/region_stall_cross_thread_covers_store.cc"
+    },
+    {
+      "expected_property": "postcondition",
+      "expected_verdict": "refuted",
+      "name": "region_read_read_does_not_cover",
+      "sha256": "5c60076c3cc5e001ac822601cc80abab0831ba00df46194a1b2794e0e6af27d1",
+      "source": "cases/region_read_read_does_not_cover.cc"
+    },
+    {
+      "expected_property": "postcondition",
+      "expected_verdict": "refuted",
+      "name": "region_other_write_does_not_cover",
+      "sha256": "976e34f5fa51d42a63b4905b995ae1191bf40cf2726f85f91158483ccaaf22d3",
+      "source": "cases/region_other_write_does_not_cover.cc"
+    },
+    {
+      "expected_property": "tile_ownership",
+      "expected_verdict": "refuted",
+      "name": "other_thread_ownership_command",
+      "sha256": "4b8dee951a108fd4b5f6fb1e7d8be8738c95c4426eaf3cd8e4d38777734ec09b",
+      "source": "cases/other_thread_ownership_command.cc"
+    },
+    {
+      "expected_property": "tile_ownership",
+      "expected_verdict": "refuted",
+      "name": "other_thread_ownership_tile_read",
+      "sha256": "359c3be4a7c9ac3dd66a1a13bc05db4459438bfa1e04834cd99634ade9addb8a",
+      "source": "cases/other_thread_ownership_tile_read.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "disjoint_thread_tiles",
+      "sha256": "5b518d1dbcae181a06e33a60bdf47acb63a87c56f1935c022f62249731ad0498",
+      "source": "cases/disjoint_thread_tiles.cc"
+    },
+    {
+      "expected_property": "pending_tile_write",
+      "expected_verdict": "refuted",
+      "name": "pair_8byte_second_half_cpu_read",
+      "sha256": "eb5e77a2d86afcdae957c01392d1b72e38fbc7c16319fa794c40e4f42c81815a",
+      "source": "cases/pair_8byte_second_half_cpu_read.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "pair_4byte_other_half_cpu_read",
+      "sha256": "95a38b2976e8d03a9378cd18f12ab5b0214887f8fc474fc095c922ad4944285f",
+      "source": "cases/pair_4byte_other_half_cpu_read.cc"
+    },
+    {
+      "expected_property": "pending_tile_write",
+      "expected_verdict": "refuted",
+      "name": "pair_8byte_second_half_command",
+      "sha256": "d850da2a806a4187b59146c1a4fda0f6bf13825640a5a933867cf156afe25db5",
+      "source": "cases/pair_8byte_second_half_command.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "pair_4byte_other_half_command",
+      "sha256": "0ec7c8343f4a80182078efd9ec1f46f3262447e1d497b0ba2b60c529fc5881a2",
+      "source": "cases/pair_4byte_other_half_command.cc"
+    },
+    {
+      "expected_property": "tile_ownership",
+      "expected_verdict": "refuted",
+      "name": "pair_8byte_missing_second_owner",
+      "sha256": "3e977b6e49afed8138c2e94d465e133273e708346caedc4dcb025f517c80115c",
+      "source": "cases/pair_8byte_missing_second_owner.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "pair_4byte_one_owner",
+      "sha256": "df72e29cc4efa8e2c5aed4063c885172003eea78aea1880d95c48b096f901c88",
+      "source": "cases/pair_4byte_one_owner.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "pair_second_half_wait_covers",
+      "sha256": "3f9f43e648cb2a3fd3cbb904b1badfa138fda7c52e1291f06c57a64aebc271ae",
+      "source": "cases/pair_second_half_wait_covers.cc"
+    },
+    {
+      "expected_property": null,
+      "expected_verdict": "proven",
+      "name": "logical_ready_one_covers_zero_requires_wait",
+      "sha256": "cc9941ca6ad5cb90311c62b275b049666205011bcb9654d4945b6e8604f2f871",
+      "source": "cases/logical_ready_one_covers_zero_requires_wait.cc"
+    },
+    {
+      "expected_property": "postcondition",
+      "expected_verdict": "refuted",
+      "name": "logical_ready_may_not_be_assumed_zero",
+      "sha256": "a8556895ee98e877227c40eb89c1fcc175451d5526cce728d27bfbff2c0f3527",
+      "source": "cases/logical_ready_may_not_be_assumed_zero.cc"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "junit_required": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  },
+  "scope": "abstract fixed-order model witnesses; never hardware/source-refinement witnesses",
+  "status": "unexecuted prospective root-admitted public suite",
+  "test": "test_public_actual.py::test_actual_public_abstract_memory_trace"
+}
