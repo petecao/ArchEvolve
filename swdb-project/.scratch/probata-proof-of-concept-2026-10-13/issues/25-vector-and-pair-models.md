@@ -83,6 +83,29 @@ clone before grammar/type feasibility is known. No solver/model-record success
 is claimed. Evidence: `../evidence/t25-reserved-name-failure-v1-20261015.json` and
 `../evidence/t25-effect-keyword-repair-controls-20261015.json`.
 
+### Exact theory syntax/type gate accepted — 2026-10-15 ET
+
+The coordinator's node0/lane 584 type-only run used unchanged bootstrap `c5216796`
+and exact new theory commit `9d8ca764`, Git blob `8b3c2bf3...`, content SHA
+`5186c27f...`. Pinned Why3 1.8.2 `prove --type-only` accepted the entire theory in
+0.0677s, peak 32,890,880 bytes; the whole guarded command exited 0 in 0.6519s,
+peak 62,087,168 bytes. There was no timeout/OOM; bootstrap remained clean and the
+lane naturally released. Only the unused witness dummy warning remains.
+
+The cold read-only audit checked 70 physical references with zero mismatches,
+including nine executables, two WP artifacts (pinned but unused by this type-only
+command), configuration, staged theory and 57 standard-library files. Fresh Git
+extraction matches the staged bytes; the declared library tree digest matches
+`520d9875...`. Evidence: `../evidence/t25-typecheck-cold-audit-v1-9d8ca764-20261015.json`.
+The separately retained entry review records the old-bootstrap/new-input boundary.
+Independent cold-result review is pending.
+
+This accepts grammar/types only, following [Why3's type-only option](https://why3.org/doc/manpages.html).
+It runs no WP or solver, creates no model-body proof record, and establishes no
+Frama-C import, source contract, or imported-task hypothesis result. The reviewed
+full 42-packet replay is next under coordinator admission; all acceptance boxes
+remain open.
+
 ## Acceptance
 
 - [ ] Each modeled member has a C function and an ACSL contract citing the standard's clause for it (`[vector]` for vector members). `swdb prove` proves every contract against its C function once, recorded with subject "a library entry's summary".
