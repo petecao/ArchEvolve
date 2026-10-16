@@ -10,16 +10,16 @@ import pytest
 from swdb.proof_setup import read_wp_reports
 
 
-def reports(tmp_path, mutate=None):
+def reports(tmp_path, mutate=None, mutate_native=None):
     target = {"goal": "typed_f_ensures", "property": "f_ensures", "function": "f",
               "line": 1, "smoke": False, "passed": True, "verdict": "valid",
               "provers": [{"prover": "fixture", "time": 0, "success": 1}]}
     smoke = {**target, "goal": "typed_f_wp_smoke_default_requires",
              "property": "f_wp_smoke_default_requires", "smoke": True,
-             "verdict": "none"}
+             "verdict": "unknown"}
     inventory = {"version": "1", "complete": True,
                  "goals": [{**target, "targets": [], "results": ["valid"]},
-                           {**smoke, "targets": ["f_ensures"], "results": []}],
+                           {**smoke, "targets": ["f_ensures"], "results": ["unknown"]}],
                  "properties": [
                      {"property": "f_ensures", "function": "f", "kind": "contract",
                       "line": 1, "extern": False, "dependencies": [], "origin": None,
@@ -32,7 +32,10 @@ def reports(tmp_path, mutate=None):
     if mutate:
         mutate(inventory)
     goals, properties, fresh = (tmp_path / name for name in ("goals.json", "properties.csv", "inventory.json"))
-    goals.write_text(json.dumps([target, smoke]))
+    native = [target, smoke]
+    if mutate_native:
+        mutate_native(native)
+    goals.write_text(json.dumps(native))
     properties.write_text("directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n"
                           ".\tf.c\t1\tf\tpostcondition\tValid\tf_ensures\n")
     fresh.write_text(json.dumps(inventory))

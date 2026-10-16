@@ -621,6 +621,24 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
     goals, unproven = [], []
     for name, expected in generated.items():
         raw_goal = reported.get(name)
+        if expected.get("smoke") and not isinstance(expected.get("passed"), bool):
+            return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name} has a malformed pass flag", goals)
+        if expected.get("smoke") and expected.get("passed") is True:
+            # Wpo.all_not_valid accepts an empty result list vacuously. A raw
+            # passed flag therefore cannot establish an attempted smoke check.
+            # Healthy nonvalid observations are operational evidence only; they
+            # do not prove satisfiability or consistency of the assumptions.
+            observations = expected.get("results")
+            healthy = {"unknown", "timeout", "stepout", "invalid"}
+            if (not isinstance(observations, list) or not observations or
+                    any(not isinstance(state, str) or state not in healthy for state in observations)):
+                return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name} lacks healthy nonvalid observations", goals)
+            if raw_goal is not None and (
+                    raw_goal.get("property") != expected["property"] or
+                    raw_goal.get("smoke") is not True or raw_goal.get("passed") is not True or
+                    not isinstance(raw_goal.get("verdict"), str) or
+                    raw_goal["verdict"] not in healthy or raw_goal["verdict"] not in observations):
+                return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name}: native report disagrees with observed inventory", goals)
         if raw_goal is None:
             direct = expected.get("passed") is True and (expected.get("smoke") or "valid" in expected.get("results", []))
             goal = {"goal": name, "property": expected.get("property"), "function": expected.get("function"),
