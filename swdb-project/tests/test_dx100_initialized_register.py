@@ -1,8 +1,21 @@
 """2026-10-16 ET. Public initialized-u32 normal-return source gate; no actual WP."""
-import json
+import json,re
 from pathlib import Path
 import yaml
 from testkit.dx100_initialized_register import prove_initialized_register
+from swdb.acsl_subset import tokens
+
+
+def assert_original_initialized_register_frame(text):
+ """Check the target unit's exact four locations independently of formatting."""
+ assert text.count('/* swdb-anchor trust_fixture.contract */')==1
+ unit=text.split('/* swdb-anchor trust_fixture.contract */',1)[1]
+ formal=re.match(r'\s*/\*@(?P<contract>.*?)\*/\s*int trust_fixture\(void\)\s*\{',unit,re.S)
+ assert formal is not None
+ frames=re.findall(r'\bassigns\b([^;]*);',formal['contract'])
+ assert len(frames)==1
+ assert [token.text for token in tokens(frames[0])]==[
+  'REG_count',',','SPD_count',',','region_count',',','__swdb_dx_reg_words','[','0','..','1',']']
 
 
 def test_public_initialized_u32_has_ordinary_prewrite_capacity_and_original_partial_frame(tmp_path):
@@ -17,6 +30,6 @@ def test_public_initialized_u32_has_ordinary_prewrite_capacity_and_original_part
  text=Path(wp['path']).read_text()
  assert r'requires 0 <= REG_count <= 31;'in text
  assert 'get_new_reg_unsigned_int_args1(7' in text and 'get_new_reg_unsigned_int_args1(11' in text
- assert 'REG_count, SPD_count, region_count, __swdb_dx_reg_words[0..1]'in text
+ assert_original_initialized_register_frame(text)
  assert r'terminates \false;'in text
  assert all(c['kind']=='dx100-initialized-u32-register-v1'for c in settings['source_definitions'])

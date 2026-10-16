@@ -1,0 +1,188 @@
+{
+  "actual_caller_frame": "assigns REG_count , SPD_count , region_count , __swdb_dx_reg_words [ 0 .. 1 ] ;",
+  "actual_formal_acceptance": false,
+  "actual_frame_tokens": [
+    "REG_count",
+    ",",
+    "SPD_count",
+    ",",
+    "region_count",
+    ",",
+    "__swdb_dx_reg_words",
+    "[",
+    "0",
+    "..",
+    "1",
+    "]"
+  ],
+  "compiler_observation_only_not_frame_semantics_theorem": true,
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "exact_four_expected_frame_entries_by_lexical_comparison": true,
+  "full_ticket28": false,
+  "inner_guard": {
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "exit_code": 1,
+    "inspection_events": [],
+    "inspection_failure": null,
+    "killed_by_watchdog": false,
+    "peak_rss_mb": 2691.8125,
+    "timed_out": false,
+    "unconfirmed_children": [],
+    "wall_s": 33.373200541653205
+  },
+  "junit": {
+    "cases": 1,
+    "errors": 0,
+    "failed_assertion": "unspaced frame substring",
+    "failed_source_line": "tests/test_dx100_initialized_register.py:20",
+    "failures": 1,
+    "later_selected_assertions_were_not_executed": true,
+    "skipped": 0
+  },
+  "native_caller_execution": false,
+  "other_passive_checks": {
+    "all_five_record_report_hashes_match": true,
+    "normal_public_method_two_translator_builder_preserved": true,
+    "retained_wp_input_terminates_false": true,
+    "source_before_after13_equal": true,
+    "source_definition_kinds_match": true
+  },
+  "record": {
+    "failure_class": "tool_crash",
+    "goals": 0,
+    "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t152357z.84353b9a",
+    "method_id": "method.dx100-initialized-register-partial-fixture-v1",
+    "proof_setup_check_verdict": "passed",
+    "source_definition_kinds": [
+      "dx100-initialized-u32-register-v1",
+      "dx100-initialized-u32-register-v1",
+      "dx100-initialized-u32-register-v1"
+    ],
+    "standin_marker_exists": true,
+    "subject": {
+      "id": "contract.dx100_initialized_register_partial_fixture.v1",
+      "kind": "partial_library_summary"
+    },
+    "tools_and_prover_labels_are_metadata_not_execution_attestation": true,
+    "unit_ensures": [],
+    "unit_requires": [],
+    "unproven_properties": 0,
+    "verdict": "not_proven"
+  },
+  "recorded_settlement": {
+    "finite_sweeps": [
+      {
+        "active_selected_tools": [],
+        "inspection_denials": [],
+        "same_uid_metadata_count": 692
+      },
+      {
+        "active_selected_tools": [],
+        "inspection_denials": [],
+        "same_uid_metadata_count": 692
+      },
+      {
+        "active_selected_tools": [],
+        "inspection_denials": [],
+        "same_uid_metadata_count": 692
+      }
+    ],
+    "fresh_live_process_inspection_by_reviewer": false,
+    "leases_present": [],
+    "runtime_pins_unchanged": true,
+    "source_unchanged": true
+  },
+  "refs": [
+    {
+      "bytes": 4693,
+      "path": "/private/tmp/probata-root-initialized-public-execution-v1-20261016.json",
+      "sha256": "2d8adc7dd839233329c94fafac326b7c574ac69a37c519f45e7e176ba6bdf139"
+    },
+    {
+      "bytes": 4376,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/root-preflight.json",
+      "sha256": "c6a9749049abc7d4908bb1df081ef0f6a2d92efc897f054e8b9488fa1724633c"
+    },
+    {
+      "bytes": 175,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/outer-receipt.json",
+      "sha256": "e33c6eb4dcd11a824cf8b17f7f091e99d10236c24319dce2f26bf89cfa927f55"
+    },
+    {
+      "bytes": 2496,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/guard.log.summary.json",
+      "sha256": "7ef986b53a7aee33eaa1838594b9eefa8627e903149184c4e44b9c24af5b01d0"
+    },
+    {
+      "bytes": 273,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/guard.log.wait.json",
+      "sha256": "424a16702f69ed735ce5e0168fc31181b79496e02376a2881d71be320874506d"
+    },
+    {
+      "bytes": 391,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/result.json",
+      "sha256": "b67d32382c5fe46dfe59b845d319d9a49ce4a8643ea5e6863df6dd8a19626f7a"
+    },
+    {
+      "bytes": 2411,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/junit.xml",
+      "sha256": "91da7b0ad811c5eba9048ae65b3128db86c3577c6dda75524b44ec6c2acb3494"
+    },
+    {
+      "bytes": 2095,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/pytest.log",
+      "sha256": "90a81c266e77809849cabae238867cbb9049dbe9b58a6dbb4ef803f9f6c55baf"
+    },
+    {
+      "bytes": 1455,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/command.json",
+      "sha256": "6c32a5b1b27d4896988e11063ab29bec3dd42f66acc96a556021a83dde6c7219"
+    },
+    {
+      "bytes": 2678,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/source-before.json",
+      "sha256": "6a1f48bdc7493fdb565062d74b4dcb171641f15db6b8c594db300eda9c0033cf"
+    },
+    {
+      "bytes": 2678,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/source-after.json",
+      "sha256": "6a1f48bdc7493fdb565062d74b4dcb171641f15db6b8c594db300eda9c0033cf"
+    },
+    {
+      "bytes": 950187,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/runtime-before.json",
+      "sha256": "67804e55f69b188983493033ec8180f6c784b181831d0db12919b401bea7e0c0"
+    },
+    {
+      "bytes": 30744,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/artifact-manifest.json",
+      "sha256": "41559380b5878265cacbdc58172e3ed7141eeb999e4da62c17cbe7b3c2723641"
+    },
+    {
+      "bytes": 14609111,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/pytest/test_public_initialized_u32_ha0/records/proofs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t152357z.84353b9a.yaml",
+      "sha256": "fa21c1a9c111ae23ef989f70a5f7543135af6a3e67c5a216061e5bc9b119857d"
+    },
+    {
+      "bytes": 2149,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component/pytest/test_public_initialized_u32_ha0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t152357z.84353b9a/wp/wp_input.c",
+      "sha256": "2d77a84e2e6af570a81ae3c950fd37afac9d0d783dd462a018bb2571089b158c"
+    }
+  ],
+  "resources": {
+    "cpu_seconds": 50.849447999999995,
+    "exit_code": 1,
+    "out_of_memory": false,
+    "peak_rss_bytes": 2837250048,
+    "timed_out": false,
+    "wall_seconds": 33.50893370900303
+  },
+  "retained_artifact_pin_errors": [],
+  "retained_artifact_pin_instances_checked": 75,
+  "review_only": "Retained-file YAML/JSON/XML/hash/lexical reads; no entry, test, project import, compiler/native/formal, SSH or process probe/rerun.",
+  "root_receipt_expected_sha256": "2d8adc7dd839233329c94fafac326b7c574ac69a37c519f45e7e176ba6bdf139",
+  "source_body_proof": false,
+  "verdict": "CONFIRMED FAILED V1 \u2014 one rendering-sensitive frame assertion; no workflow PASS",
+  "workflow_controls_passed": false
+}

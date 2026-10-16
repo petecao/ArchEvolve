@@ -1,0 +1,138 @@
+{
+  "base": "188a478eaf29089050b70adfbc4a546d20440cb4",
+  "blockers": [],
+  "changed_paths": [
+    "swdb-project/tests/test_dx100_initialized_register.py"
+  ],
+  "checks": {
+    "all_other_existing_public_assertions_retained": true,
+    "exact_expected_tokens": [
+      "REG_count",
+      ",",
+      "SPD_count",
+      ",",
+      "region_count",
+      ",",
+      "__swdb_dx_reg_words",
+      "[",
+      "0",
+      "..",
+      "1",
+      "]"
+    ],
+    "immediate_target_comment_and_function_signature_required": true,
+    "new_helper_actual_input_GREEN": true,
+    "old_exact_assertion_real_retained_input_RED": true,
+    "production_and_all_other_tracked_paths_unchanged": true,
+    "public_lexer_consumes_all_noncomment_nonwhitespace_characters_or_raises": true,
+    "retained_actual_wp_input_sha256": "2d77a84e2e6af570a81ae3c950fd37afac9d0d783dd462a018bb2571089b158c",
+    "retained_control_negative_names": [
+      "widened-cell",
+      "omitted-counter",
+      "changed-counter",
+      "omitted-cell",
+      "extra-location",
+      "duplicate-assigns",
+      "misleading-helper-same-frame"
+    ],
+    "retained_control_positive": 1,
+    "sole_assigns_clause_required": true,
+    "target_contract_unique_anchor_required": true
+  },
+  "date": "2026-10-16 ET",
+  "refs": [
+    {
+      "bytes": 3177,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-v1-20261016.py",
+      "sha256": "e6fa6d44941911c85fd28a91b71a1606fe8da1395d9274640a4b641293e7fadf"
+    },
+    {
+      "bytes": 7612,
+      "path": "/private/tmp/probata-t28-initialized-u32-public-v1-independent-failure-reconciliation-20261016.json",
+      "sha256": "6242c9d0c8adf794c52a2e8d4c8b14593a770226db7a3da26805ea590447ce79"
+    },
+    {
+      "bytes": 552,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-red-v1-20261016.log",
+      "sha256": "7258cb6d4508bd21c0baf92c7d7ce561f4c29bc1fba58a8de9746bfb56c4fa2a"
+    },
+    {
+      "bytes": 1888,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-red-v1-20261016.log.summary.json",
+      "sha256": "6fc3c3ad62e8585f86f8df135718d6c9bac24a42decd66af65118f93d2b61d55"
+    },
+    {
+      "bytes": 272,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-red-v1-20261016.log.wait.json",
+      "sha256": "6a35014a266deffb9a008f012d9940ac79d9d4dcfd5b70717c52d02f7e1867fc"
+    },
+    {
+      "bytes": 441,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-green-v1-20261016.log",
+      "sha256": "d15bad3fd304070702749f61cc89ce8c0c782f903dab6831fbef3a54cb5f44c2"
+    },
+    {
+      "bytes": 1891,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-green-v1-20261016.log.summary.json",
+      "sha256": "3a713923fe008751ff73163affd5820d3c6dcac9a696dfa5c95a948a2ba5bd0a"
+    },
+    {
+      "bytes": 273,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-green-v1-20261016.log.wait.json",
+      "sha256": "559a5eaf689de29f9fead670865b9d33188b71244ab58f283037fa532fca5741"
+    }
+  ],
+  "retained_control_resources": {
+    "green": {
+      "exit_code": 0,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "killed_by_watchdog": false,
+      "log_sha256": "d15bad3fd304070702749f61cc89ce8c0c782f903dab6831fbef3a54cb5f44c2",
+      "peak_rss_mb": 21.484375,
+      "timed_out": false,
+      "unconfirmed_children": [],
+      "wall_s": 0.3696503333048895
+    },
+    "red": {
+      "exit_code": 1,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "killed_by_watchdog": false,
+      "log_sha256": "7258cb6d4508bd21c0baf92c7d7ce561f4c29bc1fba58a8de9746bfb56c4fa2a",
+      "peak_rss_mb": 18.015625,
+      "timed_out": false,
+      "unconfirmed_children": [],
+      "wall_s": 0.3746059582917951
+    }
+  },
+  "review_execution": {
+    "compiler_native_formal_SSH_or_B": false,
+    "entry_main": false,
+    "project_imports": false,
+    "read_hash_AST_Git_only": true,
+    "tests_controls": false
+  },
+  "scope": [
+    "This helper checks the one closed generated target contract, not arbitrary ACSL semantics.",
+    "V1 actual failure and raw remain unchanged. Pure retained-input controls are not a fresh public workflow run.",
+    "No model/body/formal/hardware/current0.2/ticket acceptance.",
+    "Root must independently bind the eventual merged successor and new source-policy delta in a distinct public packet before fresh execution."
+  ],
+  "source_blobs": [
+    {
+      "bytes": 1977,
+      "commit": "ece76ebc6e32c5f1d43ccdf2aa65d7913cf6dec7",
+      "path": "swdb-project/tests/test_dx100_initialized_register.py",
+      "sha256": "1c8bb3fb666d8645f8bfc5449a0b760f9ef8fbff9c527eba059805e3e58b5703"
+    },
+    {
+      "bytes": 25477,
+      "commit": "ece76ebc6e32c5f1d43ccdf2aa65d7913cf6dec7",
+      "path": "swdb-project/swdb/acsl_subset.py",
+      "sha256": "59c1cb99afc9f5d10349e9ec53875da5962379c39365b2c38252388858b6efe8"
+    }
+  ],
+  "source_commit": "ece76ebc6e32c5f1d43ccdf2aa65d7913cf6dec7",
+  "verdict": "PASS \u2014 narrow test-only rendering repair; fresh public workflow still unexecuted"
+}

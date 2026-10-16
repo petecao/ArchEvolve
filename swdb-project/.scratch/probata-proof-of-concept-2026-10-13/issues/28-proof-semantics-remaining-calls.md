@@ -454,3 +454,12 @@ Root's separate scopeddecision accepts the original TOTAL closed software-counte
 Reviewed initialized-u32 source97 is a published ancestor of188a478e. This is distinct partial initialized-u32 source preparation only, with its earlier REQUEST_CHANGES, corrected PASS and final4policy+3routing controls preserved; no fresh compiler/scripted/public proof workflow is accepted here. Exact6216 originalTOTAL allocator102/101 scoped acceptance remains separate:33/32ordinaryValid, sole negative ensuresT/U/T, ten healthy raw nonvalid smokes each. Negative is not refuted; hardware, source/body refinement, implicit-helper totality TCB, current0.2 and full28 remain open.
 
 Ticket remains claimed; dependency/status counts are unchanged. [Compact checkpoint](../evidence/frontier-scoped-checkpoint-20261016-1117.md).
+
+
+## 2026-10-16 11:34 ET — combined preparation and preserved public failure
+
+Initialized-u32 production remains byte-identical to reviewed source97. The only initialized-register change is the [test-only frame repair](../evidence/t28-initialized-u32-frame-test-independent-source-review-v1-ece76ebc-20261016.md): require the exact target anchor and four complete ACSL frame token entries, including `[0..1]`, independently of whitespace. The retained original assertion RED and seven refusing mutations support this closed target assertion; they do not prove frame soundness.
+
+[Public V1 remains FAILED](../evidence/t28-initialized-u32-public-v1-independent-failure-reconciliation-20261016.md): one selected JUnit case, one assertion failure, no errors/skips. It failed the old unspaced substring after a named stand-in had persisted a `not_proven/tool_crash` record; the stand-in exited99, not an actual prover result. Root outer exit1/33.508934s/2,837,250,048B and c6 exit1/33.373201s/2,691.8125MiB retain no OOM/timeout or inspection events/failure/children. The retained three finite empty sweeps and absent leases are historical observations, not live host claims. The [independent failure reconciliation](../evidence/t28-initialized-u32-public-v1-independent-failure-reconciliation-20261016.json) preserves exact source/runtime/record/report pins and original failed exits. A fresh combined-source V2 workflow and formal pair are still inert pending root admission. No old failure is upgraded, and no native caller, body, hardware, current0.2 or full28 result is granted.
+
+Ticket remains claimed. [Current compact checkpoint](../evidence/combined-prefix-initialized-checkpoint-20261016-1134.md).

@@ -12,12 +12,12 @@ def refused(action):
 
 def test_copy_step_keeps_all_fifteen_full_premise_conclusions_and_other_payloads(tmp_path):
  baseline=json.loads(BASELINE.read_bytes());plan=packets.prepare('std_vector_int_realloc_v3_grow',tmp_path/'step')
- assert len(plan['obligations'])==52
+ assert len(plan['obligations'])==61
  group=next(g for g in plan['logical_obligations']if g['id']=='grow.copy.step')
  assert group['original_statement']==baseline['original_step']['statement']
  assert group['antecedent']=='t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s'
  assert group['premises_added']==[] and group['dependencies']==[]
- assert len(group['parts'])==len(set(group['parts']))==15
+ assert len(group['parts'])==len(set(group['parts']))==24 and len(group['original_definition_parts'])==15
  assert group['capture_avoiding'] is True and group['nested_bound_variables']==['j']
  assert group['definition_substitution']['k']=='(k+1)'
  h='Heap::copy_int(h,b,bo+4*k,f,4*k)'
@@ -33,7 +33,8 @@ def test_copy_step_keeps_all_fifteen_full_premise_conclusions_and_other_payloads
  ]
  assert group['substituted_conjuncts']==expected
  rows={r['id']:r for r in plan['obligations']}
- for ident,conclusion in zip(group['parts'],expected,strict=True):
+ for ident,conclusion in zip(group['original_definition_parts'],expected,strict=True):
+  if ident=='grow.copy.step.advanced_copied_prefix':continue  # Its ten exact cases are checked separately.
   row=rows[ident]
   assert row['statement']==group['quantifiers']+group['antecedent']+' ==> '+conclusion
   assert row['dependencies']==[] and row['expected']=='proven'and row['status']=='pending'
@@ -43,7 +44,7 @@ def test_copy_step_keeps_all_fifteen_full_premise_conclusions_and_other_payloads
  ref=tmp_path/'step'/group['reference']['path']
  assert hashlib.sha256(ref.read_bytes()).hexdigest()==baseline['original_step']['sha256']
  assert group['reference']['path']not in {r['path']for r in plan['obligations']}
- assert {rows[ident]['path'].split('-')[0]for ident in group['parts']}=={'009s'+str(i).zfill(2)for i in range(1,16)}
+ assert {rows[ident]['path'].split('-')[0]for ident in group['parts']}==({'009s'+str(i).zfill(2)for i in range(1,16)if i!=14}|{'009s14p'+str(i).zfill(2)for i in range(1,11)})
  for event in plan['source_inventory']['events']:
   if event['id']in {'grow.copy','grow.loop.increment'}:
    assert set(group['parts'])<=set(event['obligations']) and 'grow.copy.step'not in event['obligations']
@@ -82,9 +83,9 @@ def test_copy_step_reference_and_every_leaf_remain_required_after_coherent_tampe
 
 def test_copy_step_has_exactly_one_reference_in_reserve_and_no_new_constructor_duties(tmp_path):
  plan=packets.prepare('std_vector_int_realloc_v3_reserve',tmp_path/'reserve')
- assert len(plan['obligations'])==58
+ assert len(plan['obligations'])==67
  group=next(g for g in plan['logical_obligations']if g['id']=='grow.copy.step')
- assert len(group['parts'])==15 and plan['source_inventory']['unmapped_executable_events']==[]
+ assert len(group['parts'])==24 and len(group['original_definition_parts'])==15 and plan['source_inventory']['unmapped_executable_events']==[]
  for member,count in [('ctor_count_value',35),('dtor',11)]:
   other=packets.prepare('std_vector_int_realloc_v3_'+member,tmp_path/member)
   assert len(other['obligations'])==count and not any(g['id']=='grow.copy.step'for g in other['logical_obligations'])

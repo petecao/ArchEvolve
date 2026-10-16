@@ -1,21 +1,21 @@
 # Probata implementation resumption
 
-Updated: 2026-10-16 11:17 ET.
+Updated: 2026-10-16 11:34 ET.
 
 ## Current state
 
-Updated: 2026-10-16 11:17 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
-Implementation remains active on `codex/probata-resume-20261015`, based on `yanrujhou_main`. The eligible frontier is **07,25,28**; other unresolved tickets retain their dependencies. [All63statuses](ticket-status-20261015.md).
+Updated: 2026-10-16 11:34 ET. **35 resolved / 25 ready-for-agent / 3 claimed.**
+Implementation remains active on `codex/probata-resume-20261015`, based on `yanrujhou_main`. Eligible frontier: **07,25,28**; other unresolved tickets retain their dependencies. [All63statuses](ticket-status-20261015.md).
 
-Last root full table11:00 ET; next11:30 ET. [Current scoped checkpoint](evidence/frontier-scoped-checkpoint-20261016-1117.md) and [exact compact ledger](evidence/frontier-scoped-checkpoint-20261016-1117.json) supersede earlier current snapshots and preserve historical exits.
+Last root full table11:30 ET; next12:00 ET. [Combined preparation checkpoint](evidence/combined-prefix-initialized-checkpoint-20261016-1134.md) and [compact ledger](evidence/combined-prefix-initialized-checkpoint-20261016-1134.json) preserve the failed V1 and supersede current preparation state only. [Prior settled evidence](evidence/frontier-scoped-checkpoint-20261016-1117.md) remains unchanged.
 
 | Ticket | Current evidence | Next gate |
 | --- | --- | --- |
-| **07 claimed** | Device proof diagnostic settled partial: normal TimeoutExpired/exit1; final inventory0/152,328 journal IDs with107 unresolved identity differences; weak unexecuted. Independent cold reconciliation697checks/0errors. Six recovered events and original lease-present remain; later clearance separate. | No complete proof inventory or Typed/source/Init/lifetime/TD/count qualification. Review future continuation independently. |
-| **25 claimed** | Root accepts standalone constructor35 qualified mathematical/numeric profile under explicit TCB:44 normalized ordinary+1smoke versus42 direct nativeValid+1Timeoutsmoke+2inventory-only ordinary. Focused15 retains14successful/1advanced-prefix Timeout;37others unexecuted, metadata capture only. | No C++ body/original-v2/current caller dependency/full25 acceptance. Sole open query/hypothesis reconciliation and full52 public gate remain. |
-| **28 claimed** | Initialized-u32 source97 published through188 as preparation only. Exact6216 originalTOTAL allocator102/101 scoped pair remains accepted:33/32ordinaryValid, negative ensuresT/U/T, ten healthy raw nonvalid smokes each. | Initialized fresh workflow not admitted here; no negative refutation/hardware/source refinement/current0.2/full28 acceptance. |
+| **07 claimed** | Device proof remains partial: normal TimeoutExpired/exit1, final inventory0/152 and328 journal IDs with107 unresolved identity differences; weak unexecuted. Independent reconciliation697checks/0errors. | Separate exact-root source/capture design under review; no new proof admission or Typed/source/Init/lifetime/TD/count qualification. |
+| **25 claimed** | Reviewed prefix ten-case source e0e8 is integrated through combined e99. Both exhaustive cases retain full original premises and all five conclusions;35 retained pure controls pass. Constructor35 scoped mathematical/numeric acceptance remains separate. | Fresh focused10, public61/67 and caller127 pending; no new proof/model/body/caller acceptance. |
+| **28 claimed** | Initialized production97 unchanged. Public V1 failed one whitespace frame assertion after named stand-in persistence; original exit1 retained. Token-aware test-only repair ece76 reviewed and integrated with e99. Existing TOTAL allocator102/101 scoped decision unchanged. | Fresh public V2 and formal pair inert pending root admission. No negative refutation/hardware/body/current0.2/full28 acceptance. |
 
-These are retained root artifacts and local passive reconciliations, not live host/process observations. Root owns fresh admission and settlement. Obsolete37 source is reconstructable via retained ref/manifests/restoration; all raw preserved. No actual jobs or runtime changes are introduced by this checkpoint.
+Only preparation is adopted here. Retained host/lease observations are historical; root owns fresh admission and all actual execution. No new tool, compiler, native, formal or SSH job is run by this integration. Original failures/raw and unrelated files remain unchanged.
 
 Root owns actual admissions: at most two remote measurements, one per socket,
 and one actual Mac verifier. Count-only node0 generation587 naturally released

@@ -1,0 +1,137 @@
+{
+  "controls": [
+    {
+      "cap_gb": 1.0,
+      "case": "count-red-v1",
+      "external_native_attempts": [],
+      "failed": 1,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "passed": 5,
+      "peak_rss_mb": 44.53125,
+      "refs": [
+        {
+          "bytes": 2803,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/control/result.json",
+          "sha256": "145f0fb48d9609eaa5c1a77d2f7e3393d2292a19bea96fd3728bb316d01db1dd"
+        },
+        {
+          "bytes": 563,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/control/controls.log",
+          "sha256": "1f1997a8504742f8ade7602f688b26062727d7fd2d85984272572d898a86e9b9"
+        },
+        {
+          "bytes": 112,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/guard.log",
+          "sha256": "8a123031ca354563325dc349df3c23b5fae45a5b6aec4da9deed460de02c1a3a"
+        },
+        {
+          "bytes": 1984,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/guard.log.summary.json",
+          "sha256": "d2a81d5491457451ada8ed08931ae5faa543dd3f7f746cf962abc65161b701bb"
+        }
+      ],
+      "seconds": 0.7273007082985714,
+      "source_pins_before_after_equal": true,
+      "unconfirmed_children": []
+    },
+    {
+      "cap_gb": 1.0,
+      "case": "count-green-v1",
+      "external_native_attempts": [],
+      "failed": 0,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "passed": 6,
+      "peak_rss_mb": 44.46875,
+      "refs": [
+        {
+          "bytes": 2747,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/control/result.json",
+          "sha256": "671c7b710d59ffa5b3b13a422b9c70a83862fa0489f5ac9bef8d22c2cd926b88"
+        },
+        {
+          "bytes": 549,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/control/controls.log",
+          "sha256": "dd7812156d2251116e6d56f3cf19e426da961ef11657401cf69f8c6e3e2a52f5"
+        },
+        {
+          "bytes": 114,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/guard.log",
+          "sha256": "eee2c1617560b911967c27a1a8739b8223f22204638ba3e07f26412a05a1d395"
+        },
+        {
+          "bytes": 1990,
+          "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/guard.log.summary.json",
+          "sha256": "d76e36d5086f890db83b1cc6e1cb22aa90fc92d6dc0e7d24e3c6fc6eef599be6"
+        }
+      ],
+      "seconds": 0.7404702916974202,
+      "source_pins_before_after_equal": true,
+      "unconfirmed_children": []
+    },
+    {
+      "cap_gb": 1.0,
+      "case": "regression-v2",
+      "external_native_attempts": [],
+      "failed": 0,
+      "inspection_events": [],
+      "inspection_failure": null,
+      "passed": 35,
+      "peak_rss_mb": 50.625,
+      "refs": [
+        {
+          "bytes": 9945,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/control/result.json",
+          "sha256": "d4387c36ee988daac158494950587a20fdea52bc1d030af281eefe2caaa05998"
+        },
+        {
+          "bytes": 4489,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/control/controls.log",
+          "sha256": "2949fafe9d3f6ddf8344e01061fc14b4ea775b548292bb9b9e4d6f5790779ba3"
+        },
+        {
+          "bytes": 114,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/guard.log",
+          "sha256": "c45897aec8576c39cfa881b0560da88c94bdd7d6b3d9347583e512a843210165"
+        },
+        {
+          "bytes": 1988,
+          "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/guard.log.summary.json",
+          "sha256": "09a2274b1043ea8234ed0515c55478e2529fe3eaf1d57d964343c5914d6fe5cd"
+        }
+      ],
+      "seconds": 1.7393102916539647,
+      "source_pins_before_after_equal": true,
+      "unconfirmed_children": []
+    }
+  ],
+  "counts": {
+    "ctor": 35,
+    "dtor": 11,
+    "pending_caller": 127,
+    "reserve": 67
+  },
+  "created_et": "2026-10-16",
+  "finding": "Independent source review27 found stale reserve58 body-count dict/comment after totals changed127. The real caller test invokes Clang and remains unexecuted under pure-only authorization.",
+  "harnesses": [
+    {
+      "bytes": 4486,
+      "path": "/private/tmp/probata-t25-copy-prefix-pure-controls-v2-20261016.py",
+      "sha256": "b0771e441a2ab473542656149f673b118dae6db726df5a344797b833a434f00a"
+    },
+    {
+      "bytes": 5605,
+      "path": "/private/tmp/probata-t25-copy-prefix-pure-regression-v2-20261016.py",
+      "sha256": "678aff17b2dbbc828d9b7d963c80f1644742701650a3aba27573be2f3ff1b2a1"
+    }
+  ],
+  "native_caller127_profile_executed": false,
+  "new_pure_control": "AST-read exactly the real caller test count expectations and compare to current canonical constructor35/reserve67/destructor11 declarations plus existing3applications+11localnumeric. It never executes caller lowering, conftest, pytest fixtures or native code.",
+  "prior5RED5GREEN34pure_receipts_retained": true,
+  "production_freeze": "f46607cedf2dcce5db5d8fc7aedfdd947a2eb900",
+  "proof_claim": false,
+  "public61_workflow_executed": false,
+  "repair": "Expected reserve body-count67 and nearby comment corrected; current total127 and11localnumeric consistency stay unchanged.",
+  "status": "test-only review correction; no production change"
+}
