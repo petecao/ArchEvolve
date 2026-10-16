@@ -1,0 +1,9 @@
+# Obsolete source checkout retention — 2026-10-16 ET
+
+PASS for compact receipt preservation/local Git reconciliation only. Root removed only two exact clean obsolete detached checkouts without force:024db66c initial-import failure and21edecf2 pre-WP lineup failure. Reviewer performed no SSH, remote hash or removal. Both exact root receipts match their supplied hashes; local Git tree IDs/file counts and published ancestry reconcile9498/9730files.
+
+Before each removal, root wrote full source/raw manifests and an explicit restoration recipe, checked the dedicated retained Git ref, and rechecked clean state/leases. Original paths are now absent and explicitly reconstructable; they must not be reported as live source checkouts. Exact remote manifest hashes, ref names, source/tree IDs and restoration argv are preserved in the companion JSON. Full manifests and raw remain remote; they were not copied here.
+
+Root records1,617,608,704B+1,622,302,720B reclaimed. These are historical disk observations, not current free space. Cleanup raw snapshots contain77/78entries including later metadata; original experiment file counts remain distinct. Every cleanup raw entry was unchanged across its own removal according to root. No active producer/source or raw evidence was removed.
+
+Three finite readable-cwd scans per checkout retained explicit own-ancestry SSH/root-parent and user(sd-pam)/systemd unreadable-cwd trust exceptions. Unknown denials refused; this does not establish universal absence, atomic process containment or zero global inspection denials. Prior024V1 refusal,024V2 recovery-recipe gap and21edV1 local receipt collision were retained; reviewed repaired024V3/21edV2 were the executed recipes. No source/formal/scientific result changes. Fresh storage/lease/process checks remain mandatory before each new dispatch.
