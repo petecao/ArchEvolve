@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-16 ET",
+  "status": "prospective source repair; independent review and root actual compilation/output gate pending",
+  "changed_sources": [
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_report.ml",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_report.ml",
+      "sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+      "bytes": 7873
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_setup.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_setup.py",
+      "sha256": "a80d67d4fe23028a64d42136cf879215fc7057b1282944bc8a00a9d7d2d5492e",
+      "bytes": 45422
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_closure.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_closure.py",
+      "sha256": "b3e932cb0e6958d1ee40bc4fce26be7105c2b812552bde3279865b654a3c3b60",
+      "bytes": 3850
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_setup.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_setup.py",
+      "sha256": "67ef1eebab65cae858d9714051b1e02ff30b5be41bb342a32b1d711c93a137dd",
+      "bytes": 26164
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/fixtures/proof/wp/fake_framac.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/fixtures/proof/wp/fake_framac.py",
+      "sha256": "3f0bc7722af0541aa19b4aa678193fb4f84a662e324cfc2c1711d39d5795083f",
+      "bytes": 3775
+    }
+  ],
+  "scope_note": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/REPORT-PROPERTY-CLOSURE-20261016.md",
+    "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/REPORT-PROPERTY-CLOSURE-20261016.md",
+    "sha256": "3ec3c7d7bcf13393e87c3b0594159a05e47105ec2dc94b4837f7f6bb59be2b3d",
+    "bytes": 4274
+  },
+  "retained_actual_cold": [
+    {
+      "path": "/private/tmp/probata-t07-backend-export-positive-cold-v1-20261016.md",
+      "resolved": "/private/tmp/probata-t07-backend-export-positive-cold-v1-20261016.md",
+      "sha256": "7600a6dec52d431595a0514e64ac8bdf3397a0fc971e66c29aa80b201919f126",
+      "bytes": 7276
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-positive-cold-v1-20261016.json",
+      "resolved": "/private/tmp/probata-t07-backend-export-positive-cold-v1-20261016.json",
+      "sha256": "8a715b90ab69fa6b473a195afd6291400fd4524bdf85bc0db894631852bd905f",
+      "bytes": 72129
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-positive-reconstructed-supplement-20261016.json",
+      "resolved": "/private/tmp/probata-t07-backend-export-positive-reconstructed-supplement-20261016.json",
+      "sha256": "7bb2e636c511c396b65e61d615ccf0a98c86579fb3e98766f69069d53cc8dad1",
+      "bytes": 34618
+    }
+  ],
+  "pure_controls": [
+    {
+      "path": "/private/tmp/probata-t07-report-closure-consumer-red-20261016.log",
+      "resolved": "/private/tmp/probata-t07-report-closure-consumer-red-20261016.log",
+      "sha256": "264182d8388145c3a72e8ba8e7fe0644ff2e48d7f6b59827d5f6a52a8cc9b145",
+      "bytes": 16421
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-consumer-red-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-consumer-red-20261016.log.summary.json",
+      "sha256": "54549589864c1db0d55277fbce6cf8ca9c8325bfdde70224ba5b14c9874f8728",
+      "bytes": 1925
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-consumer-green-20261016.log",
+      "resolved": "/private/tmp/probata-t07-report-closure-consumer-green-20261016.log",
+      "sha256": "db58f9dfbb52db9ef89e68a2f6e4ed82882e9ad55c1ee3654d551db1a95734e3",
+      "bytes": 17279
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-consumer-green-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-consumer-green-20261016.log.summary.json",
+      "sha256": "dd97dd7fb648a5f06a0ea70f113bec44b52edfe756a82ba599ea6d70d3e1c69d",
+      "bytes": 1927
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-consumer-green2-20261016.log",
+      "resolved": "/private/tmp/probata-t07-report-closure-consumer-green2-20261016.log",
+      "sha256": "43bdc2f4d6f1151cd12628b4ac4c18f2aa21f8ed3e0f7a2de01268e608d7a04a",
+      "bytes": 99
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-consumer-green2-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-consumer-green2-20261016.log.summary.json",
+      "sha256": "197a5a3c7e44ab4f794b7e21b1c5360dbb402f77158499191956526aa6db2aa1",
+      "bytes": 1929
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-public-regressions-20261016.log",
+      "resolved": "/private/tmp/probata-t07-report-closure-public-regressions-20261016.log",
+      "sha256": "49e36e9963ffbad6c1e3c9d64488bb5b23de83b0e658ed135e23ca8b36e26808",
+      "bytes": 100
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-public-regressions-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-public-regressions-20261016.log.summary.json",
+      "sha256": "45f4655a5c9a0e5227448aea0544d4c7d1a7c607994344b4341341ed64931613",
+      "bytes": 2411
+    }
+  ],
+  "RED": "11 incomplete/malformed property closure data cases incorrectly returned proven;3 complete controls passed",
+  "GREEN": "25 targeted public reader/CLI regressions passed in15.12s; guard15.706990s131.515625MiB",
+  "intermediate_failure": "Public failure-class spelling in test corrected; implementation already refused those data",
+  "test_seam": "Existing public read_wp_reports + scripted public CLI report path; no formal tools",
+  "actual_OCaml_or_formal_by_author": false,
+  "old_actual_complete_claim_accepted": false,
+  "C_header_or_observer_changed": false,
+  "proof_acceptance": false,
+  "Typed_init_or_lifetime_qualified": false,
+  "TD_or_counted_acceptance": false
+}

@@ -60,7 +60,9 @@ with open(target("-wp-report-json"), "w") as out:
     json.dump([goal], out)
 if os.environ.get("SWDB_PROOF_REPORT_OUT"):
     with open(os.environ["SWDB_PROOF_REPORT_OUT"], "w") as out:
-        json.dump({"version": "1", "complete": True, "goals": [{**goal, "results": [verdict]}], "properties": []}, out)
+        json.dump({"version": "1", "complete": True, "goals": [{**goal, "results": [verdict]}],
+                   "properties": [{"property": goal["property"], "function": f,
+                                   "kind": "contract", "extern": False}]}, out)
 with open(target("-report-csv"), "w") as out:
     out.write("directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n"
               f".\twp_input.c\t4\t{f}\tpostcondition\tUnknown\t\\result >= 0\n")

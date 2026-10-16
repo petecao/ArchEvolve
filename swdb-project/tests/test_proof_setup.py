@@ -82,7 +82,9 @@ goal = {"goal": "typed_" + function + "_ensures", "property": function + "_ensur
         "provers": [{"prover": "Z3:5.1.0", "time": 0.01, "success": 1}]}
 Path(args[args.index("-wp-report-json") + 1]).write_text(json.dumps([goal]))
 Path(os.environ["SWDB_PROOF_REPORT_OUT"]).write_text(json.dumps(
-    {"version": "1", "complete": True, "goals": [{**goal, "results": ["valid"]}], "properties": []}))
+    {"version": "1", "complete": True, "goals": [{**goal, "results": ["valid"]}],
+     "properties": [{"property": goal["property"], "function": function,
+                     "kind": "contract", "extern": False}]}))
 Path(args[args.index("-report-csv") + 1]).write_text(
     "directory\\tfile\\tline\\tfunction\\tproperty kind\\tstatus\\tproperty\\n"
     + ".\\twp_input.c\\t1\\t" + function + "\\tpostcondition\\tValid\\t" + function + "_ensures\\n")
@@ -227,8 +229,16 @@ def _reports(seed, goals, inventory=None, properties=None):
     goalfile.write_text(json.dumps(goals))
     propfile.write_text("directory\tfile\tline\tfunction\tproperty kind\tstatus\tproperty\n" +
                         "\n".join(f".\twp_input.c\t1\tf\tpostcondition\t{s}\t{p}" for p, s in properties or [("f_ensures", "Valid")]))
-    invfile.write_text(json.dumps(inventory or {"version": "1", "complete": True,
-        "goals": [{**g, "results": [g.get("verdict", "valid")]} for g in goals], "properties": []}))
+    inventory = inventory or {"version": "1", "complete": True,
+        "goals": [{**g, "results": [g.get("verdict", "valid")]} for g in goals], "properties": []}
+    # Scripted report stand-ins still need the same closed property references
+    # as the real producer; no formal evidence is supplied by these rows.
+    if not inventory["properties"]:
+        inventory = {**inventory, "properties": [
+            {"property": name, "function": next(g.get("function") for g in inventory["goals"] if g["property"] == name),
+             "kind": "other", "extern": False}
+            for name in sorted({g["property"] for g in inventory["goals"]})]}
+    invfile.write_text(json.dumps(inventory))
     return {"goals": str(goalfile), "properties": str(propfile), "inventory": str(invfile), "functions": ["f"]}
 
 
