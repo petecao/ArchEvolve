@@ -1,0 +1,90 @@
+{
+  "actual_Frama_Why3_solver_executed": false,
+  "artifact_references_checked": 391,
+  "caller_acceptance": false,
+  "complete_model_acceptance": false,
+  "created": "2026-10-16 ET",
+  "execution_scope": "Root alone executed existing OCaml metadata/foundation helper/report native setup and explicit Python WP stand-ins; author performed passive hashes/metadata only",
+  "hash_errors": 0,
+  "mathematical_proof_acceptance": false,
+  "no_skips": true,
+  "original_v2_acceptance": false,
+  "persisted": {
+    "all_children_named_Python_standins_and_sentinels": true,
+    "records": 1,
+    "runs": 35,
+    "setup_runs": 35,
+    "synthetic_goals": 45,
+    "synthetic_smokes": 1,
+    "top_verdict_keys": [
+      "check",
+      "verdict"
+    ]
+  },
+  "references": [
+    {
+      "bytes": 1348,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/result.json",
+      "sha256": "2952bf2e47cd2a83b74db021c97a3cd2d3de1db761d0ae73ffc2f5c295597590"
+    },
+    {
+      "bytes": 140746,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/artifact-manifest.json",
+      "sha256": "8bc5e938060fdcdff8104c3115b606930a8e6124f9455f07c2f53632ed9a035a"
+    },
+    {
+      "bytes": 505891,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/source-before.json",
+      "sha256": "c62abf53554d83a280bb742d082176e9531ef4d35c8b8ec07c489e99ebe23ba6"
+    },
+    {
+      "bytes": 505891,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/source-after.json",
+      "sha256": "c62abf53554d83a280bb742d082176e9531ef4d35c8b8ec07c489e99ebe23ba6"
+    },
+    {
+      "bytes": 4180,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/preflight.json",
+      "sha256": "a1055bc843ae8f6846d466a89cc66d5f2ac76724de33b00dfdcaf774f54de88d"
+    },
+    {
+      "bytes": 165,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/outer-receipt.json",
+      "sha256": "9c39f06ca8caf7a8d6861d2d2d0a7638c99bdf98721d873fc1856118d3a7c88d"
+    },
+    {
+      "bytes": 2418,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/inner.log.summary.json",
+      "sha256": "9809d165f1238f51b6c14ca80d54e0850be360323fc204d321b98c60b222e3d2"
+    },
+    {
+      "bytes": 423,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/junit.xml",
+      "sha256": "a7f4ff35c0f07aa6a4edbaa735b1993aaf6cc34a885282795b8dfc7c7120bbb3"
+    },
+    {
+      "bytes": 2336,
+      "path": "/private/tmp/probata-t25-root-ctor35-public-control-v1-20261016/outer.log",
+      "sha256": "5068ecf12c2051382a4d57bdcda6ab808a64c9f65ea4c904746c4bd3ff1b0d05"
+    }
+  ],
+  "resources": {
+    "OOM": false,
+    "actual_raw_bytes": 15373059,
+    "cap_bytes": 8589934592,
+    "inner_peak_MiB": 276.5,
+    "inner_seconds": 18.5551585,
+    "inspection_or_unconfirmed_children_events": 0,
+    "outer_peak_bytes": 317374464,
+    "outer_seconds": 18.6392793,
+    "planned_raw_bytes": 67108864,
+    "timeout": false,
+    "workers": 1
+  },
+  "runtime_source": "6802a9d02204ccb4a441ab42a3b9f714e0dc4eaa",
+  "source_before_after_equal": true,
+  "source_consumer_count": 1926,
+  "status": "PASS explicit synthetic constructor public workflow only",
+  "test_cases": 1,
+  "ticket_closure": false
+}
