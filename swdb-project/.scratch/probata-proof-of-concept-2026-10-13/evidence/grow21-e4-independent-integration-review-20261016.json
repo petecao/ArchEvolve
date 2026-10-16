@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS partial-classification and retention receipt preservation",
+  "files_verified": [
+    {
+      "bytes": 181032,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-root-execution-v1-20261016.json",
+      "sha256": "c789f0ccd40a87dec5e65dc92b884aba37dc7bdd26f34155431abba4c1ec65d6"
+    },
+    {
+      "bytes": 3797,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-packet-v1-20261016.json",
+      "sha256": "4faa02ed516cb5e323d17c7e5ca9e74c7fc082661362b4bf1ae1f0fc6fac4fa8"
+    },
+    {
+      "bytes": 4655,
+      "path": "/private/tmp/probata-root-t25-grow21-partial-cold-dispatch-v1-20261016.py",
+      "sha256": "33940fd3589cd51c787398e8294a873130085d8fcffa0fb67d958845075801a9"
+    },
+    {
+      "bytes": 37921,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-reader-v1-20261016.py",
+      "sha256": "b560301992e7d8f3503637417262e07ecdb802b9d5db1b1837f8bdea7d704801"
+    },
+    {
+      "bytes": 886933,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-policy-v1-20261016.json",
+      "sha256": "7b99145fbcf651b8d79d669724324adf34a72700357802f77686861e3063d537"
+    },
+    {
+      "bytes": 1791,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-command-v1-20261016.json",
+      "sha256": "b88e7f91aa1a5f9dbc637602de7c8b1a77a38426881beb0378822a2f430dfe56"
+    },
+    {
+      "bytes": 5248,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-plan-v1-20261016.md",
+      "sha256": "6fbfad2a943c4fe711a5a4b7bcfc110a54a8dcfcedc95b9a799a44e9e21f06d2"
+    },
+    {
+      "bytes": 6593,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-controls-v1-20261016.py",
+      "sha256": "6de39b87ee5b5b50207fb7d4c6b3631ebc8e7be23c30404433f8a8235f8abaa6"
+    },
+    {
+      "bytes": 164,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-controls-v1-final-20261016/resources.json",
+      "sha256": "46b0084f5045257990065c4854e305b688f57be3512d88573aae6f775dcca23d"
+    },
+    {
+      "bytes": 9067,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-controls-v1-final-20261016/junit.xml",
+      "sha256": "cfee382df87f15ff62b220b88f816530c7475fe06812d6201ae0c5c6afe4a2bd"
+    },
+    {
+      "bytes": 99,
+      "path": "/private/tmp/probata-t25-grow21-partial-cold-controls-v1-final-20261016/control.log",
+      "sha256": "771da0b9913f5e27747a47b4d4c8366da5fb6f7ba0e3cea9a602d164c258758c"
+    },
+    {
+      "bytes": 393313,
+      "path": "/private/tmp/probata-t25-grow21-partial-actual-metadata-v1-20261016.json",
+      "sha256": "5d7b257361855db5308a545cf85fb6af363361ae3ef7cd262819d4d301f8d19c"
+    },
+    {
+      "bytes": 148160,
+      "path": "/private/tmp/probata-t25-grow21-task-metadata-root-execution-v1-20261016.json",
+      "sha256": "2dfa600b8d744eaa886e5b1c8c9c945b2e8377f7d61d3a6382008360b947a9e5"
+    },
+    {
+      "bytes": 7004,
+      "path": "/private/tmp/probata-t25-grow21-task-metadata-extractor-v1-20261016.py",
+      "sha256": "02ea0036034a18c1fea19bba204bb08f754fd52e0e280a56b58175b050117fa6"
+    },
+    {
+      "bytes": 119334,
+      "path": "/private/tmp/probata-t25-qualified-grow21-public-expected-v1-2e01d27d-20261016.json",
+      "sha256": "408999e6276bb66233e575bfc7b5826143cb55553c16a311a8b3531d58a0f275"
+    }
+  ],
+  "grow_root_receipt_sha256": "c789f0ccd40a87dec5e65dc92b884aba37dc7bdd26f34155431abba4c1ec65d6",
+  "grow_source": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+  "grow_valid_leaves": 3,
+  "grow_unexecuted": 17,
+  "grow_full_model_accepted": false,
+  "e4_root_receipt": {
+    "path": "/private/tmp/probata-e4-source-retention-root-v1-20261016.json",
+    "sha256": "bc6d8e4fb14cea58d5a3c5491dc162e51021a6757967f353c1c1d68f181f582b"
+  },
+  "e4_raw_unchanged_as_root_receipt": true,
+  "reviewer_remote_rehash": false,
+  "reviewer_cleanup_or_actual_execution": false,
+  "blockers": [],
+  "md_sha256": "952019b735ae272a160c5eccaa89cc23b8068350507ea173e77c136dbc17937e"
+}
