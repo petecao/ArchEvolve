@@ -1,0 +1,131 @@
+{
+  "alt_ergo_assertions": 52,
+  "alt_ergo_real_order_assertion": "CompatOrderMult over Real, from real.RealInfix/algebra (additional to Int ordered-ring assertion)",
+  "blockers": [],
+  "body_proof_records_created": 0,
+  "created": "2026-10-15 ET",
+  "custom_constant_map_definitions": 9,
+  "cvc5_assertions": 32,
+  "debug_actual_task_pairs_header_only_equal": 2,
+  "extern_assumptions": 0,
+  "full42_outcome": "pending",
+  "hash_errors": 0,
+  "inputs": [
+    {
+      "path": "/private/tmp/probata-t25-representative-cold-snapshot-reviewer-v2-20261015.json",
+      "sha256": "437d95eb1046a06a606e1f7ea886628d0869fbae59f96d7da4f72aa7eb58e2b9"
+    },
+    {
+      "path": "/private/tmp/probata-t25-representative-import-sources-reviewer-v2-20261015.json",
+      "sha256": "e9d50ea20dcf9f4e71b89262c00798f46096f17c211d5312c232096aa27c12af"
+    },
+    {
+      "path": "/private/tmp/probata-t25-capability-entry-v5-e56c62dd-20261015.py",
+      "sha256": "06372846c5dbd990acfd9a99a766a4d01d4b214d63762538cd37ba8b4fb9ce34"
+    },
+    {
+      "path": "/private/tmp/probata-t25-capability-command-v5-e56c62dd-20261015.json",
+      "sha256": "fcde9166a844af87af892914863dded48d50155278027954caf3a04c62fec4e3"
+    }
+  ],
+  "negated_selected_goals": 1,
+  "next_expected_source": "e56c62dd4af709eed914aff32b8d4504edcc46d6",
+  "ordinary_valid": 1,
+  "physical_profile_ref_instances_verified": 26,
+  "project_lemma_dependencies": 0,
+  "raw_files_catalogued": 32,
+  "representative_resources": {
+    "cpu_seconds": 10.955281999999999,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 382287872,
+    "timed_out": false,
+    "wall_seconds": 11.302608324214816
+  },
+  "review_markdown": {
+    "path": "/private/tmp/probata-t25-representative-task-closure-and-v5-review-v2-20261015.md",
+    "sha256": "31493d018fd4a5f7690004e36a0b4f37f525bbb8a81111055aefc252b562b1c8"
+  },
+  "reviewer_formal_tools_tests_or_evaluation_launches": false,
+  "reviewer_read_only_ssh_audit": true,
+  "selected_goals": 1,
+  "smoke_goals": 0,
+  "standard_arithmetic_assertion_labels": [
+    "CompatOrderMult",
+    "Abs_le",
+    "Abs_pos",
+    "Div_mod",
+    "Div_bound",
+    "Mod_bound",
+    "Div_sign_pos",
+    "Div_sign_neg",
+    "Mod_sign_pos",
+    "Mod_sign_neg",
+    "Rounds_toward_zero",
+    "Div_1",
+    "Mod_1",
+    "Div_inf",
+    "Mod_inf",
+    "Div_mult",
+    "Mod_mult",
+    "c_euclidian",
+    "cmod_remainder",
+    "cdiv_neutral",
+    "cdiv_inv",
+    "cdiv_closed_remainder"
+  ],
+  "stdlib_files_verified": 57,
+  "supersedes": {
+    "path": "/private/tmp/probata-t25-representative-task-closure-and-v5-review-20261015.md",
+    "sha256": "b6b8d6250ee5550712af38293bf44b5249d126ba31b1f3dd99fed15ca5178348"
+  },
+  "support_sources": [
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/qed.mlw",
+      "sha256": "54d50c3e40ea87b2bb0fd7195341c6c8bfc5ebcf300cb7b18752fae28e622efe"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/bool.mlw",
+      "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw",
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw",
+      "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/map.mlw",
+      "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw",
+      "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw",
+      "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+    }
+  ],
+  "task_files": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_Alt_Ergo_2_6_4.psmt2",
+      "sha256": "15fc8a0372eec9f63e8720962f3aaa5e901abbc4b9a09cce87d83d99f8d85530"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/zilch-typed_check_lemma_t25_control_ctor_premises_feasible_CVC5_1dt2dt1-wp_goal.smt2",
+      "sha256": "563017ae988cfb3827173544745e2a02e7aa59e622fd61e88e3bed80b2cd9dde"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_CVC5_1_2_1.smt2",
+      "sha256": "27a0b35b8b4140c1e5333f199751bd3154fe65ea974c59239a47d04b4be4ba88"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/zilch-typed_check_lemma_t25_control_ctor_premises_feasible_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "sha256": "4edfe2f4e49e002d0c9c7467e5e1961bfdc66ccc78729e70571ae816dcb1fd70"
+    }
+  ],
+  "verdict": "PASS_REPRESENTATIVE_TASK_CLOSURE_AND_STATIC_V5_ADMISSION"
+}

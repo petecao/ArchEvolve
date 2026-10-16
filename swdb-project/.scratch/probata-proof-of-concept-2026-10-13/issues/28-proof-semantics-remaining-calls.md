@@ -102,3 +102,16 @@ stand-in controls pass, including exact constant atomic golden output. No actual
 formal tool ran; no old producer result is upgraded. The numeric per-call,
 memory/history/ownership/pair implementation and new-version actual acceptance
 remain incomplete. [Exact evidence](../evidence/t28-source-typedef-identity-controls-20261015.json).
+
+Deferred-state prerequisite — 2026-10-15 ET: first generated C prototype APIs
+retain issue-to-cover history values, producer versions and immutable observed
+results; unresolved indices use issue images and actual write logs. Command
+checks distinguish physical tile halves from explicit hardware IDs, global
+ownership, exact region-conflict coverage, readiness answers and full physical
+store-line CPU hazards. Final22/22 native controls pass under ASan/UBSan and the
+workerB guard; no actual verifier, public proof acceptance or whole-call coverage
+is claimed. Deferred write/RMW effects, full typed/source mappings, per-call
+wrappers and formal IEEE relations remain active. No current semantics0.2entry
+exists; status stays **claimed** and every acceptance box remains unchecked.
+[Design](../prototype/28-proof-semantics/deferred-state-design.md),
+[exact source/native/RED pins](../evidence/t28-deferred-state-initial-controls-20261015.json).

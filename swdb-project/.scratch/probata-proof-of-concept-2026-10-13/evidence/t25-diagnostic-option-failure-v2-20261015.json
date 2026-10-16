@@ -1,0 +1,168 @@
+{
+  "all_package_bindings_accepted": true,
+  "all_result_expectations_matched": false,
+  "all_version_queries_zero": true,
+  "ambient_wp": {
+    "checked_absent": [
+      "FRAMAC_WP_CACHE",
+      "FRAMAC_WP_CACHEDIR",
+      "FRAMAC_WP_SCRIPT"
+    ],
+    "policy": "no ambient FRAMAC_WP* variables, matching proof_setup._environment",
+    "present_names": []
+  },
+  "canonical_manifest": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability-inputs/manifest.json",
+    "sha256": "390a2d3a89720fab8a5b1fb1f5cd96093aae23a9c1714143b57caa8681a4c065"
+  },
+  "complete": false,
+  "counts": {
+    "global_check_lemmas": 41,
+    "negative_global_lemmas": 4,
+    "numeric_kernels": 1,
+    "packets": 42,
+    "positive_global_lemmas": 37
+  },
+  "created": "2026-10-15 ET",
+  "diagnostic_excerpt": "[kernel] Parsing wp_input.c (with preprocessing)\nWarning, file \"/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability-inputs/theory/heap_bridge.mlw\", line 25, characters 18-23: unused variable dummy\n[kernel] User Error: option `-wp-dkey' is unknown.\n  use `/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c -help' for more information.\n[kernel] Frama-C aborted: invalid user input.\n",
+  "first_parse_normalized_file_exists": true,
+  "goal_inventory_exists": true,
+  "initial_module_container": {
+    "description": "module heap_bridge::Heap",
+    "kind": "other",
+    "property": ""
+  },
+  "inventory_note": "A fresh inventory survives with zero generated goals, one unproved check lemma and a module container; no WP goal or proof result.",
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "9120",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "2026-10-16T03:13:45Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "probata-reviewed-9d8ca764-t25-heap-capability-v4",
+      "lease_generation": 612,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.35,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T03:13:41Z"
+    }
+  },
+  "observed_lemma_property": "check_lemma_t25_control_ctor_premises_feasible",
+  "pins": [
+    {
+      "bytes": 1924,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/canonical-packet-precheck.json",
+      "sha256": "c261668e061b737c77be2e58c05f74d9109feaf8fc4c9237640c23bd06ce50e1"
+    },
+    {
+      "bytes": 207,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/ambient-wp-precheck.json",
+      "sha256": "55387ec92751537cab2dd296776f6e328a09f74a54e728823024b95cc274a232"
+    },
+    {
+      "bytes": 8569,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/selected-formal-tool-metadata.json",
+      "sha256": "eed23d03b28fe52ba1830e5348e45d99f451fe88c9099f45d9921ba078561a52"
+    },
+    {
+      "bytes": 18694,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability/profile.json",
+      "sha256": "e4dddd7f23cdb472ecc03ae2297f0a76a38c31d662ec873362ae9543cf181d21"
+    },
+    {
+      "bytes": 426,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability/jobs/control.ctor.premises_feasible/frama-c.log",
+      "sha256": "b27ed1e8fb37afb65c39400e3b853cb93c9b120b6adb63f2099f2bc3a3bfec33"
+    },
+    {
+      "bytes": 2277,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability/jobs/control.ctor.premises_feasible/wp_input.c",
+      "sha256": "54b7b254e0d1b4884e8303054036f73e15704c4cb2aaf3a589df08aa932467d6"
+    },
+    {
+      "bytes": 165,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability/jobs/control.ctor.premises_feasible/resources.json",
+      "sha256": "c5026b6b2668615dd26cec36911f5dbdd8254450d5ceb1b7c3149b77ada2be16"
+    },
+    {
+      "bytes": 165,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/resources.json",
+      "sha256": "85a4008df0a6277e07b0c9cbce1d02e116ee8593994b4c7e1e6d000d8e7a0840"
+    },
+    {
+      "bytes": 112,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/source-after.json",
+      "sha256": "98f83a3b46d0e48c8fabb477d5c11e2dfd0b1481eb0cd0a2d2a9c50246b6b766"
+    },
+    {
+      "bytes": 818,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/lane.json",
+      "sha256": "be03c1ec608cd18c96a29f17bdf24a58cddacc5403ec7e11ffe01dbf51929b21"
+    },
+    {
+      "bytes": 437,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/dispatch-argv.json",
+      "sha256": "0fe2ee9a443f1e646e1a87a48f465a00bf20be4cefb9c4c62e9583452eba3e9b"
+    },
+    {
+      "bytes": 10219,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/launch.json",
+      "sha256": "e0f956f715cb6cb14bef838d1271d81fa47faab055dab4cdaede363d41249956"
+    },
+    {
+      "bytes": 4093,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability/jobs/control.ctor.premises_feasible/wp-normalized.c",
+      "sha256": "c65c1e70814428535c90fb8987692721bb833f81baab3839193bcebb1f073df9"
+    }
+  ],
+  "prior_compact_pin": {
+    "path": "/private/tmp/probata-t25-diagnostic-option-failure-v1-20261015.json",
+    "sha256": "120a620eeba47f49576e3a11fa7ae33652cda09ffd185bac23cba187e44ac84e"
+  },
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4",
+  "resources": {
+    "cpu_seconds": 2.319372,
+    "exit_code": 1,
+    "out_of_memory": false,
+    "peak_rss_bytes": 169758720,
+    "timed_out": false,
+    "wall_seconds": 1.9601900773122907
+  },
+  "rows": [
+    {
+      "id": "control.ctor.premises_feasible",
+      "matches_expected": false,
+      "report_error": "nonzero exit, timeout/OOM, or incomplete fresh report set",
+      "resources": {
+        "cpu_seconds": 0.508092,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 118468608,
+        "timed_out": false,
+        "wall_seconds": 0.5493339728564024
+      }
+    }
+  ],
+  "scope": "Actual pre-WP option-recognition failure, not a negative proof or capability acceptance.",
+  "source_after": {
+    "commit": "9d8ca7645546ce3b282b2a51005392ceb78ff609",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "9d8ca7645546ce3b282b2a51005392ceb78ff609",
+  "tool_count": 9
+}

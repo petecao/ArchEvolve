@@ -1,0 +1,38 @@
+{
+  "boundary": "Static source/contract audit only; no compiler/native/formal/SSH execution, no prior hints or candidate payloads. Actual future counterstate controls and caller-invariant preservation proof remain pending. Review report discloses terminal_plan source excerpt over-read; no negative-control artifact was read.",
+  "checks": {
+    "report_hash": true,
+    "source_hashes": 17,
+    "static_TD_entry_requires_and_scalar_trace_reviewed": true
+  },
+  "date_et": "2026-10-15",
+  "report_sha256": "e7ce6540af01dd0db4c4c9a181952e12f83748e18b4bb1ead92228f14fde0f52",
+  "root_decisions": {
+    "accessor_fidelity": "Actual SlidingQueue begin/end use shared_out_start/shared_out_end. Restore faithful accessor behavior or explicitly document a justified registration abstraction.",
+    "admission": "Guard availability repair alone does not authorize another counted run. Review source/domain changes and no-hint helper closure before a concrete new admission.",
+    "pointer_and_storage_domains": "Supply real readable/writable ranges, same-object/one-past formation and ownership/metadata separation; no arbitrarily extensible pointers.",
+    "queue_domain": "Follow actual DOBFS allocation num_nodes; valid, pairwise-distinct occupied queue vertex IDs already visited. Preserve symbolic dimensions, real algorithm and original TDStep postcondition. Justify actual caller/history rather than desired postconditions.",
+    "unsigned_arithmetic": "Model primitive size_t addition modulo machine width. Any nonwrapping wrapper domain is a genuine call-site obligation."
+  },
+  "source_commit": "ac6bb42ead0beb38da954c3528a1821c6d9f78eb",
+  "source_hashes": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD23.md": "c70c52bb066462db14527e61f519a69f0ef177af0b3755c59c3756490e65c9c3",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py": "3474b00db4ac40a9ca3eb08a9323902243798eef538552176e07095ab9ab95be",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py": "d240f5bbc204035073389def92de23712fbde3ee57afe974391d439443ba81f9",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/focused_probe.py": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/terminal_plan.py": "b9de089b800a6d28888fc887d4040c3e0f238d4e14265129e82fdf55126ccc1a",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh": "97130fcc3d087961484cddaad7b4ab798f7cf00920eab8b94ecdb64a285f9f1f",
+    "swdb-project/apps/gapbs/src/bfs.cc": "7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73",
+    "swdb-project/apps/gapbs/src/platform_atomics.h": "1183b25883d497c038e70359eaf0ebcffdc7f097c7091e10af58c7415473d2b4",
+    "swdb-project/apps/gapbs/src/sliding_queue.h": "f8389900181f1a63c0354e274561336191bbc0e4cfb5f34f70da3abc07e4d443",
+    "swdb-project/library/dx100/bfs_read_offload.inc": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+  },
+  "source_physical_git_clean": true
+}
