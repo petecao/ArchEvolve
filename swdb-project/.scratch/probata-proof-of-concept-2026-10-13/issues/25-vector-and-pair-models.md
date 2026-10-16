@@ -1263,3 +1263,9 @@ reviewed inert full-21 packet still needs coordinator admission, fresh actual
 results and complete task/import/hypothesis cold review. No old 017 partial
 record is promoted. Original v2, generic caller composition, remaining members
 and element/type breadth remain open; this ticket is still claimed.
+
+## Current source publication boundary — 2026-10-16 ET
+
+Exact evaluated-source2e01 is published through the reviewed25301741 packet; root must evaluate2e01, not the merge or receipt commit. Both projection pieces retain the full original antecedent and mandatory AND ownership; original whole projection is reference-only, other19payloads unchanged.316package Git pins and15physical reviewed source pins match. Root3named scripted public/schema/native-OCaml controls pass in16.034838s/374.53125MiB with noevents/children/OOM/timeout; all403retained control artifact pins match. This completes source/workflow readiness only, no actual proof. Caller79targets/five unadmitted model requirements, public contract identity, full21/model/original-v2/caller/ticket25 acceptance remain open. [Integration review](../evidence/t25-projection-publication-integration-review-20261016.md), [root source/entry review](../evidence/t25-grow21-root-source-change-review-2e01d27d-20261016.md), [scripted controls](../evidence/t25-grow21-scripted-public-controls-20261016.json).
+
+This supersedes dated pending-controls preparation statements only. Status stays claimed; no historical record promotion.
