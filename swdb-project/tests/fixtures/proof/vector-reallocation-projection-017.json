@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-16 ET",
+  "original_projection": {
+    "goal": "t25v3_grow_entry_int_projection",
+    "id": "grow.entry.int_projection",
+    "path": "002-t25v3_grow_entry_int_projection.c",
+    "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f",
+    "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) ==> t25v3_repr(Heap::project_int_region(h,values,b,bo,s),r,o,b,bo,s,c)"
+  },
+  "scope": "independently retained canonical baseline byte identities, not proof acceptance",
+  "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "targets": [
+    {
+      "id": "control.grow.premises_feasible",
+      "path": "000-t25v3_control_grow_premises_feasible.c",
+      "sha256": "e9912022fad11f1fe2ea45e80ba9909673c287ce41d0114d707ca8e6d1d19579"
+    },
+    {
+      "id": "grow.entry.reads",
+      "path": "001-t25v3_grow_entry_reads.c",
+      "sha256": "18263b731752f297cedcaf3b0a64564b689992dac89a0b382b7acfb70ef4b492"
+    },
+    {
+      "id": "grow.entry.int_projection",
+      "path": "002-t25v3_grow_entry_int_projection.c",
+      "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f"
+    },
+    {
+      "id": "grow.alloc.identity",
+      "path": "003-t25v3_grow_alloc_identity.c",
+      "sha256": "ea3a5a1296e046da142f68541fed405c673537448d46a6324d755285aad21099"
+    },
+    {
+      "id": "grow.alloc.output",
+      "path": "004-t25v3_grow_alloc_output.c",
+      "sha256": "1198c24918718565409f8e995a25eb92e9f870a893f901393efbed990f1537cc"
+    },
+    {
+      "id": "grow.alloc.frame",
+      "path": "005-t25v3_grow_alloc_frame.c",
+      "sha256": "ac824da28573588e41ac18d4eac8926d40963cc655a06279e6bc9fba80dabf14"
+    },
+    {
+      "id": "grow.copy.establish",
+      "path": "006-t25v3_grow_copy_establish.c",
+      "sha256": "cac2722ab4199a0862b64192b5e91e43fd3a6260593cb32f7cc2312e06e5e435"
+    },
+    {
+      "id": "grow.copy.read",
+      "path": "007-t25v3_grow_copy_read.c",
+      "sha256": "7c90efa88d04fe2ebd52f63b2d03d26f9fab1028499546b4b8f9079b7e19a359"
+    },
+    {
+      "id": "grow.copy.write",
+      "path": "008-t25v3_grow_copy_write.c",
+      "sha256": "8cb31cb0ca397d1af45989a20b86daf800f4917d85f7e7629cbfe20ca5b7643c"
+    },
+    {
+      "id": "grow.copy.step",
+      "path": "009-t25v3_grow_copy_step.c",
+      "sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e"
+    },
+    {
+      "id": "grow.copy.exit",
+      "path": "010-t25v3_grow_copy_exit.c",
+      "sha256": "a82e1a2d18ce960a19f522f8501d387e3426ef93361101aa84a8c20ae8b64a56"
+    },
+    {
+      "id": "grow.free.argument",
+      "path": "011-t25v3_grow_free_argument.c",
+      "sha256": "e34e62929b1883a7e331d607891e0867f67255aa76f13144aa3599db4ce4fcb6"
+    },
+    {
+      "id": "grow.free.survival",
+      "path": "012-t25v3_grow_free_survival.c",
+      "sha256": "379322038e0f7d2464b40d9d9ecc31820b667ffc535b789d6072ef83fbeba2ab"
+    },
+    {
+      "id": "grow.free.aliases",
+      "path": "013-t25v3_grow_free_aliases.c",
+      "sha256": "c8af180b05b93f59898c1c9f70a1d66669a532470e7c1ddf8439ec566cb72fe3"
+    },
+    {
+      "id": "grow.store.capacity",
+      "path": "014-t25v3_grow_store_capacity.c",
+      "sha256": "58205ae5015b20dfe0ed078b910139e4c02c520fbcdf3890a43d4608d13bce55"
+    },
+    {
+      "id": "grow.post.eligibility",
+      "path": "015-t25v3_grow_post_eligibility.c",
+      "sha256": "385c5a3abc142bd86609143250fbf1d5c915180a807b714047f1a57b9a3bcb3a"
+    },
+    {
+      "id": "grow.post.values",
+      "path": "016-t25v3_grow_post_values.c",
+      "sha256": "54bfb0689114aaee966679853bf9315a1efb4a09c9e234bdf3b9ca6693fe662a"
+    },
+    {
+      "id": "grow.post.old_invalid",
+      "path": "017-t25v3_grow_post_old_invalid.c",
+      "sha256": "c837d4ba9dfc151533c52b3bc2c62009aaa414160141fc1708bad65a505412ff"
+    },
+    {
+      "id": "grow.post.frame",
+      "path": "018-t25v3_grow_post_frame.c",
+      "sha256": "f893974f292f317c49e2c5b10b8d636e68b53be843e3e3b39ae60115e0042209"
+    },
+    {
+      "id": "grow.numeric",
+      "path": "019-t25v3_grow_numeric.c",
+      "sha256": "59d1e899773f54e3bc3b1087bef201b298c52703fcbf5506b3a4f9443b086b70"
+    }
+  ]
+}
