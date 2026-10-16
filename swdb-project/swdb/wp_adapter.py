@@ -412,6 +412,11 @@ class WpAdapter:
                 context['semantics_settings']['source_definitions'] = dx100_stream_source.bindings(lowering)
                 context['semantics_settings']['termination_policy'] = 'conditional normal return; no hardware liveness'
                 context['semantics_settings']['source_refinement'] = 'owned TCB correspondence; all-schedule refinement and contract/body agreement unverified'
+            from swdb import dx100_allocation_source
+            if dx100_allocation_source.bindings(lowering):
+                context['semantics_settings']['source_definitions'] = dx100_allocation_source.bindings(lowering)
+                context['semantics_settings']['correctness_scope'] = 'original total software-counter unit; no hardware progress premise'
+                context['semantics_settings']['source_refinement'] = 'checked compiler/source bindings; contract/body correspondence is an owned TCB duty'
             log.line(f"proof semantics: {entries[0]} (sha256 {sha}); calls {', '.join(called)}; "
                      f"{len(lowering.probes)} hazard probe(s)")
         refusal = cpu_memory_admission.check(lowering, covered)
@@ -827,6 +832,17 @@ class WpAdapter:
         from swdb.dx100_source_selector import pure_layout
         from swdb import dx100_size_source
         from swdb import dx100_stream_source
+        from swdb import dx100_allocation_source
+        if dx100_allocation_source.allocation_layout(data):
+            if self.contract!='contract.dx100_software_allocation_fixture.v1' or self.method.id!='method.dx100-software-allocation-fixture-v1':
+                raise AdapterError('software allocator requires its distinct original-total fixture contract and method')
+            semantics['unit_requires'],semantics['unit_ensures']=[],[]
+            semantics['correctness_scope']='original total software-counter unit; no hardware progress premise'
+            frames=re.findall(r'\bassigns\s+([^;]+);','\n'.join(texts))
+            if len(frames)!=1 or {name.strip()for name in frames[0].split(',')}!={'REG_count','SPD_count','region_count'}:
+                raise AdapterError('software allocator requires its explicit original software-counter assigns frame; it cannot widen assigns-nothing')
+            semantics['original_assigns_frame']=['REG_count','SPD_count','region_count']
+            return texts,[proof_semantics.wp_prelude(self.library,entry_id,semantics['calls'],self.defines)]
         if dx100_stream_source.stream_layout(data):
             try:
                 policy=dx100_stream_source.unit_policy(self.library,self.library.get(self.contract) or {})
@@ -1074,11 +1090,15 @@ class WpAdapter:
                 **context["semantics_settings"], "unit_requires": semantics.get("unit_requires", []),
                 "unit_ensures": semantics.get("unit_ensures", []),
                 **({"entry_projection":semantics["entry_projection"]} if "entry_projection" in semantics else {}),
-                **({"unit_correctness_policy":semantics["unit_correctness_policy"]} if "unit_correctness_policy" in semantics else {})}
+                **({"unit_correctness_policy":semantics["unit_correctness_policy"]} if "unit_correctness_policy" in semantics else {}),
+                **({"original_assigns_frame":semantics["original_assigns_frame"]} if "original_assigns_frame" in semantics else {})}
             from swdb.dx100_source_selector import pure_layout, PURE_STATEMENT
             from swdb import dx100_size_source
             from swdb import dx100_stream_source
-            if dx100_stream_source.stream_layout(self.library.get(semantics['id'])):
+            from swdb import dx100_allocation_source
+            if dx100_allocation_source.allocation_layout(self.library.get(semantics['id'])):
+                assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},'sentence':dx100_allocation_source.STATEMENT})
+            elif dx100_stream_source.stream_layout(self.library.get(semantics['id'])):
                 assumptions.append({'kind':'proof_semantics','reference':{'id':semantics['id'],'sha256':semantics['sha256']},
                     'sentence':'Only the source-bound closed one-u32-stream, real returned wait and metadata size observation are admitted on conditional normal return. Input mapping/coherence, exclusive epoch and all-schedule event refinement are owned TCB obligations; source refinement and contract/body agreement remain unverified. No hardware termination, payload CPU read or full-interface theorem is claimed.'})
             elif dx100_size_source.size_layout(self.library.get(semantics['id'])):

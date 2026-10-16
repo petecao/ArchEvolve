@@ -422,7 +422,7 @@ def test_execution_method_must_pin_the_running_checks_version_and_content(seed, 
     "swdb/wp_pointer_bounds.py", "swdb/proof_semantics.py", "swdb/dx100_interface.py", "swdb/dx100_source_selector.py", "swdb/dx100_size_source.py", "swdb/vector_ownership.py", "swdb/standard_model_view.py",
     "swdb/array_domains.py", "swdb/model_domains.py", "swdb/dx_array_domains.py", "swdb/bounded_entry_windows.py",
     "swdb/bounded_chain.py", "swdb/summary_bindings.py", "swdb/helper_windows.py",
-    "swdb/dx100_stream_source.py", "swdb/dx100_stream_model.py", "vocab/proof_subject_kinds.yaml"])
+    "swdb/dx100_stream_source.py", "swdb/dx100_stream_model.py", "swdb/dx100_allocation_source.py", "vocab/proof_subject_kinds.yaml"])
 def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation(seed, changed):
     import os
     import shutil
