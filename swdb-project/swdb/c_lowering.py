@@ -643,9 +643,13 @@ class _Unit:
             if not desugared:                     # ticket 25: `std::vector<int>::iterator` reads through its sugar
                 raise
             parsed = _parse_type(desugared, line)
-        sugared_ok = _c_known(parsed.base) and not parsed.args
-        if not sugared_ok and desugared:
+        # A spelling such as uint64_t is an ordinary C++ typedef and may be
+        # shadowed. The source-node type is authoritative even when its name
+        # also occurs in the C prelude's fixed-width vocabulary.
+        if desugared:
             parsed = _parse_type(desugared, line)
+        if parsed.ref and not qual.rstrip().endswith('&'):
+            raise Unsupported('reference typedef needs an explicit source reference binding', line)
         return self._declarator(parsed, name, line, qual)
 
     def _declarator(self, parsed, name, line, shown):
@@ -666,6 +670,17 @@ class _Unit:
 
     def base_type(self, base, args, line, shown=""):
         plain = re.sub(r"^std::", "", base)
+        if not args and plain in (INTEGER_TYPES | set(INTERNAL_TYPES)) and '_' in plain:
+            # Function types do not always carry desugaredQualType. Resolve
+            # their typedef from the source, refusing shadowed contexts rather
+            # than substituting the C prelude's unrelated same-spelled alias.
+            nodes = [n for n in self.dump(plain) if n.get('name') == plain and not n.get('isImplicit')]
+            target = self.typedef_target(nodes, base, line)
+            parsed = _parse_type(target, line)
+            if (parsed.base == plain or parsed.args or parsed.pointers or parsed.ref or parsed.dims
+                    or not _c_known(parsed.base)):
+                raise Unsupported(f'nonprimitive source typedef identity for {base}', line)
+            return self.ctype(target, line=line)
         if not args and (plain in INTEGER_TYPES or base == "void"):
             return plain
         if not args and plain in INTERNAL_TYPES:
@@ -702,10 +717,24 @@ class _Unit:
             return self.ctype(fixed.get("qualType", "int"), fixed.get("desugaredQualType"), line=line) \
                 if fixed else "int"
         if kinds & {"TypedefDecl", "TypeAliasDecl"} and not args:
-            alias = [n for n in nodes if n.get("kind") in ("TypedefDecl", "TypeAliasDecl")][0]
-            qual, desugared = _types(alias)
-            return self.ctype(qual, desugared, line=line)
+            return self.ctype(self.typedef_target(nodes, base, line), line=line)
         return self.struct(base, args, line)
+
+    def typedef_target(self, nodes, name, line):
+        """A type spelling with no node-local binding needs a unique target.
+
+        Filtered dumps can contain unrelated class/local/namespace aliases.
+        Equal underlying targets are harmless; different targets or mixed
+        declaration kinds must not choose the first result's type.
+        """
+        aliases = [n for n in nodes if n.get('kind') in {'TypedefDecl', 'TypeAliasDecl'}]
+        targets = {desugared or qual for qual, desugared in map(_types, aliases)}
+        if not aliases or len(aliases) != len(nodes) or len(targets) != 1:
+            raise Unsupported(f'ambiguous source typedef identity for {name}', line)
+        target = next(iter(targets))
+        if _parse_type(target, line).ref:
+            raise Unsupported('reference typedef needs an explicit source reference binding', line)
+        return target
 
     def canonical(self, arg, line, desugared=None):
         """A template argument in one spelling: an integer, true/false, or a C type with every typedef resolved
@@ -724,12 +753,8 @@ class _Unit:
             return word
         key = ("typedef", word)
         if key not in self._cache:
-            aliases = [n for n in self.dump(word) if n.get("kind") in ("TypedefDecl", "TypeAliasDecl")
-                       and n.get("name") == word]
-            if not aliases:
-                raise Unsupported(f"type {word} (no typedef)", line)
-            qual, desugared = _types(aliases[0])
-            target = desugared or qual
+            nodes = [n for n in self.dump(word) if n.get('name') == word and not n.get('isImplicit')]
+            target = self.typedef_target(nodes, word, line)
             if not re.fullmatch(r"[a-z ]+", target):
                 target = re.sub(r"[A-Za-z_]\w*", lambda m: self._builtin(m.group(0), line), target)
             self._cache[key] = target
@@ -2749,7 +2774,8 @@ def _define(unit, cname, node, owner):
         if qual.rstrip().endswith("&"):
             printer.ref_ids.add(param.get("id"))
         texts.append(unit.ctype(qual, desugared, name, line))
-        params.append((name, unit.ctype(qual, desugared, "", line), "*" in qual or qual.rstrip().endswith("&")))
+        parameter_type = unit.ctype(qual, desugared, "", line)
+        params.append((name, parameter_type, '*' in parameter_type))
     printer.local_ids.update(p.get("id") for p in _children(node) if p.get("kind") == "ParmVarDecl")
     if kind in ("CXXConstructorDecl", "CXXDestructorDecl"):
         returns = "void"

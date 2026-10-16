@@ -1,0 +1,2204 @@
+{
+  "created": "2026-10-15 ET",
+  "base": "db56a3720be00422985adb392bc53d2dde04e942",
+  "scope": "Compiler source-type soundness prerequisite for ticket28, not new DX100 call semantics or actual formal evidence.",
+  "fix": "Use source-node desugared type even for familiar fixed-width names. For unresolved aliases, require one underlying source type and no mixed declaration kinds; never pick the first filtered dump. Derive parameter pointer metadata from actual lowered C type. Refuse reference typedefs until all source reference-use sites have a bound policy; literal references remain supported.",
+  "compatibility": "All semantics0.1 library bytes unchanged. Exact old constant atomic C/anchors/models/names golden control passes. Other typedef-bearing emitted C may intentionally change to preserve the actual C++ type; all old producer evidence remains scoped to its source.",
+  "profiles": {
+    "local_red": {
+      "note": "Native C++ returns1, emitted C returns0 under ASan/UBSan when local uint64_t denotes double; no diagnostic/UB was used as a counterexample.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/command.json",
+          "sha256": "b444d423c2da57ef1e3568852947ea68fbea085b1cef4fff1fa05ae0d11ff429",
+          "bytes": 326
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/control.log",
+          "sha256": "1a99f0695514262b0fef832143aa9ec39c17d60af95e576960d3ffe1bf0cf703",
+          "bytes": 3134
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/junit.xml",
+          "sha256": "9c9a43dd64ce43f9e69a0340a37cf836ecab55479627ea85b3510447449ab49c",
+          "bytes": 3553
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/pytest/test_a_local_shadow_of_a_fixed0/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/pytest/test_a_local_shadow_of_a_fixed0/c++.txt",
+          "sha256": "3959472fb89c9e796d18b3b8d7ba1a1aca17c7944a08b0ec3b2df9b6138d6195",
+          "bytes": 178
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/pytest/test_a_local_shadow_of_a_fixed0/c.bin",
+          "sha256": "e1ef2e7b8a6d1e8b0e3021a25ef5b471b73c848fbb464168dc8ae7f311d3a962",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/pytest/test_a_local_shadow_of_a_fixed0/c.txt",
+          "sha256": "26a33cb24fabbc9e4d8273328350ae4ad17595e4289d352bb30eebe80d3afb8b",
+          "bytes": 849
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.anchors.json",
+          "sha256": "9ca2cc48a90db085dbc15afff9f891b23023f168da7400852b393e58f9c1c112",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.c",
+          "sha256": "6cbc5b56ace09f6dd54ecf2c9c64d4b0af7212711b0057146f088974bd1fa813",
+          "bytes": 792
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/pytest/test_a_local_shadow_of_a_fixed0/shadowed_device_typedef.cc",
+          "sha256": "b536c0d9edb476ebee3a7df1cfae69fb8a5c2ddddb891ddac0be216c07120afc",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-red/resources.json",
+          "sha256": "5c74bb4aad05cfb7e8978dccb274b525cc1407f2b2fd3a8ecd85cb636cd5ead6",
+          "bytes": 165
+        }
+      ]
+    },
+    "local_green": {
+      "note": "12 focused compiler/native controls pass after source-node desugaring.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/command.json",
+          "sha256": "c693ddb1c44bfce2ac2740c8861fc7a72317354dc0b17e18b5067b2d46661c7c",
+          "bytes": 630
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/control.log",
+          "sha256": "e855b90a920e1cabcaf879a1cbea7f1b96caf5e8d44731370c283e91fdeb8e93",
+          "bytes": 99
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/junit.xml",
+          "sha256": "0fef175b80d78662b60cab8cc381275041f92c4c653ee3b95a7b1d73f2c18b5a",
+          "bytes": 2271
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed0/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed0/c++.txt",
+          "sha256": "3959472fb89c9e796d18b3b8d7ba1a1aca17c7944a08b0ec3b2df9b6138d6195",
+          "bytes": 178
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed0/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed0/c.txt",
+          "sha256": "6c523cc2206d4a9eedfff00759b26fbac45459101643274b10c72952998d47fa",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.anchors.json",
+          "sha256": "fdfd2d359c1e32125271bd4a56250a69758ae086c427fa03bf6e2fe162251fce",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.c",
+          "sha256": "7309c16efa28da793bd6aec62442f4d987a677347ef8844b6e8faf913dcc1e99",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed0/shadowed_device_typedef.cc",
+          "sha256": "b536c0d9edb476ebee3a7df1cfae69fb8a5c2ddddb891ddac0be216c07120afc",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed1/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed1/c++.txt",
+          "sha256": "99fb7035a8965663d5cdd9b709eeb82dad1ba519387ab7281b94dbeb2ab7ab02",
+          "bytes": 160
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed1/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed1/c.txt",
+          "sha256": "45689567893cea141119ec93ec630bfb48d39f76b9a12bf65d20361e8406057c",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.anchors.json",
+          "sha256": "b9249204955fbbfa7e370b7ba69e999ba6475659ba827cc04f5adc16daa9109c",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.c",
+          "sha256": "ace8244ab43b94161082dfe6ac862597083ecedd51636c4ade859164134356f4",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_local_shadow_of_a_fixed1/shadowed_device_typedef.cc",
+          "sha256": "7c13f54d99619bf747e76af25948799c878dd9465deebb7c3a61390af83d9de1",
+          "bytes": 103
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_shared_template_body_bi0/out/nested_types.anchors.json",
+          "sha256": "f080177c2fb0aa4d72fbf37bf7221423f8273ef21d3a41ca9109ccd972c33e66",
+          "bytes": 5434
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_a_shared_template_body_bi0/out/nested_types.c",
+          "sha256": "218dac56349baa8a04afb1746db6858f2dabea26b1c79682f3a0cdf93b1427b6",
+          "bytes": 1151
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_defined_zero_argument_tem0/c++.bin",
+          "sha256": "ae5866c4b01c351bb5013f0c16394346d526367a7567b35d957a54c3537b1907",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_defined_zero_argument_tem0/c++.txt",
+          "sha256": "eb7c614d333a2e6f3a08d57e690bd542b41302f49e9b15bcf884a424b362db5b",
+          "bytes": 293
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_defined_zero_argument_tem0/c.bin",
+          "sha256": "86bcdac242709429c9319c909e096c7433ff4a638df57fd56e00f0f36ef1fa7a",
+          "bytes": 33944
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_defined_zero_argument_tem0/c.txt",
+          "sha256": "5472e8f91a5b27a0b26eca6f6fd7d17ba5eb55a7bc9dc144365598f5a44066ab",
+          "bytes": 2375
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_defined_zero_argument_tem0/out/all_widths.anchors.json",
+          "sha256": "e546cf6bd13fbca5ede8e4215dc0fff88480f68fc408d26e4e0c6e3889f12ad1",
+          "bytes": 7180
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_defined_zero_argument_tem0/out/all_widths.c",
+          "sha256": "c2710ea32bdb5e979a6e5eacd23e9d62f2ee4ac0815f3359b49aa5a35fe65e82",
+          "bytes": 2320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_register_overload_names_a0/out/pair_order.anchors.json",
+          "sha256": "7835729367404467d138ca11283118128fa8b93c76175d6732bf26b7d3c87c78",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_register_overload_names_a0/out/pair_order.c",
+          "sha256": "8ea9888346c53ee39a5893f0e8d5a79f16fc6f922c69900beba6a50664248506",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_register_overload_names_a1/out/pair_order.anchors.json",
+          "sha256": "d367d9abce31051b44e9a5b4ff940af802ff2a222f9588958a3c8155f174681b",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_register_overload_names_a1/out/pair_order.c",
+          "sha256": "30601f7ac8ca679bb6971e699a7a57dc064c515d928d2932cacc82a9b5526300",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "f74677a0cf7d4545acaa7ac5fadd3d9b31a0502c4627751a5d1a1acd0d140b52",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "c7af887e7631a0228ab54e660b9c25e5f88440192e4ec0f15e0080a45ec7797f",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-shadow-green/resources.json",
+          "sha256": "690c1c2696d678bee2a6014f3c7fbb5c1ee5bbf4f81f7d52764b43df186a5e2b",
+          "bytes": 163
+        }
+      ]
+    },
+    "return_red": {
+      "note": "Global typedef-double uint64_t function return still emitted as integer after the local-only fix; C++1/C0 native discrepancy.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/command.json",
+          "sha256": "80e65503d89846080b918bf1ab648238cb16e93286fd9d889ebb69555c53982e",
+          "bytes": 327
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/control.log",
+          "sha256": "13a34bc06d4fe2ef958f5b21f06641436af743f3685dac58819cd890fcffb202",
+          "bytes": 3516
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/junit.xml",
+          "sha256": "bddf37c9837b5eb78899e071853d4f73ad371698b7a5ce5ff617dfc427a62237",
+          "bytes": 3928
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/pytest/test_a_local_shadow_of_a_fixed0/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/pytest/test_a_local_shadow_of_a_fixed0/c++.txt",
+          "sha256": "f3f1a660dae1f08f5fb16fe310af780166d380130cc62da8d4ca4c4d4cc0f936",
+          "bytes": 191
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/pytest/test_a_local_shadow_of_a_fixed0/c.bin",
+          "sha256": "62a1e3873a0b5b9bde5ca54370eaa9233c50b1155dc3bb5c8b2e7fa53eaa9fcb",
+          "bytes": 50312
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/pytest/test_a_local_shadow_of_a_fixed0/c.txt",
+          "sha256": "5a7f1edfa1c70b402499fbac7920e82b42bf37ffd5563dce0db3cf2ac5ac616f",
+          "bytes": 880
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.anchors.json",
+          "sha256": "ed625c39c111fdb06f72bc5442305df0bd11922fe6da4ed214228d14383a1313",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.c",
+          "sha256": "2c71ef65bf0c2fd7247aaeabffbe07befb3902c6c6bc21187e118a8f37e7f639",
+          "bytes": 823
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/pytest/test_a_local_shadow_of_a_fixed0/shadowed_device_typedef.cc",
+          "sha256": "646a621cea90cace5fb8b44bc7d1df082be87d3143c6a13a183ecc586d992de1",
+          "bytes": 134
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-red/resources.json",
+          "sha256": "0181d2f9ab6926955f122c7bb2ec330a429980b383bd6b8b57d3a551cab31ca6",
+          "bytes": 164
+        }
+      ]
+    },
+    "return_green": {
+      "note": "14 focused controls pass after resolving source aliases for signatures without desugaredQualType.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/command.json",
+          "sha256": "e6505cb2cf40ca1c200ea4d0ab66b399efd3db02439472c7ab68034782da1c4a",
+          "bytes": 630
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/control.log",
+          "sha256": "b7966233ddd3e37b1d94fe9cc6359b9f22fe317c70b03a287eff459aaf0149ee",
+          "bytes": 99
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/junit.xml",
+          "sha256": "401fc7b58f68fa5510d2b9a06094b44f4ffa2dc2f78283a7d8891d27aecedb59",
+          "bytes": 2641
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed0/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed0/c++.txt",
+          "sha256": "3959472fb89c9e796d18b3b8d7ba1a1aca17c7944a08b0ec3b2df9b6138d6195",
+          "bytes": 178
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed0/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed0/c.txt",
+          "sha256": "6c523cc2206d4a9eedfff00759b26fbac45459101643274b10c72952998d47fa",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.anchors.json",
+          "sha256": "fdfd2d359c1e32125271bd4a56250a69758ae086c427fa03bf6e2fe162251fce",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.c",
+          "sha256": "7309c16efa28da793bd6aec62442f4d987a677347ef8844b6e8faf913dcc1e99",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed0/shadowed_device_typedef.cc",
+          "sha256": "b536c0d9edb476ebee3a7df1cfae69fb8a5c2ddddb891ddac0be216c07120afc",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed1/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed1/c++.txt",
+          "sha256": "99fb7035a8965663d5cdd9b709eeb82dad1ba519387ab7281b94dbeb2ab7ab02",
+          "bytes": 160
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed1/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed1/c.txt",
+          "sha256": "45689567893cea141119ec93ec630bfb48d39f76b9a12bf65d20361e8406057c",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.anchors.json",
+          "sha256": "b9249204955fbbfa7e370b7ba69e999ba6475659ba827cc04f5adc16daa9109c",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.c",
+          "sha256": "ace8244ab43b94161082dfe6ac862597083ecedd51636c4ade859164134356f4",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed1/shadowed_device_typedef.cc",
+          "sha256": "7c13f54d99619bf747e76af25948799c878dd9465deebb7c3a61390af83d9de1",
+          "bytes": 103
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed2/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed2/c++.txt",
+          "sha256": "f3f1a660dae1f08f5fb16fe310af780166d380130cc62da8d4ca4c4d4cc0f936",
+          "bytes": 191
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed2/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed2/c.txt",
+          "sha256": "b519bba4fa41302feb9821a3e444219aa197938d751600366f7dbdae40aeedb5",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.anchors.json",
+          "sha256": "0796cf47c360eb1ffd86c0c95a8f701b1b4790234d68c12df67ba5e87c6cf246",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.c",
+          "sha256": "2315fdaaacf5d774c17bed14b1c45b0678b6f4f38258527dc08fe0866389e236",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed2/shadowed_device_typedef.cc",
+          "sha256": "646a621cea90cace5fb8b44bc7d1df082be87d3143c6a13a183ecc586d992de1",
+          "bytes": 134
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed3/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed3/c++.txt",
+          "sha256": "1ab9ca1c0c452eefeeb0a0e14f78aabdd6949146a79ef23a53a365aeb45468f4",
+          "bytes": 188
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed3/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed3/c.txt",
+          "sha256": "4e446e1a862a26c20011debcce79a2a2eee2b45bb00d345d33629e1f638a2289",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.anchors.json",
+          "sha256": "e7dc02f05502503acaccc0ee4a152eb43f262f18909cb2bf6672c83a203f5e59",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.c",
+          "sha256": "09ac0b242473bafee6a9efa54b81858ae71e1abd31180bb0d544f2424a4c4bb5",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_local_shadow_of_a_fixed3/shadowed_device_typedef.cc",
+          "sha256": "4e6f49cd99c17ccabd626ea2e628b5675e915af8c1341dec9e5367a91da08891",
+          "bytes": 131
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_shared_template_body_bi0/out/nested_types.anchors.json",
+          "sha256": "f080177c2fb0aa4d72fbf37bf7221423f8273ef21d3a41ca9109ccd972c33e66",
+          "bytes": 5434
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_a_shared_template_body_bi0/out/nested_types.c",
+          "sha256": "218dac56349baa8a04afb1746db6858f2dabea26b1c79682f3a0cdf93b1427b6",
+          "bytes": 1151
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_defined_zero_argument_tem0/c++.bin",
+          "sha256": "ae5866c4b01c351bb5013f0c16394346d526367a7567b35d957a54c3537b1907",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_defined_zero_argument_tem0/c++.txt",
+          "sha256": "eb7c614d333a2e6f3a08d57e690bd542b41302f49e9b15bcf884a424b362db5b",
+          "bytes": 293
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_defined_zero_argument_tem0/c.bin",
+          "sha256": "86bcdac242709429c9319c909e096c7433ff4a638df57fd56e00f0f36ef1fa7a",
+          "bytes": 33944
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_defined_zero_argument_tem0/c.txt",
+          "sha256": "5472e8f91a5b27a0b26eca6f6fd7d17ba5eb55a7bc9dc144365598f5a44066ab",
+          "bytes": 2375
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_defined_zero_argument_tem0/out/all_widths.anchors.json",
+          "sha256": "e546cf6bd13fbca5ede8e4215dc0fff88480f68fc408d26e4e0c6e3889f12ad1",
+          "bytes": 7180
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_defined_zero_argument_tem0/out/all_widths.c",
+          "sha256": "c2710ea32bdb5e979a6e5eacd23e9d62f2ee4ac0815f3359b49aa5a35fe65e82",
+          "bytes": 2320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_register_overload_names_a0/out/pair_order.anchors.json",
+          "sha256": "7835729367404467d138ca11283118128fa8b93c76175d6732bf26b7d3c87c78",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_register_overload_names_a0/out/pair_order.c",
+          "sha256": "8ea9888346c53ee39a5893f0e8d5a79f16fc6f922c69900beba6a50664248506",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_register_overload_names_a1/out/pair_order.anchors.json",
+          "sha256": "d367d9abce31051b44e9a5b4ff940af802ff2a222f9588958a3c8155f174681b",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_register_overload_names_a1/out/pair_order.c",
+          "sha256": "30601f7ac8ca679bb6971e699a7a57dc064c515d928d2932cacc82a9b5526300",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "f74677a0cf7d4545acaa7ac5fadd3d9b31a0502c4627751a5d1a1acd0d140b52",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "c7af887e7631a0228ab54e660b9c25e5f88440192e4ec0f15e0080a45ec7797f",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-return-green/resources.json",
+          "sha256": "b7b4f1005420525ed0bfa3b719096da091d6de09ecc1e329e932630cf83f4047",
+          "bytes": 165
+        }
+      ]
+    },
+    "paths_green": {
+      "note": "21 passed incl local/return/field/cast/summary values for both known alias spellings and conservative unresolved scope refusal.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/command.json",
+          "sha256": "2b3d0fb0cb744ae92d0e45b829ad87a18ae184b71e9852b509040cd0dbda992e",
+          "bytes": 640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/control.log",
+          "sha256": "c81c05cdcba7cd79a74fe80ce044f4ed6be59b68b62a46a2b18db4cafab32f41",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/junit.xml",
+          "sha256": "cc89ff33a09a5c847542e00f209bfea74dca403270ce7b44da48a2641e5e32c8",
+          "bytes": 3865
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed0/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed0/c++.txt",
+          "sha256": "3959472fb89c9e796d18b3b8d7ba1a1aca17c7944a08b0ec3b2df9b6138d6195",
+          "bytes": 178
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed0/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed0/c.txt",
+          "sha256": "6c523cc2206d4a9eedfff00759b26fbac45459101643274b10c72952998d47fa",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.anchors.json",
+          "sha256": "fdfd2d359c1e32125271bd4a56250a69758ae086c427fa03bf6e2fe162251fce",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.c",
+          "sha256": "7309c16efa28da793bd6aec62442f4d987a677347ef8844b6e8faf913dcc1e99",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed0/shadowed_device_typedef.cc",
+          "sha256": "b536c0d9edb476ebee3a7df1cfae69fb8a5c2ddddb891ddac0be216c07120afc",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed1/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed1/c++.txt",
+          "sha256": "99fb7035a8965663d5cdd9b709eeb82dad1ba519387ab7281b94dbeb2ab7ab02",
+          "bytes": 160
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed1/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed1/c.txt",
+          "sha256": "45689567893cea141119ec93ec630bfb48d39f76b9a12bf65d20361e8406057c",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.anchors.json",
+          "sha256": "b9249204955fbbfa7e370b7ba69e999ba6475659ba827cc04f5adc16daa9109c",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.c",
+          "sha256": "ace8244ab43b94161082dfe6ac862597083ecedd51636c4ade859164134356f4",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed1/shadowed_device_typedef.cc",
+          "sha256": "7c13f54d99619bf747e76af25948799c878dd9465deebb7c3a61390af83d9de1",
+          "bytes": 103
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed2/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed2/c++.txt",
+          "sha256": "f3f1a660dae1f08f5fb16fe310af780166d380130cc62da8d4ca4c4d4cc0f936",
+          "bytes": 191
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed2/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed2/c.txt",
+          "sha256": "b519bba4fa41302feb9821a3e444219aa197938d751600366f7dbdae40aeedb5",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.anchors.json",
+          "sha256": "0796cf47c360eb1ffd86c0c95a8f701b1b4790234d68c12df67ba5e87c6cf246",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.c",
+          "sha256": "2315fdaaacf5d774c17bed14b1c45b0678b6f4f38258527dc08fe0866389e236",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed2/shadowed_device_typedef.cc",
+          "sha256": "646a621cea90cace5fb8b44bc7d1df082be87d3143c6a13a183ecc586d992de1",
+          "bytes": 134
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed3/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed3/c++.txt",
+          "sha256": "1ab9ca1c0c452eefeeb0a0e14f78aabdd6949146a79ef23a53a365aeb45468f4",
+          "bytes": 188
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed3/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed3/c.txt",
+          "sha256": "4e446e1a862a26c20011debcce79a2a2eee2b45bb00d345d33629e1f638a2289",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.anchors.json",
+          "sha256": "e7dc02f05502503acaccc0ee4a152eb43f262f18909cb2bf6672c83a203f5e59",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.c",
+          "sha256": "09ac0b242473bafee6a9efa54b81858ae71e1abd31180bb0d544f2424a4c4bb5",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed3/shadowed_device_typedef.cc",
+          "sha256": "4e6f49cd99c17ccabd626ea2e628b5675e915af8c1341dec9e5367a91da08891",
+          "bytes": 131
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed4/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed4/c++.txt",
+          "sha256": "86ad7b836c02ffea0ae22c8787eb4556682eb5be2765d85c1e74dac12feb286e",
+          "bytes": 173
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed4/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed4/c.txt",
+          "sha256": "45eb25fd715ac5011d6f152a3644d4118cbd0bc20cdc25e17b6316dbd4be63eb",
+          "bytes": 857
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed4/out/shadowed_type.anchors.json",
+          "sha256": "6f8747be76f4a31d10790eb5ecb10971a4862bcb11aa26325161eb7d11ef6a04",
+          "bytes": 3750
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed4/out/shadowed_type.c",
+          "sha256": "b18a2bce7445988ad58dcfa757c33982fc7d5a3bcdca559d11c2b15b3e951a3e",
+          "bytes": 800
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed4/shadowed_device_typedef.cc",
+          "sha256": "08d5d3ab6a18ce9c1961d657f0fdebc33730817b28f9cb051aabc6d655e7ecee",
+          "bytes": 116
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed5/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed5/c++.txt",
+          "sha256": "cf86e484ceb073e997d2f4a0009074740e6cbae3c98bdacdd50385ae46b79376",
+          "bytes": 171
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed5/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed5/c.txt",
+          "sha256": "42d68b18efff4010703f1abf03297ee6ab26764989629cda7ee224d0e9d051ef",
+          "bytes": 857
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed5/out/shadowed_type.anchors.json",
+          "sha256": "9134af2a7c2cfe902ffd42d29a2af2802fdbd9d91106cd1ae4f725f253b76e1a",
+          "bytes": 3750
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed5/out/shadowed_type.c",
+          "sha256": "fc77f1600a65878cbd21632b61defc7c214c1dbb2d3bf4998096e39e7c5326ae",
+          "bytes": 800
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed5/shadowed_device_typedef.cc",
+          "sha256": "991eec18199e2ca10c3bc3f2b135deb12afbfe800ccd17db21e8f3400bb34053",
+          "bytes": 114
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed6/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed6/c++.txt",
+          "sha256": "b49f967be6f986df895dbda73b649cbdeb95cfe808d8c60bdc93bed9d4c42c49",
+          "bytes": 135
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed6/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed6/c.txt",
+          "sha256": "78dae9486961d28a419fea9ec0fea95d43a1bdef9801e1494436ac6d4b60b6c0",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed6/out/shadowed_type.anchors.json",
+          "sha256": "f5ae34aa359dc0a48fd8cff59b3ebd2cf2e68a9fe70b908ea646d0e70c88abdf",
+          "bytes": 2578
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed6/out/shadowed_type.c",
+          "sha256": "1091d8b1beb38b0f50e775a9998aebdb5741e83aadf2443161e4e9c2517b50e5",
+          "bytes": 560
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed6/shadowed_device_typedef.cc",
+          "sha256": "cfd91896e7fc81deee4499944bf4ad7ab6c0ca12e1caa14198828ca59f910ac2",
+          "bytes": 78
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed7/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed7/c++.txt",
+          "sha256": "2be5dc9db5e36187c5a00f2883c4c7a81eea5e128d25e17ab30222e90977270c",
+          "bytes": 133
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed7/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed7/c.txt",
+          "sha256": "616f34547fc224136d19fa34d5a0df4f6ae8599e8addb0580b6e34665066b8cd",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed7/out/shadowed_type.anchors.json",
+          "sha256": "625e9a6d1cf8a5a5853d4ae2a88af07150022341bff01564acc6118eec8ca029",
+          "bytes": 2578
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed7/out/shadowed_type.c",
+          "sha256": "aaedff0923483a2e7ac6af91b1569970feb50ee1117c04eec35467c809977605",
+          "bytes": 560
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed7/shadowed_device_typedef.cc",
+          "sha256": "2389046ad85c21cdd364d08504ec000afb7d84af03fb6a6aa5abc5fedb95fd53",
+          "bytes": 76
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed8/c++.bin",
+          "sha256": "f3c93c78e9ca79e42928c5424eda9c635c5ba54a0f9632d9634d6065de099f18",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed8/c++.txt",
+          "sha256": "df81515b67de97fb202f02555b2d679d74dedd26bf5aba6144c7fd44b8227b1e",
+          "bytes": 225
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed8/c.bin",
+          "sha256": "e5340461161a05de7a1f8bf19cf8e6fa183b4dce4dfc64d49114504cb53878d1",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed8/c.txt",
+          "sha256": "edf8c9bdfff370ba83d5bcedc466e0fcd2e1ea18ba50c354f7f0b21bb8a8146f",
+          "bytes": 703
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed8/out/shadowed_type.anchors.json",
+          "sha256": "95bc91d6eeac0b1aff1891211a1629758a29f89b29ba07327942bd31613d19dc",
+          "bytes": 3288
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed8/out/shadowed_type.c",
+          "sha256": "d145e6c36c7e693ea7be2f0460b20c49fc107ebf11c7f7e0c018ff1d94f7fa66",
+          "bytes": 599
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed8/shadowed_device_typedef.cc",
+          "sha256": "06786819542d124e7eb537335aa0e586ad1b252d85f4cae30f7bbfa6bdf620a0",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed9/c++.bin",
+          "sha256": "f3c93c78e9ca79e42928c5424eda9c635c5ba54a0f9632d9634d6065de099f18",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed9/c++.txt",
+          "sha256": "95f37ac5450f075f10c58479126c1a4e4a0c9e96310998659300e56c95b026c8",
+          "bytes": 222
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed9/c.bin",
+          "sha256": "e5340461161a05de7a1f8bf19cf8e6fa183b4dce4dfc64d49114504cb53878d1",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed9/c.txt",
+          "sha256": "ec5a1562ec436454122c2ca48f919cfa6b1925d6334abc1dec0076b9916cc755",
+          "bytes": 703
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed9/out/shadowed_type.anchors.json",
+          "sha256": "31bed59bf70b49bb3d8eab205277ac7f3e0d305f2a12984b03cc2782408eb664",
+          "bytes": 3288
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed9/out/shadowed_type.c",
+          "sha256": "11017a22a68ff56f9f7d845fd0a74262a84cf9daf1d4815ccbfa12ddec34d73f",
+          "bytes": 599
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_local_shadow_of_a_fixed9/shadowed_device_typedef.cc",
+          "sha256": "76e9a04c1af79f80b7ebae5a826fefbd92880d61e05dbef36708874406443cc3",
+          "bytes": 118
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_shared_template_body_bi0/out/nested_types.anchors.json",
+          "sha256": "f080177c2fb0aa4d72fbf37bf7221423f8273ef21d3a41ca9109ccd972c33e66",
+          "bytes": 5434
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_a_shared_template_body_bi0/out/nested_types.c",
+          "sha256": "218dac56349baa8a04afb1746db6858f2dabea26b1c79682f3a0cdf93b1427b6",
+          "bytes": 1151
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_ambiguous_unresolved_fixe0/ambiguous_typedef.cc",
+          "sha256": "ede4a49798123e22c301355f23036af01b6934594519f9cbf4812c25f05f9432",
+          "bytes": 147
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_defined_zero_argument_tem0/c++.bin",
+          "sha256": "ae5866c4b01c351bb5013f0c16394346d526367a7567b35d957a54c3537b1907",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_defined_zero_argument_tem0/c++.txt",
+          "sha256": "eb7c614d333a2e6f3a08d57e690bd542b41302f49e9b15bcf884a424b362db5b",
+          "bytes": 293
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_defined_zero_argument_tem0/c.bin",
+          "sha256": "86bcdac242709429c9319c909e096c7433ff4a638df57fd56e00f0f36ef1fa7a",
+          "bytes": 33944
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_defined_zero_argument_tem0/c.txt",
+          "sha256": "5472e8f91a5b27a0b26eca6f6fd7d17ba5eb55a7bc9dc144365598f5a44066ab",
+          "bytes": 2375
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_defined_zero_argument_tem0/out/all_widths.anchors.json",
+          "sha256": "e546cf6bd13fbca5ede8e4215dc0fff88480f68fc408d26e4e0c6e3889f12ad1",
+          "bytes": 7180
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_defined_zero_argument_tem0/out/all_widths.c",
+          "sha256": "c2710ea32bdb5e979a6e5eacd23e9d62f2ee4ac0815f3359b49aa5a35fe65e82",
+          "bytes": 2320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_register_overload_names_a0/out/pair_order.anchors.json",
+          "sha256": "7835729367404467d138ca11283118128fa8b93c76175d6732bf26b7d3c87c78",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_register_overload_names_a0/out/pair_order.c",
+          "sha256": "8ea9888346c53ee39a5893f0e8d5a79f16fc6f922c69900beba6a50664248506",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_register_overload_names_a1/out/pair_order.anchors.json",
+          "sha256": "d367d9abce31051b44e9a5b4ff940af802ff2a222f9588958a3c8155f174681b",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_register_overload_names_a1/out/pair_order.c",
+          "sha256": "30601f7ac8ca679bb6971e699a7a57dc064c515d928d2932cacc82a9b5526300",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "f74677a0cf7d4545acaa7ac5fadd3d9b31a0502c4627751a5d1a1acd0d140b52",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "c7af887e7631a0228ab54e660b9c25e5f88440192e4ec0f15e0080a45ec7797f",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-controls/resources.json",
+          "sha256": "3cd71ea01328560383c62865988da2a666fb8d35ae3ed752e190048595bd9cba",
+          "bytes": 174
+        }
+      ]
+    },
+    "member_fixture_misfire": {
+      "note": "Struct had no fields, so an unrelated existing empty-struct refusal was reached. Not the alias feature RED.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red/command.json",
+          "sha256": "5b74089c01297690e48e45b508475a8003147e8ea6cabf5db2ea6c0b1350c6a9",
+          "bytes": 327
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red/control.log",
+          "sha256": "8f349e7ed3c362ab239094ecf2588907958793fca890cbcb3442e33cd80a91a0",
+          "bytes": 2238
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red/junit.xml",
+          "sha256": "9bd987aec78246e0dd83d4eb14ae26343f45adf9efac3f22d09691782c556a8e",
+          "bytes": 3174
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red/pytest/test_a_member_return_type_cann0/member_typedef.cc",
+          "sha256": "0e7c45e672c57b390603bcd0c6731d2bdc0f83fb568e9c2d151d61fd50928217",
+          "bytes": 138
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red/resources.json",
+          "sha256": "a803926ac9b2030cf109ff3aeb2f3efb9c15eb0c837d59e4f03a4ded2d1ec287",
+          "bytes": 174
+        }
+      ]
+    },
+    "member_red": {
+      "note": "A class-local double Alias return was emitted as int from unrelated global Alias. Public lower accepted the wrong source target.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red2/command.json",
+          "sha256": "fff7821b52c20e98f7ba87ec8a9d4a6c679276be517d1d58e4b1f1f0fc2b7d03",
+          "bytes": 329
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red2/control.log",
+          "sha256": "641d7fd99d3383bc017557a17eef5f56b2e2f292fbf7262db9ef01c6730f99b1",
+          "bytes": 5865
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red2/junit.xml",
+          "sha256": "7ac63cc7731ed41147215b5ee87ded14958297f70b736fa05fee458200c59896",
+          "bytes": 11133
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red2/pytest/test_a_member_return_type_cann0/member_typedef.cc",
+          "sha256": "476d1dd183588000f3b456c7c7ae817c79db2a94e154b129e1f269fb1a1dd318",
+          "bytes": 147
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red2/pytest/test_a_member_return_type_cann0/out/result.anchors.json",
+          "sha256": "2d14c6647c0eaef2e3823197cec3656ea2ec1b80e736bbdd4e92c53972881a46",
+          "bytes": 3824
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red2/pytest/test_a_member_return_type_cann0/out/result.c",
+          "sha256": "5c4cc518bc9da73c28bd872d3e2140c5090a9238df3ed82a5533f5bb94c47e7b",
+          "bytes": 867
+        },
+        {
+          "path": "/private/tmp/probata-t28-member-typedef-red2/resources.json",
+          "sha256": "f5fc6ac40baa21ac0e4cb7a16b777e2ac5661b4f62ca656da751e4e96458b65b",
+          "bytes": 165
+        }
+      ]
+    },
+    "member_green": {
+      "note": "41 compiler/native/source-binding controls pass with unique unresolved typedef target checks.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/command.json",
+          "sha256": "9097ed3168a2623c4222904ec6615b159427435b7787522ffe09e0b51e7badba",
+          "bytes": 687
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/control.log",
+          "sha256": "fe5ffc1727771b330b13e389fffff58d6e5f4f850fa6b544be3b47082ae75687",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/junit.xml",
+          "sha256": "6f40bbad687914f87d52f9aca97c7e1bc8e8aceea8194aa41a99ddbe79e6f7a4",
+          "bytes": 7273
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_fresh_execution_method_0/records/proofs/proof.test-proposal.candidate-1.20261016t024614z.0e63b2c9.yaml",
+          "sha256": "008dab81a89b25a296ef5ac682d38e059399e260ae2a81b8ae4db170c5244d6a",
+          "bytes": 2694
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_fresh_execution_method_0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t024614z.0e63b2c9/adapter.log",
+          "sha256": "eb324c7ce8f80da51ed7e581364007918f5501cda6b1b498fc9949ac77a16b91",
+          "bytes": 484
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed0/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed0/c++.txt",
+          "sha256": "3959472fb89c9e796d18b3b8d7ba1a1aca17c7944a08b0ec3b2df9b6138d6195",
+          "bytes": 178
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed0/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed0/c.txt",
+          "sha256": "6c523cc2206d4a9eedfff00759b26fbac45459101643274b10c72952998d47fa",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.anchors.json",
+          "sha256": "fdfd2d359c1e32125271bd4a56250a69758ae086c427fa03bf6e2fe162251fce",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.c",
+          "sha256": "7309c16efa28da793bd6aec62442f4d987a677347ef8844b6e8faf913dcc1e99",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed0/shadowed_device_typedef.cc",
+          "sha256": "b536c0d9edb476ebee3a7df1cfae69fb8a5c2ddddb891ddac0be216c07120afc",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed1/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed1/c++.txt",
+          "sha256": "99fb7035a8965663d5cdd9b709eeb82dad1ba519387ab7281b94dbeb2ab7ab02",
+          "bytes": 160
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed1/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed1/c.txt",
+          "sha256": "45689567893cea141119ec93ec630bfb48d39f76b9a12bf65d20361e8406057c",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.anchors.json",
+          "sha256": "b9249204955fbbfa7e370b7ba69e999ba6475659ba827cc04f5adc16daa9109c",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.c",
+          "sha256": "ace8244ab43b94161082dfe6ac862597083ecedd51636c4ade859164134356f4",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed1/shadowed_device_typedef.cc",
+          "sha256": "7c13f54d99619bf747e76af25948799c878dd9465deebb7c3a61390af83d9de1",
+          "bytes": 103
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed2/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed2/c++.txt",
+          "sha256": "f3f1a660dae1f08f5fb16fe310af780166d380130cc62da8d4ca4c4d4cc0f936",
+          "bytes": 191
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed2/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed2/c.txt",
+          "sha256": "b519bba4fa41302feb9821a3e444219aa197938d751600366f7dbdae40aeedb5",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.anchors.json",
+          "sha256": "0796cf47c360eb1ffd86c0c95a8f701b1b4790234d68c12df67ba5e87c6cf246",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.c",
+          "sha256": "2315fdaaacf5d774c17bed14b1c45b0678b6f4f38258527dc08fe0866389e236",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed2/shadowed_device_typedef.cc",
+          "sha256": "646a621cea90cace5fb8b44bc7d1df082be87d3143c6a13a183ecc586d992de1",
+          "bytes": 134
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed3/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed3/c++.txt",
+          "sha256": "1ab9ca1c0c452eefeeb0a0e14f78aabdd6949146a79ef23a53a365aeb45468f4",
+          "bytes": 188
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed3/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed3/c.txt",
+          "sha256": "4e446e1a862a26c20011debcce79a2a2eee2b45bb00d345d33629e1f638a2289",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.anchors.json",
+          "sha256": "e7dc02f05502503acaccc0ee4a152eb43f262f18909cb2bf6672c83a203f5e59",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.c",
+          "sha256": "09ac0b242473bafee6a9efa54b81858ae71e1abd31180bb0d544f2424a4c4bb5",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed3/shadowed_device_typedef.cc",
+          "sha256": "4e6f49cd99c17ccabd626ea2e628b5675e915af8c1341dec9e5367a91da08891",
+          "bytes": 131
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed4/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed4/c++.txt",
+          "sha256": "86ad7b836c02ffea0ae22c8787eb4556682eb5be2765d85c1e74dac12feb286e",
+          "bytes": 173
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed4/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed4/c.txt",
+          "sha256": "45eb25fd715ac5011d6f152a3644d4118cbd0bc20cdc25e17b6316dbd4be63eb",
+          "bytes": 857
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed4/out/shadowed_type.anchors.json",
+          "sha256": "6f8747be76f4a31d10790eb5ecb10971a4862bcb11aa26325161eb7d11ef6a04",
+          "bytes": 3750
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed4/out/shadowed_type.c",
+          "sha256": "b18a2bce7445988ad58dcfa757c33982fc7d5a3bcdca559d11c2b15b3e951a3e",
+          "bytes": 800
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed4/shadowed_device_typedef.cc",
+          "sha256": "08d5d3ab6a18ce9c1961d657f0fdebc33730817b28f9cb051aabc6d655e7ecee",
+          "bytes": 116
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed5/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed5/c++.txt",
+          "sha256": "cf86e484ceb073e997d2f4a0009074740e6cbae3c98bdacdd50385ae46b79376",
+          "bytes": 171
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed5/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed5/c.txt",
+          "sha256": "42d68b18efff4010703f1abf03297ee6ab26764989629cda7ee224d0e9d051ef",
+          "bytes": 857
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed5/out/shadowed_type.anchors.json",
+          "sha256": "9134af2a7c2cfe902ffd42d29a2af2802fdbd9d91106cd1ae4f725f253b76e1a",
+          "bytes": 3750
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed5/out/shadowed_type.c",
+          "sha256": "fc77f1600a65878cbd21632b61defc7c214c1dbb2d3bf4998096e39e7c5326ae",
+          "bytes": 800
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed5/shadowed_device_typedef.cc",
+          "sha256": "991eec18199e2ca10c3bc3f2b135deb12afbfe800ccd17db21e8f3400bb34053",
+          "bytes": 114
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed6/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed6/c++.txt",
+          "sha256": "b49f967be6f986df895dbda73b649cbdeb95cfe808d8c60bdc93bed9d4c42c49",
+          "bytes": 135
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed6/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed6/c.txt",
+          "sha256": "78dae9486961d28a419fea9ec0fea95d43a1bdef9801e1494436ac6d4b60b6c0",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed6/out/shadowed_type.anchors.json",
+          "sha256": "f5ae34aa359dc0a48fd8cff59b3ebd2cf2e68a9fe70b908ea646d0e70c88abdf",
+          "bytes": 2578
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed6/out/shadowed_type.c",
+          "sha256": "1091d8b1beb38b0f50e775a9998aebdb5741e83aadf2443161e4e9c2517b50e5",
+          "bytes": 560
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed6/shadowed_device_typedef.cc",
+          "sha256": "cfd91896e7fc81deee4499944bf4ad7ab6c0ca12e1caa14198828ca59f910ac2",
+          "bytes": 78
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed7/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed7/c++.txt",
+          "sha256": "2be5dc9db5e36187c5a00f2883c4c7a81eea5e128d25e17ab30222e90977270c",
+          "bytes": 133
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed7/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed7/c.txt",
+          "sha256": "616f34547fc224136d19fa34d5a0df4f6ae8599e8addb0580b6e34665066b8cd",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed7/out/shadowed_type.anchors.json",
+          "sha256": "625e9a6d1cf8a5a5853d4ae2a88af07150022341bff01564acc6118eec8ca029",
+          "bytes": 2578
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed7/out/shadowed_type.c",
+          "sha256": "aaedff0923483a2e7ac6af91b1569970feb50ee1117c04eec35467c809977605",
+          "bytes": 560
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed7/shadowed_device_typedef.cc",
+          "sha256": "2389046ad85c21cdd364d08504ec000afb7d84af03fb6a6aa5abc5fedb95fd53",
+          "bytes": 76
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed8/c++.bin",
+          "sha256": "f3c93c78e9ca79e42928c5424eda9c635c5ba54a0f9632d9634d6065de099f18",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed8/c++.txt",
+          "sha256": "df81515b67de97fb202f02555b2d679d74dedd26bf5aba6144c7fd44b8227b1e",
+          "bytes": 225
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed8/c.bin",
+          "sha256": "e5340461161a05de7a1f8bf19cf8e6fa183b4dce4dfc64d49114504cb53878d1",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed8/c.txt",
+          "sha256": "edf8c9bdfff370ba83d5bcedc466e0fcd2e1ea18ba50c354f7f0b21bb8a8146f",
+          "bytes": 703
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed8/out/shadowed_type.anchors.json",
+          "sha256": "95bc91d6eeac0b1aff1891211a1629758a29f89b29ba07327942bd31613d19dc",
+          "bytes": 3288
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed8/out/shadowed_type.c",
+          "sha256": "d145e6c36c7e693ea7be2f0460b20c49fc107ebf11c7f7e0c018ff1d94f7fa66",
+          "bytes": 599
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed8/shadowed_device_typedef.cc",
+          "sha256": "06786819542d124e7eb537335aa0e586ad1b252d85f4cae30f7bbfa6bdf620a0",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed9/c++.bin",
+          "sha256": "f3c93c78e9ca79e42928c5424eda9c635c5ba54a0f9632d9634d6065de099f18",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed9/c++.txt",
+          "sha256": "95f37ac5450f075f10c58479126c1a4e4a0c9e96310998659300e56c95b026c8",
+          "bytes": 222
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed9/c.bin",
+          "sha256": "e5340461161a05de7a1f8bf19cf8e6fa183b4dce4dfc64d49114504cb53878d1",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed9/c.txt",
+          "sha256": "ec5a1562ec436454122c2ca48f919cfa6b1925d6334abc1dec0076b9916cc755",
+          "bytes": 703
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed9/out/shadowed_type.anchors.json",
+          "sha256": "31bed59bf70b49bb3d8eab205277ac7f3e0d305f2a12984b03cc2782408eb664",
+          "bytes": 3288
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed9/out/shadowed_type.c",
+          "sha256": "11017a22a68ff56f9f7d845fd0a74262a84cf9daf1d4815ccbfa12ddec34d73f",
+          "bytes": 599
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_local_shadow_of_a_fixed9/shadowed_device_typedef.cc",
+          "sha256": "76e9a04c1af79f80b7ebae5a826fefbd92880d61e05dbef36708874406443cc3",
+          "bytes": 118
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_member_return_type_cann0/member_typedef.cc",
+          "sha256": "476d1dd183588000f3b456c7c7ae817c79db2a94e154b129e1f269fb1a1dd318",
+          "bytes": 147
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_shared_template_body_bi0/out/nested_types.anchors.json",
+          "sha256": "f080177c2fb0aa4d72fbf37bf7221423f8273ef21d3a41ca9109ccd972c33e66",
+          "bytes": 5434
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_a_shared_template_body_bi0/out/nested_types.c",
+          "sha256": "218dac56349baa8a04afb1746db6858f2dabea26b1c79682f3a0cdf93b1427b6",
+          "bytes": 1151
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_ambiguous_unresolved_fixe0/ambiguous_typedef.cc",
+          "sha256": "ede4a49798123e22c301355f23036af01b6934594519f9cbf4812c25f05f9432",
+          "bytes": 147
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_defined_zero_argument_tem0/c++.bin",
+          "sha256": "ae5866c4b01c351bb5013f0c16394346d526367a7567b35d957a54c3537b1907",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_defined_zero_argument_tem0/c++.txt",
+          "sha256": "eb7c614d333a2e6f3a08d57e690bd542b41302f49e9b15bcf884a424b362db5b",
+          "bytes": 293
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_defined_zero_argument_tem0/c.bin",
+          "sha256": "86bcdac242709429c9319c909e096c7433ff4a638df57fd56e00f0f36ef1fa7a",
+          "bytes": 33944
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_defined_zero_argument_tem0/c.txt",
+          "sha256": "5472e8f91a5b27a0b26eca6f6fd7d17ba5eb55a7bc9dc144365598f5a44066ab",
+          "bytes": 2375
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_defined_zero_argument_tem0/out/all_widths.anchors.json",
+          "sha256": "e546cf6bd13fbca5ede8e4215dc0fff88480f68fc408d26e4e0c6e3889f12ad1",
+          "bytes": 7180
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_defined_zero_argument_tem0/out/all_widths.c",
+          "sha256": "c2710ea32bdb5e979a6e5eacd23e9d62f2ee4ac0815f3359b49aa5a35fe65e82",
+          "bytes": 2320
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_public_prove_binds_a_temp6/records/proofs/proof.contract.dx100_trust_fixture.20261016t024603z.46f7ab9f.yaml",
+          "sha256": "24cdd6edfae541174261c88178d99b8661c93c8adedee263fdd3d59f8926777f",
+          "bytes": 8063
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_public_prove_binds_a_temp6/runs/proof.contract.dx100_trust_fixture.20261016t024603z.46f7ab9f/adapter.log",
+          "sha256": "d76d3b001c8391b0f754cdc39f26b51fcb6bfd41834b09ca6e141eca4d9cf3f2",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_public_prove_binds_a_temp7/records/proofs/proof.contract.dx100_trust_fixture.20261016t024604z.151dc73e.yaml",
+          "sha256": "43a51589af28212e15cf4ea4944a5ef30c6f3c892d89739b7e9ea62239d1437e",
+          "bytes": 8633
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_public_prove_binds_a_temp7/runs/proof.contract.dx100_trust_fixture.20261016t024604z.151dc73e/adapter.log",
+          "sha256": "a65e5cdf99cc88de2c107abf5b3ce5cc187a9fa4f20c719241bb1e66452cd4c8",
+          "bytes": 367
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_register_overload_names_a0/out/pair_order.anchors.json",
+          "sha256": "7835729367404467d138ca11283118128fa8b93c76175d6732bf26b7d3c87c78",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_register_overload_names_a0/out/pair_order.c",
+          "sha256": "8ea9888346c53ee39a5893f0e8d5a79f16fc6f922c69900beba6a50664248506",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_register_overload_names_a1/out/pair_order.anchors.json",
+          "sha256": "d367d9abce31051b44e9a5b4ff940af802ff2a222f9588958a3c8155f174681b",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_register_overload_names_a1/out/pair_order.c",
+          "sha256": "30601f7ac8ca679bb6971e699a7a57dc064c515d928d2932cacc82a9b5526300",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "f74677a0cf7d4545acaa7ac5fadd3d9b31a0502c4627751a5d1a1acd0d140b52",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "c7af887e7631a0228ab54e660b9c25e5f88440192e4ec0f15e0080a45ec7797f",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-typedef-identity-final-green/resources.json",
+          "sha256": "640bbe5278f2a1b8763530d3bca1100aa73836dc2f9502bd0b211652265e911e",
+          "bytes": 166
+        }
+      ]
+    },
+    "pointer_red": {
+      "note": "Pointer parameter C type was int* but is_pointer metadata came from typedef spelling, falsely rejecting explicit concurrency/array domains.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-pointer-alias-red/command.json",
+          "sha256": "7217e2123cef2eab50ec66fc75e7e92b200e7bfb125934877f0af52277d0811b",
+          "bytes": 331
+        },
+        {
+          "path": "/private/tmp/probata-t28-pointer-alias-red/control.log",
+          "sha256": "d72b984c2ba31f6a5540c8f6acac3227d3a28e6a08777bbcfba7b836b6199241",
+          "bytes": 2036
+        },
+        {
+          "path": "/private/tmp/probata-t28-pointer-alias-red/junit.xml",
+          "sha256": "cb0db7b419bf9e622118bb0caae92fdd871b93918f4d219f226a3b83e9128d73",
+          "bytes": 2842
+        },
+        {
+          "path": "/private/tmp/probata-t28-pointer-alias-red/resources.json",
+          "sha256": "4a7721d39480529111f7720eca709cc3b3272ab0b4073c6ae8cec4a867e1329c",
+          "bytes": 164
+        }
+      ]
+    },
+    "reference_red": {
+      "note": "Reference typedef printed as pointer parameter but read as pointer value; public lower accepted it. Conservative source-reference refusal added.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-reference-alias-red/command.json",
+          "sha256": "aae70395082a51505abe6287954be179efa54171b240be5b1e12ca50708f2267",
+          "bytes": 334
+        },
+        {
+          "path": "/private/tmp/probata-t28-reference-alias-red/control.log",
+          "sha256": "de0c50bb5082aa12f55f3a2128e11d36a338c5d28fb635add721935734c306f0",
+          "bytes": 5335
+        },
+        {
+          "path": "/private/tmp/probata-t28-reference-alias-red/junit.xml",
+          "sha256": "c1f493ac27888da2f17d7d4112c04d9b646ac140ebe69423d939e53865044672",
+          "bytes": 9711
+        },
+        {
+          "path": "/private/tmp/probata-t28-reference-alias-red/pytest/test_reference_typedefs_requir0/out/result.anchors.json",
+          "sha256": "d9c6acf6c05a6f9dc8a80e681ea6fc52d8dbc8cdcc506c7bccadd91524161997",
+          "bytes": 2788
+        },
+        {
+          "path": "/private/tmp/probata-t28-reference-alias-red/pytest/test_reference_typedefs_requir0/out/result.c",
+          "sha256": "912e170442120f20ee0cee32a19ec637a551768de474f888208f74d8e74812d7",
+          "bytes": 495
+        },
+        {
+          "path": "/private/tmp/probata-t28-reference-alias-red/pytest/test_reference_typedefs_requir0/reference_typedef.cc",
+          "sha256": "4a3373d7e24c54819b22af197952a503fed7eda18c50bd223d6ac90e606dbd14",
+          "bytes": 55
+        },
+        {
+          "path": "/private/tmp/probata-t28-reference-alias-red/resources.json",
+          "sha256": "8198de484e1058c3a60414a344f22e5b2ac3b7cb64ed5bf15f5ceb5068717b0e",
+          "bytes": 164
+        }
+      ]
+    },
+    "final_green": {
+      "note": "49 passed: source type identity/native ASan+UBSan, both adapter array-domain controls, typed instances, literal-reference compatibility and exact preexisting atomic C/anchors/models/names golden fixture.",
+      "files": [
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/command.json",
+          "sha256": "407f2cb5cb335398a0fcb9a06fd3edaf512432119c6001443e5c62cc7729d8cf",
+          "bytes": 1042
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/control.log",
+          "sha256": "ee6b3e607a340a427fb4246d224c60f7f970f831b05e33f3c553613802d6d115",
+          "bytes": 100
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/junit.xml",
+          "sha256": "1934e4b589ded6ccfd79ecde06ac3262d03efe92fc13aac96785eec654ecb07d",
+          "bytes": 8492
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_fresh_execution_method_0/records/proofs/proof.test-proposal.candidate-1.20261016t025009z.599ae1cf.yaml",
+          "sha256": "19b086fa86094ec723922705a9e28cf363e344414f7b3530a2875241a14da46b",
+          "bytes": 2693
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_fresh_execution_method_0/runs-outside-repo/proof.test-proposal.candidate-1.20261016t025009z.599ae1cf/adapter.log",
+          "sha256": "97b34b7962bf85dd5fd7722efa89cb4ab38ff205f3c7dff61b862e952147e2f2",
+          "bytes": 482
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed0/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed0/c++.txt",
+          "sha256": "3959472fb89c9e796d18b3b8d7ba1a1aca17c7944a08b0ec3b2df9b6138d6195",
+          "bytes": 178
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed0/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed0/c.txt",
+          "sha256": "6c523cc2206d4a9eedfff00759b26fbac45459101643274b10c72952998d47fa",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.anchors.json",
+          "sha256": "fdfd2d359c1e32125271bd4a56250a69758ae086c427fa03bf6e2fe162251fce",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed0/out/shadowed_type.c",
+          "sha256": "7309c16efa28da793bd6aec62442f4d987a677347ef8844b6e8faf913dcc1e99",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed0/shadowed_device_typedef.cc",
+          "sha256": "b536c0d9edb476ebee3a7df1cfae69fb8a5c2ddddb891ddac0be216c07120afc",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed1/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed1/c++.txt",
+          "sha256": "99fb7035a8965663d5cdd9b709eeb82dad1ba519387ab7281b94dbeb2ab7ab02",
+          "bytes": 160
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed1/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed1/c.txt",
+          "sha256": "45689567893cea141119ec93ec630bfb48d39f76b9a12bf65d20361e8406057c",
+          "bytes": 847
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.anchors.json",
+          "sha256": "b9249204955fbbfa7e370b7ba69e999ba6475659ba827cc04f5adc16daa9109c",
+          "bytes": 3175
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed1/out/shadowed_type.c",
+          "sha256": "ace8244ab43b94161082dfe6ac862597083ecedd51636c4ade859164134356f4",
+          "bytes": 790
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed1/shadowed_device_typedef.cc",
+          "sha256": "7c13f54d99619bf747e76af25948799c878dd9465deebb7c3a61390af83d9de1",
+          "bytes": 103
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed2/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed2/c++.txt",
+          "sha256": "f3f1a660dae1f08f5fb16fe310af780166d380130cc62da8d4ca4c4d4cc0f936",
+          "bytes": 191
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed2/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed2/c.txt",
+          "sha256": "b519bba4fa41302feb9821a3e444219aa197938d751600366f7dbdae40aeedb5",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.anchors.json",
+          "sha256": "0796cf47c360eb1ffd86c0c95a8f701b1b4790234d68c12df67ba5e87c6cf246",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed2/out/shadowed_type.c",
+          "sha256": "2315fdaaacf5d774c17bed14b1c45b0678b6f4f38258527dc08fe0866389e236",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed2/shadowed_device_typedef.cc",
+          "sha256": "646a621cea90cace5fb8b44bc7d1df082be87d3143c6a13a183ecc586d992de1",
+          "bytes": 134
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed3/c++.bin",
+          "sha256": "2ad9d8880906a5ae1c17b9e84f6173159a3c604a6ded4629a9ea0911da28760c",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed3/c++.txt",
+          "sha256": "1ab9ca1c0c452eefeeb0a0e14f78aabdd6949146a79ef23a53a365aeb45468f4",
+          "bytes": 188
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed3/c.bin",
+          "sha256": "28995b8447665badcc4cb4ba9cb3e87c1cd0ec38fa2fe93386bea139ffd54b45",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed3/c.txt",
+          "sha256": "4e446e1a862a26c20011debcce79a2a2eee2b45bb00d345d33629e1f638a2289",
+          "bytes": 876
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.anchors.json",
+          "sha256": "e7dc02f05502503acaccc0ee4a152eb43f262f18909cb2bf6672c83a203f5e59",
+          "bytes": 3320
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed3/out/shadowed_type.c",
+          "sha256": "09ac0b242473bafee6a9efa54b81858ae71e1abd31180bb0d544f2424a4c4bb5",
+          "bytes": 819
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed3/shadowed_device_typedef.cc",
+          "sha256": "4e6f49cd99c17ccabd626ea2e628b5675e915af8c1341dec9e5367a91da08891",
+          "bytes": 131
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed4/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed4/c++.txt",
+          "sha256": "86ad7b836c02ffea0ae22c8787eb4556682eb5be2765d85c1e74dac12feb286e",
+          "bytes": 173
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed4/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed4/c.txt",
+          "sha256": "45eb25fd715ac5011d6f152a3644d4118cbd0bc20cdc25e17b6316dbd4be63eb",
+          "bytes": 857
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed4/out/shadowed_type.anchors.json",
+          "sha256": "6f8747be76f4a31d10790eb5ecb10971a4862bcb11aa26325161eb7d11ef6a04",
+          "bytes": 3750
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed4/out/shadowed_type.c",
+          "sha256": "b18a2bce7445988ad58dcfa757c33982fc7d5a3bcdca559d11c2b15b3e951a3e",
+          "bytes": 800
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed4/shadowed_device_typedef.cc",
+          "sha256": "08d5d3ab6a18ce9c1961d657f0fdebc33730817b28f9cb051aabc6d655e7ecee",
+          "bytes": 116
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed5/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed5/c++.txt",
+          "sha256": "cf86e484ceb073e997d2f4a0009074740e6cbae3c98bdacdd50385ae46b79376",
+          "bytes": 171
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed5/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed5/c.txt",
+          "sha256": "42d68b18efff4010703f1abf03297ee6ab26764989629cda7ee224d0e9d051ef",
+          "bytes": 857
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed5/out/shadowed_type.anchors.json",
+          "sha256": "9134af2a7c2cfe902ffd42d29a2af2802fdbd9d91106cd1ae4f725f253b76e1a",
+          "bytes": 3750
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed5/out/shadowed_type.c",
+          "sha256": "fc77f1600a65878cbd21632b61defc7c214c1dbb2d3bf4998096e39e7c5326ae",
+          "bytes": 800
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed5/shadowed_device_typedef.cc",
+          "sha256": "991eec18199e2ca10c3bc3f2b135deb12afbfe800ccd17db21e8f3400bb34053",
+          "bytes": 114
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed6/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed6/c++.txt",
+          "sha256": "b49f967be6f986df895dbda73b649cbdeb95cfe808d8c60bdc93bed9d4c42c49",
+          "bytes": 135
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed6/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed6/c.txt",
+          "sha256": "78dae9486961d28a419fea9ec0fea95d43a1bdef9801e1494436ac6d4b60b6c0",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed6/out/shadowed_type.anchors.json",
+          "sha256": "f5ae34aa359dc0a48fd8cff59b3ebd2cf2e68a9fe70b908ea646d0e70c88abdf",
+          "bytes": 2578
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed6/out/shadowed_type.c",
+          "sha256": "1091d8b1beb38b0f50e775a9998aebdb5741e83aadf2443161e4e9c2517b50e5",
+          "bytes": 560
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed6/shadowed_device_typedef.cc",
+          "sha256": "cfd91896e7fc81deee4499944bf4ad7ab6c0ca12e1caa14198828ca59f910ac2",
+          "bytes": 78
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed7/c++.bin",
+          "sha256": "6a8348af4121ce1b9cf8981b24445643b83497dce5d5e4a0f9d342f1231a7159",
+          "bytes": 33640
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed7/c++.txt",
+          "sha256": "2be5dc9db5e36187c5a00f2883c4c7a81eea5e128d25e17ab30222e90977270c",
+          "bytes": 133
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed7/c.bin",
+          "sha256": "ae8bb3730395bdd7f0d455eb37ea1ad944fbd11f0c20f3a63d6e5af85ceabcf6",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed7/c.txt",
+          "sha256": "616f34547fc224136d19fa34d5a0df4f6ae8599e8addb0580b6e34665066b8cd",
+          "bytes": 617
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed7/out/shadowed_type.anchors.json",
+          "sha256": "625e9a6d1cf8a5a5853d4ae2a88af07150022341bff01564acc6118eec8ca029",
+          "bytes": 2578
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed7/out/shadowed_type.c",
+          "sha256": "aaedff0923483a2e7ac6af91b1569970feb50ee1117c04eec35467c809977605",
+          "bytes": 560
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed7/shadowed_device_typedef.cc",
+          "sha256": "2389046ad85c21cdd364d08504ec000afb7d84af03fb6a6aa5abc5fedb95fd53",
+          "bytes": 76
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed8/c++.bin",
+          "sha256": "f3c93c78e9ca79e42928c5424eda9c635c5ba54a0f9632d9634d6065de099f18",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed8/c++.txt",
+          "sha256": "df81515b67de97fb202f02555b2d679d74dedd26bf5aba6144c7fd44b8227b1e",
+          "bytes": 225
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed8/c.bin",
+          "sha256": "e5340461161a05de7a1f8bf19cf8e6fa183b4dce4dfc64d49114504cb53878d1",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed8/c.txt",
+          "sha256": "edf8c9bdfff370ba83d5bcedc466e0fcd2e1ea18ba50c354f7f0b21bb8a8146f",
+          "bytes": 703
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed8/out/shadowed_type.anchors.json",
+          "sha256": "95bc91d6eeac0b1aff1891211a1629758a29f89b29ba07327942bd31613d19dc",
+          "bytes": 3288
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed8/out/shadowed_type.c",
+          "sha256": "d145e6c36c7e693ea7be2f0460b20c49fc107ebf11c7f7e0c018ff1d94f7fa66",
+          "bytes": 599
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed8/shadowed_device_typedef.cc",
+          "sha256": "06786819542d124e7eb537335aa0e586ad1b252d85f4cae30f7bbfa6bdf620a0",
+          "bytes": 121
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed9/c++.bin",
+          "sha256": "f3c93c78e9ca79e42928c5424eda9c635c5ba54a0f9632d9634d6065de099f18",
+          "bytes": 33704
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed9/c++.txt",
+          "sha256": "95f37ac5450f075f10c58479126c1a4e4a0c9e96310998659300e56c95b026c8",
+          "bytes": 222
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed9/c.bin",
+          "sha256": "e5340461161a05de7a1f8bf19cf8e6fa183b4dce4dfc64d49114504cb53878d1",
+          "bytes": 33672
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed9/c.txt",
+          "sha256": "ec5a1562ec436454122c2ca48f919cfa6b1925d6334abc1dec0076b9916cc755",
+          "bytes": 703
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed9/out/shadowed_type.anchors.json",
+          "sha256": "31bed59bf70b49bb3d8eab205277ac7f3e0d305f2a12984b03cc2782408eb664",
+          "bytes": 3288
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed9/out/shadowed_type.c",
+          "sha256": "11017a22a68ff56f9f7d845fd0a74262a84cf9daf1d4815ccbfa12ddec34d73f",
+          "bytes": 599
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_local_shadow_of_a_fixed9/shadowed_device_typedef.cc",
+          "sha256": "76e9a04c1af79f80b7ebae5a826fefbd92880d61e05dbef36708874406443cc3",
+          "bytes": 118
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_member_return_type_cann0/member_typedef.cc",
+          "sha256": "476d1dd183588000f3b456c7c7ae817c79db2a94e154b129e1f269fb1a1dd318",
+          "bytes": 147
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_pointer_typedef_retains0/records/proofs/proof.contract.dx100_trust_fixture.20261016t025010z.deb3f44d.yaml",
+          "sha256": "dad923e80a4e14476914ced9d241bff2e7f5baf7235b52d1590f7f3d6bd6dd7f",
+          "bytes": 7947
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_pointer_typedef_retains0/runs/proof.contract.dx100_trust_fixture.20261016t025010z.deb3f44d/adapter.log",
+          "sha256": "77385b23ca0bf33579a79ec31e6cfa602a1c87c4a7a80c677dcc514468dd9c3c",
+          "bytes": 405
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_pointer_typedef_retains1/records/proofs/proof.contract.dx100_trust_fixture.20261016t025012z.ec9cdd89.yaml",
+          "sha256": "f3fc24383312cf70db0a51d629541cc10d8ed323e981c7366004b7049ac2fe8c",
+          "bytes": 8515
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_pointer_typedef_retains1/runs/proof.contract.dx100_trust_fixture.20261016t025012z.ec9cdd89/adapter.log",
+          "sha256": "c3c6e8c6b9b9d83d84d7e4e8ffdcd653dd4d125c3b913fe26c4bba8983d1a2a4",
+          "bytes": 363
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_shared_template_body_bi0/out/nested_types.anchors.json",
+          "sha256": "f080177c2fb0aa4d72fbf37bf7221423f8273ef21d3a41ca9109ccd972c33e66",
+          "bytes": 5434
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_a_shared_template_body_bi0/out/nested_types.c",
+          "sha256": "218dac56349baa8a04afb1746db6858f2dabea26b1c79682f3a0cdf93b1427b6",
+          "bytes": 1151
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_ambiguous_unresolved_fixe0/ambiguous_typedef.cc",
+          "sha256": "ede4a49798123e22c301355f23036af01b6934594519f9cbf4812c25f05f9432",
+          "bytes": 147
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_cpu_effect_inventory_reta0/out/swdb_effect_minimum.anchors.json",
+          "sha256": "b86271dd8f5e6e9a0a4485238da4162f7ca74687ad79d639f2d65c7e3edc08cb",
+          "bytes": 288992
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_cpu_effect_inventory_reta0/out/swdb_effect_minimum.c",
+          "sha256": "4ad57d1ade7cd770b9de19bea320b7f00c7c349b3e710c7b15373b7e9b6ab402",
+          "bytes": 731
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_defined_zero_argument_tem0/c++.bin",
+          "sha256": "ae5866c4b01c351bb5013f0c16394346d526367a7567b35d957a54c3537b1907",
+          "bytes": 33624
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_defined_zero_argument_tem0/c++.txt",
+          "sha256": "eb7c614d333a2e6f3a08d57e690bd542b41302f49e9b15bcf884a424b362db5b",
+          "bytes": 293
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_defined_zero_argument_tem0/c.bin",
+          "sha256": "86bcdac242709429c9319c909e096c7433ff4a638df57fd56e00f0f36ef1fa7a",
+          "bytes": 33944
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_defined_zero_argument_tem0/c.txt",
+          "sha256": "5472e8f91a5b27a0b26eca6f6fd7d17ba5eb55a7bc9dc144365598f5a44066ab",
+          "bytes": 2375
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_defined_zero_argument_tem0/out/all_widths.anchors.json",
+          "sha256": "e546cf6bd13fbca5ede8e4215dc0fff88480f68fc408d26e4e0c6e3889f12ad1",
+          "bytes": 7180
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_defined_zero_argument_tem0/out/all_widths.c",
+          "sha256": "c2710ea32bdb5e979a6e5eacd23e9d62f2ee4ac0815f3359b49aa5a35fe65e82",
+          "bytes": 2320
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_public_prove_binds_a_temp6/records/proofs/proof.contract.dx100_trust_fixture.20261016t024957z.5688079a.yaml",
+          "sha256": "26eb5dbe542d66eff35b97226fce39431a049de6d9f2a2ba09978c0894bf1f7f",
+          "bytes": 8060
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_public_prove_binds_a_temp6/runs/proof.contract.dx100_trust_fixture.20261016t024957z.5688079a/adapter.log",
+          "sha256": "d76d3b001c8391b0f754cdc39f26b51fcb6bfd41834b09ca6e141eca4d9cf3f2",
+          "bytes": 409
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_public_prove_binds_a_temp7/records/proofs/proof.contract.dx100_trust_fixture.20261016t024959z.14a49537.yaml",
+          "sha256": "7e1613c81b94c02d2bb47d935a68844ab73d501a09ebe09a99e096599c1d93c2",
+          "bytes": 8629
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_public_prove_binds_a_temp7/runs/proof.contract.dx100_trust_fixture.20261016t024959z.14a49537/adapter.log",
+          "sha256": "a65e5cdf99cc88de2c107abf5b3ce5cc187a9fa4f20c719241bb1e66452cd4c8",
+          "bytes": 367
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_reference_typedefs_requir0/reference_typedef.cc",
+          "sha256": "4a3373d7e24c54819b22af197952a503fed7eda18c50bd223d6ac90e606dbd14",
+          "bytes": 55
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_reference_typedefs_requir1/reference_typedef.cc",
+          "sha256": "809f549a306d5b8046449981014db44878e22e7b3950c48b0269810287cf8967",
+          "bytes": 101
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_reference_typedefs_requir2/reference_typedef.cc",
+          "sha256": "e59a910e4af41e64c6834a8e7a4d09b3fe94b3427c59fca57b5b565738f2a42a",
+          "bytes": 66
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_register_overload_names_a0/out/pair_order.anchors.json",
+          "sha256": "7835729367404467d138ca11283118128fa8b93c76175d6732bf26b7d3c87c78",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_register_overload_names_a0/out/pair_order.c",
+          "sha256": "8ea9888346c53ee39a5893f0e8d5a79f16fc6f922c69900beba6a50664248506",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_register_overload_names_a1/out/pair_order.anchors.json",
+          "sha256": "d367d9abce31051b44e9a5b4ff940af802ff2a222f9588958a3c8155f174681b",
+          "bytes": 4317
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_register_overload_names_a1/out/pair_order.c",
+          "sha256": "30601f7ac8ca679bb6971e699a7a57dc064c515d928d2932cacc82a9b5526300",
+          "bytes": 821
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_typed_initialized_and_uni0/out/allocation_pair.anchors.json",
+          "sha256": "f74677a0cf7d4545acaa7ac5fadd3d9b31a0502c4627751a5d1a1acd0d140b52",
+          "bytes": 4443
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_typed_initialized_and_uni0/out/allocation_pair.c",
+          "sha256": "08f97f0c66532f769ed3218f8a61d777f0ff171fcd70f0eb70304721178fadee",
+          "bytes": 889
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_zero_argument_template_ca0/out/device_types.anchors.json",
+          "sha256": "c7af887e7631a0228ab54e660b9c25e5f88440192e4ec0f15e0080a45ec7797f",
+          "bytes": 7963
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/pytest/test_zero_argument_template_ca0/out/device_types.c",
+          "sha256": "650ebc67821e0ef9a69b8714a25c5bcb4516993bea4473eecd49a2988ff97ba4",
+          "bytes": 1479
+        },
+        {
+          "path": "/private/tmp/probata-t28-type-binding-final-controls/resources.json",
+          "sha256": "e2dbf21da144aae09b70c6f4cadd97f8ec8c26010c7be722959ed34f40177744",
+          "bytes": 175
+        }
+      ]
+    }
+  },
+  "source": [
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/swdb/c_lowering.py",
+      "sha256": "e10b33f4d310e3097eb84b34ed53e03daf4df690dcf0c8c160f38d907c91e08c",
+      "bytes": 160992
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_typed_calls.py",
+      "sha256": "2363259d2a96718c74598e539e0d8adeb585cf8941e94ea99b81428f4dfc828a",
+      "bytes": 10742
+    },
+    {
+      "path": "/private/tmp/probata-resume-t28/swdb-project/tests/test_dx100_typed_semantics.py",
+      "sha256": "4ed08211d378ccd710f9e7d71ecb0e78d9b85f685c4e30203a5e0b0c1cf8d454",
+      "bytes": 8188
+    }
+  ],
+  "final_resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 346636288,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 55.530891166010406,
+    "cpu_seconds": 48.669636999999994
+  }
+}
