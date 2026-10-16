@@ -71,7 +71,7 @@ def main():
         "--output", allocator_output], expect=-1, diagnostic="allocator source correspondence pending")
     record("allocator-refusal-no-emission", not allocator_output.exists())
     for name in ("gapbs_models.h", "bfs_unit.h", "dxc_summaries.h", "tdstep_standin.c", "abi-map.json"):
-        record("reproduce-" + name, (generated / name).read_bytes() == (POC / "standin_outslot" / name).read_bytes())
+        record("reproduce-" + name, (generated / name).read_bytes() == (POC / "standin_outslot_canonical" / name).read_bytes())
     run("no-overwrite", [sys.executable, GENERATOR, "--output", generated], expect=-1,
         diagnostic="output must be absent")
     refresh = out / "refresh-corrupt"

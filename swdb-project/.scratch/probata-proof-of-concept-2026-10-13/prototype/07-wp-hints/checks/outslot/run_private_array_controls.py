@@ -50,13 +50,13 @@ def main():
         "positive", "missing-store", "wrong-cell", "uninitialized-scalar", "copy-positive", "history-positive",
         "reentry-positive", "reentry-missing-store", "modular-entry-positive", "modular-entry-missing-store"})
     for name in (*manifest["output_pins"], "private-array-map.json"):
-        record("reproduce-" + name, (generated / name).read_bytes() == (POC / "standin_private_array" / name).read_bytes())
+        record("reproduce-" + name, (generated / name).read_bytes() == (POC / "standin_private_array_canonical" / name).read_bytes())
     refusal = out / "allocator-refused"
     run("allocator-gate-refused", [sys.executable, GENERATOR, "--require-allocator-correspondence", "--output", refusal],
         expect=-1, diagnostic="allocator correspondence pending")
     record("allocator-gate-no-emission", not refusal.exists())
     # Preserve physical-byte admission at both the previous model and real unit.
-    changed = out / "changed-source"; shutil.copytree(POC / "standin_outslot", changed)
+    changed = out / "changed-source"; shutil.copytree(POC / "standin_outslot_canonical", changed)
     q = changed / "gapbs_models.h"; q.write_bytes(q.read_bytes().replace(b"\n", b"\r\n"))
     run("changed-physical-source-refused", [sys.executable, GENERATOR, "--source", changed, "--output", out / "changed-refused"],
         expect=-1, diagnostic="unsupported changed source")
@@ -79,7 +79,7 @@ def main():
     run("private-helper-build", native + ["-I", generated, HERE / "private_array_native.c", "-o", out / "private-helper"])
     run("private-helper-run", [out / "private-helper"])
     for mode, include, flags in (("original", POC / "standin", []),
-                                 ("outslot", POC / "standin_outslot", ["-DSWDB_OUTSLOT"]),
+                                 ("outslot", POC / "standin_outslot_canonical", ["-DSWDB_OUTSLOT"]),
                                  ("private", generated, ["-DSWDB_OUTSLOT", "-DSWDB_PRIVATE_ARRAY"])):
         run(mode + "-td-build", native + flags + ["-I", include, HERE / "td_behavior.c", "-o", out / mode])
         run(mode + "-td-run", [out / mode])

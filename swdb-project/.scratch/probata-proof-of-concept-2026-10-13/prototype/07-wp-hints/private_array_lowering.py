@@ -8,14 +8,15 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from outslot_lowering import canonical_generated_text
 
 HERE = Path(__file__).resolve().parent
 PINS = {
-    "gapbs_models.h": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
+    "gapbs_models.h": "e2248bbe1e7dd47c6a46f8645aca9f065900c7205b066fbd5956b2c7c5fcf95c",
     "tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa",
     "bfs_unit.h": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
-    "dxc_summaries.h": "6b109e09239be71e252ee25e4cfa720c1cf37b651a8f586423f0c8d43f2b37e5",
-    "abi-map.json": "5c280a18d4efdeb8fbf3b7b833c7f550bc74121a54838a9b02a78556254ad578",
+    "dxc_summaries.h": "c70a4644a4cd27feabcacd3633a1135bcb46a8f36d86a08b2fee4a469a868c71",
+    "abi-map.json": "e6dca1c772e1ba7d0e54fe43e95c203e4c72302e72b439f48ee86c5b9cb673e7",
 }
 UNIT_PIN = "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
 
@@ -183,6 +184,7 @@ void swdb_bind_private_NodeID_array(swdb_private_NodeID_array *storage, size_t n
             'void swdb_allocation_site(struct SlidingQueue_NodeID *queue, NodeID *out) {\n'
             '  NodeID first;\n  swdb_lifetime_entry(queue, true, &first);\n'
             '  swdb_lifetime_entry(queue, false, out);\n}\n')
+    files = {name: canonical_generated_text(value) for name, value in files.items()}
     def contract(text, name):
         pos = text.index("void " + name + "(")
         begin = text.rfind("/*@", 0, pos)
@@ -194,7 +196,7 @@ void swdb_bind_private_NodeID_array(swdb_private_NodeID_array *storage, size_t n
         begin = text.index(first)
         return text[begin:text.index(last, begin)]
     manifest = {
-        "method": "t07-lexical-private-array-prospective-v2-reentry", "parent_outslot_source_pins": PINS,
+        "method": "t07-lexical-private-array-prospective-v3-canonical", "parent_outslot_source_pins": PINS,
         "actual_unit_sha256": UNIT_PIN, "removed_static_allocator_source": removed,
         "introduced_private_binding_source": replacement,
         "helper_bodies": 20, "original_helper_bodies_retained": 19, "new_binding_bodies": 1,
@@ -237,7 +239,7 @@ void swdb_bind_private_NodeID_array(swdb_private_NodeID_array *storage, size_t n
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--source", type=Path, default=HERE / "standin_outslot")
+    p.add_argument("--source", type=Path, default=HERE / "standin_outslot_canonical")
     p.add_argument("--unit", type=Path, default=HERE.parents[3] / "library/dx100/bfs_read_offload.inc")
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--require-allocator-correspondence", action="store_true")
