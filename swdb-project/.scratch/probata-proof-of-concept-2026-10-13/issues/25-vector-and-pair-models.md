@@ -1113,3 +1113,22 @@ selected typed-source image, model bodies, caller cleanup/dependencies and wider
 member/type coverage remain open. See
 [canonical reconstruction](../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
 and [passive warning addendum](../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).
+
+
+### 2026-10-16 ET — C++17 capacity and caller correspondence preparation
+
+The public lowerer now binds the prospective caller's exact-capacity witness to
+the actual admitted libc++22.1.8 constructor/allocation headers under C++17. It
+refuses changed language, macro, omitted-header, hash and physical-header inputs.
+This is implementation-specific correspondence, with no new caller premise and
+no assumption of the qualified C model's pending `capacity == count` postcondition.
+The composed Clang/native caller and pure canonical-packet profile passed 21/21
+in 59.96s (guard 60.72s, 371 MB, no OOM/timeout). Public capacity RED and all controls
+are retained in `evidence/t25-caller-capacity-controls-20261016.json`.
+
+Frozen017's separate backend static review is retained in
+`evidence/t25-qualified-backend-independent-review-01771a83-20261016.{md,json}`.
+It reports 7 source pins, 18 schema-valid scripted records and 941 report references
+with zero mismatches. Root-owned selected compiler/setup controls passed 40/40;
+all Frama processes in that profile were named stand-ins. No actual qualified
+model/caller proof or ticket acceptance checkbox is claimed by this preparation.

@@ -67,7 +67,24 @@ data, not gratuitous source freeability or writable const receivers; move and
 swap require their distinct transfer/cross-view obligations. Byte/partial-store
 or additional element types require separate typed semantics.
 
-The current public qualified grow preparation deliberately returns not proven
-before any verifier launch. Its new ID/source/contract is explicit, and neither
-its body nor caller discharge is claimed. This preparation is the first TDD
-slice toward the complete composition above, not an isolated substitute for it.
+The frozen017 qualified standalone route now reaches the checked normal-reader
+backend through the public `c_model` adapter. Scripted external outcomes cover
+all20 grow targets, ordinary/smoke handling, persistence and the normal proof
+schema. Independent static review and root-owned40-control execution accepted
+this preparation. These controls do not establish any actual v3 target proof;
+original v2 and generic caller contracts remain outside this route.
+
+The exact017 generation-only packet selects `grow.entry.int_projection`, which
+quantifies the imported `Heap::int_values` alias. Its prospective guarded recipe
+retains all20 canonical packets but requests only that one lemma for WP/Why3 task
+generation. Actual import, task closure and all fresh body proofs remain pending.
+
+The later caller certificates bind the actual lowered construction, saved data,
+reserve, guarded scalar capture, one executed destructor and return-induced
+storage end. The duplicated fallthrough destructor is unreachable. The capacity
+witness is explicitly limited to admitted libc++22.1.8 under unmodified C++17:
+its constructor allocation path requests the count exactly. It does not assume
+the qualified model's `capacity == count` postcondition. That postcondition,
+branch arithmetic, initialized int image, all ordinary proof dependencies,
+cleanup/frame/liveness and safe/no-growth/stale outcomes remain duties to prove.
+No global incoming pointer-map invariant or exclusive-ownership premise is added.

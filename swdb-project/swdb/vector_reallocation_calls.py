@@ -19,7 +19,8 @@ def identity():
     return {'id': 'vector-reallocation-caller-check-1',
             'sha256': hashlib.sha256(Path(__file__).read_bytes() +
                 Path(__file__).with_name('vector_reallocation_caller_vcs.py').read_bytes() +
-                Path(__file__).with_name('vector_reallocation_lifetime.py').read_bytes()).hexdigest()}
+                Path(__file__).with_name('vector_reallocation_lifetime.py').read_bytes() +
+                Path(__file__).with_name('vector_reallocation_capacity.py').read_bytes()).hexdigest()}
 
 
 def children(node):
@@ -187,7 +188,8 @@ def certify(node, *, source, text, defines, models, provenance):
                     scalar_read_obligation={'status': 'pending', 'path': 'count>0', 'observed': observation,
                                             'source': span(observed, source)},
                     stdlib_binding_sha256=hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest())
-        from swdb import vector_reallocation_caller_vcs, vector_reallocation_lifetime
+        from swdb import vector_reallocation_caller_vcs, vector_reallocation_lifetime, vector_reallocation_capacity
+        base['capacity_qualification']=vector_reallocation_capacity.bind(provenance)
         base['lowered_lifetime']=vector_reallocation_lifetime.certify(
             text,node['name'],count['name'],receiver['name'],alias['name'],request,observation)
         base['heap_lifetime_plan'] = vector_reallocation_caller_vcs.prepare(base)
