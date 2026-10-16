@@ -1,0 +1,49 @@
+{
+  "actual_type_only_outcome": "pending",
+  "blockers": [],
+  "created": "2026-10-15 ET",
+  "formal_tools_run_by_reviewer": false,
+  "inputs": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/heap_bridge.mlw",
+      "sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/source_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/packets.py",
+      "sha256": "4e4f71e247e899f625e2433b3f7019382f985b01ccdbeb60958f285befd23995"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/experiment.py",
+      "sha256": "868d9ef1e480862ad048b5cf0f3434a0e89c103b4c69e377ebb18003a2e7ec48"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-effect-keyword-repair-controls-20261015.json",
+      "sha256": "50860dbb20c2ef43580429327183a7b577e903d2e42d8cd0cde9f24c444670ff"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-reserved-name-failure-v1-20261015.json",
+      "sha256": "ebd57a006bd4a310bd401f69b7aaf6805f8e44d638af8e900c161452a99343b1"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_heap_capability_packets.py",
+      "sha256": "6b6a6fb52b25d0a527208d8754c12d393e5a42f999c4dc78af4a7d3fbee44ea9"
+    }
+  ],
+  "inverse_generated_packets_equal": 42,
+  "inverse_translation_files_equal": 3,
+  "local_control_pins_verified": 6,
+  "remote_raw_independently_rehashed": false,
+  "review_markdown": {
+    "path": "/private/tmp/probata-t25-effect-keyword-review-9d8ca764-20261015.md",
+    "sha256": "82274347db5201551041ffcc9996acd97e7d9f29cb4f927e05befec0f385a693"
+  },
+  "source_commit": "9d8ca7645546ce3b282b2a51005392ceb78ff609",
+  "tests_run_by_reviewer": false,
+  "theory_git_blob": "8b3c2bf3f4c831b1e28499ffafad78c196819ec5",
+  "theory_sha256": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+  "verdict": "PASS_NARROW_ALPHA_REPAIR"
+}

@@ -76,8 +76,9 @@ The repair uniformly renames these two exported predicates to `can_read` and
 three changed translation files byte-for-byte. A public lexical RED catches the
 old declarations; all 23 compiler-free controls then pass. The original clauses,
 mathematical formulas, primitive meanings and 42 target identities remain intact.
-A separate coordinator-admitted Why3 `prove --type-only` gate over the exact new
-Git blob is next, using the existing frozen bootstrap to avoid another full source
+Independent alpha review passed at `9d8ca764`: all three source files and 42
+packets inverse-restore exactly. A separate coordinator-admitted Why3
+`prove --type-only` gate over the exact new Git blob is next, using the existing frozen bootstrap to avoid another full source
 clone before grammar/type feasibility is known. No solver/model-record success
 is claimed. Evidence: `../evidence/t25-reserved-name-failure-v1-20261015.json` and
 `../evidence/t25-effect-keyword-repair-controls-20261015.json`.
