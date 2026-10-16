@@ -1,0 +1,290 @@
+{
+  "actual_prior": "Exact2e01 four-leaf partial:3ordinaryValid, originalcellopen,17unexecuted/noCsmokes; not a full model or proof of this24-target version.",
+  "base_integration": "50bdcfaf701b8147c814c6d43d2f1e335ef97de7",
+  "caller_premises_added": [],
+  "canonical_manifest_sha256": "2ffa6ddef5c15b2a492fff37d8072949e6f43b3e2c01013be6391a69422ac263",
+  "created": "2026-10-16 ET",
+  "desired_axioms_added": [],
+  "input_model": {
+    "id": "vector-reallocation-domain-3",
+    "sha256": "6e03deedbfcb81b8a6e15ecd65b705e415ca25389712f66f535ae1121d986df6"
+  },
+  "leaf_inputs": [
+    {
+      "dependencies": [],
+      "id": "grow.entry.int_projection.cells.access",
+      "path": "002b1-t25v3_grow_entry_int_projection_cells_access.c",
+      "sha256": "a934f4850d80b1ea8fb47bb832db8a52ab59a03c70c695b324ac825c92c475b3",
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::typed_reads(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j,4,4)"
+    },
+    {
+      "dependencies": [],
+      "id": "grow.entry.int_projection.cells.initialization",
+      "path": "002b2-t25v3_grow_entry_int_projection_cells_initialization.c",
+      "sha256": "a24148fae0db6882aa47b8ec7d7c477d2f061bbe8472ba8b79a3e72c0897fe73",
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::initialized_at(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j)"
+    },
+    {
+      "dependencies": [],
+      "id": "grow.entry.int_projection.cells.integer",
+      "path": "002b3-t25v3_grow_entry_int_projection_cells_integer.c",
+      "sha256": "fcd63426784f41d2a654ea36073e898f8ceaad498f126715e5580c7d0fa7c0b1",
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::integer_at(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j,Heap::load_int(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j))"
+    },
+    {
+      "dependencies": [],
+      "id": "grow.entry.int_projection.cells.bounds",
+      "path": "002b4-t25v3_grow_entry_int_projection_cells_bounds.c",
+      "sha256": "0bfb29f943335aa6258302949a8f01b5c5b68c9c17d9206e5f8f26c6635aad4e",
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> -2147483648 <= Heap::load_int(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j) <= 2147483647"
+    }
+  ],
+  "logical_obligations": [
+    {
+      "antecedent": "t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s)",
+      "combination": "AND: representation and all four independent cell conjuncts are required",
+      "component_expansions": [
+        {
+          "antecedent": "t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s",
+          "combination": "AND: all four independent definition conjuncts are required",
+          "definition_source": {
+            "begin": 5625,
+            "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+            "end": 5806,
+            "path": "heap_reallocation.mlw",
+            "sha256": "b221ae4a0927b535808cbfb05d1f03bbf0ba05d90811b56ba4650318e4bd0a58"
+          },
+          "definition_substitution": {
+            "b": "b",
+            "h": "Heap::project_int_region(h,values,b,bo,s)",
+            "o": "bo+4*j"
+          },
+          "dependencies": [],
+          "equivalence": "A implies (access and initialized and integer-tag/load and signed32-bounds) iff all four A-implies-conjunct duties",
+          "id": "grow.entry.int_projection.cells",
+          "original_statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::int32_at(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j)",
+          "outer_antecedent": "t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s)",
+          "parts": [
+            "grow.entry.int_projection.cells.access",
+            "grow.entry.int_projection.cells.initialization",
+            "grow.entry.int_projection.cells.integer",
+            "grow.entry.int_projection.cells.bounds"
+          ],
+          "premises_added": [],
+          "quantifiers": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; ",
+          "reference": {
+            "path": "references/002b-t25v3_grow_entry_int_projection_cells.c",
+            "sha256": "47e26763183659b00923090094d8a0ae658972e9f64c17c30f2c772309dfdb35"
+          },
+          "reference_role": "original logical cell target only; never imported or launched as a proved result"
+        }
+      ],
+      "definition_sources": [
+        {
+          "begin": 524,
+          "container_sha256": "ea7c743519cef009637b3aee8691233cfd316d86088402cd6a889ca1f29fa4ca",
+          "end": 716,
+          "path": "vector_reallocation_vcs.py",
+          "sha256": "0061ac023cb12a5f63f8d72450ebc02caf10467a92a6b703aa40e75ca6b77163"
+        },
+        {
+          "begin": 5809,
+          "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+          "end": 5925,
+          "path": "heap_reallocation.mlw",
+          "sha256": "47f35604756dba455af17c5c8f69429cce194dfe546b03a09a56043a39a7c101"
+        }
+      ],
+      "dependencies": [],
+      "equivalence": "A implies (R and forall j: B implies I) iff (A implies R) and all four forall-fresh-j (A and B) implies int32_at-definition-conjunct duties",
+      "fresh_index": "j",
+      "fresh_index_bound_in_outer_quantifiers": false,
+      "fresh_index_free_in_antecedent": false,
+      "id": "grow.entry.int_projection",
+      "original_statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) ==> t25v3_repr(Heap::project_int_region(h,values,b,bo,s),r,o,b,bo,s,c)",
+      "parts": [
+        "grow.entry.int_projection.repr",
+        "grow.entry.int_projection.cells.access",
+        "grow.entry.int_projection.cells.initialization",
+        "grow.entry.int_projection.cells.integer",
+        "grow.entry.int_projection.cells.bounds"
+      ],
+      "premises_added": [],
+      "quantifiers": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; ",
+      "reference": {
+        "path": "references/002-t25v3_grow_entry_int_projection.c",
+        "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f"
+      },
+      "reference_role": "original logical target only; never imported or launched as a proved result",
+      "region_substitution": {
+        "b": "b",
+        "count": "s",
+        "h": "Heap::project_int_region(h,values,b,bo,s)",
+        "j": "j",
+        "offset": "bo"
+      }
+    }
+  ],
+  "next": "Independent source review and root-only four-leaf diagnostic first. Fresh full24current normal public/schema/completeordinary/RTE/init/smoke/task closure still mandatory.",
+  "old_proof_records_promoted": false,
+  "profiles": [
+    {
+      "name": "red",
+      "physical_refs": [
+        {
+          "bytes": 165,
+          "path": "/private/tmp/probata-t25-projection-cell-components-red-20261016/resources.json",
+          "sha256": "8c139b5ac2bc36b962f61bc0e9bd8f89e8ff693b096986cacdd316244b614dd0"
+        },
+        {
+          "bytes": 1352,
+          "path": "/private/tmp/probata-t25-projection-cell-components-red-20261016/controls.log",
+          "sha256": "6dbdbb2204d629b9879c9134dc1faf08de2bd0a51cbd753cad9ae5628b709eb5"
+        },
+        {
+          "bytes": 328,
+          "path": "/private/tmp/probata-t25-projection-cell-components-red-20261016/command.json",
+          "sha256": "6e6533df72859cf03344d88712cfea8cd8de489ecbb25119c46f0ff398deb4c3"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 0.417796,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 71401472,
+        "timed_out": false,
+        "wall_seconds": 0.45289670903002843
+      }
+    },
+    {
+      "name": "green",
+      "physical_refs": [
+        {
+          "bytes": 165,
+          "path": "/private/tmp/probata-t25-projection-cell-components-green-20261016/resources.json",
+          "sha256": "8d32f2ec4b5a7ca55591e6a6da7c5ee77ed03ccc2c315f80191817a02a196234"
+        },
+        {
+          "bytes": 98,
+          "path": "/private/tmp/probata-t25-projection-cell-components-green-20261016/controls.log",
+          "sha256": "3605abb09038ce24e90d81df8f7c0d87bb6f647a5e016bf461d8a8fcb408f6e9"
+        },
+        {
+          "bytes": 330,
+          "path": "/private/tmp/probata-t25-projection-cell-components-green-20261016/command.json",
+          "sha256": "c5a8342c29bef3c8d39659a2524ce5ac72abf4bbdbdcdfec5f8c9b22d80dc95a"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 0.407674,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 71057408,
+        "timed_out": false,
+        "wall_seconds": 0.43899866699939594
+      }
+    },
+    {
+      "name": "closed-green",
+      "physical_refs": [
+        {
+          "bytes": 164,
+          "path": "/private/tmp/probata-t25-projection-cell-components-closed-green-20261016/resources.json",
+          "sha256": "147de4b9ac14e05225d900d21ebdb3be25190e7901e6e0d1147826e52d8f2346"
+        },
+        {
+          "bytes": 99,
+          "path": "/private/tmp/probata-t25-projection-cell-components-closed-green-20261016/controls.log",
+          "sha256": "b5da95a84ed86a4edf249fda68d972399fd799ce1a66a7ee49e3e1f25ed733d3"
+        },
+        {
+          "bytes": 262,
+          "path": "/private/tmp/probata-t25-projection-cell-components-closed-green-20261016/command.json",
+          "sha256": "42504ed8976ce23120b2b8f765a09bb603c760a28793c8c524758a702ae7b33d"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 0.790473,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 71630848,
+        "timed_out": false,
+        "wall_seconds": 0.8522181669832207
+      }
+    },
+    {
+      "name": "composed-green",
+      "physical_refs": [
+        {
+          "bytes": 165,
+          "path": "/private/tmp/probata-t25-projection-cell-components-composed-green-20261016/resources.json",
+          "sha256": "3cd2c2e7a4118a38e779c9770d7fa809ade3c34d87def3d00335b491115a9091"
+        },
+        {
+          "bytes": 100,
+          "path": "/private/tmp/probata-t25-projection-cell-components-composed-green-20261016/controls.log",
+          "sha256": "09753071eb89beff91582fda30d6c47c18ff64da310930d8e19ec243e611f624"
+        },
+        {
+          "bytes": 318,
+          "path": "/private/tmp/probata-t25-projection-cell-components-composed-green-20261016/command.json",
+          "sha256": "fe0f148f5db0bcee5a9c4db1efa9ef1f88ad266ea9403d18fcc12ec3b5873606"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 41.026062,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 300285952,
+        "timed_out": false,
+        "wall_seconds": 41.49686104099965
+      }
+    }
+  ],
+  "public_and_caller_census": {
+    "caller_checkpoint_unmerged": {
+      "additional_pending_applications": 2,
+      "commit": "df8dda2f4f16e35640235b41b1fcebf0ad0f1a6a"
+    },
+    "caller_current_branch_pending": 82,
+    "grow": 24,
+    "reserve": 30
+  },
+  "scope": "Exact definitional expansion of the original projected int32 cell conjunction; preparation only, no actual formal result.",
+  "semantics_change": false,
+  "source_diagnosis": {
+    "bytes": 3565,
+    "path": "/private/tmp/probata-t25-grow21-cells-diagnosis-v1-20261016.md",
+    "sha256": "cc940f7bd7e378aead644725be2bed21eca33128c6acfc2f281a2fbca2df110d"
+  },
+  "source_pins": [
+    {
+      "bytes": 24091,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "ea7c743519cef009637b3aee8691233cfd316d86088402cd6a889ca1f29fa4ca"
+    },
+    {
+      "bytes": 9713,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_packets.py",
+      "sha256": "96343e0bb2c95aa3c8061d243e15afe948040a8d4e0e03f073012a8bbc0c6c69"
+    },
+    {
+      "bytes": 6677,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_view.py",
+      "sha256": "06b06b4235e69ec41306ee35c2967d3d06af45df87290dd8d4fca6924795b893"
+    },
+    {
+      "bytes": 6727,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "987e0cc4ac69d4777030c2aa131000a9e3abde5eef5e2a025086d43a18f44c34"
+    },
+    {
+      "bytes": 4473,
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/fixtures/proof/vector-reallocation-projection-cells-2e01.json",
+      "sha256": "ffa77a8a698c322c3f1dcd1bcfaaa2a29b383aefa1518968bf311741119775bb"
+    }
+  ],
+  "targets": 24,
+  "theory_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+  "unmodified_2e01_targets": 20
+}

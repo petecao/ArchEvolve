@@ -1270,6 +1270,37 @@ Exact evaluated-source2e01 is published through the reviewed25301741 packet; roo
 
 This supersedes dated pending-controls preparation statements only. Status stays claimed; no historical record promotion.
 
+### Exact projected-cell definition decomposition — 2026-10-16 ET
+
+The retained `2e01d27d` actual run reached four leaves: feasibility and receiver
+reads were CVC5 Valid; the representation piece was Z3 Valid. The cell piece
+remained open (Alt-Ergo Timeout, CVC5 Unknown, Z3 Unknown), leaving 17 targets
+and the numeric smoke unexecuted. Source inspection finds no counterstate;
+these solver outcomes do not themselves explain the cause or establish a
+refutation. The full actual producer and its independent cold review stay separate.
+
+The prospective successor expands the exact unchanged `int32_at` definition
+into four independent duties: typed access, initializedness, integer-tag/load
+identity and signed32 bounds. Each retains the complete original premise and
+fresh-index range. All four are required jointly; none assumes a sibling or
+witness theorem. Exact source-definition/substitution bindings and the old
+cell target are retained, with the latter reference-only. All other 20 target
+C files and indices remain byte-identical to `2e01d27d`; the heap theory and
+source contracts do not change.
+
+A public canonical RED records the old 21-versus-24 inventory. The single
+GREEN, 26 compiler-free closure controls and 51 affected packet/Clang controls
+pass; dropping components, adding sibling dependencies, weakening premises,
+capturing the index or altering references/definition bindings fails closed.
+Current prospective counts are grow24, reserve30 and caller82 pending targets;
+the separately checkpointed caller applications are not included here. Evidence:
+`../evidence/t25-cell-conjunction-preparation-controls-20261016.json`.
+
+Independent review and a separately admitted four-leaf diagnostic must precede
+any full24 replay. No current proof record, caller dispatcher, model verdict or
+ticket acceptance is granted by this preparation. All previous inputs, outcomes
+and the old 017/2e01 partial producers remain unchanged.
+
 ### 2026-10-16 06:06 ET — fresh grow21 partial cold and dtor settlement
 
 [Final grow21 cold closeout](../evidence/t25-grow21-partial-final-cold-audit-v1-20261016.md) at exact2e01 accepts partial classification only:two CVC5 Valid leaves and Z3 representation Valid; cells retains Alt-Ergo Timeout/CVC5 Unknown/Z3 Unknown,17targets unexecuted,0Csmokes. Root5653checks3272indexed refs plus1582opaque consumers0errors;397current raw and378prior017files retained. The20materialized SMTs do not certify submissions. Full model/caller/original-v2/refutation and the representation/cells AND group remain false. [Integration reconciliation](../evidence/grow21-e4-independent-integration-review-20261016.md) rehashes15local artifact references without remote repetition.

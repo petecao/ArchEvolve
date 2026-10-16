@@ -52,7 +52,7 @@ def prepared_caller(tmp_path_factory):
     from swdb import vector_reallocation_caller_packets as packets
     stage=tmp_path_factory.mktemp('caller-packets')/'source'
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',CONTRACT,stage)
-    assert len(plan['obligations'])==79 # 30ctor +27reserve(with split grow) +11dtor +10local +1numeric
+    assert len(plan['obligations'])==82 # 30ctor +30reserve(with four cell conjuncts) +11dtor +10local +1numeric
     assert len(plan['required_models'])==5
     assert all(row['proof_record'] is None for row in plan['required_models'])
     return stage
@@ -119,4 +119,4 @@ def test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens(
     plan=packets.prepare(SOURCE,'vector_realloc_v3_safe',clauses,tmp_path/'whole')
     assert plan['contract']['clauses']==clauses
     assert plan['contract']['ordinary_contract_identity'].startswith('pending:')
-    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==79
+    assert plan['current_proof_records_admitted']==[] and len(plan['obligations'])==82
