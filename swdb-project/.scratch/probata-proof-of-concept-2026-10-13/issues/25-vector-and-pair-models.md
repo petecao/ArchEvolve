@@ -123,9 +123,12 @@ The repair uses it in both parsing and WP phases, retaining `print-generated`,
 `why3:compile`, `prover:pp_task` and adding `why3:import` to retain the import
 inventory. A public plan RED catches the bad flag; all 24 compiler-free controls
 pass after the repair. No original formula, target, precondition, heap semantics
-or required proof flag changes. Before another full 42 replay, the coordinator
+or required proof flag changes. Independent source review passed at `9881fff2`
+(three primary-source and six control pins verified). Before another full 42
+replay, the coordinator
 will admit one genuine lemma with actual option-help recognition and complete
 import/task/report evidence. Existing input producers remain immutable.
+Source review: `../evidence/t25-message-category-review-9881fff2-20261015.md`.
 Evidence: `../evidence/t25-diagnostic-option-failure-v2-20261015.json` and
 `../evidence/t25-message-category-repair-controls-20261015.json`.
 
