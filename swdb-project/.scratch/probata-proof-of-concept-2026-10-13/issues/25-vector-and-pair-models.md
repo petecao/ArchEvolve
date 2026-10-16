@@ -1107,3 +1107,17 @@ Typed WP integer-source embedding and non-dynamic automatic-object lifetime defi
 Exactly one known unused-variable dummy warning is present at line25. The immutable [original receipt](../evidence/t25-mac-typecheck-original-receipt-v2-304e03ac-20261016.json) SHA f458c60a83e184ab015b6ac7f4ab81ceac1d12356a5183fa3832129e708c00e8 incorrectly says warnings=[] because its parser missed comma/location-form diagnostics. Independent complete retained-output comparison classifies that warning; the old receipt is not rewritten and no actual rerun occurred. Future parser/canonical rebuild successors remain separate and are not adopted by this closeout.
 
 No solver, imported WP task/hypothesis, source-image,87 model/10 caller duties, model/body/caller composition, public model dependency or whole-ticket acceptance follows. Qualified-v3 public models still return not_proven/unsupported_construct before verifier launch. Existing pair/heap/count accepted records retain their own identities. Ticket25 stays claimed; no frontier resolves.
+
+<!-- 2026-10-16 ET scoped preparation addendum; no acceptance checkbox change. -->
+
+The qualified v3 reallocation preparation now reconstructs the exact source,
+event/clause/helper map, packets and import directory independently of staged
+hash claims. Eight tamper controls and the composed 28-control compiler/native
+profile pass; the public route remains unsupported before launch. The root's
+exact-304e03ac Why3 type-only run exited zero with one known unused-parameter
+warning, classified in a separate passive addendum after the original regex
+missed its format. This is grammar/type evidence only. Full WP import/task,
+selected typed-source image, model bodies, caller cleanup/dependencies and wider
+member/type coverage remain open. See
+[canonical reconstruction](../evidence/t25-reallocation-canonical-rebuild-controls-20261016.json)
+and [passive warning addendum](../evidence/t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.json).

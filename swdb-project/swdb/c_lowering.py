@@ -298,6 +298,7 @@ def identity():
                             + here.with_name("vector_reallocation_model.py").read_bytes()
                             + here.with_name("vector_reallocation_calls.py").read_bytes()
                             + here.with_name("vector_reallocation_vcs.py").read_bytes()
+                            + here.with_name("vector_reallocation_inventory.py").read_bytes()
                             + here.with_name("vector_reallocation_caller_vcs.py").read_bytes()
                             + here.with_name("heap_reallocation.mlw").read_bytes()
                             + here.with_name("vector_pipeline.py").read_bytes()
