@@ -57,8 +57,8 @@ already imports the heap. The minimal repair supplies the identical pinned path
 before the first input parse, retaining it in the later WP phase. A real public
 plan RED fails on the old phase ordering; all 22 compiler-free controls then pass.
 The heap semantics, all 42 targets, source/event map, original model bytes and
-result policy are unchanged. Independent diff review and a fresh admitted actual
-replay remain required. Evidence: `../evidence/t25-first-import-failure-v1-20261015.json`
+result policy are unchanged. Independent source/entry-v3 diff review passed at `c5216796`; a fresh admitted
+actual replay remains required. Review: `../evidence/t25-import-stage-review-c5216796-v3-20261015.md`. Evidence: `../evidence/t25-first-import-failure-v1-20261015.json`
 and `../evidence/t25-import-stage-repair-controls-20261015.json`.
 
 ## Acceptance
