@@ -599,10 +599,54 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
         assumptions.append({"kind": "assumed_clause", "reference": reference,
                             "sentence": f"WP treats contract property {prop['property']} of {function} as Extern: "
                                         f"{prop.get('description') or prop['property']}."})
+    # A complete goal census is insufficient if its property graph is dangling.
+    # In particular, WP status selection can leave synthetic smoke properties
+    # outside Property_status.iter even though their Wpo goals still exist.
+    property_rows = inventory["properties"]
+    property_ids = [row.get("property") for row in property_rows]
+    if (any(not isinstance(name, str) for name in property_ids) or
+            len(property_ids) != len(set(property_ids))):
+        return outcome("not_proven", UNCLASSIFIED, "ambiguous or missing property identity")
+    property_set = set(property_ids)
+    for row in property_rows:
+        name = row["property"]
+        if not name and not (row.get("kind") == "other" and row.get("function") is None and
+                             row.get("line") == 0 and str(row.get("description", "")).startswith("module\n")):
+            return outcome("not_proven", UNCLASSIFIED, "empty property identity lacks source module context")
+        dependencies = row.get("dependencies")
+        origin = row.get("origin")
+        if ("origin" not in row or not isinstance(dependencies, list) or
+                any(not isinstance(dep, str) or not dep or dep not in property_set for dep in dependencies) or
+                (origin is not None and (not isinstance(origin, str) or not origin or origin not in property_set))):
+            return outcome("not_proven", UNCLASSIFIED, "incomplete property dependency or origin closure")
+    for row in generated.values():
+        targets = row.get("targets")
+        if (not isinstance(row.get("property"), str) or not row["property"] or row["property"] not in property_set or
+                not isinstance(targets, list) or
+                any(not isinstance(target, str) or not target or target not in property_set for target in targets)):
+            return outcome("not_proven", UNCLASSIFIED, "incomplete generated-goal property or smoke-target closure")
     smoke_failures = [p for p in inventory.get("properties", []) if p.get("generated_smoke_failure")]
     goals, unproven = [], []
     for name, expected in generated.items():
         raw_goal = reported.get(name)
+        if expected.get("smoke") and not isinstance(expected.get("passed"), bool):
+            return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name} has a malformed pass flag", goals)
+        if expected.get("smoke") and expected.get("passed") is True:
+            # Wpo.all_not_valid accepts an empty result list vacuously. A raw
+            # passed flag therefore cannot establish an attempted smoke check.
+            # Healthy nonvalid observations are operational evidence only; they
+            # do not prove satisfiability or consistency of the assumptions.
+            observations = expected.get("results")
+            healthy = {"unknown", "timeout", "stepout", "invalid"}
+            if (not isinstance(observations, list) or not observations or
+                    any(not isinstance(state, str) or state not in healthy for state in observations)):
+                return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name} lacks healthy nonvalid observations", goals)
+            if raw_goal is not None and (
+                    raw_goal.get("property") != expected["property"] or
+                    raw_goal.get("smoke") is not True or raw_goal.get("passed") is not True or
+                    not isinstance(raw_goal.get("verdict"), str) or
+                    raw_goal["verdict"] not in healthy or raw_goal["verdict"] not in observations):
+                return outcome("not_proven", UNCLASSIFIED, f"smoke goal {name}: native report disagrees with observed inventory", goals)
         if raw_goal is None:
             direct = expected.get("passed") is True and (expected.get("smoke") or "valid" in expected.get("results", []))
             goal = {"goal": name, "property": expected.get("property"), "function": expected.get("function"),

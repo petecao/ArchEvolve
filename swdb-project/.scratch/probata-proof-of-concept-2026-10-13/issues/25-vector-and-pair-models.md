@@ -1212,3 +1212,9 @@ profile. Exact sources, old review, reference target and controls are pinned in
 `evidence/t25-projection-split-and-lexical-controls-20261016.json`. Independent
 source review, affected actual diagnostics, full public model and caller proofs,
 and all remaining member/type acceptance remain open.
+
+## Qualified public20 partial checkpoint — 2026-10-16 04:58 ET
+
+[Original G589 pre-public failure](../evidence/t25-qualified-grow-prepublic-failure-v1-20261016.md) preserves workspace/records FileNotFoundError, no public proof command/record, original49raw files and entry/outer1.1553consumer equality was pre-seed only; final public postchecks were not reached. Root's later416module physical/Git checks are later snapshots, not executed original postchecks.
+
+Second node0G590 exact017 attempt reached the normal public CLI and stopped at target3:2producer-reported successes, grow.entry.int_projection timeout,17unexecuted. PublicCLI returned0 and persisted one not_proven/timeout record with3goals; profile/guard exit1 in121.500689s568,692,736B, outer123.580s621,645,824B, no guardOOM/whole timeout. Complete378-file/23,369,201B remote manifest and21embedded selected metadata rows reconcile locally; no remote raw rehash/copy by integration. Source-consumer1553-file pre/post equality,416module physical/Git checks and three finite empty poststop sweeps/leases released are retained root observations. [Immutable partial metadata](../evidence/t25-qualified-grow-partial-actual-metadata-v2-20261016.json). Full task/hypothesis/ordinary/smoke cold audit and diagnosis remain pending. These2success rows do not establish the complete20target/model, original-v2 or caller theorem. Numeric0e78 is pending preparation only. Ticket stays claimed.

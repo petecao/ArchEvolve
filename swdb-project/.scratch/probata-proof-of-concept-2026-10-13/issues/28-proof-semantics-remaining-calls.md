@@ -335,3 +335,15 @@ verifier ran, no production0.2version is current and no acceptance box is checke
 The source13d782, older29c0 preparation and original7e642 actual producers remain
 separate. Coordinator review/admission and full ticket28 work remain active.
 [Source/native/scripted evidence](../evidence/t28-stream-first-vertical-controls-20261016.md).
+
+### 2026-10-16 ET — scalar prefix sequencing repair
+
+The new `array_filler` route now requires a closed literal-constant prefix, refusing calls, modifications and reads including earlier same-array elements. Public lowering RED3 reproduced the previous admissions; stationary composed GREEN9 includes two native initialized-prefix comparisons and two explicit stream stand-ins, with no actual proof. Evidence: `../evidence/t28-array-prefix-sequencing-controls-20261016.{md,json}`; executable `e4cd1a6e`. Frozen901 stays immutable; root holds actual dispatch pending successor review and full input-closure admission. Whole28 remains claimed/open.
+
+## Sequencing and wrong-size diagnostic checkpoint — 2026-10-16 04:58 ET
+
+[Independent initializer review](../evidence/t28-array-prefix-sequencing-independent-review-69c5499a-20261016.md) accepts69/e4 source preparation after3 public sequencing REDs→7focused/9stationary composedGREEN. Only literal scalar leaves/checked cast-parenthesis-unary wrappers are admitted in the new array_filler prefix; reads/calls/effects refuse.436physical+2Git pins match. Stream partial-library subject/source59-owned TCB/refinement/liveness limits remain; no stream actual is admitted. External entryV3 remains inert pending runtime/ambient V4 hardening/review.
+
+[Compact diagnostic cold review](../evidence/t28-sizewrong1-debug-compact-cold-audit-v1-20261016.md) reconciles253checks with root passive2732checks/2638files0errors,2.474842s324,673,536B; reviewer performed no remote rehash. Exact7e642 replay preserves55new/752,052B and167old raw files remote,10goals/15properties/11TSV rows/16stored per-prover results.7ordinaryValid/2healthy nonvalid smokes coexist with ordinary ensures Failed/Unknown/Timeout. New replay Alt-Ergo2.6.4 HighFailure/signal6/minorGC allocation-failure output is attributed diagnostically only, not to the original generic Failed or a uniquely proven memory-cap cause.18materialized candidates do not prove18submissions/submitted bytes. Negative clean/pair/refuted remainfalse; no new record.
+
+[Primary budget assessment](../evidence/t28-sizewrong1-prospective-budget-assessment-20261016.md) binds11source files/ranges and Why3archive: WP default1000 overrides config-only changes, and per-prover RLIMIT_AS MiB differs from8GiB outerRSS. Explicit2048/newmethod/config/environment/runtime/raw closure is a new prospective profile, not a successful fix or scheduled retry. [Admission executor attribution addendum](../evidence/root-admission-auditor-execution-provenance-20261016.json) preserves the original V3-labeled receipt while identifying actualV4 execution. No scientific result is upgraded, no current0.2/all-schedule/body/source/hardware/whole28 theorem follows; ticket stays claimed.
