@@ -1,0 +1,15 @@
+# Prospective device initializedness diagnostics
+
+2026-10-16 ET. Formal-only fixtures; no unsafe negative may execute natively.
+
+Stage `normal.c` beside the exact successor `gapbs_models.h` and `dxc_summaries.h`. It adds five root definitions to all20included helper definitions: a three-command safe stream→gather→range pipeline, that pipeline with an omitted source store, a read of the unproduced second cell, a safe gather after a real index store, and that gather with the index store omitted.
+
+Stage `omitted-output.c` separately beside the same helper header but rename `omitted-output-dxc_summaries.h` to `dxc_summaries.h`. Its safe pipeline body and contract are byte-identical to the normal safe pipeline. Only gather's output initializedness clause is omitted; all functional effects, other clauses and pending-hazard rules remain unchanged. No expected proof failure is imposed: if the backend derives initialization from its transfer semantics, retain that actual result and revise the causal hypothesis. `sites-map.json` gives exact source/header hashes and this boundary.
+
+The fixture-only TILE_SIZE2 chooses a bounded diagnostic, while the canonical TD dimensions remain symbolic. Tile validity/separation and initial idle state describe real usable incoming device storage; no initialized payload, false/true Init value, reset/havoc or desired output value is assumed. Only the positive index fixture performs its real store. The negative index fixture may have separate base-index validity side obligations as well as the target input-init precondition; inspect exact goals rather than attributing aggregate nonproof to one cause.
+
+The six compiler-only structure/syntax controls passed under B+c6 in0.572727seconds43.75MiB with no events or unsettled children. This checks C interface syntax, not ACSL parsing or initializedness. No fixture/native/formal/prover/provider execution occurred. Evidence: `../../../../evidence/t07-device-init-diagnostic-sites-20261016.json`.
+
+Root's prospective actual budget is at most900seconds,8GiB,one worker. First admit finite complete parsing/backend generation for both TUs, preserving all ordinary/RTE/init/smoke/property/Extern/dependency rows and actual formulas. No observed goal count is frozen in advance; source body census is25normal and21weak. Use unit-qualified raw IDs because identical helper/root IDs legitimately recur across separate TUs. Exact initializedness function sets include every defined helper/root; no `-wp-fct` or property filters. No source/loop proof annotations are added.
+
+A bounded follow-up proof component may use the remaining budget with all three pinned provers,30seconds per ordinary solver call, one WP worker, cache none and the pinned source-defined smoke2seconds. Complete all per-prover/smoke/native/production/observer/journal/source-runtime closure; no goal omission or healthy-generation promotion. Root alone admits and dispatches actual phases. First generation cold review precedes proof admission; no automatic provider/TD/count run follows. Full TD is a separate later fresh Codex-owned hint run after source readiness.
