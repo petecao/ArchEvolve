@@ -247,15 +247,44 @@ def projection_parts(statement):
         definitions.append({'path':name, 'begin':begin, 'end':begin+len(encoded),
                             'sha256':hashlib.sha256(encoded).hexdigest(),
                             'container_sha256':hashlib.sha256(raw).hexdigest()})
-    parts = [('grow.entry.int_projection.repr', quantifiers + antecedent + ' ==> ' + representation),
-             ('grow.entry.int_projection.cells', quantifiers + r'\forall integer j; ' + antecedent +
-              r' && 0 <= j < s ==> Heap::int32_at(' + projected + ',b,bo+4*j)')]
+    cell_quantifiers = quantifiers + r'\forall integer j; '
+    cell_antecedent = antecedent + ' && 0 <= j < s'
+    cell_statement = cell_quantifiers + cell_antecedent + ' ==> Heap::int32_at(' + projected + ',b,bo+4*j)'
+    cell_definition = '''predicate int32_at (h:heap) (b o:int) =
+    typed_reads h b o 4 4 /\\ initialized_at h b o /\\
+    integer_at h b o (load_int h b o) /\\
+    -2147483648 <= load_int h b o <= 2147483647'''
+    cell_raw = (HERE/'heap_reallocation.mlw').read_bytes()
+    encoded = cell_definition.encode()
+    if cell_raw.count(encoded) != 1:
+        raise ValueError('the exact projected-cell conjunction definition changed')
+    begin = cell_raw.index(encoded)
+    load = 'Heap::load_int(' + projected + ',b,bo+4*j)'
+    conjuncts = [
+        ('access', 'Heap::typed_reads(' + projected + ',b,bo+4*j,4,4)'),
+        ('initialization', 'Heap::initialized_at(' + projected + ',b,bo+4*j)'),
+        ('integer', 'Heap::integer_at(' + projected + ',b,bo+4*j,' + load + ')'),
+        ('bounds', '-2147483648 <= ' + load + ' <= 2147483647'),
+    ]
+    cells = [('grow.entry.int_projection.cells.' + name,
+              cell_quantifiers + cell_antecedent + ' ==> ' + formula) for name,formula in conjuncts]
+    expansion = {'id':'grow.entry.int_projection.cells','original_statement':cell_statement,
+        'quantifiers':cell_quantifiers,'antecedent':cell_antecedent,'outer_antecedent':antecedent,
+        'parts':[name for name,_ in cells],
+        'combination':'AND: all four independent definition conjuncts are required',
+        'equivalence':'A implies (access and initialized and integer-tag/load and signed32-bounds) iff all four A-implies-conjunct duties',
+        'definition_source':{'path':'heap_reallocation.mlw','begin':begin,'end':begin+len(encoded),
+            'sha256':hashlib.sha256(encoded).hexdigest(),'container_sha256':hashlib.sha256(cell_raw).hexdigest()},
+        'definition_substitution':{'h':projected,'b':'b','o':'bo+4*j'},
+        'premises_added':[],'dependencies':[],
+        'reference_role':'original logical cell target only; never imported or launched as a proved result'}
+    parts = [('grow.entry.int_projection.repr', quantifiers + antecedent + ' ==> ' + representation), *cells]
     return parts, {'id':'grow.entry.int_projection', 'original_statement':original,
         'quantifiers':quantifiers, 'antecedent':antecedent, 'fresh_index':'j',
         'fresh_index_free_in_antecedent':False, 'fresh_index_bound_in_outer_quantifiers':False,
-        'parts':[name for name,_ in parts], 'combination':'AND: both isolated pieces are required',
-        'equivalence':'A implies (R and forall j: B implies I) iff (A implies R) and forall fresh j: (A and B) implies I',
-        'definition_sources':definitions, 'premises_added':[], 'dependencies':[],
+        'parts':[name for name,_ in parts], 'combination':'AND: representation and all four independent cell conjuncts are required',
+        'equivalence':'A implies (R and forall j: B implies I) iff (A implies R) and all four forall-fresh-j (A and B) implies int32_at-definition-conjunct duties',
+        'definition_sources':definitions, 'component_expansions':[expansion], 'premises_added':[], 'dependencies':[],
         'region_substitution':{'h':projected, 'b':'b', 'offset':'bo', 'count':'s', 'j':'j'},
         'reference_role':'original logical target only; never imported or launched as a proved result'}
 
@@ -282,9 +311,13 @@ def declaration(member):
                 reference = 'references/' + f'{index:03d}-t25v3_grow_entry_int_projection.c'
                 files[reference] = lemma_source(name, statement).encode()
                 receipt['reference'] = {'path':reference,'sha256':hashlib.sha256(files[reference]).hexdigest()}
+                for component in receipt['component_expansions']:
+                    cell_reference = 'references/' + f'{index:03d}b-t25v3_grow_entry_int_projection_cells.c'
+                    files[cell_reference] = lemma_source(component['id'], component['original_statement']).encode()
+                    component['reference'] = {'path':cell_reference,'sha256':hashlib.sha256(files[cell_reference]).hexdigest()}
                 logical.append(receipt)
                 parts = [(part, formula, f'{index:03d}' + suffix)
-                         for (part, formula), suffix in zip(expanded, ('a','b'), strict=True)]
+                         for (part, formula), suffix in zip(expanded, ('a','b1','b2','b3','b4'), strict=True)]
             for part, formula, label in parts:
                 goal = 't25v3_' + part.replace('.', '_')
                 text = (CTOR_NUMERIC.replace('t25_ctor_numeric', 't25v3_ctor_numeric')

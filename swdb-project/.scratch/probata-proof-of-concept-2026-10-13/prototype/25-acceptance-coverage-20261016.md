@@ -127,3 +127,12 @@ annotation tokens. That frozen review is retained. The successor matches whole
 clauses with explicit token boundaries before source reparse. All 42 combined
 controls pass; no public contract identity, caller dispatcher or proof opens.
 See `evidence/t25-projection-split-and-lexical-controls-20261016.json`.
+
+The prospective next projection method expands the exact cell definition into
+four independent full-premise obligations. Grow24/reserve30/caller82 replace
+the preceding preparation counts on this branch. Other20 current target inputs
+are unchanged; the original cell input remains reference-only. Fifty-one
+affected controls pass, but no actual component, complete model or caller
+result is established. The separate local caller checkpoint `df8dda2f` contains
+two additional pending application duties and is not merged into this method.
+See `evidence/t25-cell-conjunction-preparation-controls-20261016.json`.

@@ -1269,3 +1269,34 @@ and element/type breadth remain open; this ticket is still claimed.
 Exact evaluated-source2e01 is published through the reviewed25301741 packet; root must evaluate2e01, not the merge or receipt commit. Both projection pieces retain the full original antecedent and mandatory AND ownership; original whole projection is reference-only, other19payloads unchanged.316package Git pins and15physical reviewed source pins match. Root3named scripted public/schema/native-OCaml controls pass in16.034838s/374.53125MiB with noevents/children/OOM/timeout; all403retained control artifact pins match. This completes source/workflow readiness only, no actual proof. Caller79targets/five unadmitted model requirements, public contract identity, full21/model/original-v2/caller/ticket25 acceptance remain open. [Integration review](../evidence/t25-projection-publication-integration-review-20261016.md), [root source/entry review](../evidence/t25-grow21-root-source-change-review-2e01d27d-20261016.md), [scripted controls](../evidence/t25-grow21-scripted-public-controls-20261016.json).
 
 This supersedes dated pending-controls preparation statements only. Status stays claimed; no historical record promotion.
+
+### Exact projected-cell definition decomposition — 2026-10-16 ET
+
+The retained `2e01d27d` actual run reached four leaves: feasibility and receiver
+reads were CVC5 Valid; the representation piece was Z3 Valid. The cell piece
+remained open (Alt-Ergo Timeout, CVC5 Unknown, Z3 Unknown), leaving 17 targets
+and the numeric smoke unexecuted. Source inspection finds no counterstate;
+these solver outcomes do not themselves explain the cause or establish a
+refutation. The full actual producer and its independent cold review stay separate.
+
+The prospective successor expands the exact unchanged `int32_at` definition
+into four independent duties: typed access, initializedness, integer-tag/load
+identity and signed32 bounds. Each retains the complete original premise and
+fresh-index range. All four are required jointly; none assumes a sibling or
+witness theorem. Exact source-definition/substitution bindings and the old
+cell target are retained, with the latter reference-only. All other 20 target
+C files and indices remain byte-identical to `2e01d27d`; the heap theory and
+source contracts do not change.
+
+A public canonical RED records the old 21-versus-24 inventory. The single
+GREEN, 26 compiler-free closure controls and 51 affected packet/Clang controls
+pass; dropping components, adding sibling dependencies, weakening premises,
+capturing the index or altering references/definition bindings fails closed.
+Current prospective counts are grow24, reserve30 and caller82 pending targets;
+the separately checkpointed caller applications are not included here. Evidence:
+`../evidence/t25-cell-conjunction-preparation-controls-20261016.json`.
+
+Independent review and a separately admitted four-leaf diagnostic must precede
+any full24 replay. No current proof record, caller dispatcher, model verdict or
+ticket acceptance is granted by this preparation. All previous inputs, outcomes
+and the old 017/2e01 partial producers remain unchanged.
