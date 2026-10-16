@@ -40,6 +40,23 @@ def _hash(path):
     with Path(path).open('rb')as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
 
 
+def _logical_reference(library,reference):
+    # Library.resolve intentionally dereferences safe aliases inside a root.
+    # This distinct source policy checks the original reference before that.
+    from swdb import paths
+    root=reference.get('root','library')
+    bases={'library':getattr(library,'root',None),'project':paths.HOME,'repository':paths.HOME.parent}
+    if root not in bases or bases[root]is None:raise Refused('initialized source needs a declared reference root')
+    base=Path(bases[root]);relative=Path(reference['path'])
+    if not base.is_absolute()or relative.is_absolute()or '..'in relative.parts:
+        raise Refused('initialized source reference must stay relative to its declared root')
+    current=base
+    if current.is_symlink():raise Refused('initialized source declared root must be physical')
+    for part in relative.parts:
+        current=current/part
+        if current.is_symlink():raise Refused('initialized-register source reference contains a symbolic link')
+
+
 def policy(library,definition):
     try:
         if not isinstance(definition,dict)or set(definition)!={'kind','call','entry','sources'}or definition['kind']!=KIND or definition['call']not in PROTOTYPES or not _same(definition['entry'],ENTRY):
@@ -48,6 +65,7 @@ def policy(library,definition):
             raise Refused('all seven distinct immutable initialized-register sources required')
         pins=[]
         for source in definition['sources']:
+            _logical_reference(library,source)
             original=library.resolve(source)
             if original.is_symlink():raise Refused('initialized-register immutable source must not be a symbolic link')
             library._pin(source);path=original.resolve()
@@ -69,6 +87,9 @@ def check(library,data,texts,error):
             error('calls.definition','initialized-register definition needs its distinct closed layout')
             return False
         return True
+    if data.get('id')!=SEMANTICS_ID:
+        error('id','initialized-register route requires its exact fixed semantics entry identity')
+        return False
     valid=True
     def refuse(message):
         nonlocal valid

@@ -105,18 +105,22 @@ class InitializedRouting(unittest.TestCase):
             model.__dict__['REGISTER_ENTRY'] = original.ENTRY
             exec(compile(ast.Module(body=[entry], type_ignores=[]), 'initialized-entry', 'exec'), model.__dict__)
             source = pure.load('dx100_initialized_register_source', ['KIND', 'Refused', '_same', '_hash', 'policy'])
+            pure.load('dx100_initialized_register_source', ['_logical_reference'])
             source.__dict__.update(ENTRY=model.ENTRY, PROTOTYPES=model.PROTOTYPES, SOURCE_PINS=size.SOURCE_PINS)
+            paths = types.ModuleType('swdb.paths'); paths.HOME = PROJECT
+            sys.modules[paths.__name__] = paths; pure.package.paths = paths
             pins = []
             for name, digest in size.SOURCE_PINS.items():
                 path = PROJECT / ('apps/dx100/benchmarks/API/' + name if name in {'MAA.hpp', 'MAA_gem5.hpp'}
                                   else 'tests/fixtures/proof/dx100/gem5-e4fc4af/' + name)
-                pins.append({'path': str(path), 'sha256': digest})
+                pins.append({'root':'project','path':str(path.relative_to(PROJECT)),'sha256':digest})
 
-            class Library:
-                def resolve(self, pin): return Path(pin['path'])
-                def _pin(self, pin):
-                    if hashlib.sha256(self.resolve(pin).read_bytes()).hexdigest() != pin['sha256']:
-                        raise ValueError('changed immutable source')
+            library_file=PROJECT/'swdb/library.py';library_tree=ast.parse(library_file.read_bytes())
+            original_library=next(n for n in library_tree.body if isinstance(n,ast.ClassDef)and n.name=='Library')
+            methods=[n for n in original_library.body if isinstance(n,ast.FunctionDef)and n.name in {'resolve','_pin'}]
+            shell=ast.ClassDef(name='Library',bases=[],keywords=[],body=methods,decorator_list=[],type_params=[])
+            context={'Path':Path,'paths':paths,'re':re,'artifacts':types.SimpleNamespace(file_hash=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest())}
+            exec(compile(ast.fix_missing_locations(ast.Module(body=[shell],type_ignores=[])),str(library_file),'exec'),context)
 
             def definition(call):
                 return {'kind': 'dx100-initialized-u32-register-v1', 'call': call, 'entry': model.ENTRY, 'sources': pins}
@@ -127,7 +131,7 @@ class InitializedRouting(unittest.TestCase):
                               *[{'call': call, 'supported': True, 'instances': [
                                   {'arguments': ['unsigned int'], 'arity': 1, 'definition': definition(call)}]}
                                 for call in ['get_new_reg', 'get_reg']]]}
-            library = Library(); library.entries = {'semantics.control': data}
+            library = context['Library'](); library.root = PROJECT/'library'; library.entries = {'semantics.control': data}
             api = pure.load('proof_semantics', ['TILE_POINTER', 'current', 'covered_names', 'lowering_options'])
             options = api.lowering_options(library)['semantics']
             self.assertEqual(set(options['source_definitions']), {'init_MAA'})

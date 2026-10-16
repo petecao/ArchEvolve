@@ -850,6 +850,8 @@ class WpAdapter:
                 policy=dx100_initialized_register_source.unit_policy(self.library,self.library.get(self.contract)or{})
             except dx100_initialized_register_source.Refused as exc:
                 raise AdapterError('partial initialized register admission: '+str(exc)) from None
+            if {'id':semantics.get('id'),'sha256':semantics.get('sha256')}!=policy['semantics']:
+                raise AdapterError('partial initialized register selected semantics pin differs from its fixed unit policy')
             if self.method.id!=dx100_initialized_register_source.PARTIAL_METHOD:
                 raise AdapterError('partial initialized register admission requires its original partial method')
             frames=re.findall(r'\bassigns\s+([^;]+);','\n'.join(texts))
