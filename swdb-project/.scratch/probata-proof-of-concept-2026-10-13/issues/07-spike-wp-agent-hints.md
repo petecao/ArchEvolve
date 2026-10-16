@@ -8,25 +8,30 @@ Updated: 2026-10-16 12:50 ET (resumed by Yan-Ru; method24 plan approved, claimed
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
 
-## Current resume checkpoint — method24, resumed 2026-10-16 12:50 ET
+## Current resume checkpoint — paused for Yan-Ru's fallback decision, 2026-10-16 17:00 ET
 
-Yan-Ru resumed ticket 07 at 12:46 ET and approved the method24 plan ("agree go ahead"):
+Status **claimed**; no job, no Codex call, no heartbeat running. Work lives on local branch
+`probata-poc/t07-m24` (worktree `/tmp/claude/probata-wt/t07-m24`), not yet merged into `yanrujhou_main`
+(the root session is active in the main checkout). Raw output: `/tmp/claude/probata-runs/t07f/` (host `mac`).
 
-1. **Provable stand-in first (uncounted).** Close the three helper goals that hints cannot reach
-   (hint anchors exist only in TDStep) with C-standard-equivalent forms; keep the stand-in at this
-   ticket's fidelity bar (deeper fidelity belongs to ticket 21). Check: no-hint WP, every helper goal Valid.
-2. **Timeout ladder and conjunct splitting in rounds** (3 s, open goals rechecked at 10 s;
-   `-wp-split-conj`). The verdict replay stays fresh, cache-none, 30 s. Evidence: 98% of 28,272 Valid
-   proofs in t07, t07c-e attempts took <= 3 s.
-3. **Bounded falsifier for hints (CBMC).** Candidate loop invariants and asserts become bounded
-   assertions on the stand-in; a false hint returns a concrete counterexample in seconds. A filter
-   only: WP gives the verdict. Yan-Ru approved returning these hint counterexamples to Codex.
-4. **Generic proof-structure prompt guidance** (no BFS-specific text; every hint stays Codex's).
-5. **Counted runs** until a pass or the box ends (about 2026-10-27 ET).
+Method24-family counted runs (zero seeds, Codex only, 60 minutes): run 27 FAIL 96 open, run 28 FAIL 81 open,
+run 29 FAIL 75 open, each after about 50 counted minutes (the final-replay reserve kept the rest). The
+best set improves slowly and stays far from zero. **Decision needed (Yan-Ru):** the fallbacks of the
+approved plan: (a) a 120-minute budget (map 13 item 11 allows tuning as a new run plan); (b) start from
+the contract proof's hints as seeds (map 13 item 9, the design's per-candidate flow); (c) close 07 as fail
+and carry the falsifier, the parallel rounds and the stand-in corrections into A3. Also for sign-off: the
+`pushed_are_new` correction below.
 
-Process (approved): one independent review per method before launch, not one per inert packet.
-Fallbacks if about five counted runs fail are Yan-Ru's call (120-minute budget; contract-proof seeds).
-Active owner: main session 11d49a0d. Raw output: `/tmp/claude/probata-runs/t07f/` (host `mac`).
+Resume: read this section and the three run entries below; `python3 m24.py --out <new empty folder>` in
+`prototype/07-wp-hints/` (sandbox off: Why3 socket and Codex network) starts a method26 counted run.
+
+The approved method24 plan (Yan-Ru, 2026-10-16 12:46 ET), kept for reference:
+
+1. **Provable stand-in first (uncounted).** Done.
+2. **Timeout ladder and conjunct splitting in rounds.** Done (10 s rung only at <= 40 open).
+3. **Bounded falsifier for hints.** Done (by execution; see the deviation note).
+4. **Generic proof-structure prompt guidance.** Done.
+5. **Counted runs.** Runs 27-29, all FAIL.
 
 ### Method24 progress — 2026-10-16 ET (uncounted preparation, host `mac`)
 
@@ -113,6 +118,13 @@ Finding: `\wp::strategy` hints only act through the `tip` prover, which neither 
 Method26 = method25 with strategy and proof-attachment hints refused by the tools (a subset of the map 13
 vocabulary) and the prompt saying so. Verdict path unchanged. This delta (prompt text plus an up-front
 refusal) was reviewed by the main session only, since it touches neither the verdict path nor the falsifier.
+
+### Counted run 29 (method26 run 1) — 2026-10-16 16:03–16:54 ET: FAIL
+
+No set reached zero open goals; no final replay. 51.0 counted minutes, 2 Codex calls, 28 tool calls (4 failed
+checks, against 35 in run 28), 6 WP passes of 2.7–4.6 min; 5.10M input tokens (4.87M cached), 44.2k output.
+Best set: 69 hints, **75 of 584 goals open** (43 unit, 32 hint; 30 of them call-site preconditions; all
+timeout). [Compact evidence](../evidence/t07-counted-29-20261016.json).
 
 ## Historical checkpoint — user stop 2026-10-16 11:36 ET
 
