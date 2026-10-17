@@ -1,8 +1,8 @@
 # Register of learned agent rules
 
-Updated: 2026-10-15 14:46 ET. Owner: Yan-Ru Jhou. Origin: the 2026-10-08–09 LANL
+Updated: 2026-10-16 22:20 ET. Owner: Yan-Ru Jhou. Origin: the 2026-10-08–09 LANL
 analytic-evaluator session and its retrospective; revised after the 2026-10-11–12
-LANL-shaped-db and 2026-10-15 Probata session retrospectives.
+LANL-shaped-db, 2026-10-15 Probata and 2026-10-16 Probata ticket 07 retrospectives.
 
 The executable instructions are in
 [learned-workflow.md](../../../.claude/rules/learned-workflow.md); audit them using
@@ -26,7 +26,7 @@ permissions and scientific thresholds they point to.
 
 ## Review register
 
-Initial assessment: 2026-10-09 ET. Latest review: 2026-10-15 ET.
+Initial assessment: 2026-10-09 ET. Latest review: 2026-10-16 ET.
 Review after: 2026-10-22 ET; then weekly.
 The date prioritizes an audit, not automatic expiry. Update an entry's review
 date with a substantive decision; a healthy, unchanged audit needs no date-only
@@ -34,14 +34,16 @@ commit. Scheduled audits may remain quiet.
 
 | ID | State | Evidence required to replace or retire the reminder |
 |---|---|---|
-| LR-01 | active | Tickets close against their own criteria; claims bind exact source and retained evidence, distinguish actual runs from offline checks, and make additional research scope explicit. |
+| LR-01 | active | Tickets close against their own criteria; claims bind exact source and retained evidence, distinguish actual runs from offline checks, and make additional research scope explicit. Spike evidence stays proportionate (verdict, inputs, hashes, run folder) in later comparable sessions. |
 | LR-02 | active | A mandatory launch check enforces the applicable pilot/admission requirement and rejects an ineligible pair; cite its regression and where it runs. |
 | LR-03 | active | Test selection distinguishes component and real-verifier work; dependency-closed fixtures, relevant tool/watchdog preflight and cheap report-reader checks cover the observed failures. |
-| LR-04 | active | Recurring mechanical checks run in the normal workflow; failure diagnosis and selection make broad reruns depend on changed code or unresolved failures. |
-| LR-05 | active | Status and resume summaries derive from tickets; pause checks release unfinished claims, preserve resume commands and stop the effort's heartbeat. |
+| LR-04 | active | Recurring mechanical checks run in the normal workflow; failure diagnosis and selection make broad reruns depend on changed code or unresolved failures. A launcher records one review per method version before launch. |
+| LR-05 | active | Status and resume summaries derive from tickets; pause checks release unfinished claims, preserve resume commands and stop the effort's heartbeat. A tracker check fails on a resume section over 30 lines. |
 | LR-06 | active | Output lifecycle tooling enforces destination capacity and verified disposable cleanup while preserving every required future reader. |
 | LR-07 | active | A committed runner enforces memory-sized workers, shared slots, RSS caps, timeouts and incremental structured results; independently checked long runs post scheduled status tables and report missed intervals. |
-| LR-08 | active | Normal integration and closeout checks enforce the remote-branch budget, keep worker branches local and retire eligible idle refs/worktrees under the existing recovery and reader checks. |
+| LR-08 | active | Normal integration and closeout checks enforce the remote-branch budget, keep worker branches local and retire eligible idle refs/worktrees under the existing recovery and reader checks. A PreToolUse hook blocks stash/reset/path checkout in the shared primary checkout. |
+| LR-09 | active | Proof, optimization and measurement launchers run a target self-check (preconditions satisfiable, postconditions true on concrete known-good runs) and refuse a refuted target; cite the check and where it runs. |
+| LR-10 | active | Judgment call. Retire only if later comparable efforts reach a checkpoint report on their own (trend, suspected premise, options) before three attempts pass without a step change. |
 
 Partial improvements justify narrowing an instruction; they do not automatically
 retire the entire lesson. New lessons need a concrete observed incident, a trigger,
@@ -111,6 +113,20 @@ it instead of adding another nearly identical rule.
     [recovery procedures](../../.scratch/probata-proof-of-concept-2026-10-13/prototype/closeout/README.md)
     retain historical source and required readers.
 
+- **2026-10-16 Probata ticket 07 session** (ticket:
+  [07](../../.scratch/probata-proof-of-concept-2026-10-13/issues/07-spike-wp-agent-hints.md), "Final Answer"):
+  - **LR-09 (new):** the stand-in's postcondition `pushed_are_new` was false (`\old` read the queue entry
+    in the pre-state). Counted runs 1-26 over about 3 days tried to prove it; a bounded falsifier run on
+    concrete inputs refuted it in about 10 s.
+  - **LR-10 (new):** 23 method versions and 26 counted runs ran without a premise check while the best set
+    stayed at 19-29 open goals; standing autonomy instructions pushed toward continuing.
+  - **LR-01/04:** before the pause, about 20 hours produced admission packets, observers and reviews of
+    reviews with no counted run; after Yan-Ru approved one review per method, four counted runs (27-30)
+    fit in one afternoon.
+  - **LR-05:** the ticket reached 1,943 lines; each resume began by reading two persisted 140 KB outputs.
+  - **LR-08:** a test-comparison command ran `git stash` in the shared primary checkout and dropped
+    another effort's settings-recovery stash ref (restored from its object).
+
 ## Audit procedure
 
 1. Read current rule files, this register, repository instructions and Git status.
@@ -151,3 +167,9 @@ date alone is not an actionable defect or permission to remove a rule.
   acceptance requirements remain in force. All lessons remain active; executable
   enforcement is still required before marking them automated. Removed the stale
   pointer to the absent `rule-maintenance.md`; the audit procedure remains here.
+- 2026-10-16 22:20 ET (Yan-Ru approved, ticket 07 retrospective): revised LR-01 (evidence sized to the
+  ticket type), LR-04 (one review per method version; changes outside the verdict path reviewed in the
+  diff), LR-05 (resume section at most 30 lines; history in dated evidence files), LR-08 (ticket work
+  in its own worktree; the shared primary checkout keeps other sessions' work and stash entries); added
+  LR-09 (check the target first) and LR-10 (convergence checkpoint). Scientific acceptance criteria,
+  owner policies and permissions are unchanged; LR-01's evidence requirement still binds every verdict.
