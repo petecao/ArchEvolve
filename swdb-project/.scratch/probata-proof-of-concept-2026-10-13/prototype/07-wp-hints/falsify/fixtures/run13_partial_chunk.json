@@ -1,0 +1,72 @@
+[
+ {
+  "id": "r1c16h1",
+  "anchor": "global",
+  "kind": "predicate",
+  "text": "predicate td_hit_to{L}(struct SlidingQueue_NodeID *q, SGOffset *off, NodeID *nbr, integer stop, integer v) = \\exists integer p, e; \\at(q->shared_out_start,L) <= p < stop && \\at(off[\\at(q->shared[p],L)],L) <= e < \\at(off[\\at(q->shared[p],L) + 1],L) && \\at(nbr[e],L) == v;",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 17"
+ },
+ {
+  "id": "r1c16h2",
+  "anchor": "global",
+  "kind": "predicate",
+  "text": "predicate td_hit_scalar{L}(struct SlidingQueue_NodeID *q, SGOffset *off, NodeID *nbr, integer pos, integer edge, integer v) = td_hit_to{L}(q,off,nbr,pos,v) || (\\exists integer e; \\at(off[\\at(q->shared[pos],L)],L) <= e < edge && \\at(nbr[e],L) == v);",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 17"
+ },
+ {
+  "id": "r1c16h3",
+  "anchor": "global",
+  "kind": "predicate",
+  "text": "predicate td_hit_acc{P,C}(struct SlidingQueue_NodeID *q, SGOffset *off, NodeID *nbr, int *lo, int *hi, integer begin, integer n, integer li, integer lj, integer v) = td_hit_to{P}(q,off,nbr,begin,v) || (\\exists integer r,e; 0 <= r < n && \\at(lo[r],C) <= e < \\at(hi[r],C) && dxc_lex_le(r,e,li,lj) && \\at(nbr[e],P) == v);",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 17"
+ },
+ {
+  "id": "r1c16h4",
+  "anchor": "global",
+  "kind": "predicate",
+  "text": "predicate td_hit_batch{P,C}(struct SlidingQueue_NodeID *q, SGOffset *off, NodeID *nbr, int *lo, int *hi, integer begin, integer n, integer li, integer lj, int *vertices, integer k, integer v) = td_hit_acc{P,C}(q,off,nbr,lo,hi,begin,n,li,lj,v) || (\\exists integer z; 0 <= z < k && \\at(vertices[z],C) == v);",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 17"
+ },
+ {
+  "id": "r1c16h5",
+  "anchor": "global",
+  "kind": "predicate",
+  "text": "predicate td_parent_safe{P,C}(struct SlidingQueue_NodeID *q, SGOffset *off, NodeID *nbr, NodeID *parent, integer n) = \\forall integer v; 0 <= v < n ==> (\\at(parent[v],P) >= 0 ==> \\at(parent[v],C) == \\at(parent[v],P)) && (\\at(parent[v],P) < 0 && \\at(parent[v],C) < 0 ==> \\at(parent[v],C) == \\at(parent[v],P)) && (\\at(parent[v],P) < 0 && \\at(parent[v],C) >= 0 ==> bfs_frontier_edge{P}(q,off,nbr,\\at(parent[v],C),v));",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 17"
+ },
+ {
+  "id": "r1c16h6",
+  "anchor": "global",
+  "kind": "logic",
+  "text": "logic integer td_new_at{L}(struct SlidingQueue_NodeID *q, NodeID *local, integer base, integer k) = k < \\at(q->shared_in,L) - base ? \\at(q->shared[base + k],L) : \\at(local[k - (\\at(q->shared_in,L) - base)],L);",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 17"
+ },
+ {
+  "id": "r1c16h7",
+  "anchor": "global",
+  "kind": "predicate",
+  "text": "predicate td_queue_state{P,C}(struct SlidingQueue_NodeID *q, NodeID *parent, NodeID *local, integer in, integer n) = \\at(q->shared_in,P) <= \\at(q->shared_in,C) && 0 <= in <= 16384 && (\\forall integer p; 0 <= p < \\at(q->shared_in,P) ==> \\at(q->shared[p],C) == \\at(q->shared[p],P)) && (\\forall integer k; 0 <= k < \\at(q->shared_in,C) - \\at(q->shared_in,P) + in ==> 0 <= td_new_at{C}(q,local,\\at(q->shared_in,P),k) < n && \\at(parent[td_new_at{C}(q,local,\\at(q->shared_in,P),k)],P) < 0 && \\at(parent[td_new_at{C}(q,local,\\at(q->shared_in,P),k)],C) >= 0) && (\\forall integer v; 0 <= v < n && \\at(parent[v],P) < 0 && \\at(parent[v],C) >= 0 ==> \\exists integer k; 0 <= k < \\at(q->shared_in,C) - \\at(q->shared_in,P) + in && td_new_at{C}(q,local,\\at(q->shared_in,P),k) == v) && (\\forall integer k1,k2; 0 <= k1 < k2 < \\at(q->shared_in,C) - \\at(q->shared_in,P) + in ==> td_new_at{C}(q,local,\\at(q->shared_in,P),k1) != td_new_at{C}(q,local,\\at(q->shared_in,P),k2));",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 17"
+ },
+ {
+  "id": "r1c18h1",
+  "anchor": "loop:chunk_loop",
+  "kind": "loop_invariant",
+  "text": "loop invariant chunk_semantics: td_parent_safe{Pre,Here}(queue,VertexOffsets->start_,g->out_neighbors_,parent->start_,num_nodes) && td_queue_state{Pre,Here}(queue,parent->start_,lqueue.local_queue,lqueue.in,num_nodes) && (\\forall integer v; 0 <= v < num_nodes && \\at(parent->start_[v],Pre) < 0 ==> (parent->start_[v] >= 0 <==> td_hit_to{Pre}(queue,VertexOffsets->start_,g->out_neighbors_,begin,v))) && dxc_idle;",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 19"
+ },
+ {
+  "id": "r1c18h3",
+  "anchor": "stmt:range_start",
+  "kind": "ghost",
+  "text": "ghost int td_old_i = dxc_reg[c.reg[4]];",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 19"
+ },
+ {
+  "id": "r1c18h4",
+  "anchor": "stmt:range_start",
+  "kind": "ghost",
+  "text": "ghost int td_old_j = dxc_reg[c.reg[5]];",
+  "provenance": "codex gpt-5.6-sol xhigh round 1 tool call 19"
+ }
+]

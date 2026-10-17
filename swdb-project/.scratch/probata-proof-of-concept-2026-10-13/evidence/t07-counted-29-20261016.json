@@ -1,0 +1,131 @@
+{
+ "run": "counted-29 (method26 run 1)",
+ "host": "mac",
+ "raw": "/tmp/claude/probata-runs/t07f/counted-29/",
+ "verdict": {
+  "pass": false,
+  "reason": "no qualifying final replay within the budget"
+ },
+ "minutes": 51.0,
+ "provider_calls": 2,
+ "usage": {
+  "input_tokens": 5098426,
+  "cached_input_tokens": 4874624,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 44193,
+  "reasoning_output_tokens": 21570
+ },
+ "excluded_lock_wait_s": 0.0,
+ "pin": {
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh"
+ },
+ "codex_version": "codex-cli 0.153.0",
+ "git_head": "eb5fb62427cc4b3bb85690e33d9184115ad763b8",
+ "inputs": {
+  "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+  "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+  "gapbs_models.h": "ab1b7c8e4a5f0a447cec6fdf180326ad24b14bd0dffd03f2a42e370cb6d0995d",
+  "tdstep_standin.c": "0871f2a820f10d675bd5a78c7b0b13e951b985c40bd0f76d2097ff428bc80760"
+ },
+ "scripts": {
+  "m24.py": "0227a1322a398b426599ec701be7ae6d6fa7878f9e249a3782fa4a516021bc3f",
+  "m24_tool.py": "9a7cbb968ec105eb11ef3a5b37ee422ac87ced19e1e97ea06f1fb04f109cb4d6",
+  "hints.py": "bd5b089b72de57f237f63513ce1c58ef0d1520516f9dd7adc3d9229ebe3c67aa",
+  "loop.py": "0b8b8d81360733870f91746691b8bbf19d9ada8744ce173df8f909e884afc279",
+  "wp_run.sh": "c0dda0c5d16c57c6db7f8c79258e66513242d2a34c2b6d15badf84bc9277a682",
+  "goal_print.py": "565fea12e6e3382ff06ce708799cd0abac02c52f69a9d219ef511d92dae2991f",
+  "falsify/falsify.py": "4203e3faacd1981360e598e56e6f876e936759df09c216c8d96253072aba2bf4",
+  "falsify/acsl_eval.py": "9e2ca0114c1aaa8179d713b07924f70be201ad73ba822bfc077e288b9db2292b",
+  "falsify/build.py": "42803e5691b76e1d7f2e519f5a55a5e7be7a74eb668ac531a7ab5e3df3d9a156",
+  "falsify/harness.c": "31044c2052b4cb92192fc98e17d5fda44ec6b9fceb1e44109686c048f9097aec",
+  "falsify/instances.py": "beee23887d9e7137223ae2d500022500a93c05546cb8dab0b6c6085d6b4288e3"
+ },
+ "baseline": {
+  "runs": [
+   {
+    "timeout_s": 3,
+    "wall_s": 303.13,
+    "open": 171,
+    "n_goals": 314
+   }
+  ],
+  "open": 171,
+  "minutes": 5.07
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "codex": {
+    "exit": 0,
+    "wall_s": 2608.2,
+    "usage": {
+     "input_tokens": 5098426,
+     "cached_input_tokens": 4874624,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 44193,
+     "reasoning_output_tokens": 21570
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14654-6e7d-77a0-941f-0b867dc731b3"
+   },
+   "tool_calls": 28,
+   "tool_results": [
+    "falsified",
+    "check failed",
+    "check passed",
+    "not all proven",
+    "printed 2 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 2 goal block(s)",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven"
+   ],
+   "minutes": 48.54,
+   "best_open": 75
+  },
+  {
+   "round": 2,
+   "codex": {
+    "exit": -15,
+    "wall_s": 147.6,
+    "usage": {},
+    "error": "FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/claude/probata-runs/t07f/counted-29/codex-r2/turn0/final.json'; stderr tail: 2026-10-16T20:52:16.893234Z ERROR codex_core::tools::router: error=resources/list failed: resources/list failed for `probata`: Mcp error: -32601: not supported: resources/list\n",
+    "killed_at_deadline": true,
+    "thread": "01a14654-6e7d-77a0-941f-0b867dc731b3"
+   },
+   "tool_calls": 0,
+   "tool_results": [],
+   "minutes": 51.0,
+   "best_open": 75
+  }
+ ],
+ "best": {
+  "n_open": 75,
+  "n_goals": 584,
+  "n_hints": 69,
+  "best_json_sha256": "96d14cac04fc4047a9cc66402890060732df6fd956aa2d02f500825a1079793b",
+  "open_unit": 43,
+  "open_hint": 32
+ }
+}

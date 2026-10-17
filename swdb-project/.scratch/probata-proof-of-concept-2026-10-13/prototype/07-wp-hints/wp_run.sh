@@ -72,6 +72,56 @@ case "$mode" in
     fi
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp $cache_arg -wp-cache none -wp-session session -wp-prover none -wp-print ;;
+  # Method24 (2026-10-16 ET): search rounds use a timeout ladder (the driver passes 3 s, then 10 s for
+  # goals still open) and -wp-split-conj (sound: every conjunct is its own goal, so feedback names the
+  # failing part). Never a verdict. The verdict is final24: the frozen full replay (all functions, 30 s,
+  # -wp-cache none, fresh session, smoke tests) plus the same -wp-split-conj the rounds used.
+  round24) [ -n "$cache_arg" ] || { echo "round24 needs <cache_dir>"; exit 2; }; rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-fct TDStep -wp-split-conj -wp-cache update -wp-cache-dir "$cache_arg" -wp-session session \
+      -wp-prover alt-ergo,z3,cvc5 -wp-timeout "$tmo_arg" -wp-par 12 -wp-report-json goals.json \
+      -then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json -then -report -report-untried ;;
+  # Method25 (2026-10-16 ET): round24 split into three concurrent WP processes over an exact partition of
+  # TDStep's goals (104 + 209 + 304 = 617 on run 27's best set, checked), each -wp-par 4, inside ONE
+  # verifier job (one slot, one RSS watchdog over the whole tree). WP's goal generation and Qed run
+  # sequentially per process, so the partition shortens the wall time (run 27 best set: 360 s -> 219 s;
+  # a 4-way split gave 215 s, CPU-bound). Never a verdict.
+  round24p) [ -n "$cache_arg" ] || { echo "round24p needs <cache_dir>"; exit 2; }
+    # Selector 2 excludes @invariant so a check-kind invariant cannot land in two parts (review 2026-10-16).
+    k=0
+    for sel in "@invariant" "@requires,@check,@terminates,-@invariant" "-@invariant,-@requires,-@check,-@terminates"; do
+      k=$((k+1)); rm -rf "part$k" && mkdir -p "part$k/session" "$cache_arg/part$k" && cp ./*.c ./*.h "part$k/" || exit 2
+    done
+    pids=""; k=0
+    for sel in "@invariant" "@requires,@check,@terminates,-@invariant" "-@invariant,-@requires,-@check,-@terminates"; do
+      k=$((k+1)); sub="part$k"
+      lem=""; [ $k -eq 3 ] && lem="-then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json"
+      ( cd "$sub" && exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+        -wp -wp-fct TDStep -wp-prop="$sel" -wp-split-conj -wp-cache update -wp-cache-dir "$cache_arg/part$k" -wp-session session \
+        -wp-prover alt-ergo,z3,cvc5 -wp-timeout "$tmo_arg" -wp-par 4 -wp-report-json goals.json $lem > wp.log 2>&1 ) &
+      pids="$pids $!"
+    done
+    rc=0; for p in $pids; do wait "$p" || rc=1; done
+    for k in 1 2 3; do cat "part$k/wp.log"; done
+    python3 -I -c 'import json,sys
+g=[]
+for k in (1,2,3):
+    g+=json.load(open(f"part{k}/goals.json"))
+names=[x["goal"] for x in g]
+assert len(names)==len(set(names)), "goal in two parts"
+json.dump(g,open("goals.json","w"))' || rc=1
+    [ -f part3/lemmas.json ] && cp part3/lemmas.json lemmas.json
+    exit $rc ;;
+  final24) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-split-conj -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 -wp-timeout 30 -wp-par 12 \
+      -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
+  # Negative control (covering wait removed): all of TDStep's goals with the same flags as final24, so the
+  # hazard check's consolidated status accounts for the hints it depends on (review S2, 2026-10-16 ET).
+  negctl24) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" SWDB_VERIFIER_RUN_TOKEN="${SWDB_VERIFIER_RUN_TOKEN-}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-fct TDStep -wp-split-conj -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 \
+      -wp-timeout 30 -wp-par 12 -wp-report-json goals.json -then -report -report-untried ;;
   wp) smoke="" ;;
   wp-smoke) smoke="-wp-smoke-tests" ;;
   wp-rte) smoke="-wp-rte" ;;

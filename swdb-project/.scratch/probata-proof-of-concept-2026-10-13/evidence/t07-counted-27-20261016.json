@@ -1,0 +1,155 @@
+{
+ "run": "counted-27 (method24 run 1)",
+ "host": "mac",
+ "raw": "/tmp/claude/probata-runs/t07f/counted-27/",
+ "verdict": {
+  "pass": false,
+  "reason": "no qualifying final replay within the budget"
+ },
+ "minutes": 50.11,
+ "provider_calls": 3,
+ "usage": {
+  "input_tokens": 17188597,
+  "cached_input_tokens": 16717696,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 51670,
+  "reasoning_output_tokens": 21015
+ },
+ "excluded_lock_wait_s": 0.0,
+ "pin": {
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh"
+ },
+ "codex_version": "codex-cli 0.153.0",
+ "git_head": "0c364f31f79980e2975fff66443e3acc99b4af22",
+ "inputs": {
+  "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+  "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+  "gapbs_models.h": "ab1b7c8e4a5f0a447cec6fdf180326ad24b14bd0dffd03f2a42e370cb6d0995d",
+  "tdstep_standin.c": "0871f2a820f10d675bd5a78c7b0b13e951b985c40bd0f76d2097ff428bc80760"
+ },
+ "scripts": {
+  "m24.py": "5f0bb49b7afba76986cf140f864715b226c45f223ddee2a103f5cae0bfd8ef6a",
+  "m24_tool.py": "e248fa63d52c888dd8908f27f55196913105c554feb79646034fa96533074ce2",
+  "hints.py": "bd5b089b72de57f237f63513ce1c58ef0d1520516f9dd7adc3d9229ebe3c67aa",
+  "loop.py": "0b8b8d81360733870f91746691b8bbf19d9ada8744ce173df8f909e884afc279",
+  "wp_run.sh": "1b25cc78797bbf3205fa9634d390d4985b384b8f6930106062fdfa14ac5fabe0",
+  "goal_print.py": "565fea12e6e3382ff06ce708799cd0abac02c52f69a9d219ef511d92dae2991f",
+  "falsify/falsify.py": "ea3c1313839d15f57ebc9aae0b60f4d73156eb59790305082e0a0521d8972af9",
+  "falsify/acsl_eval.py": "66b04a9a065d6871eb30c06a38de7f960c70943da41ede595f2299d7c07752c3",
+  "falsify/build.py": "42803e5691b76e1d7f2e519f5a55a5e7be7a74eb668ac531a7ab5e3df3d9a156",
+  "falsify/harness.c": "31044c2052b4cb92192fc98e17d5fda44ec6b9fceb1e44109686c048f9097aec",
+  "falsify/instances.py": "beee23887d9e7137223ae2d500022500a93c05546cb8dab0b6c6085d6b4288e3"
+ },
+ "baseline": {
+  "runs": [
+   {
+    "timeout_s": 3,
+    "wall_s": 179.43,
+    "open": 171,
+    "n_goals": 314
+   }
+  ],
+  "open": 171,
+  "minutes": 3.01
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "codex": {
+    "exit": 0,
+    "wall_s": 2147.9,
+    "usage": {
+     "input_tokens": 11385610,
+     "cached_input_tokens": 11198208,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 32979,
+     "reasoning_output_tokens": 18167
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a145d5-f515-7242-b490-0f0bdfdc5918"
+   },
+   "tool_calls": 21,
+   "tool_results": [
+    "falsified",
+    "falsified",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check passed",
+    "not all proven",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "check failed",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check failed",
+    "check failed",
+    "check failed"
+   ],
+   "minutes": 38.81,
+   "best_open": 96
+  },
+  {
+   "round": 2,
+   "codex": {
+    "exit": 0,
+    "wall_s": 603.9,
+    "usage": {
+     "input_tokens": 5289720,
+     "cached_input_tokens": 5063552,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 12636,
+     "reasoning_output_tokens": 1852
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a145d5-f515-7242-b490-0f0bdfdc5918"
+   },
+   "tool_calls": 3,
+   "tool_results": [
+    "check passed",
+    "falsified",
+    "not all proven"
+   ],
+   "minutes": 48.87,
+   "best_open": 96
+  },
+  {
+   "round": 3,
+   "codex": {
+    "exit": 0,
+    "wall_s": 74.2,
+    "usage": {
+     "input_tokens": 513267,
+     "cached_input_tokens": 455936,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 6055,
+     "reasoning_output_tokens": 996
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a145d5-f515-7242-b490-0f0bdfdc5918"
+   },
+   "tool_calls": 0,
+   "tool_results": [],
+   "minutes": 50.11,
+   "best_open": 96
+  }
+ ],
+ "best": {
+  "n_open": 96,
+  "n_goals": 617,
+  "n_hints": 74,
+  "best_json_sha256": "993c6ae9395c3b3d37bf033d23c4cbf1fd1fcc082e5cfac4db79397e14193d24",
+  "open_unit": 34,
+  "open_hint": 62
+ }
+}

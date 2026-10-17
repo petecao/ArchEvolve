@@ -155,7 +155,7 @@ def assess(d, logf):
     smoke = H.smoke_failures(goals)
     failing = [{"goal": g.get("goal"), "property": g.get("property"), "failure_class": failure_class(g),
                 "provers": g.get("provers")} for g in goals if not g.get("smoke") and not g.get("passed")]
-    ok = bool(props) and not problems and not smoke and not failing
+    ok = bool(props) and bool(goals) and not problems and not smoke and not failing
     return {"ok": ok, "n_props": len(props), "problems": problems, "smoke_failures": smoke,
             "failing_goals": failing, "n_goals": len(goals)}
 

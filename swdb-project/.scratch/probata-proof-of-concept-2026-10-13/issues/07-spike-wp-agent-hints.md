@@ -1,14 +1,170 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-16 19:05 ET (resolved: spike verdict FAIL, method24 family runs 27-30); 2026-10-16 12:50 ET (resumed by Yan-Ru; method24 plan approved, claimed); 2026-10-15 ET (prospective method23 independently reviewed; run25 remains unproven and no new counted launch is implied); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
 
-## Current resume checkpoint — user stop 2026-10-16 11:36 ET
+## Final Answer — 2026-10-16 19:05 ET: spike (c) verdict **FAIL**
+
+**For ticket 09: (c) fails.** No counted run proved the unit within its budget. Mac results (host `mac`).
+
+| Run | Method | Budget | Best set at stop | Final replay |
+|---|---|---|---|---|
+| 27 | method24 | 60 min | 96 of 617 open | not reached |
+| 28 | method25 (parallel rounds) | 60 min | 81 of 658 open | not reached |
+| 29 | method26 (no strategy hints) | 60 min | 75 of 584 open | not reached |
+| 30 | method26, run plan `method26-b120` (Yan-Ru's fallback a) | 120 min | 2 of 653 open, but under a **false lemma** | not reached |
+
+Runs 1-26 (earlier methods) are below; all failed. Per Yan-Ru's rule (fallback a, then c if it fails), 07
+closes as fail.
+
+**Why run 30's "2 open" was not near a proof.** Its incumbent's lemma `td_rank_nonnegative` is false
+(n = i = 0, j = e = 0; Codex found this itself). WP makes every lemma a hypothesis of every goal, so the 651
+proven goals may rest on an inconsistent context. An uncounted diagnostic replaced only that lemma by a true
+guarded version (`... && (i < n || j == -1) ==> ...`, edited by the implementing agent, so never countable):
+the final replay (all functions, 30 s, smoke tests) left at least 62 TDStep goals open and hit its 900 s
+limit before finishing (`/tmp/claude/probata-runs/t07f/diag-30-guarded/`).
+
+**Acceptance, item by item:**
+- Stand-in (C++ names, hazard checks, DX100 calls only through ACSL summaries, threads = 1, symbolic sizes):
+  met; three corrections this session (below).
+- No-hint WP run recorded with failure classes: met (171 of 447 open, all TDStep, all timeout).
+- A counted run proving everything in 60 minutes: **not met**.
+- Vocabulary, erase-and-diff, Codex-only provenance: met in runs 27-30 (no seeds, no implementing-agent hints).
+- Verdict from a fresh per-property report, smoke tests, negative control: never reached in a counted run.
+- Portfolio Alt-Ergo, Z3, CVC5 with the prover recorded per goal: met.
+- Workspace and provider pin (`gpt-5.6-sol`, `xhigh`, Codex CLI 0.153.0): met.
+
+**What this session found that A2/A3 need:**
+1. **The stand-in's own postcondition `pushed_are_new` was false.** `\old(parent->start_[queue->shared[i]])`
+   reads the queue entry in the pre-state. Every earlier run tried to prove a false clause. Fixed with
+   `\let w = queue->shared[i]` (accepted by Yan-Ru with fallback a). Lesson for ticket 31's unit
+   postcondition: `\old`/`\at` evaluate their whole argument, indices included.
+2. **A bounded falsifier pays off** (`prototype/07-wp-hints/falsify/`): executes the hint-free stand-in on
+   2000 precondition-satisfying inputs and evaluates asserts, invariants, variants and loop assigns in about
+   10 s. It found the false postcondition and run 13's false invariant, and refuted false hints within
+   seconds in every counted run. **Gap:** it did not evaluate lemmas; the false lemma of run 30 would have
+   been caught. Ticket 35/37 should add lemma instances and treat a refuted lemma as voiding every goal.
+3. **WP throughput is the bottleneck.** Goal generation and Qed run sequentially per process; three
+   concurrent processes over an exact goal partition cut a round from 360 s to 219 s. Even so, a 60-minute
+   run holds only 4-6 WP passes.
+4. **Strategy hints are inert without the `tip` prover**; they wasted most failed checks in run 28.
+5. **The in-call tool needs `show_best` and a patch operation.** In run 30, Codex had proved replacement
+   lemmas but could not combine them with the incumbent; rounds 3-10 were wasted short calls.
+6. Helper-model corrections: `std_copy`'s bound as an element count (C11 6.5.6p9) and a store through a
+   formal for call results (WP 33 drops call-result initializedness).
+
+Evidence: [run 27](../evidence/t07-counted-27-20261016.json), [run 28](../evidence/t07-counted-28-20261016.json),
+[run 29](../evidence/t07-counted-29-20261016.json), [run 30](../evidence/t07-counted-30-20261016.json); raw
+output in `/tmp/claude/probata-runs/t07f/` (host `mac`, 196 MB, kept for audit). Code: local branch
+`probata-poc/t07-m24` (worktree `/tmp/claude/probata-wt/t07-m24`), not yet merged into `yanrujhou_main`.
+
+The approved method24 plan (Yan-Ru, 2026-10-16 12:46 ET), kept for reference:
+
+1. **Provable stand-in first (uncounted).** Done.
+2. **Timeout ladder and conjunct splitting in rounds.** Done (10 s rung only at <= 40 open).
+3. **Bounded falsifier for hints.** Done (by execution; see the deviation note).
+4. **Generic proof-structure prompt guidance.** Done.
+5. **Counted runs.** Runs 27-29, all FAIL.
+
+### Method24 progress — 2026-10-16 ET (uncounted preparation, host `mac`)
+
+- **Step 1 done: provable stand-in.** No-hint WP on the helpers left 2 goals open: the `std_copy`
+  byte-offset bound (WP 33 keeps byte offsets abstract) and the QueueBuffer constructor's
+  `gapbs_buffer_domain` (WP drops call-result initializedness). Fixes: element-count bound (C11 6.5.6p9)
+  and a store through a formal (`swdb_store_local_queue`). Result: all 125 helper goals Valid, 34.5 s.
+- **A false postcondition, found by the falsifier.** `pushed_are_new` used
+  `\old(parent->start_[queue->shared[i]])`, which reads `queue->shared[i]` in the pre-state, where
+  positions past `shared_in` are arbitrary. A concrete run refutes it (num_nodes=4, shared=[2,0,1,0],
+  shared_in=3: vertex 3 is pushed at position 3, whose pre-state entry 0 was already visited). So no hint
+  set could prove the unit postcondition as written; the 42 past `[Valid]` results for that goal all
+  rested on unproven hints. Fixed with `\let w = queue->shared[i]` (post-state entry, pre-state parent).
+  The same form appears in no other contract in the repository (grep, library/ and swdb/).
+- **No-hint full replay (before the `pushed_are_new` fix):** 359 ordinary goals, 136 open (all TDStep,
+  all timeout), 153/153 smoke tests passed, 19.8 min, 4.4 GB peak
+  (`/tmp/claude/probata-runs/t07f/s1-nohint-full/`). Smoke tests are cheap (each <= 1.5 s); the cost is
+  timeouts.
+- **Step 3: falsifier built** (`prototype/07-wp-hints/falsify/`). Deviation from the plan, recorded:
+  instead of CBMC it executes an instrumented copy of the hint-free stand-in (executable DX100 and
+  library models that follow the summaries) on 2000 seeded inputs that satisfy every named
+  precondition, and evaluates the hints on the recorded states (a bounded check by execution; E-ACSL 33
+  crashed on the stand-in's contracts and rejects labeled `\at` with logic variables). Validation: it
+  refutes run 13's false partial-chunk invariant (`r1c18h1`) and the old `pushed_are_new`; all 9 fixed
+  postconditions and all named preconditions hold on every input; a full run takes about 10 s.
+- **Process incident (repaired):** a test-comparison command ran `git stash` in the shared main
+  checkout and dropped the settings-recovery stash ref; `.claude/settings.json` never changed (29 B,
+  SHA `b3e5fbb2...`). The ref was restored from object `94250972`. Ticket 07 work now runs in worktree
+  `/tmp/claude/probata-wt/t07-m24`, local branch `probata-poc/t07-m24`.
+
+- **No-hint run on the frozen method24 stand-in (acceptance item 2):** final24 mode (all functions,
+  30 s, `-wp-cache none`, smoke tests, `-wp-split-conj`): 447 ordinary goals, **171 open, all in TDStep,
+  all timeout**; 153/153 smoke tests passed; 25.5 min, 4.6 GB (`/tmp/claude/probata-runs/t07f/s1-nohint-final24/`).
+- **Ladder measurement:** no-hint round at 3 s: 180 s, 171/314 open; the 10 s rerun took 483 s and closed
+  none. The 10 s rung therefore runs only when at most 40 goals stay open.
+- **Independent pre-launch review (2026-10-16 ET):** nothing could produce a false pass. Fixed before
+  launch: falsifier false refutations (unsigned quantifier domains, casts as C conversions, ghost storage
+  types and multi-statement ghosts, variant positivity only on back edges as WP 33 generates it, frame
+  check against the union of loop-assigns over all visits); negative control now runs all TDStep goals
+  and requires a non-Valid, non-refuted consolidated hazard status in a healthy run; budget judged when
+  the positive replay ends; unit names removed from the prompt guidance; the report reader keeps
+  unexpected statuses (Bug, Unsound, ...) as problems. One review claim was wrong and is not adopted:
+  `loop variant len - i - 1` on the range loop is not a valid variant (a full tile inside one row
+  leaves the row index unchanged), and the falsifier correctly refutes it.
+- **Assumptions (decided by the main session under Yan-Ru's delegation, 2026-10-16 ET):** the verdict
+  replay adds `-wp-split-conj` (sound: a property is Valid only when every part is); the
+  `pushed_are_new` text correction keeps the unit postcondition's intended meaning and is flagged to
+  Yan-Ru for sign-off.
+
+### Counted run 27 (method24 run 1) — 2026-10-16 13:47–14:37 ET: FAIL
+
+No set reached zero open goals; no final replay. 50.1 counted minutes (the driver stops when only the
+9-minute final reserve is left), 0 s excluded lock wait. Baseline (no hints, 3 s): 171 of 314 open, 3.0 min.
+3 Codex calls in one resumed session (`gpt-5.6-sol`, `xhigh`, CLI 0.153.0), 24 tool calls, 4 WP proofs;
+17.19M input tokens (16.72M cached), 51.7k output (21.0k reasoning). Best set: 74 hints, **96 of 617 goals
+open** (34 unit, 62 hint; all timeout). Goal counts are with `-wp-split-conj`, so they are not comparable
+with earlier runs. Each `prove_hints` call took 6.0–7.6 min, so Codex got 4 WP passes; WP time was about
+60% of the run. [Compact evidence](../evidence/t07-counted-27-20261016.json).
+
+### Method25 — 2026-10-16 ET (prospective; search-only changes, verdict path unchanged)
+
+Cause of run 27's slow search: WP's goal generation and Qed simplification run sequentially in one
+process. Per-category timing on run 27's best set (3 s): invariants 113 s, call preconditions 95 s,
+assigns 74 s, asserts 47 s, the rest under 20 s; the sum (366 s) equals the full round. Method25 runs the
+rounds as three concurrent WP processes over an exact partition of TDStep's goals (`@invariant`;
+`@requires,@check,@terminates`; the complement; 104 + 209 + 304 = 617, checked) inside one verifier job:
+360 s -> 219 s, 3.3 GB peak (a 4-way split gave 215 s: CPU-bound). The falsifier now also evaluates
+local-struct addresses (`&lqueue`) and nested slices in loop assigns (every run 27 hint is now checked).
+In run 27 it refuted 3 false hints in seconds, each of which would have cost a WP pass.
+
+### Counted run 28 (method25 run 1) — 2026-10-16 15:10–16:01 ET: FAIL
+
+No set reached zero open goals; no final replay. 50.5 counted minutes, 3 Codex calls, 63 tool calls,
+39.70M input tokens (39.11M cached), 67.3k output. Baseline 171 of 314 open at 3 s in 302 s (slower than
+run 27's 180 s; Zoom and a git process were using CPU). Best set: 94 hints, **81 of 658 goals open**
+(33 unit, 48 hint; all timeout). Parallel `prove_hints` took about 4 min. 35 of 63 tool calls were failed
+checks: 24 WP goal-generation aborts from undefined `\wp::strategy` names and 10 parse errors, mostly
+strategy syntax. [Compact evidence](../evidence/t07-counted-28-20261016.json).
+
+### Method26 — 2026-10-16 ET (prospective)
+
+Finding: `\wp::strategy` hints only act through the `tip` prover, which neither the method24/25 rounds nor
+`final24` run, so every strategy hint was inert, and strategy syntax caused 31 of run 28's 35 failed checks.
+Method26 = method25 with strategy and proof-attachment hints refused by the tools (a subset of the map 13
+vocabulary) and the prompt saying so. Verdict path unchanged. This delta (prompt text plus an up-front
+refusal) was reviewed by the main session only, since it touches neither the verdict path nor the falsifier.
+
+### Counted run 29 (method26 run 1) — 2026-10-16 16:03–16:54 ET: FAIL
+
+No set reached zero open goals; no final replay. 51.0 counted minutes, 2 Codex calls, 28 tool calls (4 failed
+checks, against 35 in run 28), 6 WP passes of 2.7–4.6 min; 5.10M input tokens (4.87M cached), 44.2k output.
+Best set: 69 hints, **75 of 584 goals open** (43 unit, 32 hint; 30 of them call-site preconditions; all
+timeout). [Compact evidence](../evidence/t07-counted-29-20261016.json).
+
+## Historical checkpoint — user stop 2026-10-16 11:36 ET
 
 Status is **ready-for-agent**; the active claim is released at the user's request.
 Do not resume implementation/evaluation until the user resumes. Root owns the final
