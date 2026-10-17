@@ -1,7 +1,7 @@
 # 09 — Spike verdict
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 08:55 ET (Answer: A1 exit not passed, stop rule fires, re-plan note); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-16 21:55 ET (Later change: (c) final FAIL, A1 exit check closed as not passed); 2026-10-14 08:55 ET (Answer: A1 exit not passed, stop rule fires, re-plan note); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 06, 07, 08
@@ -309,3 +309,18 @@ All Mac results. Paths are under this effort's `prototype/` folder.
   the bounded verifier at threads = 1; see the Later changes on 21, 22, 30, 33, 61 and the design spec's
   verifier lineup), and A2 and the Rocq track start now while (c) continues inside its box. A1's exit check
   stays open on (c) alone.
+
+## Later change — 2026-10-16 21:55 ET: (c) final verdict FAIL
+
+Ticket 07 resolved 2026-10-16 19:05 ET: **(c) fails** (its "Final Answer" section). Counted runs 27-30
+(method24-26; run 30 with Yan-Ru's 120-minute fallback budget) all ended without a qualifying final
+replay; run 30's apparent 2 open goals rested on a false lemma, and a true lemma leaves at least 62 open.
+Runs 1-26 had tried to prove a false unit postcondition (`pushed_are_new`, corrected in 07). So the
+"(c) failed within the box: yes, provisionally" reading above is now final, and A1's exit check, which
+stayed open on (c) alone, closes as **not passed**. (b)'s pass via the CBMC fallback and the A2 decisions
+of 2026-10-14 13:19 ET are unchanged.
+
+Input for the re-plan (main session's recommendation, Yan-Ru 2026-10-16): make per-candidate proofs start
+from contract-proof seeds (map 13 item 9; contract proof in ticket 32), report zero-seed runs as the
+ablation, and run 07's bounded falsifier on every contract and stand-in before any proof run.
+
