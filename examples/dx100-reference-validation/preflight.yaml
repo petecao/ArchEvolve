@@ -1,0 +1,46 @@
+format: dx100-validation-preflight-v0.1
+workflow_sha256: 0a3a384d9111d0674a82b589d22381ccd208129b71644745a6e285c2af838fec
+environment_sha256: 24d65d456fafb502d33d741838c52ecf6df634ce5e23d907b07caab7f8d07e72
+status: blocked_unbound_environment
+missing:
+- source_root
+- build_root
+- run_root
+- build_jobs
+- platform.host
+- platform.os
+- platform.architecture
+- platform.toolchain_version
+- tools.cxx
+- tools.cc
+- tools.cmake
+- tools.make
+- tools.scons
+- tools.gem5
+- great_lakes.account
+- great_lakes.partition
+- great_lakes.cpus_per_task
+- great_lakes.memory
+- great_lakes.walltime
+- target.ramulator_config
+- target.system_argv
+- target.launcher
+- target.verifier_continuation_review
+- target.resource_address_review
+- target.guest_env_file
+- target.wrapper
+- target.verify_max_ticks
+failures: []
+verified_source_files: {}
+geometry:
+  status: necessary_geometry_pass
+  slice_family:
+  - 4
+  - 8
+  - 16
+  - 32
+  initial_slices: 32
+  reason: Necessary arithmetic only; not a hardware correctness/timing proof.
+ready_to_execute: false
+target_validated: false
+note: This preparatory checker never submits jobs or certifies a target.

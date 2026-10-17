@@ -84,3 +84,7 @@ The same reported sections and counters appear in the hardware request's `worklo
 - Add a live model backend when requested; the existing system prompt is not executed by this offline backend.
 - Connect Peter's intrinsic-spec generation, Yan-Ru's rewriting, and the evaluator.
 - Add persistent evaluation feedback and reviewed catalog-extension proposals. Current manifests retain offline trial identity only.
+
+## October 15 capability planning update
+
+The evidence backend now plans capability groups before lookup and emits per-block requests, coverage and before/after diagrams. See [the planning guide](designs/prelookup-planning/README.md) for grouping rules, new candidate identities and reproducing the examples. The historical seed backend is unchanged.

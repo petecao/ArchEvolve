@@ -1,5 +1,7 @@
 # Offline evolution runtime and reflector revision
 
+**October 16 integration:** [source-bound saved proposals](../planning-loop-integration/README.md) now exercise real hardware planning and handoff generation through `offline_planning` mode. Structural feedback enters this store without a fabricated timing/cohort; performance trials and promotion remain disabled in that mode. The synthetic demo below is retained as a separate state-machine test.
+
 Implemented October 11, 2026. This is a runnable **offline coordinator**, not an
 LLM integration or a demonstrated self-improving hardware system. The included
 proposer, evaluator and reviewer are explicitly scripted synthetic fixtures.

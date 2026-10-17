@@ -1,0 +1,493 @@
+format: dx100-explorer-domain-handoff-v1
+date: '2026-10-16'
+design_id: dx100-artifact-e4fc4af
+source_repository: https://github.com/erichni17/DX100-maa
+source_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+scope: Pinned public gem5/API/BFS artifact; source constraints and proposal domains, not a target-validated search
+  space.
+reference_default_semantics: Declared SimObject defaults; launcher overrides and actual config.ini remain authoritative
+  for effective runs.
+independently_validated_configurations: []
+initial_explorer_profile:
+  status: proposed_pending_matched_correctness_validation
+  vary:
+    num_tile_elements:
+    - 1024
+    - 2048
+    - 4096
+    - 8192
+    - 16384
+    - 32768
+  freeze_other_parameters_to_reference: true
+  required_preflight:
+  - Bind actual DRAM topology and validate initial slice membership before accepting reference32.
+  - Rebuild each binary with matching TILE_SIZE and record effective config.ini/binary/source hashes.
+  - Check BFS correctness, intended path and resource/length/address bounds on each selected configuration.
+  author_result_basis: Published artifact tile-sensitivity tables; author-reported points without independent run/correctness
+    receipts. See published-dx100-calibration.json (included alongside this contract).
+parameters:
+- id: num_tiles_per_core
+  type: Unsigned
+  reference_default: 8
+  source_line: 13
+  cli_option: --maa_num_tiles_per_core
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: Parameterize/edit unconditional NUM_TILES_PER_CORE=8 in MAA.hpp; rebuild, update allocation/ownership
+    and simulator MMIO ranges.
+- id: num_tile_elements
+  type: Unsigned
+  reference_default: 16384
+  source_line: 14
+  cli_option: --maa_num_tile_elements
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: enumerate_kernel_supported_sizes_pending_target_validation
+  necessary_conditions:
+  - positive_integer
+  - Every produced tile length fits uint16_t; full N-length tiles imply N<=65535 with unchanged bookkeeping.
+  api_or_kernel_change: Rebuild kernel with matching TILE_SIZE and simulator --maa_num_tile_elements; MMIO layout/strides
+    depend on it. Pinned BFS dispatch supports six explicit sizes.
+  kernel_supported_values:
+  - 1024
+  - 2048
+  - 4096
+  - 8192
+  - 16384
+  - 32768
+  author_reported_values:
+  - 1024
+  - 2048
+  - 4096
+  - 8192
+  - 16384
+  - 32768
+- id: num_regs_per_core
+  type: Unsigned
+  reference_default: 8
+  source_line: 15
+  cli_option: --maa_num_regs_per_core
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: Parameterize/edit unconditional NUM_REGS_PER_CORE=8 in MAA.hpp; rebuild and recheck register
+    allocation/MMIO ranges.
+- id: num_instructions_per_core
+  type: Unsigned
+  reference_default: 8
+  source_line: 16
+  cli_option: --maa_num_instructions_per_core
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_row_table_rows_per_slice
+  type: Unsigned
+  reference_default: 64
+  source_line: 17
+  cli_option: --maa_num_row_table_rows_per_slice
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_row_table_entries_per_subslice_row
+  type: Unsigned
+  reference_default: 8
+  source_line: 18
+  cli_option: --maa_num_row_table_entries_per_subslice_row
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_row_table_config_cache_entries
+  type: Unsigned
+  reference_default: 16
+  source_line: 19
+  cli_option: --maa_num_row_table_config_cache_entries
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_request_table_addresses
+  type: Unsigned
+  reference_default: 128
+  source_line: 20
+  cli_option: --maa_num_request_table_addresses
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_request_table_entries_per_address
+  type: Unsigned
+  reference_default: 16
+  source_line: 21
+  cli_option: --maa_num_request_table_entries_per_address
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: reconfigure_row_table
+  type: Bool
+  reference_default: false
+  source_line: 22
+  cli_option: --maa_reconfigure_row_table
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - boolean
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+  representable_values:
+  - false
+  - true
+- id: no_reorder
+  type: Bool
+  reference_default: false
+  source_line: 23
+  cli_option: --maa_no_reorder
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - boolean
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+  representable_values:
+  - false
+  - true
+- id: force_cache_access
+  type: Bool
+  reference_default: false
+  source_line: 24
+  cli_option: --maa_force_cache_access
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - boolean
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+  representable_values:
+  - false
+  - true
+- id: num_initial_row_table_slices
+  type: Unsigned
+  reference_default: 32
+  source_line: 25
+  cli_option: --maa_num_initial_row_table_slices
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: spd_read_latency
+  type: Cycles
+  reference_default: 1
+  source_line: 26
+  cli_option: --maa_spd_read_latency
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: spd_write_latency
+  type: Cycles
+  reference_default: 1
+  source_line: 27
+  cli_option: --maa_spd_write_latency
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_spd_read_ports_per_maa
+  type: Unsigned
+  reference_default: 4
+  source_line: 28
+  cli_option: --maa_num_spd_read_ports_per_maa
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_spd_write_ports_per_maa
+  type: Unsigned
+  reference_default: 4
+  source_line: 29
+  cli_option: --maa_num_spd_write_ports_per_maa
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: rowtable_latency
+  type: Cycles
+  reference_default: 1
+  source_line: 30
+  cli_option: --maa_rowtable_latency
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: ALU_lane_latency
+  type: Cycles
+  reference_default: 1
+  source_line: 31
+  cli_option: --maa_ALU_lane_latency
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: num_ALU_lanes
+  type: Unsigned
+  reference_default: 16
+  source_line: 32
+  cli_option: --maa_num_ALU_lanes
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: cache_snoop_latency
+  type: Cycles
+  reference_default: 1
+  source_line: 33
+  cli_option: null
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: No direct API layout change identified; bind effective configuration and validate target
+    behavior.
+- id: max_outstanding_cache_side_packets
+  type: Unsigned
+  reference_default: 512
+  source_line: 34
+  cli_option: null
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: SimObject knob; no matching stock CLI forwarding found. Expose/configure it explicitly before
+    treating it as an explorer knob.
+- id: max_outstanding_cpu_side_packets
+  type: Unsigned
+  reference_default: 512
+  source_line: 35
+  cli_option: null
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: SimObject knob; no matching stock CLI forwarding found. Expose/configure it explicitly before
+    treating it as an explorer knob.
+- id: num_memory_channels
+  type: Unsigned
+  reference_default: 2
+  source_line: 36
+  cli_option: --mem-channels
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: Match memory-controller topology/Ramulator organization; recompute row-table slice family.
+- id: num_cores
+  type: Unsigned
+  reference_default: 4
+  source_line: 37
+  cli_option: --num-cpus
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: Compile matching NUM_CORES; stock API branches support4,8,16 with corresponding MEM_SIZE.
+    Match num_cpus, memory size and worker arrays.
+- id: num_maas
+  type: Unsigned
+  reference_default: 1
+  source_line: 38
+  cli_option: --maa_num_maas
+  legal_domain: null
+  independently_validated_values: []
+  initial_explorer_policy: freeze_reference_pending_validation
+  necessary_conditions:
+  - positive_integer
+  api_or_kernel_change: Match routing, unit/port replication and cores-per-instance; kernel/context allocation and
+    isolation require validation.
+coupling_constraints:
+- id: software_hardware_layout
+  evidence_status: required
+  rule: TILE_SIZE=N; NUM_CORES=C; NUM_TILES=C*T; NUM_SCALAR_REGS=C*G. Match simulator and rebuilt binary; MMIO start
+    must match configured memory size.
+  source: configs/common/MAAConfig.py:75-108; benchmarks/API/MAA.hpp:15-24; MAA_gem5.hpp:12-25,70-90
+- id: payload_and_offsets
+  evidence_status: source_derived
+  rule: Scratchpad payload=4*C*T*N bytes; scalar payload=4*C*G bytes; size and ready MMIO regions each2*C*T bytes.
+    Two data mappings alias the same scratchpad; count payload once. OffsetTable allocation follows N automatically;
+    row/request geometry has separate knobs.
+  source: src/mem/MAA/SPD.cc:214-229; Tables.cc:139-149; configs/common/MAAConfig.py:81-105
+- id: length_width
+  evidence_status: necessary_not_sufficient
+  rule: Tile sizes are uint16_t in simulator/API. Reject configurations that can produce unrepresentable lengths.
+    Larger N requires widening/auditing API, model and callers. This does not validate every N<=65535.
+  source: src/mem/MAA/SPD.hh:34; benchmarks/API/MAA_gem5.hpp:23,102-106
+- id: operand_id_encoding
+  evidence_status: source_derived_necessary
+  rule: Instruction tile/register fields occupy8bits and0xff denotes absent. Keep encoded IDs0..254; making all
+    global slots addressable implies C*T<=255 and C*G<=255. Larger namespaces require encoder/decoder changes; this
+    is not a complete admitted geometry.
+  source: benchmarks/API/MAA_gem5.hpp:161-189; src/mem/MAA/CpuSidePort.cc:186-234
+- id: wide_values
+  evidence_status: source_derived
+  rule: 64-bit values consume two adjacent32-bit physical tile/register slots. Reserve both; for wide tiles id+1<num_tiles.
+    A universal even-ID rule has not been established.
+  source: benchmarks/API/MAA_gem5.hpp:117-145; src/mem/MAA/SPD.hh:47-59
+- id: bfs_worker_limits
+  evidence_status: pinned_kernel
+  rule: Pinned BFS allocates8int32tiles and8int32scalar slots per worker. Require workers<=NUM_CORES and aggregate
+    allocations fit C*T/C*G; preserve exclusive lifetimes. The separate five-tile hybrid sketch is a different kernel/mapping.
+  source: benchmarks/gapbs/src/bfs.cc:63-86,377-403
+- id: core_instance_geometry
+  evidence_status: source_guard_and_inference
+  rule: C>0,M>0,C%M==0; cores_per_instance=C/M; instruction slots_per_instance=I*C/M. Retain power-of-two C for
+    the pinned floor-log2 address decoder/interleaving, with stock API C in{4,8,16}; other core counts require API/routing
+    changes and validation.
+  source: src/mem/MAA/MAA.cc:30-38,79-89,144-152; benchmarks/API/MAA_gem5.hpp:12-21
+- id: row_table_slice_family
+  evidence_status: source_derived_topology_coupling
+  rule: Let B=channels*ranks*bankgroups*banks and Smin=2*channels*ranks. Bind positive topology dimensions, require
+    B/Smin to be an integral power of two for the doubling/halving enumeration; S in{Smin*2^i<=B}. With reconfiguration
+    disabled, initial_slices must equal an enumerated S. Preserve bank-factor divisibility guards and slice-index
+    coverage.
+  source: src/mem/MAA/IndirectAccess.cc:116-121,142-175,203-214
+- id: row_table_capacity
+  evidence_status: source_derived
+  rule: At S slices, subslices=B/S, rows_total=S*R, burst_entries_per_row=E*B/S, nominal total burst entries=R*E*B.
+    R,E positive and geometry integral. No source requirement R*E*B=N was established. Reconfiguration keeps this
+    nominal capacity constant across its slice family. Simulator allocation of all alternative configurations is
+    not physical area to sum blindly.
+  source: src/mem/MAA/IndirectAccess.cc:142-164,206-210
+- id: request_table_capacity
+  evidence_status: required_workload_bound
+  rule: 'Request table has Q address slots and W entries/address. Positive Q,W are necessary; bound insertion multiplicity/address:
+    exhausting entries for an existing address asserts. Do not assume every table-full case stalls safely or set
+    Q*W=N without evidence.'
+  source: src/mem/MAA/Tables.cc:17-33,65-101,125-132
+- id: ports_lanes_latency
+  evidence_status: planning_guard
+  rule: Keep port/lane counts positive; ALU latency uses ceil(work/lanes)*lane_latency. Require positive cycles
+    in the initial explorer as an explicit modeling policy; zero-cycle behavior and arbitrary counts remain unresolved.
+    Total SPD read/write ports scale as per_instance_ports*M.
+  source: src/mem/MAA/MAA.cc:83; ALU.cc:25-31,55
+- id: area_model_scope
+  evidence_status: cost_guard
+  rule: Published DX100 area anchor4.061mm2 at28nm with32tiles of16384elements. Existing0.495+3.566*N/16384 proxy
+    assumes32tiles; other tile counts/control/ports/tables need additional area characterization. Cost-CLI arithmetic
+    bounds do not establish kernel legality or measured area accuracy.
+  source: docs/hardware-cost-model.md; docs/cost-rigor-2026-10-15/README.md
+unresolved:
+- Full legal hardware domains for row/request sizes, ports, lanes, latencies, instruction capacity and instance
+  count.
+- General tile-size legality beyond the pinned BFS enumeration; a universal tile-size power-of-two requirement is
+  not established.
+- Physical area/timing effects of table, port, lane and multiplicity changes.
+- A jointly target-validated parameter tuple and corresponding API/kernel configuration.
+source_files:
+- path: benchmarks/API/MAA.hpp
+  sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA.hpp
+- path: benchmarks/API/MAA_gem5.hpp
+  sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp
+- path: benchmarks/gapbs/src/bfs.cc
+  sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bfs.cc
+- path: configs/common/MAA.py
+  sha256: bec35223a643ca784c77047297543f52c5aebe4935a7a5c9adda29a732c7e14e
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/configs/common/MAA.py
+- path: configs/common/MAAConfig.py
+  sha256: 9fd396d36edf29da0ef846d4b13c3c255db0620a45aa577bf783abd8261f1f01
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/configs/common/MAAConfig.py
+- path: configs/common/Options.py
+  sha256: 91e2f35957b62b2d331d490c76858b36c6d779886dc20fa3b11f17226b80916c
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/configs/common/Options.py
+- path: configs/run_gem5_all.py
+  sha256: cacb8428934083119153d52b16ad1a19e60ef5264678b650a362b9877c4b4973
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/configs/run_gem5_all.py
+- path: src/mem/MAA/ALU.cc
+  sha256: 3eab45bf9847d5b1a97df2149ad2aa67b46f8e72c000d54bd01c384fa608e0e6
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/ALU.cc
+- path: src/mem/MAA/IndirectAccess.cc
+  sha256: 7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/IndirectAccess.cc
+- path: src/mem/MAA/MAA.cc
+  sha256: 058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MAA.cc
+- path: src/mem/MAA/MAA.hh
+  sha256: fbf6a8bf8d9bc47b218afca6ea64d5ea1728bdac6754814aa83d4b7465366419
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MAA.hh
+- path: src/mem/MAA/MAA.py
+  sha256: 347f0e08124bf9d951fb3ee24654074b5d681b71bc6168538c82dbd0b35856f2
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MAA.py
+- path: src/mem/MAA/SPD.cc
+  sha256: 9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/SPD.cc
+- path: src/mem/MAA/SPD.hh
+  sha256: 70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/SPD.hh
+- path: src/mem/MAA/Tables.cc
+  sha256: 9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/Tables.cc
+- path: src/mem/MAA/Tables.hh
+  sha256: 5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/Tables.hh
+- path: src/mem/MAA/CpuSidePort.cc
+  sha256: 886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b
+  url: https://github.com/erichni17/DX100-maa/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/CpuSidePort.cc

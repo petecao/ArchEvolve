@@ -1,0 +1,94 @@
+format: saved-hardware-proposals-v0.1
+provenance: 'Hand-authored BFS replay fixtures: two conditional catalog choices and
+  one intentional unsupported-CAS rejection. No model calls.'
+entries:
+- id: dx100-indexed-reads
+  task_id: gapbs_bfs_top_down_step
+  core_sha256: 9aaf6b9e5c74d89bdee8e792c80156f952c909de939f2a65b57d8abc19733280
+  strategy_sha256: a1f0870119ededd7350749b72d25f98db5ff7f34fea1ad2fe7b7e3ec06ec38a1
+  history_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  content:
+    parent_ref: c29f5a27d358211d01e0c609495f2fdf65034c6c56f5d3a297ef051c97ac0e71
+    mutation: placement
+    design:
+      format: hardware-block-selection-v0.1
+      bindings:
+        input_sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+        catalog_sha256: 7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d
+        source_context_sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+        hardware_plan_sha256: 366ce2a4e2b23dbc32a587f8f201520a302fc2aa3fe0724ec4aabbf72bd12c80
+        pipeline_sha256: 36a9299884d16cc0db9f50189321591015bda850b1d2bb259099b760d0fbacef
+      block_choices:
+      - block_id: block-indexed-read-5d48e03303
+        action: catalog_option
+        design_id: dx100-artifact-e4fc4af
+        execution_role: execute
+      - block_id: block-effect-read_modify_write-cas-6e560e8702
+        action: retain_cpu
+      - block_id: block-stream-read-bf7778b743
+        action: retain_cpu
+    rationale: Hand-authored replay fixture to exercise dx100-indexed-reads. This
+      is not an autonomous discovery or a speedup claim.
+    obligations:
+    - Preserve source behavior; discharge exact catalog mapping, visibility and completion
+      requirements before rewriting.
+- id: maple-indexed-reads-needs-evidence
+  task_id: gapbs_bfs_top_down_step
+  core_sha256: 9aaf6b9e5c74d89bdee8e792c80156f952c909de939f2a65b57d8abc19733280
+  strategy_sha256: a1f0870119ededd7350749b72d25f98db5ff7f34fea1ad2fe7b7e3ec06ec38a1
+  history_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  content:
+    parent_ref: c29f5a27d358211d01e0c609495f2fdf65034c6c56f5d3a297ef051c97ac0e71
+    mutation: placement
+    design:
+      format: hardware-block-selection-v0.1
+      bindings:
+        input_sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+        catalog_sha256: 7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d
+        source_context_sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+        hardware_plan_sha256: 366ce2a4e2b23dbc32a587f8f201520a302fc2aa3fe0724ec4aabbf72bd12c80
+        pipeline_sha256: 36a9299884d16cc0db9f50189321591015bda850b1d2bb259099b760d0fbacef
+      block_choices:
+      - block_id: block-indexed-read-5d48e03303
+        action: catalog_option
+        design_id: maple-isca2022
+        execution_role: execute
+      - block_id: block-effect-read_modify_write-cas-6e560e8702
+        action: retain_cpu
+      - block_id: block-stream-read-bf7778b743
+        action: retain_cpu
+    rationale: Hand-authored replay fixture to exercise maple-indexed-reads-needs-evidence.
+      This is not an autonomous discovery or a speedup claim.
+    obligations:
+    - Preserve source behavior; discharge exact catalog mapping, visibility and completion
+      requirements before rewriting.
+- id: unsupported-dx100-cas
+  task_id: gapbs_bfs_top_down_step
+  core_sha256: 9aaf6b9e5c74d89bdee8e792c80156f952c909de939f2a65b57d8abc19733280
+  strategy_sha256: a1f0870119ededd7350749b72d25f98db5ff7f34fea1ad2fe7b7e3ec06ec38a1
+  history_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  content:
+    parent_ref: c29f5a27d358211d01e0c609495f2fdf65034c6c56f5d3a297ef051c97ac0e71
+    mutation: placement
+    design:
+      format: hardware-block-selection-v0.1
+      bindings:
+        input_sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+        catalog_sha256: 7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d
+        source_context_sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+        hardware_plan_sha256: 366ce2a4e2b23dbc32a587f8f201520a302fc2aa3fe0724ec4aabbf72bd12c80
+        pipeline_sha256: 36a9299884d16cc0db9f50189321591015bda850b1d2bb259099b760d0fbacef
+      block_choices:
+      - block_id: block-indexed-read-5d48e03303
+        action: retain_cpu
+      - block_id: block-effect-read_modify_write-cas-6e560e8702
+        action: catalog_option
+        design_id: dx100-artifact-e4fc4af
+        execution_role: execute
+      - block_id: block-stream-read-bf7778b743
+        action: retain_cpu
+    rationale: Hand-authored replay fixture to exercise unsupported-dx100-cas. This
+      is not an autonomous discovery or a speedup claim.
+    obligations:
+    - Preserve source behavior; discharge exact catalog mapping, visibility and completion
+      requirements before rewriting.

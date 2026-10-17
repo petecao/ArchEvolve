@@ -1,0 +1,10 @@
+flowchart LR
+  db["Hardware catalog: options per planned block"]
+  r0["access-01-read: queue.shared"] --> b2
+  r1["access-02-read: VertexOffsets"] --> b0
+  r2["access-03-read: g.out_neighbors_"] --> b0
+  r3["access-04-read: parent"] --> b0
+  r4["access-04-update: parent"] --> b1
+  b0["Indexed-read group (3 access requests)<br/>indirect, ranged_indirect"] --> db
+  b1["Separate update request (1 access requests)<br/>indirect"] --> db
+  b2["Streaming-read group (1 access requests)<br/>sequential"] --> db

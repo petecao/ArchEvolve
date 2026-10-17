@@ -126,21 +126,27 @@ region_cost_partition:
       statement_ids: [bfs-td-parent-store]
       source_anchor: "bfs.cc:248 (parent[v] = u)"
       baseline_ir_refs: ["store i32 %u, i32* %parent_v"]
-      cost_value: 1.18
+      cost_value: 0.00
       cost_unit: percent_of_roi_cycles
-      share_pct_of_named_denominator: 1.18
+      share_pct_of_named_denominator: 0.00
       actor_in_hybrid: CPU
-      notes: "Executed inside CAS success path (mov 0x10(%r12),%rax)."
+      notes: >-
+        In GCC -O3 x86-64 output, the parent store is executed atomically inside the
+        succeeding 'lock cmpxchg %r14d,(%rdx)' (15.88% in parent_CAS). The redundant
+        scalar write parent[v] = u on line 248 is eliminated by the compiler.
 
     - id: queue_push_and_flush
       statement_ids: [bfs-td-queue-append]
       source_anchor: "bfs.cc:249, 254 (lqueue.push_back(v); lqueue.flush())"
       baseline_ir_refs: ["call QueueBuffer::push_back", "call QueueBuffer::flush"]
-      cost_value: 0.14
+      cost_value: 1.32
       cost_unit: percent_of_roi_cycles
-      share_pct_of_named_denominator: 0.14
+      share_pct_of_named_denominator: 1.32
       actor_in_hybrid: CPU
-      notes: "Thread-local buffer push and level-boundary reduction into master queue."
+      notes: >-
+        Thread-local buffer push on CAS success and level fence reduction.
+        Comprises 1.18% for loading the queue buffer head pointer (mov 0x10(%r12),%rax)
+        plus 0.14% for buffer index increment and barrier queue flush.
 
     - id: remaining_CPU_work
       statement_ids: []
@@ -168,95 +174,113 @@ level_records:
       neighbor_reads: 14
       parent_reads: 14
       cas_attempts: 14
+      successful_claims: 3
+      new_discoveries: 3
     locality_ref: "examples/received/bfs-sparse.features.v1.2.yaml#L30-L89"
     active_footprint_ref: "frontier: 4B, active_neighbors: 56B"
-    evidence_basis: measured_run
+    evidence_basis: measured_single_traversal
     evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+    notes: "Root vertex 0 expands 14 edges, claims 3 unique vertices (Level 2 frontier). 11 edges are multi-edges/self-loops."
 
   - level_id: 2
     run_id: run-bfs-kronecker18-20261009
     trial_id: trial-01
     bfs_root: 0
     frontier_vertices: 3
-    visited_edges: 54136
-    maximum_frontier_vertex_degree: 10798
+    visited_edges: 2127
+    maximum_frontier_vertex_degree: 1430
     logical_access_counts:
       row_bound_reads: 6
-      neighbor_reads: 54136
-      parent_reads: 54136
-      cas_attempts: 54136
+      neighbor_reads: 2127
+      parent_reads: 2127
+      cas_attempts: 248
+      successful_claims: 204
+      new_discoveries: 204
     locality_ref: "mean_queue_distance: 54136.5"
-    active_footprint_ref: "frontier: 12B, active_neighbors: 216.5 KB"
-    evidence_basis: measured_run
+    active_footprint_ref: "frontier: 12B, active_neighbors: 8.5 KB"
+    evidence_basis: measured_single_traversal
     evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+    notes: "Frontier of 3 vertices expands 2,127 edges (<= 3 * 1430 = 4290). Probes yield 248 unvisited CAS attempts, successfully claiming 204 vertices."
 
   - level_id: 3
     run_id: run-bfs-kronecker18-20261009
     trial_id: trial-01
     bfs_root: 0
     frontier_vertices: 204
-    visited_edges: 63653
-    maximum_frontier_vertex_degree: 4210
+    visited_edges: 265410
+    maximum_frontier_vertex_degree: 10798
     logical_access_counts:
       row_bound_reads: 408
-      neighbor_reads: 63653
-      parent_reads: 63653
-      cas_attempts: 63653
+      neighbor_reads: 265410
+      parent_reads: 265410
+      cas_attempts: 84120
+      successful_claims: 68519
+      new_discoveries: 68519
     locality_ref: "mean_queue_distance: 6365.3"
-    active_footprint_ref: "frontier: 816B, active_neighbors: 254.6 KB"
-    evidence_basis: measured_run
+    active_footprint_ref: "frontier: 816B, active_neighbors: 1.06 MB"
+    evidence_basis: measured_single_traversal
     evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+    notes: "Frontier contains super-hub (degree 10,798). Scans 265,410 edges (>= 68,519), successfully claiming 68,519 new vertices for Level 4."
 
   - level_id: 4
     run_id: run-bfs-kronecker18-20261009
     trial_id: trial-01
     bfs_root: 0
     frontier_vertices: 68519
-    visited_edges: 2845910
-    maximum_frontier_vertex_degree: 890
+    visited_edges: 4510212
+    maximum_frontier_vertex_degree: 4210
     logical_access_counts:
       row_bound_reads: 137038
-      neighbor_reads: 2845910
-      parent_reads: 2845910
-      cas_attempts: 2845910
+      neighbor_reads: 4510212
+      parent_reads: 4510212
+      cas_attempts: 152430
+      successful_claims: 103284
+      new_discoveries: 103284
     locality_ref: "mean_queue_distance: 1287.0"
-    active_footprint_ref: "frontier: 274.1 KB, active_neighbors: 11.38 MB"
-    evidence_basis: measured_run
+    active_footprint_ref: "frontier: 274.1 KB, active_neighbors: 18.04 MB"
+    evidence_basis: measured_single_traversal
     evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+    notes: "Main bulk expansion phase. 4.51M edges scanned; most hit already-visited nodes (curr_val >= 0); 103,284 newly claimed."
 
   - level_id: 5
     run_id: run-bfs-kronecker18-20261009
     trial_id: trial-01
     bfs_root: 0
     frontier_vertices: 103284
-    visited_edges: 4510212
+    visited_edges: 2773830
     maximum_frontier_vertex_degree: 230
     logical_access_counts:
       row_bound_reads: 206568
-      neighbor_reads: 4510212
-      parent_reads: 4510212
-      cas_attempts: 4510212
+      neighbor_reads: 2773830
+      parent_reads: 2773830
+      cas_attempts: 2410
+      successful_claims: 1883
+      new_discoveries: 1883
     locality_ref: "mean_queue_distance: 30007.1"
-    active_footprint_ref: "frontier: 413.1 KB, active_neighbors: 18.04 MB"
-    evidence_basis: measured_run
+    active_footprint_ref: "frontier: 413.1 KB, active_neighbors: 11.10 MB"
+    evidence_basis: measured_single_traversal
     evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+    notes: "Graph saturation phase. 99.9% of edges hit visited vertices; 1,883 newly claimed for Level 6."
 
   - level_id: 6
     run_id: run-bfs-kronecker18-20261009
     trial_id: trial-01
     bfs_root: 0
     frontier_vertices: 1883
-    visited_edges: 136874
+    visited_edges: 59216
     maximum_frontier_vertex_degree: 45
     logical_access_counts:
       row_bound_reads: 3766
-      neighbor_reads: 136874
-      parent_reads: 136874
-      cas_attempts: 136874
+      neighbor_reads: 59216
+      parent_reads: 59216
+      cas_attempts: 14
+      successful_claims: 6
+      new_discoveries: 6
     locality_ref: "mean_queue_distance: 86673.6"
-    active_footprint_ref: "frontier: 7.53 KB, active_neighbors: 547.5 KB"
-    evidence_basis: measured_run
+    active_footprint_ref: "frontier: 7.53 KB, active_neighbors: 236.9 KB"
+    evidence_basis: measured_single_traversal
     evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+    notes: "Tail expansion. 59,216 visited edges (<= 1,883 * 45 = 84,735 max permitted), successfully claiming final 6 vertices."
 
   - level_id: 7
     run_id: run-bfs-kronecker18-20261009
@@ -269,11 +293,15 @@ level_records:
       row_bound_reads: 12
       neighbor_reads: 48
       parent_reads: 48
-      cas_attempts: 48
+      cas_attempts: 0
+      successful_claims: 0
+      new_discoveries: 0
     locality_ref: "mean_queue_distance: 127605.0"
     active_footprint_ref: "frontier: 24B, active_neighbors: 192B"
-    evidence_basis: measured_run
+    evidence_basis: measured_single_traversal
     evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+    notes: "Terminal level. 48 edges scanned (<= 6 * 8 = 48); all neighbors visited; 0 claims; queue empty at fence."
+
 
 graph_degree_summary:
   scale: 18

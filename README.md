@@ -1,5 +1,8 @@
 # ArchEvolve — hardware exploration prototype
 
+October 16: [DX100 parameter-explorer handoff](docs/designs/dx100-parameter-domain/README.md) — source defaults, candidate values, coupling constraints, software changes and unresolved domains.
+
+
 The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: **20 source/version/configuration/mapping records, 62 operations and 204 located claims** (data revision **0.1.17**). TMU, COBRA and AXI-Pack are scoped mapping records, not generic gather replacements.
 
 The [current mechanism handoff](docs/mechanism-handoff-2026-10-06/README.md) explains scheduling, grouping, response association, credits, completion and unresolved implementation details. It includes a small executable association scaffold; no cycle model, RTL or target-performance validation is implied.
@@ -14,7 +17,7 @@ cd swdb-project && python3 -m pytest -q
 
 ## Current offline forward path
 
-**Feature reports → normalized evidence → typed operation queries → conditional candidates → intrinsic-description packages, YAML and Mermaid.**
+**Feature reports → normalized evidence → capability groups → per-block catalog queries → conditional candidates → intrinsic-description packages, YAML and Mermaid.**
 
 The pipeline makes no LLM/API or evaluator calls. It preserves scope, source uncertainty, result validity, ordering/completion obligations and parameter states. It does not generate an executable rewrite or prove performance/composition.
 
@@ -28,6 +31,18 @@ python3 -m venv .venv
 The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.17); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
 
 ## Results and handoff
+
+- **[Standalone DX100 16K validation preparation](docs/designs/dx100-reference-validation/README.md)**: pinned build/run manifests, Great Lakes environment template, effective-configuration/ROI checks and evidence collection. No target run has occurred.
+
+- **[Optional generalizations](docs/designs/optional-generalizations/README.md)**: source-bound configurable-offset/scale proposals, paired minimum/extension queries, and review diagrams. Additional hardware requirements, legal values and costs remain unresolved.
+
+- **[DX100 parameter-domain adapter](docs/designs/dx100-parameter-domain/explorer-adapter.md)**: imports Eric's six tile-size candidates with frozen reference geometry, rebuild/validation requests and explicit unresolved execution/cost fields.
+
+- **[Saved proposals through the planning loop](docs/designs/planning-loop-integration/README.md)**: real BFS/catalog handoffs, structural feedback in experiment memory, and context-bound saved reflection. No live model calls or performance ranking.
+
+- **[Bounded parameter exploration](docs/designs/bounded-parameters/README.md)**: reviewed finite domains, coupled constraints, configuration handoffs and evaluator-record comparison. Unknown ranges block enumeration; unknown costs remain null.
+
+- **[Pre-lookup hardware planning](docs/designs/prelookup-planning/README.md)**: BFS before/after diagrams, a mixed-access grouping example, conjunctive per-block queries, and source-preserving handoffs.
 
 - **[Architecture evolution and adaptive prompts](docs/designs/evolution-loop/README.md)**: two-loop design and [runnable offline memory/reflector prototype](docs/designs/evolution-loop/offline-runtime.md), including learned rules, paired trials and rollback. The demo is scripted and synthetic; live models and hardware evaluation remain unconnected.
 - **[October 8 feature-interface audit](docs/audits/peter-features-20261008/README.md)**: minimum additions requested from Peter for region cost/phase accounting, helper findings and a null-valued discussion template.

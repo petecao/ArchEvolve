@@ -1,0 +1,51 @@
+format: dx100-validation-environment-v0.1
+workflow_sha256: 0a3a384d9111d0674a82b589d22381ccd208129b71644745a6e285c2af838fec
+source_root: null
+platform:
+  host: null
+  os: null
+  architecture: null
+  toolchain_version: null
+tools:
+  cxx: null
+  cc: null
+  cmake: null
+  make: null
+  scons: null
+  gem5: null
+build_root: null
+run_root: null
+build_jobs: null
+great_lakes:
+  account: null
+  partition: null
+  cpus_per_task: null
+  memory: null
+  walltime: null
+target:
+  memory_size_bytes: 17179869184
+  cpu_model: X86O3CPU
+  cpu_clock: 3.2GHz
+  cache_configuration: 'Eric launcher: L1I/D 32kB, L2 256kB, L3 8MB; identical for
+    both variants'
+  ramulator_config: null
+  ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+  dram_topology:
+    channels: 2
+    ranks: 1
+    bankgroups: 4
+    banks: 4
+  wrapper: null
+  wrapper_sha256: 3cc4fe210c2294974c700d5855ef1038f6ce9587009af45df4fd359f98739bd5
+  verify_max_ticks: null
+  guest_env_file: null
+  guest_env_sha256: ae12933e46f0d1023049a7b9f8c5c329e148a56c9a58eb3db850691922e9a61a
+  system_argv: null
+  launcher: null
+  launcher_sha256: ca411c0adecc1f6966217df39b02100a55b2c0070756b01328d5572081febe86
+  checkpoint_policy: Separate fresh checkpoint per graph and binary; checkpoint AtomicSimpleCPU,
+    restore X86O3CPU
+  verifier_continuation_review: null
+  resource_address_review: null
+note: Unbound site/target settings are blockers, not inferred defaults. No job submission
+  is implemented.

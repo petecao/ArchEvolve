@@ -1,0 +1,110 @@
+{
+  "status": "historical_execution_and_ROI_activity_witness_without_target_verifier_PASS",
+  "raw_directory": "/data1/nier/DX100/experiments/campaigns/2026-07-08_gapbs_tile_smoke/bfs_s20_t16384_m2GB_gem5.opt.ovl_base",
+  "source_commit_of_historical_runtime": null,
+  "historical_binary_sha256": null,
+  "reference_source_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "historical_differences": [
+    "2GB mapping with modified API memory-base binding; stock four-core API expects16GB.",
+    "Instrumented gem5.opt.ovl_base; exact historical source/binary identity is not reconstructed here.",
+    "Stopped at ROI m5_exit despite-v; no BFSVerifier PASS."
+  ],
+  "command": "/data1/nier/DX100/build/X86/gem5.opt.ovl_base --outdir=/data1/nier/DX100/experiments/campaigns/2026-07-08_gapbs_tile_smoke/bfs_s20_t16384_m2GB_gem5.opt.ovl_base /data1/nier/DX100/configs/deprecated/example/se.py --cpu-type X86O3CPU -r 1 -n 4 --mem-size 2GB --sys-clock 3.2GHz --cpu-clock 3.2GHz --caches --l1d_size=32kB --l1d_assoc=8 --l1d-hwp-type=StridePrefetcher --l1d_mshrs=16 --l1d_write_buffers=8 --l1i_size=32kB --l1i_assoc=8 --l1i-hwp-type=StridePrefetcher --l1i_mshrs=16 --l1i_write_buffers=8 --l2cache --l2_size=256kB --l2_assoc=4 --l2-hwp-type=StridePrefetcher --l2_mshrs=32 --l2_write_buffers=16 --l3cache --l3_size=8MB --l3_assoc=16 --l3_mshrs=256 --l3_write_buffers=128 --l3_ports 4 --cacheline_size=64 --mem-type Ramulator2 --ramulator-config /data1/nier/DX100/ext/ramulator2/ramulator2/example_gem5_config.yaml --mem-channels 2 --maa_ncbus_width 32 --maa --maa_num_maas 1 --maa_num_tile_elements 16384 --maa_l2_uncacheable --maa_l3_uncacheable --maa_num_initial_row_table_slices 32 --cmd /data1/nier/DX100/benchmarks/gapbs/bfs_maa_16K --options '-f /data1/nier/DX100/benchmarks/gapbs/serialized_graph_20.sg -l -n 1 -v' --prog-interval=1000",
+  "topology_log": "Ramulator organization [n_levels: 6] -- CH: 2, RA: 1, BG: 4, BA: 4, RO: 65536, CO: 1024",
+  "maa_settings": {
+    "type": "MAA",
+    "children": "mmu power_state",
+    "alu_lane_latency": "1",
+    "addr_ranges": "2147483648:2149580800 2149580800:2151677952 2151677952:2151678016 2151678016:2151678080 2151678080:2151678208 2151678208:2151678272",
+    "cache_snoop_latency": "1",
+    "clk_domain": "system.cpu_clk_domain",
+    "eventq_index": "0",
+    "force_cache_access": "false",
+    "max_outstanding_cache_side_packets": "32768",
+    "max_outstanding_cpu_side_packets": "32768",
+    "mmu": "system.maa.mmu",
+    "no_reorder": "false",
+    "num_alu_lanes": "16",
+    "num_cores": "4",
+    "num_indirect_units_per_maa": "1",
+    "num_initial_row_table_slices": "32",
+    "num_instructions_per_core": "8",
+    "num_maas": "1",
+    "num_memory_channels": "2",
+    "num_regs_per_core": "8",
+    "num_request_table_addresses": "128",
+    "num_request_table_entries_per_address": "16",
+    "num_row_table_config_cache_entries": "16",
+    "num_row_table_entries_per_subslice_row": "8",
+    "num_row_table_rows_per_slice": "64",
+    "num_spd_read_ports_per_maa": "4",
+    "num_spd_write_ports_per_maa": "4",
+    "num_tile_elements": "16384",
+    "num_tiles_per_core": "8",
+    "power_model": "",
+    "power_state": "system.maa.power_state",
+    "reconfigure_row_table": "false",
+    "rowtable_latency": "1",
+    "spd_read_latency": "1",
+    "spd_write_latency": "1",
+    "system": "system",
+    "cache_sides": "system.tol3bus.cpu_side_ports[4] system.tol3bus.cpu_side_ports[5] system.tol3bus.cpu_side_ports[6] system.tol3bus.cpu_side_ports[7]",
+    "cpu_sides": "system.membus.mem_side_ports[1] system.membus.mem_side_ports[2] system.membus.mem_side_ports[3] system.membus.mem_side_ports[4]",
+    "mem_sides": "system.membusnc.cpu_side_ports[1] system.membusnc.cpu_side_ports[2]"
+  },
+  "stats_blocks": [
+    {
+      "simTicks": 25561820454.0,
+      "finalTick": 31780771756.0,
+      "system.maa.numInst": 17903.0,
+      "system.maa.numInst_INDRD": 6567.0,
+      "system.maa.numInst_RANGE": 2161.0,
+      "system.maa.numInst_STRRD": 84.0,
+      "system.maa.I0_IND_NumInsts": 8644.0,
+      "system.maa.I0_IND_NumWordsInserted": 102973607.0,
+      "system.maa.I0_IND_NumUniqueCacheLineInserted": 34693292.0,
+      "system.maa.cycles_TOTAL": 81667158.0
+    },
+    {
+      "simTicks": 25563529121.0,
+      "finalTick": 31782480423.0,
+      "system.maa.numInst": 17903.0,
+      "system.maa.numInst_INDRD": 6567.0,
+      "system.maa.numInst_RANGE": 2161.0,
+      "system.maa.numInst_STRRD": 84.0,
+      "system.maa.I0_IND_NumInsts": 8644.0,
+      "system.maa.I0_IND_NumWordsInserted": 102973607.0,
+      "system.maa.I0_IND_NumUniqueCacheLineInserted": 34693292.0,
+      "system.maa.cycles_TOTAL": 81672617.0
+    }
+  ],
+  "raw_sha256": {
+    "run.log": "29a3a22a348de1f7ca769a1fdd0dee3b50ac529bd35bfb67b22af76a761058c7",
+    "stats.txt": "3a2e08d29526e3493bb90b8a7c0894aea5c7a39b6b3ec7157d28262d66c925f7",
+    "config.ini": "97cdbef4950898412c96eae5b86eba01b34283c10da9d5ec2ecf606391d8cab8"
+  },
+  "historical_rc_receipt": {
+    "path": "/data1/nier/DX100/experiments/campaigns/2026-07-08_gapbs_tile_smoke/results.tsv",
+    "row": "2026-07-09T01:32:35\tgem5.opt.ovl_base\tbfs\t16384\t20\t1\t0\t25563529121\t81672617\t0.820\t0.180\t/data1/nier/DX100/experiments/campaigns/2026-07-08_gapbs_tile_smoke/bfs_s20_t16384_m2GB_gem5.opt.ovl_base"
+  },
+  "pinned_ramulator_config": {
+    "source_path": "ext/ramulator2/ramulator2/example_gem5_config.yaml",
+    "sha256": "aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b",
+    "yaml_channels_per_controller": 1,
+    "gem5_memory_controllers": 2,
+    "effective_topology": {
+      "channels": 2,
+      "ranks": 1,
+      "bankgroups": 4,
+      "banks": 4,
+      "rows": 65536,
+      "columns": 1024
+    },
+    "row_table_slice_family": [
+      4,
+      8,
+      16,
+      32
+    ]
+  }
+}

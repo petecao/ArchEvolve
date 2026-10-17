@@ -4,6 +4,7 @@ import unittest
 from unittest.mock import patch
 
 from archevolve.__main__ import reference_context
+from archevolve.evolution_store import digest
 from archevolve.hardware_catalog import load_catalog, query_catalog, inspect_design
 from archevolve.normalize import load_normalized
 from archevolve.select import select_candidates
@@ -49,8 +50,13 @@ class AXIPackAdmissionTests(unittest.TestCase):
         for name in ['bfs-sparse.features.v1.2.yaml', 'bfs-fully-connected.features.v1.2.yaml']:
             case = load_normalized(ROOT / 'examples/received' / name, reference_context(ROOT))
             with self.subTest(case=name):
-                self.assertEqual(select_candidates(case, base, 'bound-catalog', 'fixed-digest', 12),
-                                 select_candidates(case, self.catalog, 'bound-catalog', 'fixed-digest', 12))
+                before=select_candidates(case, base, 'bound-catalog', 'fixed-digest', 12)
+                after=select_candidates(case, self.catalog, 'bound-catalog', 'fixed-digest', 12)
+                # Adding an unrelated record changes snapshot identity, not matching.
+                for output,catalog in ((before,base),(after,self.catalog)):
+                    for block in output[1]['block_catalog_results']:
+                        self.assertEqual(block['catalog_identity'].pop('canonical_sha256'),digest(catalog))
+                self.assertEqual(before,after)
 
     def test_explicit_intent_projections_keep_full_contract(self):
         case = load_normalized(ROOT / 'examples/received/bfs-sparse.features.v1.2.yaml', reference_context(ROOT))

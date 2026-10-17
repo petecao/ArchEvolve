@@ -1,0 +1,140 @@
+format: dx100-reference-build-recipes-v0.1
+workflow_sha256: 0a3a384d9111d0674a82b589d22381ccd208129b71644745a6e285c2af838fec
+execute: false
+recipes:
+- id: ramulator-configure
+  cwd: '{source}/ext/ramulator2/ramulator2'
+  argv:
+  - '{cmake}'
+  - -S
+  - .
+  - -B
+  - '{source}/ext/ramulator2/ramulator2/build'
+  - -DCMAKE_C_COMPILER={cc}
+  - -DCMAKE_CXX_COMPILER={cxx}
+  status: template_requires_linkage_review
+- id: ramulator-build
+  cwd: '{source}'
+  argv:
+  - '{cmake}'
+  - --build
+  - '{source}/ext/ramulator2/ramulator2/build'
+  - -j
+  - '{jobs}'
+  status: template_requires_linkage_review
+- id: m5ops-build
+  cwd: '{source}/util/m5'
+  argv:
+  - '{scons}'
+  - build/x86/out/m5
+  - -j{jobs}
+- id: gem5-build
+  cwd: '{source}'
+  argv:
+  - '{scons}'
+  - build/X86/gem5.opt
+  - -j{jobs}
+- id: converter
+  cwd: '{build}'
+  argv:
+  - '{cxx}'
+  - -std=c++11
+  - -O3
+  - -fopenmp
+  - '{source}/benchmarks/gapbs/src/converter.cc'
+  - -o
+  - '{build}/converter'
+- id: fresh-m5op-object
+  cwd: '{build}'
+  argv:
+  - '{cxx}'
+  - -I{source}/include
+  - -I{source}/util/m5/src
+  - -c
+  - '{source}/util/m5/build/x86/abi/x86/m5op.S'
+  - -o
+  - '{build}/m5op.o'
+- id: functional-baseline
+  cwd: '{build}'
+  argv:
+  - '{cxx}'
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g3
+  - -fopenmp
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -I{source}/benchmarks/API
+  - -DFUNC
+  - '{source}/benchmarks/gapbs/src/bfs.cc'
+  - -o
+  - '{build}/bfs-functional-baseline'
+- id: functional-dx100
+  cwd: '{build}'
+  argv:
+  - '{cxx}'
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g3
+  - -fopenmp
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -I{source}/benchmarks/API
+  - -DFUNC
+  - -DMAA
+  - '{source}/benchmarks/gapbs/src/bfs.cc'
+  - -o
+  - '{build}/bfs-functional-dx100'
+- id: gem5-baseline
+  cwd: '{build}'
+  argv:
+  - '{cxx}'
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g3
+  - -fopenmp
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -I{source}/benchmarks/API
+  - -DGEM5
+  - -I{source}/include
+  - -I{source}/util/m5/src
+  - '{source}/benchmarks/gapbs/src/bfs.cc'
+  - '{build}/m5op.o'
+  - -o
+  - '{build}/bfs-gem5-baseline'
+- id: gem5-dx100
+  cwd: '{build}'
+  argv:
+  - '{cxx}'
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g3
+  - -fopenmp
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  - -I{source}/benchmarks/API
+  - -DGEM5
+  - -DMAA
+  - -I{source}/include
+  - -I{source}/util/m5/src
+  - '{source}/benchmarks/gapbs/src/bfs.cc'
+  - '{build}/m5op.o'
+  - -o
+  - '{build}/bfs-gem5-dx100'
+notes:
+- Recipes are unexecuted argv templates, not shell strings. Bind paths and toolchain
+  on Great Lakes.
+- Ramulator uses its source-local build directory per the artifact; ext/ramulator2/SConscript
+  links from the Ramulator source root. Confirm the produced library location and
+  archive its hash.
+- Use fresh output names/object files; do not reuse the repository-shipped m5op.o
+  or binaries.
+- Capture command argv, cwd, allowlisted environment, compiler version, exit status,
+  stdout/stderr, macro dump and binary/object hashes.
+- Native FUNC binaries provide only functional-model evidence. Never execute a GEM5/MMIO
+  binary natively.

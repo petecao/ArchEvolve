@@ -1,0 +1,72 @@
+{
+  "format": "optional-generalization-demo-v0.1",
+  "planning_manifest": {
+    "format": "prelookup-planning-demo-v0.1",
+    "identity": {
+      "catalog_sha256": "7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d",
+      "bfs_input_sha256": "379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3",
+      "source_context_sha256": "4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac",
+      "mixed_fixture_sha256": "5c9c07811febae68a2afa5bd3317b94062435e7efe88eb6f592f4244f58db482",
+      "code_sha256": {
+        "tools/demo_hardware_planning.py": "65f63202b99a04120464ed258d21baa46454bfd2e1723fe10458a9606cf47786",
+        "archevolve/generalizations.py": "1ec7c107dfd6bb18e6c7c3429f9060b0284f2ab67e188908b3a3019f690912ea",
+        "archevolve/hardware_planning.py": "ba10b300523ffb78057c6ef793578ed841c44b3d28b376090f4a229312e255ef",
+        "archevolve/evidence_select.py": "d3ee3659a908d2e33488b72e1a64dba506dc2f57ad56f701f855105257977fc6",
+        "archevolve/hardware_catalog.py": "c585bb3cf99a018b44eb4b4d77e2d826da5d6469287afec77b80365f7221a623",
+        "archevolve/normalize.py": "06557820ebb9cfc4c86a31e5ade37d663a611e0e6a2f36f0eb8f636a7677b778",
+        "archevolve/workload_context.py": "5b9ddd4332d5492cc79af5b021324ba1079ccfdc0e48fa8a17a65418ffa3247a",
+        "archevolve/__main__.py": "fc3536f5f71b6c2aa38d794ba1b27ef150c4a4656123f9119bf5c49895235832"
+      }
+    },
+    "llm_calls": 0,
+    "evaluation_performed": false,
+    "synthetic_cases": [
+      "mixed"
+    ],
+    "counts": {
+      "bfs": {
+        "access_requests": 5,
+        "planned_blocks": 3,
+        "unique_typed_clauses": 4
+      },
+      "mixed": {
+        "access_requests": 4,
+        "planned_blocks": 2,
+        "unique_typed_clauses": 2
+      }
+    },
+    "artifact_sha256": {
+      "bfs/hardware-plan.yaml": "c6ff2b6eabd176fd36e71feb9081124095c3c87f221c4accc1ad24f31da6d1f0",
+      "bfs/block-catalog-results.yaml": "40739aa99d72141af6e5ce62a21349ac305536c3560bc37367fe74d82f333881",
+      "bfs/planning-before.mmd": "a0b73bb6c1f92c9e1bf05fbe52048f094364a78c3d67e3373641492a0406529e",
+      "bfs/planning-after.mmd": "b241f20e4098411ee62b56be09f141b42a66c09a600d81aaf2b1b3dcd79665a8",
+      "bfs/planning.md": "fb5af40db1d7dbd4dd1c44aedb866ede533318119735e2abb6b248f5a4e9367c",
+      "bfs/generalization-proposals.yaml": "79f8636321c4f3755fa30f3cf32deaaea43670ef9b8a9a7f495344ba36f5109b",
+      "bfs/generalization-queries.yaml": "2dce8e6e953538d9ecbdd287c87cb52220e414e3549064daf1fdc3b9e117a17e",
+      "bfs/generalizations.mmd": "d17797f720acbe857702486c7adf08e65daaf2b11d57cab0d070e9faf2f7620e",
+      "bfs/generalizations.md": "a06a16617e6ff7716212d160c15a7a87e837b180cce890f85178ea0cbee3fb24",
+      "mixed/hardware-plan.yaml": "5a26665758381c9af08774eeced7d10b21139517c55d6419f5f04e4fcdc423ae",
+      "mixed/block-catalog-results.yaml": "0adae69dc9167b972dfcf956e77d8c17d4d5df5e281b5f97df3a79cd50ceb832",
+      "mixed/planning-before.mmd": "82b60350287a0f452bd9605956a3a204f32ca75abacc6207c33bef5d19322e53",
+      "mixed/planning-after.mmd": "63f1a47bb8b17030ebb08dd290a168690ef9cfb05d0ebbef9513a3a01eba0283",
+      "mixed/planning.md": "4e70151f53091c40a9793b734ca380ebda0f2edc2c72674710a4ba1b5d8f946d",
+      "mixed/generalization-proposals.yaml": "1577540cffa7e5b20e66eec22666fabf6baeddea01e1b4cc4fd8ef6111a69820",
+      "mixed/generalization-queries.yaml": "af32be75fad4c51b90a73ecf95e680bf07eb101908f186ad1a346090e4647120",
+      "mixed/generalizations.mmd": "d17797f720acbe857702486c7adf08e65daaf2b11d57cab0d070e9faf2f7620e",
+      "mixed/generalizations.md": "e7f824fdaca33eb2909598164b6b98047bb51700eaa5d2a9eadcfe56731eb0d0"
+    }
+  },
+  "note": "BFS source annotations plus a synthetic mixed example. No inferred hardware support, cost comparison or implementation.",
+  "artifact_sha256": {
+    "bfs/hardware-plan.yaml": "c6ff2b6eabd176fd36e71feb9081124095c3c87f221c4accc1ad24f31da6d1f0",
+    "bfs/generalization-proposals.yaml": "79f8636321c4f3755fa30f3cf32deaaea43670ef9b8a9a7f495344ba36f5109b",
+    "bfs/generalization-queries.yaml": "2dce8e6e953538d9ecbdd287c87cb52220e414e3549064daf1fdc3b9e117a17e",
+    "bfs/generalizations.md": "a06a16617e6ff7716212d160c15a7a87e837b180cce890f85178ea0cbee3fb24",
+    "bfs/generalizations.mmd": "d17797f720acbe857702486c7adf08e65daaf2b11d57cab0d070e9faf2f7620e",
+    "mixed/hardware-plan.yaml": "5a26665758381c9af08774eeced7d10b21139517c55d6419f5f04e4fcdc423ae",
+    "mixed/generalization-proposals.yaml": "1577540cffa7e5b20e66eec22666fabf6baeddea01e1b4cc4fd8ef6111a69820",
+    "mixed/generalization-queries.yaml": "af32be75fad4c51b90a73ecf95e680bf07eb101908f186ad1a346090e4647120",
+    "mixed/generalizations.md": "e7f824fdaca33eb2909598164b6b98047bb51700eaa5d2a9eadcfe56731eb0d0",
+    "mixed/generalizations.mmd": "d17797f720acbe857702486c7adf08e65daaf2b11d57cab0d070e9faf2f7620e"
+  }
+}

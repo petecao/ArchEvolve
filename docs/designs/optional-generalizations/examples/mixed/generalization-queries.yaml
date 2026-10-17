@@ -1,0 +1,953 @@
+format: generalization-query-pairs-v0.1
+minimum_plan_sha256: 8121518113e30847d18c260be823806a873919ade94de168a3877f906b555925
+pairs:
+- proposal_id: generalization-8d20ac96cee126aa0f59
+  minimum_block_id: block-indexed-read-d9d3cdfc04
+  minimum_query:
+    id: block-indexed-read-d9d3cdfc04
+    family: indexed-read
+    member_request_ids:
+    - gather-a-read
+    - gather-c-read
+    member_access_ids:
+    - gather-a
+    - gather-c
+    statement_ids:
+    - gather-a
+    - gather-c
+    grouping_basis: same operation family, exact known payload/index types and old-value
+      requirement
+    grouping_rationale: Related indexed-read shapes can request a shared capability
+      superset; each shape remains a separate obligation.
+    status: proposed_capability_group
+    missing_evidence: []
+    capability_clauses:
+    - id: block-indexed-read-d9d3cdfc04-cap-01
+      query:
+        operation: read
+        subtype: gather
+        address_pattern: indirect
+        payload_type: int32
+        index_width_bits: 32
+        require_old_value: false
+      request_ids:
+      - gather-a-read
+      - gather-c-read
+    members:
+    - request_id: gather-a-read
+      access_id: gather-a
+      array: A
+      statement_ids:
+      - gather-a
+      source_locations:
+      - file: examples/planning/mixed-access.pseudo.cpp
+        start_line: 6
+        end_line: 6
+      statement_binding_status: synthetic_source_fixture
+      mutable_target: false
+      address_expression: B[i]
+      operation_mapping_basis: Hand-authored synthetic target load, no measured profile.
+      reported_features:
+        reported_mean_index_distance: null
+        reported_mean_byte_stride: null
+        reported_stream_stride_bytes: null
+        reuse_distance: null
+        reuse_frequency: null
+        tile_working_set_bytes: null
+        evidence_refs:
+        - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+    - request_id: gather-c-read
+      access_id: gather-c
+      array: C
+      statement_ids:
+      - gather-c
+      source_locations:
+      - file: examples/planning/mixed-access.pseudo.cpp
+        start_line: 7
+        end_line: 7
+      statement_binding_status: synthetic_source_fixture
+      mutable_target: false
+      address_expression: D[2*i+1]
+      operation_mapping_basis: Hand-authored synthetic target load, no measured profile.
+      reported_features:
+        reported_mean_index_distance: null
+        reported_mean_byte_stride: null
+        reported_stream_stride_bytes: null
+        reuse_distance: null
+        reuse_frequency: null
+        tile_working_set_bytes: null
+        evidence_refs:
+        - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+    required_capabilities:
+      operations:
+      - read
+      subtypes:
+      - gather
+      address_patterns:
+      - indirect
+      payload_types:
+      - int32
+      index_width_bits:
+      - 32
+      require_old_value: false
+      mutable_read_request_ids: []
+    resource_requirements:
+      simultaneous_streams: null
+      aggregate_working_set_bytes: null
+      minimum_tile_capacity: null
+      schedule: unresolved
+      note: Do not sum footprints or assume concurrent execution from a grouping;
+        derive lifetimes, reuse and sharing first.
+    mapping_obligations:
+    - Preserve per-member address expressions, numeric domains and value identity.
+    - Establish dependencies, ordering, completion, aliases, mutability and CPU/device
+      visibility.
+    - Establish scheduling, resource ownership/capacity and per-thread contexts before
+      sharing one physical instance.
+    optional_generalizations: []
+    hardware_composition_status: not_established
+  minimum_result:
+    catalog_identity:
+      catalog_id: archevolve-hardware
+      revision: 0.1.17
+      canonical_sha256: a34c2abe46e886ecc5f7e003a5158f151ded84ea7449359f8f367a06ee95d6f9
+    status: options_for_review
+    options:
+    - missing_capability_evidence: []
+      missing_workload_evidence: []
+      design_id: dx100-artifact-e4fc4af
+      execution_role: execute
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: conditional_capability_cover
+    - missing_capability_evidence:
+      - index_width_bits
+      missing_workload_evidence: []
+      design_id: dx100-paper-v2
+      execution_role: execute
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: candidate_cover_needs_evidence
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: maple-isca2022
+      execution_role: assist
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: false
+      joint_execution_status: requires_mapping_and_resource_review
+      status: assist_alternative_not_executor
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: maple-isca2022
+      execution_role: execute
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: candidate_cover_needs_evidence
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: prodigy-hpca2021
+      execution_role: assist
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: false
+      joint_execution_status: requires_mapping_and_resource_review
+      status: assist_alternative_not_executor
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: spzip-isca2021-push
+      execution_role: assist
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: false
+      joint_execution_status: requires_mapping_and_resource_review
+      status: assist_alternative_not_executor
+    partial_designs: []
+  generalized_query:
+    format: capability-extension-query-v0.1
+    minimum_block_sha256: 0f1fa4b9ca73c661096d299a30b134e99a0b5a8fd73276503cbef6c9a85e8408
+    base_capability_request:
+      id: block-indexed-read-d9d3cdfc04
+      family: indexed-read
+      member_request_ids:
+      - gather-a-read
+      - gather-c-read
+      member_access_ids:
+      - gather-a
+      - gather-c
+      statement_ids:
+      - gather-a
+      - gather-c
+      grouping_basis: same operation family, exact known payload/index types and old-value
+        requirement
+      grouping_rationale: Related indexed-read shapes can request a shared capability
+        superset; each shape remains a separate obligation.
+      status: proposed_capability_group
+      missing_evidence: []
+      capability_clauses:
+      - id: block-indexed-read-d9d3cdfc04-cap-01
+        query:
+          operation: read
+          subtype: gather
+          address_pattern: indirect
+          payload_type: int32
+          index_width_bits: 32
+          require_old_value: false
+        request_ids:
+        - gather-a-read
+        - gather-c-read
+      members:
+      - request_id: gather-a-read
+        access_id: gather-a
+        array: A
+        statement_ids:
+        - gather-a
+        source_locations:
+        - file: examples/planning/mixed-access.pseudo.cpp
+          start_line: 6
+          end_line: 6
+        statement_binding_status: synthetic_source_fixture
+        mutable_target: false
+        address_expression: B[i]
+        operation_mapping_basis: Hand-authored synthetic target load, no measured
+          profile.
+        reported_features:
+          reported_mean_index_distance: null
+          reported_mean_byte_stride: null
+          reported_stream_stride_bytes: null
+          reuse_distance: null
+          reuse_frequency: null
+          tile_working_set_bytes: null
+          evidence_refs:
+          - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+      - request_id: gather-c-read
+        access_id: gather-c
+        array: C
+        statement_ids:
+        - gather-c
+        source_locations:
+        - file: examples/planning/mixed-access.pseudo.cpp
+          start_line: 7
+          end_line: 7
+        statement_binding_status: synthetic_source_fixture
+        mutable_target: false
+        address_expression: D[2*i+1]
+        operation_mapping_basis: Hand-authored synthetic target load, no measured
+          profile.
+        reported_features:
+          reported_mean_index_distance: null
+          reported_mean_byte_stride: null
+          reported_stream_stride_bytes: null
+          reuse_distance: null
+          reuse_frequency: null
+          tile_working_set_bytes: null
+          evidence_refs:
+          - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+      required_capabilities:
+        operations:
+        - read
+        subtypes:
+        - gather
+        address_patterns:
+        - indirect
+        payload_types:
+        - int32
+        index_width_bits:
+        - 32
+        require_old_value: false
+        mutable_read_request_ids: []
+      resource_requirements:
+        simultaneous_streams: null
+        aggregate_working_set_bytes: null
+        minimum_tile_capacity: null
+        schedule: unresolved
+        note: Do not sum footprints or assume concurrent execution from a grouping;
+          derive lifetimes, reuse and sharing first.
+      mapping_obligations:
+      - Preserve per-member address expressions, numeric domains and value identity.
+      - Establish dependencies, ordering, completion, aliases, mutability and CPU/device
+        visibility.
+      - Establish scheduling, resource ownership/capacity and per-thread contexts
+        before sharing one physical instance.
+      optional_generalizations: []
+      hardware_composition_status: not_established
+    requested_extension:
+      expression_language: restricted_index_annotation_not_compilable_cpp
+      kind: configurable_index_offset
+      observed_expression: D[2*i+1]
+      proposed_expression: D[2 * i + ae_offset]
+      parameter:
+        name: ae_offset
+        baseline_setting: 1
+        legal_values: null
+        width_bits: null
+        signedness: null
+        configuration_granularity: null
+      computation_location: null
+      capability_request: Expose the indicated literal as a configurable input while
+        preserving the original case when set to the observed value.
+      scope: One literal at one expression site only; no joint affine, datatype, atomic,
+        ordering or concurrency expansion.
+  generalized_result:
+    status: unresolved_capability_not_expressed_by_current_catalog_predicates
+    supported: null
+    matching_designs: null
+    hardware_requirements: null
+  additional_cost:
+    area_mm2: null
+    power_w: null
+    latency_ms: null
+    cost_model: null
+  note: The minimum-result matches are not evidence for the extension. Owner/evaluator
+    response is required.
+- proposal_id: generalization-cd09730d5cbc9137b534
+  minimum_block_id: block-indexed-read-d9d3cdfc04
+  minimum_query:
+    id: block-indexed-read-d9d3cdfc04
+    family: indexed-read
+    member_request_ids:
+    - gather-a-read
+    - gather-c-read
+    member_access_ids:
+    - gather-a
+    - gather-c
+    statement_ids:
+    - gather-a
+    - gather-c
+    grouping_basis: same operation family, exact known payload/index types and old-value
+      requirement
+    grouping_rationale: Related indexed-read shapes can request a shared capability
+      superset; each shape remains a separate obligation.
+    status: proposed_capability_group
+    missing_evidence: []
+    capability_clauses:
+    - id: block-indexed-read-d9d3cdfc04-cap-01
+      query:
+        operation: read
+        subtype: gather
+        address_pattern: indirect
+        payload_type: int32
+        index_width_bits: 32
+        require_old_value: false
+      request_ids:
+      - gather-a-read
+      - gather-c-read
+    members:
+    - request_id: gather-a-read
+      access_id: gather-a
+      array: A
+      statement_ids:
+      - gather-a
+      source_locations:
+      - file: examples/planning/mixed-access.pseudo.cpp
+        start_line: 6
+        end_line: 6
+      statement_binding_status: synthetic_source_fixture
+      mutable_target: false
+      address_expression: B[i]
+      operation_mapping_basis: Hand-authored synthetic target load, no measured profile.
+      reported_features:
+        reported_mean_index_distance: null
+        reported_mean_byte_stride: null
+        reported_stream_stride_bytes: null
+        reuse_distance: null
+        reuse_frequency: null
+        tile_working_set_bytes: null
+        evidence_refs:
+        - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+    - request_id: gather-c-read
+      access_id: gather-c
+      array: C
+      statement_ids:
+      - gather-c
+      source_locations:
+      - file: examples/planning/mixed-access.pseudo.cpp
+        start_line: 7
+        end_line: 7
+      statement_binding_status: synthetic_source_fixture
+      mutable_target: false
+      address_expression: D[2*i+1]
+      operation_mapping_basis: Hand-authored synthetic target load, no measured profile.
+      reported_features:
+        reported_mean_index_distance: null
+        reported_mean_byte_stride: null
+        reported_stream_stride_bytes: null
+        reuse_distance: null
+        reuse_frequency: null
+        tile_working_set_bytes: null
+        evidence_refs:
+        - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+    required_capabilities:
+      operations:
+      - read
+      subtypes:
+      - gather
+      address_patterns:
+      - indirect
+      payload_types:
+      - int32
+      index_width_bits:
+      - 32
+      require_old_value: false
+      mutable_read_request_ids: []
+    resource_requirements:
+      simultaneous_streams: null
+      aggregate_working_set_bytes: null
+      minimum_tile_capacity: null
+      schedule: unresolved
+      note: Do not sum footprints or assume concurrent execution from a grouping;
+        derive lifetimes, reuse and sharing first.
+    mapping_obligations:
+    - Preserve per-member address expressions, numeric domains and value identity.
+    - Establish dependencies, ordering, completion, aliases, mutability and CPU/device
+      visibility.
+    - Establish scheduling, resource ownership/capacity and per-thread contexts before
+      sharing one physical instance.
+    optional_generalizations: []
+    hardware_composition_status: not_established
+  minimum_result:
+    catalog_identity:
+      catalog_id: archevolve-hardware
+      revision: 0.1.17
+      canonical_sha256: a34c2abe46e886ecc5f7e003a5158f151ded84ea7449359f8f367a06ee95d6f9
+    status: options_for_review
+    options:
+    - missing_capability_evidence: []
+      missing_workload_evidence: []
+      design_id: dx100-artifact-e4fc4af
+      execution_role: execute
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: conditional_capability_cover
+    - missing_capability_evidence:
+      - index_width_bits
+      missing_workload_evidence: []
+      design_id: dx100-paper-v2
+      execution_role: execute
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: candidate_cover_needs_evidence
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: maple-isca2022
+      execution_role: assist
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: false
+      joint_execution_status: requires_mapping_and_resource_review
+      status: assist_alternative_not_executor
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: maple-isca2022
+      execution_role: execute
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: candidate_cover_needs_evidence
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: prodigy-hpca2021
+      execution_role: assist
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: false
+      joint_execution_status: requires_mapping_and_resource_review
+      status: assist_alternative_not_executor
+    - missing_capability_evidence:
+      - index_width_bits
+      - payload_types
+      missing_workload_evidence: []
+      design_id: spzip-isca2021-push
+      execution_role: assist
+      covered_clause_ids:
+      - block-indexed-read-d9d3cdfc04-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: false
+      joint_execution_status: requires_mapping_and_resource_review
+      status: assist_alternative_not_executor
+    partial_designs: []
+  generalized_query:
+    format: capability-extension-query-v0.1
+    minimum_block_sha256: 0f1fa4b9ca73c661096d299a30b134e99a0b5a8fd73276503cbef6c9a85e8408
+    base_capability_request:
+      id: block-indexed-read-d9d3cdfc04
+      family: indexed-read
+      member_request_ids:
+      - gather-a-read
+      - gather-c-read
+      member_access_ids:
+      - gather-a
+      - gather-c
+      statement_ids:
+      - gather-a
+      - gather-c
+      grouping_basis: same operation family, exact known payload/index types and old-value
+        requirement
+      grouping_rationale: Related indexed-read shapes can request a shared capability
+        superset; each shape remains a separate obligation.
+      status: proposed_capability_group
+      missing_evidence: []
+      capability_clauses:
+      - id: block-indexed-read-d9d3cdfc04-cap-01
+        query:
+          operation: read
+          subtype: gather
+          address_pattern: indirect
+          payload_type: int32
+          index_width_bits: 32
+          require_old_value: false
+        request_ids:
+        - gather-a-read
+        - gather-c-read
+      members:
+      - request_id: gather-a-read
+        access_id: gather-a
+        array: A
+        statement_ids:
+        - gather-a
+        source_locations:
+        - file: examples/planning/mixed-access.pseudo.cpp
+          start_line: 6
+          end_line: 6
+        statement_binding_status: synthetic_source_fixture
+        mutable_target: false
+        address_expression: B[i]
+        operation_mapping_basis: Hand-authored synthetic target load, no measured
+          profile.
+        reported_features:
+          reported_mean_index_distance: null
+          reported_mean_byte_stride: null
+          reported_stream_stride_bytes: null
+          reuse_distance: null
+          reuse_frequency: null
+          tile_working_set_bytes: null
+          evidence_refs:
+          - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+      - request_id: gather-c-read
+        access_id: gather-c
+        array: C
+        statement_ids:
+        - gather-c
+        source_locations:
+        - file: examples/planning/mixed-access.pseudo.cpp
+          start_line: 7
+          end_line: 7
+        statement_binding_status: synthetic_source_fixture
+        mutable_target: false
+        address_expression: D[2*i+1]
+        operation_mapping_basis: Hand-authored synthetic target load, no measured
+          profile.
+        reported_features:
+          reported_mean_index_distance: null
+          reported_mean_byte_stride: null
+          reported_stream_stride_bytes: null
+          reuse_distance: null
+          reuse_frequency: null
+          tile_working_set_bytes: null
+          evidence_refs:
+          - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+      required_capabilities:
+        operations:
+        - read
+        subtypes:
+        - gather
+        address_patterns:
+        - indirect
+        payload_types:
+        - int32
+        index_width_bits:
+        - 32
+        require_old_value: false
+        mutable_read_request_ids: []
+      resource_requirements:
+        simultaneous_streams: null
+        aggregate_working_set_bytes: null
+        minimum_tile_capacity: null
+        schedule: unresolved
+        note: Do not sum footprints or assume concurrent execution from a grouping;
+          derive lifetimes, reuse and sharing first.
+      mapping_obligations:
+      - Preserve per-member address expressions, numeric domains and value identity.
+      - Establish dependencies, ordering, completion, aliases, mutability and CPU/device
+        visibility.
+      - Establish scheduling, resource ownership/capacity and per-thread contexts
+        before sharing one physical instance.
+      optional_generalizations: []
+      hardware_composition_status: not_established
+    requested_extension:
+      expression_language: restricted_index_annotation_not_compilable_cpp
+      kind: configurable_index_scale
+      observed_expression: D[2*i+1]
+      proposed_expression: D[ae_scale * i + 1]
+      parameter:
+        name: ae_scale
+        baseline_setting: 2
+        legal_values: null
+        width_bits: null
+        signedness: null
+        configuration_granularity: null
+      computation_location: null
+      capability_request: Expose the indicated literal as a configurable input while
+        preserving the original case when set to the observed value.
+      scope: One literal at one expression site only; no joint affine, datatype, atomic,
+        ordering or concurrency expansion.
+  generalized_result:
+    status: unresolved_capability_not_expressed_by_current_catalog_predicates
+    supported: null
+    matching_designs: null
+    hardware_requirements: null
+  additional_cost:
+    area_mm2: null
+    power_w: null
+    latency_ms: null
+    cost_model: null
+  note: The minimum-result matches are not evidence for the extension. Owner/evaluator
+    response is required.
+- proposal_id: generalization-635f10b0adaba72c2b32
+  minimum_block_id: block-stream-read-3e4c92e98e
+  minimum_query:
+    id: block-stream-read-3e4c92e98e
+    family: stream-read
+    member_request_ids:
+    - stream-x-read
+    - stream-y-read
+    member_access_ids:
+    - stream-x
+    - stream-y
+    statement_ids:
+    - stream-x
+    - stream-y
+    grouping_basis: same operation family, exact known payload/index types and old-value
+      requirement
+    grouping_rationale: Compatible streaming operations share a request.
+    status: proposed_capability_group
+    missing_evidence: []
+    capability_clauses:
+    - id: block-stream-read-3e4c92e98e-cap-01
+      query:
+        operation: read
+        subtype: stream_load
+        address_pattern: sequential
+        payload_type: float32
+        index_width_bits: null
+        require_old_value: false
+      request_ids:
+      - stream-x-read
+      - stream-y-read
+    members:
+    - request_id: stream-x-read
+      access_id: stream-x
+      array: X
+      statement_ids:
+      - stream-x
+      source_locations:
+      - file: examples/planning/mixed-access.pseudo.cpp
+        start_line: 8
+        end_line: 8
+      statement_binding_status: synthetic_source_fixture
+      mutable_target: false
+      address_expression: i
+      operation_mapping_basis: Hand-authored synthetic target load, no measured profile.
+      reported_features:
+        reported_mean_index_distance: null
+        reported_mean_byte_stride: null
+        reported_stream_stride_bytes: null
+        reuse_distance: null
+        reuse_frequency: null
+        tile_working_set_bytes: null
+        evidence_refs:
+        - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+    - request_id: stream-y-read
+      access_id: stream-y
+      array: Y
+      statement_ids:
+      - stream-y
+      source_locations:
+      - file: examples/planning/mixed-access.pseudo.cpp
+        start_line: 9
+        end_line: 9
+      statement_binding_status: synthetic_source_fixture
+      mutable_target: false
+      address_expression: i+2
+      operation_mapping_basis: Hand-authored synthetic target load, no measured profile.
+      reported_features:
+        reported_mean_index_distance: null
+        reported_mean_byte_stride: null
+        reported_stream_stride_bytes: null
+        reuse_distance: null
+        reuse_frequency: null
+        tile_working_set_bytes: null
+        evidence_refs:
+        - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+    required_capabilities:
+      operations:
+      - read
+      subtypes:
+      - stream_load
+      address_patterns:
+      - sequential
+      payload_types:
+      - float32
+      index_width_bits: []
+      require_old_value: false
+      mutable_read_request_ids: []
+    resource_requirements:
+      simultaneous_streams: null
+      aggregate_working_set_bytes: null
+      minimum_tile_capacity: null
+      schedule: unresolved
+      note: Do not sum footprints or assume concurrent execution from a grouping;
+        derive lifetimes, reuse and sharing first.
+    mapping_obligations:
+    - Preserve per-member address expressions, numeric domains and value identity.
+    - Establish dependencies, ordering, completion, aliases, mutability and CPU/device
+      visibility.
+    - Establish scheduling, resource ownership/capacity and per-thread contexts before
+      sharing one physical instance.
+    optional_generalizations: []
+    hardware_composition_status: not_established
+  minimum_result:
+    catalog_identity:
+      catalog_id: archevolve-hardware
+      revision: 0.1.17
+      canonical_sha256: a34c2abe46e886ecc5f7e003a5158f151ded84ea7449359f8f367a06ee95d6f9
+    status: options_for_review
+    options:
+    - missing_capability_evidence: []
+      missing_workload_evidence: []
+      design_id: dx100-artifact-e4fc4af
+      execution_role: execute
+      covered_clause_ids:
+      - block-stream-read-3e4c92e98e-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: conditional_capability_cover
+    - missing_capability_evidence: []
+      missing_workload_evidence: []
+      design_id: dx100-paper-v2
+      execution_role: execute
+      covered_clause_ids:
+      - block-stream-read-3e4c92e98e-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: conditional_capability_cover
+    - missing_capability_evidence:
+      - payload_types
+      missing_workload_evidence: []
+      design_id: maple-isca2022
+      execution_role: assist
+      covered_clause_ids:
+      - block-stream-read-3e4c92e98e-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: false
+      joint_execution_status: requires_mapping_and_resource_review
+      status: assist_alternative_not_executor
+    - missing_capability_evidence:
+      - payload_types
+      missing_workload_evidence: []
+      design_id: maple-isca2022
+      execution_role: execute
+      covered_clause_ids:
+      - block-stream-read-3e4c92e98e-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: candidate_cover_needs_evidence
+    - missing_capability_evidence:
+      - payload_types
+      missing_workload_evidence: []
+      design_id: terminus-micro2024-cas
+      execution_role: execute
+      covered_clause_ids:
+      - block-stream-read-3e4c92e98e-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: candidate_cover_needs_evidence
+    - missing_capability_evidence:
+      - payload_types
+      missing_workload_evidence: []
+      design_id: terminus-micro2024-deferred
+      execution_role: execute
+      covered_clause_ids:
+      - block-stream-read-3e4c92e98e-cap-01
+      missing_clause_ids: []
+      satisfies_returned_value_request: null
+      joint_execution_status: requires_mapping_and_resource_review
+      status: candidate_cover_needs_evidence
+    partial_designs: []
+  generalized_query:
+    format: capability-extension-query-v0.1
+    minimum_block_sha256: e5d79e8ad64305b6e90addec1a9adc674dfed657bd71b2e872c72938aeea034a
+    base_capability_request:
+      id: block-stream-read-3e4c92e98e
+      family: stream-read
+      member_request_ids:
+      - stream-x-read
+      - stream-y-read
+      member_access_ids:
+      - stream-x
+      - stream-y
+      statement_ids:
+      - stream-x
+      - stream-y
+      grouping_basis: same operation family, exact known payload/index types and old-value
+        requirement
+      grouping_rationale: Compatible streaming operations share a request.
+      status: proposed_capability_group
+      missing_evidence: []
+      capability_clauses:
+      - id: block-stream-read-3e4c92e98e-cap-01
+        query:
+          operation: read
+          subtype: stream_load
+          address_pattern: sequential
+          payload_type: float32
+          index_width_bits: null
+          require_old_value: false
+        request_ids:
+        - stream-x-read
+        - stream-y-read
+      members:
+      - request_id: stream-x-read
+        access_id: stream-x
+        array: X
+        statement_ids:
+        - stream-x
+        source_locations:
+        - file: examples/planning/mixed-access.pseudo.cpp
+          start_line: 8
+          end_line: 8
+        statement_binding_status: synthetic_source_fixture
+        mutable_target: false
+        address_expression: i
+        operation_mapping_basis: Hand-authored synthetic target load, no measured
+          profile.
+        reported_features:
+          reported_mean_index_distance: null
+          reported_mean_byte_stride: null
+          reported_stream_stride_bytes: null
+          reuse_distance: null
+          reuse_frequency: null
+          tile_working_set_bytes: null
+          evidence_refs:
+          - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+      - request_id: stream-y-read
+        access_id: stream-y
+        array: Y
+        statement_ids:
+        - stream-y
+        source_locations:
+        - file: examples/planning/mixed-access.pseudo.cpp
+          start_line: 9
+          end_line: 9
+        statement_binding_status: synthetic_source_fixture
+        mutable_target: false
+        address_expression: i+2
+        operation_mapping_basis: Hand-authored synthetic target load, no measured
+          profile.
+        reported_features:
+          reported_mean_index_distance: null
+          reported_mean_byte_stride: null
+          reported_stream_stride_bytes: null
+          reuse_distance: null
+          reuse_frequency: null
+          tile_working_set_bytes: null
+          evidence_refs:
+          - synthetic-source:examples/planning/mixed-access.pseudo.cpp
+      required_capabilities:
+        operations:
+        - read
+        subtypes:
+        - stream_load
+        address_patterns:
+        - sequential
+        payload_types:
+        - float32
+        index_width_bits: []
+        require_old_value: false
+        mutable_read_request_ids: []
+      resource_requirements:
+        simultaneous_streams: null
+        aggregate_working_set_bytes: null
+        minimum_tile_capacity: null
+        schedule: unresolved
+        note: Do not sum footprints or assume concurrent execution from a grouping;
+          derive lifetimes, reuse and sharing first.
+      mapping_obligations:
+      - Preserve per-member address expressions, numeric domains and value identity.
+      - Establish dependencies, ordering, completion, aliases, mutability and CPU/device
+        visibility.
+      - Establish scheduling, resource ownership/capacity and per-thread contexts
+        before sharing one physical instance.
+      optional_generalizations: []
+      hardware_composition_status: not_established
+    requested_extension:
+      expression_language: restricted_index_annotation_not_compilable_cpp
+      kind: configurable_index_offset
+      observed_expression: i+2
+      proposed_expression: i + ae_offset
+      parameter:
+        name: ae_offset
+        baseline_setting: 2
+        legal_values: null
+        width_bits: null
+        signedness: null
+        configuration_granularity: null
+      computation_location: null
+      capability_request: Expose the indicated literal as a configurable input while
+        preserving the original case when set to the observed value.
+      scope: One literal at one expression site only; no joint affine, datatype, atomic,
+        ordering or concurrency expansion.
+  generalized_result:
+    status: unresolved_capability_not_expressed_by_current_catalog_predicates
+    supported: null
+    matching_designs: null
+    hardware_requirements: null
+  additional_cost:
+    area_mm2: null
+    power_w: null
+    latency_ms: null
+    cost_model: null
+  note: The minimum-result matches are not evidence for the extension. Owner/evaluator
+    response is required.
+cost_comparison_performed: false
+selected_generalization: null

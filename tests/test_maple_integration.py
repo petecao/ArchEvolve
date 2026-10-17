@@ -84,8 +84,8 @@ class MapleIntegrationTests(unittest.TestCase):
 
     def test_focus_retains_full_trace_and_produces_both_maple_modes(self):
         focus = ["dx100-artifact-e4fc4af", "maple-isca2022"]
-        request, trace = select_candidates(self.case, self.catalog, str(self.path), self.digest, 4, focus)
-        self.assertEqual(len(request["candidates"]), 4)
+        request, trace = select_candidates(self.case, self.catalog, str(self.path), self.digest, 8, focus)
+        self.assertLessEqual(len(request["candidates"]), 8)
         self.assertEqual({c.get("catalog_design_id") for c in request["candidates"][1:]}, set(focus))
         maple = [c for c in request["candidates"] if c.get("catalog_design_id") == "maple-isca2022"]
         self.assertEqual({c["candidate_scope"] for c in maple}, {"read_execute", "read_assist"})
@@ -125,15 +125,18 @@ class MapleIntegrationTests(unittest.TestCase):
 
     def test_end_to_end_maple_handoff_has_source_paths_and_review_gates(self):
         focus = ["dx100-artifact-e4fc4af", "maple-isca2022"]
-        artifacts, manifest = prepare_run([self.input], self.path, max_candidates=4,
+        artifacts, manifest = prepare_run([self.input], self.path, max_candidates=8,
             source_context_path=ROOT / "examples/bfs.source-observations.yaml", compare_design_ids=focus, focus_design_ids=focus)
-        candidate = yaml.safe_load(artifacts["case-01/handoffs/candidate-04/candidate.yaml"])
+        path = next(p for p in artifacts if p.endswith("/candidate.yaml")
+                    and yaml.safe_load(artifacts[p]).get("catalog_design_id") == "maple-isca2022"
+                    and yaml.safe_load(artifacts[p]).get("candidate_scope") == "read_execute")
+        candidate = yaml.safe_load(artifacts[path])
         self.assertEqual(candidate["catalog_design_id"], "maple-isca2022")
         self.assertEqual(candidate["candidate_scope"], "read_execute")
         self.assertIn("structure.mmd", '\n'.join(artifacts))
         self.assertIn("maple-structure", candidate["source_evidence"]["claims"])
         self.assertEqual(candidate["hardware"]["connections"], [])
-        draft = yaml.safe_load(artifacts["case-01/handoffs/candidate-04/intrinsic-draft.yaml"])
+        draft = yaml.safe_load(artifacts[path.replace("candidate.yaml", "intrinsic-draft.yaml")])
         self.assertTrue(all(o["concrete_signature"] is None for o in draft["operations"]))
         self.assertFalse(draft["readiness"]["correctness_verified"])
         self.assertEqual(manifest["identity"]["focus_design_ids"], focus)

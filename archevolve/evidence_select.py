@@ -8,7 +8,8 @@ from copy import deepcopy
 import re
 from textwrap import shorten
 
-from archevolve.hardware_catalog import query_catalog, validate_catalog
+from archevolve.hardware_catalog import validate_catalog
+from archevolve.hardware_planning import plan_hardware, query_block
 from archevolve.mechanisms import mechanism_context
 from archevolve.workload_context import candidate_groups, request_groups, request_statement_context
 from tools.render_mermaid import RequestError, validate_request
@@ -132,7 +133,7 @@ def interface_view(design, options):
             "view_notice":"Independent catalog operation interfaces. No physical port widths, component composition or unlisted connections are established by this drawing."}
 
 
-def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4, focus_design_ids=None):
+def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_candidates=4, focus_design_ids=None, block_choices=None):
     validate_catalog(catalog)
     if type(max_candidates) is not int or max_candidates < 1:
         raise RequestError("max_candidates must be at least 1, including the CPU comparison.")
@@ -142,51 +143,93 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
     if focus_design_ids is not None:
         if not focus_design_ids or len(focus_design_ids) != len(set(focus_design_ids)) or not set(focus_design_ids) <= set(designs):
             raise RequestError("Focus design IDs must be nonempty, unique, and present in the catalog.")
+    plan = plan_hardware(case, requests, workload_groups)
+    block_results = [query_block(catalog, block) for block in plan["blocks"]]
+    requests_by_id = {r["id"]: r for r in requests}
     groups, trace = {}, []
-    for request in requests:
-        result = query_catalog(catalog, operation=request["operation"], subtype=request["subtype"],
-                               address_pattern=request["address_pattern"], payload_type=request["payload_type"],
-                               index_width_bits=request["index_width_bits"], require_old_value=request["require_old_value"])
-        row = {"request":deepcopy(request), "query":result["query"], "matches":deepcopy(result["matches"]), "excluded":deepcopy(result["excluded"])}
-        trace.append(row)
-        if not result["matches"] or all(m["operation"]["support"] == "unknown" for m in result["matches"]):
-            gaps.append({"id":request["id"]+"-coverage", "message":"No catalog match supplies this exact requested capability; inspect exclusions and remaining evidence gaps.", "request_id":request["id"]})
-        for match in result["matches"]:
-            # Unknown support is retained in trace; it is not promoted to an interface option.
-            if match["operation"]["support"] == "unknown":
-                continue
-            op, design = match["operation"], designs[match["design_id"]]
-            bucket = ("mapping_reference" if design["record_kind"] == "mapping" else
-                      request["purpose"] + ("_execute" if op["execution_role"] == "execute" else "_assist"))
-            group = groups.setdefault((design["id"], bucket), {"design":design, "bucket":bucket, "options":{}})
-            option = group["options"].setdefault(op["id"], {"operation":deepcopy(op), "catalog_status":match["status"],
-                    "missing_capability_evidence":deepcopy(match["missing_capability_evidence"]), "matched_requests":[]})
-            option["missing_capability_evidence"] = sorted(set(option["missing_capability_evidence"]) | set(match["missing_capability_evidence"]))
-            if option["missing_capability_evidence"]:
-                option["catalog_status"] = "needs_evidence"
-            option["matched_requests"].append(deepcopy(request))
+    for block, result in zip(plan["blocks"], block_results):
+        permitted = {(o["design_id"], o["execution_role"]) for o in result["options"]}
+        if not any(o["execution_role"] == "execute" for o in result["options"]):
+            gaps.append({"id": block["id"] + "-coverage", "block_id": block["id"],
+                "message": "No executor record covers every clause in this planned block. Keep CPU behavior; request evidence or explicitly revise the plan."})
+        for clause_result in result["capability_results"]:
+            for rid in clause_result["member_request_ids"]:
+                request = requests_by_id[rid]
+                trace.append({"block_id": block["id"], "request": deepcopy(request), "query": clause_result["query"],
+                              "matches": deepcopy(clause_result["matches"]), "excluded": deepcopy(clause_result["excluded"])})
+                for match in clause_result["matches"]:
+                    op, design = match["operation"], designs[match["design_id"]]
+                    if op["support"] == "unknown" or (design["id"], op["execution_role"]) not in permitted:
+                        continue
+                    bucket = ("mapping_reference" if design["record_kind"] == "mapping" else
+                              request["purpose"] + ("_execute" if op["execution_role"] == "execute" else "_assist"))
+                    group = groups.setdefault((block["id"], design["id"], bucket, op["execution_role"]),
+                        {"design": design, "bucket": bucket, "block": block, "role": op["execution_role"], "options": {}})
+                    option = group["options"].setdefault(op["id"], {"operation": deepcopy(op), "catalog_status": match["status"],
+                        "missing_capability_evidence": deepcopy(match["missing_capability_evidence"]), "matched_requests": []})
+                    option["missing_capability_evidence"] = sorted(set(option["missing_capability_evidence"]) | set(match["missing_capability_evidence"]))
+                    if option["missing_capability_evidence"]:
+                        option["catalog_status"] = "needs_evidence"
+                    option["matched_requests"].append(deepcopy(request))
 
     preferred_pattern = "indirect" if case["signals"].get("reported_large_jumps") else "sequential" if case["signals"].get("reported_near_unit_indices") else None
     def order(group):
         options = list(group["options"].values())
         missing = sum(len(o["missing_capability_evidence"]) + sum(len(r["missing_workload_evidence"]) for r in o["matched_requests"]) for o in options)
         code = any(o["operation"]["support"] == "code_observed" for o in options)
-        return (missing > 0, not code, group["design"]["id"])
-    # Reserve exploration diversity before filling remaining slots. This is not performance ranking.
+        return (-len(group["block"]["member_request_ids"]), missing > 0, not code, group["design"]["id"], group["block"]["id"], group["role"])
+    # Offer one option per planned block before additional alternatives. This is
+    # coverage-oriented exploration, not a performance/cost rank.
     buckets = ["read_execute", "update_execute", "read_assist", "mapping_reference", "update_assist"]
-    ordered = []
-    lanes = {bucket:sorted([g for g in groups.values() if g["bucket"] == bucket], key=order) for bucket in buckets}
+    def interleave(values):
+        lanes = {bucket: sorted([g for g in values if g["bucket"] == bucket], key=order) for bucket in buckets}
+        output = []
+        while any(lanes.values()):
+            for bucket in buckets:
+                if lanes[bucket]:
+                    output.append(lanes[bucket].pop(0))
+        return output
+    ordered = interleave(list(groups.values()))
+    lanes = {b["id"]: interleave([g for g in groups.values() if g["block"]["id"] == b["id"] and
+             (focus_design_ids is None or g["design"]["id"] in focus_design_ids)]) for b in plan["blocks"]}
+    eligible = []
     while any(lanes.values()):
-        for bucket in buckets:
-            if lanes[bucket]: ordered.append(lanes[bucket].pop(0))
-    eligible = [g for g in ordered if focus_design_ids is None or g["design"]["id"] in focus_design_ids]
+        for block in plan["blocks"]:
+            if lanes[block["id"]]:
+                eligible.append(lanes[block["id"]].pop(0))
     selected = eligible[:max_candidates-1]
+    if block_choices is not None:
+        if not isinstance(block_choices, list) or not all(isinstance(c, dict) for c in block_choices):
+            raise RequestError("Block choices must be a list of mappings.")
+        ids = [c.get("block_id") for c in block_choices]
+        if len(ids) != len(set(ids)) or set(ids) != {b["id"] for b in plan["blocks"]}:
+            raise RequestError("Choose each planned block exactly once, including explicitly retained CPU blocks.")
+        selected = []
+        for choice in block_choices:
+            if choice.get("action") == "retain_cpu" and set(choice) == {"block_id", "action"}:
+                continue
+            if set(choice) != {"block_id", "action", "design_id", "execution_role"} or choice.get("action") != "catalog_option":
+                raise RequestError("Only explicit CPU retention or one catalog design/role per block is accepted.")
+            matches = [g for g in eligible if g["block"]["id"] == choice["block_id"] and
+                       g["design"]["id"] == choice["design_id"] and g["role"] == choice["execution_role"]]
+            if len(matches) != 1:
+                raise RequestError("Selected design/role does not cover the complete block: " + str(choice))
+            selected.append(matches[0])
+        if len(selected) > max_candidates-1:
+            raise RequestError("Explicit block choices exceed the candidate budget.")
+        selected.sort(key=lambda g: [b["id"] for b in plan["blocks"]].index(g["block"]["id"]))
     selection = []
     for group in ordered:
-        selection.append({"design_id":group["design"]["id"], "scope":group["bucket"],
+        selection.append({"block_id":group["block"]["id"], "execution_role": group["role"], "design_id":group["design"]["id"], "scope":group["bucket"],
                           "operation_ids":sorted(group["options"]),
                           "decision":"selected_for_exploration" if any(group is g for g in selected) else
+                                     "not_chosen_in_saved_proposal" if block_choices is not None else
                                      "outside_requested_design_focus" if focus_design_ids is not None and group["design"]["id"] not in focus_design_ids else "eligible_outside_candidate_budget"})
+
+    for result in block_results:
+        chosen = [g for g in selected if g["block"]["id"] == result["block_id"]]
+        result["selected_for_handoff"] = [{"design_id":g["design"]["id"], "scope":g["bucket"], "execution_role":g["role"]} for g in chosen]
+        result["handoff_status"] = "options_selected" if chosen else "retained_on_cpu_by_proposal" if block_choices is not None else "none_within_focus_and_global_budget"
 
     baseline = {"id":case["case_id"]+"--cpu-baseline", "catalog_entry":"cpu-baseline", "status":"comparison_unmeasured",
                 "rationale":"Keep unchanged TDStep as the comparison. This does not assert that an accelerator is better.",
@@ -205,9 +248,10 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
         update_offload = bucket == "update_execute"
         status = "needs_evidence" if missing else "mapping_reference" if bucket == "mapping_reference" else "assistance_only" if bucket.endswith("assist") else "conditional"
         candidates.append({
-            "id":case["case_id"]+"--"+design["id"]+"--"+bucket, "catalog_entry":design["id"]+":"+bucket,
+            "id":case["case_id"]+"--"+design["id"]+"--"+bucket+"--"+group["block"]["id"]+"--"+group["role"], "catalog_entry":design["id"]+":"+bucket,
+            "planned_block_id":group["block"]["id"], "planned_block":deepcopy(group["block"]),
             "status":status, "catalog_design_id":design["id"], "catalog_design_revision":design["revision"], "catalog_record_kind":design["record_kind"],
-            "candidate_scope":bucket, "rationale":"Source-scoped operation matches for this workload. This is an interface exploration option, not a composed accelerator, legal rewrite, or performance winner.",
+            "candidate_scope":bucket, "rationale":"One source-scoped design/role covers all typed clauses of this planned capability group. This is an interface exploration option, not a composed accelerator, legal rewrite, or performance winner.",
             "target_access_ids":sorted({r["access_id"] for o in options for r in o["matched_requests"]}),
             "target_statement_ids":sorted({sid for o in options for r in o["matched_requests"] for sid in r["statement_ids"]}),
             "request_groups":candidate_groups(workload_groups, options),
@@ -231,17 +275,18 @@ def select_evidence_candidates(case, catalog, catalog_ref, catalog_digest, max_c
         "representation":"source_scoped_operation_interface_views", "input_ref":case["input_ref"], "input_sha256":case["input_sha256"],
         "input_revision":case["source_binding"]["reported_revision"], "catalog_ref":catalog_ref, "catalog_revision":catalog["revision"], "catalog_sha256":catalog_digest,
         "kernel_id":case["case_id"], "capability_requests":requests,
+        "hardware_plan":plan, "proposal_block_choices":deepcopy(block_choices),
         "request_groups":workload_groups,
         "workload_summary":{key:deepcopy(case.get(key)) for key in ("kernel", "source_binding", "source_context", "evidence_status", "rmw", "profiling_provenance", "frontier_evolution_profile", "profiling_context", "reported_counters", "methodology")},
         "interpretation_notes":["Offline evidence retrieval and explicit exploration ordering; no LLM or evaluator calls.",
                                 "Each box is a catalog operation interface, not an inferred physical component. Unconnected operation options are not a proved composition.",
                                 "Reference sizes are preserved as references, not chosen tuning values. Unknown domains stay unknown.",
                                 "Mutable read targets are not assumed immutable. CAS support is queried separately; assistance and fetch-old behavior do not establish CAS execution.",
-                                "One slot each for reads, update execution and read assistance is considered before remaining alternatives, subject to budget. Within scopes, evidence completeness/code support precede stable IDs; none is a performance rank."],
+                                "Groups are planned before lookup. Round-robin selection gives one option per planned block before additional alternatives, subject to the global budget and focus. Within each block, execution/assistance lanes and evidence completeness/code support precede stable IDs; none is a performance rank."],
         "candidates":candidates, "clarification_requests":questions,
         "selection_policy":{"preferred_read_shape_for_display":preferred_pattern, "category_order":buckets, "max_candidates_including_baseline":max_candidates,
-                            "focus_design_ids":deepcopy(focus_design_ids)},
+                            "focus_design_ids":deepcopy(focus_design_ids), "block_allocation":"round_robin_before_additional_alternatives"},
     }
     validate_request(request)
-    return request, {"capability_queries":trace, "candidate_selection":selection,
+    return request, {"hardware_plan":plan, "block_catalog_results":block_results, "capability_queries":trace, "candidate_selection":selection,
         "scope":"Matching evidence and remaining conditions only. Unsupported/unknown operations are retained; no performance or composition proof."}

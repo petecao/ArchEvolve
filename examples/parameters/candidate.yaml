@@ -1,0 +1,23 @@
+id: synthetic-finite-buffer
+catalog_design_id: synthetic-buffer
+catalog_design_revision: fixture-1
+parameter_contract:
+- id: lanes
+  unit: lanes
+  state: unknown
+  value: null
+  domain: null
+  claim_refs: []
+  notes: Synthetic knob, not DX100/MAPLE.
+- id: depth
+  unit: entries_per_lane
+  state: unknown
+  value: null
+  domain: null
+  claim_refs: []
+  notes: Synthetic knob, not DX100/MAPLE.
+source_evidence:
+  claims: {}
+hardware:
+  note: Synthetic fixture only; no implementation
+requirements: []
