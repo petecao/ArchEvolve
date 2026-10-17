@@ -1,0 +1,52 @@
+{
+  "author_controls_retained_not_rerun": {
+    "actual_controller_bootstrap_or_resource_limits_executed": false,
+    "child_events": [],
+    "entry_sha256": "91db08f4cc17b8af0448b94c72ed074b287283c63b1f5e562c1ed9a487f960e4",
+    "errors": 0,
+    "failures": 0,
+    "skips": 0,
+    "tests": 7
+  },
+  "date": "2026-10-16 ET",
+  "entry_sha256": "91db08f4cc17b8af0448b94c72ed074b287283c63b1f5e562c1ed9a487f960e4",
+  "finding": {
+    "description": "Deadline and extent are gated before each write, but successful final result close and subsequent pin/print have no settled deadline/topology/aggregate check. Delayed close or final hash can cross900s while main returns normally with completion true. Outer960s timeout does not enforce the advertised900s internal criterion.",
+    "function": "main/save/Sink.close final success publication",
+    "priority": 2,
+    "required_repair": "Freeze a successor with settled final-publication deadline/extent gates and a fail-closed completion/publication policy; test delayed close/final pin. Preserve current bytes. No original raw mutation is warranted."
+  },
+  "no_actual_normalization_or_remote_execution": true,
+  "otherwise_reviewed": [
+    "Closed new root/exclusive fixed paths and original read-only audit; source/policy/normalizer/census embeds and bounded primitive execution; original V10 refusal/four phases identity preserved.",
+    "Original gzip complete decoder and source token/census matching, normalized gzip full inverse, no whole AST DOM/file, independent source/runtime before/after pins.",
+    "64KiB projected retained quota,128MiB physical/256MiB aggregate/1MiB reserve/50GiB floor and separate192MiB expanded caps remain explicit.",
+    "No compiler/native/solver/source/ABI/public/full-ticket admission; release-source-to-binary/OS/loader and original full compiler provenance remain separate."
+  ],
+  "packet_sha256": "e79b5f08dde0be66b2ed1baec2feac30d9fe63ece45d1566700c895d2ddce9d1",
+  "physical_pins_checked": 16,
+  "pure_scripted_counterexample": {
+    "end_seconds": 901,
+    "events": [
+      [
+        "open",
+        "result.json",
+        true
+      ],
+      [
+        "write",
+        32,
+        899.9
+      ],
+      [
+        "close",
+        901
+      ]
+    ],
+    "only_save_function_AST_executed": true,
+    "real_file_or_main_or_normalizer_or_compiler_or_child_or_network_execution": false,
+    "save_returned_successfully": true,
+    "start_seconds": 899.9
+  },
+  "verdict": "HOLD_FINALIZATION_REPAIR_REQUIRED"
+}

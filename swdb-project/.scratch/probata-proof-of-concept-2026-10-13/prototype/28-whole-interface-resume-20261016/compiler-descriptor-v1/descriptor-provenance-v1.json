@@ -1,0 +1,89 @@
+{
+  "admitted_runtime_policy": {
+    "bytes": 666177,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/linux_compiler_capture_policy_v10.json",
+    "sha256": "8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517"
+  },
+  "date": "2026-10-16 ET",
+  "descriptor": {
+    "bytes": 3549,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/expected-absolute-compiler-descriptor-v1.json",
+    "sha256": "7ef1f44848dd60dae9a9732ce49752209197e80e1afcd3720649d173e386aba3"
+  },
+  "exact_derivation": {
+    "compiler_selection_from_policy": [
+      "command",
+      "version",
+      "wrapper",
+      "driver"
+    ],
+    "complete_inverse_recovers_original_runtime_value": true,
+    "justification": "Original command_executable path/hash equal the exact selected physical wrapper in admitted policy. This is a prospective absolute-selector normalization, not observation that the original alias probe used absolute argv.",
+    "only_runtime_change": {
+      "field": "command",
+      "new": [
+        "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+      ],
+      "old": [
+        "clang++"
+      ]
+    },
+    "original_tool_alias_verbatim": [
+      "clang++"
+    ],
+    "other_six_runtime_leaves_exact": true,
+    "runtime_source": "exact parsed original runtime object",
+    "top_level_keys": [
+      "schema",
+      "command",
+      "version",
+      "wrapper",
+      "driver",
+      "runtime_identity"
+    ]
+  },
+  "limits": [
+    "G624 remains a preconsumer loader-environment refusal; this metadata read does not alter its outcome.",
+    "No fresh compiler/version/runtime probe, loader-startup equivalence, source/ABI/call/model/native/public/new0.2/full-ticket acceptance is inferred.",
+    "This projected expected descriptor is not the original compiler command-group observation, and the original tool/runtime alias remains preserved."
+  ],
+  "passive_read": {
+    "exit_code": 0,
+    "local_wall_seconds": 0.690600417,
+    "native_compiler_solver_version_query": false,
+    "raw_write": false,
+    "stable_metadata": true
+  },
+  "required_before_public_use": [
+    "Root explicitly selects this exact descriptor in the prospective profile.",
+    "Fresh guard rechecks the exact physical wrapper/driver and runtime inputs before/after.",
+    "Fresh job uses the absolute singleton compiler command and actual public method/runtime identity recomputation must match this prospective expected descriptor."
+  ],
+  "schema": "prospective-root-selected-compiler-descriptor-derivation-1",
+  "source_read_stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/passive-read-stderr-v1.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_read_stdout": {
+    "bytes": 3058,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/passive-read-stdout-v1.json",
+    "sha256": "7bd1f63df8a11af79e4ce1d4066e0e2119a199267878354cdc25bb2f780d6f37"
+  },
+  "source_reader": {
+    "bytes": 2257,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/read_g624_provenance_v1.py",
+    "sha256": "b7a82aabc2d201658efc75deab7e5481ab4fb190a4664cc2c249c9f4736f835d"
+  },
+  "source_remote": {
+    "bytes": 3368,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v2/runtime-provenance.json",
+    "sha256": "88b89c657b024a9d2d22a7ebe2e18ee7cc9e0e23756952f3c672610bb6a4144c"
+  },
+  "source_runtime_value_projection": {
+    "bytes": 2634,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/retained-runtime-value-projection-v1.json",
+    "sha256": "59ecc517f0b0be8006d002bc92274cf15d03ecb0da3ac0929a4f7ff97ac2e205"
+  },
+  "state": "AWAITING_ROOT_SELECTION"
+}

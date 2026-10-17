@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "base_sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243",
+      "path": "swdb/c_lowering.py",
+      "proposed_sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+    },
+    {
+      "base_sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3",
+      "path": "swdb/cbmc_translator.py",
+      "proposed_sha256": "9319dea126f186f64aeec28d51ac6732fa50b8ad4b70787a977ab5bb5f9c3fbb"
+    },
+    {
+      "base_sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436",
+      "path": "swdb/proof_semantics.py",
+      "proposed_sha256": "22c2f2bbe14064c5abf14177902c45b9be8a8cc40b5411e7a770465a9feee597"
+    },
+    {
+      "base_sha256": "394fca77dba50ba42f1d043efd2e940a152b330a8a2e87d178f121052f53e9cf",
+      "path": "swdb/formal_frame.py",
+      "proposed_sha256": "bcee46cf9e585f1b7a16e7c8f89e7667a279359bc8db3865f87d04d522d56a98"
+    },
+    {
+      "base_sha256": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a",
+      "path": "swdb/cbmc_adapter.py",
+      "proposed_sha256": "dc5a73344cb65f670b0f3ab1f554a7aeb76c175e95e74a5879cd995f644d59c5"
+    },
+    {
+      "base_sha256": "e65f083540d0c4aafca8c2a2183f71dad644fd314aff02ff04cd2331fabcc79d",
+      "path": "swdb/proof_setup.py",
+      "proposed_sha256": "f85605cd87561bbaadedcfcd4deb2fa00d3c967dd3031cb9f0a6c27bb4d64af7"
+    }
+  ],
+  "new_registry_runtime_ingress_integration": "pending separate explicit deltas",
+  "preserved_root_runtime_inputs": [
+    {
+      "bytes": 104308,
+      "path": "swdb/wp_adapter.py",
+      "sha256": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229"
+    },
+    {
+      "bytes": 64171,
+      "path": "swdb/wp_pointer_bounds.py",
+      "sha256": "62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241"
+    },
+    {
+      "bytes": 10126,
+      "path": "swdb/standard_vector_member_view.py",
+      "sha256": "6636e5857616e8b93e26c1f0b9c0fed26ef5e9ec565e116586c683625c6fe966"
+    }
+  ],
+  "proof_setup_complete_inverse_restores_published_root_bytes": true,
+  "scientific_execution": false,
+  "shared_production_written": false,
+  "source_commit": "1c45737f6cff9b43731d8da530be869a7e5d745e",
+  "source_route_hooks_unchanged_from_reviewed_v3": true
+}

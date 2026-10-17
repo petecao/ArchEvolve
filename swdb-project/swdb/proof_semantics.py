@@ -136,6 +136,9 @@ def ghost_declarations(text):
 
 def check(library, entry_id, data, error):
     """The checks of an entry that covers calls (called by swdb.formal_frame for proof_semantics entries)."""
+    from swdb import dx100_whole_checked
+    if dx100_whole_checked.checked(data):
+        return dx100_whole_checked.check(library, data, error)
     rules = {r.get("id") for r in data.get("rules") or [] if isinstance(r, dict)}
     interface = data.get("hardware_interface")
     calls = data.get("calls")
@@ -227,9 +230,17 @@ def check(library, entry_id, data, error):
     return _typecheck(library, entry_id, data, texts, error)
 
 
+def _require_summary_form(data):
+    from swdb import dx100_whole_checked
+    if dx100_whole_checked.checked(data):
+        from swdb.proof import AdapterError
+        raise AdapterError("whole-interface checked bodies have no WP/ACSL summary form")
+
+
 def acsl_source(data, texts, rows=None, *, constants=None):
     """The C file Frama-C type-checks: constants, the ghost block, the device state, the logic definitions, then each
     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
+    _require_summary_form(data)
     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
     from swdb.dx100_source_selector import pure_layout
     from swdb.dx100_size_source import size_layout
@@ -259,6 +270,7 @@ def wp_prelude(library, entry_id, called, defines=()):
     constants, the probe macros (each a call of a contracted probe function), the ghost state (ghost.acsl as
     written), the device state, the logic, and the contract of every call and query the unit makes."""
     data = library.get(entry_id)
+    _require_summary_form(data)
     constants = _constants(data, defines)
     texts = {"ghost.acsl": library.resolve(data["ghost"]["acsl"]).read_text(),
              "model.state": library.resolve(data["model"]["state"]).read_text(),
@@ -279,6 +291,7 @@ def wp_prelude(library, entry_id, called, defines=()):
 def wp_locations(library, entry_id, defines=()):
     """The ACSL locations of the ghost and device state (a unit that calls into the semantics assigns them)."""
     data = library.get(entry_id)
+    _require_summary_form(data)
     found = []
     decls = [d for _n, d in ghost_declarations(library.resolve(data["ghost"]["acsl"]).read_text())]
     state = library.resolve(data["model"]["state"]).read_text()
@@ -438,6 +451,7 @@ def record_assumptions(library, entry_id, sha256):
 def lowering_options(library):
     """The keyword arguments of `c_lowering.lower` for a unit that may call into a current proof semantics: its
     calls and queries as summaries (calls kept, prototype only) and the tile-pointer calls (hazard probes)."""
+    from swdb import dx100_whole_checked
     covered = covered_names(library)
     if not covered:
         return {}
@@ -445,7 +459,7 @@ def lowering_options(library):
                  for row in data.get('calls', []) if 'instances' in row}
     semantics = {"tile_pointer": {TILE_POINTER}, "calls": set(covered),
                  "refused_calls": {row["call"] for data in current(library).values()
-                                   for row in data.get("calls", []) if row.get("supported") is False}}
+                                   for row in data.get("calls", []) if row.get("supported") is False or dx100_whole_checked.checked(data)}}
     if instances:
         from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
         instances = {name: [{**v, 'definition': (dx100_initialized_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_initialized_register_source.KIND else dx100_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector.policy)(library, v['definition'])}
@@ -523,9 +537,18 @@ def _bounded_state(text, constants, *, constant_table=False):
     return re.sub(declaration, lambda _match: "\n".join(rows), text), objects
 
 
-def model_for(library, entry_id, defines=()):
+def model_for(library, entry_id, defines=(), *, source_unit=None):
     """The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults."""
     data = library.get(entry_id)
+    from swdb import dx100_whole_checked, dx100_checked_source
+    if dx100_whole_checked.checked(data):
+        if source_unit is None or source_unit.selection.entry_id != entry_id:
+            raise ValueError('whole checked model requires its exact complete source/receiver unit')
+        dx100_whole_checked.policy(library, data)
+        dx100_checked_source.recheck(source_unit)
+        return Model(**dx100_checked_source.model_fields(source_unit))
+    if source_unit is not None:
+        raise ValueError('a checked whole source unit cannot select a legacy model')
     constants = _constants(data, defines)
     parts = [f"/* Generated by swdb.proof_semantics: the C model of {entry_id} (version {data.get('version')}). */"]
     parts += [f"#define {name} {value}" for name, value in constants.items()]
@@ -554,7 +577,10 @@ def array_call_policies(library, defines=()):
     """
     from swdb import bounded_initialization, dx_array_domains
     found = {}
+    from swdb import dx100_whole_checked
     for entry in current(library):
+        if dx100_whole_checked.checked(library.get(entry)):
+            continue  # whole units gain no generic per-call or pointer exemptions
         model = model_for(library, entry, defines)
         policy = bounded_initialization._dx100_policy(library, model, defines)
         if policy is None:
@@ -570,7 +596,10 @@ def imported_call_policies(library, defines=()):
     """Every audited external call needs its exact prototype and model binding."""
     from swdb import bounded_initialization
     found = {}
+    from swdb import dx100_whole_checked
     for entry in current(library):
+        if dx100_whole_checked.checked(library.get(entry)):
+            continue  # whole units gain no generic per-call or pointer exemptions
         model = model_for(library, entry, defines)
         policy = bounded_initialization._dx100_policy(library, model, defines)
         if policy is None:

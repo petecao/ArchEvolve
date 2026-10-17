@@ -1,0 +1,45 @@
+{
+  "actual_executed": false,
+  "edits": [
+    {
+      "after": "kind_value=fields.get('kind',{});kind_identity={'value_kind':kind_value.get('kind','missing-or-ambiguous'),\n                            'ordered_merkle_sha256':kind_value.get('ordered_merkle_sha256'),\n                            'decoded_string_sha256':kind_value.get('scalar',{}).get('sha256')}\n                        event={'node_kind':node_kind,'node_kind_identity':kind_identity,'node_id':fields.get('id',{}).get('scalar',{}).get('text'),",
+      "before": "event={'node_kind':node_kind,'node_id':fields.get('id',{}).get('scalar',{}).get('text'),"
+    },
+    {
+      "after": "group=json.dumps({'node_kind_identity':kind_identity,'key_sha256':event['key_sha256'],'ordinal':item['ordinal'],'reason':reason},sort_keys=True,separators=(',',':'));self.groups[group]=self.groups.get(group,0)+1;need(len(self.groups)<=256,'bounded distinct duplicate role census')",
+      "before": "group=json.dumps([node_kind,item['key'][:256],item['ordinal'],reason],separators=(',',':'));self.groups[group]=self.groups.get(group,0)+1;need(len(self.groups)<=256,'bounded distinct duplicate role census')"
+    },
+    {
+      "after": "def publication(value,limit=32768):\n    \"\"\"Keep complete census hashes; omit display rows to fit the entire line.\"\"\"\n    def encode(item):return json.dumps(item,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False)\n    complete=encode(value);result=dict(value);report=dict(value['census']);result['census']=report\n    report['samples']=list(report['samples']);report['duplicate_groups']=list(report['duplicate_groups'])\n    result['publication']={'schema':'bounded-complete-census-publication-2','stdout_limit_bytes':limit,\n        'complete_report_bytes':len(complete.encode()),'complete_report_sha256':hashlib.sha256(complete.encode()).hexdigest(),\n        'omitted_event_display_rows':0,'omitted_group_display_rows':0,'complete_census_digests_preserved':True}\n    while True:\n        text=encode(result)\n        if len(text.encode())+1<=limit:return text\n        if report['duplicate_groups']:\n            report['duplicate_groups'].pop();result['publication']['omitted_group_display_rows']+=1\n        elif report['samples']:\n            report['samples'].pop();result['publication']['omitted_event_display_rows']+=1\n        else:raise Refused('fixed compact census metadata exceeds output cap')\n\nif __name__=='__main__':",
+      "before": "if __name__=='__main__':"
+    },
+    {
+      "after": "print(publication(inspect(sys.argv[1])))",
+      "before": "value=json.dumps(inspect(sys.argv[1]),sort_keys=True,allow_nan=False);need(len(value.encode())<=32768,'compact metadata output cap exceeded');print(value)"
+    }
+  ],
+  "exact_text_inverse": true,
+  "predecessor": {
+    "bytes": 21433,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v1/complete_duplicate_census_v1.py",
+    "sha256": "ff5e7424155960f2f5425d5f942fe99aa69b27f43e740ac4c8620c3590aadd49"
+  },
+  "successor": {
+    "bytes": 22965,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v2/complete_duplicate_census_v2.py",
+    "sha256": "d265c49485057cbd43cfd913cfc905683090866174b45d863f22121331d997b3"
+  },
+  "unchanged_top_level_AST": [
+    "no_child",
+    "Refused",
+    "DuplicateFound",
+    "need",
+    "position",
+    "pin",
+    "document",
+    "load",
+    "NullSink",
+    "role",
+    "inspect"
+  ]
+}

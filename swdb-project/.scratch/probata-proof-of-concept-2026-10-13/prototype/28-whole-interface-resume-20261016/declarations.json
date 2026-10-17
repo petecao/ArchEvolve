@@ -1,0 +1,1265 @@
+[
+  {
+    "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+    "declaration": "inline T1 *get_cacheable_tile_pointer(int SPD_id)",
+    "file": "MAA.hpp",
+    "formal_arity": 1,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA.hpp",
+    "header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+    "line": 57,
+    "line_end": 59,
+    "minimum_arity": 1,
+    "name": "get_cacheable_tile_pointer",
+    "parameters": [
+      {
+        "default": null,
+        "name": "SPD_id",
+        "type": "int"
+      }
+    ],
+    "returns": "T1 *",
+    "source_range": [
+      1028,
+      1157
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+    "declaration": "inline volatile T1 *get_noncacheable_tile_pointer(int SPD_id)",
+    "file": "MAA.hpp",
+    "formal_arity": 1,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA.hpp",
+    "header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+    "line": 61,
+    "line_end": 63,
+    "minimum_arity": 1,
+    "name": "get_noncacheable_tile_pointer",
+    "parameters": [
+      {
+        "default": null,
+        "name": "SPD_id",
+        "type": "int"
+      }
+    ],
+    "returns": "volatile T1 *",
+    "source_range": [
+      1178,
+      1322
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "3781b69d4af7249210a12448f83b9b5cd125b593ad289e9d3160a3ce936b0fff",
+    "declaration": "void add_mem_region(void *start, void *end)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 2,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 56,
+    "line_end": 58,
+    "minimum_arity": 2,
+    "name": "add_mem_region",
+    "parameters": [
+      {
+        "default": null,
+        "name": "start",
+        "type": "void *"
+      },
+      {
+        "default": null,
+        "name": "end",
+        "type": "void *"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      1886,
+      1984
+    ],
+    "template": false
+  },
+  {
+    "body_sha256": "b310e561e9966a6190eeece3c13274e4123b2967718bc86babf5990df87c73c5",
+    "declaration": "void clear_mem_region()",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 0,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 60,
+    "line_end": 69,
+    "minimum_arity": 0,
+    "name": "clear_mem_region",
+    "parameters": [],
+    "returns": "void",
+    "source_range": [
+      1986,
+      2608
+    ],
+    "template": false
+  },
+  {
+    "body_sha256": "2a9e2e96bbeb7f0c7093c6a3501b5e4d67654d8d360767ce83eb17df57df8eac",
+    "declaration": "void alloc_MAA()",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 0,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 71,
+    "line_end": 91,
+    "minimum_arity": 0,
+    "name": "alloc_MAA",
+    "parameters": [],
+    "returns": "void",
+    "source_range": [
+      2610,
+      3512
+    ],
+    "template": false
+  },
+  {
+    "body_sha256": "cf708b8c3413e2d8ca92a4fc6c8791df674b603b46a452293b4f0992ef4d4af3",
+    "declaration": "inline void init_MAA()",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 0,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 93,
+    "line_end": 97,
+    "minimum_arity": 0,
+    "name": "init_MAA",
+    "parameters": [],
+    "returns": "void",
+    "source_range": [
+      3514,
+      3600
+    ],
+    "template": false
+  },
+  {
+    "body_sha256": "963dad36a357d2f9063c552ebf4080f5a865896021db3519f3c365d36f507ceb",
+    "declaration": "void wait_ready(int SPD_id)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 1,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 98,
+    "line_end": 101,
+    "minimum_arity": 1,
+    "name": "wait_ready",
+    "parameters": [
+      {
+        "default": null,
+        "name": "SPD_id",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      3601,
+      3755
+    ],
+    "template": false
+  },
+  {
+    "body_sha256": "4a0fd5811d735b68236c767b371fcd289c874ce0ebb7f6989a38ce3e8df1a0ab",
+    "declaration": "inline volatile uint16_t get_tile_size(int SPD_id)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 1,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 102,
+    "line_end": 106,
+    "minimum_arity": 1,
+    "name": "get_tile_size",
+    "parameters": [
+      {
+        "default": null,
+        "name": "SPD_id",
+        "type": "int"
+      }
+    ],
+    "returns": "volatile uint16_t",
+    "source_range": [
+      3756,
+      3920
+    ],
+    "template": false
+  },
+  {
+    "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+    "declaration": "inline volatile T1 get_reg(int reg_id)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 1,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 108,
+    "line_end": 112,
+    "minimum_arity": 1,
+    "name": "get_reg",
+    "parameters": [
+      {
+        "default": null,
+        "name": "reg_id",
+        "type": "int"
+      }
+    ],
+    "returns": "volatile T1",
+    "source_range": [
+      3941,
+      4123
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+    "declaration": "inline void set_reg(int reg_id, T1 data)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 2,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 114,
+    "line_end": 117,
+    "minimum_arity": 2,
+    "name": "set_reg",
+    "parameters": [
+      {
+        "default": null,
+        "name": "reg_id",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      4144,
+      4299
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+    "declaration": "inline int get_new_reg(T1 data)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 1,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 119,
+    "line_end": 127,
+    "minimum_arity": 1,
+    "name": "get_new_reg",
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1"
+      }
+    ],
+    "returns": "int",
+    "source_range": [
+      4320,
+      4624
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+    "declaration": "inline int get_new_reg()",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 0,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 129,
+    "line_end": 136,
+    "minimum_arity": 0,
+    "name": "get_new_reg",
+    "parameters": [],
+    "returns": "int",
+    "source_range": [
+      4645,
+      4911
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+    "declaration": "inline int get_new_tile()",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 0,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 138,
+    "line_end": 145,
+    "minimum_arity": 0,
+    "name": "get_new_tile",
+    "parameters": [],
+    "returns": "int",
+    "source_range": [
+      4932,
+      5199
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+    "declaration": "void maa_const(T1 data, int dst_reg)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 2,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 147,
+    "line_end": 149,
+    "minimum_arity": 2,
+    "name": "maa_const",
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1"
+      },
+      {
+        "default": null,
+        "name": "dst_reg",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      5220,
+      5335
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+    "declaration": "void print_tile(int SPD_id)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 1,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 152,
+    "line_end": 159,
+    "minimum_arity": 1,
+    "name": "print_tile",
+    "parameters": [
+      {
+        "default": null,
+        "name": "SPD_id",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      5357,
+      5650
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+    "declaration": "DataType get_data_type()",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 0,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 165,
+    "line_end": 173,
+    "minimum_arity": 0,
+    "name": "get_data_type",
+    "parameters": [],
+    "returns": "DataType",
+    "source_range": [
+      5732,
+      6250
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+    "declaration": "inline void maa_alu_scalar(int src1_tile, int src2_reg, int dst_tile, Operation_t op, int cond_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 5,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 175,
+    "line_end": 192,
+    "minimum_arity": 4,
+    "name": "maa_alu_scalar",
+    "packet": {
+      "base_parameter": null,
+      "dtype": "T1",
+      "memory_access": 0,
+      "opcode": 8,
+      "opcode_name": "ALU_SCALAR",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": false,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "src2_reg"
+        },
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "src1_tile"
+        },
+        "src2": null
+      },
+      "operation": "op"
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "src1_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "src2_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "dst_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "op",
+        "type": "Operation_t"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      6271,
+      8164
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+    "declaration": "inline void maa_alu_vector(int src1_tile, int src2_tile, int dst_tile, Operation_t op, int cond_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 5,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 194,
+    "line_end": 211,
+    "minimum_arity": 4,
+    "name": "maa_alu_vector",
+    "packet": {
+      "base_parameter": null,
+      "dtype": "T1",
+      "memory_access": 0,
+      "opcode": 9,
+      "opcode_name": "ALU_VECTOR",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": false,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "src1_tile"
+        },
+        "src2": {
+          "optional": false,
+          "parameter": "src2_tile"
+        }
+      },
+      "operation": "op"
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "src1_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "src2_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "dst_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "op",
+        "type": "Operation_t"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      8185,
+      10079
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+    "declaration": "inline void maa_alu_reduce(int src1_tile, int dst_reg, Operation_t op, int cond_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 4,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 213,
+    "line_end": 230,
+    "minimum_arity": 3,
+    "name": "maa_alu_reduce",
+    "packet": {
+      "base_parameter": null,
+      "dtype": "T1",
+      "memory_access": 0,
+      "opcode": 10,
+      "opcode_name": "ALU_REDUCE",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": null,
+        "dst2": null,
+        "rdst1": {
+          "optional": false,
+          "parameter": "dst_reg"
+        },
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "src1_tile"
+        },
+        "src2": null
+      },
+      "operation": "op"
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "src1_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "dst_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "op",
+        "type": "Operation_t"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      10100,
+      11978
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+    "declaration": "inline void maa_stream_load(T1 *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 6,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 232,
+    "line_end": 249,
+    "minimum_arity": 5,
+    "name": "maa_stream_load",
+    "packet": {
+      "base_parameter": "data",
+      "dtype": "T1",
+      "memory_access": 1,
+      "opcode": 0,
+      "opcode_name": "STREAM_LD",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": false,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "min_reg"
+        },
+        "rsrc2": {
+          "optional": false,
+          "parameter": "max_reg"
+        },
+        "rsrc3": {
+          "optional": false,
+          "parameter": "stride_reg"
+        },
+        "src1": null,
+        "src2": null
+      },
+      "operation": null
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1 *"
+      },
+      {
+        "default": null,
+        "name": "min_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "max_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "stride_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "dst_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      11999,
+      13900
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+    "declaration": "inline void maa_stream_store(T1 *data, int min_reg, int max_reg, int stride_reg, int src_tile, int cond_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 6,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 251,
+    "line_end": 268,
+    "minimum_arity": 5,
+    "name": "maa_stream_store",
+    "packet": {
+      "base_parameter": "data",
+      "dtype": "T1",
+      "memory_access": 2,
+      "opcode": 1,
+      "opcode_name": "STREAM_ST",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": null,
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "min_reg"
+        },
+        "rsrc2": {
+          "optional": false,
+          "parameter": "max_reg"
+        },
+        "rsrc3": {
+          "optional": false,
+          "parameter": "stride_reg"
+        },
+        "src1": {
+          "optional": false,
+          "parameter": "src_tile"
+        },
+        "src2": null
+      },
+      "operation": null
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1 *"
+      },
+      {
+        "default": null,
+        "name": "min_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "max_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "stride_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "src_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      13921,
+      15823
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+    "declaration": "inline void maa_indirect_load(T1 *data, int idx_tile, int dst_tile, int cond_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 4,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 270,
+    "line_end": 287,
+    "minimum_arity": 3,
+    "name": "maa_indirect_load",
+    "packet": {
+      "base_parameter": "data",
+      "dtype": "T1",
+      "memory_access": 1,
+      "opcode": 2,
+      "opcode_name": "INDIR_LD",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": false,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": null
+      },
+      "operation": null
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1 *"
+      },
+      {
+        "default": null,
+        "name": "idx_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "dst_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      15844,
+      17719
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+    "declaration": "inline void maa_indirect_store_vector(T1 *data, int idx_tile, int src_tile, int cond_tile = -1, int dst_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 5,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 289,
+    "line_end": 306,
+    "minimum_arity": 3,
+    "name": "maa_indirect_store_vector",
+    "packet": {
+      "base_parameter": "data",
+      "dtype": "T1",
+      "memory_access": 2,
+      "opcode": 4,
+      "opcode_name": "INDIR_ST_VECTOR",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": {
+          "optional": false,
+          "parameter": "src_tile"
+        }
+      },
+      "operation": null
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1 *"
+      },
+      {
+        "default": null,
+        "name": "idx_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "src_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "dst_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      17740,
+      19642
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+    "declaration": "inline void maa_indirect_store_scalar(T1 *data, int idx_tile, int src_reg, int cond_tile = -1, int dst_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 5,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 308,
+    "line_end": 325,
+    "minimum_arity": 3,
+    "name": "maa_indirect_store_scalar",
+    "packet": {
+      "base_parameter": "data",
+      "dtype": "T1",
+      "memory_access": 2,
+      "opcode": 3,
+      "opcode_name": "INDIR_ST_SCALAR",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "src_reg"
+        },
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": null
+      },
+      "operation": null
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1 *"
+      },
+      {
+        "default": null,
+        "name": "idx_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "src_reg",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "dst_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      19663,
+      21564
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+    "declaration": "inline void maa_indirect_rmw_vector(T1 *data, int idx_tile, int src_tile, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 6,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 327,
+    "line_end": 344,
+    "minimum_arity": 4,
+    "name": "maa_indirect_rmw_vector",
+    "packet": {
+      "base_parameter": "data",
+      "dtype": "T1",
+      "memory_access": 2,
+      "opcode": 6,
+      "opcode_name": "INDIR_RMW_VECTOR",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": null,
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": {
+          "optional": false,
+          "parameter": "src_tile"
+        }
+      },
+      "operation": "o_type"
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1 *"
+      },
+      {
+        "default": null,
+        "name": "idx_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "src_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "o_type",
+        "type": "Operation_t"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "dst_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      21585,
+      23505
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+    "declaration": "inline void maa_indirect_rmw_scalar(T1 *data, int idx_tile, int src_reg, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 6,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 346,
+    "line_end": 363,
+    "minimum_arity": 4,
+    "name": "maa_indirect_rmw_scalar",
+    "packet": {
+      "base_parameter": "data",
+      "dtype": "T1",
+      "memory_access": 2,
+      "opcode": 5,
+      "opcode_name": "INDIR_RMW_SCALAR",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": true,
+          "parameter": "dst_tile"
+        },
+        "dst2": null,
+        "rdst1": null,
+        "rdst2": null,
+        "rsrc1": {
+          "optional": false,
+          "parameter": "src_reg"
+        },
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "idx_tile"
+        },
+        "src2": null
+      },
+      "operation": "o_type"
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "data",
+        "type": "T1 *"
+      },
+      {
+        "default": null,
+        "name": "idx_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "src_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "o_type",
+        "type": "Operation_t"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "dst_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      23526,
+      25445
+    ],
+    "template": true
+  },
+  {
+    "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+    "declaration": "inline void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int dst_i_tile, int dst_j_tile, int cond_tile = -1)",
+    "file": "MAA_gem5.hpp",
+    "formal_arity": 8,
+    "header_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+    "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+    "line": 366,
+    "line_end": 383,
+    "minimum_arity": 7,
+    "name": "maa_range_loop",
+    "packet": {
+      "base_parameter": null,
+      "dtype": "int32_t",
+      "memory_access": 0,
+      "opcode": 7,
+      "opcode_name": "RANGE_LOOP",
+      "operands": {
+        "condition": {
+          "optional": true,
+          "parameter": "cond_tile"
+        },
+        "dst1": {
+          "optional": false,
+          "parameter": "dst_i_tile"
+        },
+        "dst2": {
+          "optional": false,
+          "parameter": "dst_j_tile"
+        },
+        "rdst1": {
+          "optional": false,
+          "parameter": "last_i_reg"
+        },
+        "rdst2": {
+          "optional": false,
+          "parameter": "last_j_reg"
+        },
+        "rsrc1": {
+          "optional": false,
+          "parameter": "stride_reg"
+        },
+        "rsrc2": null,
+        "rsrc3": null,
+        "src1": {
+          "optional": false,
+          "parameter": "min_tile"
+        },
+        "src2": {
+          "optional": false,
+          "parameter": "max_tile"
+        }
+      },
+      "operation": null
+    },
+    "parameters": [
+      {
+        "default": null,
+        "name": "last_i_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "last_j_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "min_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "max_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "stride_reg",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "dst_i_tile",
+        "type": "int"
+      },
+      {
+        "default": null,
+        "name": "dst_j_tile",
+        "type": "int"
+      },
+      {
+        "default": -1,
+        "name": "cond_tile",
+        "type": "int"
+      }
+    ],
+    "returns": "void",
+    "source_range": [
+      25530,
+      27473
+    ],
+    "template": true
+  }
+]

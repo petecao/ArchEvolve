@@ -1,0 +1,31 @@
+{
+  "author_preserved_successor": "V2 was prepared after both findings without changing V1.",
+  "date": "2026-10-16 ET",
+  "findings": [
+    {
+      "boundary": "Registry public dataclass constructor",
+      "description": "Direct normal Registry(input_bytes, identity tuples) construction does not invoke validate; lookup accepts type Registry and parses its bytes without the closed4-unit/5-contract validation. The freshly validated handle wording exceeds this ordinary construction seam. This grants no source/runtime authority but violates the byte-validator interface.",
+      "priority": 2
+    },
+    {
+      "boundary": "shared memory capture equality",
+      "description": "Python dictionary equality conflates JSON bool/int and int/float values. Three differing canonical captures can pass memory_captures equality after their separate policy byte hashes are rebound. Exact same-TU capture identity needs type-sensitive canonical comparison.",
+      "priority": 2
+    }
+  ],
+  "module": {
+    "bytes": 13907,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v1/unit_policy_registry_v1.py",
+    "sha256": "4adc6208ac7c52d3c65f717acbf7fb82c20fd3fba2de8e3b37b8ac0477a0796a"
+  },
+  "no_main_or_tests_or_remote_compiler_native_solver_project_import_execution": true,
+  "packet": {
+    "bytes": 3025,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v1/source-packet-v1.json",
+    "sha256": "e6421159e71c6e9820a50e2966b55fdae18fd1155a3f97fe7660c10dc925fc0e"
+  },
+  "physical_pins_checked": 10,
+  "review_axis": "Independent Spec and pure data interface semantics",
+  "scope": "Closed byte-only4-unit/5-contract/2-source registry; no physical reader/runtime/source/receiver/library authority or production integration.",
+  "verdict": "HOLD_V1_BYTE_VALIDATION_HANDLE_AND_CAPTURE_IDENTITY"
+}

@@ -1,0 +1,274 @@
+{
+  "TCB": [
+    "Selected complete standard Int/Real/Map/Qed module declarations and source-to-driver proposition splitting/renaming",
+    "Why3 record/array and built-in mathematical SMT Int/Bool interpretation",
+    "Normal compiler/VC generation and solver soundness, source-to-binary/loader/OS and between-check boundaries retained from actual full cold capture",
+    "Printed task bytes are materialized evidence, not independently intercepted actual solver-consumed bytes"
+  ],
+  "additional_primary_formulas": [
+    {
+      "full_body_sha256": "92ed3b6387a2ea7adfb0281282ed3f10092b199ffe0c64ac751db7f08385dad7",
+      "kind": "lemma",
+      "label": "Abs_le",
+      "module": "int.Abs",
+      "source_lines": "54"
+    },
+    {
+      "full_body_sha256": "b10a675182a54bd3e05baba0fae2deec3825802ec0c246d6ff6211f8f382cdf6",
+      "kind": "axiom",
+      "label": "Div_bound",
+      "module": "int.ComputerDivision",
+      "source_lines": "217-218"
+    },
+    {
+      "full_body_sha256": "54870e5c89b533678e220be22537d8796ab107f992c8d45a7cf79a926108d378",
+      "kind": "axiom",
+      "label": "Mod_bound",
+      "module": "int.ComputerDivision",
+      "source_lines": "222-223"
+    },
+    {
+      "full_body_sha256": "f0128a61c0627c057a80014c6828d71960dea19dc00202eeb22d7fea7964bc2f",
+      "kind": "lemma",
+      "label": "cmod_remainder",
+      "module": "frama_c_wp.qed.Qed",
+      "source_lines": "35-39"
+    }
+  ],
+  "all_result_inputs_rehashed": [
+    {
+      "bytes": 1657066,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-cold-v1-actual-stdout-20261016.json",
+      "role": "cold",
+      "sha256": "2ec440bcc9c282c3dfeec44f98c79a6861c6882c19ad8b2cb8913b8880dc1e9c"
+    },
+    {
+      "bytes": 500042,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v3-actual-stdout-20261016.json",
+      "role": "capture",
+      "sha256": "9924e02166c0613047bf750b31a06508b67d5eb8853fec79a59c8f1d926b5a72"
+    },
+    {
+      "bytes": 5598,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v3-actual-execution-20261016.json",
+      "role": "execution",
+      "sha256": "9235ac6f18cfaa595052755255268dd16f2f12881aeb92d06ed30269b7c39421"
+    },
+    {
+      "bytes": 207385,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/context.json",
+      "role": "context",
+      "sha256": "03f9f790e108557d7f63766a4150c9714f8020f3142145998ca269d1ba4c613c"
+    },
+    {
+      "bytes": 101267,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-complete-interpretation-v2-20261016.json",
+      "role": "accepted_standard_basis",
+      "sha256": "e872b1f96c961a2516c4ef39b9baae823b121aa253a11a9eeef08530596671ab"
+    },
+    {
+      "bytes": 4439,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-root-scoped-acceptance-20261016.json",
+      "role": "standard_basis_root_decision",
+      "sha256": "a7d02b87369485970533a96766521fc858a74509e125f00632a5cb5dddbf3ddb"
+    },
+    {
+      "bytes": 669940,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-owners-effects-interpretation-v1-20261016.json",
+      "role": "own_join",
+      "sha256": "31f1b3f6ba45abb780f97cb4a281e25f5775a2e3a745e6211dedad93fffbcf69"
+    },
+    {
+      "bytes": 18821,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap_reader_v2.py",
+      "role": "Heap_context_V2",
+      "sha256": "66fb703fd3b2a0503ca834613081740527d54f53b05d3b2e38fd81b477983bf2"
+    },
+    {
+      "bytes": 20608,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners_effects_reader.py",
+      "role": "Owners_Effects_interpreter",
+      "sha256": "248633006c0a9c28b42b60cc0697dcd2d651a0d314ec3924a8bd2f281cdcdb13"
+    },
+    {
+      "bytes": 15336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/semantic_terms.py",
+      "role": "accepted_typed_Boolean_alpha_syntax",
+      "sha256": "0caf0330afed019637d03228a94f5af5cfc305e358f6eca51c631a881e163ef7"
+    },
+    {
+      "bytes": 18553,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/int.mlw",
+      "role": "primary_source_counterpart_int.Abs",
+      "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+    },
+    {
+      "bytes": 2071,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/qed.mlw",
+      "role": "primary_source_counterpart_frama_c_wp.qed.Qed",
+      "sha256": "54d50c3e40ea87b2bb0fd7195341c6c8bfc5ebcf300cb7b18752fae28e622efe"
+    }
+  ],
+  "axis": "Independent complete outer mathematical/source-context Spec review",
+  "controls": {
+    "bytes": 4629,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_complete_join.py",
+    "sha256": "4b60f61ccd56d9daaf6fe3d327c20bdaf3459d80baa94cb7901585b1ff895295"
+  },
+  "coverage_assessment": [
+    "The exact original cold observation, once-admitted complete AST capture/execution, reviewed Owners join, accepted standard basis and root decision are physically content-bound. All26 task ids/artifacts/order match the original cold census; every ordered command index/kind/hash matches and administrative omission is restricted to the known original nonmathematical commands. No mathematical tree is orphaned.",
+    "Every mathematical command has a closed head. The checked Heap/cell task context consumes every declaration with complete record field order/sorts, selected Integer/Pointer encoding laws, division signatures and optional false-map defining equation. Unknown additional sort/function/record/constant declarations refuse.",
+    "Complete positional Heap definitions, complete positional Owners/OwnedEffects definitions and the exact typed abs1 body are a disjoint exhaustive partition of all observed definitions. No leftover function body or arbitrary abbreviation remains. The separate reviewed source aliases fresh_id/end_automatic and size/capacity are exact source definitions.",
+    "Every original full goal is independently recomputed through the reviewed typed source binder/role interpretation and tied to both the capture goal command hash/index and previous full-source join. No source goal, conclusion or original antecedent is added, omitted or substituted by a sibling theorem.",
+    "All942 support assertion instances are consumed exactly once before the unchanged original final goal:784 exact standard foundation bodies and158 checked cell/constant-map definitional bodies. Standard assertions require both exact captured body identity and exact source/family attribution; unknown assertions, including false or desired-source-post premises, refuse.",
+    "Existing standard bodies reuse only the already accepted exact standard-basis attribution under the same primary module file/body identity and proposition declarations. The four absent-from-G621 CVC5 body variants are separately full-formula compared and source-family checked. No label/name-only support acceptance is introduced.",
+    "The local complete int.mlw and Qed counterpart bytes equal the retained source9 import-source closure. I independently read Abs_le (line54), ComputerDivision Div_bound/Mod_bound (lines217-223), and the four-case Qed cmod_remainder (lines35-39); all antecedents, signs, strictness, conjunctions and bounds match the four transcriptions. The source-to-driver translation remains the explicitly stated foundation TCB.",
+    "The original outcome list is tied to cold and capture, with exactly eight proven duties and the final swap.owner_correspondence not_proven with three timeouts. The mixed timeout/unknown/Valid move-owner attempts are retained as observed. No interpreter changes solver outcomes or grants empirical consistency from zero smoke."
+  ],
+  "date": "2026-10-16 ET",
+  "decision": "PASS_EXACT_CONDITIONAL_SOURCE9_JOIN",
+  "eligible_scope": "After separate root adoption, only the exact eight source9 conditional mathematical duties whose retained native/normal outcomes are proven are eligible under the explicit accepted compiler/VC/driver/foundation/solver TCB. This review establishes the complete retained interpretation join, not an independent new solver proof. The compound swap-owner theorem remains unproved.",
+  "findings": [],
+  "independent_recomputation": {
+    "additional_CVC5_formula_instances": {
+      "Abs_le": 8,
+      "Div_bound": 8,
+      "Mod_bound": 8,
+      "cmod_remainder": 8
+    },
+    "all115_captured_tree_keys_used_by_task_references": true,
+    "complete_offline_main_result_equals_retained_JSON": true,
+    "counts": {
+      "Heap_definition_instances": 462,
+      "Owners_Effects_definition_instances": 346,
+      "abs_definition_instances": 26,
+      "distinct_math_commands": 115,
+      "standard_support_instances": 784,
+      "sum_map_support_instances": 158,
+      "tasks": 26
+    },
+    "distinct_support_body_hashes": 46,
+    "external_attempts": [],
+    "solver_compiler_native_project_import_or_SSH_execution": false,
+    "total_definition_instances": 834,
+    "total_support_assertion_instances": 942,
+    "unknown_items": []
+  },
+  "independent_root_scientific_adoption_required": true,
+  "limitations": [
+    "The complete captured mathematical syntax is materialized evidence. No actual solver-consumed bytes were independently intercepted and no new proof run occurred. Historical submission/runtime/loader/source-to-binary/OS and between-check boundaries remain as in the accepted original cold capture.",
+    "The standard proposition bodies and complete source module identities are reconciled, while source-to-driver standard translation and splitting/renaming, mathematical built-ins and VC generation/solver soundness remain explicit TCB. This review is not a new proof of all standard Why3/Qed lemmas.",
+    "No original C/C++ memory-to-Heap interpretation, actual ownership registration, source receiver/fresh allocator framing, padding/payload/lifetime/cleanup or Typed Mint/Mptr correspondence is discharged by this abstract mathematical join.",
+    "No source-body/caller/default-catalog/public route is admitted. Root scientific adoption is separate; the original three compound swap timeouts remain not_proven."
+  ],
+  "module": {
+    "bytes": 17289,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/complete_join.py",
+    "sha256": "220211cb665bd339ba304a05d0ff86f89aea0c2c58d7d9ccff60982a00a81481"
+  },
+  "new_formal_or_native_or_remote_execution": false,
+  "outcomes": [
+    {
+      "id": "move.destination_header",
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "move.source_empty",
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "move.incoming_frame",
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "move.owner_correspondence",
+      "native_results": [
+        "timeout",
+        "unknown",
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "swap.left_header",
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "swap.right_header",
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "swap.temporary_lifetime",
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "swap.incoming_frame",
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven"
+    },
+    {
+      "id": "swap.owner_correspondence",
+      "native_results": [
+        "timeout",
+        "timeout",
+        "timeout"
+      ],
+      "normal_verdict": "not_proven"
+    }
+  ],
+  "prior_component_reviews": [
+    {
+      "bytes": 4455,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-heap-context-v2-parent-independent-review-20261016.json",
+      "sha256": "f719f040023704b86486741d3c9076b6dd5f08d65c816c24d557ae7e9521b5ad"
+    },
+    {
+      "bytes": 17111,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-owners-effects-independent-spec-review-v1-20261016.json",
+      "sha256": "784ed31dabc93a0a74e0ec85d1cd790c2df8032fe14f0975ce19a8211459ebb1"
+    }
+  ],
+  "retained_result": {
+    "bytes": 1497352,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-complete-math-interpretation-v1-20261016.json",
+    "sha256": "a140435ff7cb2d3933338be03bdc01f256f731a244538ab150969f99dc9580fa"
+  },
+  "reviewer": "/root/ticket25/caller_assess",
+  "reviewer_controls": {
+    "command": [
+      "python3",
+      "-I",
+      "-B",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_complete_join.py"
+    ],
+    "errors": 0,
+    "external_attempts": [],
+    "failures": 0,
+    "reported_seconds": 0.833,
+    "scope": "Full26-task positive; extra false support, extra definition/declaration, altered abs body, missing goal premise, source-family identity mutation, tree mutation, duplicate/reordered tasks, bad tree reference/command order and timeout promotion negatives.",
+    "tests": 14
+  },
+  "reviewer_scientific_adoption": false,
+  "source_C_Heap_Typed_lifetime_caller_default_admission": false,
+  "source_files_modified": false
+}

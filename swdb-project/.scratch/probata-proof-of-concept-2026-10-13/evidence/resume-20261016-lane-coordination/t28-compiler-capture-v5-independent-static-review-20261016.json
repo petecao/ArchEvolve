@@ -1,0 +1,93 @@
+{
+  "actual_compiler_run": false,
+  "control_evidence": {
+    "prior_red_preserved": "The stale raw namespace regression remains in the pinned RED log; successor control source checks raw_name equality and exact inverses.",
+    "provenance": "Read retained exact source/log; controls were not rerun by this reviewer.",
+    "reported_child_events": [],
+    "reported_errors": 0,
+    "reported_failures": 0,
+    "reported_skips": 0,
+    "reported_tests": 12
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact V5 mechanical binding successor; actual capture admission remains root-owned",
+  "findings": [],
+  "full_ticket28": false,
+  "independently_checked": {
+    "command_json_inverse_edits": 34,
+    "compiler_source_meaning": "The reviewed four Clang phases still use original physical caller/probe .cpp inputs, one full caller TU and separate literal-only ABI observation. Namespace substitutions do not change flags, dependencies or compiler semantics.",
+    "entry_ast_inverse": "All ten function names remain; all nine non-main function ASTs are identical. The main AST differs only in the reviewed binder filename and reconstructs V4 after that literal substitution.",
+    "entry_text_inverse": "Exactly three single-occurrence substitutions reconstruct the reviewed V4 bytes: raw V5 namespace, reviewed binder SHA, and consumed whole_interface_v4.py name.",
+    "json_inverse": "Both recorded inverse edit lists reconstruct the complete frozen predecessor JSON values, without unlisted differences.",
+    "packet_pin_occurrences": 28,
+    "packet_unique_physical_pins": 27,
+    "passive_consumers": "Dispatch V3 and argument stager V2 are physical receipt pins only; neither is staged or imported by capture. Only the reviewed binder V4 is consumed.",
+    "policy_json_inverse_edits": 24,
+    "resource_finalization": "Inherited V4 functions are exact: 4 GiB RSS, 180 s outer guard, 165 s entry, 128 MiB per file, 256 MiB total and 1 MiB metadata reserve; projected result/manifest extent, postpublication deadline/extent invalidation, and initial depfile rechecks remain unchanged.",
+    "runtime_source_roles": "Every policy value outside schema/raw_name/entry_sha256/controller_files/capture_recipe is identical to V4. Exact V5 staged input census equals policy controller_files plus the selected policy. Adapter V2 and runtime/role/guard sources remain unchanged."
+  },
+  "limits": [
+    "This review does not assert actual Linux source/runtime identity, source immutability between sampled hashes, complete root resource settlement, or compiler execution success.",
+    "The root must reconcile the actual command/exit, complete artifacts, dependency/source/control/runtime pins and final raw extent under the reviewed lane guard. The verifier-lock environment marker does not establish a held advisory lock.",
+    "Compiler observation is preparation only. Expression/CPU staging, receiver/effect/model/public record admission and full ticket28 acceptance remain pending."
+  ],
+  "pins": {
+    "command": {
+      "bytes": 12322,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/linux_compiler_capture_command_v5.json",
+      "sha256": "02ddd1c7caa2076c15b003e4338cb515a6bf5376bde3997e5104405d641f2ad0"
+    },
+    "controls": {
+      "bytes": 14837,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/test_capture_v5.py",
+      "sha256": "641b542d6c2a2b33c57a251ebfb92a72a57a300001529587b9821760ce2fd2a8"
+    },
+    "entry": {
+      "bytes": 21977,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/linux_compiler_capture_v5.py",
+      "sha256": "79492ff4a08434034a76d6f7a86cace49e54d0d4123d4ee20e960d96529da7af"
+    },
+    "inverse": {
+      "bytes": 27604,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/compiler-capture-v5-inverse.json",
+      "sha256": "5c10801243dc8d7a2d454fab961b74dfc3a43b9448dde5a08b1015de7579bbec"
+    },
+    "packet": {
+      "bytes": 9931,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/compiler-capture-source-packet-v5.json",
+      "sha256": "1f9619e4cad84977e5277207c2122d9cc95ae382859486ad04af2194792cb9ce"
+    },
+    "policy": {
+      "bytes": 664401,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/linux_compiler_capture_policy_v5.json",
+      "sha256": "23301831412b8ea615c0753ca9e02548b3211bee18011e07499de3ee3b9b8d49"
+    },
+    "retained_green": {
+      "bytes": 2146,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/pure-capture-v5-controls.log",
+      "sha256": "438110cc320860b2a2446ca0b17868991fc66ea023336d70fdb415ecf72aedb7"
+    },
+    "retained_red": {
+      "bytes": 3148,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v5/pure-capture-v5-controls-red.log",
+      "sha256": "66f20c8350e6693a0182e6c72fd41ee5061ee9d58f167c8ae591375f21f49cd9"
+    }
+  },
+  "public_proof": false,
+  "review_basis": [
+    {
+      "bytes": 5201,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-capture-v4-independent-static-review-20261016.json",
+      "sha256": "c5e9b919afb29253b322f696cab5b54f366bb1ad052c68674d078dfe90b1afec"
+    },
+    {
+      "bytes": 6429,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-unrelated-macro-call-v1-independent-static-review-20261016.json",
+      "sha256": "2b9ab43652c90807eabe6bb8f58135d1de49dbc13dd3f845e438e51148fc1109"
+    }
+  ],
+  "reviewer": "caller_assess",
+  "schema": "t28-independent-static-capture-rebind-review-1",
+  "scope": "Static source, AST, JSON inverse and physical metadata review only. No project imports, tests, entry execution, compiler, native helper, verifier, solver, SSH or scientific run.",
+  "source_call_admission": false
+}

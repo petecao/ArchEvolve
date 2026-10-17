@@ -1,0 +1,11 @@
+# Pointer-getter recheck argument repair
+
+2026-10-16 ET. Inert source-only V3 successor. No compiler, native, verifier, project package import or actual complete-TU projection is executed.
+
+The only projection source change supplies `caller=caller` and `call_range=record['call_range']` to the one pointer-getter `api['recheck_binding']` invocation. The real `whole_interface_v4.recheck_binding` forwards to `bind_call`, whose two keyword-only parameters are mandatory. V2 omitted them and raised `TypeError` before binding every pointer getter. V3 passes the already selected original caller and the exact range in its existing call record. No caller/range value is invented or generalized.
+
+Seven no-child controls extract the real binder, rechecker, signature, inventory and source-span helpers. They construct explicitly synthetic diagnostic TU nodes with the six pointer-getter sites from the pinned first-source text and real pinned original-header declaration spans. All six V2 call expressions reproduce the missing-keyword `TypeError`; all six V3 expressions return the identical expected binding. Wrong caller, changed recorded caller, invalid/shifted range and a range whose actual call has an incompatible canonical type refuse. A self-consistent binding for another actual same-type call remains a legitimate binder input; the existing complete preparation, per-site range lookup and original statement certificate supply its independent selection boundary. These controls do not claim retained compiler metadata or prove the source program.
+
+The exact one-callsite textual inverse reconstructs all V2 bytes. Every other function AST is unchanged. The original fixed source, header matrix, all nine declaration edits, generated C++ runtime bodies, receiver-policy re-preparation, complete body validation, choice handling, source/header rereads and final return/schema remain exact. All frozen V2 packet/input pins are checked unchanged. The V3 filename and physical digest identify the repaired consumer; no existing producer/entry/method hash is silently reused.
+
+Native selection and builder producer-basis pins still name V2. They remain unchanged until independent review and a separate coherent successor binds V3. No current capture is accepted, no public result is inferred and no negative replay or hardware claim is made here.

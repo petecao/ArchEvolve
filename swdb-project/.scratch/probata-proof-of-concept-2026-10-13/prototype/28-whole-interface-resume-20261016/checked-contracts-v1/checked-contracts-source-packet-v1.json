@@ -1,0 +1,52 @@
+{
+  "WP_boundary": "New form explicitly refuses all ACSL/WP-summary generation; old form functions remain unchanged after removing the narrow new-kind branch/guards.",
+  "base": {
+    "bytes": 34602,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_semantics.py",
+    "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+  },
+  "date": "2026-10-16 ET",
+  "design_sha256": "a6139eea1e141c68bb351026b7cdb38a2458eb4b8be3a772a8251a7060db6e1c",
+  "files": {
+    "checked-contracts-proposed-v1.patch": {
+      "bytes": 14894,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/checked-contracts-proposed-v1.patch",
+      "sha256": "2f800ab936fdce07f3622bd126b932a783dc5e8e6a6458975e783bbbbf157c0b"
+    },
+    "dx100_whole_checked_v1.py": {
+      "bytes": 12218,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/dx100_whole_checked_v1.py",
+      "sha256": "8b482c419947840dbd2ebf70d0b3c19b55e4d409a59ec383feb28a432e7043b8"
+    },
+    "proof_semantics.base.py": {
+      "bytes": 34602,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/proof_semantics.base.py",
+      "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+    },
+    "proof_semantics.proposed.py": {
+      "bytes": 35096,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/proof_semantics.proposed.py",
+      "sha256": "c213b716fcf6a7ef6db42ad09be1620a1f6838be8a8abaf96e32dafd7bd21013"
+    },
+    "test_checked_contracts_v1.py": {
+      "bytes": 9950,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/test_checked_contracts_v1.py",
+      "sha256": "5d2d0b5d40ba4bf282d3ac741439dd8cac07e220dc7af1d04b3d366b1414ad7b"
+    }
+  },
+  "integration_boundary": "The early check branch validates this new checked-C contract form; it grants no actual source/ABI/runtime/capture/model/receiver correctness. Source-unit/c_lowering/CBMC/Plan/runtime projection hooks are a separate pending jointly reviewed patch. No standalone public acceptance or current version publication is inferred.",
+  "production_paths": [
+    "swdb-project/swdb/proof_semantics.py",
+    "swdb-project/swdb/dx100_whole_checked.py"
+  ],
+  "pure_controls": {
+    "child_audit_guard": true,
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "skips": 0,
+    "tests": 10
+  },
+  "shared_production_modified": false,
+  "status": "FROZEN_VALIDATOR_PROPOSAL_PENDING_INDEPENDENT_REVIEW_AND_SOURCE_ROUTE"
+}

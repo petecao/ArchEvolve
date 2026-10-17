@@ -1,0 +1,29 @@
+{
+  "actual_public_validation_or_proof": false,
+  "checks": [
+    "Complete textual inverse restores original proof_semantics bytes; all other function ASTs equal",
+    "Only exact checked-body form takes early validator branch; deleting a contract refuses through that public seam",
+    "Every ACSL/WP summary generator rejects new form before source/state access; old forms preserve behavior"
+  ],
+  "child_audit_guard": true,
+  "classification": "PASS_PURE_PUBLIC_ENTRY_SEAM_CONTROLS_ONLY",
+  "controls": {
+    "bytes": 3903,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/test_proof_semantics_hook_v1.py",
+    "sha256": "894b388c2c38c3a65b8f6e3f100f4b609413c9325dcdcf1112a7d19232f56be9"
+  },
+  "date": "2026-10-16 ET",
+  "errors": 0,
+  "exit_code": 0,
+  "failures": 0,
+  "inherited_entry_controls": 10,
+  "new_seam_controls": 3,
+  "shared_production_modified": false,
+  "skips": 0,
+  "source_packet": {
+    "bytes": 3058,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/checked-contracts-source-packet-v1.json",
+    "sha256": "637006bd7d2df2d3a9a64cc2948ddc4c7e45fdc90cb80e9c5b9f89308cc1b97e"
+  },
+  "tests": 13
+}

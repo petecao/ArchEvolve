@@ -1,0 +1,37 @@
+{
+  "preparer_inverse_names": {
+    "profile_builder_v4.py": "profile_builder_v3.py",
+    "selected_profile_builder_v4": "selected_profile_builder_v3"
+  },
+  "production_patch_unchanged": true,
+  "replacements": [
+    {
+      "new": "# Exact physical extent in the already admitted Clang22 Linux inventory.\n# This is a selected driver-role bound, not a generic document-cap increase.\nSELECTED_DRIVER_BYTES = 271520144\n\n\ndef stream_pin(row, *, limit):\n    \"\"\"Hash a bounded physical input without retaining its payload.\"\"\"\n    exact(row, {'path', 'bytes', 'sha256'}, 'physical pin')\n    need(type(row['path']) is str and Path(row['path']).is_absolute()\n         and type(limit) is int and type(row['bytes']) is int and 0 <= row['bytes'] <= limit\n         and type(row['sha256']) is str and re.fullmatch('[0-9a-f]{64}', row['sha256']),\n         'explicit bounded physical pin required')\n    path = Path(row['path']); before = path.lstat()\n    need(stat.S_ISREG(before.st_mode) and path.resolve(strict=True) == path\n         and before.st_size == row['bytes'], 'canonical physical extent required before streaming')\n    hasher = hashlib.sha256(); count = 0\n    with path.open('rb') as handle:\n        while True:\n            chunk = handle.read(min(1024 * 1024, row['bytes'] - count + 1))\n            if not chunk: break\n            count += len(chunk)\n            need(count <= row['bytes'], 'physical stream grew beyond selected extent')\n            hasher.update(chunk)\n    need(count == row['bytes'] and hasher.hexdigest() == row['sha256']\n         and stable(path.lstat()) == stable(before), 'physical stream changed or hash differs')\n    return dict(row)\n\n\ndef check_physical_inventory(inventory):\n    exact(inventory, {'compiler_driver', 'compiler_wrapper', 'device_configuration',\n        'address_projection', 'numeric_runtime'}, 'complete physical role census')\n    need(type(inventory['compiler_driver']) is dict\n         and inventory['compiler_driver'].get('bytes') == SELECTED_DRIVER_BYTES,\n         'exact admitted Clang22 driver extent required')\n    for role, row in inventory.items():\n        stream_pin(row, limit=SELECTED_DRIVER_BYTES if role == 'compiler_driver' else 256 * 1024 * 1024)\n    return inventory\n\n\ndef lowering_identity_without_probe(module, compiler_observation, *, physical_inventory):",
+      "old": "def lowering_identity_without_probe(module, compiler_observation):"
+    },
+    {
+      "new": "    exact(physical_inventory, {'compiler_driver', 'compiler_wrapper', 'device_configuration',\n        'address_projection', 'numeric_runtime'}, 'complete physical role census')\n    need(compiler_observation['wrapper'] == physical_inventory['compiler_wrapper']\n         and compiler_observation['driver'] == physical_inventory['compiler_driver']\n         and compiler_observation['driver']['bytes'] == SELECTED_DRIVER_BYTES,\n         'observed compiler pins differ from the exact selected physical inventory')\n    stream_pin(compiler_observation['wrapper'], limit=256 * 1024 * 1024)\n    stream_pin(compiler_observation['driver'], limit=SELECTED_DRIVER_BYTES)",
+      "old": "    read(compiler_observation['wrapper']); read(compiler_observation['driver'], limit=256 * 1024 * 1024)"
+    },
+    {
+      "new": "    check_physical_inventory(request['physical_inputs'])",
+      "old": "    exact(request['physical_inputs'], {'compiler_driver', 'compiler_wrapper', 'device_configuration',\n        'address_projection', 'numeric_runtime'}, 'complete physical role census')\n    for row in request['physical_inputs'].values():\n        read(row, limit=256 * 1024 * 1024)"
+    },
+    {
+      "new": "lowering_identity_without_probe(lowering, parse(read(request['compiler_observation'])),\n        physical_inventory=request['physical_inputs'])",
+      "old": "lowering_identity_without_probe(lowering, parse(read(request['compiler_observation'])))"
+    },
+    {
+      "new": "    need(type(runtime) is dict and set(runtime) == {'check', 'command', 'driver', 'command_executable', 'frontend', 'parser', 'headers'}\n         and runtime['command'] == compiler_observation['command']\n         and runtime['driver'] == {key: compiler_observation['driver'][key] for key in ('path', 'sha256')}\n         and runtime['command_executable'] == {key: compiler_observation['wrapper'][key] for key in ('path', 'sha256')},\n         'complete selected wrapper/underlying-driver runtime descriptor required')",
+      "old": "    need(type(runtime) is dict and runtime.get('command') == compiler_observation['command']\n         and runtime.get('driver') == {key: compiler_observation['driver'][key] for key in ('path', 'sha256')}\n         and 'unavailable' not in runtime, 'exact observed underlying-driver runtime descriptor required')"
+    },
+    {
+      "new": "    \"\"\"Same exact hash recipe with two root-selected expected-runtime leaves.\n\n    Never call locate()/runtime_identity(): both may probe a compiler. Root must\n    preserve any original alias-command observation and separately select the\n    exact absolute-command normalization/provenance. This derives the future\n    job's expected identity; actual public recomputation must still match it.\n    \"\"\"",
+      "old": "    \"\"\"Same exact hash recipe; only two observed-runtime leaves are supplied.\n\n    Never call locate()/runtime_identity(): both may probe a compiler. The root\n    must have separately admitted the physical wrapper, driver, selected runtime\n    descriptor and version. This reproduces an identity, not its observation.\n    \"\"\""
+    }
+  ],
+  "schema": "exact-profile-streaming-v5-inverse-1",
+  "template_delta": {
+    "compiler_observation": "null until root selects the separate compiler/runtime descriptor"
+  }
+}

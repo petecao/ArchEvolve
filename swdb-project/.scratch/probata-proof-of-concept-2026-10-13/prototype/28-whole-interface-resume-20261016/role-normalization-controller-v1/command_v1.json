@@ -1,0 +1,90 @@
+{
+  "actual_executed": false,
+  "bootstrap": {
+    "bytes": 3028,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/role-normalization-controller-v1/bootstrap_v1.py",
+    "sha256": "f2f514daf6cd6af87d9c65d718adfb7f683fed02a48920170629a8fdeb15e28d"
+  },
+  "closed_environment": {
+    "HOME": "/data1/yanruj/probata-verifiers/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "LD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "date": "2026-10-16 ET",
+  "limits": {
+    "AS_bytes": 536870912,
+    "CPU_seconds": 950,
+    "aggregate_bytes": 268435456,
+    "disk_floor_bytes": 53687091200,
+    "expanded_normalized_bytes": 201326592,
+    "internal_seconds": 900,
+    "local_seconds": 1000,
+    "outer_seconds": 960,
+    "physical_file_bytes": 134217728,
+    "reserve_bytes": 1048576,
+    "work_seconds": 885
+  },
+  "prior_once_only_census_admission_reused": false,
+  "python_argv": [
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "# Source-only selected Python bootstrap; no execution during authoring.\nimport resource\nimport sys\nresource.setrlimit(resource.RLIMIT_AS,(536870912,536870912))\nresource.setrlimit(resource.RLIMIT_CPU,(950,950))\nOUTPUT_ROOT='/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1'\nOUTPUT_PATHS=('/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/controller.py', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/normalizer.py', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/census.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/policy.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inputs-before.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inputs-after.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/caller.normalized.json.gz', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/rename-manifest.jsonl', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/transport.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inverse.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/result.json')\ndef bootstrap_audit(event,args):\n    if event=='open':\n        path,mode,flags=args\n        if (isinstance(mode,str) and any(c in mode for c in 'wax+')) or flags&(1|2|64|512|1024):\n            if type(path) is not str or path not in OUTPUT_PATHS or not flags&64 or not flags&128:\n                raise PermissionError('only exclusive fixed new-root output allowed')\n    if event=='os.mkdir':\n        if args[0] not in (OUTPUT_ROOT,OUTPUT_ROOT+'/control',OUTPUT_ROOT+'/component'):\n            raise PermissionError('only fixed new-root directories allowed')\n        return\n    if event in {'os.system','os.remove','os.unlink','os.rename','os.replace','os.rmdir','os.chmod','os.chown','os.link','os.symlink','os.truncate',\n        'os.utime','os.chdir','os.putenv','os.unsetenv','ctypes.dlopen','resource.setrlimit'} or event.startswith(('subprocess.','os.exec','os.spawn','os.posix_spawn','os.fork','socket.')):\n        raise PermissionError('passive transform mutation/child/network refused: '+event)\nsys.addaudithook(bootstrap_audit)\nimport hashlib\npayload=sys.stdin.buffer.read(81926)\nif len(payload)!=81925 or hashlib.sha256(payload).hexdigest()!='91db08f4cc17b8af0448b94c72ed074b287283c63b1f5e562c1ed9a487f960e4':\n    raise ValueError('exact reviewed transform stdin required')\nif len(sys.argv)!=2 or sys.argv[1]!=OUTPUT_ROOT:\n    raise ValueError('exact fresh output argument required')\nexec(compile(payload,'<reviewed-passive-role-transform-stdin>','exec'),{'__name__':'__main__','SOURCE_BYTES':payload,'__builtins__':__builtins__})\n",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1"
+  ],
+  "remote_argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "960s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj/probata-verifiers/home",
+    "LANG=C",
+    "LC_ALL=C",
+    "LD_LIBRARY_PATH=/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "# Source-only selected Python bootstrap; no execution during authoring.\nimport resource\nimport sys\nresource.setrlimit(resource.RLIMIT_AS,(536870912,536870912))\nresource.setrlimit(resource.RLIMIT_CPU,(950,950))\nOUTPUT_ROOT='/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1'\nOUTPUT_PATHS=('/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/controller.py', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/normalizer.py', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/census.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/policy.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inputs-before.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inputs-after.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/caller.normalized.json.gz', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/rename-manifest.jsonl', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/transport.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inverse.json', '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/result.json')\ndef bootstrap_audit(event,args):\n    if event=='open':\n        path,mode,flags=args\n        if (isinstance(mode,str) and any(c in mode for c in 'wax+')) or flags&(1|2|64|512|1024):\n            if type(path) is not str or path not in OUTPUT_PATHS or not flags&64 or not flags&128:\n                raise PermissionError('only exclusive fixed new-root output allowed')\n    if event=='os.mkdir':\n        if args[0] not in (OUTPUT_ROOT,OUTPUT_ROOT+'/control',OUTPUT_ROOT+'/component'):\n            raise PermissionError('only fixed new-root directories allowed')\n        return\n    if event in {'os.system','os.remove','os.unlink','os.rename','os.replace','os.rmdir','os.chmod','os.chown','os.link','os.symlink','os.truncate',\n        'os.utime','os.chdir','os.putenv','os.unsetenv','ctypes.dlopen','resource.setrlimit'} or event.startswith(('subprocess.','os.exec','os.spawn','os.posix_spawn','os.fork','socket.')):\n        raise PermissionError('passive transform mutation/child/network refused: '+event)\nsys.addaudithook(bootstrap_audit)\nimport hashlib\npayload=sys.stdin.buffer.read(81926)\nif len(payload)!=81925 or hashlib.sha256(payload).hexdigest()!='91db08f4cc17b8af0448b94c72ed074b287283c63b1f5e562c1ed9a487f960e4':\n    raise ValueError('exact reviewed transform stdin required')\nif len(sys.argv)!=2 or sys.argv[1]!=OUTPUT_ROOT:\n    raise ValueError('exact fresh output argument required')\nexec(compile(payload,'<reviewed-passive-role-transform-stdin>','exec'),{'__name__':'__main__','SOURCE_BYTES':payload,'__builtins__':__builtins__})\n",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1"
+  ],
+  "remote_shell_command": "/usr/bin/timeout --signal=TERM --kill-after=5s 960s /usr/bin/env -i HOME=/data1/yanruj/probata-verifiers/home LANG=C LC_ALL=C LD_LIBRARY_PATH=/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu PATH=/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 /data1/yanruj/venvs/swdb-test/bin/python -I -B -c '# Source-only selected Python bootstrap; no execution during authoring.\nimport resource\nimport sys\nresource.setrlimit(resource.RLIMIT_AS,(536870912,536870912))\nresource.setrlimit(resource.RLIMIT_CPU,(950,950))\nOUTPUT_ROOT='\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1'\"'\"'\nOUTPUT_PATHS=('\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/controller.py'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/normalizer.py'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/census.json'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/control/policy.json'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inputs-before.json'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inputs-after.json'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/caller.normalized.json.gz'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/rename-manifest.jsonl'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/transport.json'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/component/inverse.json'\"'\"', '\"'\"'/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1/result.json'\"'\"')\ndef bootstrap_audit(event,args):\n    if event=='\"'\"'open'\"'\"':\n        path,mode,flags=args\n        if (isinstance(mode,str) and any(c in mode for c in '\"'\"'wax+'\"'\"')) or flags&(1|2|64|512|1024):\n            if type(path) is not str or path not in OUTPUT_PATHS or not flags&64 or not flags&128:\n                raise PermissionError('\"'\"'only exclusive fixed new-root output allowed'\"'\"')\n    if event=='\"'\"'os.mkdir'\"'\"':\n        if args[0] not in (OUTPUT_ROOT,OUTPUT_ROOT+'\"'\"'/control'\"'\"',OUTPUT_ROOT+'\"'\"'/component'\"'\"'):\n            raise PermissionError('\"'\"'only fixed new-root directories allowed'\"'\"')\n        return\n    if event in {'\"'\"'os.system'\"'\"','\"'\"'os.remove'\"'\"','\"'\"'os.unlink'\"'\"','\"'\"'os.rename'\"'\"','\"'\"'os.replace'\"'\"','\"'\"'os.rmdir'\"'\"','\"'\"'os.chmod'\"'\"','\"'\"'os.chown'\"'\"','\"'\"'os.link'\"'\"','\"'\"'os.symlink'\"'\"','\"'\"'os.truncate'\"'\"',\n        '\"'\"'os.utime'\"'\"','\"'\"'os.chdir'\"'\"','\"'\"'os.putenv'\"'\"','\"'\"'os.unsetenv'\"'\"','\"'\"'ctypes.dlopen'\"'\"','\"'\"'resource.setrlimit'\"'\"'} or event.startswith(('\"'\"'subprocess.'\"'\"','\"'\"'os.exec'\"'\"','\"'\"'os.spawn'\"'\"','\"'\"'os.posix_spawn'\"'\"','\"'\"'os.fork'\"'\"','\"'\"'socket.'\"'\"')):\n        raise PermissionError('\"'\"'passive transform mutation/child/network refused: '\"'\"'+event)\nsys.addaudithook(bootstrap_audit)\nimport hashlib\npayload=sys.stdin.buffer.read(81926)\nif len(payload)!=81925 or hashlib.sha256(payload).hexdigest()!='\"'\"'91db08f4cc17b8af0448b94c72ed074b287283c63b1f5e562c1ed9a487f960e4'\"'\"':\n    raise ValueError('\"'\"'exact reviewed transform stdin required'\"'\"')\nif len(sys.argv)!=2 or sys.argv[1]!=OUTPUT_ROOT:\n    raise ValueError('\"'\"'exact fresh output argument required'\"'\"')\nexec(compile(payload,'\"'\"'<reviewed-passive-role-transform-stdin>'\"'\"','\"'\"'exec'\"'\"'),{'\"'\"'__name__'\"'\"':'\"'\"'__main__'\"'\"','\"'\"'SOURCE_BYTES'\"'\"':payload,'\"'\"'__builtins__'\"'\"':__builtins__})\n' /data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v1",
+  "root_transport_TCB": [
+    "SSH",
+    "/usr/bin/timeout",
+    "/usr/bin/env"
+  ],
+  "scope": "INERT passive byte transform; independent review and root actual-write admission required",
+  "selected_libz_physical_pins": [
+    {
+      "bytes": 113000,
+      "path": "/usr/lib/x86_64-linux-gnu/libz.so.1.3",
+      "sha256": "86200da370f20476a2507e9097a789b5ef97269b4ca8d5e164ad82dab9d99892"
+    }
+  ],
+  "selected_python_physical_pin": {
+    "bytes": 8020928,
+    "path": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "source_policy": {
+    "bytes": 14295,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/role-normalization-controller-v1/source_policy_v1.json",
+    "sha256": "a60eb2a09402eed069e3cceff5e5cbb7cba475621c428695658a1ceddc2b17c6"
+  },
+  "stderr_limit_bytes": 32768,
+  "stdin": {
+    "bytes": 81925,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/role-normalization-controller-v1/normalization_controller_v1.py",
+    "sha256": "91db08f4cc17b8af0448b94c72ed074b287283c63b1f5e562c1ed9a487f960e4"
+  },
+  "stdout_limit_bytes": 32768
+}

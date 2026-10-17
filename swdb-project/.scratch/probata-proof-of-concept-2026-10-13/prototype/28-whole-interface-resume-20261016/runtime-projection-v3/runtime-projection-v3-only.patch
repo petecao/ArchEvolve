@@ -1,0 +1,11 @@
+--- a/runtime_projection_v2.py
++++ b/runtime_projection_v3.py
+@@ -273,7 +273,7 @@
+         need(len(call_nodes)==1,'one exact source getter initializes each runtime descriptor')
+         call=call_nodes[0];record=calls.get(tuple(api['_span'](call)))
+         need(record is not None and record['name'] in {'get_cacheable_tile_pointer','get_noncacheable_tile_pointer'},'closed source pointer getter required')
+-        fresh=api['recheck_binding'](record,normalized_tu,source_path=source_path,source_text=source,declarations=declarations,abi=abi)
++        fresh=api['recheck_binding'](record,normalized_tu,caller=caller,call_range=record['call_range'],source_path=source_path,source_text=source,declarations=declarations,abi=abi)
+         dtype=fresh['dtype'];need(dtype in (0,1),'first runtime fixture pointer types are uint32/int32')
+         begin,end=api['_span'](node);text=source[begin:end]
+         match=re.match(r'(volatile\s+)?(std::(?:u?int32_t))\s*\*\s*'+re.escape(name),text)

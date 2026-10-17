@@ -1,0 +1,115 @@
+{
+  "actual_executed": false,
+  "compiler_descriptor": {
+    "actual_root_profile_selection": "pending; source pins and pure controls do not grant selection",
+    "claim": "root-selected future expected identity, not an observed absolute command or loader startup",
+    "command": [
+      "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+    ],
+    "driver": {
+      "bytes": 271520144,
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+      "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+    },
+    "exact_keys": [
+      "schema",
+      "command",
+      "version",
+      "wrapper",
+      "driver",
+      "runtime_identity"
+    ],
+    "normalization": "only runtime.command becomes the exact absolute singleton; all other observed leaves stay identical",
+    "original_tool_and_runtime_command": [
+      "clang++"
+    ],
+    "physical_inventory_equality": {
+      "driver": "physical_inputs.compiler_driver",
+      "wrapper": "physical_inputs.compiler_wrapper"
+    },
+    "prospective_descriptor": {
+      "bytes": 3549,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/expected-absolute-compiler-descriptor-v1.json",
+      "sha256": "7ef1f44848dd60dae9a9732ce49752209197e80e1afcd3720649d173e386aba3"
+    },
+    "runtime_identity_exact_keys": [
+      "check",
+      "command",
+      "driver",
+      "command_executable",
+      "frontend",
+      "parser",
+      "headers"
+    ],
+    "schema": "root-selected-compiler-observation-1",
+    "separate_provenance": {
+      "bytes": 4479,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/descriptor-provenance-v1.json",
+      "sha256": "6379822389f62aea0289da83d16a45a7484ea5c78b86889a6c397751679b4948"
+    },
+    "separate_root_selection_receipt_required": [
+      "exact original raw pin and complete object",
+      "exact normalization/inverse and selected absolute job command",
+      "exact wrapper/driver policy pins",
+      "root selection; future actual method/runtime recomputation remains mandatory"
+    ],
+    "source_observation": {
+      "bytes": 3058,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-descriptor-v1/passive-read-stdout-v1.json",
+      "sha256": "7bd1f63df8a11af79e4ce1d4066e0e2119a199267878354cdc25bb2f780d6f37"
+    },
+    "version": "22.1.8",
+    "wrapper": {
+      "bytes": 145,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    }
+  },
+  "context_receipt_and_receiver_policy_are_separate_required_assemble_arguments": true,
+  "date": "2026-10-16 ET",
+  "owned_context_runtime_mapping_or_compiler_descriptor_created": false,
+  "schema": "checked-source-first-profile-input-map-5",
+  "selection_fields": {
+    "assertion_header": "physical pin: exact original cassert header from admitted complete capture/runtime",
+    "capture": "closed first-stream kind2 original/transform/prepared roles; actual prepared equality required",
+    "choice_budget": "full256 independent uint32 inputs for this first public profile; no narrowing by expected result",
+    "compiler_observation": "physical pin: separate six-key root-selected expected compiler/runtime descriptor described below",
+    "components": "four exact portable concrete backend pins",
+    "design": "portable exact approved new0.2 design pin",
+    "ingress": "literal reviewed-production-route-v4-normalized-complete-capture",
+    "library_root": "fresh canonical root-owned normal library, with exact first and memory source data",
+    "mapping_receipt": "physical pin: externally owned two-object local mapping receipt, exact actual declarations/addresses",
+    "method_seed": "physical pin: externally selected actual execution method; full fresh identities emitted",
+    "original_project": "immutable captured 2baf swdb-project; absolute source/header coordinates retained",
+    "owned_rules_receipt": "physical pin: externally owned exact compiler_source_projection and numeric_runtime_profile statements",
+    "owner": "explicit external root-selected owner; reused exactly by all owned receipts",
+    "physical_inputs": "five externally selected physical roles; driver exact271520144 extent; bounded stream checks",
+    "producer_project": "separate root-published coherent producer swdb-project; complete census physically rechecked",
+    "producer_snapshot": "physical pin: root-selected-normal-producer-source-census-1, all swdb/vocab entries and 54 required basis rows",
+    "proof_source": "portable library proof_units/source.cpp, exact3148 SHA and identical original buffer",
+    "runtime_receipt": "physical pin: externally owned numeric/runtime configuration receipt, not generated by builder",
+    "schema": "literal dx100-public-profile-selection-1"
+  },
+  "selection_template": {
+    "bytes": 8049,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v5/profile/selection-template-v5.json",
+    "sha256": "671debb5dbe95994e58b933b766b1db3688fc1346db12500dae246b5e41da547"
+  },
+  "streaming": {
+    "chunk_bytes": 1048576,
+    "driver_extent": 271520144,
+    "ordinary_document_limits_unchanged": true,
+    "payload_retained": false,
+    "stable_fields": [
+      "st_dev",
+      "st_ino",
+      "st_mode",
+      "st_nlink",
+      "st_uid",
+      "st_gid",
+      "st_size",
+      "st_mtime_ns",
+      "st_ctime_ns"
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+test_all26_retained_contexts_and462_complete_typed_Heap_definitions (__main__.Controls.test_all26_retained_contexts_and462_complete_typed_Heap_definitions) ... ok
+test_definition_result_sort_change_refuses (__main__.Controls.test_definition_result_sort_change_refuses) ... ok
+test_each_of_eight_sum_laws_is_required (__main__.Controls.test_each_of_eight_sum_laws_is_required) ... ok
+test_extra_function_declaration_refuses_even_if_unused (__main__.Controls.test_extra_function_declaration_refuses_even_if_unused) ... ok
+test_false_map_requires_the_exact_type_and_false_equation (__main__.Controls.test_false_map_requires_the_exact_type_and_false_equation) ... ok
+test_full_Heap_body_store_value_change_refuses (__main__.Controls.test_full_Heap_body_store_value_change_refuses) ... ok
+test_goal_cannot_supply_a_missing_constant_map_support_law (__main__.Controls.test_goal_cannot_supply_a_missing_constant_map_support_law) ... ok
+test_match_projection_requires_the_whole_selected_argument_and_zero_case (__main__.Controls.test_match_projection_requires_the_whole_selected_argument_and_zero_case) ... ok
+test_native_sum_constructor_width_change_refuses (__main__.Controls.test_native_sum_constructor_width_change_refuses) ... ok
+test_polymorphic_match_result_and_constructor_tag_changes_refuse (__main__.Controls.test_polymorphic_match_result_and_constructor_tag_changes_refuse) ... ok
+test_private_normalization_vocabulary_cannot_be_inserted_in_actual_input (__main__.Controls.test_private_normalization_vocabulary_cannot_be_inserted_in_actual_input) ... ok
+test_record_field_sort_or_extra_field_refuses (__main__.Controls.test_record_field_sort_or_extra_field_refuses) ... ok
+test_same_sort_function_arguments_cannot_be_permuted (__main__.Controls.test_same_sort_function_arguments_cannot_be_permuted) ... FAIL
+test_same_sort_record_field_reordering_is_not_alpha_renaming (__main__.Controls.test_same_sort_record_field_reordering_is_not_alpha_renaming) ... ok
+test_unclassified_added_false_assertion_is_not_consumed_or_adopted (__main__.Controls.test_unclassified_added_false_assertion_is_not_consumed_or_adopted) ... ok
+
+======================================================================
+FAIL: test_same_sort_function_arguments_cannot_be_permuted (__main__.Controls.test_same_sort_function_arguments_cannot_be_permuted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_heap_context_v2.py", line 123, in test_same_sort_function_arguments_cannot_be_permuted
+    with self.assertRaisesRegex(ValueError, 'Heap definition mismatch'): check(commands)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.555s
+
+FAILED (failures=1)
+{"actual_solver_or_scientific_adoption": false, "errors": 0, "external_attempts": [], "failures": 1, "tests": 15}

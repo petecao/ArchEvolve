@@ -1,0 +1,25 @@
+{
+  "actual_source_ABI_public_or_ticket_admission": false,
+  "classification": "PASS_NARROW_NORMALIZED_INGRESS_V2_STANDARDS_SOURCE_REVIEW",
+  "controls": 7,
+  "controls_log": {
+    "bytes": 1089,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-normalized-ingress-v2-root-controls-20261016.log",
+    "sha256": "2bcbc7ab7b0a4fb28f745ff78a4195b023249aef7140bdf35b999d08be1a31bc"
+  },
+  "date": "2026-10-16 ET",
+  "exact_four_edit_full_inverse": true,
+  "findings": [],
+  "limitations": [
+    "Tiny literal real consumer controls do not establish actual large-TU DOM success, compiler dependency, source/ABI/call or public proof acceptance.",
+    "Coherent productionV4 integration and actual bounded consumer evaluation remain required."
+  ],
+  "packet": {
+    "bytes": 6565,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-ingress-v2/source-packet-v2.json",
+    "sha256": "40b9aba9b1b87ef5a159d9a408e8b19bb84f606059c48005b1abb3c2c3e31825"
+  },
+  "reviewer": "root, complementary to parent28 independent Spec766229b4",
+  "scope": "Exact first normalized stream has192MiB effective bound before unchanged legacy512MiB sentinel. Exact bytes/type/extent/hash checks precede delegate, original and normalized identities remain distinct; ingress binds physical same legacy module and rechecks source/runtime. The existing legacy implementation and primitives are unchanged.",
+  "verified_pins": 17
+}

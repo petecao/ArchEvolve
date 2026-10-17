@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-16",
+  "edits": [
+    {
+      "new": "  unsigned byte_count, byte_parent[8], byte_shift[8];\n  const char *guard_rule;",
+      "old": "  unsigned byte_count, byte_parent[8], byte_shift[8];"
+    },
+    {
+      "new": "    if (n->kind == 11 && phase[frame] < 2) {\n      if (phase[frame] == 0) parent=n->left;\n      else {DXM_CHECK(dxm_nodes[n->left].value,n->guard_rule);parent=n->right;}\n      ++phase[frame];visit=1;\n    } else if ((n->kind == 2 || n->kind == 5) && phase[frame] < 2) {",
+      "old": "    if ((n->kind == 2 || n->kind == 5) && phase[frame] < 2) {"
+    },
+    {
+      "new": "      } else if (n->kind == 11) {\n        n->value=dxm_nodes[n->right].value;\n      } else if (n->kind == 5) {\n        n->value=0;",
+      "old": "      } else if (n->kind == 5) {\n        n->value=0;"
+    },
+    {
+      "new": "        if (a->kind == 1 || a->kind == 2) {\n          DXM_CHECK(dxm_initialized[cell]",
+      "old": "        if (a->kind == 1) {\n          DXM_CHECK(dxm_initialized[cell]"
+    },
+    {
+      "new": "          if(a->kind == 1) value=dxt_evaluate_family(a->dtype,a->op,old,value,1);",
+      "old": "          value=dxt_evaluate_family(a->dtype,a->op,old,value,1);"
+    },
+    {
+      "new": "      } else if (a->kind == 1 || a->kind == 2) {\n        dxm_publish_alias",
+      "old": "      } else if (a->kind == 1) {\n        dxm_publish_alias"
+    }
+  ],
+  "extended_sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f",
+  "inverse_exact": true,
+  "original_sha256": "82e6cb5245c4c53461210d9bc21feb49f692e1945f5d23a2596bd30fe486cead"
+}

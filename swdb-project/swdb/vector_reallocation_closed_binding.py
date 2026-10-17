@@ -397,3 +397,51 @@ def check(lowering, source, formal_texts, scientific_directory, directory):
 def check_launch(lowering, source, formal_texts, scientific_directory, directory):
     check(lowering, source, formal_texts, scientific_directory, directory)
     raise Refused('public framework integration of the checked source proof basis remains required')
+
+
+def reusable_components(scientific_directory):
+    """Bind current constructor35/destructor11/private9 mathematical inputs.
+
+    These are conditional mathematical components of the immutable reviewed
+    archive. Their complete current source/domain/theory/target contexts are
+    checked independently of a particular caller. The no-growth caller, four
+    gluing targets and 23 conjunction parts are not current prerequisites of
+    this interface. No historical identity is relabeled as current evidence.
+    """
+    from swdb import vector_reallocation_model as model
+
+    catalog, documents, resolve = _bundle(scientific_directory)
+    selected = {
+        'constructor': constructor.declaration(glue.CTOR),
+        'destructor': constructor.declaration(glue.DTOR),
+        'private_frame': private.declaration(),
+    }
+    requirements = {}
+    for name, (plan, _files) in selected.items():
+        targets = [{'id': row['id'], 'sha256': row['sha256']} for row in plan['obligations']]
+        if name == 'private_frame':
+            requirements[name] = {'checker': plan['checker'], 'required_targets': targets,
+                                  'current_proof_record_admitted': False}
+        else:
+            member = glue.CTOR if name == 'constructor' else glue.DTOR
+            requirements[name] = {'member': member, **model.certificate(member),
+                                  'required_targets': targets, 'current_body_record_admitted': False}
+    by_name = {row['id']: row for row in catalog['components']}
+    if len(by_name) != len(catalog['components']) or not set(selected) <= set(by_name):
+        raise Refused('complete reusable scientific component membership changed')
+    rule = {'scientific_dependencies': requirements}
+    components = [_component(by_name[name], selected[name], rule, resolve) for name in selected]
+    count = sum(len(row['targets']) for row in components)
+    if count != 55:
+        raise Refused('the complete reusable mathematical target census changed')
+    result = {'created': '2026-10-16 ET', 'checker': identity(),
+        'proof_basis': 'exact retained conditional mathematical components with current source/domain/theory contexts',
+        'scientific_dependencies_bound': True, 'complete_source_target_count': count,
+        'components': components, 'scientific_catalog_sha256': REVIEWED_CATALOG_SHA256,
+        'evidence_object_count': len(documents), 'original_archive_target_count': 82,
+        'unrelated_components_required': [], 'historical_records_rewritten': False,
+        'current_model_records_created': [], 'source_admission': False,
+        'source_typed_bridge_established': False, 'caller_acceptance': False}
+    files = {'components/'+name+'/'+path: raw
+             for name, (_plan, canonical) in selected.items() for path, raw in canonical.items()}
+    return result, files

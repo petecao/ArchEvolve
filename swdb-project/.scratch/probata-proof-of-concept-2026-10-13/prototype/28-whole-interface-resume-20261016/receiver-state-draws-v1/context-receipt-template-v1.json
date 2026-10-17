@@ -1,0 +1,77 @@
+{
+  "bindings": {
+    "abi_observation": null,
+    "assertion_header": null,
+    "capture_receipt": null,
+    "full_tu": null,
+    "model_assembly": null,
+    "runtime_receipt": null,
+    "source": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd",
+    "source_atlas": null,
+    "statement_preparation": null
+  },
+  "execution_mode": "fresh-cxx-program-globals",
+  "model_kind": "dx100-whole-interface-checked-body-1",
+  "modeled_threads": null,
+  "numeric_flags": {
+    "alu_minmax_unordered_first": {
+      "policy": "pinned ALU unordered comparison selects the first operand",
+      "runtime_receipt_sha256": null,
+      "value": null
+    },
+    "ieee_binary_rn": {
+      "policy": "binary32/binary64 round-to-nearest, no fast-math, and the backend floating environment guards",
+      "runtime_receipt_sha256": null,
+      "value": null
+    },
+    "signed_shift_cpp17_arithmetic": {
+      "policy": "C++17 signed-left-shift and arithmetic negative-right-shift implementation profile",
+      "runtime_receipt_sha256": null,
+      "value": null
+    }
+  },
+  "ordinary_allocations": [],
+  "owner": null,
+  "physical_inputs_sha256": null,
+  "premises": [
+    {
+      "owner": null,
+      "record_assumption": true,
+      "rule": "exclusive-model-instance",
+      "statement": "This modeled trace exclusively controls the selected DX100 instance; all CPU/device interference is represented by the complete admitted trace."
+    },
+    {
+      "owner": null,
+      "record_assumption": true,
+      "rule": "fresh-host",
+      "statement": "A fresh C++ program supplies the twelve observed static globals, with no intervening mutation before source entry."
+    },
+    {
+      "owner": null,
+      "record_assumption": true,
+      "rule": "ordinary-allocation",
+      "statement": "Ordinary local storage comes from the exact checked original automatic declaration and live scope; allocation origin is not exclusive ordinary-memory access ownership."
+    },
+    {
+      "owner": null,
+      "record_assumption": true,
+      "rule": "physical-runtime",
+      "statement": "The selected physical mapping, device configuration, compiler ABI, and numeric runtime policies apply to this trace under their exact pinned inputs."
+    },
+    {
+      "owner": null,
+      "record_assumption": true,
+      "rule": "quiescent-entry",
+      "statement": "The modeled trace starts quiescent, with no prior pending command, construction, history, software tile/register owner, or registered region; no device payload value is asserted."
+    },
+    {
+      "owner": null,
+      "record_assumption": true,
+      "rule": "valid-entry-metadata",
+      "statement": "Initial tile size/status metadata is in the selected valid/quiescent domain: Finished with an unknown size in 0..16384. No particular size, payload value, or payload initializedness is asserted."
+    }
+  ],
+  "profile": "fresh-program-exclusive-quiescent-modeled-trace-v1",
+  "schema": "whole-interface-program-context-1",
+  "source_kind": "dx100-whole-interface-source-v1"
+}

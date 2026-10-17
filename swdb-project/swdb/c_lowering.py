@@ -202,6 +202,7 @@ class Lowering:
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
     stdlib_provenance: dict = field(default_factory=dict)  # original full-TU declarations and header closure
     stdlib_substitutions: tuple = ()  # printer-requested free std calls, independently bound in the original TU
+    whole_source: object | None = None  # exact checked source unit, freshly revalidated
     vector_reallocation_candidate: dict = field(default_factory=dict)  # pending obligations; grants no origin
 
     @property
@@ -212,6 +213,8 @@ class Lowering:
     def anchors_json(self):
         data = {"tool": self.tool, "function": self.function, "c_lowering_sha256": self.sha256,
                 "anchors": list(self.anchors)}
+        if self.whole_source is not None:
+            data["whole_source"] = self.whole_source.certificate
         if self.summaries:
             data["summaries"] = list(self.summaries)
         if self.models:
@@ -2707,7 +2710,7 @@ def _name(name, line):
 # --- lowering ---------------------------------------------------------------------------------------
 
 def lower(source, function, includes=(), defines=(), summaries=None, semantics=None,
-          array_domains=None, array_domain_contract=None):
+          array_domains=None, array_domain_contract=None, whole_source_selection=None):
     """The C lowering of `function` (and of every function, class and global it uses) from the C++ file `source`.
 
     `summaries` maps the C++ name of a function to the summary that stands for it ({name: summary ID or
@@ -2719,6 +2722,16 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     gets a generated hazard probe (`SWDB_TILE_READ` / `SWDB_TILE_WRITE`, ID `<function>.probe<N>`), listed in
     `Lowering.probes` with its C++ source range so the C++ side gets the same probe. A tile pointer used any
     other way is outside the subset. Without `semantics` the output is unchanged."""
+    if whole_source_selection is not None:
+        from swdb import dx100_checked_source
+        if includes or summaries or semantics or array_domains or array_domain_contract:
+            raise Unsupported('checked whole source cannot mix generic summary/window inputs')
+        try:
+            unit = dx100_checked_source.compose(whole_source_selection, source=source,
+                                               function=function, defines=defines)
+            return Lowering(**dx100_checked_source.lowering_fields(unit))
+        except (dx100_checked_source.Refused, ValueError, OSError, TypeError, KeyError, AttributeError) as exc:
+            raise Unsupported('checked whole source: ' + str(exc)) from None
     tool = locate()
     if tool.missing:
         raise LoweringError(tool.missing)

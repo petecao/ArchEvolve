@@ -1,0 +1,3210 @@
+{
+  "caller_premises_added": [],
+  "cases": {
+    "positive": {
+      "administrative_product": {
+        "actual_freshness_and_storage_correspondence": "explicit source storage TCB, not a new caller premise",
+        "consumes_selected_private_frontier": false,
+        "pointwise_incoming_frame": [
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.n"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.n"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.value"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.value"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.k"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.k"
+          },
+          {
+            "body": [
+              {
+                "operation": "store",
+                "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+                "target": "ctor.k"
+              }
+            ],
+            "operation": "loop",
+            "range": "0 <= k < n",
+            "rule": "pointwise identity for q composes by induction over every finite iteration"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.k"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.value"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.n"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.saved"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "data.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "data.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "data.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.saved"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.other"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.other"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.other"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.value"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.value"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.swdb_return"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.swdb_return"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.destination.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.destination.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.destination.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.source.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.source.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.source.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.swdb_return"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.value"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.saved"
+          }
+        ],
+        "private_objects": [
+          "ctor.this",
+          "ctor.n",
+          "ctor.value",
+          "ctor.k",
+          "caller.saved",
+          "data.this",
+          "move.this",
+          "move.other",
+          "caller.value",
+          "caller.swdb_return",
+          "dtor.destination.this",
+          "dtor.source.this"
+        ],
+        "projection": "distinct source-fresh parameter, counter and local pointer/scalar identities form a separate product; they are hidden without assigning them receiver/buffer Heap keys",
+        "source_order_checked": true
+      },
+      "after_cleanup": {
+        "next": 4,
+        "objects": [
+          {
+            "address": 8,
+            "alive": false,
+            "allocated": true,
+            "cells": [
+              {
+                "offset": 0,
+                "value": [
+                  "Pointer",
+                  0,
+                  0
+                ]
+              },
+              {
+                "offset": 8,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              },
+              {
+                "offset": 16,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [
+              0,
+              8,
+              16
+            ],
+            "key": 1,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "int_prefix": null
+            },
+            "writable": true
+          },
+          {
+            "address": 56,
+            "alive": false,
+            "allocated": true,
+            "cells": [],
+            "dynamic": true,
+            "extent": [
+              4,
+              0
+            ],
+            "filled_prefix": {
+              "all_0_le_k_lt_n_checked_symbolically": true,
+              "base_empty_prefix": true,
+              "count": [
+                1,
+                0
+              ],
+              "counter_decrease": 1,
+              "initialized": true,
+              "prior_cell_separation_coefficients": [
+                4,
+                0
+              ],
+              "remaining_extent_nonnegative_coefficients": [
+                0,
+                4,
+                0
+              ],
+              "step_preserves_every_earlier_element": true,
+              "stride": 4,
+              "value": 7,
+              "variant_after_in_tail_coordinates": [
+                0,
+                1,
+                0
+              ],
+              "variant_before_in_tail_coordinates": [
+                0,
+                1,
+                1
+              ]
+            },
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [],
+              "initialized_int_prefix": {
+                "count": [
+                  1,
+                  0
+                ],
+                "initialized": true,
+                "offset_predicate": "p=4*k for some integer 0<=k<n",
+                "stride": 4
+              }
+            },
+            "initialized_offsets": [],
+            "key": 2,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [],
+              "int_prefix": {
+                "count": [
+                  1,
+                  0
+                ],
+                "element": [
+                  "Integer",
+                  [
+                    0,
+                    7
+                  ]
+                ],
+                "offset_predicate": "p=4*k for some integer 0<=k<n",
+                "stride": 4
+              }
+            },
+            "writable": true
+          },
+          {
+            "address": 32,
+            "alive": false,
+            "allocated": true,
+            "cells": [
+              {
+                "offset": 0,
+                "value": [
+                  "Pointer",
+                  2,
+                  0
+                ]
+              },
+              {
+                "offset": 8,
+                "value": [
+                  "Integer",
+                  [
+                    1,
+                    0
+                  ]
+                ]
+              },
+              {
+                "offset": 16,
+                "value": [
+                  "Integer",
+                  [
+                    1,
+                    0
+                  ]
+                ]
+              }
+            ],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [
+              0,
+              8,
+              16
+            ],
+            "key": 3,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    2,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      1,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      1,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "int_prefix": null
+            },
+            "writable": true
+          }
+        ],
+        "owners": {
+          "active_keys": [],
+          "backing": {}
+        },
+        "ready_keys": [
+          1,
+          3
+        ]
+      },
+      "after_move": {
+        "destination_header": {
+          "buffer": 2,
+          "capacity": [
+            1,
+            0
+          ],
+          "count": [
+            1,
+            0
+          ]
+        },
+        "snapshot": {
+          "next": 4,
+          "objects": [
+            {
+              "address": 8,
+              "alive": true,
+              "allocated": true,
+              "cells": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "dynamic": false,
+              "extent": [
+                0,
+                24
+              ],
+              "filled_prefix": null,
+              "initialization_denotation": {
+                "default_unobserved_initialized": false,
+                "explicit_initialized_offsets": [
+                  0,
+                  8,
+                  16
+                ],
+                "initialized_int_prefix": null
+              },
+              "initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "key": 1,
+              "memory_denotation": {
+                "default_unobserved_cell": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "explicit_stores": [
+                  {
+                    "offset": 0,
+                    "value": [
+                      "Pointer",
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "offset": 8,
+                    "value": [
+                      "Integer",
+                      [
+                        0,
+                        0
+                      ]
+                    ]
+                  },
+                  {
+                    "offset": 16,
+                    "value": [
+                      "Integer",
+                      [
+                        0,
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "int_prefix": null
+              },
+              "writable": true
+            },
+            {
+              "address": 56,
+              "alive": true,
+              "allocated": true,
+              "cells": [],
+              "dynamic": true,
+              "extent": [
+                4,
+                0
+              ],
+              "filled_prefix": {
+                "all_0_le_k_lt_n_checked_symbolically": true,
+                "base_empty_prefix": true,
+                "count": [
+                  1,
+                  0
+                ],
+                "counter_decrease": 1,
+                "initialized": true,
+                "prior_cell_separation_coefficients": [
+                  4,
+                  0
+                ],
+                "remaining_extent_nonnegative_coefficients": [
+                  0,
+                  4,
+                  0
+                ],
+                "step_preserves_every_earlier_element": true,
+                "stride": 4,
+                "value": 7,
+                "variant_after_in_tail_coordinates": [
+                  0,
+                  1,
+                  0
+                ],
+                "variant_before_in_tail_coordinates": [
+                  0,
+                  1,
+                  1
+                ]
+              },
+              "initialization_denotation": {
+                "default_unobserved_initialized": false,
+                "explicit_initialized_offsets": [],
+                "initialized_int_prefix": {
+                  "count": [
+                    1,
+                    0
+                  ],
+                  "initialized": true,
+                  "offset_predicate": "p=4*k for some integer 0<=k<n",
+                  "stride": 4
+                }
+              },
+              "initialized_offsets": [],
+              "key": 2,
+              "memory_denotation": {
+                "default_unobserved_cell": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "explicit_stores": [],
+                "int_prefix": {
+                  "count": [
+                    1,
+                    0
+                  ],
+                  "element": [
+                    "Integer",
+                    [
+                      0,
+                      7
+                    ]
+                  ],
+                  "offset_predicate": "p=4*k for some integer 0<=k<n",
+                  "stride": 4
+                }
+              },
+              "writable": true
+            },
+            {
+              "address": 32,
+              "alive": true,
+              "allocated": true,
+              "cells": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    2,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      1,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      1,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "dynamic": false,
+              "extent": [
+                0,
+                24
+              ],
+              "filled_prefix": null,
+              "initialization_denotation": {
+                "default_unobserved_initialized": false,
+                "explicit_initialized_offsets": [
+                  0,
+                  8,
+                  16
+                ],
+                "initialized_int_prefix": null
+              },
+              "initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "key": 3,
+              "memory_denotation": {
+                "default_unobserved_cell": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "explicit_stores": [
+                  {
+                    "offset": 0,
+                    "value": [
+                      "Pointer",
+                      2,
+                      0
+                    ]
+                  },
+                  {
+                    "offset": 8,
+                    "value": [
+                      "Integer",
+                      [
+                        1,
+                        0
+                      ]
+                    ]
+                  },
+                  {
+                    "offset": 16,
+                    "value": [
+                      "Integer",
+                      [
+                        1,
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "int_prefix": null
+              },
+              "writable": true
+            }
+          ],
+          "owners": {
+            "active_keys": [
+              1,
+              3
+            ],
+            "backing": {
+              "1": 0,
+              "3": 2
+            }
+          },
+          "ready_keys": [
+            1,
+            3
+          ]
+        },
+        "source_header": {
+          "buffer": 0,
+          "capacity": [
+            0,
+            0
+          ],
+          "count": [
+            0,
+            0
+          ]
+        },
+        "world": {
+          "Heap.well_formed": {
+            "derived": true,
+            "issued_cases": [
+              1,
+              2,
+              3
+            ],
+            "live_pair_cases": [
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ]
+            ],
+            "other_integer_keys": "allocated=false and alive=false"
+          },
+          "Owners.valid": {
+            "active_cases": [
+              1,
+              3
+            ],
+            "derived": true,
+            "exclusive_and_receiver_distinct_cases": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                1
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "other_integer_keys": "active=false and backing=0"
+          },
+          "all_other_owner_cases": "inactive, so both universal implications are vacuous",
+          "derived": true,
+          "positive_freeable_cases": [
+            3
+          ],
+          "ready_header_witnesses": [
+            1,
+            3
+          ],
+          "receiver_cases": [
+            1,
+            3
+          ]
+        }
+      },
+      "arithmetic": {
+        "buffer_end_bounds": [
+          60,
+          8589934644
+        ],
+        "buffer_width_bounds": [
+          4,
+          8589934588
+        ],
+        "count_bounds": [
+          1,
+          2147483647
+        ],
+        "logical_field_alignment": 8,
+        "logical_header_bytes": 24,
+        "n_to_unsigned64_exact": true,
+        "proof": "exact affine endpoint bounds hold for every original integer n in the branch; the nonnegative signed32 count widens without loss to unsigned64",
+        "source_int_bytes": 4
+      },
+      "capture": {
+        "before_any_destructor": true,
+        "positive_read_justification": "0<n, element0 is initialized literal7 by the full prefix induction and move writes only private headers",
+        "saved_alias_registered_as_owner": false,
+        "saved_private_key": 2,
+        "source_event": "caller.value copied to caller.swdb_return before destination destructor",
+        "value": 7
+      },
+      "cleanup": {
+        "buffer_release_count": 1,
+        "captured_scalar_after_cleanup": 7,
+        "no_payload_or_pointer_read_after_release": true,
+        "registry_retirement_is_Heap_release": false,
+        "source_null_release_is_identity": true,
+        "steps": [
+          {
+            "automatic_end_private_key": 3,
+            "owner": "destination",
+            "registry_retired_separately": true,
+            "released_private_key": 2
+          },
+          {
+            "automatic_end_private_key": 1,
+            "owner": "source",
+            "registry_retired_separately": true,
+            "released_private_key": 0
+          }
+        ]
+      },
+      "domain": [
+        1,
+        2147483647
+      ],
+      "entry": {
+        "buffer": 2,
+        "destination": 3,
+        "next": 4,
+        "objects": [
+          {
+            "address": 8,
+            "alive": true,
+            "allocated": true,
+            "cells": [
+              {
+                "offset": 0,
+                "value": [
+                  "Pointer",
+                  2,
+                  0
+                ]
+              },
+              {
+                "offset": 8,
+                "value": [
+                  "Integer",
+                  [
+                    1,
+                    0
+                  ]
+                ]
+              },
+              {
+                "offset": 16,
+                "value": [
+                  "Integer",
+                  [
+                    1,
+                    0
+                  ]
+                ]
+              }
+            ],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [
+              0,
+              8,
+              16
+            ],
+            "key": 1,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    2,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      1,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      1,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "int_prefix": null
+            },
+            "writable": true
+          },
+          {
+            "address": 56,
+            "alive": true,
+            "allocated": true,
+            "cells": [],
+            "dynamic": true,
+            "extent": [
+              4,
+              0
+            ],
+            "filled_prefix": {
+              "all_0_le_k_lt_n_checked_symbolically": true,
+              "base_empty_prefix": true,
+              "count": [
+                1,
+                0
+              ],
+              "counter_decrease": 1,
+              "initialized": true,
+              "prior_cell_separation_coefficients": [
+                4,
+                0
+              ],
+              "remaining_extent_nonnegative_coefficients": [
+                0,
+                4,
+                0
+              ],
+              "step_preserves_every_earlier_element": true,
+              "stride": 4,
+              "value": 7,
+              "variant_after_in_tail_coordinates": [
+                0,
+                1,
+                0
+              ],
+              "variant_before_in_tail_coordinates": [
+                0,
+                1,
+                1
+              ]
+            },
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [],
+              "initialized_int_prefix": {
+                "count": [
+                  1,
+                  0
+                ],
+                "initialized": true,
+                "offset_predicate": "p=4*k for some integer 0<=k<n",
+                "stride": 4
+              }
+            },
+            "initialized_offsets": [],
+            "key": 2,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [],
+              "int_prefix": {
+                "count": [
+                  1,
+                  0
+                ],
+                "element": [
+                  "Integer",
+                  [
+                    0,
+                    7
+                  ]
+                ],
+                "offset_predicate": "p=4*k for some integer 0<=k<n",
+                "stride": 4
+              }
+            },
+            "writable": true
+          },
+          {
+            "address": 32,
+            "alive": true,
+            "allocated": true,
+            "cells": [],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [],
+            "key": 3,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [],
+              "int_prefix": null
+            },
+            "writable": true
+          }
+        ],
+        "owners": {
+          "active_keys": [
+            1,
+            3
+          ],
+          "backing": {
+            "1": 2,
+            "3": 0
+          }
+        },
+        "ready_keys": [
+          1
+        ],
+        "source": 1
+      },
+      "fill_induction": {
+        "all_0_le_k_lt_n_checked_symbolically": true,
+        "base_empty_prefix": true,
+        "count": [
+          1,
+          0
+        ],
+        "counter_decrease": 1,
+        "initialized": true,
+        "prior_cell_separation_coefficients": [
+          4,
+          0
+        ],
+        "remaining_extent_nonnegative_coefficients": [
+          0,
+          4,
+          0
+        ],
+        "step_preserves_every_earlier_element": true,
+        "stride": 4,
+        "value": 7,
+        "variant_after_in_tail_coordinates": [
+          0,
+          1,
+          0
+        ],
+        "variant_before_in_tail_coordinates": [
+          0,
+          1,
+          1
+        ]
+      },
+      "full_move_premises": {
+        "OwnedEffects.header(source,b,n,n)": {
+          "derived": true
+        },
+        "OwnedEffects.is_ready(source)": {
+          "derived": true
+        },
+        "OwnedEffects.reserved": {
+          "derived": true,
+          "destination_header_values_assumed": false
+        },
+        "OwnedEffects.world": {
+          "Heap.well_formed": {
+            "derived": true,
+            "issued_cases": [
+              1,
+              2,
+              3
+            ],
+            "live_pair_cases": [
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ]
+            ],
+            "other_integer_keys": "allocated=false and alive=false"
+          },
+          "Owners.valid": {
+            "active_cases": [
+              1,
+              3
+            ],
+            "derived": true,
+            "exclusive_and_receiver_distinct_cases": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                3,
+                1
+              ],
+              [
+                3,
+                3
+              ]
+            ],
+            "other_integer_keys": "active=false and backing=0"
+          },
+          "all_other_owner_cases": "inactive, so both universal implications are vacuous",
+          "derived": true,
+          "positive_freeable_cases": [
+            1
+          ],
+          "ready_header_witnesses": [
+            1
+          ],
+          "receiver_cases": [
+            1,
+            3
+          ]
+        },
+        "Owners.active_owner(source)": {
+          "derived": true
+        },
+        "destination != source": {
+          "derived": true
+        }
+      },
+      "incoming_frame": {
+        "all_source_effects_checked": true,
+        "arbitrary_incoming_type_restriction": null,
+        "dead_physical_bytes_preserved": false,
+        "freshness_basis": "actual source/storage/allocator freshness and local framing TCB; the private interpretation table never assumes global incoming Owners.valid or an empty C heap",
+        "physical_reuse": "a new identity may reuse a dead physical address; the dead identity ghost snapshot is not the physical bytes at that address",
+        "preserves": [
+          "all incoming allocation metadata",
+          "all incoming live storage values/initialization",
+          "all incoming dead allocation-identity ghost history"
+        ],
+        "steps": [
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "allocate",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "buffer"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "body": [
+              {
+                "operation": "store",
+                "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+                "target": "buffer"
+              }
+            ],
+            "operation": "loop",
+            "range": "0 <= k < n",
+            "rule": "pointwise identity for q composes by induction over every finite iteration"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "destination"
+          },
+          {
+            "operation": "header_copy",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "destination"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "release",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "buffer"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "destination"
+          },
+          {
+            "operation": "release",
+            "rule": "null release is identity under the explicit release TCB",
+            "target": "null"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          }
+        ]
+      },
+      "injection": {
+        "basis": "fresh distinct actual lexical/allocator identities, framed from arbitrary incoming identities, map to this finite table under the explicit source storage/allocator TCB",
+        "injective": true,
+        "logical_addresses_are_actual_pointer_values": false,
+        "mapping": {
+          "buffer": 2,
+          "destination": 3,
+          "source": 1
+        },
+        "private_keys_claim_global_Heap_next": false,
+        "source_creation_order": [
+          {
+            "operation": "begin_automatic",
+            "private_key": 1,
+            "source": "source"
+          },
+          {
+            "operation": "allocate",
+            "private_key": 2,
+            "source": "buffer"
+          },
+          {
+            "operation": "begin_automatic",
+            "private_key": 3,
+            "source": "destination"
+          }
+        ]
+      }
+    },
+    "zero": {
+      "administrative_product": {
+        "actual_freshness_and_storage_correspondence": "explicit source storage TCB, not a new caller premise",
+        "consumes_selected_private_frontier": false,
+        "pointwise_incoming_frame": [
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.n"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.n"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.value"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.value"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.value"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.n"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "ctor.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.saved"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "data.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "data.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "data.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.saved"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.other"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.other"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.other"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "move.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.value"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.value"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.swdb_return"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.swdb_return"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.destination.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.destination.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.destination.this"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.source.this"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.source.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "dtor.source.this"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.swdb_return"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.value"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "caller.saved"
+          }
+        ],
+        "private_objects": [
+          "ctor.this",
+          "ctor.n",
+          "ctor.value",
+          "caller.saved",
+          "data.this",
+          "move.this",
+          "move.other",
+          "caller.value",
+          "caller.swdb_return",
+          "dtor.destination.this",
+          "dtor.source.this"
+        ],
+        "projection": "distinct source-fresh parameter, counter and local pointer/scalar identities form a separate product; they are hidden without assigning them receiver/buffer Heap keys",
+        "source_order_checked": true
+      },
+      "after_cleanup": {
+        "next": 3,
+        "objects": [
+          {
+            "address": 8,
+            "alive": false,
+            "allocated": true,
+            "cells": [
+              {
+                "offset": 0,
+                "value": [
+                  "Pointer",
+                  0,
+                  0
+                ]
+              },
+              {
+                "offset": 8,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              },
+              {
+                "offset": 16,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [
+              0,
+              8,
+              16
+            ],
+            "key": 1,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "int_prefix": null
+            },
+            "writable": true
+          },
+          {
+            "address": 32,
+            "alive": false,
+            "allocated": true,
+            "cells": [
+              {
+                "offset": 0,
+                "value": [
+                  "Pointer",
+                  0,
+                  0
+                ]
+              },
+              {
+                "offset": 8,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              },
+              {
+                "offset": 16,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [
+              0,
+              8,
+              16
+            ],
+            "key": 2,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "int_prefix": null
+            },
+            "writable": true
+          }
+        ],
+        "owners": {
+          "active_keys": [],
+          "backing": {}
+        },
+        "ready_keys": [
+          1,
+          2
+        ]
+      },
+      "after_move": {
+        "destination_header": {
+          "buffer": 0,
+          "capacity": [
+            0,
+            0
+          ],
+          "count": [
+            0,
+            0
+          ]
+        },
+        "snapshot": {
+          "next": 3,
+          "objects": [
+            {
+              "address": 8,
+              "alive": true,
+              "allocated": true,
+              "cells": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "dynamic": false,
+              "extent": [
+                0,
+                24
+              ],
+              "filled_prefix": null,
+              "initialization_denotation": {
+                "default_unobserved_initialized": false,
+                "explicit_initialized_offsets": [
+                  0,
+                  8,
+                  16
+                ],
+                "initialized_int_prefix": null
+              },
+              "initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "key": 1,
+              "memory_denotation": {
+                "default_unobserved_cell": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "explicit_stores": [
+                  {
+                    "offset": 0,
+                    "value": [
+                      "Pointer",
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "offset": 8,
+                    "value": [
+                      "Integer",
+                      [
+                        0,
+                        0
+                      ]
+                    ]
+                  },
+                  {
+                    "offset": 16,
+                    "value": [
+                      "Integer",
+                      [
+                        0,
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "int_prefix": null
+              },
+              "writable": true
+            },
+            {
+              "address": 32,
+              "alive": true,
+              "allocated": true,
+              "cells": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "dynamic": false,
+              "extent": [
+                0,
+                24
+              ],
+              "filled_prefix": null,
+              "initialization_denotation": {
+                "default_unobserved_initialized": false,
+                "explicit_initialized_offsets": [
+                  0,
+                  8,
+                  16
+                ],
+                "initialized_int_prefix": null
+              },
+              "initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "key": 2,
+              "memory_denotation": {
+                "default_unobserved_cell": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ],
+                "explicit_stores": [
+                  {
+                    "offset": 0,
+                    "value": [
+                      "Pointer",
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "offset": 8,
+                    "value": [
+                      "Integer",
+                      [
+                        0,
+                        0
+                      ]
+                    ]
+                  },
+                  {
+                    "offset": 16,
+                    "value": [
+                      "Integer",
+                      [
+                        0,
+                        0
+                      ]
+                    ]
+                  }
+                ],
+                "int_prefix": null
+              },
+              "writable": true
+            }
+          ],
+          "owners": {
+            "active_keys": [
+              1,
+              2
+            ],
+            "backing": {
+              "1": 0,
+              "2": 0
+            }
+          },
+          "ready_keys": [
+            1,
+            2
+          ]
+        },
+        "source_header": {
+          "buffer": 0,
+          "capacity": [
+            0,
+            0
+          ],
+          "count": [
+            0,
+            0
+          ]
+        },
+        "world": {
+          "Heap.well_formed": {
+            "derived": true,
+            "issued_cases": [
+              1,
+              2
+            ],
+            "live_pair_cases": [
+              [
+                1,
+                2
+              ]
+            ],
+            "other_integer_keys": "allocated=false and alive=false"
+          },
+          "Owners.valid": {
+            "active_cases": [
+              1,
+              2
+            ],
+            "derived": true,
+            "exclusive_and_receiver_distinct_cases": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "other_integer_keys": "active=false and backing=0"
+          },
+          "all_other_owner_cases": "inactive, so both universal implications are vacuous",
+          "derived": true,
+          "positive_freeable_cases": [],
+          "ready_header_witnesses": [
+            1,
+            2
+          ],
+          "receiver_cases": [
+            1,
+            2
+          ]
+        }
+      },
+      "arithmetic": {
+        "buffer_end_bounds": null,
+        "buffer_width_bounds": [
+          0,
+          0
+        ],
+        "count_bounds": [
+          0,
+          0
+        ],
+        "logical_field_alignment": 8,
+        "logical_header_bytes": 24,
+        "n_to_unsigned64_exact": true,
+        "proof": "exact affine endpoint bounds hold for every original integer n in the branch; the nonnegative signed32 count widens without loss to unsigned64",
+        "source_int_bytes": 4
+      },
+      "capture": {
+        "before_any_destructor": true,
+        "positive_read_justification": "n==0 selects literal0; no null pointer arithmetic or dereference is evaluated",
+        "saved_alias_registered_as_owner": false,
+        "saved_private_key": 0,
+        "source_event": "caller.value copied to caller.swdb_return before destination destructor",
+        "value": 0
+      },
+      "cleanup": {
+        "buffer_release_count": 0,
+        "captured_scalar_after_cleanup": 0,
+        "no_payload_or_pointer_read_after_release": true,
+        "registry_retirement_is_Heap_release": false,
+        "source_null_release_is_identity": true,
+        "steps": [
+          {
+            "automatic_end_private_key": 2,
+            "owner": "destination",
+            "registry_retired_separately": true,
+            "released_private_key": 0
+          },
+          {
+            "automatic_end_private_key": 1,
+            "owner": "source",
+            "registry_retired_separately": true,
+            "released_private_key": 0
+          }
+        ]
+      },
+      "domain": [
+        0,
+        0
+      ],
+      "entry": {
+        "buffer": 0,
+        "destination": 2,
+        "next": 3,
+        "objects": [
+          {
+            "address": 8,
+            "alive": true,
+            "allocated": true,
+            "cells": [
+              {
+                "offset": 0,
+                "value": [
+                  "Pointer",
+                  0,
+                  0
+                ]
+              },
+              {
+                "offset": 8,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              },
+              {
+                "offset": 16,
+                "value": [
+                  "Integer",
+                  [
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [
+                0,
+                8,
+                16
+              ],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [
+              0,
+              8,
+              16
+            ],
+            "key": 1,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [
+                {
+                  "offset": 0,
+                  "value": [
+                    "Pointer",
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "offset": 8,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                {
+                  "offset": 16,
+                  "value": [
+                    "Integer",
+                    [
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "int_prefix": null
+            },
+            "writable": true
+          },
+          {
+            "address": 32,
+            "alive": true,
+            "allocated": true,
+            "cells": [],
+            "dynamic": false,
+            "extent": [
+              0,
+              24
+            ],
+            "filled_prefix": null,
+            "initialization_denotation": {
+              "default_unobserved_initialized": false,
+              "explicit_initialized_offsets": [],
+              "initialized_int_prefix": null
+            },
+            "initialized_offsets": [],
+            "key": 2,
+            "memory_denotation": {
+              "default_unobserved_cell": [
+                "Integer",
+                [
+                  0,
+                  0
+                ]
+              ],
+              "explicit_stores": [],
+              "int_prefix": null
+            },
+            "writable": true
+          }
+        ],
+        "owners": {
+          "active_keys": [
+            1,
+            2
+          ],
+          "backing": {
+            "1": 0,
+            "2": 0
+          }
+        },
+        "ready_keys": [
+          1
+        ],
+        "source": 1
+      },
+      "fill_induction": {
+        "base_empty_prefix": true,
+        "no_allocation_or_loop": true,
+        "zero_branch_does_not_evaluate_pointer_arithmetic": true
+      },
+      "full_move_premises": {
+        "OwnedEffects.header(source,b,n,n)": {
+          "derived": true
+        },
+        "OwnedEffects.is_ready(source)": {
+          "derived": true
+        },
+        "OwnedEffects.reserved": {
+          "derived": true,
+          "destination_header_values_assumed": false
+        },
+        "OwnedEffects.world": {
+          "Heap.well_formed": {
+            "derived": true,
+            "issued_cases": [
+              1,
+              2
+            ],
+            "live_pair_cases": [
+              [
+                1,
+                2
+              ]
+            ],
+            "other_integer_keys": "allocated=false and alive=false"
+          },
+          "Owners.valid": {
+            "active_cases": [
+              1,
+              2
+            ],
+            "derived": true,
+            "exclusive_and_receiver_distinct_cases": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "other_integer_keys": "active=false and backing=0"
+          },
+          "all_other_owner_cases": "inactive, so both universal implications are vacuous",
+          "derived": true,
+          "positive_freeable_cases": [],
+          "ready_header_witnesses": [
+            1
+          ],
+          "receiver_cases": [
+            1,
+            2
+          ]
+        },
+        "Owners.active_owner(source)": {
+          "derived": true
+        },
+        "destination != source": {
+          "derived": true
+        }
+      },
+      "incoming_frame": {
+        "all_source_effects_checked": true,
+        "arbitrary_incoming_type_restriction": null,
+        "dead_physical_bytes_preserved": false,
+        "freshness_basis": "actual source/storage/allocator freshness and local framing TCB; the private interpretation table never assumes global incoming Owners.valid or an empty C heap",
+        "physical_reuse": "a new identity may reuse a dead physical address; the dead identity ghost snapshot is not the physical bytes at that address",
+        "preserves": [
+          "all incoming allocation metadata",
+          "all incoming live storage values/initialization",
+          "all incoming dead allocation-identity ghost history"
+        ],
+        "steps": [
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "begin_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "destination"
+          },
+          {
+            "operation": "header_copy",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "destination"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "store",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          },
+          {
+            "operation": "release",
+            "rule": "null release is identity under the explicit release TCB",
+            "target": "null"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "destination"
+          },
+          {
+            "operation": "release",
+            "rule": "null release is identity under the explicit release TCB",
+            "target": "null"
+          },
+          {
+            "operation": "end_automatic",
+            "rule": "for arbitrary incoming identity q, source freshness gives q!=target; a target-local store/release/scope event preserves the q observation",
+            "target": "source"
+          }
+        ]
+      },
+      "injection": {
+        "basis": "fresh distinct actual lexical/allocator identities, framed from arbitrary incoming identities, map to this finite table under the explicit source storage/allocator TCB",
+        "injective": true,
+        "logical_addresses_are_actual_pointer_values": false,
+        "mapping": {
+          "destination": 2,
+          "source": 1
+        },
+        "private_keys_claim_global_Heap_next": false,
+        "source_creation_order": [
+          {
+            "operation": "begin_automatic",
+            "private_key": 1,
+            "source": "source"
+          },
+          {
+            "operation": "begin_automatic",
+            "private_key": 2,
+            "source": "destination"
+          }
+        ]
+      }
+    }
+  },
+  "checker": {
+    "id": "vector-owned-move-private-composition-1",
+    "sha256": "db9a62b9553b5036b0a541d5b69a625fb330175c904e88fd9825736af672e727"
+  },
+  "conditional_private_composition_checked": true,
+  "conditional_private_entry_constructed": true,
+  "created": "2026-10-16 ET",
+  "current_records_admitted": [],
+  "exact_mathematical_evidence_bound": false,
+  "incoming_component": {
+    "domain": "arbitrary incoming allocation identities and types, live storage values and dead-identity ghost histories",
+    "empty_incoming_C_heap_assumed": false,
+    "product": "incoming source observations times the constructed private logical witness times separately hidden administrative storage",
+    "restriction": null
+  },
+  "input_partition": {
+    "disjoint_and_complete": true,
+    "original_signed32_n_domain": [
+      0,
+      2147483647
+    ],
+    "positive_domain": [
+      1,
+      2147483647
+    ],
+    "upper_bound_is_source_type_not_new_requires": true,
+    "zero_domain": [
+      0,
+      0
+    ]
+  },
+  "new_mathematical_axioms": [],
+  "normal_public_diagnostic_ledger_bound": false,
+  "original_contract": [
+    "requires 0 <= n;",
+    "assigns \\nothing;",
+    "ensures \\result == (n > 0 ? 7 : 0);"
+  ],
+  "private_initial_heap": {
+    "Owners_active_keys": [],
+    "allocated_keys": [],
+    "incoming_Heap_or_Owners_precondition": false,
+    "memory_choice": "unobserved private cells may be chosen Integer0; initialization defaults false",
+    "next": 1,
+    "role": "existential interpretation witness"
+  },
+  "private_total_maps": {
+    "meaning": "total PRIVATE maps chosen for an existential witness; incoming memory lives in the independent arbitrary component",
+    "unlisted_allocated_alive_dynamic_writable": false,
+    "unlisted_extent_address": 0,
+    "unlisted_initialized": false,
+    "unwritten_cell_choice": [
+      "Integer",
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  "scientific_dependencies": {
+    "constructor": {
+      "current_record_admitted": false,
+      "member": "std_vector_int_realloc_v3_ctor_count_value",
+      "retained_evidence_role": "conditionally reusable exact model mathematics only; complete historical evidence/context binding still required",
+      "source_inverse": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+        "caller_discharge": "required; not assumed",
+        "executable_bodies": [
+          {
+            "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "original_function": "swdb_alloc_int",
+            "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "qualified_function": "swdb_alloc_int"
+          },
+          {
+            "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "original_function": "swdb_free",
+            "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "qualified_function": "swdb_free"
+          },
+          {
+            "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+            "inverse_qualified_body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+            "original_fragment_sha256": "3cd8afffdc132e49f623b56149a1621603ea1314c030515f0320fd5b912b000c",
+            "original_function": "std_vector_int_ctor_count_value",
+            "qualified_fragment_sha256": "a4963a177811339c6e5f44377c2a793de7ab830103987ba68e68b68048ab5bfe",
+            "qualified_function": "std_vector_int_realloc_v3_ctor_count_value"
+          }
+        ],
+        "inverse_qualified_source_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_ctor_count_value",
+        "original_source_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "qualification certificate only; a proof verdict requires fresh checked execution",
+        "qualified_member": "std_vector_int_realloc_v3_ctor_count_value",
+        "qualified_source_sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a",
+        "typed_source_image": {
+          "applicable": true,
+          "boundary": "old heap repr does not imply int32_region; actual typed-source correspondence is mandatory",
+          "caller_discharge": "source-derived typed int objects; opaque raw storage unsupported",
+          "id": "wp-typed-int32-source-image-1",
+          "projection": "selected WP Typed bounded integer chunk -> Integer(value); pointer chunks are not integer cells",
+          "raw_effective_type_safety_proved": false,
+          "required_source_files": [
+            {
+              "name": "MemTyped.ml",
+              "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+            },
+            {
+              "name": "Cint.ml",
+              "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+            },
+            {
+              "name": "Factory.ml",
+              "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+            }
+          ],
+          "required_wp_integer_model": "Machine; Natural/NAT is outside this bounded-int projection",
+          "runtime_source_binding": "required selected-tool verification before every launch; not assumed"
+        },
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "targets": [
+        {
+          "goal": "t25v3_control_ctor_premises_feasible",
+          "id": "control.ctor.premises_feasible",
+          "kind": "check_lemma",
+          "sha256": "b5e411200cea2b718f6d7464d67b16c9704f13da40fb4b5c3d15f8ccc424dad5",
+          "statement": "Heap::well_formed(Heap::allocate(Heap::empty(0),6,8)) && Heap::typed_writes(Heap::allocate(Heap::empty(0),6,8),1,0,24,8) && Heap::available(Heap::allocate(Heap::empty(0),6,8),1,64)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_zero_data",
+          "id": "ctor.rte.zero_data",
+          "kind": "check_lemma",
+          "sha256": "3a64ef32dc04c28baf29bf0432e000405db7e5923e5ee7c40d15a3afd162edee",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(h,r,o,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_zero_size",
+          "id": "ctor.rte.zero_size",
+          "kind": "check_lemma",
+          "sha256": "524665df08d6df290bc3fa479ba7de698c4929ecb9307065e909c815cea8e651",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::put_pointer(h,r,o,0,0),r,o+8,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_zero_capacity",
+          "id": "ctor.rte.zero_capacity",
+          "kind": "check_lemma",
+          "sha256": "1b503dcb3e5d9ad0c02e7f05c4b961c4e344d05b027d2c922445495b030dd44e",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::put_integer(Heap::put_pointer(h,r,o,0,0),r,o+8,0),r,o+16,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_fields_initialized",
+          "id": "ctor.fields.initialized",
+          "kind": "check_lemma",
+          "sha256": "7457a3fb08737a445abd553c0b18ecf41782b92e468bbd8a6fc641c64b412080",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> t25_fields(t25_initial(h,r,o),r,o,0,0,0,0)"
+        },
+        {
+          "goal": "t25v3_ctor_zero_post",
+          "id": "ctor.zero.post",
+          "kind": "check_lemma",
+          "sha256": "67a767b853c35aa675dc2a038b8ce511f72c3b5d283c4b456ed3b9b537504cc0",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> t25_repr(t25_initial(h,r,o),r,o,0,0,0,0)"
+        },
+        {
+          "goal": "t25v3_ctor_zero_frame",
+          "id": "ctor.zero.frame",
+          "kind": "check_lemma",
+          "sha256": "246cb3285d23c64743a49e27ea7fddca8b0370800f447852782eb09f1dc8490a",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; t25_frame(h,t25_initial(h,r,o),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_identity",
+          "id": "ctor.alloc.identity",
+          "kind": "check_lemma",
+          "sha256": "2c4039918468f64d6186788d62229926ec3de5ed7733deb3f1a37d626e1d3e7f",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) && Heap::typed_writes(h,r,o,24,8) ==> Heap::fresh_id(h) != r && !Heap::issued(h,Heap::fresh_id(h)) && Heap::live(Heap::allocate(h,n,a),Heap::fresh_id(h))"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_well_formed",
+          "id": "ctor.alloc.well_formed",
+          "kind": "check_lemma",
+          "sha256": "37fb36cddfa7c04a94b82a42170d5c2e5ca38e32c79bb164d24cdc9de7e37f55",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a; Heap::well_formed(h) && Heap::available(h,n,a) ==> Heap::well_formed(Heap::allocate(h,n,a))"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_separation",
+          "id": "ctor.alloc.separation",
+          "kind": "check_lemma",
+          "sha256": "15b3e29c013f359fd41166886cf8c87349871c4d6be2f3acf2a42fa2faeef5d7",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a,b; Heap::well_formed(h) && Heap::available(h,n,a) && Heap::live(h,b) ==> Heap::separated(Heap::allocate(h,n,a),Heap::fresh_id(h),b)"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_extent",
+          "id": "ctor.alloc.extent",
+          "kind": "check_lemma",
+          "sha256": "19ba37f46cad8d3c1fb1540232498f75f033e3462e8bd333ef29f6ef5b0d6ebb",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a; Heap::well_formed(h) && Heap::available(h,n,a) && 0 < n ==> Heap::typed_writes(Heap::allocate(h,n,a),Heap::fresh_id(h),0,4*n,4) && Heap::bytes(Heap::allocate(h,n,a),Heap::fresh_id(h)) == 4*n"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_uninitialized",
+          "id": "ctor.alloc.uninitialized",
+          "kind": "check_lemma",
+          "sha256": "7e829d37db0bd00afc9da274a2bb64f670f95d8877a85cca91e9968f956b6797",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a,j; !Heap::initialized_at(Heap::allocate(h,n,a),Heap::fresh_id(h),j)"
+        },
+        {
+          "goal": "t25v3_ctor_capacity_entry",
+          "id": "ctor.capacity.entry",
+          "kind": "check_lemma",
+          "sha256": "7a0e99453d6cbc09801fce66d2387a93175e593cf4152c99f36d21cd50adba42",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a,v; Heap::well_formed(h) && Heap::available(h,n,a) && Heap::typed_writes(h,r,o,24,8) && 0 < n <= 4611686018427387903 && -2147483648 <= v <= 2147483647 ==> t25v3_ctor_inv(t25_allocated(h,r,o,n,a),r,o,Heap::fresh_id(h),n,0,v)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_allocated_data",
+          "id": "ctor.rte.allocated_data",
+          "kind": "check_lemma",
+          "sha256": "02ba89b283c54cc344aad9897d86365fc227c0c2b2bc0efcb67f6e49ad0bb96a",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) && Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::allocate(t25_initial(h,r,o),n,a),r,o,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_allocated_capacity",
+          "id": "ctor.rte.allocated_capacity",
+          "kind": "check_lemma",
+          "sha256": "0991127933d1a77bd56ec6c71aa78a2c00754d88fadba9dd91c109a4fa4bf2ec",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) && Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::put_pointer(Heap::allocate(t25_initial(h,r,o),n,a),r,o,Heap::fresh_id(h),0),r,o+16,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_prefix_establish",
+          "id": "ctor.prefix.establish",
+          "kind": "check_lemma",
+          "sha256": "50fb5df4e141d3263dc802457dbd7935be3b0286b17ec43c21bac0e37fc97218",
+          "statement": "\\forall Heap::heap h; \\forall integer b,v; Heap::filled_prefix(h,b,0,v)"
+        },
+        {
+          "goal": "t25v3_ctor_store_access",
+          "id": "ctor.store.access",
+          "kind": "check_lemma",
+          "sha256": "83c4d2ad7c3351e04007cfc3a8b4b9ace11774feab2e0eb678e7cb7a663af2ad",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,k,v; t25v3_ctor_inv(h,r,o,b,n,k,v) && k < n ==> Heap::typed_forms(h,b,4*k,4) && Heap::typed_writes(h,b,4*k,4,4) && Heap::initialized_at(h,r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_prefix_step",
+          "id": "ctor.prefix.step",
+          "kind": "check_lemma",
+          "sha256": "aa084a3b18ca0a7abd158071d20b91efb631d797ea0789f8e24c4fb35ccba598",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,k,v; t25v3_ctor_inv(h,r,o,b,n,k,v) && k < n ==> t25v3_ctor_inv(Heap::put_integer(h,b,4*k,v),r,o,b,n,k+1,v)"
+        },
+        {
+          "goal": "t25v3_ctor_prefix_exit",
+          "id": "ctor.prefix.exit",
+          "kind": "check_lemma",
+          "sha256": "63e1d91b2abddf2959a3ed8d35fbccd0f3c4c1679a17e61d5f364e0b9135d123",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,k,v; t25v3_ctor_inv(h,r,o,b,n,k,v) && !(k < n) ==> k == n && Heap::filled_prefix(h,b,n,v)"
+        },
+        {
+          "goal": "t25v3_ctor_final_post",
+          "id": "ctor.final.post",
+          "kind": "check_lemma",
+          "sha256": "7bdbb392a07ba3d6cf4e6a38d8cb84253a7ffc2f801a29c456a4039c4859f42e",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> t25_repr(Heap::put_integer(h,r,o+8,n),r,o,b,0,n,n) && Heap::filled_prefix(Heap::put_integer(h,r,o+8,n),b,n,v)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_final_size",
+          "id": "ctor.rte.final_size",
+          "kind": "check_lemma",
+          "sha256": "2f55d2e1f387cc1e191db7169b89969582c6684a320930868d364d2bd8ddfd3e",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> Heap::typed_writes(h,r,o+8,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_frame_preexisting",
+          "id": "ctor.frame.preexisting",
+          "kind": "check_lemma",
+          "sha256": "f944af412b583f4a9a60871dd616b8188e64a27fb7cd75eb94a372c4454c2835",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) ==> t25_frame(h,t25_allocated(h,r,o,n,a),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_frame_loop_step",
+          "id": "ctor.frame.loop_step",
+          "kind": "check_lemma",
+          "sha256": "b73c3d72d71d00b1a3db42157634a66fcc2caa20a5a803f12189ee864a0ef98a",
+          "statement": "\\forall Heap::heap old,h; \\forall integer r,o,b,k,v; t25_frame(old,h,r,o) && !Heap::live(old,b) ==> t25_frame(old,Heap::put_integer(h,b,4*k,v),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_frame_final",
+          "id": "ctor.frame.final",
+          "kind": "check_lemma",
+          "sha256": "524a1813b0938ef54b0f013c015bf74448488031a6398d934f5ea84f632bcf28",
+          "statement": "\\forall Heap::heap old,h; \\forall integer r,o,n; t25_frame(old,h,r,o) ==> t25_frame(old,Heap::put_integer(h,r,o+8,n),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_numeric",
+          "id": "ctor.numeric",
+          "kind": "c_kernel",
+          "sha256": "95efe1cba1bbc55c5f08d538cd4424ff93a4d3adf6bd5d169ad17664377d5600",
+          "statement": null
+        },
+        {
+          "goal": "t25v3_control_zero_size_formation",
+          "id": "control.zero_size.formation",
+          "kind": "check_lemma",
+          "sha256": "20e39f968e9d59dc0d4fd901a6758e976969a3824c3509d3ad5cd21e482cb1dc",
+          "statement": "\\forall Heap::heap h; \\forall integer a; Heap::well_formed(h) && Heap::available(h,0,a) ==> Heap::well_formed(Heap::allocate(h,0,a)) && Heap::fresh_id(h) != 0 && Heap::typed_forms(Heap::allocate(h,0,a),Heap::fresh_id(h),0,4) && !Heap::can_read(Heap::allocate(h,0,a),Heap::fresh_id(h),0,4)"
+        },
+        {
+          "goal": "t25v3_control_live_zero_base_not_fresh",
+          "id": "control.live_zero_base.not_fresh",
+          "kind": "check_lemma",
+          "sha256": "986b457661e64986482e9959757025ca082a0826018dbd372529d0722656b112",
+          "statement": "\\forall Heap::heap h; \\forall integer b,n; Heap::live(h,b) && Heap::bytes(h,b) == 0 ==> !Heap::available(h,n,Heap::numerical_address(h,b))"
+        },
+        {
+          "goal": "t25v3_control_ctor_qualified_feasible",
+          "id": "control.ctor.qualified_feasible",
+          "kind": "check_lemma",
+          "sha256": "a60560cd42ab38003711f2bc0815fb0f39a4757888d19bb038bc4c4b4525770d",
+          "statement": "t25v3_ctor_inv(t25_allocated(Heap::allocate(Heap::empty(0),6,8),1,0,1,64),1,0,2,1,0,7)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_zero_post",
+          "id": "ctor.qualified.zero_post",
+          "kind": "check_lemma",
+          "sha256": "efbc464b79789d41ce4c4cbbc507e6bd66440c7455291412f6cbe6a2bb3d4871",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> t25v3_eligible(t25_initial(h,r,o),r,o,0,0,0,0)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_repr",
+          "id": "ctor.qualified.positive_post.repr",
+          "kind": "check_lemma",
+          "sha256": "a2f0879c57876cd1c0a655d514723f028939794f07faf50f3b0559fdd669500d",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> t25_repr(Heap::put_integer(h,r,o+8,n),r,o,b,0,n,n)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_access",
+          "id": "ctor.qualified.positive_post.cells.access",
+          "kind": "check_lemma",
+          "sha256": "2281cad8ea18001a5e5397b71f48d74ee6a7f5f447a7581ebf15c36d042f7d1c",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> Heap::typed_reads(Heap::put_integer(h,r,o+8,n),b,(0+4*j),4,4)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_initialization",
+          "id": "ctor.qualified.positive_post.cells.initialization",
+          "kind": "check_lemma",
+          "sha256": "c84a63dc42bb61eee15381e5c265a743e4e95acfe630019303cfd6f1e933bebe",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> Heap::initialized_at(Heap::put_integer(h,r,o+8,n),b,(0+4*j))"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_integer",
+          "id": "ctor.qualified.positive_post.cells.integer",
+          "kind": "check_lemma",
+          "sha256": "c61359f03125569a6d84b788c010664bde01021446716d7dc7525359a0e8714a",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> Heap::integer_at(Heap::put_integer(h,r,o+8,n),b,(0+4*j),Heap::load_int(Heap::put_integer(h,r,o+8,n),b,(0+4*j)))"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_bounds",
+          "id": "ctor.qualified.positive_post.cells.bounds",
+          "kind": "check_lemma",
+          "sha256": "867a0e3070efe2c84395fd0dda1c438306169583e8e71b8abdd4b267c6694cdc",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> -2147483648 <= Heap::load_int(Heap::put_integer(h,r,o+8,n),b,(0+4*j)) <= 2147483647"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_eligibility",
+          "id": "ctor.qualified.positive_post.eligibility",
+          "kind": "check_lemma",
+          "sha256": "91a7d5520173fb81907e40a5d4b6e187dffdebddd4373b291b7a0c0c923220bf",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> (n == 0 || (Heap::freeable(Heap::put_integer(h,r,o+8,n),b,0) && r != b))"
+        }
+      ]
+    },
+    "destructor": {
+      "current_record_admitted": false,
+      "member": "std_vector_int_realloc_v3_dtor",
+      "retained_evidence_role": "conditionally reusable exact model mathematics only; complete historical evidence/context binding still required",
+      "source_inverse": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+        "caller_discharge": "required; not assumed",
+        "executable_bodies": [
+          {
+            "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "original_function": "swdb_alloc_int",
+            "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "qualified_function": "swdb_alloc_int"
+          },
+          {
+            "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "original_function": "swdb_free",
+            "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "qualified_function": "swdb_free"
+          },
+          {
+            "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+            "inverse_qualified_body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+            "original_fragment_sha256": "7779eb945593c441b99b36115d35a24a8347bee1fb9d91db1db14879458ef38a",
+            "original_function": "std_vector_int_dtor",
+            "qualified_fragment_sha256": "9870371fd3541cf977563c759b0205704642c7324837c8695c51c6903cdfd8e0",
+            "qualified_function": "std_vector_int_realloc_v3_dtor"
+          }
+        ],
+        "inverse_qualified_source_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_dtor",
+        "original_source_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "qualification certificate only; a proof verdict requires fresh checked execution",
+        "qualified_member": "std_vector_int_realloc_v3_dtor",
+        "qualified_source_sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f",
+        "typed_source_image": {
+          "applicable": false,
+          "raw_effective_type_safety_proved": false,
+          "role": "no buffer element load; original pointer/free domain retained"
+        },
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "targets": [
+        {
+          "goal": "t25v3_control_dtor_premises_feasible",
+          "id": "control.dtor.premises_feasible",
+          "kind": "check_lemma",
+          "sha256": "0563754418f4a12a41995478c6a829c73114b4c967df221220a3b08fba410c4f",
+          "statement": "Heap::well_formed(t25_sample(0)) && t25_repr(t25_sample(0),1,0,2,0,1,1) && Heap::freeable(t25_sample(0),2,0)"
+        },
+        {
+          "goal": "t25v3_dtor_data_read",
+          "id": "dtor.data.read",
+          "kind": "check_lemma",
+          "sha256": "004833d8949bb5d4400a219ef2b9368ae7ca4914d15fc69062f761c63b29827b",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) ==> Heap::typed_reads(h,r,o,8,8) && Heap::initialized_at(h,r,o) && Heap::pointer_at(h,r,o,b,bo)"
+        },
+        {
+          "goal": "t25v3_dtor_free_argument",
+          "id": "dtor.free.argument",
+          "kind": "check_lemma",
+          "sha256": "462a7744e8f7a5137bdca30bbd498f6a38e2272e93a5922cfca31bfb5e05e949",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (c == 0 || Heap::freeable(h,b,bo)) ==> (b == 0 && bo == 0) || Heap::freeable(h,b,bo)"
+        },
+        {
+          "goal": "t25v3_dtor_null_no_op",
+          "id": "dtor.null.no_op",
+          "kind": "check_lemma",
+          "sha256": "96b0e5c9536694714afec32d21cf52517e871f2225ff074cc043746c5a15a9b4",
+          "statement": "\\forall Heap::heap h; Heap::release(h,0) == h"
+        },
+        {
+          "goal": "t25v3_dtor_alias_invalidated",
+          "id": "dtor.alias.invalidated",
+          "kind": "check_lemma",
+          "sha256": "40bed47f0ae13d768e077e6ea7789dcd190194e1522810310250ad1278a698a1",
+          "statement": "\\forall Heap::heap h; \\forall integer b,alias_offset; b != 0 ==> !Heap::forms(Heap::release(h,b),b,alias_offset) && !Heap::can_read(Heap::release(h,b),b,alias_offset,4)"
+        },
+        {
+          "goal": "t25v3_dtor_post_old_invalid",
+          "id": "dtor.post.old_invalid",
+          "kind": "check_lemma",
+          "sha256": "5062df7f6ed1315b67e6e1a0d323dcff7cb53a6b6df4639034cbd45ca415034f",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; Heap::well_formed(h) && t25_repr(h,r,o,b,bo,s,c) && (c == 0 || Heap::freeable(h,b,bo)) && c > 0 ==> !Heap::can_read(Heap::release(h,b),b,bo,4)"
+        },
+        {
+          "goal": "t25v3_dtor_frame_surviving",
+          "id": "dtor.frame.surviving",
+          "kind": "check_lemma",
+          "sha256": "3012485de6f563339f99f6c8b38d270fb6d04429367c20836d8e8a6465b5aa67",
+          "statement": "\\forall Heap::heap h; \\forall integer dead,b,o; Heap::live(h,b) && b != dead ==> Heap::contents(Heap::release(h,dead),b,o) == Heap::contents(h,b,o) && (Heap::initialized_at(Heap::release(h,dead),b,o) <==> Heap::initialized_at(h,b,o))"
+        },
+        {
+          "goal": "t25v3_dtor_frame_other_live",
+          "id": "dtor.frame.other_live",
+          "kind": "check_lemma",
+          "sha256": "e0fb664a9c258708be364a9017d9806ae01ec81eb905f4a572943f29abaedc1a",
+          "statement": "\\forall Heap::heap h; \\forall integer dead,b; b != dead ==> Heap::same_object(h,Heap::release(h,dead),b)"
+        },
+        {
+          "goal": "t25v3_dtor_receiver_overlap",
+          "id": "dtor.receiver.overlap",
+          "kind": "check_lemma",
+          "sha256": "8c53c08ddc54ebb60d69fce168fff27c4c0dd52c8d80741d99eabd5475202096",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; r != 0 ==> !Heap::can_read(Heap::release(h,r),r,o,24)"
+        },
+        {
+          "goal": "t25v3_control_reused_address_stale",
+          "id": "control.reused_address.stale",
+          "kind": "check_lemma",
+          "sha256": "59f1c15f17ed5a1cddb2658e07f6af4f9e0877ed902d84c444ff93d2a824c0d8",
+          "statement": "\\forall Heap::heap h; \\forall integer b,n; Heap::well_formed(h) && Heap::freeable(h,b,0) && Heap::aligned(Heap::numerical_address(h,b),4) && 0 < n && 4*n <= Heap::bytes(h,b) ==> Heap::available(Heap::release(h,b),n,Heap::numerical_address(h,b)) && Heap::well_formed(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b))) && Heap::numerical_address(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b)),Heap::fresh_id(h)) == Heap::numerical_address(h,b) && !Heap::can_read(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b)),b,0,4)"
+        },
+        {
+          "goal": "t25v3_control_before_release_read",
+          "id": "control.before_release.read",
+          "kind": "check_lemma",
+          "sha256": "5f2c091c9d006b7aca4fa6143450b0b38a480f9380771bb9a0bf6399e6d1702f",
+          "statement": "\\forall Heap::heap h; \\forall integer b,o; Heap::can_read(h,b,o,4) && Heap::initialized_at(h,b,o) ==> Heap::live(h,b)"
+        }
+      ]
+    },
+    "move_source": {
+      "checker": {
+        "id": "vector-owned-source-view-1",
+        "sha256": "5639308d3b8db1a93071cd9d40cfa1aa025fe11c5435a303fff9fe783885a3cb"
+      },
+      "mathematically_admitted": false,
+      "old_eight_native_Valid_or_registry10_is_admission": false,
+      "remaining": "complete exact source-to-Heap/phase/header composition and independent task encoding closure",
+      "source_local_discharge": "the two participating lexical owners are constructed here; no opaque incoming Owners.valid or OwnedEffects.world premise is assumed",
+      "targets": [
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_destination_header",
+          "id": "move.destination_header",
+          "kind": "check_lemma",
+          "path": "obligations/000-t25_owned_effect_move_destination_header.c",
+          "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::header(OwnedEffects::move(h,d,s),d,b,n,c)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_source_empty",
+          "id": "move.source_empty",
+          "kind": "check_lemma",
+          "path": "obligations/001-t25_owned_effect_move_source_empty.c",
+          "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::header(OwnedEffects::move(h,d,s),s,0,0,0)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_incoming_frame",
+          "id": "move.incoming_frame",
+          "kind": "check_lemma",
+          "path": "obligations/002-t25_owned_effect_move_incoming_frame.c",
+          "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::incoming_frame(h,OwnedEffects::move(h,d,s),d,s)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_owner_correspondence",
+          "id": "move.owner_correspondence",
+          "kind": "check_lemma",
+          "path": "obligations/003-t25_owned_effect_move_owner_correspondence.c",
+          "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::world(OwnedEffects::move(h,d,s),Owners::move(owners,d,s),OwnedEffects::moved_phases(ready,d,s))",
+          "status": "pending"
+        }
+      ]
+    },
+    "private_frame": {
+      "checker": {
+        "id": "vector-private-lifetime-frame-1",
+        "sha256": "d821607eba3ac35dbbc212f141c372faf0ed947d56805a612bcc4270e3ab844d"
+      },
+      "current_record_admitted": false,
+      "retained_evidence_role": "conditional private math only; actual incoming all-identity source frame is separate",
+      "targets": [
+        {
+          "dependencies": [],
+          "goal": "t25_private_entry_reflexive",
+          "id": "entry.reflexive",
+          "kind": "check_lemma",
+          "path": "obligations/000-t25_private_entry_reflexive.c",
+          "sha256": "5998b73632c81c97aeaa2cf383315be526a94570f248dca029fb79447e871f78",
+          "statement": "\\forall Heap::heap h; t25_private_frame(h,h)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_automatic_frame",
+          "id": "automatic.frame",
+          "kind": "check_lemma",
+          "path": "obligations/001-t25_private_automatic_frame.c",
+          "sha256": "6324aed8153be9f5a7dda9b66a5d72a78c53b0228a9ed40a68327acdef8b0571",
+          "statement": "\\forall Heap::heap h; \\forall integer width,a; Heap::well_formed(h) ==> t25_private_frame(h,Heap::begin_automatic(h,width,a)) && !Heap::live(h,Heap::fresh_id(h))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_allocation_frame",
+          "id": "allocation.frame",
+          "kind": "check_lemma",
+          "path": "obligations/002-t25_private_allocation_frame.c",
+          "sha256": "dadf3cf983f34461dcb084c0bf88de22cb7bf3409ba7e0cbb8b50febcdc7e489",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer n,a; Heap::well_formed(now) && t25_private_frame(entry,now) ==> t25_private_frame(entry,Heap::allocate(now,n,a)) && !Heap::live(entry,Heap::fresh_id(now))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_integer_store_frame",
+          "id": "integer_store.frame",
+          "kind": "check_lemma",
+          "path": "obligations/003-t25_private_integer_store_frame.c",
+          "sha256": "8b22188dcff983758ad4a738bd95638623454e5c9cf777babaa3f931fcc558e0",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer b,o,v; t25_private_frame(entry,now) && !Heap::live(entry,b) ==> t25_private_frame(entry,Heap::put_integer(now,b,o,v))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_pointer_store_frame",
+          "id": "pointer_store.frame",
+          "kind": "check_lemma",
+          "path": "obligations/004-t25_private_pointer_store_frame.c",
+          "sha256": "be07d38896958af227b41eda58cf677fa4da599aab3b7a7c13de423be98b481a",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer b,o,target,offset; t25_private_frame(entry,now) && !Heap::live(entry,b) ==> t25_private_frame(entry,Heap::put_pointer(now,b,o,target,offset))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_release_frame",
+          "id": "release.frame",
+          "kind": "check_lemma",
+          "path": "obligations/005-t25_private_release_frame.c",
+          "sha256": "dd64ff3d4f99544ed3e206e48a426a468757239f5c8a44d1800cdc642652e810",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer b; t25_private_frame(entry,now) && !Heap::live(entry,b) ==> t25_private_frame(entry,Heap::release(now,b))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_automatic_end_frame",
+          "id": "automatic_end.frame",
+          "kind": "check_lemma",
+          "path": "obligations/006-t25_private_automatic_end_frame.c",
+          "sha256": "aede762faf9c388a1525d9bfef95a69814908ca5ce2e81101a34c6922d29e703",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer r; t25_private_frame(entry,now) && !Heap::live(entry,r) ==> t25_private_frame(entry,Heap::end_automatic(now,r))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_cleanup_observation",
+          "id": "cleanup.observation",
+          "kind": "check_lemma",
+          "path": "obligations/007-t25_private_cleanup_observation.c",
+          "sha256": "8b0041e29c2a2cff5cfccea2c0ff47d9c705f6d6a21801f5c7e2c1ffcf45bdb6",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer r,b; t25_private_frame(entry,now) && t25_private_ids(entry,r,b) ==> t25_private_frame(entry,t25_private_cleanup(now,r,b)) && t25_private_observes(entry,now,t25_private_cleanup(now,r,b))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_cleanup_exists_scalar",
+          "id": "cleanup.exists_scalar",
+          "kind": "check_lemma",
+          "path": "obligations/008-t25_private_cleanup_exists_scalar.c",
+          "sha256": "3862ad897bdaa760a0a78e97cf2752daaba13e747d134c5cd8aad4395fa5bebb",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer r,b,n; t25_private_frame(entry,now) && t25_private_ids(entry,r,b) && Heap::typed_writes(now,r,0,24,8) && !Heap::freeable(now,r,0) && 0 <= n && (n == 0 ? b == 0 : Heap::freeable(now,b,0) && Heap::int32_region(now,b,0,n) && Heap::filled_prefix(now,b,n,7)) ==> \\exists Heap::heap final; \\exists integer scalar; final == t25_private_cleanup(now,r,b) && scalar == (n > 0 ? Heap::load_int(now,b,0) : 0) && scalar == (n > 0 ? 7 : 0) && t25_private_frame(entry,final) && t25_private_observes(entry,now,final)",
+          "status": "pending"
+        }
+      ]
+    }
+  },
+  "source_Heap_Typed_caller_admission": false,
+  "source_layout_TCB": {
+    "correspondence": "the selected source/library/storage ABI relates these field observations; private logical addresses are chosen witnesses, not actual numeric source pointers",
+    "header_extent_alignment": [
+      24,
+      8
+    ],
+    "int_bytes_alignment": [
+      4,
+      4
+    ],
+    "logical_addresses_equal_physical_addresses": false,
+    "pointer_size_bits": 64,
+    "size_type_bits": 64,
+    "source_int_bits": 32,
+    "total_incoming_Typed_encoding_claimed": false
+  },
+  "source_model_TCB": {
+    "allocation": "successful allocation returns a fresh, valid, suitably aligned, freeable buffer of n int objects and frames all incoming caller-visible allocation metadata/contents/initialization",
+    "environment": "default std::allocator spelling and TU screening do not prove replacement/interposition-free behavior; any linked allocator/deallocator observable effects are covered only by the explicit model correspondence TCB",
+    "moved_from_empty": "the complete selected model resets source fields; this source/library correspondence is explicit TCB, not the portable C++17 valid-but-unspecified postcondition",
+    "moved_from_empty_is_portable_Cpp17_postcondition": false,
+    "plain_allocation_assumption": "Allocation succeeds: every malloc (std::vector growth, new[]) returns usable memory, never null.",
+    "plain_library_assumption": "The pinned standard library (libc++ of clang 22.1.8) implements the modeled members of std_vector_int as the C++ standard (ISO/IEC 14882:2017 (C++17)) says, as the model swdb-std-models-2 states them.",
+    "release": "valid dynamic release ends that allocation only; null release is inert; all other incoming allocation observations are framed",
+    "source_storage": "normal lexical automatic entry provides fresh distinct writable source/destination/administrative objects; full layout/Heap/source correspondence must be checked before adoption"
+  },
+  "source_rule": {
+    "all_statements_accounted": true,
+    "checker": {
+      "id": "vector-owned-closed-move-source-1",
+      "sha256": "e1611934d01c2fbafc3ea54847393f3ef0cec6d5c9a7d0ddcd571e167a7c07d5"
+    },
+    "complete_model_and_contract_inverse_checked": true,
+    "extra_TU_constructs": [],
+    "lowering_sha256": "5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34",
+    "source_sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2",
+    "whole_original_source_checked": true
+  }
+}

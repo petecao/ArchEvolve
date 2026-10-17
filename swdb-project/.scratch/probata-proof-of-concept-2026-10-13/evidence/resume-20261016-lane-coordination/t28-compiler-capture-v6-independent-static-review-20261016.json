@@ -1,0 +1,96 @@
+{
+  "actual_compiler_run": false,
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact V6 access-time stability repair; root retains actual capture admission",
+  "findings": [],
+  "full_ticket28": false,
+  "independent_checks": {
+    "complete_json_inverses": {
+      "command": 32,
+      "policy": 24
+    },
+    "entry_inverse": "Exactly three edits reconstruct the full reviewed V5 text/AST: V6 raw namespace, the stable-stat helper insertion and pin comparison through that helper.",
+    "function_preservation": "All ten prior function names remain; all nine prior function ASTs other than pin, including main/finalization/resource/runtime/dependency code, are identical. One pure helper is added.",
+    "json_meaning": "Recorded policy/command inverses reconstruct complete frozen V5 objects. All policy values outside schema/raw/entry/controller/recipe adaptations are identical; exact staged input census and selected policy agree with command.",
+    "packet_pin_occurrences": 27,
+    "stable_fields": [
+      "st_dev",
+      "st_ino",
+      "st_mode",
+      "st_nlink",
+      "st_uid",
+      "st_gid",
+      "st_size",
+      "st_mtime_ns",
+      "st_ctime_ns"
+    ],
+    "stat_meaning": "A normal read may change atime without changing source identity or contents. The comparator still checks device/inode/file type+mode/link count/owner/group/size and nanosecond modification/change times. Canonical regular-path checks, full SHA-256 read, before size and expected-pin recheck remain exact. Removing atime from this fingerprint is appropriate; source immutability between sampled checks is still an explicit TCB.",
+    "unchanged_scope": "Original caller/ABI source, adapter V2, binder V4 and passive dispatch/stager pins remain unchanged. The four Clang phases, physical source/dependency/runtime/role checks, 4 GiB/180 s outer/165 s entry/128 MiB file/256 MiB total/1 MiB final reserve and final result invalidation remain exact.",
+    "unique_physical_pins": 26
+  },
+  "limits": [
+    "Root must independently reconcile exact actual command/exit, original V5 refusal, healthy lane/watchdog and RSS/time/timeout/OOM settlement, complete captured artifacts and final raw extent.",
+    "Sampled stable metadata and content checks do not prove continuous physical immutability or trusted compiler correctness. Verifier-lock environment metadata is not a held advisory-lock theorem.",
+    "Any compiler capture success remains preparation, without source/caller/model/receiver/CPU/public proof admission or full ticket28 acceptance."
+  ],
+  "pins": {
+    "compiler-capture-source-packet-v6.json": {
+      "bytes": 9591,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v6/compiler-capture-source-packet-v6.json",
+      "sha256": "c473101fcd5880aea35b8751e780cf475407cbae062dd62e54040f4a8804de33"
+    },
+    "compiler-capture-v6-inverse.json": {
+      "bytes": 26921,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v6/compiler-capture-v6-inverse.json",
+      "sha256": "7b70e06aac3ea9416b348a22398feab1ba3253f2822f78d27e7764dfeeb8cabf"
+    },
+    "linux_compiler_capture_command_v6.json": {
+      "bytes": 12322,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v6/linux_compiler_capture_command_v6.json",
+      "sha256": "e907b2f2aeb81a93e0c328bdb9878c0f291d7c61cf04658703ad51c995c917cd"
+    },
+    "linux_compiler_capture_policy_v6.json": {
+      "bytes": 664401,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v6/linux_compiler_capture_policy_v6.json",
+      "sha256": "d20b3cdaae48730aab97a6580cc4d9052113cd955f2695747a6af170fcb2ab0a"
+    },
+    "linux_compiler_capture_v6.py": {
+      "bytes": 22220,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v6/linux_compiler_capture_v6.py",
+      "sha256": "3818dc8c776194b2cbdb1a5d1d13e4857f6059e2396270aad96c08fb9e3bb426"
+    },
+    "pure-capture-v6-controls.log": {
+      "bytes": 2639,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v6/pure-capture-v6-controls.log",
+      "sha256": "888fe4de7928444783ad9b45ebc9c086957b0e37a84bf4bc8a7577b13abef907"
+    },
+    "test_capture_v6.py": {
+      "bytes": 17427,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v6/test_capture_v6.py",
+      "sha256": "8f3f9a75807b91330509dc64cadb822d93777a23ffa2a02a01aa0ccfc5361ad6"
+    }
+  },
+  "prior_actual_history": {
+    "V5_refusal": "Root reports V5 stopped at the input pin before compiler dispatch because full lstat included a read-updated atime. This review does not independently inspect or relabel that actual raw. V5 packet and pinned prior review remain intact.",
+    "V6_actual_run_claimed": false
+  },
+  "public_proof": false,
+  "retained_controls": {
+    "added_cases": "Mocked pin succeeds on atime-only change; each of nine retained fields individually refuses; same stable metadata with changed bytes fails expected-pin recheck. Twelve inherited controls remain.",
+    "cases": 15,
+    "child_events": [],
+    "errors": 0,
+    "failures": 0,
+    "provenance": "Read exact control source and log; not rerun by reviewer.",
+    "skips": 0
+  },
+  "review_basis": {
+    "bytes": 6828,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-capture-v5-independent-static-review-20261016.json",
+    "sha256": "ede27c6f94da317c8db149645dcfaae0b07cbe46112d10ea513faab10df83957"
+  },
+  "reviewer": "caller_assess",
+  "schema": "t28-independent-static-capture-stat-review-6",
+  "scope": "Read-only source/AST/JSON/hash inspection only. No entry main, project import, tests, audit helper, compiler/native/verifier/solver, SSH or scientific run.",
+  "source_call_admission": false
+}

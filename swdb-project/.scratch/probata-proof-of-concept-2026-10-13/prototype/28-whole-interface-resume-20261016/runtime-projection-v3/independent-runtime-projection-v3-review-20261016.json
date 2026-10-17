@@ -1,0 +1,88 @@
+{
+  "V2_refusal_preserved": true,
+  "actual_native_source_or_new02_admission": false,
+  "change": "One recheck_binding call adds the selected actual caller and original record call range required by real bind_call. No other runtime/source/edit/receiver/body gate changes.",
+  "checked_rows": [
+    {
+      "bytes": 2350,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/PLAN.md",
+      "relative": "PLAN.md",
+      "sha256": "b1399997ad25b9eddfb52f0a24b63fe276b2aaa97a62296dc22fe216478150ba"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/pure-controls-v3.json",
+      "relative": "pure-controls-v3.json",
+      "sha256": "105a3002203e09dc22d53e6e7c9a5ef9733f550da8b6146881baf22a775e22cf"
+    },
+    {
+      "bytes": 882,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/pure-controls-v3.log",
+      "relative": "pure-controls-v3.log",
+      "sha256": "97af05dcb12d4297de36162edc2ba55197117a7f0c2f798dad2316ce28efff64"
+    },
+    {
+      "bytes": 1177,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/runtime-projection-v3-inverse.json",
+      "relative": "runtime-projection-v3-inverse.json",
+      "sha256": "13a8e5e6afb50085e751a406af1a4edc02c3336db3180b606841ffc3c74d8f5f"
+    },
+    {
+      "bytes": 988,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/runtime-projection-v3-only.patch",
+      "relative": "runtime-projection-v3-only.patch",
+      "sha256": "73d5fb187694edd94051669f115a0287c1d2e3b9e3290af8cfae074796234ca6"
+    },
+    {
+      "bytes": 23244,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/runtime_projection_v3.py",
+      "relative": "runtime_projection_v3.py",
+      "sha256": "e60e1ed82a0bbc4983bb4acd9ca0204fd4238ef8ed555c9dc4a2ab8800a07284"
+    },
+    {
+      "bytes": 9673,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/test_runtime_projection_v3.py",
+      "relative": "test_runtime_projection_v3.py",
+      "sha256": "d6b1127f9dd13b16855a30f208e0eb16eaeb71681f441ea52c99485459bb4008"
+    },
+    {
+      "bytes": 34803,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+      "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+    },
+    {
+      "bytes": 4524,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+      "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+    },
+    {
+      "bytes": 6803,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v2/runtime-projection-source-packet-v2.json",
+      "sha256": "b52aee9f472356519cc3edb1fe23bc8e5c1e333dcbb969ebdb23c4d9c51c0c49"
+    }
+  ],
+  "complete_text_inverse_to_V2": true,
+  "date": "2026-10-16 ET",
+  "decision": "PASS narrow required keyword repair; source only",
+  "independent_controls": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/test_runtime_projection_v3.py",
+    "errors": 0,
+    "exit": 0,
+    "failures": 0,
+    "scope": "Real extracted binder/rechecker over synthetic same-TU fixture metadata; no actual compiler TU or native execution.",
+    "skips": 0,
+    "tests": 7
+  },
+  "packet": {
+    "bytes": 3903,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/runtime-projection-source-packet-v3.json",
+    "sha256": "ed14187c77eb41ec55ae667370f35e1e40917208584e41c2627365b45e74e02e"
+  },
+  "pending": [
+    "coherent producer/native/profile basis rebind",
+    "complete admitted actual original TU/ABI/source/runtime/context closure",
+    "actual fresh native agreement and public proof/replay"
+  ],
+  "reviewer": "/root/ticket28",
+  "schema": "independent-runtime-projection-v3-review-1"
+}

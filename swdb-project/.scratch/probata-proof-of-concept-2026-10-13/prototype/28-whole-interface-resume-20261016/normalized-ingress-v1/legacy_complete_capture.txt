@@ -1,0 +1,58 @@
+def complete_capture(policy, reads, project):
+    """No partial prefix or unreviewed projected graph is a complete TU input."""
+    selected = policy['capture']
+    keys = {'kind', 'policy', 'result', 'observation', 'prepared', 'runtime_before', 'runtime_after',
+        'zlib_before', 'zlib_after', 'zlib_runtime', 'gzip_receipt', 'compressed_tu', 'abi', 'probe', 'source'}
+    need(type(selected) is dict and set(selected) == keys and selected['kind'] == CAPTURE_KIND,
+         'unreviewed/partial streaming projections are unsupported; preserve separate graph identities')
+    capture_policy = reads.document(selected['policy'])
+    result, observation = (reads.document(selected[name]) for name in ('result', 'observation'))
+    need(result.get('accepted') is True and result.get('error') is None
+         and result.get('after_input_errors') == [] and result.get('bytecode_cache_present') is False
+         and 'finalization_refusal' not in result, 'complete settled capture required; accepted alone grants nothing')
+    need(observation.get('source_commit') == capture_policy['source_commit']
+         and observation.get('original_source_coordinates') is True, 'original configured source coordinate observation required')
+    commands = observation['commands']; recipe = capture_policy['capture_recipe']['commands']
+    need(len(commands) == len(recipe) == 4 and [row['phase'] for row in commands] ==
+         ['caller-preprocess', 'caller-ast', 'abi-preprocess', 'abi-ast'], 'exact four compiler phases required')
+    for actual, expected in zip(commands, recipe):
+        need(actual['phase'] == expected['phase'] and actual['argv'] == expected['argv']
+             and actual['cwd'] == expected['cwd'] and type(actual['returncode']) is int and actual['returncode'] == 0
+             and type(actual['timeout_seconds']) in (int, float) and 0 < actual['timeout_seconds'] <= 45,
+             'actual compiler command/configuration/exit differs')
+        reads.absolute(actual['stdout'], retain=False); reads.absolute(actual['stderr'], retain=False)
+    before = reads.document(selected['runtime_before']); after = reads.document(selected['runtime_after'])
+    need(after == {'runtime': before, 'after_errors': []}, 'captured runtime pre/post closure differs')
+    zbefore, zafter = (reads.document(selected[name]) for name in ('zlib_before', 'zlib_after'))
+    need(zbefore == zafter == capture_policy['zlib_binding'], 'captured zlib selection changed')
+    for row in observation['inputs']: reads.absolute(row, retain=False)
+    need([group['label'] for group in observation['groups']] == ['caller', 'abi'], 'complete caller/ABI groups required')
+    for group in observation['groups']:
+        for row in group['dependencies']: reads.absolute(row, retain=False)
+        for name in ('frozen', 'preprocess_dependency', 'ast', 'ast_dependency'):
+            reads.absolute(group[name], retain=False)
+        if group['label'] == 'caller': reads.absolute(group['expanded_stream_receipt'], retain=False)
+    receipt = reads.document(selected['gzip_receipt'])
+    compressed = reads.portable(selected['compressed_tu'], limit=134217728)
+    need(receipt['compressed_sha256'] == sha(compressed), 'retained gzip identity differs')
+    # zlib is imported only after the physical selected runtime has been checked.
+    runtime = reads.document(selected['zlib_runtime'])
+    need(set(runtime) == {'schema', 'origin', 'version', 'physical_inputs'}
+         and runtime['schema'] == 'selected-stdlib-zlib-runtime-1', 'closed decoder runtime selection required')
+    for row in runtime['physical_inputs']: reads.absolute(row, retain=False)
+    import zlib
+    need(zlib.__spec__.origin == runtime['origin'] and zlib.ZLIB_RUNTIME_VERSION == runtime['version'], 'actual selected zlib identity differs')
+    full_tu_raw = codec.decode(zlib, io.BytesIO(compressed), receipt,
+        expanded_limit=536870912, compressed_limit=134217728, check=reads.stable)
+    source = reads.selected(selected['source']); probe = reads.selected(selected['probe'])
+    need(sha(source) == SOURCE_SHA, 'first captured original source fixture differs')
+    source_path, probe_path = reads.path(selected['source']), reads.path(selected['probe'])
+    declarations = binder.inventory(project)
+    prepared = compiler.prepare_unit(binder.__dict__, full_tu_raw=full_tu_raw, abi_raw=reads.selected(selected['abi']),
+        source_path=source_path, source_bytes=source, probe_path=probe_path, probe_bytes=probe, declarations=declarations,
+        compiler_capture_pin=selected['observation']['sha256'], full_tu_compressed_bytes=receipt['compressed_bytes'], full_tu_expanded_limit=536870912)
+    need(prepared == reads.document(selected['prepared']), 'fresh complete original TU/ABI preparation differs')
+    need(prepared['raw_full_tu_sha256'] == receipt['expanded_sha256'], 'expanded original stream identity differs')
+    tu = compiler.resolve_locations(compiler.parse_json_roots(full_tu_raw, full_tu=True, expanded_limit=536870912)[0], source_path)
+    reads.recheck()
+    return source_path, source, tu, declarations, prepared, receipt

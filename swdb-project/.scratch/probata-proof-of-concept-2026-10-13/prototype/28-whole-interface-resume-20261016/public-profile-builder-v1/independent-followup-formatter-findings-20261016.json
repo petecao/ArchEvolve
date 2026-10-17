@@ -1,0 +1,47 @@
+{
+  "actual_emitted_profile_or_scientific_execution": false,
+  "basis": [
+    {
+      "bytes": 37257,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/public-profile-builder-v1/profile_builder_v1.py",
+      "sha256": "f594d5c23bef2bcda7a97c6a214601913425d7a24f2575985102eefe0b0391c2"
+    },
+    {
+      "bytes": 36530,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/dx100_checked_source.py",
+      "sha256": "069d07c85b97e6aed9685738375b57923ff65a6b2ca557f04e510edbe793b731"
+    },
+    {
+      "bytes": 27108,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/formal_frame.py",
+      "sha256": "bcee46cf9e585f1b7a16e7c8f89e7667a279359bc8db3865f87d04d522d56a98"
+    },
+    {
+      "bytes": 10740,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/public-profile-planner-v2/independent-public-profile-builder-planner-v2-review-20261016.json",
+      "sha256": "8fa88e65a028882d11dcdee9bef0dcc80abd85bfe61576f2b1ff7e010c7a5d4a"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "decision": "HOLD actual use; narrow builderV2 requested",
+  "findings": [
+    {
+      "id": "FORMAT-01",
+      "predicate": "checked_unit_format requires exactly two separate clause rows with assigns and ensures, but unit_contracts emits one combined row",
+      "priority": "P1",
+      "required_fix": "separate exact frame/result clauses, retain same source/result/model/draw selection; fresh derived hashes",
+      "trigger": "normal validate on either emitted79/80 contract"
+    },
+    {
+      "id": "FORMAT-02",
+      "predicate": "_concurrency requires a list; unit_contracts omits concurrency_frame",
+      "priority": "P1",
+      "required_fix": "explicit empty concurrency_frame for no-pointer interface, checked through real extracted validator",
+      "trigger": "normal formal_frame._entry on emitted rewrite contract"
+    }
+  ],
+  "predecessor_files_modified": false,
+  "prior_source_review_scope_correction": "8fa88e65 source-only PASS did not exercise the complete normal validation frontdoor. Preserve it and its24pure controls as historical; actual builder use remains held until V2 fixes and fresh review.",
+  "reviewer": "/root/ticket28",
+  "schema": "public-profile-builder-v1-followup-findings-1"
+}

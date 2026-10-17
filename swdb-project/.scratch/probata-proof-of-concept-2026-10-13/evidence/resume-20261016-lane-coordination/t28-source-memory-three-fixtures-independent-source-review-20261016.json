@@ -1,0 +1,73 @@
+{
+  "API_and_capacity": [
+    "Original API declarations admit 1-argument int32 register allocation, zero-argument uint32 tile allocation,5explicit stream arguments plus default condition=-1,3explicit indirect-load arguments plus default=-1, one tile-pointer argument and one wait-ready argument. All IDs/roles/types must still be obtained from the future actual same TU.",
+    "Three scalar registers and one/two physical32bit tile allocations fit the pinned NUM_CORES4 domain; bound0..1/stride1 commands touch exactly one index/value. No second-thread or ready-query scope is introduced.",
+    "The16uint32 initialized aggregate occupies64bytes including its ordinary zero tail; region end=data+16 is one-past and covers that full object. An independently admitted64byte-aligned physical mapping is required for the store full-line footprint to stay inside this object. Natural source alignment4 does not establish that mapping.",
+    "Cacheable index-tile write follows its stream completion and precedes the gather. The allowed MMIO-implements-owned-semantics TCB supplies source/destination ready roles; this source-only packet does not prove hardware/body refinement."
+  ],
+  "boundaries": {
+    "actual_acceptance": "Exact three expected properties must hold with no frontend/skip/capacity/unwind substitute; fresh native agreement/reachability and exact original C++ hazard replay required. Abstract25 and old79/80 evidence cannot stand in.",
+    "actual_compiler_native_verifier_or_SSH": false,
+    "fresh_source_policy_runtime_owners_and_root_actual_admission_required": true,
+    "physical_alignment_mapping_ownership_or_history_granted": false,
+    "public_proof_or_current_new02_admission": false,
+    "retained_author_child_free_controls": 3,
+    "reviewer_executed_tests": false,
+    "source_AST_ABI_allocation_lifetime_CPU_or_receiver_certificate": false
+  },
+  "checks": {
+    "all3_exact_function_spans_and_prospective_mangled_names": true,
+    "all_grant_and_observation_flags_false": true,
+    "all_packet_physical_filepins": true,
+    "issue_CPU_access_covering_wait_order": true,
+    "negative_contract_results_equal_ordinary_values": [
+      7,
+      9
+    ],
+    "old_fixed79_80_abstract25_and_production_packets_unchanged": true,
+    "one_shared_complete_source_TU_requested_not_observed": true,
+    "two_original_header_pins_and27declaration_inventory": true
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_PROSPECTIVE_ORIGINAL_API_SOURCE_AND_DOMAIN_ONLY",
+  "findings": [],
+  "packet": {
+    "bytes": 2722,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/source-memory-fixture-packet-v1.json",
+    "sha256": "8713e6fd42c40503c4604b5b8291c308b5a1eaeeef4ba01c63bdbf9b4db6ef31"
+  },
+  "preparation_module": {
+    "bytes": 5711,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/source_memory_profiles_v1.py",
+    "sha256": "26c817b46c4c6bbd92d461710b709d5c7051cb20183ed2592d4db7f48caad253"
+  },
+  "request": {
+    "bytes": 4730,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/prospective-local-request-v1.json",
+    "sha256": "de679bf9e64310ed4d1502d68317316a3e352a42851cab5e2ac675d94a3a2ca6"
+  },
+  "reviewer": "lane_coordination",
+  "schema": "source-memory-three-fixtures-independent-source-review-1",
+  "source": {
+    "bytes": 3258,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/same_thread_memory_v1.cpp",
+    "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
+  },
+  "source_interpretation": [
+    {
+      "function": "whole_same_thread_read_during_store",
+      "prediction": "refuted store-footprint-cpu-access",
+      "reason": "Stream load reads one initialized uint32 at index0 and covering wait completes it. Stream store has one pending physical-line write; the following CPU read of data[0] conflicts before the later source-role wait. Store payload is7, so a wrong expected result is not the distinguishing property."
+    },
+    {
+      "function": "whole_same_thread_write_during_gather",
+      "prediction": "refuted same-thread-read-footprint-write",
+      "reason": "Index stream completes before CPU writes its cacheable index0 to0. Pending indirect load reads data[0]; same-thread CPU data[0]=9 conflicts with the read footprint. Return9 intentionally matches ordinary execution; the final result wait occurs after the conflicting store."
+    },
+    {
+      "function": "whole_same_thread_read_during_gather",
+      "prediction": "proven under admitted mapping/MMIO semantics",
+      "reason": "The pending gather and CPU read both read data[0]. The result wait completes the gather before ordinary array scope exit; return7 agrees with source initialization."
+    }
+  ]
+}

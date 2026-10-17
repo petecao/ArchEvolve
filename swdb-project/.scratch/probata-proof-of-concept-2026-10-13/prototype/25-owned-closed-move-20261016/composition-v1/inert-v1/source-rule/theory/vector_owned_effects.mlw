@@ -1,0 +1,67 @@
+(* 2026-10-16 ET. Pending header-effect interpretation for original model C.
+   No axioms or admitted source propositions. Heap/Owners definitions are
+   imported unchanged. Receiver padding is outside this field observation;
+   physical padding/frame correspondence remains a separate source duty. *)
+module OwnedEffects
+  use int.Int
+  use map.Map
+  use heap_reallocation.Heap as H
+  use vector_owned_state.Owners as O
+
+  type phases = map int bool
+  predicate is_ready (ready:phases) (r:int) = ready[r] = True
+  function target (h:H.heap) (r:int) : int =
+    match H.contents h r 0 with
+    | H.Pointer b _ -> b
+    | H.Integer _ -> 0
+    end
+  function size (h:H.heap) (r:int) : int = H.load_int h r 8
+  function capacity (h:H.heap) (r:int) : int = H.load_int h r 16
+
+  predicate receiver (h:H.heap) (r:int) =
+    H.typed_writes h r 0 8 8 /\ H.typed_writes h r 8 8 8 /\
+    H.typed_writes h r 16 8 8
+  predicate header (h:H.heap) (r b n c:int) =
+    receiver h r /\ 0 <= n <= c <= 18446744073709551615 /\
+    H.pointer_at h r 0 b 0 /\ H.integer_at h r 8 n /\
+    H.integer_at h r 16 c /\ H.initialized_at h r 0 /\
+    H.initialized_at h r 8 /\ H.initialized_at h r 16
+
+  (* A reserved destination has no physical field-value premise. Source
+     automatic placement/freshness is additional to this phase relation. *)
+  predicate reserved (h:H.heap) (s:O.state) (ready:phases) (r:int) =
+    O.active_owner s r /\ ready[r] = False /\ O.buffer s r = 0 /\ receiver h r
+  predicate world (h:H.heap) (s:O.state) (ready:phases) =
+    H.well_formed h /\ O.valid s (H.fresh_id h) /\
+    (forall r:int. O.active_owner s r ->
+      receiver h r /\
+      (ready[r] = True -> exists n,c:int. header h r (O.buffer s r) n c)) /\
+    (forall r:int. O.active_owner s r /\ 0 < O.buffer s r ->
+      H.freeable h (O.buffer s r) 0)
+
+  function store_header (h:H.heap) (r b n c:int) : H.heap =
+    H.put_integer (H.put_integer (H.put_pointer h r 0 b 0) r 8 n) r 16 c
+  function copy_header (h:H.heap) (destination source:int) : H.heap =
+    store_header h destination (target h source) (size h source) (capacity h source)
+  function move (h:H.heap) (destination source:int) : H.heap =
+    store_header (copy_header h destination source) source 0 0 0
+  function moved_phases (ready:phases) (destination source:int) : phases =
+    set (set ready destination True) source True
+
+  (* Exact C temporary order: fresh automatic t = *this; *this = *other;
+     *other = t; end t. The temporary is not a second vector owner. *)
+  function swap (h:H.heap) (left right a:int) : H.heap =
+    let temporary = H.fresh_id h in
+    let h1 = H.begin_automatic h 24 a in
+    let h2 = copy_header h1 temporary left in
+    let h3 = copy_header h2 left right in
+    let h4 = copy_header h3 right temporary in
+    H.end_automatic h4 temporary
+
+  predicate incoming_frame (before after:H.heap) (left right:int) =
+    forall b:int. H.issued before b ->
+      H.same_object before after b /\
+      (b <> left /\ b <> right -> forall p:int.
+        H.contents before b p = H.contents after b p /\
+        (H.initialized_at before b p <-> H.initialized_at after b p))
+end

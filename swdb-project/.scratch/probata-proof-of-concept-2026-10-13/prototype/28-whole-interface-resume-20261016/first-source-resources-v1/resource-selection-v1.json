@@ -1,0 +1,52 @@
+{
+  "DXM_NODES": 1024,
+  "backend_components": {
+    "whole_adapters.h": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a",
+    "whole_closed_routes_v1.h": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7",
+    "whole_value_backend_v1.h": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f",
+    "whole_value_builders_v1.h": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+  },
+  "backend_default_DXM_NODES": 128,
+  "boundary": "source-bound resource preflight only; actual capacity checks and scientific result remain mandatory",
+  "capacity_evaluation_and_unwinding_assertions_retained": true,
+  "default_helper_unwind": 513,
+  "function": "whole_interface_source_fixture",
+  "helper_owner_unwind": {
+    "dxm_cover": 20481
+  },
+  "schema": "dx100-first-source-resource-profile-1",
+  "source_sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd",
+  "structural_node_accounting": [
+    {
+      "category": "four_stream_loads",
+      "count": 4,
+      "nodes_per": 58
+    },
+    {
+      "category": "stream_store",
+      "count": 1,
+      "nodes_per": 56
+    },
+    {
+      "category": "scalar_vector_reduce",
+      "count": 1,
+      "nodes_per": 88
+    },
+    {
+      "category": "five_indirect_calls",
+      "count": 5,
+      "nodes_per": 36
+    },
+    {
+      "category": "range",
+      "count": 1,
+      "nodes_per": 208
+    },
+    {
+      "category": "source_scalar_CPU_observations",
+      "count": 1,
+      "nodes_per": 64
+    }
+  ],
+  "structural_node_budget": 828
+}

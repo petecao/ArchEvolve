@@ -1,0 +1,53 @@
+{
+  "actual_ingress_or_compiler_or_native_or_proof": false,
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "from swdb._dx100_whole import closed_python_surface as closed\nfrom swdb._dx100_whole import normalized_compiler_adapter_v1 as normalized_compiler\n",
+      "offset": 595,
+      "old": "from swdb._dx100_whole import closed_python_surface as closed\n"
+    },
+    {
+      "new": "CLOSED_SHA='748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af'\nNORMALIZED_COMPILER_SHA='0bbf572196677dbc926bb5d331022c2766e44c287bd1ea3cce0ef077153a8a01'\n",
+      "offset": 1545,
+      "old": "CLOSED_SHA='748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af'\n"
+    },
+    {
+      "new": "for module,expected in ((normalizer,NORMALIZER_SHA),(codec,CODEC_SHA),(closed,CLOSED_SHA),\n        (normalized_compiler,NORMALIZED_COMPILER_SHA),(source.compiler,normalized_compiler.LEGACY_SHA)):",
+      "offset": 17459,
+      "old": "for module,expected in ((normalizer,NORMALIZER_SHA),(codec,CODEC_SHA),(closed,CLOSED_SHA)):"
+    },
+    {
+      "new": "    need(normalized_compiler.legacy is source.compiler,'normalized adapter must use the same unchanged legacy compiler module')\n    prepared=normalized_compiler.prepare_unit(source.binder.__dict__,transport_kind=KIND,full_tu_raw=full_tu,abi_raw=reads.selected(original['abi']),",
+      "offset": 24546,
+      "old": "    prepared=source.compiler.prepare_unit(source.binder.__dict__,full_tu_raw=full_tu,abi_raw=reads.selected(original['abi']),"
+    }
+  ],
+  "exact_predecessor_reconstructed": true,
+  "legacy_adapter_unchanged": {
+    "bytes": 15063,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+    "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+  },
+  "legacy_complete_capture_unchanged": {
+    "bytes": 5106,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-ingress-v1/legacy_complete_capture.txt",
+    "sha256": "cdfd56f5503d4068abe31037a2d121e5a81bfdd86889676a4563b25f37a94241"
+  },
+  "new_wrapper": {
+    "bytes": 3640,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-ingress-v2/proposed/normalized_compiler_adapter_v1.py",
+    "sha256": "0bbf572196677dbc926bb5d331022c2766e44c287bd1ea3cce0ef077153a8a01"
+  },
+  "predecessor": {
+    "bytes": 25681,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-ingress-v1/proposed/normalized_capture_ingress_v1.py",
+    "sha256": "ee290e72feedf9b24d9bca299a2be7686ec217d1312bf6b99df651b534ed157d"
+  },
+  "schema": "normalized-ingress-v2-inverse-1",
+  "successor": {
+    "bytes": 26112,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-ingress-v2/proposed/normalized_capture_ingress_v2.py",
+    "sha256": "3dbd9459d07c4a5d855715a664612fd9595c37d8f2b6957ee7f67cf185eac46f"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "rows": [
+    {
+      "test": "test_reusable_components_bind_only_the_complete_unchanged_55_targets",
+      "passed": false,
+      "error": "module 'swdb.vector_reallocation_closed_binding' has no attribute 'reusable_components'",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 14, in <module>\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_reusable_components.py\", line 14, in test_reusable_components_bind_only_the_complete_unchanged_55_targets\n    result, files = packets.reusable_components(ARCHIVE)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'swdb.vector_reallocation_closed_binding' has no attribute 'reusable_components'\n"
+    },
+    {
+      "test": "test_reusable_components_refuse_modified_missing_or_unbound_evidence",
+      "passed": false,
+      "error": "module 'swdb.vector_reallocation_closed_binding' has no attribute 'reusable_components'",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 13, in <module>\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_reusable_components.py\", line 58, in test_reusable_components_refuse_modified_missing_or_unbound_evidence\n    packets.reusable_components(directory)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'swdb.vector_reallocation_closed_binding' has no attribute 'reusable_components'\n"
+    }
+  ],
+  "attempts": []
+}

@@ -1,0 +1,21 @@
+test_01_exact_delta_and_all_closed_routes (__main__.ValueControls) ... ok
+test_02_guard_first_and_inactive_initializedness (__main__.ValueControls) ... ok
+test_03_immutable_versions_and_history_choose_at_cover (__main__.ValueControls) ... ok
+test_04_range_primary_loop_against_closed_form (__main__.ValueControls) ... ERROR
+test_05_native_controls_remain_inert (__main__.ValueControls) ... ok
+
+======================================================================
+ERROR: test_04_range_primary_loop_against_closed_form (__main__.ValueControls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_value_builders_v1.py", line 168, in test_04_range_primary_loop_against_closed_form
+    self.assertEqual(prefix_range(*args),source_range(*args))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_value_builders_v1.py", line 102, in prefix_range
+    if len(output) + count > bound: raise GuardFailure("value prefix")
+GuardFailure: value prefix
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (errors=1)
+{"compiler_native_execution": false, "date": "2026-10-16", "errors": 1, "failures": 0, "native_harness_status": "INERT_86_CONTROLS_NOT_EXECUTED", "skips": 0, "test_cases": 5}

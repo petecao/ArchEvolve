@@ -92,6 +92,10 @@ def check(library):
 def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
     clauses = data.get('clauses') if isinstance(data.get('clauses'), list) else []
     clauses = [c if isinstance(c, dict) else {} for c in clauses]
+    from swdb import dx100_checked_source
+    whole_format = dx100_checked_source.checked_unit_format(library,entry_id,data)
+    for reason in whole_format or ():
+        error('whole_source_unit_contract',reason)
     if 'enables' in data:
         error('enables', 'an enabling contract never lists what it enables (map 17 item 5); the offload-only '
                          'contract names its required enabling contracts')
@@ -125,7 +129,8 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                     or not all(isinstance(u, str) for u in acsl.get('uses', []))):
                 error(f'{where}.acsl', 'acsl takes text (the formal half) and uses (logic-library entry IDs)')
                 continue
-            reasons = acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic)
+            reasons = ([] if whole_format == [] and dx100_checked_source.sole_whole_frame(acsl)
+                       else acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic))
             reasons += [f'uses {u}, which belongs to another entry: an entry\'s own logic file serves only that '
                         'entry (map 16 item 9)' for u in acsl.get('uses', [])
                         if u in logic.files and u.startswith('logic.') and library.get(u[len('logic.'):]) is not None
@@ -340,6 +345,16 @@ def lowered(library, unit):
     """The C lowering of a proof_unit's baseline function (cached per source sha256), or the LoweringError."""
     from swdb import c_lowering, proof_semantics
     path = library.resolve(unit['source'])
+    from swdb import dx100_checked_source
+    selection = dx100_checked_source.select_baseline(library, unit)
+    if selection is not None:
+        # Source bytes and summary names do not identify an atlas/receiver/TU.
+        # Always freshly compose this route, bypassing the generic _LOWERED cache.
+        try:
+            return c_lowering.lower(path, unit['function'], defines=dx100_checked_source.DEFINES,
+                                    whole_source_selection=selection)
+        except c_lowering.LoweringError as exc:
+            return exc
     options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines
     summaries = {**summarized(library, unit['function']), **options.get('summaries', {})}   # ticket 24: summaries
     options['summaries'] = summaries

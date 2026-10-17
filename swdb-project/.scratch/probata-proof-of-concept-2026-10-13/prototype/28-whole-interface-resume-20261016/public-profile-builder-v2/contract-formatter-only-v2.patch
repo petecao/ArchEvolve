@@ -1,0 +1,23 @@
+--- a/profile_builder_v1.py
++++ b/profile_builder_v2.py
+@@ -160,12 +160,17 @@
+             'formal_frame': 1, 'version': '1.0',
+             'provenance': {'origin': {'intrinsic_specification': 'ticket28 checked original whole-source unit; 2026-10-16 ET'}},
+             'proof_unit': {'source': proof_source, 'function': FUNCTION},
+-            'clauses': [{'id': 'result', 'role': 'postcondition',
++            'concurrency_frame': [],
++            'clauses': [{'id': 'frame', 'role': 'frame',
++                'statement': 'The checked whole-source unit may change its whole modeled state.',
++                'discharge_mode': 'runtime_guard', 'negative_control': {'id': 'narrow-frame', 'check': 'whole-state-frame'},
++                'acsl': {'text': FRAME, 'uses': []}, 'proof_placement': {'once': 'self'}},
++                {'id': 'result', 'role': 'postcondition',
+                 'statement': 'Original whole-source scalar result equals ' + str(expected) + '.',
+                 'discharge_mode': 'runtime_guard', 'negative_control': {'id': 'wrong-result', 'check': 'result'},
+-                'acsl': {'text': FRAME + r' ensures \result == ' + str(expected) + ';', 'uses': []},
++                'acsl': {'text': r'ensures \result == ' + str(expected) + ';', 'uses': []},
+                 'proof_placement': {'once': 'self'}}],
+-            'pattern_key': [{'roles': ['index', 'target'], 'address_shapes': ['stream'], 'update_kind': 'read'}],
++            'pattern_key': [{'roles': ['target'], 'address_shapes': ['stream'], 'update_kind': 'read'}],
+             'strategies': [], 'uses_intrinsics': [], 'uses_library_operations': [], 'runtime_guards': [],
+             'knobs': [], 'preservation_obligations': [], 'requirement_map': [],
+             'correctness_check': {'kernel': FUNCTION, 'check': 'original-result'},

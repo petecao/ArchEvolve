@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-16 ET",
+  "external_attempts_after_audit": [],
+  "native_compiler_solver_or_network_workflow": false,
+  "rows": [
+    {
+      "error": "",
+      "passed": false,
+      "test": "test_reusable_components_bind_only_the_complete_unchanged_55_targets",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/reusable-components-v1/run_public_controls.py\", line 42, in <module>\n    function()\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_reusable_components.py\", line 36, in test_reusable_components_bind_only_the_complete_unchanged_55_targets\n    assert any(name.startswith(prefix) and '/obligations/' in name for name in files)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "passed": true,
+      "test": "test_reusable_components_refuse_modified_missing_or_unbound_evidence"
+    }
+  ],
+  "stdlib_existing_Python_API_initialized_before_project_imports": true
+}

@@ -1,0 +1,57 @@
+{
+  "all_packet_rows_rehashed": 60,
+  "axis": "Spec and source/control flow",
+  "confirmed_scopes": [
+    "Closed positive80/negative79 contract ID/content hash allowlist affects only real ensures predicates; source/model/receiver/full-domain draw Plan remain identical.",
+    "The checked-unit-only assigns-everything scanner exception does not extend the generic ACSL language, and all three WP/ACSL-summary paths refuse this form.",
+    "Actual current source/header/complete TU/ABI/statement/lifetime/receiver/atlas composition and exact generated inputs are required; generic lowering cache and summary/pointer exemptions are bypassed/refused.",
+    "Native checks use fatal fresh-process termination to avoid longjmp across nontrivial C++ lifetimes; every oracle row is a distinct process and original assert abort is retained without replay credit.",
+    "CBMC mandatory safety/unwinding/reachability and exact-counterexample replay paths are retained; actual show-loops stdout is recorded and unknown loop owners refuse.",
+    "Physical semantics entry hashes are used by Model and assumption references; normalized content digest remains separately labeled."
+  ],
+  "date": "2026-10-16 ET",
+  "findings": [
+    {
+      "author_confirmed": true,
+      "id": "SOURCE-ROLE-01",
+      "priority": "P1",
+      "required_fix": "Every launch declares its c/cxx role or exact freshly regenerated expected text; replay must bind only texts(context)[cxx], independent of current file content. Keep exact source-preserving C++ comparison and refuse cross-role substitution.",
+      "source": "dx100_checked_adapter.check_launch accepts either freshly generated C or C++ text for any path. cbmc_adapter._replay supplies replay_cc.read_text() as the claimed expected text. Substituting valid generated C into the replay .cc file therefore passes membership and compiles C as its own C++ counterpart.",
+      "summary": "Replay does not bind its actual generated input to the C++ role."
+    },
+    {
+      "author_confirmed": true,
+      "id": "SOURCE-SHAPE-02",
+      "priority": "P2",
+      "required_fix": "Typed early guard returns unrecognized non-dict units to existing validation; exercise the real _entry for malformed generic inputs.",
+      "source": "checked_unit_format accesses .get on a truthy proof_unit outside its try. formal_frame._entry invokes it for every entry, so a non-dict string/list now raises AttributeError before the original proof-unit shape checks.",
+      "summary": "Malformed generic proof_unit can raise before the existing formal-frame diagnostic."
+    }
+  ],
+  "independent_controls": {
+    "actual_exit": 0,
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v2/test_route_v2.py",
+    "errors": 0,
+    "failures": 0,
+    "scope": "named real AST/scanner/translator seams with explicit collaborator stand-ins; no project import/compiler/native/solver/SSH execution",
+    "skips": 0,
+    "tests": 25
+  },
+  "locations": {
+    "cbmc_adapter.py:_replay": 681,
+    "dx100_checked_adapter.py:check_launch": 104,
+    "dx100_checked_source.py:checked_unit_format": 219
+  },
+  "packet": {
+    "bytes": 25242,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v2/source-packet-v2.json",
+    "sha256": "e49034a2cacbbc0d5df5b48152ec8701ccc5df12fd70f53b7a21a14a92a239ac"
+  },
+  "remaining_integration_gates": [
+    "Current ingress only accepts the older complete lossless schema, not the successful543MB compiler stream plus documented Type duplicate roles. Reviewed lossless/minified/role-normalized same-TU transport must be integrated before actual source composition. No filtered ID joins, field loss or generic last-wins duplicate parsing is authorized.",
+    "Fresh normal-package method/runtime/source/environment publication and root admission are still mandatory.",
+    "First exact source lacks get_tile_ready and another issuing thread. No abstract25 relabeling/current0.2/full-ticket acceptance follows."
+  ],
+  "shared_production_changed": false,
+  "status": "REQUEST_CHANGES_BEFORE_SHARED_INTEGRATION"
+}

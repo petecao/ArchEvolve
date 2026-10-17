@@ -1,0 +1,63 @@
+--- unit_policy_registry_v1.py
++++ unit_policy_registry_v2.py
+@@ -6,7 +6,7 @@
+ set. No caller callback, Library substitute, process or source admission occurs
+ here. The old first-source policy is referenced without rewriting its bytes.
+ """
+-from dataclasses import dataclass
++from dataclasses import dataclass, field
+ import hashlib
+ import json
+ from pathlib import PurePosixPath
+@@ -137,11 +137,24 @@
+ @dataclass(frozen=True)
+ class Registry:
+     input_bytes: bytes
+-    policy_byte_identities: tuple
+-    contract_content_identities: tuple
+-
+-
+-def validate(registry_raw, policy_documents, contract_documents):
++    policy_documents: tuple
++    contract_documents: tuple
++    policy_byte_identities: tuple = field(init=False)
++    contract_content_identities: tuple = field(init=False)
++
++    def __post_init__(self):
++        for rows in (self.policy_documents, self.contract_documents):
++            need(type(rows) is tuple and all(type(row) is tuple and len(row) == 2
++                 and type(row[0]) is str and type(row[1]) is bytes for row in rows)
++                 and len({row[0] for row in rows}) == len(rows),
++                 'immutable distinct document byte tuples required')
++        policies, contracts = _checked_identities(self.input_bytes,
++            dict(self.policy_documents), dict(self.contract_documents))
++        object.__setattr__(self, 'policy_byte_identities', policies)
++        object.__setattr__(self, 'contract_content_identities', contracts)
++
++
++def _checked_identities(registry_raw, policy_documents, contract_documents):
+     """Validate complete bytes, never fill receipts or construct a source unit.
+ 
+     `policy_documents` is keyed by each referenced physical byte SHA; contract
+@@ -181,10 +194,19 @@
+             check_contract(contract_documents[row['id']], row, unit)
+             content.append((row['id'], row['sha256'])); needed_contracts.add(row['id'])
+     need(memory_sources == [memory_sources[0]] * 3, 'three memory callers must share one complete original source/TU buffer')
+-    need(memory_captures == [memory_captures[0]] * 3, 'three memory callers must share one exact complete-TU capture/ABI transport')
++    need([canonical(capture) for capture in memory_captures] == [canonical(memory_captures[0])] * 3,
++         'three memory callers must share one exact complete-TU capture/ABI transport')
+     need(set(policy_documents) == needed_policies and set(contract_documents) == needed_contracts,
+          'unselected extra/missing registry documents refused')
+-    return Registry(registry_raw, tuple(identities), tuple(content))
++    return tuple(identities), tuple(content)
++
++
++def validate(registry_raw, policy_documents, contract_documents):
++    """All ordinary constructors validate immutable document bytes as well."""
++    need(type(policy_documents) is dict and type(contract_documents) is dict,
++         'explicit policy and contract document mappings required')
++    return Registry(registry_raw, tuple(sorted(policy_documents.items())),
++        tuple(sorted(contract_documents.items())))
+ 
+ 
+ def lookup(registry, *, source, function, contract_id, contract_sha256):

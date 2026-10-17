@@ -1,0 +1,89 @@
+{
+  "CPU_seconds": 650,
+  "actual_executed": false,
+  "address_space_bytes": 536870912,
+  "bootstrap": {
+    "bytes": 1560,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v3/readonly_bootstrap_v4.py",
+    "sha256": "545d88a1933f7f5005b9a67f1f1b56faa0df21d65361dde55ca88ae0cfca1e12"
+  },
+  "closed_environment": {
+    "HOME": "/data1/yanruj/probata-verifiers/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "LD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "date": "2026-10-16 ET",
+  "internal_wall_seconds": 600,
+  "kill_grace_seconds": 5,
+  "local_transport_timeout_seconds": 700,
+  "outer_timeout_seconds": 660,
+  "predecessor_command": {
+    "bytes": 9007,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v2/complete-census-command-v2.json",
+    "sha256": "d58a2c31984e6b37b9809421e694a2e801ba66ce55e13cc9c571dd0bffc809c0"
+  },
+  "prior_once_only_admission_reused": false,
+  "python_argv": [
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "# 2026-10-16 ET. Inert root-selected stdin bootstrap; do not run while authoring.\nimport resource\nimport sys\nresource.setrlimit(resource.RLIMIT_AS, (536870912, 536870912))\nresource.setrlimit(resource.RLIMIT_CPU, (650, 650))\n\ndef readonly_audit(event, args):\n    if event == 'open':\n        path, mode, flags = args\n        if (isinstance(mode, str) and any(char in mode for char in 'wax+')) or flags & (1 | 2 | 64 | 512 | 1024):\n            raise PermissionError('passive diagnostic forbids writable open')\n    if event in {'os.system', 'os.remove', 'os.unlink', 'os.rename', 'os.replace', 'os.rmdir', 'os.mkdir',\n                 'os.chmod', 'os.chown', 'os.link', 'os.symlink', 'os.truncate', 'os.utime', 'os.chdir',\n                 'os.putenv', 'os.unsetenv', 'ctypes.dlopen', 'resource.setrlimit'} or event.startswith(\n                 ('subprocess.', 'os.exec', 'os.spawn', 'os.posix_spawn', 'os.fork', 'socket.')):\n        raise PermissionError('passive diagnostic mutation/child/network refused: ' + event)\n\nsys.addaudithook(readonly_audit)\nimport hashlib\npayload = sys.stdin.buffer.read(22967)\nif len(payload) != 22966 or hashlib.sha256(payload).hexdigest() != '7517108384e877d6e67322a3b291662b95fa305a3bc5bab169414b6f06b0f54b':\n    raise ValueError('exact original diagnostic stdin bytes required')\nif len(sys.argv) != 2:\n    raise ValueError('one exact original raw argument required')\nsys.argv = ['-', sys.argv[1]]\nexec(compile(payload, '<reviewed-complete-duplicate-census-stdin>', 'exec'), {'__name__': '__main__', '__builtins__': __builtins__})\n",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10"
+  ],
+  "remote_argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "660s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj/probata-verifiers/home",
+    "LANG=C",
+    "LC_ALL=C",
+    "LD_LIBRARY_PATH=/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-c",
+    "# 2026-10-16 ET. Inert root-selected stdin bootstrap; do not run while authoring.\nimport resource\nimport sys\nresource.setrlimit(resource.RLIMIT_AS, (536870912, 536870912))\nresource.setrlimit(resource.RLIMIT_CPU, (650, 650))\n\ndef readonly_audit(event, args):\n    if event == 'open':\n        path, mode, flags = args\n        if (isinstance(mode, str) and any(char in mode for char in 'wax+')) or flags & (1 | 2 | 64 | 512 | 1024):\n            raise PermissionError('passive diagnostic forbids writable open')\n    if event in {'os.system', 'os.remove', 'os.unlink', 'os.rename', 'os.replace', 'os.rmdir', 'os.mkdir',\n                 'os.chmod', 'os.chown', 'os.link', 'os.symlink', 'os.truncate', 'os.utime', 'os.chdir',\n                 'os.putenv', 'os.unsetenv', 'ctypes.dlopen', 'resource.setrlimit'} or event.startswith(\n                 ('subprocess.', 'os.exec', 'os.spawn', 'os.posix_spawn', 'os.fork', 'socket.')):\n        raise PermissionError('passive diagnostic mutation/child/network refused: ' + event)\n\nsys.addaudithook(readonly_audit)\nimport hashlib\npayload = sys.stdin.buffer.read(22967)\nif len(payload) != 22966 or hashlib.sha256(payload).hexdigest() != '7517108384e877d6e67322a3b291662b95fa305a3bc5bab169414b6f06b0f54b':\n    raise ValueError('exact original diagnostic stdin bytes required')\nif len(sys.argv) != 2:\n    raise ValueError('one exact original raw argument required')\nsys.argv = ['-', sys.argv[1]]\nexec(compile(payload, '<reviewed-complete-duplicate-census-stdin>', 'exec'), {'__name__': '__main__', '__builtins__': __builtins__})\n",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10"
+  ],
+  "remote_shell_command": "/usr/bin/timeout --signal=TERM --kill-after=5s 660s /usr/bin/env -i HOME=/data1/yanruj/probata-verifiers/home LANG=C LC_ALL=C LD_LIBRARY_PATH=/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu PATH=/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 /data1/yanruj/venvs/swdb-test/bin/python -I -B -c '# 2026-10-16 ET. Inert root-selected stdin bootstrap; do not run while authoring.\nimport resource\nimport sys\nresource.setrlimit(resource.RLIMIT_AS, (536870912, 536870912))\nresource.setrlimit(resource.RLIMIT_CPU, (650, 650))\n\ndef readonly_audit(event, args):\n    if event == '\"'\"'open'\"'\"':\n        path, mode, flags = args\n        if (isinstance(mode, str) and any(char in mode for char in '\"'\"'wax+'\"'\"')) or flags & (1 | 2 | 64 | 512 | 1024):\n            raise PermissionError('\"'\"'passive diagnostic forbids writable open'\"'\"')\n    if event in {'\"'\"'os.system'\"'\"', '\"'\"'os.remove'\"'\"', '\"'\"'os.unlink'\"'\"', '\"'\"'os.rename'\"'\"', '\"'\"'os.replace'\"'\"', '\"'\"'os.rmdir'\"'\"', '\"'\"'os.mkdir'\"'\"',\n                 '\"'\"'os.chmod'\"'\"', '\"'\"'os.chown'\"'\"', '\"'\"'os.link'\"'\"', '\"'\"'os.symlink'\"'\"', '\"'\"'os.truncate'\"'\"', '\"'\"'os.utime'\"'\"', '\"'\"'os.chdir'\"'\"',\n                 '\"'\"'os.putenv'\"'\"', '\"'\"'os.unsetenv'\"'\"', '\"'\"'ctypes.dlopen'\"'\"', '\"'\"'resource.setrlimit'\"'\"'} or event.startswith(\n                 ('\"'\"'subprocess.'\"'\"', '\"'\"'os.exec'\"'\"', '\"'\"'os.spawn'\"'\"', '\"'\"'os.posix_spawn'\"'\"', '\"'\"'os.fork'\"'\"', '\"'\"'socket.'\"'\"')):\n        raise PermissionError('\"'\"'passive diagnostic mutation/child/network refused: '\"'\"' + event)\n\nsys.addaudithook(readonly_audit)\nimport hashlib\npayload = sys.stdin.buffer.read(22967)\nif len(payload) != 22966 or hashlib.sha256(payload).hexdigest() != '\"'\"'7517108384e877d6e67322a3b291662b95fa305a3bc5bab169414b6f06b0f54b'\"'\"':\n    raise ValueError('\"'\"'exact original diagnostic stdin bytes required'\"'\"')\nif len(sys.argv) != 2:\n    raise ValueError('\"'\"'one exact original raw argument required'\"'\"')\nsys.argv = ['\"'\"'-'\"'\"', sys.argv[1]]\nexec(compile(payload, '\"'\"'<reviewed-complete-duplicate-census-stdin>'\"'\"', '\"'\"'exec'\"'\"'), {'\"'\"'__name__'\"'\"': '\"'\"'__main__'\"'\"', '\"'\"'__builtins__'\"'\"': __builtins__})\n' /data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10",
+  "remote_staging_or_raw_mutations": false,
+  "root_transport_tools_TCB": [
+    "/usr/bin/timeout",
+    "/usr/bin/env",
+    "SSH transport"
+  ],
+  "scope": "SOURCE ONLY: V3 passive complete census budget successor; new root admission required",
+  "selected_libz_physical_pins": [
+    {
+      "bytes": 113000,
+      "path": "/usr/lib/x86_64-linux-gnu/libz.so.1.3",
+      "sha256": "86200da370f20476a2507e9097a789b5ef97269b4ca8d5e164ad82dab9d99892"
+    }
+  ],
+  "selected_policy": {
+    "bytes": 666177,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/linux_compiler_capture_policy_v10.json",
+    "sha256": "8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517"
+  },
+  "selected_python_physical_pin": {
+    "bytes": 8020928,
+    "path": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "stdin": {
+    "bytes": 22966,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v3/complete_duplicate_census_v3.py",
+    "sha256": "7517108384e877d6e67322a3b291662b95fa305a3bc5bab169414b6f06b0f54b"
+  },
+  "stdin_byte_fidelity": true,
+  "stdout_bytes": 32768
+}

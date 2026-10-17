@@ -1,0 +1,260 @@
+{
+  "axis": "Independent Spec and mathematical/source interpretation semantics",
+  "complete_support_or_mathematical_adoption": false,
+  "counts": {
+    "all_support_assertion_instances_returned_unconsumed": 942,
+    "captured_tasks": 26,
+    "complete_content_addressed_math_trees": 115,
+    "complete_original_source_duties": 9,
+    "matched_own_definition_instances": 346,
+    "remaining_definition_instances_returned": 488,
+    "remaining_distinct_definition_commands_returned": 24,
+    "source_definition_rows": 24
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_EXACT_COMPONENT_WITH_OUTER_JOIN_PENDING",
+  "definition_instance_counts": {
+    "E_copy_header": 26,
+    "E_header": 26,
+    "E_incoming_frame": 4,
+    "E_is_ready": 26,
+    "E_move": 12,
+    "E_moved_phases": 6,
+    "E_receiver": 26,
+    "E_reserved": 12,
+    "E_store_header": 26,
+    "E_swap": 14,
+    "E_target": 26,
+    "E_world": 26,
+    "O_active_owner": 26,
+    "O_buffer": 26,
+    "O_exclusive": 26,
+    "O_move": 6,
+    "O_swap": 6,
+    "O_valid": 26
+  },
+  "findings": [],
+  "history_pins": [
+    {
+      "bytes": 113,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners-effects-history-v1/green-v1.log",
+      "sha256": "62b60f6d56d3f98ef8c5b4b52e5f5668a6c920e19f108bf694941dcfbf829efd"
+    },
+    {
+      "bytes": 116,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners-effects-history-v1/green-v2.log",
+      "sha256": "20a6e82b2d56dcc30fb667cfa3d2176e99f4cbc49de4d60f61d89256cf1e59b8"
+    },
+    {
+      "bytes": 116,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners-effects-history-v1/green-v3.log",
+      "sha256": "35585528cdb691ae72d044259c2263445e69e3726cc3b4720ec5a53ecd84ff38"
+    },
+    {
+      "bytes": 2218,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners-effects-history-v1/heap-independent-green-v1.log",
+      "sha256": "9ec95692a741ecac18c27b93dcf726a81ed94a12f3ed349089ee8c8ef8e53518"
+    },
+    {
+      "bytes": 11176,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners-effects-history-v1/red-v1.log",
+      "sha256": "2d601fd790ffe3d2a568dda2c3ff1aed0aa9537d72f9f73d8a7f499061b3db28"
+    }
+  ],
+  "independent_checks": [
+    "Physically rehashed all ten preparation inputs and five history files. Independently checked all115 complete tree hashes, all26 artifact/goal/ordered math-command reference bindings, the346 full definition match result rows and all942 returned support instances.",
+    "Read both complete source theories and all24 typed source definition transcriptions. Owners active/backing/valid/exclusive/fresh/update/retire formulas and OwnedEffects receiver/header/world/reserved/store/copy/move/swap/phases/incoming-frame formulas agree with the pinned primary source. Retire remains a registry update, and swap temporary remains an automatic Heap effect rather than an owner registration.",
+    "Independently reconstructed all nine complete ACSL statement strings from the immutable literal interface and checked byte equality with the original manifest and their full canonical input hashes. Complete move and swap antecedents and every original conclusion remain present; no sibling theorem or desired postcondition is imported as a premise.",
+    "Function definitions check ordered argument-sort lists and result sorts, then alpha-rename arguments to fixed markers by position. Same-sort source/destination parameter permutation is refused rather than treated as a permutable universal theorem. Scope-aware global role renaming preserves inner forall/exists, simultaneous let and match binders.",
+    "The explicit goal map is total, one-to-one and sort-preserving over the full source and actual outer binder sets. Its permitted reorder stays inside one complete closed universal block. No quantifier moves across an implication or an existential. The whole normalized source antecedent and conclusion must match.",
+    "Typed overload candidates require complete ordered signatures and every observed own candidate then requires a complete body match. A spelling or numeric suffix grants no source fact. Private interpretation-role/positional-marker injection is refused.",
+    "The only absent own functions expanded are exact source size/capacity accessors at offsets8/16. Additional fresh-id/end-automatic and Integer/Pointer projection normalization comes from the separately reviewed closed HeapV2 record/cell interpretation; it is not an arbitrary source rewrite.",
+    "Required direct/transitive own roles must occur as complete matched definitions or exact source abbreviations/context roles. Other definitions and every support assertion are returned explicitly for the separate complete Heap/driver/support join. All26 goal and346 own body matches alone grant no complete mathematical adoption."
+  ],
+  "join": {
+    "bytes": 6895,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/reconcile_owners_effects.py",
+    "sha256": "cccc30483b46dd87491e814054080ef0644225617c727c22a9e97eeca6dd18e5"
+  },
+  "limits": [
+    "This component checks complete Owners/OwnedEffects source bodies and full original source goal syntax under the exact separately checked record/cell context. Complete Heap source bodies, all remaining definitions and every one of the942 support assertion instances must still be reconciled by the independent outer join.",
+    "The original eight native Valid source9 outcomes and compound swap.owner_correspondence Timeout are unchanged historical evidence. A complete formula match does not turn the Timeout into a theorem or infer consistency from the native labels.",
+    "The join reads already retained compact mathematical syntax locally. It does not establish actual solver-consumed bytes, historical submission identity, continuous runtime/loader closure, source-to-binary correctness or a C/C++ memory correspondence.",
+    "No Owners validity predicate becomes an allocator/ownership/lifetime axiom, and no source fresh registration, Heap release correspondence, Typed memory mapping, padding/payload correspondence or caller conclusion is inferred. Source/Heap/Typed/body/lifetime/caller/default/public mathematical adoption remains false in this component."
+  ],
+  "module": {
+    "bytes": 20608,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners_effects_reader.py",
+    "sha256": "248633006c0a9c28b42b60cc0697dcd2d651a0d314ec3924a8bd2f281cdcdb13"
+  },
+  "original_source_rows": [
+    {
+      "id": "move.destination_header",
+      "input": {
+        "bytes": 586,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/000-t25_owned_effect_move_destination_header.c",
+        "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689"
+      },
+      "statement_sha256": "d7b09940098bb2c745215e94fbfa99a0f0b46f45d1627764ee89fd267aa38133"
+    },
+    {
+      "id": "move.source_empty",
+      "input": {
+        "bytes": 580,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/001-t25_owned_effect_move_source_empty.c",
+        "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941"
+      },
+      "statement_sha256": "ad771838bc769699c31c8f8bfceb83be91264d5e51c085be779973bf0a4f816e"
+    },
+    {
+      "id": "move.incoming_frame",
+      "input": {
+        "bytes": 588,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/002-t25_owned_effect_move_incoming_frame.c",
+        "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad"
+      },
+      "statement_sha256": "ab1bfcbfd98e900bc9f3602fc63a78975960d919a4a83e1748dfb1f7702a7b54"
+    },
+    {
+      "id": "move.owner_correspondence",
+      "input": {
+        "bytes": 642,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/003-t25_owned_effect_move_owner_correspondence.c",
+        "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d"
+      },
+      "statement_sha256": "edadeb9b98ea33692732e85c151f0027e6e0c24f3e1bf5f46571ae21d5ad7f38"
+    },
+    {
+      "id": "swap.left_header",
+      "input": {
+        "bytes": 693,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/004-t25_owned_effect_swap_left_header.c",
+        "sha256": "3fab57b9196b55b86cf20cc0ea6181a38e0bdbbe8ecf6f06865dd59d0935d3fa"
+      },
+      "statement_sha256": "138866c274bbd36f31a121fb77710d49c3bf6fef1903c502d9c2169bf01df1bd"
+    },
+    {
+      "id": "swap.right_header",
+      "input": {
+        "bytes": 694,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/005-t25_owned_effect_swap_right_header.c",
+        "sha256": "9e6d0dda572705cdf5b4c2469a4dd0d66015ccefe102b49a87bf32ff0a1fde11"
+      },
+      "statement_sha256": "701eb95e969cb2d441068489c763399fe56f8ebac635818d1258fe35c8a26c39"
+    },
+    {
+      "id": "swap.temporary_lifetime",
+      "input": {
+        "bytes": 761,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/006-t25_owned_effect_swap_temporary_lifetime.c",
+        "sha256": "bff552ceb0d7b09b213e6585683c7e7c3c3b5140b14f3b31697257574cfaf20f"
+      },
+      "statement_sha256": "375578083119ee04128a7501faf36116e8bddee0574f383cf902b2be70e7d7f9"
+    },
+    {
+      "id": "swap.incoming_frame",
+      "input": {
+        "bytes": 699,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/007-t25_owned_effect_swap_incoming_frame.c",
+        "sha256": "8d4f8ec024986bc2c12f8a10f152ac9a0ab87abb248b957e7d74b8ffe1a1ad6b"
+      },
+      "statement_sha256": "f23b025143fcaa88089351d8b6a8f7254943aadf7071440a3303b6f4fc5765f0"
+    },
+    {
+      "id": "swap.owner_correspondence",
+      "input": {
+        "bytes": 721,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/obligations/008-t25_owned_effect_swap_owner_correspondence.c",
+        "sha256": "f59232cf9139d28b313913dadeb9c0455aec0a022359dd2c67148d3e66f1b2a3"
+      },
+      "statement_sha256": "231645fdda7aaa4ecba995b79c5faa44044e7a855841cd3c3dffd4633d8200ef"
+    }
+  ],
+  "preparation": {
+    "bytes": 6980,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-owners-effects-preparation-v1-20261016.json",
+    "sha256": "8d44707c73a3d6d20bbdb6a4610defee29a3107b68ff7790c6027c81a66447a0"
+  },
+  "reviewed_inputs": [
+    {
+      "bytes": 20608,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners_effects_reader.py",
+      "sha256": "248633006c0a9c28b42b60cc0697dcd2d651a0d314ec3924a8bd2f281cdcdb13"
+    },
+    {
+      "bytes": 7484,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py",
+      "sha256": "d0c48237039def872086aa43a7047a8693a3752cce056d49ae6f8ee3e4c5e12b"
+    },
+    {
+      "bytes": 6895,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/reconcile_owners_effects.py",
+      "sha256": "cccc30483b46dd87491e814054080ef0644225617c727c22a9e97eeca6dd18e5"
+    },
+    {
+      "bytes": 18821,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap_reader_v2.py",
+      "sha256": "66fb703fd3b2a0503ca834613081740527d54f53b05d3b2e38fd81b477983bf2"
+    },
+    {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 3128,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_effects.mlw",
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    {
+      "bytes": 500042,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v3-actual-stdout-20261016.json",
+      "sha256": "9924e02166c0613047bf750b31a06508b67d5eb8853fec79a59c8f1d926b5a72"
+    },
+    {
+      "bytes": 31307,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/inert-v2/manifest.json",
+      "sha256": "a7486a5eb0133a49f4fd590f7fc0651371da263339044dd99c95978957f40e55"
+    },
+    {
+      "bytes": 15336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/semantic_terms.py",
+      "sha256": "0caf0330afed019637d03228a94f5af5cfc305e358f6eca51c631a881e163ef7"
+    },
+    {
+      "bytes": 669940,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-owners-effects-interpretation-v1-20261016.json",
+      "sha256": "31f1b3f6ba45abb780f97cb4a281e25f5775a2e3a745e6211dedad93fffbcf69"
+    }
+  ],
+  "reviewed_source_modified": false,
+  "reviewer": "/root/ticket25/caller_assess",
+  "reviewer_controls": {
+    "actual_provers_compilers_native_tools_network_or_SSH": false,
+    "command": [
+      "python3",
+      "-I",
+      "-B",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py"
+    ],
+    "errors": 0,
+    "failures": 0,
+    "project_imports": false,
+    "scope": "Includes all26 retained task positives, missing/extra antecedent and altered post negatives, same-sort function parameter permutation, overload/cell/update/sort mutation, duplicate outer binder, permitted positional alpha rename, captured rename, private role injection and scoped global alias controls.",
+    "seconds_reported": 0.487,
+    "source_reads_and_child_free_mathematical_controls_only": true,
+    "tests": 17
+  },
+  "scientific_or_remote_rerun": false,
+  "separate_HeapV2_review": {
+    "bytes": 4455,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-heap-context-v2-parent-independent-review-20261016.json",
+    "sha256": "f719f040023704b86486741d3c9076b6dd5f08d65c816c24d557ae7e9521b5ad"
+  },
+  "source_Heap_Typed_body_lifetime_caller_default_admission": false,
+  "tests": {
+    "bytes": 7484,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py",
+    "sha256": "d0c48237039def872086aa43a7047a8693a3752cce056d49ae6f8ee3e4c5e12b"
+  }
+}

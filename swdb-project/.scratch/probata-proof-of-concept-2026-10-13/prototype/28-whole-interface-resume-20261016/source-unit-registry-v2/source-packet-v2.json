@@ -1,0 +1,54 @@
+{
+  "actual_normal_producer_or_new02_acceptance": false,
+  "closed_findings": [
+    "Registry normal constructor bypass of byte validator",
+    "Python-equal but canonical-JSON-distinct shared memory capture objects"
+  ],
+  "controls": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v2/test_unit_policy_registry_v2.py",
+    "errors": 0,
+    "exit": 0,
+    "failures": 0,
+    "project_child_network_or_native_events": false,
+    "skips": 0,
+    "tests": 14
+  },
+  "date": "2026-10-16 ET",
+  "exact_full_text_inverse": true,
+  "files": [
+    {
+      "bytes": 15158,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v2/unit_policy_registry_v2.py",
+      "sha256": "4f943d2e4f8f629d6599f236fb7d0fbb798f6bfa48b496e525ae319db8505c5d"
+    },
+    {
+      "bytes": 13745,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v2/test_unit_policy_registry_v2.py",
+      "sha256": "48cb75c096c0ab34f050a5ba4f8c7e343747a0da9883482b1ee01c4432fbca02"
+    },
+    {
+      "bytes": 3151,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v2/constructor-and-capture-identity-only.patch",
+      "sha256": "b02bc7465c733da9c7b3b707672ba49c86c777c56c3f149ed3bca9a0bf39b55c"
+    },
+    {
+      "bytes": 2099,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v2/README.md",
+      "sha256": "c4fd1eac403fc978ccd0b488e77075a1d5dd345b7c861f882c11d7ad05f99711"
+    }
+  ],
+  "first79_80_policy_bytes_changed": false,
+  "predecessor": {
+    "bytes": 3025,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v1/source-packet-v1.json",
+    "sha256": "e6421159e71c6e9820a50e2966b55fdae18fd1155a3f97fe7660c10dc925fc0e"
+  },
+  "predecessor_source": {
+    "bytes": 13907,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-unit-registry-v1/unit_policy_registry_v1.py",
+    "sha256": "4adc6208ac7c52d3c65f717acbf7fb82c20fd3fba2de8e3b37b8ac0477a0796a"
+  },
+  "registry_wire_format_and_known_profile_set_changed": false,
+  "schema": "closed-unit-policy-registry-source-packet-2",
+  "state": "FROZEN SOURCE ONLY; independent review/integration pending"
+}

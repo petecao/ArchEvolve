@@ -1,0 +1,79 @@
+{
+  "builder_and_transport_changed": false,
+  "controls": {
+    "actual_cli_or_proof_executed": false,
+    "child_or_network": false,
+    "date": "2026-10-16 ET",
+    "errors": 0,
+    "failures": 0,
+    "project_imports": false,
+    "scope": "real extracted CLI, define forwarding/normalization, compose build gate and method selector over explicit inert metadata",
+    "skips": 0,
+    "tests": 7
+  },
+  "coverage": [
+    "V1 missing-defines RED against real compose gate",
+    "V2 both public command parser/adapter/compose GREEN",
+    "exact selected method despite another higher frozen sequence",
+    "unknown named method refusal",
+    "missing/changed/duplicate/extra define refusal",
+    "entire emitted-plan inverse except six inserted argument tokens",
+    "all13 predecessor file pins unchanged"
+  ],
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 2398,
+      "relative": "PLAN.md",
+      "sha256": "cf8b7254704a299c3129c2925fba047df4040cdb0fc09e1ea6c73c993a143ea6"
+    },
+    {
+      "bytes": 8849,
+      "relative": "base-source/method_version.py",
+      "sha256": "115b4f56f7e77c8c7dfa6522cc446244d54f032c2d71f0463cecc8ba0d2d1b17"
+    },
+    {
+      "bytes": 51186,
+      "relative": "base-source/proof.py",
+      "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+    },
+    {
+      "bytes": 2522,
+      "relative": "inverse-scope-v2.json",
+      "sha256": "228ee76eedc6010e7271634f0c4104865aae770a17d18e7ef3a1988e2b0cc4a4"
+    },
+    {
+      "bytes": 3643,
+      "relative": "pair_plan_v2.py",
+      "sha256": "13de81d1f067d2cd95b09bed886b5495cb9ce8bf5a35188402fe75394f140e2a"
+    },
+    {
+      "bytes": 785,
+      "relative": "planner-only-v2.patch",
+      "sha256": "e8a1e32ff6b956e971de285030142d9d45b52b1d9471f3350a7105793cfd1216"
+    },
+    {
+      "bytes": 323,
+      "relative": "pure-controls-v2.json",
+      "sha256": "16b63180ce81a66457ed2114b12e4e57b8db6c1b657f2a94499bae314a4b24f6"
+    },
+    {
+      "bytes": 866,
+      "relative": "pure-controls-v2.log",
+      "sha256": "b72b5a603b15d9ceb738a8d0a97a48b9fdf865dfc10ea4010c3ebb479925335b"
+    },
+    {
+      "bytes": 12428,
+      "relative": "test_planner_v2.py",
+      "sha256": "574b6ddd033c799917bf2e16cb4fa8d97acbdbf0c637d7cf9e50388dbad49f8b"
+    }
+  ],
+  "predecessor": {
+    "bytes": 7377,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/public-profile-builder-v1/source-packet-v1.json",
+    "sha256": "b15802108dc91302210f432a48348b78f26e387503cb2e9faa27497144814da1"
+  },
+  "production_changes_applied": false,
+  "schema": "dx100-public-profile-planner-source-packet-2",
+  "state": "FROZEN SOURCE-ONLY; independent review/root admission pending"
+}

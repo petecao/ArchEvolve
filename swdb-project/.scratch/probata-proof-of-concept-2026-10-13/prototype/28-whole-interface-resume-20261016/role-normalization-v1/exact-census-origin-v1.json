@@ -1,0 +1,48 @@
+{
+  "actual_executed": false,
+  "census_function_text_inverse": true,
+  "copied_role_AST_exact": true,
+  "edits": [
+    {
+      "after": "def normalize(source,sink,manifest_sink,base,check):",
+      "before": "def census(source,base,check):"
+    },
+    {
+      "after": "    output_bytes=0;manifest_bytes=0;manifest_hash=hashlib.sha256();renames=0\n    def write_output(value):\n        nonlocal output_bytes\n        need(output_bytes+len(value)<=134217728,'normalized retained file cap exceeded')\n        for begin in range(0,len(value),65536):\n            part=value[begin:begin+65536];check();need(sink.write(part)==len(part),'short normalized write');output_bytes+=len(part)\n    def write_manifest(row):\n        nonlocal manifest_bytes,renames\n        value=json.dumps(row,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False).encode()+b'\\n'\n        need(len(value)<=4096 and manifest_bytes+len(value)<=33554432,'bounded complete inverse manifest required')\n        check();need(manifest_sink.write(value)==len(value),'short inverse manifest write')\n        manifest_bytes+=len(value);manifest_hash.update(value);renames+=1\n    class Census(base['Minifier']):",
+      "before": "    class Census(base['Minifier']):"
+    },
+    {
+      "after": "            write_output(value)\n            self.last_token=value\n",
+      "before": "            self.last_token=value\n"
+    },
+    {
+      "after": "            write_output(token if replacement is None else replacement)\n            self.last_token=token;self.stack[-1]",
+      "before": "            self.last_token=token;self.stack[-1]"
+    },
+    {
+      "after": "                        key=self.string(key=True);token=self.key_token;self.key_capture=False;key_end=position(r)\n                        need(key!='swdbClangDesugaredType','original key collides with reserved role transport namespace')",
+      "before": "                        key=self.string(key=True);token=self.key_token;self.key_capture=False;key_end=position(r)"
+    },
+    {
+      "after": "                        normalized_key_start=self.normalized_bytes\n                        self.emit_key(token,replacement);normalized_key_end=self.normalized_bytes;count=",
+      "before": "                        self.emit_key(token,replacement);count="
+    },
+    {
+      "after": "'key_span':[key_start,key_end],'normalized_key_span':[normalized_key_start,normalized_key_end],'ordinal':ordinal",
+      "before": "'key_span':[key_start,key_end],'ordinal':ordinal"
+    },
+    {
+      "after": "                    if qualified:\n                        self.qualified_replacements+=1\n                        item=next(row for row in entries if row['key']=='type' and row['ordinal']==2)\n                        write_manifest({'schema':'llvm22-type-role-rename-1','role':reason,\n                            'node_id':fields['id']['scalar']['text'],'original_key_span':item['key_span'],\n                            'normalized_key_span':item['normalized_key_span'],'original_token':'\"type\"',\n                            'normalized_token':'\"swdbClangDesugaredType\"'})",
+      "before": "                    if qualified:self.qualified_replacements+=1"
+    },
+    {
+      "after": "    result=Census().complete()\n    need(result['prospective_role_normalization_eligible'] is True,'unknown role/order/shape/collision prevents transport publication')\n    need(renames==result['duplicate_events']==result['prospective_role_renames'],'complete inverse rename census differs')\n    need(output_bytes==result['prospective_normalized_token_bytes'],'written normalized extent differs')\n    result.pop('normalized_AST_retained_or_admitted')\n    result.update(schema='llvm22-original-tu-role-transport-1',normalized_AST_written=True,normalized_AST_admitted=False,\n        normalized_bytes=output_bytes,normalized_sha256=result['prospective_normalized_token_sha256'],\n        inverse_manifest_bytes=manifest_bytes,inverse_manifest_sha256=manifest_hash.hexdigest(),inverse_manifest_rows=renames,\n        original_TU_source_ABI_or_public_admission=False)\n    return result",
+      "before": "    return Census().complete()"
+    }
+  ],
+  "origin": {
+    "bytes": 22966,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v3/complete_duplicate_census_v3.py",
+    "sha256": "7517108384e877d6e67322a3b291662b95fa305a3bc5bab169414b6f06b0f54b"
+  }
+}

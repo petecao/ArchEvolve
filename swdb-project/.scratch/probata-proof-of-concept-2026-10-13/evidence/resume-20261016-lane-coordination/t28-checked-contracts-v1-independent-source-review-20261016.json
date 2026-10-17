@@ -1,0 +1,162 @@
+{
+  "author_controls_retained_only": {
+    "actual_public_validation_or_proof": false,
+    "checks": [
+      "Complete textual inverse restores original proof_semantics bytes; all other function ASTs equal",
+      "Only exact checked-body form takes early validator branch; deleting a contract refuses through that public seam",
+      "Every ACSL/WP summary generator rejects new form before source/state access; old forms preserve behavior"
+    ],
+    "child_audit_guard": true,
+    "classification": "PASS_PURE_PUBLIC_ENTRY_SEAM_CONTROLS_ONLY",
+    "controls": {
+      "bytes": 3903,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/test_proof_semantics_hook_v1.py",
+      "sha256": "894b388c2c38c3a65b8f6e3f100f4b609413c9325dcdcf1112a7d19232f56be9"
+    },
+    "date": "2026-10-16 ET",
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "inherited_entry_controls": 10,
+    "new_seam_controls": 3,
+    "shared_production_modified": false,
+    "skips": 0,
+    "source_packet": {
+      "bytes": 3058,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/checked-contracts-source-packet-v1.json",
+      "sha256": "637006bd7d2df2d3a9a64cc2948ddc4c7e45fdc90cb80e9c5b9f89308cc1b97e"
+    },
+    "tests": 13
+  },
+  "axis": "Independent checked-contract validator source review",
+  "boundaries": {
+    "WP_supported": false,
+    "integration_admission": false,
+    "source_model_receiver_runtime_ABI_or_current0_2_claim": false
+  },
+  "date": "2026-10-16 ET",
+  "decision": "CHANGES_REQUESTED_ORIGINAL_PIN_PATH_AND_PREHASH_BOUND",
+  "findings": [
+    {
+      "id": "CHECKED-01",
+      "impact": "Entry refusal/provenance/resource-bound mismatch only; no admitted source/ABI/model/body proof or mathematical counterexample. Escaping-root aliases remain rejected by Library.",
+      "line": 75,
+      "observation": "pinned() calls library._pin(row) then library.resolve(row) before canonical/regular/4MiB checks. Real Library.resolve returns (base/relative).resolve(), erasing an in-root symlink before lstat. A correctly pinned in-root alias therefore passes real Library although the fake test Library preserves aliases and its symlink control refuses them. _pin also hashes the entire target before size is bounded.",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/dx100_whole_checked_v1.py",
+      "priority": "P2",
+      "requested_change": "Preserve V1. Inspect the original unresolved portable components and canonical root/regular file/size before resolving or reading/hash content; then verify exact pin/stable metadata. Add a no-child integration-shaped control using actual Library resolution behavior without catalog construction, and reject oversized input before _pin hashes it.",
+      "supporting_source": {
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/library.py",
+        "pin_lines": [
+          310,
+          317
+        ],
+        "resolve_lines": [
+          296,
+          308
+        ]
+      },
+      "title": "Validate original portable components and size before real Library resolution/hash"
+    }
+  ],
+  "inputs": [
+    {
+      "bytes": 14894,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/checked-contracts-proposed-v1.patch",
+      "sha256": "2f800ab936fdce07f3622bd126b932a783dc5e8e6a6458975e783bbbbf157c0b"
+    },
+    {
+      "bytes": 12218,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/dx100_whole_checked_v1.py",
+      "sha256": "8b482c419947840dbd2ebf70d0b3c19b55e4d409a59ec383feb28a432e7043b8"
+    },
+    {
+      "bytes": 34602,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/proof_semantics.base.py",
+      "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+    },
+    {
+      "bytes": 35096,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/proof_semantics.proposed.py",
+      "sha256": "c213b716fcf6a7ef6db42ad09be1620a1f6838be8a8abaf96e32dafd7bd21013"
+    },
+    {
+      "bytes": 9950,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/test_checked_contracts_v1.py",
+      "sha256": "5d2d0b5d40ba4bf282d3ac741439dd8cac07e220dc7af1d04b3d366b1414ad7b"
+    },
+    {
+      "bytes": 69747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+      "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+    },
+    {
+      "bytes": 15884,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_adapters.h",
+      "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+    },
+    {
+      "bytes": 13765,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_builders_v1.h",
+      "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+    },
+    {
+      "bytes": 3881,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_closed_routes_v1.h",
+      "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+    },
+    {
+      "bytes": 1323,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA.hpp",
+      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+    },
+    {
+      "bytes": 27473,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    },
+    {
+      "bytes": 173034,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/new-0.2-contract-design-v1.json",
+      "sha256": "a6139eea1e141c68bb351026b7cdb38a2458eb4b8be3a772a8251a7060db6e1c"
+    },
+    {
+      "bytes": 46103,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/library.py",
+      "sha256": "70a22a19c7baee1a5f1562d99023d67486957f3e21c84d9f60ab491b9f3b8c3a"
+    },
+    {
+      "bytes": 1381,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/checked-contracts-hook-controls-v1.json",
+      "sha256": "4de44c7e426cde0cd8f3eb7cf74ab315c538ef7d0bf4e6ddc6445d36801e5525"
+    },
+    {
+      "bytes": 3903,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/test_proof_semantics_hook_v1.py",
+      "sha256": "894b388c2c38c3a65b8f6e3f100f4b609413c9325dcdcf1112a7d19232f56be9"
+    }
+  ],
+  "module": {
+    "bytes": 12218,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/dx100_whole_checked_v1.py",
+    "sha256": "8b482c419947840dbd2ebf70d0b3c19b55e4d409a59ec383feb28a432e7043b8"
+  },
+  "packet": {
+    "bytes": 3058,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/checked-contracts-source-packet-v1.json",
+    "sha256": "637006bd7d2df2d3a9a64cc2948ddc4c7e45fdc90cb80e9c5b9f89308cc1b97e"
+  },
+  "passed_checks": {
+    "WP_and_defaults": "Complete textual inverse restores base proof_semantics bytes exactly. Only exact checked form takes new branch. All3ACSL/WP summary consumers reject new form before summary/state access. Existing form functions stay original after inverse.",
+    "components": "All4fixed component hashes and2original header hashes match. Complete immutable header inventory binds every name/overload; actual full-TU/configuration/ABI/CPU projection and source-policy semantics remain separate mandatory consumer gates.",
+    "design": "Exact approved design a6139eea with26calls/27declarations/132typed instances; per-call domain/value/source/ownership contracts must equal the pinned design canonically. Choice budget integer1..256 does not attest independent actual draws.",
+    "form": "Exact new contract kind/version0.2/sequence2/formalframe1/interface e4fc4af. Returned source_admission_granted and WP_summary_supported stay false.",
+    "scope": "Unapplied validator proposal only; source-unit/lowering/CBMC/Plan/runtime integration requires separate joint review. No actual source/receiver/ABI/refinement/publicproof/current0.2 claim.",
+    "trust": "All5Eric visibility/MMIO and2compiler/numeric premises are exact, explicitly owned and record_assumption=True. Extra rules require citation or owner; optional hardware/body refinement theorem is not a blocker."
+  },
+  "verification": {
+    "actual_profile_or_source_admission": false,
+    "project_import_test_compiler_native_verifier_solver_or_SSH_execution": false,
+    "source_hash_AST_metadata_only": true
+  }
+}

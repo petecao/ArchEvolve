@@ -1,0 +1,137 @@
+EE..EEEEEEEEEE
+======================================================================
+ERROR: test_complete_all26_tasks (__main__.OwnersEffectsControls.test_complete_all26_tasks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 45, in test_complete_all26_tasks
+    result = [check(task) for task in DATA['tasks']]
+              ^^^^^^^^^^^
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_complete_position_preserving_parameter_alpha (__main__.OwnersEffectsControls.test_complete_position_preserving_parameter_alpha)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 136, in test_complete_position_preserving_parameter_alpha
+    self.assertTrue(check(task, rows)['source_goal_equivalent'])
+                    ^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_changed_cell_projection (__main__.OwnersEffectsControls.test_reject_changed_cell_projection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 114, in test_reject_changed_cell_projection
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_changed_original_post (__main__.OwnersEffectsControls.test_reject_changed_original_post)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 75, in test_reject_changed_original_post
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_changed_outer_sort (__main__.OwnersEffectsControls.test_reject_changed_outer_sort)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 90, in test_reject_changed_outer_sort
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_changed_overload_sort (__main__.OwnersEffectsControls.test_reject_changed_overload_sort)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 122, in test_reject_changed_overload_sort
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_changed_owner_update (__main__.OwnersEffectsControls.test_reject_changed_owner_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 106, in test_reject_changed_owner_update
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_definition_parameter_permutation (__main__.OwnersEffectsControls.test_reject_definition_parameter_permutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 98, in test_reject_definition_parameter_permutation
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_dropped_original_premise (__main__.OwnersEffectsControls.test_reject_dropped_original_premise)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 68, in test_reject_dropped_original_premise
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_duplicate_outer_binder (__main__.OwnersEffectsControls.test_reject_duplicate_outer_binder)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 83, in test_reject_duplicate_outer_binder
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_reject_private_interpretation_vocabulary (__main__.OwnersEffectsControls.test_reject_private_interpretation_vocabulary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 143, in test_reject_private_interpretation_vocabulary
+    check(task, rows)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 39, in check
+    return OWN['reconcile_task'](rows, task['id'], context, SEMANTIC['one'],
+           ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'reconcile_task'
+
+======================================================================
+ERROR: test_scope_safe_global_alias (__main__.OwnersEffectsControls.test_scope_safe_global_alias)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_owners_effects.py", line 149, in test_scope_safe_global_alias
+    result = OWN['rename_globals'](tree, {'target': 'E_target'})
+             ~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'rename_globals'
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.141s
+
+FAILED (errors=12)

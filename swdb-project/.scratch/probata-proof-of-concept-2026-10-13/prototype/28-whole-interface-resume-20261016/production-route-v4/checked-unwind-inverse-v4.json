@@ -1,0 +1,10 @@
+{
+  "after": "                loops = dx100_checked_adapter.model_loops(self,tools,scratch,code.lowering.whole_source,context)\n                bound_rows = dx100_checked_adapter.helper_loop_bounds(code.lowering.whole_source,loops,context)\n                if bound_rows:\n                    flags += [\"--unwindset\", \",\".join(f\"{row['loop']}:{row['unwind']}\" for row in bound_rows)]\n            else:\n                loops = self._model_loops(tools, scratch, code.model)\n                if loops:\n                    flags += [\"--unwindset\", \",\".join(f\"{loop}:{code.model.unwind}\" for loop in loops)]",
+  "before": "                loops = dx100_checked_adapter.model_loops(self,tools,scratch,code.lowering.whole_source,context)\n            else:\n                loops = self._model_loops(tools, scratch, code.model)\n            if loops:\n                flags += [\"--unwindset\", \",\".join(f\"{loop}:{code.model.unwind}\" for loop in loops)]",
+  "exact_predecessor_restored": true,
+  "nonchecked_default_loop_flags_unchanged": true,
+  "predecessor_sha256": "dc5a73344cb65f670b0f3ab1f554a7aeb76c175e95e74a5879cd995f644d59c5",
+  "schema": "checked-source-unwind-inverse-4",
+  "successor_sha256": "0b04badc1d23bcf500cefb878c58599e8ad5f69fb8c122a7bd0014cec09d81eb",
+  "unwinding_assertions_removed": false
+}

@@ -1,0 +1,1818 @@
+{
+  "contract_count": 26,
+  "contracts": {
+    "add_mem_region": [
+      {
+        "adapter": "dxs_add_region",
+        "call": "add_mem_region",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "One-sided source overlap rejection, int8 ID conversion and first-ID/F2 lookup; negative/wrapped region domains refuse.",
+        "formal_arity": 2,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "3781b69d4af7249210a12448f83b9b5cd125b593ad289e9d3160a3ce936b0fff",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 58,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 56
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              56,
+              58
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "alloc_MAA": [
+      {
+        "adapter": "dxs_alloc",
+        "call": "alloc_MAA",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Set seven exact MMIO endpoints and replace six built-in regions; do not reset payload, pending commands or allocation counters.",
+        "formal_arity": 0,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "2a9e2e96bbeb7f0c7093c6a3501b5e4d67654d8d360767ce83eb17df57df8eac",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 91,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 71
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              71,
+              91
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "clear_mem_region": [
+      {
+        "adapter": "dxs_clear_regions",
+        "call": "clear_mem_region",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Replace registrations with exact six MMIO intervals, set next region6; no command/payload reset.",
+        "formal_arity": 0,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "b310e561e9966a6190eeece3c13274e4123b2967718bc86babf5990df87c73c5",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 69,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 60
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              60,
+              69
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "get_cacheable_tile_pointer": [
+      {
+        "adapter": "dwi_tile_address",
+        "call": "get_cacheable_tile_pointer",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Return cacheable MMIO base+tile*TILE_SIZE*4; no ownership, readiness, validity or initializedness grant.",
+        "formal_arity": 1,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 59,
+          "file": "MAA.hpp",
+          "header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "line": 57
+        },
+        "source_basis": [
+          {
+            "file": "MAA.hpp",
+            "lines": [
+              57,
+              59
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "get_data_type": [
+      {
+        "adapter": "dwi_dtype",
+        "call": "get_data_type",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Exact canonical uint32/int32/float/uint64/int64/double identity selects0..5; every other type selectsMAX6.",
+        "formal_arity": 0,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 173,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 165
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              165,
+              173
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "get_new_reg": [
+      {
+        "adapter": "dxg_new_initialized",
+        "call": "get_new_reg",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Allocate sizeof(T1)/4 physical halves; initialized overload additionally performs the explicit-ID-stalling typed MMIO write; capacity precedes that write as a call obligation.",
+        "formal_arity": 1,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 127,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 119
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              119,
+              127
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      },
+      {
+        "adapter": "dxg_new",
+        "call": "get_new_reg",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Allocate sizeof(T1)/4 physical halves; initialized overload additionally performs the explicit-ID-stalling typed MMIO write; capacity precedes that write as a call obligation.",
+        "formal_arity": 0,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 136,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 129
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              129,
+              136
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "get_new_tile": [
+      {
+        "adapter": "dxs_new_tile",
+        "call": "get_new_tile",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Allocate sizeof(T1)/4 physical halves; odd8-byte starts are permitted; preserve data and size versions.",
+        "formal_arity": 0,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 145,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 138
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              138,
+              145
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "get_noncacheable_tile_pointer": [
+      {
+        "adapter": "dwi_tile_address",
+        "call": "get_noncacheable_tile_pointer",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Return noncacheable MMIO base+tile*TILE_SIZE*4; later dereference needs its own source access policy.",
+        "formal_arity": 1,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 63,
+          "file": "MAA.hpp",
+          "header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "line": 61
+        },
+        "source_basis": [
+          {
+            "file": "MAA.hpp",
+            "lines": [
+              61,
+              63
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "get_reg": [
+      {
+        "adapter": "dxg_cpu_read_bits",
+        "call": "get_reg",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Observe the typed shared RF byte image after ownership/alignment/pending-write checks; no invented read stall.",
+        "formal_arity": 1,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 112,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 108
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              108,
+              112
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "get_tile_size": [
+      {
+        "adapter": "dxz_get_size",
+        "call": "get_tile_size",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Read exact starting-tile immutable size only when Finished; no wait/cover, no second-half metadata copy or fresh-zero assumption.",
+        "formal_arity": 1,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "4a0fd5811d735b68236c767b371fcd289c874ce0ebb7f6989a38ce3e8df1a0ab",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 106,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 102
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              102,
+              106
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "init_MAA": [
+      {
+        "adapter": "dxs_init",
+        "call": "init_MAA",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Reset host REG/SPD counters and next region6 only; preserve device payload, pending commands and registrations.",
+        "formal_arity": 0,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "cf708b8c3413e2d8ca92a4fc6c8791df674b603b46a452293b4f0992ef4d4af3",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 97,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 93
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              93,
+              97
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "maa_alu_reduce": [
+      {
+        "adapter": "dwi_maa_alu_reduce",
+        "call": "maa_alu_reduce",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected"
+        ],
+        "effect": "Source initializer and operand order src OP accumulator; deferred masked fold into RF typed result; no at-issue value evaluation.",
+        "formal_arity": 4,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 230,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 213
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              213,
+              230
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              99,
+              224
+            ],
+            "role": "scalar/reduction initialization and immutable size agreement"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              266,
+              861
+            ],
+            "role": "six typed operations and final tile/RF outputs"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_alu_scalar": [
+      {
+        "adapter": "dwi_maa_alu_scalar",
+        "call": "maa_alu_scalar",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected"
+        ],
+        "effect": "Capture src tile/size, RF scalar and condition versions; deferred typed binary per active lane; comparisons outputu32; inactive bytes preserved.",
+        "formal_arity": 5,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 192,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 175
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              175,
+              192
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              99,
+              224
+            ],
+            "role": "scalar/reduction initialization and immutable size agreement"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              266,
+              861
+            ],
+            "role": "six typed operations and final tile/RF outputs"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_alu_vector": [
+      {
+        "adapter": "dwi_maa_alu_vector",
+        "call": "maa_alu_vector",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected"
+        ],
+        "effect": "Capture two tile/size versions and condition versions; deferred typed lane binary; comparisons outputu32; inactive bytes preserved.",
+        "formal_arity": 5,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 211,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 194
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              194,
+              211
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              99,
+              224
+            ],
+            "role": "scalar/reduction initialization and immutable size agreement"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              266,
+              861
+            ],
+            "role": "six typed operations and final tile/RF outputs"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_const": [
+      {
+        "adapter": "dxg_cpu_write_bits",
+        "call": "maa_const",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Same MMIO RF payload write, without adding the set_reg source fence; owned MMIO ordering premise remains recorded.",
+        "formal_arity": 2,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 149,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 147
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              147,
+              149
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "maa_indirect_load": [
+      {
+        "adapter": "dwi_maa_indirect_load",
+        "call": "maa_indirect_load",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree"
+        ],
+        "effect": "Capture u32 index/condition and source size versions; checked uint32 offset correspondence and first-ID/F2; active indexed history nodes, inactive bytes preserved.",
+        "formal_arity": 4,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 287,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 270
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              270,
+              287
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_indirect_rmw_scalar": [
+      {
+        "adapter": "dwi_maa_indirect_rmw_scalar",
+        "call": "maa_indirect_rmw_scalar",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree"
+        ],
+        "effect": "Deferred ADD/MIN/MAX with captured typed RF scalar; old result aliases progressively updated copied line; source numeric guards retained.",
+        "formal_arity": 6,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 363,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 346
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              346,
+              363
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_indirect_rmw_vector": [
+      {
+        "adapter": "dwi_maa_indirect_rmw_vector",
+        "call": "maa_indirect_rmw_vector",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree"
+        ],
+        "effect": "Deferred ADD/MIN/MAX with typed vector values and arbitrary permitted action order; old result aliases progressively updated copied line.",
+        "formal_arity": 6,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 344,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 327
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              327,
+              344
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_indirect_store_scalar": [
+      {
+        "adapter": "dwi_maa_indirect_store_scalar",
+        "call": "maa_indirect_store_scalar",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree"
+        ],
+        "effect": "Capture u32 indices, typed RF scalar and conditions; deferred store actions with optional old-result output and inactive-byte preservation.",
+        "formal_arity": 5,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 325,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 308
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              308,
+              325
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_indirect_store_vector": [
+      {
+        "adapter": "dwi_maa_indirect_store_vector",
+        "call": "maa_indirect_store_vector",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree"
+        ],
+        "effect": "Capture u32 indices, typed source and conditions; deferred store actions; optional output is progressively copied line old values, not untouched response data.",
+        "formal_arity": 5,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 306,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 289
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              289,
+              306
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_range_loop": [
+      {
+        "adapter": "dwi_maa_range_loop",
+        "call": "maa_range_loop",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected"
+        ],
+        "effect": "Header forces INT32 independent of T1; capture two continuation RF states, min/max/condition size/value versions and signed-int stride; both RF states and two tile/size outputs update at deferred cover.",
+        "formal_arity": 8,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 383,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 366
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              366,
+              383
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_stream_load": [
+      {
+        "adapter": "dwi_maa_stream_load",
+        "call": "maa_stream_load",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree"
+        ],
+        "effect": "Capture signed-int RF min/max/stride; checked nonempty source count/prefix; active ordinary-array cells create issue-to-cover history nodes; inactive bytes preserved.",
+        "formal_arity": 6,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 249,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 232
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              232,
+              249
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              143,
+              146
+            ],
+            "role": "signed-int RF bounds and stride"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              340,
+              340
+            ],
+            "role": "starting-tile result size"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "maa_stream_store": [
+      {
+        "adapter": "dwi_maa_stream_store",
+        "call": "maa_stream_store",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree"
+        ],
+        "effect": "Capture signed-int RF bounds/stride and source/condition versions; deferred stores complete under full physical-line guards.",
+        "formal_arity": 6,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 268,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 251
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              251,
+              268
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              143,
+              146
+            ],
+            "role": "signed-int RF bounds and stride"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              340,
+              340
+            ],
+            "role": "starting-tile result size"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ],
+        "value_builder": "required separately source-bound family implementation"
+      }
+    ],
+    "print_tile": [
+      {
+        "adapter": "dwi_print_tile",
+        "call": "print_tile",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Read size without cover, then ordered typed CPU tile reads and explicit observed-output events; preserve IO projection premise.",
+        "formal_arity": 1,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 159,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 152
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              152,
+              159
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "set_reg": [
+      {
+        "adapter": "dxg_cpu_write_bits",
+        "call": "set_reg",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Explicit starting-ID write stalls matching pending explicit RF operands, then checks whole physical pair interference and replaces bytes.",
+        "formal_arity": 2,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 117,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 114
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              114,
+              117
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ],
+    "wait_ready": [
+      {
+        "adapter": "dxc_wait_tile",
+        "call": "wait_ready",
+        "domains": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "effect": "Returned blocking read covers globally counted source/destination roles on this physical half; a condition-only role does not count; no polling/liveness claim.",
+        "formal_arity": 1,
+        "owned_premises": {
+          "addresses": "Explicit C-object/guest/physical-line mapping, first region/F2, full-line no-interference and bounds are call-site obligations.",
+          "deferred": "Consumers capture immutable size/value versions; history chooses at cover, and a known value is not command completion.",
+          "mmio": "Owned MMIO/event correspondence: these exact header calls have the modeled effects on normal return; no termination claim.",
+          "numeric": "Exact numeric runtime profile/guards apply to active values; IEEE bit semantics are not replaced by real arithmetic.",
+          "source": "The admitted compiler binds the actual global source declaration, template identity and ABI; final replay must recheck the complete source closure.",
+          "state": "Entry metadata/payload/ownership describe the actual receiver state; alloc/init do not create a fresh zero device."
+        },
+        "public_supported": false,
+        "source": {
+          "body_sha256": "963dad36a357d2f9063c552ebf4080f5a865896021db3519f3c365d36f507ceb",
+          "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "end_line": 101,
+          "file": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 98
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              98,
+              101
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ],
+        "value_builder": null
+      }
+    ]
+  },
+  "date": "2026-10-16",
+  "scope": "owned source/MMIO per-call recipes; PREPARATION_ONLY"
+}

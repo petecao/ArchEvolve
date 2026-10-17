@@ -1,0 +1,1767 @@
+{
+  "all_scientific_dependencies_admitted": false,
+  "branches": {
+    "positive": {
+      "administrative_storage": {
+        "address_escapes": false,
+        "caller_n_is_entry_parameter": true,
+        "fresh_private_objects": [
+          "ctor.this",
+          "ctor.n",
+          "ctor.value",
+          "ctor.k",
+          "caller.saved",
+          "data.this",
+          "move.this",
+          "move.other",
+          "caller.value",
+          "caller.swdb_return",
+          "dtor.destination.this",
+          "dtor.source.this"
+        ],
+        "incoming_frame": {
+          "all_steps_checked": true,
+          "private_targets": [
+            "caller.saved",
+            "caller.swdb_return",
+            "caller.value",
+            "ctor.k",
+            "ctor.n",
+            "ctor.this",
+            "ctor.value",
+            "data.this",
+            "dtor.destination.this",
+            "dtor.source.this",
+            "move.other",
+            "move.this"
+          ],
+          "protected": "all incoming allocated identities",
+          "rule": "pointwise identity composes over sequence and every iteration of the exact private fill loop",
+          "steps": [
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.n"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.n"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.value"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.value"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.k"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.k"
+            },
+            {
+              "arbitrary_count_induction": true,
+              "body": {
+                "all_steps_checked": true,
+                "private_targets": [
+                  "caller.saved",
+                  "caller.swdb_return",
+                  "caller.value",
+                  "ctor.k",
+                  "ctor.n",
+                  "ctor.this",
+                  "ctor.value",
+                  "data.this",
+                  "dtor.destination.this",
+                  "dtor.source.this",
+                  "move.other",
+                  "move.this"
+                ],
+                "protected": "all incoming allocated identities",
+                "rule": "pointwise identity composes over sequence and every iteration of the exact private fill loop",
+                "steps": [
+                  {
+                    "operation": "store",
+                    "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+                    "target": "ctor.k"
+                  }
+                ]
+              },
+              "operation": "loop",
+              "range": "0 <= k < n"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.k"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.value"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.n"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.saved"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "data.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "data.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "data.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.saved"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.other"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.other"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.other"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.value"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.value"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.swdb_return"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.swdb_return"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.destination.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.destination.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.destination.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.source.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.source.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.source.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.swdb_return"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.value"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.saved"
+            }
+          ]
+        },
+        "no_admin_identity_consumes_selected_Heap_frontier": true,
+        "projection": "private call parameters, loop counter and scalar/pointer local storage form a separate hidden product component; they do not silently consume the selected Heap receiver/buffer frontier",
+        "return_initialization": "value copied to swdb_return before either destructor",
+        "saved_initialization": "actual initialized data field value copied into local pointer; independent of pointee initialization",
+        "value_initialization": "guarded buffer load at positive count, literal zero otherwise"
+      },
+      "buffer_identity": "Heap.next(entry)+1",
+      "cleanup": {
+        "automatic_ends": [
+          "destination",
+          "source"
+        ],
+        "buffer_release_count": 1,
+        "destructor_order": [
+          "destination",
+          "source"
+        ],
+        "no_private_pointer_observation_after_release": true,
+        "registry_retire_is_release": false,
+        "source_data_used": "null",
+        "transition": "end_automatic(release(end_automatic(release(post,destination.data),destination),source.data),source)"
+      },
+      "condition": "0 < n <= INT_MAX",
+      "destination_after_move": {
+        "capacity": "n",
+        "data": "buffer",
+        "size": "n"
+      },
+      "destination_identity": "Heap.next(entry)+2",
+      "incoming_frame": {
+        "all_steps_checked": true,
+        "private_targets": [
+          "buffer",
+          "destination",
+          "source"
+        ],
+        "protected": "all incoming allocated identities",
+        "rule": "pointwise identity composes over sequence and every iteration of the exact private fill loop",
+        "steps": [
+          {
+            "operation": "begin_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source"
+          },
+          {
+            "field": "data",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": "null"
+          },
+          {
+            "field": "size",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "field": "capacity",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "count": "n",
+            "operation": "allocate",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "buffer"
+          },
+          {
+            "field": "data",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": "buffer"
+          },
+          {
+            "field": "capacity",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": "n"
+          },
+          {
+            "arbitrary_count_induction": true,
+            "body": {
+              "all_steps_checked": true,
+              "private_targets": [
+                "buffer",
+                "destination",
+                "source"
+              ],
+              "protected": "all incoming allocated identities",
+              "rule": "pointwise identity composes over sequence and every iteration of the exact private fill loop",
+              "steps": [
+                {
+                  "offset": "4*k",
+                  "operation": "store",
+                  "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+                  "target": "buffer",
+                  "value": 7
+                }
+              ]
+            },
+            "operation": "loop",
+            "range": "0 <= k < n"
+          },
+          {
+            "field": "size",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": "n"
+          },
+          {
+            "operation": "begin_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "destination"
+          },
+          {
+            "complete_fields": [
+              "data",
+              "size",
+              "capacity"
+            ],
+            "from": "source",
+            "operation": "header_copy",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "destination"
+          },
+          {
+            "field": "data",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": "null"
+          },
+          {
+            "field": "size",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "field": "capacity",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "operation": "release",
+            "owner": "destination",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "buffer"
+          },
+          {
+            "operation": "end_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "destination"
+          },
+          {
+            "operation": "release",
+            "owner": "source",
+            "pointwise_frame": "null release is identity under the explicit deallocator model",
+            "target": "null"
+          },
+          {
+            "operation": "end_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source"
+          }
+        ]
+      },
+      "returned_pointer": false,
+      "saved": "buffer",
+      "scalar": 7,
+      "scalar_captured_before_cleanup": true,
+      "source_after_move": {
+        "capacity": 0,
+        "data": "null",
+        "size": 0
+      },
+      "source_before_move": {
+        "capacity": "n",
+        "data": "buffer",
+        "size": "n"
+      },
+      "source_identity": "Heap.next(entry)",
+      "source_identity_history": "source automatic begins before constructor; exact initial stores preserve next; positive allocator is fresh; destination automatic begins after constructor and is never-issued"
+    },
+    "zero": {
+      "administrative_storage": {
+        "address_escapes": false,
+        "caller_n_is_entry_parameter": true,
+        "fresh_private_objects": [
+          "ctor.this",
+          "ctor.n",
+          "ctor.value",
+          "caller.saved",
+          "data.this",
+          "move.this",
+          "move.other",
+          "caller.value",
+          "caller.swdb_return",
+          "dtor.destination.this",
+          "dtor.source.this"
+        ],
+        "incoming_frame": {
+          "all_steps_checked": true,
+          "private_targets": [
+            "caller.saved",
+            "caller.swdb_return",
+            "caller.value",
+            "ctor.n",
+            "ctor.this",
+            "ctor.value",
+            "data.this",
+            "dtor.destination.this",
+            "dtor.source.this",
+            "move.other",
+            "move.this"
+          ],
+          "protected": "all incoming allocated identities",
+          "rule": "pointwise identity composes over sequence and every iteration of the exact private fill loop",
+          "steps": [
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.n"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.n"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.value"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.value"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.value"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.n"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "ctor.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.saved"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "data.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "data.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "data.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.saved"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.other"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.other"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.other"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "move.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.value"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.value"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.swdb_return"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.swdb_return"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.destination.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.destination.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.destination.this"
+            },
+            {
+              "operation": "begin_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.source.this"
+            },
+            {
+              "operation": "store",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.source.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "dtor.source.this"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.swdb_return"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.value"
+            },
+            {
+              "operation": "end_automatic",
+              "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+              "target": "caller.saved"
+            }
+          ]
+        },
+        "no_admin_identity_consumes_selected_Heap_frontier": true,
+        "projection": "private call parameters, loop counter and scalar/pointer local storage form a separate hidden product component; they do not silently consume the selected Heap receiver/buffer frontier",
+        "return_initialization": "value copied to swdb_return before either destructor",
+        "saved_initialization": "actual initialized data field value copied into local pointer; independent of pointee initialization",
+        "value_initialization": "guarded buffer load at positive count, literal zero otherwise"
+      },
+      "buffer_identity": "null",
+      "cleanup": {
+        "automatic_ends": [
+          "destination",
+          "source"
+        ],
+        "buffer_release_count": 0,
+        "destructor_order": [
+          "destination",
+          "source"
+        ],
+        "no_private_pointer_observation_after_release": true,
+        "registry_retire_is_release": false,
+        "source_data_used": "null",
+        "transition": "end_automatic(release(end_automatic(release(post,destination.data),destination),source.data),source)"
+      },
+      "condition": "n == 0",
+      "destination_after_move": {
+        "capacity": 0,
+        "data": "null",
+        "size": 0
+      },
+      "destination_identity": "Heap.next(entry)+1",
+      "incoming_frame": {
+        "all_steps_checked": true,
+        "private_targets": [
+          "destination",
+          "source"
+        ],
+        "protected": "all incoming allocated identities",
+        "rule": "pointwise identity composes over sequence and every iteration of the exact private fill loop",
+        "steps": [
+          {
+            "operation": "begin_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source"
+          },
+          {
+            "field": "data",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": "null"
+          },
+          {
+            "field": "size",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "field": "capacity",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "operation": "begin_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "destination"
+          },
+          {
+            "complete_fields": [
+              "data",
+              "size",
+              "capacity"
+            ],
+            "from": "source",
+            "operation": "header_copy",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "destination"
+          },
+          {
+            "field": "data",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": "null"
+          },
+          {
+            "field": "size",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "field": "capacity",
+            "operation": "store",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source",
+            "value": 0
+          },
+          {
+            "operation": "release",
+            "owner": "destination",
+            "pointwise_frame": "null release is identity under the explicit deallocator model",
+            "target": "null"
+          },
+          {
+            "operation": "end_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "destination"
+          },
+          {
+            "operation": "release",
+            "owner": "source",
+            "pointwise_frame": "null release is identity under the explicit deallocator model",
+            "target": "null"
+          },
+          {
+            "operation": "end_automatic",
+            "pointwise_frame": "target identity was not issued at entry; all incoming identities differ",
+            "target": "source"
+          }
+        ]
+      },
+      "returned_pointer": false,
+      "saved": "null",
+      "scalar": 0,
+      "scalar_captured_before_cleanup": true,
+      "source_after_move": {
+        "capacity": 0,
+        "data": "null",
+        "size": 0
+      },
+      "source_before_move": {
+        "capacity": 0,
+        "data": "null",
+        "size": 0
+      },
+      "source_identity": "Heap.next(entry)",
+      "source_identity_history": "source automatic begins before constructor; exact initial stores preserve next; positive allocator is fresh; destination automatic begins after constructor and is never-issued"
+    }
+  },
+  "caller_acceptance": false,
+  "caller_premises_added": [],
+  "cfg": {
+    "basis": "complete exact body: one unconditional scalar-return compound precedes both fallback destructors",
+    "capture_before_both_destructors": true,
+    "edits": [
+      {
+        "begin": 5555,
+        "end": 5584,
+        "old": "std_vector_int_dtor(&source);",
+        "replacement": "/* checked unreachable cleanup after unconditional captured-scalar return */"
+      },
+      {
+        "begin": 5407,
+        "end": 5441,
+        "old": "std_vector_int_dtor(&destination);",
+        "replacement": "/* checked unreachable cleanup after unconditional captured-scalar return */"
+      }
+    ],
+    "fallback_reachable": false,
+    "original_anchors": [
+      {
+        "function": null,
+        "id": "ghost.globals",
+        "kind": "ghost_globals",
+        "line": 8
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.contract",
+        "kind": "contract",
+        "line": 85
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.entry",
+        "kind": "entry",
+        "line": 87
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s1.before",
+        "kind": "before",
+        "line": 88
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s1.after",
+        "kind": "after",
+        "line": 91
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s2.before",
+        "kind": "before",
+        "line": 92
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s2.after",
+        "kind": "after",
+        "line": 94
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s3.before",
+        "kind": "before",
+        "line": 95
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s3.after",
+        "kind": "after",
+        "line": 98
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s4.before",
+        "kind": "before",
+        "line": 99
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s4.after",
+        "kind": "after",
+        "line": 101
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s5.before",
+        "kind": "before",
+        "line": 102
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s5.after",
+        "kind": "after",
+        "line": 109
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s6.before",
+        "kind": "before",
+        "line": 110
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s6.after",
+        "kind": "after",
+        "line": 112
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s7.before",
+        "kind": "before",
+        "line": 113
+      },
+      {
+        "function": "vector_owned_move_capture",
+        "id": "vector_owned_move_capture.s7.after",
+        "kind": "after",
+        "line": 115
+      }
+    ],
+    "original_sha256": "5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34",
+    "reachable_destructor_order": [
+      "destination",
+      "source"
+    ],
+    "view_sha256": "9865b670b08806d5027074137955413d88a80d8c9cc32200a9019cf8a77fcc03",
+    "whole_lowering_inverse_equal": true
+  },
+  "checker": {
+    "id": "vector-owned-closed-move-source-1",
+    "sha256": "e1611934d01c2fbafc3ea54847393f3ef0cec6d5c9a7d0ddcd571e167a7c07d5"
+  },
+  "created": "2026-10-16 ET",
+  "current_records_admitted": [],
+  "derivation_scope": "exact conditional source grammar/effect/scalar rule, not completed scientific dependency or physical memory translation",
+  "function": "vector_owned_move_capture",
+  "observation": {
+    "address_reuse": "a fresh identity may reuse a dead identity physical address; it does not modify that dead identity ghost snapshot",
+    "dead_physical_bytes_preserved": false,
+    "hidden": "private source/destination/buffer and administrative storage, their histories and frontier increments",
+    "incoming_type_restriction": null,
+    "preserves": [
+      "allocation metadata",
+      "live storage contents and initialization",
+      "dead-identity ghost history"
+    ],
+    "protected": "every incoming allocated identity, live or dead, with arbitrary element/payload type",
+    "source_rule": "pointwise private-effect induction from never-issued source-created receiver/buffer identities; no typed map ownership inference"
+  },
+  "original_contract": [
+    "requires 0 <= n;",
+    "assigns \\nothing;",
+    "ensures \\result == (n > 0 ? 7 : 0);"
+  ],
+  "original_library_provenance": {
+    "library": {
+      "id": "libc++-22.1.8"
+    },
+    "models": [
+      "std_vector_int",
+      "std_vector_int_ctor_count_value",
+      "std_vector_int_data",
+      "std_vector_int_dtor",
+      "std_vector_int_move_ctor",
+      "swdb_alloc_int",
+      "swdb_free"
+    ],
+    "pure_harness_only": true,
+    "substitution_requests": [],
+    "verdict": "passed"
+  },
+  "original_substitution_requests": [],
+  "ownership": {
+    "complete_global_registry_claimed": false,
+    "complete_participating_lexical_owners": [
+      "source",
+      "destination"
+    ],
+    "frontier": "never-issued Heap.next history; not live owner cardinality or physical address",
+    "incoming_owners_assumed_valid": false,
+    "raw_saved_pointer_is_owner": false,
+    "source_rule": "source fresh construction creates the only initial backing owner; fresh writable destination receives it; resetting source removes its backing ownership before cleanup"
+  },
+  "parent_model": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "required_before_launch": [
+    "complete exact historical/current mathematical context binding including pending move4 encoding",
+    "actual source-created Heap header/phase/layout/cleanup composition under explicit allocator/library/storage TCB",
+    "fresh complete original ordinary/RTE/init/frame/smoke diagnostic and current generated-input preflight"
+  ],
+  "scientific_dependencies": {
+    "constructor": {
+      "current_record_admitted": false,
+      "member": "std_vector_int_realloc_v3_ctor_count_value",
+      "retained_evidence_role": "conditionally reusable exact model mathematics only; complete historical evidence/context binding still required",
+      "source_inverse": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+        "caller_discharge": "required; not assumed",
+        "executable_bodies": [
+          {
+            "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "original_function": "swdb_alloc_int",
+            "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "qualified_function": "swdb_alloc_int"
+          },
+          {
+            "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "original_function": "swdb_free",
+            "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "qualified_function": "swdb_free"
+          },
+          {
+            "body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+            "inverse_qualified_body_sha256": "b2a65ba2e721e87eda94ded1bd37e05ba0d5f8b9a405f97a46d3da977965623e",
+            "original_fragment_sha256": "3cd8afffdc132e49f623b56149a1621603ea1314c030515f0320fd5b912b000c",
+            "original_function": "std_vector_int_ctor_count_value",
+            "qualified_fragment_sha256": "a4963a177811339c6e5f44377c2a793de7ab830103987ba68e68b68048ab5bfe",
+            "qualified_function": "std_vector_int_realloc_v3_ctor_count_value"
+          }
+        ],
+        "inverse_qualified_source_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_ctor_count_value",
+        "original_source_sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "qualification certificate only; a proof verdict requires fresh checked execution",
+        "qualified_member": "std_vector_int_realloc_v3_ctor_count_value",
+        "qualified_source_sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a",
+        "typed_source_image": {
+          "applicable": true,
+          "boundary": "old heap repr does not imply int32_region; actual typed-source correspondence is mandatory",
+          "caller_discharge": "source-derived typed int objects; opaque raw storage unsupported",
+          "id": "wp-typed-int32-source-image-1",
+          "projection": "selected WP Typed bounded integer chunk -> Integer(value); pointer chunks are not integer cells",
+          "raw_effective_type_safety_proved": false,
+          "required_source_files": [
+            {
+              "name": "MemTyped.ml",
+              "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+            },
+            {
+              "name": "Cint.ml",
+              "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+            },
+            {
+              "name": "Factory.ml",
+              "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+            }
+          ],
+          "required_wp_integer_model": "Machine; Natural/NAT is outside this bounded-int projection",
+          "runtime_source_binding": "required selected-tool verification before every launch; not assumed"
+        },
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "targets": [
+        {
+          "goal": "t25v3_control_ctor_premises_feasible",
+          "id": "control.ctor.premises_feasible",
+          "kind": "check_lemma",
+          "sha256": "b5e411200cea2b718f6d7464d67b16c9704f13da40fb4b5c3d15f8ccc424dad5",
+          "statement": "Heap::well_formed(Heap::allocate(Heap::empty(0),6,8)) && Heap::typed_writes(Heap::allocate(Heap::empty(0),6,8),1,0,24,8) && Heap::available(Heap::allocate(Heap::empty(0),6,8),1,64)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_zero_data",
+          "id": "ctor.rte.zero_data",
+          "kind": "check_lemma",
+          "sha256": "3a64ef32dc04c28baf29bf0432e000405db7e5923e5ee7c40d15a3afd162edee",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(h,r,o,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_zero_size",
+          "id": "ctor.rte.zero_size",
+          "kind": "check_lemma",
+          "sha256": "524665df08d6df290bc3fa479ba7de698c4929ecb9307065e909c815cea8e651",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::put_pointer(h,r,o,0,0),r,o+8,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_zero_capacity",
+          "id": "ctor.rte.zero_capacity",
+          "kind": "check_lemma",
+          "sha256": "1b503dcb3e5d9ad0c02e7f05c4b961c4e344d05b027d2c922445495b030dd44e",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::put_integer(Heap::put_pointer(h,r,o,0,0),r,o+8,0),r,o+16,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_fields_initialized",
+          "id": "ctor.fields.initialized",
+          "kind": "check_lemma",
+          "sha256": "7457a3fb08737a445abd553c0b18ecf41782b92e468bbd8a6fc641c64b412080",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> t25_fields(t25_initial(h,r,o),r,o,0,0,0,0)"
+        },
+        {
+          "goal": "t25v3_ctor_zero_post",
+          "id": "ctor.zero.post",
+          "kind": "check_lemma",
+          "sha256": "67a767b853c35aa675dc2a038b8ce511f72c3b5d283c4b456ed3b9b537504cc0",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> t25_repr(t25_initial(h,r,o),r,o,0,0,0,0)"
+        },
+        {
+          "goal": "t25v3_ctor_zero_frame",
+          "id": "ctor.zero.frame",
+          "kind": "check_lemma",
+          "sha256": "246cb3285d23c64743a49e27ea7fddca8b0370800f447852782eb09f1dc8490a",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; t25_frame(h,t25_initial(h,r,o),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_identity",
+          "id": "ctor.alloc.identity",
+          "kind": "check_lemma",
+          "sha256": "2c4039918468f64d6186788d62229926ec3de5ed7733deb3f1a37d626e1d3e7f",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) && Heap::typed_writes(h,r,o,24,8) ==> Heap::fresh_id(h) != r && !Heap::issued(h,Heap::fresh_id(h)) && Heap::live(Heap::allocate(h,n,a),Heap::fresh_id(h))"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_well_formed",
+          "id": "ctor.alloc.well_formed",
+          "kind": "check_lemma",
+          "sha256": "37fb36cddfa7c04a94b82a42170d5c2e5ca38e32c79bb164d24cdc9de7e37f55",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a; Heap::well_formed(h) && Heap::available(h,n,a) ==> Heap::well_formed(Heap::allocate(h,n,a))"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_separation",
+          "id": "ctor.alloc.separation",
+          "kind": "check_lemma",
+          "sha256": "15b3e29c013f359fd41166886cf8c87349871c4d6be2f3acf2a42fa2faeef5d7",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a,b; Heap::well_formed(h) && Heap::available(h,n,a) && Heap::live(h,b) ==> Heap::separated(Heap::allocate(h,n,a),Heap::fresh_id(h),b)"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_extent",
+          "id": "ctor.alloc.extent",
+          "kind": "check_lemma",
+          "sha256": "19ba37f46cad8d3c1fb1540232498f75f033e3462e8bd333ef29f6ef5b0d6ebb",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a; Heap::well_formed(h) && Heap::available(h,n,a) && 0 < n ==> Heap::typed_writes(Heap::allocate(h,n,a),Heap::fresh_id(h),0,4*n,4) && Heap::bytes(Heap::allocate(h,n,a),Heap::fresh_id(h)) == 4*n"
+        },
+        {
+          "goal": "t25v3_ctor_alloc_uninitialized",
+          "id": "ctor.alloc.uninitialized",
+          "kind": "check_lemma",
+          "sha256": "7e829d37db0bd00afc9da274a2bb64f670f95d8877a85cca91e9968f956b6797",
+          "statement": "\\forall Heap::heap h; \\forall integer n,a,j; !Heap::initialized_at(Heap::allocate(h,n,a),Heap::fresh_id(h),j)"
+        },
+        {
+          "goal": "t25v3_ctor_capacity_entry",
+          "id": "ctor.capacity.entry",
+          "kind": "check_lemma",
+          "sha256": "7a0e99453d6cbc09801fce66d2387a93175e593cf4152c99f36d21cd50adba42",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a,v; Heap::well_formed(h) && Heap::available(h,n,a) && Heap::typed_writes(h,r,o,24,8) && 0 < n <= 4611686018427387903 && -2147483648 <= v <= 2147483647 ==> t25v3_ctor_inv(t25_allocated(h,r,o,n,a),r,o,Heap::fresh_id(h),n,0,v)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_allocated_data",
+          "id": "ctor.rte.allocated_data",
+          "kind": "check_lemma",
+          "sha256": "02ba89b283c54cc344aad9897d86365fc227c0c2b2bc0efcb67f6e49ad0bb96a",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) && Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::allocate(t25_initial(h,r,o),n,a),r,o,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_allocated_capacity",
+          "id": "ctor.rte.allocated_capacity",
+          "kind": "check_lemma",
+          "sha256": "0991127933d1a77bd56ec6c71aa78a2c00754d88fadba9dd91c109a4fa4bf2ec",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) && Heap::typed_writes(h,r,o,24,8) ==> Heap::typed_writes(Heap::put_pointer(Heap::allocate(t25_initial(h,r,o),n,a),r,o,Heap::fresh_id(h),0),r,o+16,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_prefix_establish",
+          "id": "ctor.prefix.establish",
+          "kind": "check_lemma",
+          "sha256": "50fb5df4e141d3263dc802457dbd7935be3b0286b17ec43c21bac0e37fc97218",
+          "statement": "\\forall Heap::heap h; \\forall integer b,v; Heap::filled_prefix(h,b,0,v)"
+        },
+        {
+          "goal": "t25v3_ctor_store_access",
+          "id": "ctor.store.access",
+          "kind": "check_lemma",
+          "sha256": "83c4d2ad7c3351e04007cfc3a8b4b9ace11774feab2e0eb678e7cb7a663af2ad",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,k,v; t25v3_ctor_inv(h,r,o,b,n,k,v) && k < n ==> Heap::typed_forms(h,b,4*k,4) && Heap::typed_writes(h,b,4*k,4,4) && Heap::initialized_at(h,r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_prefix_step",
+          "id": "ctor.prefix.step",
+          "kind": "check_lemma",
+          "sha256": "aa084a3b18ca0a7abd158071d20b91efb631d797ea0789f8e24c4fb35ccba598",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,k,v; t25v3_ctor_inv(h,r,o,b,n,k,v) && k < n ==> t25v3_ctor_inv(Heap::put_integer(h,b,4*k,v),r,o,b,n,k+1,v)"
+        },
+        {
+          "goal": "t25v3_ctor_prefix_exit",
+          "id": "ctor.prefix.exit",
+          "kind": "check_lemma",
+          "sha256": "63e1d91b2abddf2959a3ed8d35fbccd0f3c4c1679a17e61d5f364e0b9135d123",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,k,v; t25v3_ctor_inv(h,r,o,b,n,k,v) && !(k < n) ==> k == n && Heap::filled_prefix(h,b,n,v)"
+        },
+        {
+          "goal": "t25v3_ctor_final_post",
+          "id": "ctor.final.post",
+          "kind": "check_lemma",
+          "sha256": "7bdbb392a07ba3d6cf4e6a38d8cb84253a7ffc2f801a29c456a4039c4859f42e",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> t25_repr(Heap::put_integer(h,r,o+8,n),r,o,b,0,n,n) && Heap::filled_prefix(Heap::put_integer(h,r,o+8,n),b,n,v)"
+        },
+        {
+          "goal": "t25v3_ctor_rte_final_size",
+          "id": "ctor.rte.final_size",
+          "kind": "check_lemma",
+          "sha256": "2f55d2e1f387cc1e191db7169b89969582c6684a320930868d364d2bd8ddfd3e",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> Heap::typed_writes(h,r,o+8,8,8)"
+        },
+        {
+          "goal": "t25v3_ctor_frame_preexisting",
+          "id": "ctor.frame.preexisting",
+          "kind": "check_lemma",
+          "sha256": "f944af412b583f4a9a60871dd616b8188e64a27fb7cd75eb94a372c4454c2835",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,n,a; Heap::well_formed(h) ==> t25_frame(h,t25_allocated(h,r,o,n,a),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_frame_loop_step",
+          "id": "ctor.frame.loop_step",
+          "kind": "check_lemma",
+          "sha256": "b73c3d72d71d00b1a3db42157634a66fcc2caa20a5a803f12189ee864a0ef98a",
+          "statement": "\\forall Heap::heap old,h; \\forall integer r,o,b,k,v; t25_frame(old,h,r,o) && !Heap::live(old,b) ==> t25_frame(old,Heap::put_integer(h,b,4*k,v),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_frame_final",
+          "id": "ctor.frame.final",
+          "kind": "check_lemma",
+          "sha256": "524a1813b0938ef54b0f013c015bf74448488031a6398d934f5ea84f632bcf28",
+          "statement": "\\forall Heap::heap old,h; \\forall integer r,o,n; t25_frame(old,h,r,o) ==> t25_frame(old,Heap::put_integer(h,r,o+8,n),r,o)"
+        },
+        {
+          "goal": "t25v3_ctor_numeric",
+          "id": "ctor.numeric",
+          "kind": "c_kernel",
+          "sha256": "95efe1cba1bbc55c5f08d538cd4424ff93a4d3adf6bd5d169ad17664377d5600",
+          "statement": null
+        },
+        {
+          "goal": "t25v3_control_zero_size_formation",
+          "id": "control.zero_size.formation",
+          "kind": "check_lemma",
+          "sha256": "20e39f968e9d59dc0d4fd901a6758e976969a3824c3509d3ad5cd21e482cb1dc",
+          "statement": "\\forall Heap::heap h; \\forall integer a; Heap::well_formed(h) && Heap::available(h,0,a) ==> Heap::well_formed(Heap::allocate(h,0,a)) && Heap::fresh_id(h) != 0 && Heap::typed_forms(Heap::allocate(h,0,a),Heap::fresh_id(h),0,4) && !Heap::can_read(Heap::allocate(h,0,a),Heap::fresh_id(h),0,4)"
+        },
+        {
+          "goal": "t25v3_control_live_zero_base_not_fresh",
+          "id": "control.live_zero_base.not_fresh",
+          "kind": "check_lemma",
+          "sha256": "986b457661e64986482e9959757025ca082a0826018dbd372529d0722656b112",
+          "statement": "\\forall Heap::heap h; \\forall integer b,n; Heap::live(h,b) && Heap::bytes(h,b) == 0 ==> !Heap::available(h,n,Heap::numerical_address(h,b))"
+        },
+        {
+          "goal": "t25v3_control_ctor_qualified_feasible",
+          "id": "control.ctor.qualified_feasible",
+          "kind": "check_lemma",
+          "sha256": "a60560cd42ab38003711f2bc0815fb0f39a4757888d19bb038bc4c4b4525770d",
+          "statement": "t25v3_ctor_inv(t25_allocated(Heap::allocate(Heap::empty(0),6,8),1,0,1,64),1,0,2,1,0,7)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_zero_post",
+          "id": "ctor.qualified.zero_post",
+          "kind": "check_lemma",
+          "sha256": "efbc464b79789d41ce4c4cbbc507e6bd66440c7455291412f6cbe6a2bb3d4871",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; Heap::typed_writes(h,r,o,24,8) ==> t25v3_eligible(t25_initial(h,r,o),r,o,0,0,0,0)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_repr",
+          "id": "ctor.qualified.positive_post.repr",
+          "kind": "check_lemma",
+          "sha256": "a2f0879c57876cd1c0a655d514723f028939794f07faf50f3b0559fdd669500d",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> t25_repr(Heap::put_integer(h,r,o+8,n),r,o,b,0,n,n)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_access",
+          "id": "ctor.qualified.positive_post.cells.access",
+          "kind": "check_lemma",
+          "sha256": "2281cad8ea18001a5e5397b71f48d74ee6a7f5f447a7581ebf15c36d042f7d1c",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> Heap::typed_reads(Heap::put_integer(h,r,o+8,n),b,(0+4*j),4,4)"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_initialization",
+          "id": "ctor.qualified.positive_post.cells.initialization",
+          "kind": "check_lemma",
+          "sha256": "c84a63dc42bb61eee15381e5c265a743e4e95acfe630019303cfd6f1e933bebe",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> Heap::initialized_at(Heap::put_integer(h,r,o+8,n),b,(0+4*j))"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_integer",
+          "id": "ctor.qualified.positive_post.cells.integer",
+          "kind": "check_lemma",
+          "sha256": "c61359f03125569a6d84b788c010664bde01021446716d7dc7525359a0e8714a",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> Heap::integer_at(Heap::put_integer(h,r,o+8,n),b,(0+4*j),Heap::load_int(Heap::put_integer(h,r,o+8,n),b,(0+4*j)))"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_cells_bounds",
+          "id": "ctor.qualified.positive_post.cells.bounds",
+          "kind": "check_lemma",
+          "sha256": "867a0e3070efe2c84395fd0dda1c438306169583e8e71b8abdd4b267c6694cdc",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; \\forall integer j; t25v3_ctor_inv(h,r,o,b,n,n,v) && 0 <= j < n ==> -2147483648 <= Heap::load_int(Heap::put_integer(h,r,o+8,n),b,(0+4*j)) <= 2147483647"
+        },
+        {
+          "goal": "t25v3_ctor_qualified_positive_post_eligibility",
+          "id": "ctor.qualified.positive_post.eligibility",
+          "kind": "check_lemma",
+          "sha256": "91a7d5520173fb81907e40a5d4b6e187dffdebddd4373b291b7a0c0c923220bf",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> (n == 0 || (Heap::freeable(Heap::put_integer(h,r,o+8,n),b,0) && r != b))"
+        }
+      ]
+    },
+    "destructor": {
+      "current_record_admitted": false,
+      "member": "std_vector_int_realloc_v3_dtor",
+      "retained_evidence_role": "conditionally reusable exact model mathematics only; complete historical evidence/context binding still required",
+      "source_inverse": {
+        "alias_policy": "escaped raw aliases remain legal before release and stale afterward",
+        "allocation_identity_condition": "capacity>0 implies receiver and backing allocation bases differ",
+        "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+        "caller_discharge": "required; not assumed",
+        "executable_bodies": [
+          {
+            "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+            "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "original_function": "swdb_alloc_int",
+            "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+            "qualified_function": "swdb_alloc_int"
+          },
+          {
+            "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+            "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "original_function": "swdb_free",
+            "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+            "qualified_function": "swdb_free"
+          },
+          {
+            "body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+            "inverse_qualified_body_sha256": "ff60f7bb4cfc6d2bfcfe1e898b75a6c685da6d711e5da0d6afb9920fc756b263",
+            "original_fragment_sha256": "7779eb945593c441b99b36115d35a24a8347bee1fb9d91db1db14879458ef38a",
+            "original_function": "std_vector_int_dtor",
+            "qualified_fragment_sha256": "9870371fd3541cf977563c759b0205704642c7324837c8695c51c6903cdfd8e0",
+            "qualified_function": "std_vector_int_realloc_v3_dtor"
+          }
+        ],
+        "inverse_qualified_source_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+        "original_contract_proved": false,
+        "original_member": "std_vector_int_dtor",
+        "original_source_sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317",
+        "parent_model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "pending": [
+          "complete original source/clause/RTE/init/frame/lifetime map under the new contract",
+          "fresh unbounded body proof",
+          "source-derived caller eligibility and cross-view liveness accounting"
+        ],
+        "proof_status": "qualification certificate only; a proof verdict requires fresh checked execution",
+        "qualified_member": "std_vector_int_realloc_v3_dtor",
+        "qualified_source_sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f",
+        "typed_source_image": {
+          "applicable": false,
+          "raw_effective_type_safety_proved": false,
+          "role": "no buffer element load; original pointer/free domain retained"
+        },
+        "unary_role": "reallocation eligibility; not exclusive ownership",
+        "version": 3
+      },
+      "targets": [
+        {
+          "goal": "t25v3_control_dtor_premises_feasible",
+          "id": "control.dtor.premises_feasible",
+          "kind": "check_lemma",
+          "sha256": "0563754418f4a12a41995478c6a829c73114b4c967df221220a3b08fba410c4f",
+          "statement": "Heap::well_formed(t25_sample(0)) && t25_repr(t25_sample(0),1,0,2,0,1,1) && Heap::freeable(t25_sample(0),2,0)"
+        },
+        {
+          "goal": "t25v3_dtor_data_read",
+          "id": "dtor.data.read",
+          "kind": "check_lemma",
+          "sha256": "004833d8949bb5d4400a219ef2b9368ae7ca4914d15fc69062f761c63b29827b",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) ==> Heap::typed_reads(h,r,o,8,8) && Heap::initialized_at(h,r,o) && Heap::pointer_at(h,r,o,b,bo)"
+        },
+        {
+          "goal": "t25v3_dtor_free_argument",
+          "id": "dtor.free.argument",
+          "kind": "check_lemma",
+          "sha256": "462a7744e8f7a5137bdca30bbd498f6a38e2272e93a5922cfca31bfb5e05e949",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (c == 0 || Heap::freeable(h,b,bo)) ==> (b == 0 && bo == 0) || Heap::freeable(h,b,bo)"
+        },
+        {
+          "goal": "t25v3_dtor_null_no_op",
+          "id": "dtor.null.no_op",
+          "kind": "check_lemma",
+          "sha256": "96b0e5c9536694714afec32d21cf52517e871f2225ff074cc043746c5a15a9b4",
+          "statement": "\\forall Heap::heap h; Heap::release(h,0) == h"
+        },
+        {
+          "goal": "t25v3_dtor_alias_invalidated",
+          "id": "dtor.alias.invalidated",
+          "kind": "check_lemma",
+          "sha256": "40bed47f0ae13d768e077e6ea7789dcd190194e1522810310250ad1278a698a1",
+          "statement": "\\forall Heap::heap h; \\forall integer b,alias_offset; b != 0 ==> !Heap::forms(Heap::release(h,b),b,alias_offset) && !Heap::can_read(Heap::release(h,b),b,alias_offset,4)"
+        },
+        {
+          "goal": "t25v3_dtor_post_old_invalid",
+          "id": "dtor.post.old_invalid",
+          "kind": "check_lemma",
+          "sha256": "5062df7f6ed1315b67e6e1a0d323dcff7cb53a6b6df4639034cbd45ca415034f",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; Heap::well_formed(h) && t25_repr(h,r,o,b,bo,s,c) && (c == 0 || Heap::freeable(h,b,bo)) && c > 0 ==> !Heap::can_read(Heap::release(h,b),b,bo,4)"
+        },
+        {
+          "goal": "t25v3_dtor_frame_surviving",
+          "id": "dtor.frame.surviving",
+          "kind": "check_lemma",
+          "sha256": "3012485de6f563339f99f6c8b38d270fb6d04429367c20836d8e8a6465b5aa67",
+          "statement": "\\forall Heap::heap h; \\forall integer dead,b,o; Heap::live(h,b) && b != dead ==> Heap::contents(Heap::release(h,dead),b,o) == Heap::contents(h,b,o) && (Heap::initialized_at(Heap::release(h,dead),b,o) <==> Heap::initialized_at(h,b,o))"
+        },
+        {
+          "goal": "t25v3_dtor_frame_other_live",
+          "id": "dtor.frame.other_live",
+          "kind": "check_lemma",
+          "sha256": "e0fb664a9c258708be364a9017d9806ae01ec81eb905f4a572943f29abaedc1a",
+          "statement": "\\forall Heap::heap h; \\forall integer dead,b; b != dead ==> Heap::same_object(h,Heap::release(h,dead),b)"
+        },
+        {
+          "goal": "t25v3_dtor_receiver_overlap",
+          "id": "dtor.receiver.overlap",
+          "kind": "check_lemma",
+          "sha256": "8c53c08ddc54ebb60d69fce168fff27c4c0dd52c8d80741d99eabd5475202096",
+          "statement": "\\forall Heap::heap h; \\forall integer r,o; r != 0 ==> !Heap::can_read(Heap::release(h,r),r,o,24)"
+        },
+        {
+          "goal": "t25v3_control_reused_address_stale",
+          "id": "control.reused_address.stale",
+          "kind": "check_lemma",
+          "sha256": "59f1c15f17ed5a1cddb2658e07f6af4f9e0877ed902d84c444ff93d2a824c0d8",
+          "statement": "\\forall Heap::heap h; \\forall integer b,n; Heap::well_formed(h) && Heap::freeable(h,b,0) && Heap::aligned(Heap::numerical_address(h,b),4) && 0 < n && 4*n <= Heap::bytes(h,b) ==> Heap::available(Heap::release(h,b),n,Heap::numerical_address(h,b)) && Heap::well_formed(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b))) && Heap::numerical_address(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b)),Heap::fresh_id(h)) == Heap::numerical_address(h,b) && !Heap::can_read(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b)),b,0,4)"
+        },
+        {
+          "goal": "t25v3_control_before_release_read",
+          "id": "control.before_release.read",
+          "kind": "check_lemma",
+          "sha256": "5f2c091c9d006b7aca4fa6143450b0b38a480f9380771bb9a0bf6399e6d1702f",
+          "statement": "\\forall Heap::heap h; \\forall integer b,o; Heap::can_read(h,b,o,4) && Heap::initialized_at(h,b,o) ==> Heap::live(h,b)"
+        }
+      ]
+    },
+    "move_source": {
+      "checker": {
+        "id": "vector-owned-source-view-1",
+        "sha256": "5639308d3b8db1a93071cd9d40cfa1aa025fe11c5435a303fff9fe783885a3cb"
+      },
+      "mathematically_admitted": false,
+      "old_eight_native_Valid_or_registry10_is_admission": false,
+      "remaining": "complete exact source-to-Heap/phase/header composition and independent task encoding closure",
+      "source_local_discharge": "the two participating lexical owners are constructed here; no opaque incoming Owners.valid or OwnedEffects.world premise is assumed",
+      "targets": [
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_destination_header",
+          "id": "move.destination_header",
+          "kind": "check_lemma",
+          "path": "obligations/000-t25_owned_effect_move_destination_header.c",
+          "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::header(OwnedEffects::move(h,d,s),d,b,n,c)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_source_empty",
+          "id": "move.source_empty",
+          "kind": "check_lemma",
+          "path": "obligations/001-t25_owned_effect_move_source_empty.c",
+          "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::header(OwnedEffects::move(h,d,s),s,0,0,0)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_incoming_frame",
+          "id": "move.incoming_frame",
+          "kind": "check_lemma",
+          "path": "obligations/002-t25_owned_effect_move_incoming_frame.c",
+          "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::incoming_frame(h,OwnedEffects::move(h,d,s),d,s)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_owned_effect_move_owner_correspondence",
+          "id": "move.owner_correspondence",
+          "kind": "check_lemma",
+          "path": "obligations/003-t25_owned_effect_move_owner_correspondence.c",
+          "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d",
+          "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::world(OwnedEffects::move(h,d,s),Owners::move(owners,d,s),OwnedEffects::moved_phases(ready,d,s))",
+          "status": "pending"
+        }
+      ]
+    },
+    "private_frame": {
+      "checker": {
+        "id": "vector-private-lifetime-frame-1",
+        "sha256": "d821607eba3ac35dbbc212f141c372faf0ed947d56805a612bcc4270e3ab844d"
+      },
+      "current_record_admitted": false,
+      "retained_evidence_role": "conditional private math only; actual incoming all-identity source frame is separate",
+      "targets": [
+        {
+          "dependencies": [],
+          "goal": "t25_private_entry_reflexive",
+          "id": "entry.reflexive",
+          "kind": "check_lemma",
+          "path": "obligations/000-t25_private_entry_reflexive.c",
+          "sha256": "5998b73632c81c97aeaa2cf383315be526a94570f248dca029fb79447e871f78",
+          "statement": "\\forall Heap::heap h; t25_private_frame(h,h)",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_automatic_frame",
+          "id": "automatic.frame",
+          "kind": "check_lemma",
+          "path": "obligations/001-t25_private_automatic_frame.c",
+          "sha256": "6324aed8153be9f5a7dda9b66a5d72a78c53b0228a9ed40a68327acdef8b0571",
+          "statement": "\\forall Heap::heap h; \\forall integer width,a; Heap::well_formed(h) ==> t25_private_frame(h,Heap::begin_automatic(h,width,a)) && !Heap::live(h,Heap::fresh_id(h))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_allocation_frame",
+          "id": "allocation.frame",
+          "kind": "check_lemma",
+          "path": "obligations/002-t25_private_allocation_frame.c",
+          "sha256": "dadf3cf983f34461dcb084c0bf88de22cb7bf3409ba7e0cbb8b50febcdc7e489",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer n,a; Heap::well_formed(now) && t25_private_frame(entry,now) ==> t25_private_frame(entry,Heap::allocate(now,n,a)) && !Heap::live(entry,Heap::fresh_id(now))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_integer_store_frame",
+          "id": "integer_store.frame",
+          "kind": "check_lemma",
+          "path": "obligations/003-t25_private_integer_store_frame.c",
+          "sha256": "8b22188dcff983758ad4a738bd95638623454e5c9cf777babaa3f931fcc558e0",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer b,o,v; t25_private_frame(entry,now) && !Heap::live(entry,b) ==> t25_private_frame(entry,Heap::put_integer(now,b,o,v))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_pointer_store_frame",
+          "id": "pointer_store.frame",
+          "kind": "check_lemma",
+          "path": "obligations/004-t25_private_pointer_store_frame.c",
+          "sha256": "be07d38896958af227b41eda58cf677fa4da599aab3b7a7c13de423be98b481a",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer b,o,target,offset; t25_private_frame(entry,now) && !Heap::live(entry,b) ==> t25_private_frame(entry,Heap::put_pointer(now,b,o,target,offset))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_release_frame",
+          "id": "release.frame",
+          "kind": "check_lemma",
+          "path": "obligations/005-t25_private_release_frame.c",
+          "sha256": "dd64ff3d4f99544ed3e206e48a426a468757239f5c8a44d1800cdc642652e810",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer b; t25_private_frame(entry,now) && !Heap::live(entry,b) ==> t25_private_frame(entry,Heap::release(now,b))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_automatic_end_frame",
+          "id": "automatic_end.frame",
+          "kind": "check_lemma",
+          "path": "obligations/006-t25_private_automatic_end_frame.c",
+          "sha256": "aede762faf9c388a1525d9bfef95a69814908ca5ce2e81101a34c6922d29e703",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer r; t25_private_frame(entry,now) && !Heap::live(entry,r) ==> t25_private_frame(entry,Heap::end_automatic(now,r))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_cleanup_observation",
+          "id": "cleanup.observation",
+          "kind": "check_lemma",
+          "path": "obligations/007-t25_private_cleanup_observation.c",
+          "sha256": "8b0041e29c2a2cff5cfccea2c0ff47d9c705f6d6a21801f5c7e2c1ffcf45bdb6",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer r,b; t25_private_frame(entry,now) && t25_private_ids(entry,r,b) ==> t25_private_frame(entry,t25_private_cleanup(now,r,b)) && t25_private_observes(entry,now,t25_private_cleanup(now,r,b))",
+          "status": "pending"
+        },
+        {
+          "dependencies": [],
+          "goal": "t25_private_cleanup_exists_scalar",
+          "id": "cleanup.exists_scalar",
+          "kind": "check_lemma",
+          "path": "obligations/008-t25_private_cleanup_exists_scalar.c",
+          "sha256": "3862ad897bdaa760a0a78e97cf2752daaba13e747d134c5cd8aad4395fa5bebb",
+          "statement": "\\forall Heap::heap entry,now; \\forall integer r,b,n; t25_private_frame(entry,now) && t25_private_ids(entry,r,b) && Heap::typed_writes(now,r,0,24,8) && !Heap::freeable(now,r,0) && 0 <= n && (n == 0 ? b == 0 : Heap::freeable(now,b,0) && Heap::int32_region(now,b,0,n) && Heap::filled_prefix(now,b,n,7)) ==> \\exists Heap::heap final; \\exists integer scalar; final == t25_private_cleanup(now,r,b) && scalar == (n > 0 ? Heap::load_int(now,b,0) : 0) && scalar == (n > 0 ? 7 : 0) && t25_private_frame(entry,final) && t25_private_observes(entry,now,final)",
+          "status": "pending"
+        }
+      ]
+    }
+  },
+  "source_admission": false,
+  "source_derivation_checked": true,
+  "source_events": {
+    "lowered": [
+      {
+        "normalized_bytes": 21,
+        "normalized_sha256": "b0c36d00cc712f694acf7ba1f6dd3bcca527d045b3485370bcd6423b3253fac5",
+        "ordinal": 0,
+        "role": "declare source"
+      },
+      {
+        "normalized_bytes": 46,
+        "normalized_sha256": "c5f26003e4dfca5daf0588921ed3f48711de5b776061f1a6e38c77273307b6e7",
+        "ordinal": 1,
+        "role": "construct source"
+      },
+      {
+        "normalized_bytes": 41,
+        "normalized_sha256": "ef91192c35c6c8eb8b7b12ed095ac01d8d006f40f45365d0eec28115c9a8dcd3",
+        "ordinal": 2,
+        "role": "capture saved pointer"
+      },
+      {
+        "normalized_bytes": 26,
+        "normalized_sha256": "614927373dbb92fa841d2728c275eb75c07a44a2cf8af90d652c561000e4cbd4",
+        "ordinal": 3,
+        "role": "declare destination"
+      },
+      {
+        "normalized_bytes": 47,
+        "normalized_sha256": "a0b618aa4689ae2ed5e55e7c924b294284b668c388a64c7ad4eb06c22d99a501",
+        "ordinal": 4,
+        "role": "move construct destination"
+      },
+      {
+        "normalized_bytes": 34,
+        "normalized_sha256": "43a9008020b7f36f0aee2503badc1c1bd7319c972ce5bfa492370c3a453ed872",
+        "ordinal": 5,
+        "role": "capture guarded scalar"
+      },
+      {
+        "normalized_bytes": 25,
+        "normalized_sha256": "21d7ee777fb0dfa56cb4c7c04932b87d4d6dcd62442efeefd91c2907ec30a52c",
+        "ordinal": 6,
+        "role": "copy return scalar"
+      },
+      {
+        "normalized_bytes": 33,
+        "normalized_sha256": "5118f04061e893dd4be2d93b886de8ef4848d6575ba1c626bba8df6559360af9",
+        "ordinal": 7,
+        "role": "destroy destination"
+      },
+      {
+        "normalized_bytes": 28,
+        "normalized_sha256": "984df4c8af6049800e0f2b4094b53d8fb9eb389d04a6bf7a9eb35a5ee94a74b4",
+        "ordinal": 8,
+        "role": "destroy source"
+      },
+      {
+        "normalized_bytes": 18,
+        "normalized_sha256": "dab360f4b2f0c2f471b36b3f09f585484bd6ae1d38b4c1ba3985c198ea43a8d3",
+        "ordinal": 9,
+        "role": "return copied scalar"
+      },
+      {
+        "normalized_bytes": 35,
+        "normalized_sha256": "b8a0bae0ae7e84c8d86868f11c82c5c7d4dd7a3840bba606353b881718462b51",
+        "ordinal": 10,
+        "role": "unreachable destination destructor"
+      },
+      {
+        "normalized_bytes": 28,
+        "normalized_sha256": "984df4c8af6049800e0f2b4094b53d8fb9eb389d04a6bf7a9eb35a5ee94a74b4",
+        "ordinal": 11,
+        "role": "unreachable source destructor"
+      }
+    ],
+    "original": [
+      {
+        "begin": 161,
+        "end": 191,
+        "line": 6,
+        "role": "construct source",
+        "sha256": "0cccf5618edecffab77b7f8ecb46b8a08c4bb9c14e6f705df84788ea7eee8542"
+      },
+      {
+        "begin": 194,
+        "end": 221,
+        "line": 7,
+        "role": "capture saved pointer",
+        "sha256": "d93af62734ade6ef6c90a09d897dba5f39dafc0b47b1cb4c356ccea293b6450c"
+      },
+      {
+        "begin": 224,
+        "end": 272,
+        "line": 8,
+        "role": "move construct destination",
+        "sha256": "7de6063b66b0982c9a8da8e0b6cd2714d469c5b0ce76ed413b080b291ee0afd4"
+      },
+      {
+        "begin": 275,
+        "end": 308,
+        "line": 9,
+        "role": "capture guarded scalar",
+        "sha256": "c5b181c2722982bcdfb92ec6b6d05c0dfef3b157d043764cd8c36a5be9c12c27"
+      },
+      {
+        "begin": 311,
+        "end": 324,
+        "line": 10,
+        "role": "return scalar",
+        "sha256": "5d53d5b5321d350fd4fb82525e091d7e11f9eecdaaf39f27e2f4fa5b7e9475d7"
+      }
+    ]
+  },
+  "source_grammar": {
+    "all_statements_accounted": true,
+    "complete_model_and_contract_inverse_checked": true,
+    "extra_TU_constructs": [],
+    "lowering_sha256": "5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34",
+    "source_sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2",
+    "whole_original_source_checked": true
+  },
+  "source_heap_bridge_established": false,
+  "source_model_TCB": {
+    "allocation": "successful allocation returns a fresh, valid, suitably aligned, freeable buffer of n int objects and frames all incoming caller-visible allocation metadata/contents/initialization",
+    "environment": "default std::allocator spelling and TU screening do not prove replacement/interposition-free behavior; any linked allocator/deallocator observable effects are covered only by the explicit model correspondence TCB",
+    "moved_from_empty": "the complete selected model resets source fields; this source/library correspondence is explicit TCB, not the portable C++17 valid-but-unspecified postcondition",
+    "moved_from_empty_is_portable_Cpp17_postcondition": false,
+    "plain_allocation_assumption": "Allocation succeeds: every malloc (std::vector growth, new[]) returns usable memory, never null.",
+    "plain_library_assumption": "The pinned standard library (libc++ of clang 22.1.8) implements the modeled members of std_vector_int as the C++ standard (ISO/IEC 14882:2017 (C++17)) says, as the model swdb-std-models-2 states them.",
+    "release": "valid dynamic release ends that allocation only; null release is inert; all other incoming allocation observations are framed",
+    "source_storage": "normal lexical automatic entry provides fresh distinct writable source/destination/administrative objects; full layout/Heap/source correspondence must be checked before adoption"
+  },
+  "source_safety": {
+    "count_conversion": "original nonnegative signed32 n widens exactly to unsigned64",
+    "field_reads": "source constructor initializes all source fields; data returns that initialized pointer; complete move copies initialized fields to fresh writable destination before source resets",
+    "loop_induction": {
+      "base": "empty initialized/filled prefix at k=0",
+      "complete_dependency": "all35 constructor targets; no native callee desired postcondition used as a premise",
+      "exit": "k=n, hence each 0<=j<n is initialized int7",
+      "step": "write private element k with literal7, preserve every j<k, increment k",
+      "variant": "n-k decreases and is nonnegative"
+    },
+    "model_maximum_count": 4611686018427387903,
+    "null_pointer_arithmetic_evaluated": false,
+    "original_count_upper_bound": 2147483647,
+    "padding": "struct assignment may change any private receiver byte; no preservation or initialized value of padding is claimed",
+    "positive_read": "0 < n implies 0 <= 0 < n; exact constructor fill initializes int element0 to 7 before move; header transfer never touches payload",
+    "source_size_observed_after_move": false,
+    "termination": "normal-return source/library/allocator scope, finite exact count loop; no hardware or allocator termination inferred"
+  },
+  "source_tool": {
+    "clang": "22.1.8",
+    "id": "swdb-c-lowering",
+    "naming_rules": "kept-names.3",
+    "version": "9"
+  },
+  "source_typed_bridge_established": false
+}

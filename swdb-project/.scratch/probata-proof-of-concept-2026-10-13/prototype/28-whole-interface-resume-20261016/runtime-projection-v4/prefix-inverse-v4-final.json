@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-16 ET",
+  "draft_documents_preserved": true,
+  "draft_inverse": {
+    "bytes": 2106,
+    "path": "prototype/28-whole-interface-resume-20261016/runtime-projection-v4/prefix-inverse-v4-draft.json",
+    "sha256": "5542e64d4b81abdfb963b2f5e60d3e78902750598863123e745bc5b0962477e0"
+  },
+  "helper": {
+    "bytes": 11959,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-selection-v1/source_memory_selection_v1.py",
+    "sha256": "498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767"
+  },
+  "helper_review": {
+    "bytes": 5997,
+    "path": "evidence/resume-20261016-lane-coordination/t28-source-memory-selection-v1-independent-source-review-20261016.json",
+    "sha256": "7ffabf19d082ca979fcf41b6e24ddb214ffcce4fccd53ac02048a6793ec8d7f8"
+  },
+  "inverse": "truncate exactly after the unchanged V3 byte extent; compare full bytes and SHA",
+  "new_code_bytes": 14316,
+  "new_public_API": "memory_projection",
+  "old_public_API_unchanged": "projection",
+  "predecessor": {
+    "bytes": 23244,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/runtime_projection_v3.py",
+    "sha256": "e60e1ed82a0bbc4983bb4acd9ca0204fd4238ef8ed555c9dc4a2ab8800a07284"
+  },
+  "receiver": {
+    "bytes": 34554,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/receiver-memory-v1/receiver_memory_v1.py",
+    "sha256": "f8cf91dee0e7b442812065b7935e176df48a417a308eb3798104b4320f654f23"
+  },
+  "receiver_independent_review": {
+    "bytes": 5830,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/receiver-memory-v1-independent-review/independent-review-v1.json",
+    "sha256": "baa7f65d65bf3ce5272156547f639e983b29a49e0d7d434b2abaea01a63ad54e"
+  },
+  "runtime_and_controls_changed_from_draft": false,
+  "schema": "runtime-memory-v4-prefix-inverse-1",
+  "state": "FROZEN source-only; independent composed-runtime review pending",
+  "successor": {
+    "bytes": 37560,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v4/runtime_projection_v4.py",
+    "sha256": "56077c3476ba0f4af3b06089e937a0a5723318f7927ba81ea45c8556251cb7de"
+  },
+  "unchanged_prefix_bytes": 23244
+}

@@ -1,0 +1,67 @@
+{
+  "changes": [
+    "Remove every UnaryExprOrTypeTraitExpr from the closed expression grammar; evaluated type/VLA bounds receive no exception",
+    "Require qualType and desugaredQualType strings without volatile, rejecting hidden typedef/reference volatility and malformed metadata"
+  ],
+  "compiler_native_project_child_execution": false,
+  "date": "2026-10-16 ET",
+  "independent_review_pending": true,
+  "inverse": "Replace one exact local pure() block to recover the complete frozen V2 binder; V1/V2/value/native packets unchanged",
+  "pins": [
+    {
+      "bytes": 33171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface.py",
+      "sha256": "b859035b88dd267a7515e208c5a524ea7bd2cacde147e43b6723e2067303b44c"
+    },
+    {
+      "bytes": 34661,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v2.py",
+      "sha256": "dbcb5d35c6a575884265f0e6c0e49e5603a71f6d392cff1915d6aeda61e1159b"
+    },
+    {
+      "bytes": 34697,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py",
+      "sha256": "074b974f4a4dd1074247a90d2a727d1cb0ee37b576055d738dd746fd6d4cc1db"
+    },
+    {
+      "bytes": 2322,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/prepare_whole_interface_v3.py",
+      "sha256": "78fc40efe53c0758da96dd6f45819e5b39e464a1f7f6166d0453426800d81818"
+    },
+    {
+      "bytes": 3223,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_whole_interface_v3.py",
+      "sha256": "a564971d73b6a8560d895950368d4240b4f29a5a11d4ca3be23ef8fa7b89f11e"
+    },
+    {
+      "bytes": 5257,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole-interface-v3-inverse-delta.json",
+      "sha256": "81e34f1408db4ff2da7d13fe7b72599d6285e15e197c924ac137dc188016657d"
+    },
+    {
+      "bytes": 1130,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/pure-whole-interface-v3.log",
+      "sha256": "e6193685e0d15e23310d146d4b53f5c628876e99b4dd6a85c96da870e7e8d034"
+    },
+    {
+      "bytes": 14503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/value-source-preparation-v1.json",
+      "sha256": "4d5177fd68f7acce3fcba4266b046909bcaca0a48ec9addae204877827ed9cd9"
+    },
+    {
+      "bytes": 6119,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux-native86-source-packet-v1.json",
+      "sha256": "97a1a6cfdd8d677c351815db0e67de1254e472950f33289149d98f9361dfeb05"
+    }
+  ],
+  "public_admission": false,
+  "status": "AUTHOR SOURCE-ONLY: 11 tests,132 synthetic bindings,94 refusals; no compiler/public admission",
+  "tests": {
+    "cases": 11,
+    "errors": 0,
+    "failures": 0,
+    "refusals": 94,
+    "skips": 0,
+    "synthetic_bindings": 132
+  }
+}

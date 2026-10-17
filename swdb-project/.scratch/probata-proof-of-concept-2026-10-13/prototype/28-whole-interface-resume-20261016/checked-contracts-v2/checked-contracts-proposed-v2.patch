@@ -1,0 +1,288 @@
+--- /dev/null
++++ b/swdb-project/swdb/dx100_whole_checked.py
+@@ -0,0 +1,239 @@
++"""2026-10-16 ET. Proposed checked-body entry validator, never source admission.
++
++This contract form executes its concrete C bodies. It has no ACSL summary or
++fallback havoc/assume form. The separate source-unit consumer must still bind
++the actual complete TU, CPU effects, receiver, oracle draws and runtime inputs.
++The existing 0.1 entry is handled by its existing validator.
++"""
++import hashlib
++import json
++from pathlib import Path
++import re
++import stat
++
++from swdb import paths
++
++KIND = 'dx100-whole-interface-checked-body-1'
++SOURCE_KIND = 'dx100-whole-interface-source-v1'
++DESIGN_SHA = 'a6139eea1e141c68bb351026b7cdb38a2458eb4b8be3a772a8251a7060db6e1c'
++COMMIT = 'e4fc4afdf894f295442cef3604667a469fab8e62'
++HEADERS = {
++    'MAA.hpp': '4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd',
++    'MAA_gem5.hpp': '5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174',
++}
++COMPONENTS = {
++    'whole_value_backend_v1.h': 'c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f',
++    'whole_adapters.h': 'e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a',
++    'whole_value_builders_v1.h': '88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e',
++    'whole_closed_routes_v1.h': '0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7',
++}
++TRUST = {
++    'mmio_ordering': 'The pinned MMIO implements call semantics including ordering; its wait fence lacks a memory clobber, a portability note independent of candidate artifacts.',
++    'cross_core_filter': 'A DX100 store remains visible if the snoop filter drops its line before the write reaches L3.',
++    'cross_core_write_buffer': 'A DX100 store remains visible when L3 passes a write below it because no block can be allocated.',
++    'no_stale_cpu_copy': 'No stale CPU copy survives a DX100 store (owner Eric).',
++    'one_instance': 'All commands belong to one DX100 instance.',
++}
++OWNED = {
++    'compiler_source_projection': 'The selected compiler and complete original translation-unit observation support the admitted source, ABI, expression and CPU-memory projection under their exact pinned configuration.',
++    'numeric_runtime_profile': 'The selected signed-shift, IEEE rounding and unordered min/max runtime policies apply; every operation retains its ordinary numeric-domain checks.',
++}
++# Same immutable-header declaration grammar as swdb.dx100_interface. No kernel
++# is an inventory input, and this grammar never accepts unpinned header bytes.
++_DEFINITION = re.compile(r'(?m)^[ \t]*(?P<declaration>(?:(?:inline|volatile)\s+)*[A-Za-z_]\w*(?:::\w+)*'
++    r'(?:\s+|[ \t]*[*&][ \t]*)(?P<name>[A-Za-z_]\w*)\s*\([^;{}]*\))\s*\{')
++_MASK = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.S)
++
++
++class Refused(ValueError):
++    pass
++
++
++def need(condition, message):
++    if not condition:
++        raise Refused(message)
++
++
++def checked(data):
++    return isinstance(data, dict) and data.get('contract_form') == KIND
++
++
++def canonical(value):
++    return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
++
++
++def stable_metadata(value):
++    return tuple(getattr(value, name) for name in ('st_dev', 'st_ino', 'st_mode', 'st_nlink',
++        'st_uid', 'st_gid', 'st_size', 'st_mtime_ns', 'st_ctime_ns'))
++
++
++def pinned(library, row, *, limit=4 * 1024 * 1024):
++    need(type(row) is dict and set(row) == {'root', 'path', 'sha256'}
++         and row['root'] in {'library', 'project'} and type(row['path']) is str
++         and row['path'] and Path(row['path']).parts and row['path'] == Path(row['path']).as_posix()
++         and not Path(row['path']).is_absolute()
++         and '..' not in Path(row['path']).parts
++         and type(row['sha256']) is str and re.fullmatch('[0-9a-f]{64}', row['sha256']),
++         'exact portable library/project pin required')
++    # Inspect the original portable components before Library.resolve can erase
++    # an in-root alias. No unbounded Library._pin read precedes the size gate.
++    base = Path(library.root if row['root'] == 'library' else paths.HOME)
++    need(base.is_absolute() and base.resolve(strict=True) == base,
++         'canonical physical reference root required')
++    path, directories = base, [(base, base.lstat())]
++    need(stat.S_ISDIR(directories[0][1].st_mode), 'physical reference root must be a directory')
++    parts = Path(row['path']).parts
++    for index, component in enumerate(parts):
++        path = path / component
++        before = path.lstat()
++        if index + 1 < len(parts):
++            need(stat.S_ISDIR(before.st_mode), 'portable path component must be a physical directory')
++            directories.append((path, before))
++        else:
++            need(stat.S_ISREG(before.st_mode) and 0 < before.st_size <= limit,
++                 'bounded canonical regular entry input required')
++    need(path.resolve(strict=True) == path and Path(library.resolve(row)) == path,
++         'portable reference resolution differs from its physical components')
++    with path.open('rb') as handle:
++        raw = handle.read(limit + 1)
++    need(stable_metadata(path.lstat()) == stable_metadata(before)
++         and len(raw) == before.st_size and len(raw) <= limit
++         and hashlib.sha256(raw).hexdigest() == row['sha256']
++         and all(stable_metadata(parent.lstat()) == stable_metadata(old)
++                 for parent, old in directories),
++         'entry input changed or differs from its physical pin')
++    return raw
++
++
++def document(raw):
++    def unique(pairs):
++        result = {}
++        for key, value in pairs:
++            need(key not in result, 'duplicate checked-body JSON key refused')
++            result[key] = value
++        return result
++    return json.loads(raw, object_pairs_hook=unique,
++        parse_constant=lambda _: (_ for _ in ()).throw(Refused('nonfinite JSON refused')))
++
++
++def declarations(raw, header):
++    text = raw.decode('utf-8')
++    clean = _MASK.sub(lambda match: re.sub(r'[^\n]', ' ', match.group()), text)
++    depths, depth = [], 0
++    for char in clean:
++        depths.append(depth)
++        depth += (char == '{') - (char == '}')
++    need(depth == 0, 'unbalanced immutable interface header')
++    return [{'file': header, 'line': text.count('\n', 0, match.start('declaration')) + 1,
++             'name': match['name'], 'declaration': ' '.join(match['declaration'].split())}
++            for match in _DEFINITION.finditer(clean) if depths[match.start()] == 0]
++
++
++def policy(library, data):
++    """Recheck entry bytes and return bindings, without granting source admission.
++
++    The library owner selects this entry through normal version/pin machinery.
++    Neither a matching design hash nor this result attests that a compiler ran,
++    a source transformation is correct, or the external receiver premises hold.
++    """
++    need(checked(data), 'unrecognized checked-body contract form')
++    need(data.get('kind') == 'proof_semantics' and type(data.get('formal_frame')) is int and data['formal_frame'] == 1
++         and data.get('target') == 'dx100-mmio' and data.get('version') == '0.2'
++         and type(data.get('sequence')) is int and data['sequence'] == 2,
++         'separate new 0.2 checked-body version required')
++    need(data.get('hardware_interface') == {'id': 'dx100-mmio', 'version': '1.0-e4fc4af',
++        'gem5_commit': COMMIT}, 'immutable MMIO interface identity differs')
++    body = data.get('checked_body')
++    need(type(body) is dict and set(body) == {'design', 'components', 'source_policy', 'choice_budget'},
++         'exact checked-body source and model bindings required')
++    need(body['design'].get('sha256') == DESIGN_SHA, 'reviewed per-call contract design differs')
++    design = document(pinned(library, body['design']))
++    need(type(design.get('calls')) is list and len(design['calls']) == 26
++         and canonical(data.get('calls')) == canonical(design['calls']), 'every exact per-call contract is mandatory')
++    need(data.get('queries') in (None, []) and 'wp' not in data,
++         'checked-body form has no imported query or WP-summary fallback')
++    calls = design['calls']
++    need(len({row['call'] for row in calls}) == 26
++         and sum(len(row['source_declarations']) for row in calls) == 27
++         and sum(len(row['typed_arity_instances']) for row in calls) == 132,
++         'whole interface name/overload/type-arity census differs')
++    need(type(body['choice_budget']) is int and 1 <= body['choice_budget'] <= 256,
++         'bounded independently drawn model choices required')
++    need(type(body['components']) is list and len(body['components']) == 4,
++         'exact four concrete checked model bodies required')
++    seen = set()
++    physical_inputs = [body['design'], body['source_policy']]
++    for row in body['components']:
++        name = Path(row['path']).name
++        need(name in COMPONENTS and name not in seen and row['sha256'] == COMPONENTS[name],
++             'concrete model body identity or census differs')
++        raw = pinned(library, row)
++        need(not re.search(rb'^\s*#\s*include\s*"', raw, re.M), 'unpinned model include refused')
++        seen.add(name)
++        physical_inputs.append(row)
++    source_policy = document(pinned(library, body['source_policy']))
++    need(type(source_policy) is dict and source_policy.get('kind') == SOURCE_KIND,
++         'separate exact whole-source policy binding required')
++    inventory = data.get('declaration_inventory')
++    need(type(inventory) is dict and set(inventory) == {'sources', 'declarations'}
++         and type(inventory['sources']) is list and len(inventory['sources']) == 2,
++         'both complete original headers required')
++    actual, seen_headers = [], set()
++    for row in inventory['sources']:
++        name = Path(row['path']).name
++        need(name in HEADERS and name not in seen_headers and row['sha256'] == HEADERS[name],
++             'immutable original interface header differs')
++        actual.extend(declarations(pinned(library, row), name))
++        seen_headers.add(name)
++        physical_inputs.append(row)
++    key = lambda row: (row['file'], row['line'], row['name'], row['declaration'])
++    need(len(actual) == 27 and len({row['name'] for row in actual}) == 26
++         and sorted(actual, key=key) == sorted(inventory['declarations'], key=key)
++         and {row['name'] for row in actual} == {row['call'] for row in calls},
++         'contract inventory differs from complete immutable interface declarations')
++    rules = data.get('rules')
++    need(type(rules) is list and all(type(row) is dict for row in rules)
++         and len({row.get('id') for row in rules}) == len(rules), 'unique cited/owned rules required')
++    by_id = {row.get('id'): row for row in rules}
++    for name, statement in {**TRUST, **OWNED}.items():
++        row = by_id.get(name)
++        need(type(row) is dict and set(row) == {'id', 'statement', 'assumed', 'record_assumption'}
++             and row['statement'] == statement and row['record_assumption'] is True
++             and type(row['assumed']) is dict and set(row['assumed']) == {'owner'}
++             and type(row['assumed']['owner']) is str and row['assumed']['owner'].strip(),
++             'every call-boundary/runtime trust premise must be explicitly owned and recorded: ' + name)
++        if name in TRUST:
++            need(row['assumed']['owner'] == 'Eric', 'existing visibility/MMIO trust owner differs')
++    for row in calls:
++        contract = row['contract']
++        need(contract['asserted_domain_checks'] and contract['normal_return_state_value_relation']
++             and contract['source_basis'] and set(contract['owned_rules']) == {'compiler', 'mmio', 'numeric_runtime'},
++             'per-call checked domains, values, source basis and owned semantics required')
++    # All other rules must still have exactly one source citation or named owner.
++    for row in rules:
++        need(type(row.get('id')) is str and row['id'] and type(row.get('statement')) is str
++             and row['statement'].strip() and set(row) <= {'id', 'statement', 'cites', 'assumed', 'record_assumption'}
++             and ('cites' in row) != ('assumed' in row), 'malformed checked-body rule')
++        if 'assumed' in row:
++            need(type(row['assumed']) is dict and set(row['assumed']) == {'owner'}
++                 and type(row['assumed']['owner']) is str and row['assumed']['owner'].strip(), 'rule needs its owner')
++        else:
++            cites = row['cites']
++            need(type(cites) is dict and set(cites) == {'gem5_commit', 'path', 'lines'}
++                 and cites['gem5_commit'] == COMMIT and type(cites['path']) is str and cites['path']
++                 and type(cites['lines']) is str and re.fullmatch(r'\d+(-\d+)?(,\s*\d+(-\d+)?)*', cites['lines']),
++                 'rule must cite exact gem5 source and lines')
++    for row in physical_inputs:
++        pinned(library, row)
++    return {'kind': SOURCE_KIND, 'contract_form': KIND, 'design_sha256': DESIGN_SHA, 'design': body['design'],
++        'source_policy': body['source_policy'], 'choice_budget': body['choice_budget'],
++        'components': body['components'], 'contract_names': sorted(row['call'] for row in calls),
++        'source_admission_granted': False, 'WP_summary_supported': False}
++
++
++def check(library, data, error):
++    try:
++        policy(library, data)
++    except (Refused, OSError, ValueError, TypeError, KeyError, AttributeError, UnicodeError) as exc:
++        error('checked_body', str(exc))
++    return []
+--- a/swdb-project/swdb/proof_semantics.py
++++ b/swdb-project/swdb/proof_semantics.py
+@@ -136,6 +136,9 @@
+ 
+ def check(library, entry_id, data, error):
+     """The checks of an entry that covers calls (called by swdb.formal_frame for proof_semantics entries)."""
++    from swdb import dx100_whole_checked
++    if dx100_whole_checked.checked(data):
++        return dx100_whole_checked.check(library, data, error)
+     rules = {r.get("id") for r in data.get("rules") or [] if isinstance(r, dict)}
+     interface = data.get("hardware_interface")
+     calls = data.get("calls")
+@@ -227,9 +230,17 @@
+     return _typecheck(library, entry_id, data, texts, error)
+ 
+ 
++def _require_summary_form(data):
++    from swdb import dx100_whole_checked
++    if dx100_whole_checked.checked(data):
++        from swdb.proof import AdapterError
++        raise AdapterError("whole-interface checked bodies have no WP/ACSL summary form")
++
++
+ def acsl_source(data, texts, rows=None, *, constants=None):
+     """The C file Frama-C type-checks: constants, the ghost block, the device state, the logic definitions, then each
+     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
++    _require_summary_form(data)
+     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
+     from swdb.dx100_source_selector import pure_layout
+     from swdb.dx100_size_source import size_layout
+@@ -259,6 +270,7 @@
+     constants, the probe macros (each a call of a contracted probe function), the ghost state (ghost.acsl as
+     written), the device state, the logic, and the contract of every call and query the unit makes."""
+     data = library.get(entry_id)
++    _require_summary_form(data)
+     constants = _constants(data, defines)
+     texts = {"ghost.acsl": library.resolve(data["ghost"]["acsl"]).read_text(),
+              "model.state": library.resolve(data["model"]["state"]).read_text(),
+@@ -279,6 +291,7 @@
+ def wp_locations(library, entry_id, defines=()):
+     """The ACSL locations of the ghost and device state (a unit that calls into the semantics assigns them)."""
+     data = library.get(entry_id)
++    _require_summary_form(data)
+     found = []
+     decls = [d for _n, d in ghost_declarations(library.resolve(data["ghost"]["acsl"]).read_text())]
+     state = library.resolve(data["model"]["state"]).read_text()

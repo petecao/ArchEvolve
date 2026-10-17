@@ -1,0 +1,51 @@
+{
+  "base": {
+    "bytes": 3501,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/public-profile-builder-v1/pair_plan_v1.py",
+    "sha256": "ba7efab4807e355621db85985f016294a3e11480e60744f518639b02b0e7b7ff"
+  },
+  "change": "one argv span adds two repeatable defines plus explicit method-version; no other planner delta",
+  "date": "2026-10-16 ET",
+  "exact_patch": {
+    "bytes": 785,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/public-profile-planner-v2/planner-only-v2.patch",
+    "sha256": "e8a1e32ff6b956e971de285030142d9d45b52b1d9471f3350a7105793cfd1216"
+  },
+  "frozen_v3_adapter": {
+    "bytes": 77637,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/cbmc_adapter.py",
+    "sha256": "dc5a73344cb65f670b0f3ab1f554a7aeb76c175e95e74a5879cd995f644d59c5"
+  },
+  "frozen_v3_compose": {
+    "bytes": 36530,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/dx100_checked_source.py",
+    "sha256": "069d07c85b97e6aed9685738375b57923ff65a6b2ca557f04e510edbe793b731"
+  },
+  "real_source_nodes": [
+    {
+      "function": "register_cli",
+      "sha256": "94935ddd7b0cb2161595142c5a7fe7efc5971a99afe548d18481fe8f642ce5b0",
+      "source": "base-source/proof.py"
+    },
+    {
+      "function": "_bounds_argument",
+      "sha256": "ff4e07d684a7766dffe284ffb96603a24d09c98ce9bade60138a47505bd9a47f",
+      "source": "base-source/proof.py"
+    },
+    {
+      "function": "_prove_summary",
+      "sha256": "df94bd7d20baee1d9124a7cf1a69b118691cd15cff40a89c461f832c44e21d72",
+      "source": "base-source/proof.py"
+    },
+    {
+      "function": "_current_method",
+      "sha256": "74977693ed274d8bbd0028367a674cd0a4d9a7d0171f0dac41ff6101254e43bf",
+      "source": "base-source/proof.py"
+    }
+  ],
+  "successor": {
+    "bytes": 3643,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/public-profile-planner-v2/pair_plan_v2.py",
+    "sha256": "13de81d1f067d2cd95b09bed886b5495cb9ce8bf5a35188402fe75394f140e2a"
+  }
+}

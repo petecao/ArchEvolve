@@ -1,0 +1,42 @@
+{
+  "actual_executed": false,
+  "edits": [
+    {
+      "after": "output_bytes+len(value)<=201326592,'normalized expanded token stream cap exceeded'",
+      "before": "output_bytes+len(value)<=134217728,'normalized retained file cap exceeded'",
+      "count": 1
+    },
+    {
+      "after": "self.normalized_bytes<=201326592\n            group_rows=",
+      "before": "self.normalized_bytes<=134217728\n            group_rows=",
+      "count": 1
+    },
+    {
+      "after": "role_normalization_and_expanded_cap_eligible",
+      "before": "prospective_role_normalization_eligible",
+      "count": 2
+    },
+    {
+      "after": "expanded_role_transport_refused",
+      "before": "prospective_normalization_refused",
+      "count": 1
+    },
+    {
+      "after": "plain_normalized_file_cap_fit",
+      "before": "prospective_normalized_file_cap_fit",
+      "count": 1
+    },
+    {
+      "after": "schema='llvm22-original-tu-role-expanded-2',normalized_expanded_stream_written=True,normalized_uncompressed_file_written=False,normalized_AST_admitted=False",
+      "before": "schema='llvm22-original-tu-role-transport-1',normalized_AST_written=True,normalized_AST_admitted=False",
+      "count": 1
+    }
+  ],
+  "normalizer_function_exact_inverse": true,
+  "origin": {
+    "bytes": 22928,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/role-normalization-v1/role_normalizer_v1.py",
+    "sha256": "e0aeb03bcdbe59dee9f79495d822623bfcefc7184317abd7ae001a0ff212d9fe"
+  },
+  "role_AST_unchanged": true
+}

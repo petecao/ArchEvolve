@@ -1,0 +1,214 @@
+{
+  "c_lowering.py": [
+    {
+      "count": 1,
+      "new": "    whole_source: object | None = None  # exact checked source unit, freshly revalidated\n    vector_reallocation_candidate: dict = field(default_factory=dict)",
+      "old": "    vector_reallocation_candidate: dict = field(default_factory=dict)"
+    },
+    {
+      "count": 1,
+      "new": "        if self.whole_source is not None:\n            data[\"whole_source\"] = self.whole_source.certificate\n        if self.summaries:\n",
+      "old": "        if self.summaries:\n"
+    },
+    {
+      "count": 1,
+      "new": "          array_domains=None, array_domain_contract=None, whole_source_selection=None):",
+      "old": "          array_domains=None, array_domain_contract=None):"
+    },
+    {
+      "count": 1,
+      "new": "    if whole_source_selection is not None:\n        from swdb import dx100_checked_source\n        if includes or summaries or semantics or array_domains or array_domain_contract:\n            raise Unsupported('checked whole source cannot mix generic summary/window inputs')\n        try:\n            unit = dx100_checked_source.compose(whole_source_selection, source=source,\n                                               function=function, defines=defines)\n            return Lowering(**dx100_checked_source.lowering_fields(unit))\n        except (dx100_checked_source.Refused, ValueError, OSError, TypeError, KeyError, AttributeError) as exc:\n            raise Unsupported('checked whole source: ' + str(exc)) from None\n    tool = locate()\n",
+      "old": "    tool = locate()\n"
+    }
+  ],
+  "cbmc_adapter.py": [
+    {
+      "count": 1,
+      "new": "        from swdb import dx100_checked_source, dx100_checked_adapter\n        selected_whole = dx100_checked_source.select_baseline(self.library, entry.get('proof_unit') or {})\n        if selected_whole is not None:\n            return dx100_checked_adapter.run(self,job,entry,context,source,selected_whole)\n        covered = proof_semantics.covered_names(self.library)",
+      "old": "        covered = proof_semantics.covered_names(self.library)"
+    },
+    {
+      "count": 1,
+      "new": "        if 'whole_source_unit' in context:\n            from swdb import dx100_checked_adapter\n            if inputs and any(Path(path) != Path(job.scratch) / 'job.c' for path,_ in inputs):\n                raise AdapterError('whole checked CBMC callback requires its exact job.c input')\n            dx100_checked_adapter.check_launch(self,job,context,[('c',path) for path,_ in inputs])\n            return\n        trace_plan = context.get('synthetic_trace_source_plan')",
+      "old": "        trace_plan = context.get('synthetic_trace_source_plan')"
+    },
+    {
+      "count": 1,
+      "new": "        if code.lowering.whole_source is not None:\n            from swdb import dx100_checked_adapter\n            if sizes:\n                raise AdapterError('whole checked source has no size parameter')\n            return dx100_checked_adapter.build(self,job,entry,code,context)\n        unit = code.interface(job.unit.function)",
+      "old": "        unit = code.interface(job.unit.function)"
+    },
+    {
+      "count": 4,
+      "new": "tr.prelude(whole_source=code.lowering.whole_source) + built[\"logic\"]",
+      "old": "tr.prelude() + built[\"logic\"]"
+    },
+    {
+      "count": 1,
+      "new": "        whole = code.lowering.whole_source is not None\n        heap = code.lowering.allocation           # ticket 25:",
+      "old": "        heap = code.lowering.allocation           # ticket 25:"
+    },
+    {
+      "count": 1,
+      "new": "            if whole:\n                from swdb import dx100_checked_adapter\n                dx100_checked_adapter.check_launch(self,job,context,[(side,paths_[side])])\n                problem = dx100_checked_adapter.compile_native(context['tools'],side,paths_[side],binary,\n                    ['-DSWDB_NATIVE','-DSWDB_DIFFERENTIAL','-O0','-w',*SANITIZERS,*code.cxx_defines()])\n            else:\n                problem = _compile(context[\"tools\"][\"clang\"], side, paths_[side], binary,\n                                   [\"-DSWDB_NATIVE\", \"-DSWDB_DIFFERENTIAL\", \"-O0\", \"-fwrapv\", \"-w\",\n                                    *((\"-fsanitize=address\",) if heap else ()),\n                                    *(code.cxx_defines() if side == \"cxx\" else ())])",
+      "old": "            problem = _compile(context[\"tools\"][\"clang\"], side, paths_[side], binary,\n                               [\"-DSWDB_NATIVE\", \"-DSWDB_DIFFERENTIAL\", \"-O0\", \"-fwrapv\", \"-w\",\n                                *((\"-fsanitize=address\",) if heap else ()),\n                                *(code.cxx_defines() if side == \"cxx\" else ())])"
+    },
+    {
+      "count": 1,
+      "new": "            if whole:\n                dx100_checked_adapter.check_launch(self,job,context)\n                done, crashed = dx100_checked_adapter.run_fresh_domain(binary,lines)\n                dx100_checked_adapter.check_launch(self,job,context)\n            else:\n                done, crashed = _run_domain(binary, lines, sanitized=heap)",
+      "old": "            done, crashed = _run_domain(binary, lines, sanitized=heap)"
+    },
+    {
+      "count": 1,
+      "new": "            if code.lowering.whole_source is not None:\n                from swdb import dx100_checked_adapter\n                loops = dx100_checked_adapter.model_loops(self,tools,scratch,code.lowering.whole_source,context)\n            else:\n                loops = self._model_loops(tools, scratch, code.model)",
+      "old": "            loops = self._model_loops(tools, scratch, code.model)"
+    },
+    {
+      "count": 1,
+      "new": "        if code.lowering.whole_source is not None:\n            from swdb import dx100_checked_adapter\n            dx100_checked_adapter.check_launch(self,job,context,[('cxx',replay_cc)])\n            problem=dx100_checked_adapter.compile_native(context['tools'],'cxx',replay_cc,binary,\n                ['-DSWDB_NATIVE','-DSWDB_REPLAY','-O0','-g','-w',*SANITIZERS,*code.cxx_defines()])\n        else:\n            problem = _compile(context[\"tools\"][\"clang\"], \"cxx\", replay_cc, binary,\n                               [\"-DSWDB_NATIVE\", \"-DSWDB_REPLAY\", \"-O0\", \"-g\", \"-w\", *SANITIZERS, *code.cxx_defines()])",
+      "old": "        problem = _compile(context[\"tools\"][\"clang\"], \"cxx\", replay_cc, binary,\n                           [\"-DSWDB_NATIVE\", \"-DSWDB_REPLAY\", \"-O0\", \"-g\", \"-w\", *SANITIZERS, *code.cxx_defines()])"
+    },
+    {
+      "count": 1,
+      "new": "            if code.lowering.whole_source is not None:\n                dx100_checked_adapter.check_launch(self,job,context)\n            with open(given) as stdin:",
+      "old": "            with open(given) as stdin:"
+    },
+    {
+      "count": 1,
+      "new": "            if code.lowering.whole_source is not None:\n                dx100_checked_adapter.check_launch(self,job,context)\n            text = replay_log.read_text(errors=\"replace\")",
+      "old": "            text = replay_log.read_text(errors=\"replace\")"
+    },
+    {
+      "count": 1,
+      "new": "            if code.lowering.whole_source is not None:\n                retained_replay = out / f'whole-source-replay-{index}.log'\n                retained_replay.write_text(text)\n                context['reports'].append((f'whole_source_replay_termination_{index}',retained_replay))\n                context['settings'].setdefault('whole_source_replay_terminations',[]).append({\n                    'exit_code':done.exit_code,'original_assert_abort_observed':\n                        bool(re.search(r'__assert_fail|Assertion .*failed',text)),\n                    'scope':'original C++ assert abort is retained; missing exact failure marker grants no replay'})\n            inputs = _inputs(text)",
+      "old": "            inputs = _inputs(text)"
+    },
+    {
+      "count": 1,
+      "new": "            if context.get('whole_source_unit') is not None:\n                from swdb import dx100_checked_source\n                assumptions += dx100_checked_source.record_assumptions(context['whole_source_unit'])\n            else:\n                assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)\n            from swdb import bounded_initialization\n            if context.get('whole_source_unit') is not None:\n                pass  # library-backed context rules were emitted once above\n            elif model.entry == bounded_initialization.DX100_TRACE_ENTRY:",
+      "old": "            assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)\n            from swdb import bounded_initialization\n            if model.entry == bounded_initialization.DX100_TRACE_ENTRY:"
+    },
+    {
+      "count": 1,
+      "new": "        stubs = stubs or {}\n        if self.lowering.whole_source is not None:\n            from swdb import dx100_checked_native\n            if stubs:\n                raise AdapterError('whole checked source cannot substitute C++ summary bodies')\n            return self.model.c_text + dx100_checked_native.view(self.lowering.whole_source)['cxx_text']\n        tool = c_lowering.locate()",
+      "old": "        stubs = stubs or {}\n        tool = c_lowering.locate()"
+    },
+    {
+      "count": 1,
+      "new": "        if draw['role'] == 'whole-model-choice':\n            values = [0,1,2,3,2**31-1,2**31,2**32-1]\n        elif draw[\"role\"] == \"size\":",
+      "old": "        if draw[\"role\"] == \"size\":"
+    }
+  ],
+  "cbmc_translator.py": [
+    {
+      "count": 1,
+      "new": "def prelude(whole_source=None):\n    text = PRELUDE.replace(\"@TOOL@\", f\"{TOOL_ID} {TOOL_VERSION}\").replace(\"@CAPACITY@\", ORACLE_CAPACITY)\n    if whole_source is not None:\n        from swdb import dx100_checked_source\n        text = dx100_checked_source.native_prelude(whole_source, text)\n    return text",
+      "old": "def prelude():\n    return PRELUDE.replace(\"@TOOL@\", f\"{TOOL_ID} {TOOL_VERSION}\").replace(\"@CAPACITY@\", ORACLE_CAPACITY)"
+    },
+    {
+      "count": 1,
+      "new": "            state=(), finish=(), array_domains=None, whole_source=None):",
+      "old": "            state=(), finish=(), array_domains=None):"
+    },
+    {
+      "count": 1,
+      "new": "    profile = None\n    if whole_source is not None:\n        from swdb import dx100_checked_source\n        if call is not None or check or cap != 0:\n            raise Untranslatable('checked whole source requires its original scalar proof interface')\n        try:\n            profile = dx100_checked_source.harness_profile(whole_source, interface, rows,\n                sizes, knobs, setup, state, finish, array_domains)\n        except (dx100_checked_source.Refused, ValueError, TypeError, KeyError) as exc:\n            raise Untranslatable(str(exc)) from None\n        setup = profile['setup']\n    for name in sizes:\n        if not interface.scalar(name):",
+      "old": "    for name in sizes:\n        if not interface.scalar(name):"
+    },
+    {
+      "count": 1,
+      "new": "    lines += [f\"  {statement}\" for statement in setup]\n    if profile is not None:\n        plan.draws.extend(profile[\"draws\"])  # setup already drew each slot exactly once\n",
+      "old": "    lines += [f\"  {statement}\" for statement in setup]\n"
+    },
+    {
+      "count": 1,
+      "new": "        elif profile is not None and draw[\"role\"] == \"whole-model-choice\":\n            lines.append(f\"  {_print('input ' + draw['name'], draw['ctype'], draw['c_lvalue'])};\")\n        else:\n            lines.append(f\"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};\")",
+      "old": "        else:\n            lines.append(f\"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};\")"
+    },
+    {
+      "count": 1,
+      "new": "            frame = \"1\" if profile is not None else _frame(clause, interface, cap, caps, counter, logic)\n            lines.append(f'  SWDB_PROP({frame}, \"{clause.name}\");')",
+      "old": "            lines.append(f'  SWDB_PROP({_frame(clause, interface, cap, caps, counter, logic)}, \"{clause.name}\");')"
+    },
+    {
+      "count": 1,
+      "new": "        \"    fflush(stdout);\",\n        *((\"    if (fgets(swdb_line, sizeof swdb_line, stdin)) return 3;\", \"    return 0;\") if profile is not None else ()),\n        \"  }\",",
+      "old": "        \"    fflush(stdout);\",\n        \"  }\","
+    }
+  ],
+  "formal_frame.py": [
+    {
+      "count": 1,
+      "new": "    from swdb import dx100_checked_source\n    selection = dx100_checked_source.select_baseline(library, unit)\n    if selection is not None:\n        # Source bytes and summary names do not identify an atlas/receiver/TU.\n        # Always freshly compose this route, bypassing the generic _LOWERED cache.\n        try:\n            return c_lowering.lower(path, unit['function'], defines=dx100_checked_source.DEFINES,\n                                    whole_source_selection=selection)\n        except c_lowering.LoweringError as exc:\n            return exc\n    options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines",
+      "old": "    options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines"
+    },
+    {
+      "count": 1,
+      "new": "    clauses = [c if isinstance(c, dict) else {} for c in clauses]\n    from swdb import dx100_checked_source\n    whole_format = dx100_checked_source.checked_unit_format(library,entry_id,data)\n    for reason in whole_format or ():\n        error('whole_source_unit_contract',reason)",
+      "old": "    clauses = [c if isinstance(c, dict) else {} for c in clauses]"
+    },
+    {
+      "count": 1,
+      "new": "            reasons = ([] if whole_format == [] and dx100_checked_source.sole_whole_frame(acsl)\n                       else acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic))",
+      "old": "            reasons = acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic)"
+    }
+  ],
+  "proof_semantics.py": [
+    {
+      "count": 1,
+      "new": "    from swdb import dx100_whole_checked\n    if dx100_whole_checked.checked(data):\n        return dx100_whole_checked.check(library, data, error)\n    rules = {r.get(\"id\") for r in data.get(\"rules\") or [] if isinstance(r, dict)}",
+      "old": "    rules = {r.get(\"id\") for r in data.get(\"rules\") or [] if isinstance(r, dict)}"
+    },
+    {
+      "count": 1,
+      "new": "def model_for(library, entry_id, defines=(), *, source_unit=None):",
+      "old": "def model_for(library, entry_id, defines=()):"
+    },
+    {
+      "count": 1,
+      "new": "def model_for(library, entry_id, defines=(), *, source_unit=None):\n    \"\"\"The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults.\"\"\"\n    data = library.get(entry_id)\n    from swdb import dx100_whole_checked, dx100_checked_source\n    if dx100_whole_checked.checked(data):\n        if source_unit is None or source_unit.selection.entry_id != entry_id:\n            raise ValueError('whole checked model requires its exact complete source/receiver unit')\n        dx100_whole_checked.policy(library, data)\n        dx100_checked_source.recheck(source_unit)\n        return Model(**dx100_checked_source.model_fields(source_unit))\n    if source_unit is not None:\n        raise ValueError('a checked whole source unit cannot select a legacy model')\n    constants = _constants(data, defines)\n",
+      "old": "def model_for(library, entry_id, defines=(), *, source_unit=None):\n    \"\"\"The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults.\"\"\"\n    data = library.get(entry_id)\n    constants = _constants(data, defines)\n"
+    },
+    {
+      "count": 2,
+      "new": "    from swdb import dx100_whole_checked\n    for entry in current(library):\n        if dx100_whole_checked.checked(library.get(entry)):\n            continue  # whole units gain no generic per-call or pointer exemptions\n        model = model_for(library, entry, defines)",
+      "old": "    for entry in current(library):\n        model = model_for(library, entry, defines)"
+    },
+    {
+      "count": 1,
+      "new": "def _require_summary_form(data):\n    from swdb import dx100_whole_checked\n    if dx100_whole_checked.checked(data):\n        from swdb.proof import AdapterError\n        raise AdapterError(\"whole-interface checked bodies have no WP/ACSL summary form\")\n\n\ndef acsl_source(data, texts, rows=None, *, constants=None):",
+      "old": "def acsl_source(data, texts, rows=None, *, constants=None):"
+    },
+    {
+      "count": 1,
+      "new": "    _require_summary_form(data)\n    parts = [f\"#define {name} {value}\" for name, value in (data.get(\"constants\") or {}).items()]",
+      "old": "    parts = [f\"#define {name} {value}\" for name, value in (data.get(\"constants\") or {}).items()]"
+    },
+    {
+      "count": 1,
+      "new": "def wp_prelude(library, entry_id, called, defines=()):\n    \"\"\"The WP form of a proof semantics for one unit, inserted at the C lowering's ghost.globals anchor: the size\n    constants, the probe macros (each a call of a contracted probe function), the ghost state (ghost.acsl as\n    written), the device state, the logic, and the contract of every call and query the unit makes.\"\"\"\n    data = library.get(entry_id)\n    _require_summary_form(data)\n",
+      "old": "def wp_prelude(library, entry_id, called, defines=()):\n    \"\"\"The WP form of a proof semantics for one unit, inserted at the C lowering's ghost.globals anchor: the size\n    constants, the probe macros (each a call of a contracted probe function), the ghost state (ghost.acsl as\n    written), the device state, the logic, and the contract of every call and query the unit makes.\"\"\"\n    data = library.get(entry_id)\n"
+    },
+    {
+      "count": 1,
+      "new": "def wp_locations(library, entry_id, defines=()):\n    \"\"\"The ACSL locations of the ghost and device state (a unit that calls into the semantics assigns them).\"\"\"\n    data = library.get(entry_id)\n    _require_summary_form(data)\n",
+      "old": "def wp_locations(library, entry_id, defines=()):\n    \"\"\"The ACSL locations of the ghost and device state (a unit that calls into the semantics assigns them).\"\"\"\n    data = library.get(entry_id)\n"
+    },
+    {
+      "count": 1,
+      "new": "    from swdb import dx100_whole_checked\n    covered = covered_names(library)\n    if not covered:",
+      "old": "    covered = covered_names(library)\n    if not covered:"
+    },
+    {
+      "count": 1,
+      "new": "for row in data.get(\"calls\", []) if row.get(\"supported\") is False or dx100_whole_checked.checked(data)}}",
+      "old": "for row in data.get(\"calls\", []) if row.get(\"supported\") is False}}"
+    }
+  ],
+  "proof_setup.py": [
+    {
+      "count": 1,
+      "new": "        if context.get('whole_source_unit') is not None:\n            from swdb import dx100_checked_adapter\n            try:\n                hashes['whole_source'] = dx100_checked_adapter.check_launch(adapter,job,context,[('c',path) for path,_ in inputs])\n            except (ValueError,OSError,TypeError,KeyError,AttributeError) as exc:\n                _fail('whole_source',str(exc))\n        else:\n            from swdb import bounded_initialization\n            admissions = context.get(\"settings\", {}).get(\"bounded_initialization\") or {}\n            sides = {\"candidate\": lowering, \"baseline\": baseline} if baseline is not None else {\"unit\": lowering}\n            for side, lowered in sides.items():\n                expected = admissions if side == \"unit\" else admissions.get(side, {})\n                if lowered is None or not expected:\n                    _fail(\"bounded_initialization\", \"bounded verifier has no generated initializedness admission\")\n                try:\n                    cap = max((value for name, value in job.bounds.items() if name != \"threads\"), default=0)\n                    actual = bounded_initialization.check(lowered, cap, library=getattr(adapter, \"library\", None),\n                                                           model=context.get(\"model\"))\n                    bounded_initialization.check_model_input(actual, context.get(\"model\"),\n                        getattr(adapter, \"library\", None), lowered.defines,\n                        \"\\n\".join(Path(path).read_text() for path, _expected in inputs))\n                except ValueError as exc:\n                    _fail(\"bounded_initialization\", str(exc))\n                if actual != expected or actual.get(\"verdict\") != \"passed\":\n                    _fail(\"bounded_initialization\", f\"{side} initializedness admission changed or refused\")\n            hashes[\"bounded_initialization\"] = _digest(admissions)\n",
+      "old": "        from swdb import bounded_initialization\n        admissions = context.get(\"settings\", {}).get(\"bounded_initialization\") or {}\n        sides = {\"candidate\": lowering, \"baseline\": baseline} if baseline is not None else {\"unit\": lowering}\n        for side, lowered in sides.items():\n            expected = admissions if side == \"unit\" else admissions.get(side, {})\n            if lowered is None or not expected:\n                _fail(\"bounded_initialization\", \"bounded verifier has no generated initializedness admission\")\n            try:\n                cap = max((value for name, value in job.bounds.items() if name != \"threads\"), default=0)\n                actual = bounded_initialization.check(lowered, cap, library=getattr(adapter, \"library\", None),\n                                                       model=context.get(\"model\"))\n                bounded_initialization.check_model_input(actual, context.get(\"model\"),\n                    getattr(adapter, \"library\", None), lowered.defines,\n                    \"\\n\".join(Path(path).read_text() for path, _expected in inputs))\n            except ValueError as exc:\n                _fail(\"bounded_initialization\", str(exc))\n            if actual != expected or actual.get(\"verdict\") != \"passed\":\n                _fail(\"bounded_initialization\", f\"{side} initializedness admission changed or refused\")\n        hashes[\"bounded_initialization\"] = _digest(admissions)\n"
+    }
+  ]
+}

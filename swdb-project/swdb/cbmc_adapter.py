@@ -182,6 +182,10 @@ class CbmcAdapter:
             from swdb.wp_adapter import _unit_source
             source = _unit_source(Path(job.unit.tree), job.unit.function)
         log.line(f"source: {source.name}")
+        from swdb import dx100_checked_source, dx100_checked_adapter
+        selected_whole = dx100_checked_source.select_baseline(self.library, entry.get('proof_unit') or {})
+        if selected_whole is not None:
+            return dx100_checked_adapter.run(self,job,entry,context,source,selected_whole)
         covered = proof_semantics.covered_names(self.library)
         declarations = (entry.get('proof_unit') or {}).get('array_domains')
         source_kwargs = dict(defines=self.defines, **proof_semantics.lowering_options(self.library))
@@ -327,6 +331,12 @@ class CbmcAdapter:
 
     def check_entry_windows(self, job, context, inputs=()):
         """Regenerate source, planner and both checked views immediately before launch."""
+        if 'whole_source_unit' in context:
+            from swdb import dx100_checked_adapter
+            if inputs and any(Path(path) != Path(job.scratch) / 'job.c' for path,_ in inputs):
+                raise AdapterError('whole checked CBMC callback requires its exact job.c input')
+            dx100_checked_adapter.check_launch(self,job,context,[('c',path) for path,_ in inputs])
+            return
         trace_plan = context.get('synthetic_trace_source_plan')
         if trace_plan is not None:
             from swdb import bounded_initialization, bounded_entry_windows, wp_pointer_bounds
@@ -411,6 +421,11 @@ class CbmcAdapter:
     # --- translation ---------------------------------------------------------------------------------------
     def _build(self, job, entry, code, sizes, summary_job, context):
         """The harness, the stubs and the plan."""
+        if code.lowering.whole_source is not None:
+            from swdb import dx100_checked_adapter
+            if sizes:
+                raise AdapterError('whole checked source has no size parameter')
+            return dx100_checked_adapter.build(self,job,entry,code,context)
         unit = code.interface(job.unit.function)
         rows = [c for c in entry.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")]
         if summary_job:
@@ -546,24 +561,36 @@ class CbmcAdapter:
         lines, sampled, domain = _domain(built["plan"])
         inputs = scratch / "domain.txt"
         inputs.write_text("".join(" ".join(str(v) for v in line) + "\n" for line in lines))
-        c_text = tr.prelude() + built["logic"] + code.c_text() + built["harness"]
-        cxx_text = tr.prelude() + built["logic"] + code.cxx_text() + built["harness"]
+        c_text = tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.c_text() + built["harness"]
+        cxx_text = tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.cxx_text() + built["harness"]
         paths_ = {"c": out / "differential_c.c", "cxx": out / "differential_cxx.cc"}
         paths_["c"].write_text(c_text)
         paths_["cxx"].write_text(cxx_text)
         context["reports"] += [("differential_c", paths_["c"]), ("differential_cxx", paths_["cxx"])]
         outputs, undefined = {}, set()
+        whole = code.lowering.whole_source is not None
         heap = code.lowering.allocation           # ticket 25: heap use (models, new[]) runs under AddressSanitizer
         for side in ("c", "cxx"):
             binary = scratch / f"differential_{side}"
-            problem = _compile(context["tools"]["clang"], side, paths_[side], binary,
-                               ["-DSWDB_NATIVE", "-DSWDB_DIFFERENTIAL", "-O0", "-fwrapv", "-w",
-                                *(("-fsanitize=address",) if heap else ()),
-                                *(code.cxx_defines() if side == "cxx" else ())])
+            if whole:
+                from swdb import dx100_checked_adapter
+                dx100_checked_adapter.check_launch(self,job,context,[(side,paths_[side])])
+                problem = dx100_checked_adapter.compile_native(context['tools'],side,paths_[side],binary,
+                    ['-DSWDB_NATIVE','-DSWDB_DIFFERENTIAL','-O0','-w',*SANITIZERS,*code.cxx_defines()])
+            else:
+                problem = _compile(context["tools"]["clang"], side, paths_[side], binary,
+                                   ["-DSWDB_NATIVE", "-DSWDB_DIFFERENTIAL", "-O0", "-fwrapv", "-w",
+                                    *(("-fsanitize=address",) if heap else ()),
+                                    *(code.cxx_defines() if side == "cxx" else ())])
             if problem:
                 return self._not_proven("parse_error", f"the {side} side of the differential run does not compile: "
                                         f"{problem}", context)
-            done, crashed = _run_domain(binary, lines, sanitized=heap)
+            if whole:
+                dx100_checked_adapter.check_launch(self,job,context)
+                done, crashed = dx100_checked_adapter.run_fresh_domain(binary,lines)
+                dx100_checked_adapter.check_launch(self,job,context)
+            else:
+                done, crashed = _run_domain(binary, lines, sanitized=heap)
             if done.returncode != 0:
                 return self._not_proven("tool_crash", f"the {side} side of the differential run exited "
                                         f"{done.returncode}: {done.stderr[-400:]}", context)
@@ -602,7 +629,7 @@ class CbmcAdapter:
     # --- CBMC ------------------------------------------------------------------------------------------
     def _cbmc(self, job, code, built, context):
         tools, log, out, scratch = context["tools"], context["log"], context["out"], Path(job.scratch)
-        text = tr.prelude() + built["logic"] + code.c_text(built["stubs"]) + built["harness"]
+        text = tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.c_text(built["stubs"]) + built["harness"]
         job_c = out / "job.c"
         job_c.write_text(text)
         shutil.copyfile(job_c, scratch / "job.c")
@@ -610,9 +637,16 @@ class CbmcAdapter:
         flags = ["-DSWDB_CBMC", "--unwind", str(built["unwind"]), *FROZEN,
                  *(flag for flag in tools["flags"] if flag not in FROZEN)]
         if code.model is not None:                   # ticket 27: the model's loops get the model's own bound
-            loops = self._model_loops(tools, scratch, code.model)
-            if loops:
-                flags += ["--unwindset", ",".join(f"{loop}:{code.model.unwind}" for loop in loops)]
+            if code.lowering.whole_source is not None:
+                from swdb import dx100_checked_adapter
+                loops = dx100_checked_adapter.model_loops(self,tools,scratch,code.lowering.whole_source,context)
+                bound_rows = dx100_checked_adapter.helper_loop_bounds(code.lowering.whole_source,loops,context)
+                if bound_rows:
+                    flags += ["--unwindset", ",".join(f"{row['loop']}:{row['unwind']}" for row in bound_rows)]
+            else:
+                loops = self._model_loops(tools, scratch, code.model)
+                if loops:
+                    flags += ["--unwindset", ",".join(f"{loop}:{code.model.unwind}" for loop in loops)]
         if code.lowering.allocation:              # ticket 25: the "allocation succeeds" assumption entry (CBMC 6
             flags.append("--no-malloc-may-fail")  # lets malloc return NULL by default)
         command = [*tools["command"], "job.c", *flags, "--json-ui"]
@@ -653,11 +687,17 @@ class CbmcAdapter:
         """Replay each failing property's trace on the C++ (callees by their stubs) with sanitizers on."""
         out, scratch = context["out"], Path(job.scratch)
         replay_cc = out / "replay_cxx.cc"
-        replay_cc.write_text(tr.prelude() + built["logic"] + code.cxx_text(built["stubs"]) + built["harness"])
+        replay_cc.write_text(tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.cxx_text(built["stubs"]) + built["harness"])
         context["reports"].append(("replay_cxx", replay_cc))
         binary = scratch / "replay_cxx"
-        problem = _compile(context["tools"]["clang"], "cxx", replay_cc, binary,
-                           ["-DSWDB_NATIVE", "-DSWDB_REPLAY", "-O0", "-g", "-w", *SANITIZERS, *code.cxx_defines()])
+        if code.lowering.whole_source is not None:
+            from swdb import dx100_checked_adapter
+            dx100_checked_adapter.check_launch(self,job,context,[('cxx',replay_cc)])
+            problem=dx100_checked_adapter.compile_native(context['tools'],'cxx',replay_cc,binary,
+                ['-DSWDB_NATIVE','-DSWDB_REPLAY','-O0','-g','-w',*SANITIZERS,*code.cxx_defines()])
+        else:
+            problem = _compile(context["tools"]["clang"], "cxx", replay_cc, binary,
+                               ["-DSWDB_NATIVE", "-DSWDB_REPLAY", "-O0", "-g", "-w", *SANITIZERS, *code.cxx_defines()])
         if problem:
             return self._not_proven("parse_error", f"the C++ replay does not compile: {problem}", context)
         tries = []
@@ -667,15 +707,27 @@ class CbmcAdapter:
             given = scratch / f"replay_input_{index}.txt"
             given.write_text(" ".join(str(v) for v in failure["oracle"]) + "\n")
             replay_log = scratch / f"replay_{index}.log"
+            if code.lowering.whole_source is not None:
+                dx100_checked_adapter.check_launch(self,job,context)
             with open(given) as stdin:
                 done = rss_watchdog.run([str(binary)], log=replay_log, cap_bytes=cap, timeout=REPLAY_SECONDS,
                                         cwd=scratch, env={**os.environ, "ASAN_OPTIONS": "detect_leaks=0"},
                                         stdin=stdin)
+            if code.lowering.whole_source is not None:
+                dx100_checked_adapter.check_launch(self,job,context)
             text = replay_log.read_text(errors="replace")
             if done.timed_out or done.out_of_memory:
                 return self._not_proven("timeout" if done.timed_out else "out_of_memory",
                                         f"the C++ replay of {failure['check']} exceeded its "
                                         f"{'time' if done.timed_out else 'memory'} budget", context)
+            if code.lowering.whole_source is not None:
+                retained_replay = out / f'whole-source-replay-{index}.log'
+                retained_replay.write_text(text)
+                context['reports'].append((f'whole_source_replay_termination_{index}',retained_replay))
+                context['settings'].setdefault('whole_source_replay_terminations',[]).append({
+                    'exit_code':done.exit_code,'original_assert_abort_observed':
+                        bool(re.search(r'__assert_fail|Assertion .*failed',text)),
+                    'scope':'original C++ assert abort is retained; missing exact failure marker grants no replay'})
             inputs = _inputs(text)
             failed = re.findall(r" fail=(\S+)", text)
             reports = [ln for ln in text.splitlines() if "runtime error" in ln or "AddressSanitizer" in ln]
@@ -720,9 +772,15 @@ class CbmcAdapter:
             tools.append(ident)
         model = context.get("model")
         if model is not None:                        # ticket 27: the proof semantics and the reduction it rests on
-            assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
+            if context.get('whole_source_unit') is not None:
+                from swdb import dx100_checked_source
+                assumptions += dx100_checked_source.record_assumptions(context['whole_source_unit'])
+            else:
+                assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
             from swdb import bounded_initialization
-            if model.entry == bounded_initialization.DX100_TRACE_ENTRY:
+            if context.get('whole_source_unit') is not None:
+                pass  # library-backed context rules were emitted once above
+            elif model.entry == bounded_initialization.DX100_TRACE_ENTRY:
                 assumptions.append({'kind': 'proof_semantics',
                     'reference': {'id': model.entry, 'sha256': model.sha256},
                     'sentence': 'This is a synthetic abstract scalar trace. Deferred history, ownership, '
@@ -913,7 +971,9 @@ def _domain(plan):
     range, values from a small fixed set; at most MAX_RUNS lines (a fixed-seed sample beyond that)."""
     choices, summary = [], {}
     for draw in plan.draws:
-        if draw["role"] == "size":
+        if draw['role'] == 'whole-model-choice':
+            values = [0,1,2,3,2**31-1,2**31,2**32-1]
+        elif draw["role"] == "size":
             values = list(range(-1, int(draw["bound"]) + 1))
         elif draw["role"] == "knob":
             low, high = draw["range"]
@@ -1076,6 +1136,11 @@ class Code:
     def cxx_text(self, stubs=None):
         """The C++ text of the lowered functions and globals, cut from the source by clang's source ranges."""
         stubs = stubs or {}
+        if self.lowering.whole_source is not None:
+            from swdb import dx100_checked_native
+            if stubs:
+                raise AdapterError('whole checked source cannot substitute C++ summary bodies')
+            return self.model.c_text + dx100_checked_native.view(self.lowering.whole_source)['cxx_text']
         tool = c_lowering.locate()
         data = self.source.read_bytes()
         parts = [self.model.c_text] if self.model is not None else []

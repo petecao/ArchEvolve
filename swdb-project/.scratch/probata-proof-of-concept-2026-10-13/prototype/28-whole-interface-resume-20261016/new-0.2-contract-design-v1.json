@@ -1,0 +1,3907 @@
+{
+  "CBMC_method": {
+    "anti_vacuity": "All called concrete functions remain reachable; check complete original assertions, source guards, model/ordinary-term inventory, unwind sufficiency, exact verdict/records and retained counterexample for negatives",
+    "checks": "Every source/runtime/domain/hazard/undefinedness check is an ordinary named property; no source precondition is converted into an assumption",
+    "choices": "Only internal semantic nondeterministic choices are range-restricted to the complete permitted finite choice set; never constrain choices to a desired output",
+    "classification": "Capacity/unsupported/runtime-domain property failures report unsupported/unknown; proven model safety plus original assertions may prove the controlled source unit. Distinguish source/model premises in the formal frame.",
+    "source_body": "Original source remains compiler-observed; owned per-call MMIO semantics are explicit. No optional hardware/body theorem blocker."
+  },
+  "actual_compiler_native_verifier_execution": false,
+  "calls": [
+    {
+      "call": "get_cacheable_tile_pointer",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "normal_return_state_value_relation": "Return descriptor(kind=cacheable,tile=SPD_id,dtype=actual T,offset=0), denoting MMIO_base + SPD_id*TILE_SIZE*4. Grant no ownership, readiness, initializedness or size.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA.hpp",
+            "lines": [
+              57,
+              59
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 1,
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "declaration": "inline T1 *get_cacheable_tile_pointer(int SPD_id)",
+          "header": "MAA.hpp",
+          "header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "line": 57,
+          "minimum_arity": 1
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "c_name": "dws_get_cacheable_tile_pointer_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_get_cacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_cacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 57
+        },
+        {
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "c_name": "dws_get_cacheable_tile_pointer_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_get_cacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_cacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 57
+        },
+        {
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "c_name": "dws_get_cacheable_tile_pointer_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_get_cacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_cacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 57
+        },
+        {
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "c_name": "dws_get_cacheable_tile_pointer_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_get_cacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_cacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 57
+        },
+        {
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "c_name": "dws_get_cacheable_tile_pointer_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_get_cacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_cacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 57
+        },
+        {
+          "body_sha256": "57049152e4dd0809dabd17be8d4bbba34d17279cac56e85d6607944cf33c6c2c",
+          "c_name": "dws_get_cacheable_tile_pointer_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_get_cacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_cacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 57
+        }
+      ]
+    },
+    {
+      "call": "get_noncacheable_tile_pointer",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "normal_return_state_value_relation": "Return descriptor(kind=noncacheable,tile=SPD_id,dtype=actual T,offset=0), denoting the source noncacheable base + SPD_id*TILE_SIZE*4. Grant no CPU-access policy or ownership/readiness/initializedness.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA.hpp",
+            "lines": [
+              61,
+              63
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 1,
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "declaration": "inline volatile T1 *get_noncacheable_tile_pointer(int SPD_id)",
+          "header": "MAA.hpp",
+          "header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "line": 61,
+          "minimum_arity": 1
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "c_name": "dws_get_noncacheable_tile_pointer_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_get_noncacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_noncacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 61
+        },
+        {
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "c_name": "dws_get_noncacheable_tile_pointer_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_get_noncacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_noncacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 61
+        },
+        {
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "c_name": "dws_get_noncacheable_tile_pointer_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_get_noncacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_noncacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 61
+        },
+        {
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "c_name": "dws_get_noncacheable_tile_pointer_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_get_noncacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_noncacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 61
+        },
+        {
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "c_name": "dws_get_noncacheable_tile_pointer_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_get_noncacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_noncacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 61
+        },
+        {
+          "body_sha256": "cf8f50be918f90fdd7c327c69e0793f8d78e5c50c3a91f9af4c4fd19d42b34cb",
+          "c_name": "dws_get_noncacheable_tile_pointer_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_get_noncacheable_tile_pointer",
+          "formal_arity": 1,
+          "model_result_type": "struct dws_pointer",
+          "name": "get_noncacheable_tile_pointer",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+          "source_line": 61
+        }
+      ]
+    },
+    {
+      "call": "add_mem_region",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "No unbound command; exact configured source MMIO geometry; source region/ID/capacity guards"
+        ],
+        "normal_return_state_value_relation": "At old next_region, apply the exact source overlap predicate and ID conversion; install [start,end), advance the int8 source counter. Region assignment later uses first containing ID and preserves F2 stall/lookup order.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              56,
+              58
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 2,
+          "body_sha256": "3781b69d4af7249210a12448f83b9b5cd125b593ad289e9d3160a3ce936b0fff",
+          "declaration": "void add_mem_region(void *start, void *end)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 56,
+          "minimum_arity": 2
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "3781b69d4af7249210a12448f83b9b5cd125b593ad289e9d3160a3ce936b0fff",
+          "c_name": "dws_add_mem_region",
+          "canonical_type": null,
+          "dtype": null,
+          "fixed_route": "dwi_add_mem_region",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "add_mem_region",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 56
+        }
+      ]
+    },
+    {
+      "call": "clear_mem_region",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "No unbound command; exact configured source MMIO geometry; source region/ID/capacity guards"
+        ],
+        "normal_return_state_value_relation": "Replace registrations with the six current source MMIO intervals; next_region=6. Do not reset payload, allocations, pending commands or memory history.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              60,
+              69
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 0,
+          "body_sha256": "b310e561e9966a6190eeece3c13274e4123b2967718bc86babf5990df87c73c5",
+          "declaration": "void clear_mem_region()",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 60,
+          "minimum_arity": 0
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "b310e561e9966a6190eeece3c13274e4123b2967718bc86babf5990df87c73c5",
+          "c_name": "dws_clear_mem_region",
+          "canonical_type": null,
+          "dtype": null,
+          "fixed_route": "dwi_clear_mem_region",
+          "formal_arity": 0,
+          "model_result_type": "void",
+          "name": "clear_mem_region",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 60
+        }
+      ]
+    },
+    {
+      "call": "alloc_MAA",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "No unbound command; exact configured source MMIO geometry; source region/ID/capacity guards"
+        ],
+        "normal_return_state_value_relation": "Set seven MMIO endpoints to source MEM_SIZE + exact tile/size/ready/RF/instruction spans; install six built-in regions and next_region=6. Preserve allocation counters, payload/size versions, pending commands and ordinary history.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              71,
+              91
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 0,
+          "body_sha256": "2a9e2e96bbeb7f0c7093c6a3501b5e4d67654d8d360767ce83eb17df57df8eac",
+          "declaration": "void alloc_MAA()",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 71,
+          "minimum_arity": 0
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "2a9e2e96bbeb7f0c7093c6a3501b5e4d67654d8d360767ce83eb17df57df8eac",
+          "c_name": "dws_alloc_MAA",
+          "canonical_type": null,
+          "dtype": null,
+          "fixed_route": "dwi_alloc_MAA",
+          "formal_arity": 0,
+          "model_result_type": "void",
+          "name": "alloc_MAA",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 71
+        }
+      ]
+    },
+    {
+      "call": "init_MAA",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "No unbound command; exact configured source MMIO geometry; source region/ID/capacity guards"
+        ],
+        "normal_return_state_value_relation": "Set global source allocation counters and next_region to their source initial values. Preserve MMIO allocation, registrations, payload, size versions, pending commands and ordinary history.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              93,
+              97
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 0,
+          "body_sha256": "cf708b8c3413e2d8ca92a4fc6c8791df674b603b46a452293b4f0992ef4d4af3",
+          "declaration": "inline void init_MAA()",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 93,
+          "minimum_arity": 0
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "cf708b8c3413e2d8ca92a4fc6c8791df674b603b46a452293b4f0992ef4d4af3",
+          "c_name": "dws_init_MAA",
+          "canonical_type": null,
+          "dtype": null,
+          "fixed_route": "dwi_init_MAA",
+          "formal_arity": 0,
+          "model_result_type": "void",
+          "name": "init_MAA",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 93
+        }
+      ]
+    },
+    {
+      "call": "wait_ready",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "normal_return_state_value_relation": "On conditional normal return cover globally counted source/destination commands naming this physical half, including either half of an 8-byte role. Settle their deferred dependency/action closure. A condition-only role does not count. No polling/liveness conclusion.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              98,
+              101
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 1,
+          "body_sha256": "963dad36a357d2f9063c552ebf4080f5a865896021db3519f3c365d36f507ceb",
+          "declaration": "void wait_ready(int SPD_id)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 98,
+          "minimum_arity": 1
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "963dad36a357d2f9063c552ebf4080f5a865896021db3519f3c365d36f507ceb",
+          "c_name": "dws_wait_ready",
+          "canonical_type": null,
+          "dtype": null,
+          "fixed_route": "dwi_wait_ready",
+          "formal_arity": 1,
+          "model_result_type": "void",
+          "name": "wait_ready",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 98
+        }
+      ]
+    },
+    {
+      "call": "get_tile_size",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "normal_return_state_value_relation": "Require the exact starting tile to be Finished, then return its initialized uint16 size version. No wait, cover, fresh-zero assumption or copy of first-half metadata to a second half.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              102,
+              106
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 1,
+          "body_sha256": "4a0fd5811d735b68236c767b371fcd289c874ce0ebb7f6989a38ce3e8df1a0ab",
+          "declaration": "inline volatile uint16_t get_tile_size(int SPD_id)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 102,
+          "minimum_arity": 1
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "4a0fd5811d735b68236c767b371fcd289c874ce0ebb7f6989a38ce3e8df1a0ab",
+          "c_name": "dws_get_tile_size",
+          "canonical_type": null,
+          "dtype": null,
+          "fixed_route": "dwi_get_tile_size",
+          "formal_arity": 1,
+          "model_result_type": "uint16_t",
+          "name": "get_tile_size",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 102
+        }
+      ]
+    },
+    {
+      "call": "get_reg",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "Exact T bit representation and complete RF pair domain/ownership; pending interference/stalls remain in model body"
+        ],
+        "normal_return_state_value_relation": "After typed pair ownership/domain and pending-writer checks, read all bytes from the immutable shared RF image and require their initializedness. Return the exact T bit copy. No invented read stall or ownership grant.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              108,
+              112
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 1,
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "declaration": "inline volatile T1 get_reg(int reg_id)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 108,
+          "minimum_arity": 1
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "c_name": "dws_get_reg_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_get_reg",
+          "formal_arity": 1,
+          "model_result_type": "uint32_t",
+          "name": "get_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 108
+        },
+        {
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "c_name": "dws_get_reg_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_get_reg",
+          "formal_arity": 1,
+          "model_result_type": "int32_t",
+          "name": "get_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 108
+        },
+        {
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "c_name": "dws_get_reg_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_get_reg",
+          "formal_arity": 1,
+          "model_result_type": "float",
+          "name": "get_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 108
+        },
+        {
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "c_name": "dws_get_reg_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_get_reg",
+          "formal_arity": 1,
+          "model_result_type": "uint64_t",
+          "name": "get_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 108
+        },
+        {
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "c_name": "dws_get_reg_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_get_reg",
+          "formal_arity": 1,
+          "model_result_type": "int64_t",
+          "name": "get_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 108
+        },
+        {
+          "body_sha256": "b953d1971b8ea30d7c3d236521b7527e9da0db6ddd6a54d2ffb2aaa9425b5793",
+          "c_name": "dws_get_reg_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_get_reg",
+          "formal_arity": 1,
+          "model_result_type": "double",
+          "name": "get_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 108
+        }
+      ]
+    },
+    {
+      "call": "set_reg",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "Exact T bit representation and complete RF pair domain/ownership; pending interference/stalls remain in model body"
+        ],
+        "normal_return_state_value_relation": "Stall source-matching pending explicit RF operands at the starting ID, then check complete physical-pair interference/ownership and replace exactly T's bytes with input bits. Preserve other bytes and ordinary-memory history.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              114,
+              117
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 2,
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "declaration": "inline void set_reg(int reg_id, T1 data)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 114,
+          "minimum_arity": 2
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "c_name": "dws_set_reg_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_set_reg",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "set_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 114
+        },
+        {
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "c_name": "dws_set_reg_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_set_reg",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "set_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 114
+        },
+        {
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "c_name": "dws_set_reg_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_set_reg",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "set_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 114
+        },
+        {
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "c_name": "dws_set_reg_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_set_reg",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "set_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 114
+        },
+        {
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "c_name": "dws_set_reg_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_set_reg",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "set_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 114
+        },
+        {
+          "body_sha256": "5e454c419bd3a48379d00a50915504958c02891cdfeccd8e040f692aa0071618",
+          "c_name": "dws_set_reg_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_set_reg",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "set_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 114
+        }
+      ]
+    },
+    {
+      "call": "get_new_reg",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "Check capacity and complete physical-pair ownership before source counter/value effects; never assume fresh-zero bytes"
+        ],
+        "normal_return_state_value_relation": "Both arities return old global RF allocation counter and advance it by sizeof(T)/4, assigning all physical halves. Arity0 preserves bytes/initializedness. Arity1 then performs the explicit-ID-stalling typed RF write of the exact input object-representation bits.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              119,
+              127
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              129,
+              136
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 1,
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "declaration": "inline int get_new_reg(T1 data)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 119,
+          "minimum_arity": 1
+        },
+        {
+          "arity": 0,
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "declaration": "inline int get_new_reg()",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 129,
+          "minimum_arity": 0
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "c_name": "dws_get_new_reg_unsigned_int_args1",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 1,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 119
+        },
+        {
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "c_name": "dws_get_new_reg_int_args1",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 1,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 119
+        },
+        {
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "c_name": "dws_get_new_reg_float_args1",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 1,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 119
+        },
+        {
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "c_name": "dws_get_new_reg_unsigned_long_args1",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 1,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 119
+        },
+        {
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "c_name": "dws_get_new_reg_long_args1",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 1,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 119
+        },
+        {
+          "body_sha256": "d8af7565f7d7dbe316e1dd24585c7d0b6be133e7c80912ff6bf2b70f66f9a723",
+          "c_name": "dws_get_new_reg_double_args1",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 1,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 119
+        },
+        {
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "c_name": "dws_get_new_reg_unsigned_int_args0",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 129
+        },
+        {
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "c_name": "dws_get_new_reg_int_args0",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 129
+        },
+        {
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "c_name": "dws_get_new_reg_float_args0",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 129
+        },
+        {
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "c_name": "dws_get_new_reg_unsigned_long_args0",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 129
+        },
+        {
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "c_name": "dws_get_new_reg_long_args0",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 129
+        },
+        {
+          "body_sha256": "3fba9d7f93225d028c342b0fb4d01f1046fb5fac3dfb2a27494d6d906b43288f",
+          "c_name": "dws_get_new_reg_double_args0",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_get_new_reg",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_reg",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 129
+        }
+      ]
+    },
+    {
+      "call": "get_new_tile",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "Check capacity and complete physical-pair ownership before source counter/value effects; never assume fresh-zero bytes"
+        ],
+        "normal_return_state_value_relation": "Return old global tile allocation counter; advance it by sizeof(T)/4 and assign every physical half to the owned thread. Odd 8-byte starts are allowed. Payload, size and pending state are not initialized or cleared.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              138,
+              145
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 0,
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "declaration": "inline int get_new_tile()",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 138,
+          "minimum_arity": 0
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "c_name": "dws_get_new_tile_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_get_new_tile",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 138
+        },
+        {
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "c_name": "dws_get_new_tile_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_get_new_tile",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 138
+        },
+        {
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "c_name": "dws_get_new_tile_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_get_new_tile",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 138
+        },
+        {
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "c_name": "dws_get_new_tile_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_get_new_tile",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 138
+        },
+        {
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "c_name": "dws_get_new_tile_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_get_new_tile",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 138
+        },
+        {
+          "body_sha256": "960dbf4e946408df95babf1b2774cd016eab93260fe388620361700763947854",
+          "c_name": "dws_get_new_tile_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_get_new_tile",
+          "formal_arity": 0,
+          "model_result_type": "int",
+          "name": "get_new_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 138
+        }
+      ]
+    },
+    {
+      "call": "maa_const",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "Exact T bit representation and complete RF pair domain/ownership; pending interference/stalls remain in model body"
+        ],
+        "normal_return_state_value_relation": "Perform the same source typed RF payload write, preserving its own source ordering premise; do not invent the set_reg source fence. Explicit-ID stalls and complete-pair checks remain concrete.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              147,
+              149
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 2,
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "declaration": "void maa_const(T1 data, int dst_reg)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 147,
+          "minimum_arity": 2
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "c_name": "dws_maa_const_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_maa_const",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "maa_const",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 147
+        },
+        {
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "c_name": "dws_maa_const_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_maa_const",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "maa_const",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 147
+        },
+        {
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "c_name": "dws_maa_const_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_maa_const",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "maa_const",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 147
+        },
+        {
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "c_name": "dws_maa_const_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_maa_const",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "maa_const",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 147
+        },
+        {
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "c_name": "dws_maa_const_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_maa_const",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "maa_const",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 147
+        },
+        {
+          "body_sha256": "cbdbe27bfebe676b7ff954cfb4c3e76e3ceb4e6cc3a8a9df41e932ecf84fde9f",
+          "c_name": "dws_maa_const_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_maa_const",
+          "formal_arity": 2,
+          "model_result_type": "void",
+          "name": "maa_const",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 147
+        }
+      ]
+    },
+    {
+      "call": "print_tile",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "normal_return_state_value_relation": "Read size without cover, then ordered typed CPU tile values with ordinary pending/ownership/initializedness guards; append bounded ordered typed observation events. Printed byte formatting is outside the chosen observation projection unless separately integrated.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              152,
+              159
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 1,
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "declaration": "void print_tile(int SPD_id)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 152,
+          "minimum_arity": 1
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "c_name": "dws_print_tile_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_print_tile",
+          "formal_arity": 1,
+          "model_result_type": "void",
+          "name": "print_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 152
+        },
+        {
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "c_name": "dws_print_tile_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_print_tile",
+          "formal_arity": 1,
+          "model_result_type": "void",
+          "name": "print_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 152
+        },
+        {
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "c_name": "dws_print_tile_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_print_tile",
+          "formal_arity": 1,
+          "model_result_type": "void",
+          "name": "print_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 152
+        },
+        {
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "c_name": "dws_print_tile_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_print_tile",
+          "formal_arity": 1,
+          "model_result_type": "void",
+          "name": "print_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 152
+        },
+        {
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "c_name": "dws_print_tile_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_print_tile",
+          "formal_arity": 1,
+          "model_result_type": "void",
+          "name": "print_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 152
+        },
+        {
+          "body_sha256": "4b6b953ee741105a2c4db94c8beb4c1902e738e7d4ef5c1b51fd9b3eed406dc3",
+          "c_name": "dws_print_tile_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_print_tile",
+          "formal_arity": 1,
+          "model_result_type": "void",
+          "name": "print_tile",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 152
+        }
+      ]
+    },
+    {
+      "call": "get_data_type",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise"
+        ],
+        "normal_return_state_value_relation": "Return the exact source canonical-type mapping uint32/int32/float/uint64/int64/double\u21920..5; every other type\u2192MAX6. No state changes.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              165,
+              173
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": null
+      },
+      "source_declarations": [
+        {
+          "arity": 0,
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "declaration": "DataType get_data_type()",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 165,
+          "minimum_arity": 0
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "c_name": "dws_get_data_type_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dwi_get_data_type",
+          "formal_arity": 0,
+          "model_result_type": "unsigned",
+          "name": "get_data_type",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 165
+        },
+        {
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "c_name": "dws_get_data_type_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dwi_get_data_type",
+          "formal_arity": 0,
+          "model_result_type": "unsigned",
+          "name": "get_data_type",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 165
+        },
+        {
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "c_name": "dws_get_data_type_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dwi_get_data_type",
+          "formal_arity": 0,
+          "model_result_type": "unsigned",
+          "name": "get_data_type",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 165
+        },
+        {
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "c_name": "dws_get_data_type_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dwi_get_data_type",
+          "formal_arity": 0,
+          "model_result_type": "unsigned",
+          "name": "get_data_type",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 165
+        },
+        {
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "c_name": "dws_get_data_type_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dwi_get_data_type",
+          "formal_arity": 0,
+          "model_result_type": "unsigned",
+          "name": "get_data_type",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 165
+        },
+        {
+          "body_sha256": "c792f66c6e665c625cf61da15704ad57fad40d6557367adaddc9d040128860c5",
+          "c_name": "dws_get_data_type_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dwi_get_data_type",
+          "formal_arity": 0,
+          "model_result_type": "unsigned",
+          "name": "get_data_type",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 165
+        }
+      ]
+    },
+    {
+      "call": "maa_alu_scalar",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation"
+        ],
+        "normal_return_state_value_relation": "After concrete stalls/role binding capture immutable source size/tile/RF/condition versions. At cover, for active lanes compute source typed binary(src,scalar); comparisons produce u32. Preserve every inactive byte and publish the captured size.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              175,
+              192
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              99,
+              224
+            ],
+            "role": "scalar/reduction initialization and immutable size agreement"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              266,
+              861
+            ],
+            "role": "six typed operations and final tile/RF outputs"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_alu"
+      },
+      "source_declarations": [
+        {
+          "arity": 5,
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "declaration": "inline void maa_alu_scalar(int src1_tile, int src2_reg, int dst_tile, Operation_t op, int cond_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 175,
+          "minimum_arity": 4
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "c_name": "dws_maa_alu_scalar_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_alu_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 175
+        },
+        {
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "c_name": "dws_maa_alu_scalar_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_alu_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 175
+        },
+        {
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "c_name": "dws_maa_alu_scalar_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_alu_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 175
+        },
+        {
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "c_name": "dws_maa_alu_scalar_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_alu_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 175
+        },
+        {
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "c_name": "dws_maa_alu_scalar_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_alu_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 175
+        },
+        {
+          "body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+          "c_name": "dws_maa_alu_scalar_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_alu_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 175
+        }
+      ]
+    },
+    {
+      "call": "maa_alu_vector",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation"
+        ],
+        "normal_return_state_value_relation": "Require source sizes/condition size agreement through deferred guards; capture both tile versions. At cover compute typed binary(src1,src2) for active lanes, with u32 comparisons, byte-preserving inactive outputs and captured output size.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              194,
+              211
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              99,
+              224
+            ],
+            "role": "scalar/reduction initialization and immutable size agreement"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              266,
+              861
+            ],
+            "role": "six typed operations and final tile/RF outputs"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_alu"
+      },
+      "source_declarations": [
+        {
+          "arity": 5,
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "declaration": "inline void maa_alu_vector(int src1_tile, int src2_tile, int dst_tile, Operation_t op, int cond_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 194,
+          "minimum_arity": 4
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "c_name": "dws_maa_alu_vector_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_alu_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 194
+        },
+        {
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "c_name": "dws_maa_alu_vector_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_alu_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 194
+        },
+        {
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "c_name": "dws_maa_alu_vector_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_alu_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 194
+        },
+        {
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "c_name": "dws_maa_alu_vector_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_alu_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 194
+        },
+        {
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "c_name": "dws_maa_alu_vector_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_alu_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 194
+        },
+        {
+          "body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+          "c_name": "dws_maa_alu_vector_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_alu_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_alu_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 194
+        }
+      ]
+    },
+    {
+      "call": "maa_alu_reduce",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation"
+        ],
+        "normal_return_state_value_relation": "Use the source operation/type initializer and fold each active source value as src OP accumulator, not accumulator OP src. Settle the captured masked fold into the typed RF result at cover; preserve input versions and source numeric guards.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              213,
+              230
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              99,
+              224
+            ],
+            "role": "scalar/reduction initialization and immutable size agreement"
+          },
+          {
+            "file": "ALU.cc",
+            "lines": [
+              266,
+              861
+            ],
+            "role": "six typed operations and final tile/RF outputs"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_alu"
+      },
+      "source_declarations": [
+        {
+          "arity": 4,
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "declaration": "inline void maa_alu_reduce(int src1_tile, int dst_reg, Operation_t op, int cond_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 213,
+          "minimum_arity": 3
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "c_name": "dws_maa_alu_reduce_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_alu_reduce",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_alu_reduce",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 213
+        },
+        {
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "c_name": "dws_maa_alu_reduce_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_alu_reduce",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_alu_reduce",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 213
+        },
+        {
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "c_name": "dws_maa_alu_reduce_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_alu_reduce",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_alu_reduce",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 213
+        },
+        {
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "c_name": "dws_maa_alu_reduce_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_alu_reduce",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_alu_reduce",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 213
+        },
+        {
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "c_name": "dws_maa_alu_reduce_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_alu_reduce",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_alu_reduce",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 213
+        },
+        {
+          "body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+          "c_name": "dws_maa_alu_reduce_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_alu_reduce",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_alu_reduce",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 213
+        }
+      ]
+    },
+    {
+      "call": "maa_stream_load",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation",
+          "CPU/device projections share exact physical scalar cells; reject mixed-width/type or MMIO-overlapping ordinary views",
+          "Conservative whole remaining object physical envelope; device writes include full cache-line conflict envelope"
+        ],
+        "normal_return_state_value_relation": "Capture signed-int RF min/max/stride, condition and source issue history; deferred guards require nonempty nonnegative range, positive stride and source signed-overflow/page/count domain. Active lane k reads data[min+k*stride] at a permitted issue-to-cover history prefix; inactive bytes remain unchanged; publish the checked count.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              232,
+              249
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              143,
+              146
+            ],
+            "role": "signed-int RF bounds and stride"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              340,
+              340
+            ],
+            "role": "starting-tile result size"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_stream"
+      },
+      "source_declarations": [
+        {
+          "arity": 6,
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "declaration": "inline void maa_stream_load(T1 *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 232,
+          "minimum_arity": 5
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "c_name": "dws_maa_stream_load_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_stream_load",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 232
+        },
+        {
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "c_name": "dws_maa_stream_load_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_stream_load",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 232
+        },
+        {
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "c_name": "dws_maa_stream_load_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_stream_load",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 232
+        },
+        {
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "c_name": "dws_maa_stream_load_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_stream_load",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 232
+        },
+        {
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "c_name": "dws_maa_stream_load_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_stream_load",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 232
+        },
+        {
+          "body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+          "c_name": "dws_maa_stream_load_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_stream_load",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 232
+        }
+      ]
+    },
+    {
+      "call": "maa_stream_store",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation",
+          "CPU/device projections share exact physical scalar cells; reject mixed-width/type or MMIO-overlapping ordinary views",
+          "Conservative whole remaining object physical envelope; device writes include full cache-line conflict envelope"
+        ],
+        "normal_return_state_value_relation": "Capture signed-int bounds/stride and source/condition versions. At cover execute the checked active data[min+k*stride]=src[k] actions under complete physical-line guards and arbitrary permitted action order; do not evaluate RF/index producers at issue.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              251,
+              268
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              143,
+              146
+            ],
+            "role": "signed-int RF bounds and stride"
+          },
+          {
+            "file": "StreamAccess.cc",
+            "lines": [
+              340,
+              340
+            ],
+            "role": "starting-tile result size"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_stream"
+      },
+      "source_declarations": [
+        {
+          "arity": 6,
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "declaration": "inline void maa_stream_store(T1 *data, int min_reg, int max_reg, int stride_reg, int src_tile, int cond_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 251,
+          "minimum_arity": 5
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "c_name": "dws_maa_stream_store_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_stream_store",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_store",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 251
+        },
+        {
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "c_name": "dws_maa_stream_store_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_stream_store",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_store",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 251
+        },
+        {
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "c_name": "dws_maa_stream_store_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_stream_store",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_store",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 251
+        },
+        {
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "c_name": "dws_maa_stream_store_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_stream_store",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_store",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 251
+        },
+        {
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "c_name": "dws_maa_stream_store_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_stream_store",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_store",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 251
+        },
+        {
+          "body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+          "c_name": "dws_maa_stream_store_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_stream_store",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_stream_store",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 251
+        }
+      ]
+    },
+    {
+      "call": "maa_indirect_load",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation",
+          "CPU/device projections share exact physical scalar cells; reject mixed-width/type or MMIO-overlapping ordinary views",
+          "Conservative whole remaining object physical envelope; device writes include full cache-line conflict envelope"
+        ],
+        "normal_return_state_value_relation": "Capture u32 indices, source/condition size/value versions and ordinary-cell issue history. Retain uint32 multiplication/source offset correspondence, index bounds and first-ID/F2 guards. Active lanes read permitted history versions; preserve inactive bytes and publish captured size.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              270,
+              287
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_indirect"
+      },
+      "source_declarations": [
+        {
+          "arity": 4,
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "declaration": "inline void maa_indirect_load(T1 *data, int idx_tile, int dst_tile, int cond_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 270,
+          "minimum_arity": 3
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "c_name": "dws_maa_indirect_load_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_indirect_load",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_indirect_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 270
+        },
+        {
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "c_name": "dws_maa_indirect_load_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_indirect_load",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_indirect_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 270
+        },
+        {
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "c_name": "dws_maa_indirect_load_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_indirect_load",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_indirect_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 270
+        },
+        {
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "c_name": "dws_maa_indirect_load_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_indirect_load",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_indirect_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 270
+        },
+        {
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "c_name": "dws_maa_indirect_load_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_indirect_load",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_indirect_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 270
+        },
+        {
+          "body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+          "c_name": "dws_maa_indirect_load_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_indirect_load",
+          "formal_arity": 4,
+          "model_result_type": "void",
+          "name": "maa_indirect_load",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 270
+        }
+      ]
+    },
+    {
+      "call": "maa_indirect_store_vector",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation",
+          "CPU/device projections share exact physical scalar cells; reject mixed-width/type or MMIO-overlapping ordinary views",
+          "Conservative whole remaining object physical envelope; device writes include full cache-line conflict envelope"
+        ],
+        "normal_return_state_value_relation": "Capture indices/vector/conditions; complete stores to mapped cells under full-line guards. Optional output publishes progressively copied line old values for each action, including repeated aliases. Inactive output bytes/initializedness remain unchanged.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              289,
+              306
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_indirect"
+      },
+      "source_declarations": [
+        {
+          "arity": 5,
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "declaration": "inline void maa_indirect_store_vector(T1 *data, int idx_tile, int src_tile, int cond_tile = -1, int dst_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 289,
+          "minimum_arity": 3
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "c_name": "dws_maa_indirect_store_vector_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_indirect_store_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 289
+        },
+        {
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "c_name": "dws_maa_indirect_store_vector_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_indirect_store_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 289
+        },
+        {
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "c_name": "dws_maa_indirect_store_vector_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_indirect_store_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 289
+        },
+        {
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "c_name": "dws_maa_indirect_store_vector_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_indirect_store_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 289
+        },
+        {
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "c_name": "dws_maa_indirect_store_vector_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_indirect_store_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 289
+        },
+        {
+          "body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+          "c_name": "dws_maa_indirect_store_vector_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_indirect_store_vector",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 289
+        }
+      ]
+    },
+    {
+      "call": "maa_indirect_store_scalar",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation",
+          "CPU/device projections share exact physical scalar cells; reject mixed-width/type or MMIO-overlapping ordinary views",
+          "Conservative whole remaining object physical envelope; device writes include full cache-line conflict envelope"
+        ],
+        "normal_return_state_value_relation": "Capture indices/typed RF scalar/conditions; complete the scalar stores under full-line guards. Optional old output observes the progressively updated line, with inactive-byte preservation and no forged memory-cell identity.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              308,
+              325
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_indirect"
+      },
+      "source_declarations": [
+        {
+          "arity": 5,
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "declaration": "inline void maa_indirect_store_scalar(T1 *data, int idx_tile, int src_reg, int cond_tile = -1, int dst_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 308,
+          "minimum_arity": 3
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "c_name": "dws_maa_indirect_store_scalar_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_indirect_store_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 308
+        },
+        {
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "c_name": "dws_maa_indirect_store_scalar_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_indirect_store_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 308
+        },
+        {
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "c_name": "dws_maa_indirect_store_scalar_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_indirect_store_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 308
+        },
+        {
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "c_name": "dws_maa_indirect_store_scalar_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_indirect_store_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 308
+        },
+        {
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "c_name": "dws_maa_indirect_store_scalar_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_indirect_store_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 308
+        },
+        {
+          "body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+          "c_name": "dws_maa_indirect_store_scalar_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_indirect_store_scalar",
+          "formal_arity": 5,
+          "model_result_type": "void",
+          "name": "maa_indirect_store_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 308
+        }
+      ]
+    },
+    {
+      "call": "maa_indirect_rmw_vector",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation",
+          "CPU/device projections share exact physical scalar cells; reject mixed-width/type or MMIO-overlapping ordinary views",
+          "Conservative whole remaining object physical envelope; device writes include full cache-line conflict envelope"
+        ],
+        "normal_return_state_value_relation": "For each active action, compute typed ADD/MIN/MAX(old, captured_vector[k]) in a permitted action order; update the shared physical cell and optional progressive old-result output. Preserve repeated-alias dependence and source overflow/float rules.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              327,
+              344
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_indirect"
+      },
+      "source_declarations": [
+        {
+          "arity": 6,
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "declaration": "inline void maa_indirect_rmw_vector(T1 *data, int idx_tile, int src_tile, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 327,
+          "minimum_arity": 4
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "c_name": "dws_maa_indirect_rmw_vector_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_vector",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 327
+        },
+        {
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "c_name": "dws_maa_indirect_rmw_vector_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_vector",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 327
+        },
+        {
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "c_name": "dws_maa_indirect_rmw_vector_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_vector",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 327
+        },
+        {
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "c_name": "dws_maa_indirect_rmw_vector_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_vector",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 327
+        },
+        {
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "c_name": "dws_maa_indirect_rmw_vector_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_vector",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 327
+        },
+        {
+          "body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+          "c_name": "dws_maa_indirect_rmw_vector_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_vector",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_vector",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 327
+        }
+      ]
+    },
+    {
+      "call": "maa_indirect_rmw_scalar",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "nonempty logical/physical envelope; empty or all-inactive memory calls remain outside this preparation domain",
+          "supplied envelope covers every possible deferred active address; source and physical mappings agree",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation",
+          "CPU/device projections share exact physical scalar cells; reject mixed-width/type or MMIO-overlapping ordinary views",
+          "Conservative whole remaining object physical envelope; device writes include full cache-line conflict envelope"
+        ],
+        "normal_return_state_value_relation": "For each active action, compute typed ADD/MIN/MAX(old,captured RF scalar) with the same progressive alias/action-order and optional old-result semantics. Source numeric/initializedness guards remain concrete.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              346,
+              363
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              406,
+              418
+            ],
+            "role": "condition/index size agreement"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              492,
+              494
+            ],
+            "role": "uint32 product then address addition"
+          },
+          {
+            "file": "IndirectAccess.cc",
+            "lines": [
+              898,
+              1128
+            ],
+            "role": "progressive old values and six typed RMW branches"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              200,
+              241
+            ],
+            "role": "source overlap predicate and first containing region"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_indirect"
+      },
+      "source_declarations": [
+        {
+          "arity": 6,
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "declaration": "inline void maa_indirect_rmw_scalar(T1 *data, int idx_tile, int src_reg, Operation_t o_type, int cond_tile = -1, int dst_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 346,
+          "minimum_arity": 4
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "c_name": "dws_maa_indirect_rmw_scalar_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_scalar",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 346
+        },
+        {
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "c_name": "dws_maa_indirect_rmw_scalar_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_scalar",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 346
+        },
+        {
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "c_name": "dws_maa_indirect_rmw_scalar_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_scalar",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 346
+        },
+        {
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "c_name": "dws_maa_indirect_rmw_scalar_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_scalar",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 346
+        },
+        {
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "c_name": "dws_maa_indirect_rmw_scalar_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_scalar",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 346
+        },
+        {
+          "body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+          "c_name": "dws_maa_indirect_rmw_scalar_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_indirect_rmw_scalar",
+          "formal_arity": 6,
+          "model_result_type": "void",
+          "name": "maa_indirect_rmw_scalar",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 346
+        }
+      ]
+    },
+    {
+      "call": "maa_range_loop",
+      "contract": {
+        "asserted_domain_checks": [
+          "actual full-TU source/type/arity binding",
+          "all structural bounds/capacities remain checked obligations",
+          "per-thread ownership and shared global-instance hazards",
+          "conditional normal return; no added original-unit premise",
+          "atomic prepare/capture/build/bind with no intervening source action",
+          "no implicit history settlement to choose a size or address",
+          "condition/size/byte initializedness checked only when selected",
+          "Bounded command/DAG/value-prefix/action/history capacities are asserted model-domain checks",
+          "Apply source explicit-destination/global-region stalls before capturing immutable versions",
+          "Operation and source undefinedness checks occur only on selected active values; no inactive-lane arithmetic or initializedness obligation"
+        ],
+        "normal_return_state_value_relation": "Force INT32 regardless of T. Capture continuation i/j, signed stride and equal-size min/max/condition versions; deferred RangeFuser-source loop emits checked (i,j) values, advances/resets continuation state and publishes both sizes/RF states at cover. This bounded domain requires the entire output to fit the two-element prefix below source capacity.",
+        "owned_rules": {
+          "compiler": "Admitted original complete-TU/ABI/source-expression/CPU-pointer observation and transformation",
+          "mmio": "The pinned source MMIO operations implement the stated model semantics on conditional normal return (explicit accepted TCB)",
+          "numeric_runtime": "Explicit selected signed-shift/IEEE rounding/unordered minmax policies; source numeric guards remain checked"
+        },
+        "source_basis": [
+          {
+            "file": "MAA_gem5.hpp",
+            "lines": [
+              366,
+              383
+            ],
+            "role": "exact source declaration/body; owned normal-return MMIO correspondence"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              66,
+              154
+            ],
+            "role": "source priority/role widths"
+          },
+          {
+            "file": "IF.cc",
+            "lines": [
+              193,
+              218
+            ],
+            "role": "explicit destination/global-region stalls"
+          },
+          {
+            "file": "MAA.cc",
+            "lines": [
+              563,
+              580
+            ],
+            "role": "counted source/destination roles"
+          },
+          {
+            "file": "SPD.cc",
+            "lines": [
+              120,
+              138
+            ],
+            "role": "both physical halves counted"
+          }
+        ]
+      },
+      "execution": {
+        "CBMC": "Keep and execute the concrete body; do not replace it with an imported nondeterministic return, havoc frame or assumed postcondition",
+        "WP": "Do not promote this design to a WP summary until its corresponding concrete-body obligations and frame/return relation are separately admitted",
+        "body": "Generated dws_<actual canonical c_name> wrapper over reviewed concrete state/value backends",
+        "packet_family": "dxw_range"
+      },
+      "source_declarations": [
+        {
+          "arity": 8,
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "declaration": "inline void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int dst_i_tile, int dst_j_tile, int cond_tile = -1)",
+          "header": "MAA_gem5.hpp",
+          "header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "line": 366,
+          "minimum_arity": 7
+        }
+      ],
+      "typed_arity_instances": [
+        {
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "c_name": "dws_maa_range_loop_unsigned_int",
+          "canonical_type": "unsigned int",
+          "dtype": 0,
+          "fixed_route": "dws_fixed_maa_range_loop",
+          "formal_arity": 8,
+          "model_result_type": "void",
+          "name": "maa_range_loop",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 366
+        },
+        {
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "c_name": "dws_maa_range_loop_int",
+          "canonical_type": "int",
+          "dtype": 1,
+          "fixed_route": "dws_fixed_maa_range_loop",
+          "formal_arity": 8,
+          "model_result_type": "void",
+          "name": "maa_range_loop",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 366
+        },
+        {
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "c_name": "dws_maa_range_loop_float",
+          "canonical_type": "float",
+          "dtype": 2,
+          "fixed_route": "dws_fixed_maa_range_loop",
+          "formal_arity": 8,
+          "model_result_type": "void",
+          "name": "maa_range_loop",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 366
+        },
+        {
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "c_name": "dws_maa_range_loop_unsigned_long",
+          "canonical_type": "unsigned long",
+          "dtype": 3,
+          "fixed_route": "dws_fixed_maa_range_loop",
+          "formal_arity": 8,
+          "model_result_type": "void",
+          "name": "maa_range_loop",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 366
+        },
+        {
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "c_name": "dws_maa_range_loop_long",
+          "canonical_type": "long",
+          "dtype": 4,
+          "fixed_route": "dws_fixed_maa_range_loop",
+          "formal_arity": 8,
+          "model_result_type": "void",
+          "name": "maa_range_loop",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 366
+        },
+        {
+          "body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+          "c_name": "dws_maa_range_loop_double",
+          "canonical_type": "double",
+          "dtype": 5,
+          "fixed_route": "dws_fixed_maa_range_loop",
+          "formal_arity": 8,
+          "model_result_type": "void",
+          "name": "maa_range_loop",
+          "pointer_descriptor_abi": true,
+          "public_admission": false,
+          "source_header_sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+          "source_line": 366
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "call_entries": 26,
+    "declarations": 27,
+    "exact_six_type_or_nontemplate_instances": 132
+  },
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "full_ticket28": false,
+  "inputs": [
+    {
+      "bytes": 34697,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py",
+      "sha256": "074b974f4a4dd1074247a90d2a727d1cb0ee37b576055d738dd746fd6d4cc1db"
+    },
+    {
+      "bytes": 25584,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_dispatch_v2.py",
+      "sha256": "a2652610ae6198b7a3045e30155c77bfd9637a79ae2c9b668407ee5ae8eb7e9a"
+    },
+    {
+      "bytes": 9837,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_pointer_bridge_synthetic_v2.h",
+      "sha256": "b30f42a24f6c2fae502d744e3333007c92e7b344e79f45bb2214e1d7af272edb"
+    },
+    {
+      "bytes": 10090,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_direct_families_v2.h",
+      "sha256": "f8f4463a7ca89d236a149ed8fdffb59619e84d70980c7453018f8d716713dc01"
+    },
+    {
+      "bytes": 45071,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_routes_synthetic_v2.h",
+      "sha256": "24c5529eba20e482db66eecb1464601292436010185588ff7566eb3916df3e57"
+    },
+    {
+      "bytes": 20817,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-dispatch-preparation-v2.json",
+      "sha256": "7c25e7afb6a1f87e3f3b96d20de1e43131e48d47a0d8e383ab53e65fceeea90b"
+    },
+    {
+      "bytes": 4524,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+      "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+    }
+  ],
+  "model_ABI": {
+    "CPU": "dws_cpu_load/store_{u32,i32,f32,u64,i64,f64}(owned_thread,pointer,index[,value])",
+    "calls": "dws_<bound source c_name>(unsigned owned_thread, exact scalar or dws_pointer source arguments...)",
+    "families": "11 dws_fixed_maa_* direct prepare\u2192fixed family builder\u2192bind routes; no callback ABI",
+    "memory": "Same physical scalar cells and spans for CPU/device projections, full MMIO exclusion and source lifetime/provenance admission",
+    "pointer": "struct dws_pointer {unsigned kind,object,tile,dtype;uint64_t offset;}",
+    "representation": "Exact memcpy scalar input/result bits; actual canonical typedef identities derive from admitted compiler observation, never the synthetic headers"
+  },
+  "predicted_public_fixtures": [
+    {
+      "fixture": "source_call_fixture_v2.cpp",
+      "prediction": "Positive: final ordinary data[0]=39,data[1]=41, return80, checked range continuation and size2; not observed",
+      "scope": "All26 names/both overloads, uint32/int32 data, all11 families, CPU values and waits"
+    },
+    {
+      "fixture": "Same source with final assertion/return expected79",
+      "prediction": "Counterexample to original assertion, with source/model guards healthy; not observed",
+      "scope": "Source-derived negative"
+    },
+    {
+      "fixture": "Six typed initialized RF/ALU/reduction callers",
+      "prediction": "Defined arithmetic/bit representations succeed; source overflow/division/shift/unsupported operations remain classified checks",
+      "scope": "Exact uint32/int32/float/uint64/int64/double source instances"
+    },
+    {
+      "fixture": "64-bit role second-half wait and condition-only wait pair",
+      "prediction": "Either counted half covers; condition-only wait does not cover and premature CPU observation fails",
+      "scope": "Physical readiness/pair semantics"
+    },
+    {
+      "fixture": "Same-thread/other-thread ordinary write between issue and cover",
+      "prediction": "Same-thread conflicting write refuses; permitted other-thread history exposes all allowed prefixes, preserving source correlation",
+      "scope": "Shared physical cell history and complete CPU effects"
+    },
+    {
+      "fixture": "Partial same-type alias views and mixed-width/MMIO alias negatives",
+      "prediction": "Same scalar bytes reuse history; mixed views and MMIO crossings refuse; selected-element disjointness does not waive full-line conflict",
+      "scope": "Cell identity/ownership/line envelopes"
+    }
+  ],
+  "prospective_entry": {
+    "hardware_interface": {
+      "gem5_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+      "id": "dx100-mmio",
+      "version": "1.0-e4fc4af"
+    },
+    "id": "semantics.dx100_bfs_0_2",
+    "new_entry_only": true,
+    "old_0_1_bytes_preserved": true,
+    "sequence": 2,
+    "version": "0.2"
+  },
+  "public_admission": false,
+  "status": "CONCRETE NEW0.2 CONTRACT/MODEL DESIGN; not a published/accepted entry"
+}

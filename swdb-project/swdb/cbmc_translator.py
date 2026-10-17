@@ -931,8 +931,12 @@ static double swdb_next_real(void) {
 """
 
 
-def prelude():
-    return PRELUDE.replace("@TOOL@", f"{TOOL_ID} {TOOL_VERSION}").replace("@CAPACITY@", ORACLE_CAPACITY)
+def prelude(whole_source=None):
+    text = PRELUDE.replace("@TOOL@", f"{TOOL_ID} {TOOL_VERSION}").replace("@CAPACITY@", ORACLE_CAPACITY)
+    if whole_source is not None:
+        from swdb import dx100_checked_source
+        text = dx100_checked_source.native_prelude(whole_source, text)
+    return text
 
 
 def _draw(ctype):
@@ -1067,7 +1071,7 @@ def _array_domain_plan(interface, rows, sizes, cap, declarations):
 
 
 def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, check=False, setup=(),
-            state=(), finish=(), array_domains=None):
+            state=(), finish=(), array_domains=None, whole_source=None):
     """(C text of the harness, Plan) for the proof unit `interface` and its clause list `rows` (Clause).
 
     `sizes`: {parameter: bound} (each an integer parameter of the unit); `cap`: the length of every interface
@@ -1079,6 +1083,17 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
     `array_domains` (2026-10-15 ET) only plans entry extents against capacity. Planner metadata alone is
     insufficient for proof admission: checked WP/CBMC paths require independent source certificates;
     unchecked adapter paths and runtime-check refuse these jobs."""
+    profile = None
+    if whole_source is not None:
+        from swdb import dx100_checked_source
+        if call is not None or check or cap != 0:
+            raise Untranslatable('checked whole source requires its original scalar proof interface')
+        try:
+            profile = dx100_checked_source.harness_profile(whole_source, interface, rows,
+                sizes, knobs, setup, state, finish, array_domains)
+        except (dx100_checked_source.Refused, ValueError, TypeError, KeyError) as exc:
+            raise Untranslatable(str(exc)) from None
+        setup = profile['setup']
     for name in sizes:
         if not interface.scalar(name):
             raise Untranslatable(f"size bound {name} is not an integer parameter of {interface.function}")
@@ -1109,6 +1124,8 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
         lines.append(f"  {name} = ({ctype}) swdb_next();")
         plan.draws.append({"name": name, "role": "knob", "ctype": ctype, "range": list(legal)})
     lines += [f"  {statement}" for statement in setup]
+    if profile is not None:
+        plan.draws.extend(profile["draws"])  # setup already drew each slot exactly once
     for name in state:
         lines.append(f"  {name} = (int) swdb_next();")
         plan.draws.append({"name": name, "role": "state", "ctype": "int"})
@@ -1117,6 +1134,8 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
         if draw["role"] == "element":
             pointer, index = draw["name"].split("[")
             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], f'swdb_buf_{pointer}[{index[:-1]}]')};")
+        elif profile is not None and draw["role"] == "whole-model-choice":
+            lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], draw['c_lvalue'])};")
         else:
             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};")
     # A sanitizer may terminate inside the target without returning to main's final flush.
@@ -1155,7 +1174,8 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
                               logic=logic, post=True)
             lines.append(f'  SWDB_PROP({text}, "{clause.name}");')
         elif clause.kind == "assigns":
-            lines.append(f'  SWDB_PROP({_frame(clause, interface, cap, caps, counter, logic)}, "{clause.name}");')
+            frame = "1" if profile is not None else _frame(clause, interface, cap, caps, counter, logic)
+            lines.append(f'  SWDB_PROP({frame}, "{clause.name}");')
     lines.append(f'  SWDB_REACH("{REACH_END}");')
     lines.append("#if defined(SWDB_DIFFERENTIAL)")
     if result:
@@ -1209,6 +1229,7 @@ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, che
         "#endif",
         "    else printf(\" end=%s\\n\", code == 1 ? \"check\" : \"infeasible\");",
         "    fflush(stdout);",
+        *(("    if (fgets(swdb_line, sizeof swdb_line, stdin)) return 3;", "    return 0;") if profile is not None else ()),
         "  }",
         "  return 0;",
         "}",

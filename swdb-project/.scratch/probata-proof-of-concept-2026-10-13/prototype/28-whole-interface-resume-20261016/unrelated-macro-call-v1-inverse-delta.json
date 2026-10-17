@@ -1,0 +1,59 @@
+{
+  "actual_compiler_executed": false,
+  "date": "2026-10-16 ET",
+  "ordinary_macro_effects_require_independent_complete_statement_consumer": true,
+  "public_admission": false,
+  "selected_macro_API_calls_still_refused": true,
+  "source_kind_unchanged": "dx100-whole-interface-source-v1",
+  "status": "SOURCE ONLY: unrelated macro calls no longer block locating a selected direct API span",
+  "versions": [
+    {
+      "edits": [
+        {
+          "new": "        if kind == \"CallExpr\" and owner is not None and owner.get(\"mangledName\") == caller:\n            try: direct_span = _span(node)\n            except Refused: direct_span = None\n            if direct_span == call_range:\n                calls.append((node, owner, parent))",
+          "old": "        if kind == \"CallExpr\" and owner is not None and owner.get(\"mangledName\") == caller and _span(node) == call_range:\n            calls.append((node, owner, parent))"
+        }
+      ],
+      "new_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+      "new_sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8",
+      "old_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py",
+      "old_sha256": "074b974f4a4dd1074247a90d2a727d1cb0ee37b576055d738dd746fd6d4cc1db"
+    },
+    {
+      "edits": [
+        {
+          "new": "BINDER_SHA = \"217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8\"",
+          "old": "BINDER_SHA = \"074b974f4a4dd1074247a90d2a727d1cb0ee37b576055d738dd746fd6d4cc1db\""
+        },
+        {
+          "new": "            try: direct_span = api[\"_span\"](node)\n            except api[\"Refused\"]: direct_span = None\n            if direct_span == fresh[\"call_range\"]: matches.append(node)",
+          "old": "            if api[\"_span\"](node) == fresh[\"call_range\"]: matches.append(node)"
+        }
+      ],
+      "new_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_dispatch_v3.py",
+      "new_sha256": "d05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703",
+      "old_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_dispatch_v2.py",
+      "old_sha256": "a2652610ae6198b7a3045e30155c77bfd9637a79ae2c9b668407ee5ae8eb7e9a"
+    },
+    {
+      "edits": [
+        {
+          "new": "BINDER_SHA = '217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8'",
+          "old": "BINDER_SHA = '074b974f4a4dd1074247a90d2a727d1cb0ee37b576055d738dd746fd6d4cc1db'"
+        },
+        {
+          "new": "DISPATCH_SHA = 'd05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703'",
+          "old": "DISPATCH_SHA = 'a2652610ae6198b7a3045e30155c77bfd9637a79ae2c9b668407ee5ae8eb7e9a'"
+        },
+        {
+          "new": "            if node.get('kind') == 'CallExpr':\n                try: direct_span = self.api['_span'](node)\n                except self.api['Refused']: direct_span = None\n                if direct_span == fresh['call_range']: matches.append(node)",
+          "old": "            if node.get('kind') == 'CallExpr' and self.api['_span'](node) == fresh['call_range']: matches.append(node)"
+        }
+      ],
+      "new_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_argument_staging_v2.py",
+      "new_sha256": "79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178",
+      "old_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_argument_staging_v1.py",
+      "old_sha256": "b7a244c0cc156a716af01475aa656cd5f7129e1dc4eb87a5ca43f54d4dce11eb"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "finite_next_seam": "separately discriminated immutable TraceUnit/event-Plan with its own exact selection, receiver, model and native claim",
+  "functions": {
+    "dx100_checked_adapter.py": {
+      "build": "adapter, job, entry, code, context",
+      "check_launch": "adapter, job, context, inputs=()",
+      "check_role_inputs": "expected, inputs",
+      "compile_native": "tools, side, path, binary, flags",
+      "helper_loop_bounds": "unit, actual_loop_ids, context",
+      "method_check": "adapter, unit, tools",
+      "model_loops": "adapter, tools, scratch, unit, context",
+      "run": "adapter, job, entry, context, source_path, selection",
+      "run_fresh_domain": "binary, lines",
+      "texts": "context"
+    },
+    "dx100_checked_native.py": {
+      "check_generated_header": "unit, root, expected",
+      "view": "unit"
+    },
+    "dx100_checked_source.py": {
+      "bind_context_rules": "entry, premises",
+      "canonical": "value",
+      "capture_inputs": "capture",
+      "checked_unit_format": "library, contract_id, data",
+      "complete_capture": "policy, reads, project",
+      "compose": "selection, *, source, function, defines=()",
+      "digest": "value",
+      "harness_profile": "unit, interface, rows, sizes, knobs, setup, state, finish, array_domains",
+      "live_pointer_bridge": "atlas, thread",
+      "lowering_fields": "unit",
+      "model_fields": "unit",
+      "native_prelude": "unit, text",
+      "need": "value, message",
+      "producer_closure": "policy, reads",
+      "producer_paths": "",
+      "recheck": "unit",
+      "record_assumptions": "unit",
+      "resource_selection": "source_sha256, function, components",
+      "select_baseline": "library, proof_unit",
+      "sha": "raw",
+      "sole_whole_frame": "acsl",
+      "source_policy": "selection, reads",
+      "unit_contract": "library, unit, contract_id, contract_sha256, rows",
+      "unit_resource_profile": "unit"
+    }
+  },
+  "no_source_cpp_projection_for_generated_model_trace": true,
+  "schema": "checked-source-proposal-api-4",
+  "source_unit_is_not_finite_model_trace": true
+}

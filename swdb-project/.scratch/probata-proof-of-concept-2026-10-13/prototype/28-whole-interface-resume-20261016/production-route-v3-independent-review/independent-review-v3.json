@@ -1,0 +1,82 @@
+{
+  "V2_packet": {
+    "bytes": 25242,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v2/source-packet-v2.json",
+    "sha256": "e49034a2cacbbc0d5df5b48152ec8701ccc5df12fd70f53b7a21a14a92a239ac"
+  },
+  "V3_changed_production_inverse": [
+    "swdb/cbmc_adapter.py",
+    "swdb/dx100_checked_adapter.py",
+    "swdb/dx100_checked_source.py",
+    "swdb/proof_setup.py"
+  ],
+  "V3_unchanged_production_files": 32,
+  "actual_capture_reader_or_scientific_execution": false,
+  "compiler_native_solver_SSH_executed": false,
+  "date": "2026-10-16 ET",
+  "findings": [],
+  "full_patch": {
+    "bytes": 674870,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/production-full-v3.patch",
+    "sha256": "06d74a3674e8d4c9de81250409a0d4a2085d77a7bf6aa8cc294125acda4b12f7"
+  },
+  "independent_controls": {
+    "child_events": [],
+    "errors": 0,
+    "failures": 0,
+    "scope": "AST-projected primitives and local synthetic bytes only; no compiler/native/actual/source-route main",
+    "skips": 0,
+    "tests": 6
+  },
+  "packet": {
+    "bytes": 25558,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/source-packet-v3.json",
+    "sha256": "333d3aeecd251a0fd7ce3a489f958ba0faf9951c6fc8f03ab78d27cb2f550379"
+  },
+  "physical_pin_rows_rehashed": 121,
+  "public_or_full28_acceptance": false,
+  "remaining_actual_gates": [
+    "No complete accepted original-TU capture exists for this fixture. The route currently supports its exact V8 complete transport/schema and refuses V10/raw duplicate streams; any normalized role transport requires a separately reviewed successor.",
+    "Actual full-TU/source/ABI/call/global/CPU/lifetime/receiver/view exercise and fresh method/runtime/environment publication/admission remain required.",
+    "Real positive proof, negative replay/refutation, source/public record and reachability controls remain root-owned; source review and synthetic controls provide none of those outcomes.",
+    "First fixed scalar trace is not whole-interface readiness, two-thread, region/ownership/pair or full ticket28 acceptance. Source/compiler projection, numeric runtime and MMIO-implements-semantics remain explicit owned TCB premises."
+  ],
+  "review_files": [
+    {
+      "bytes": 5942,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3-independent-review/review_controls.py",
+      "sha256": "02cb42075cb03c8bc279d2a10fc7dcb97f22382e0356c20b95f2c162f68b4a7a"
+    },
+    {
+      "bytes": 1136,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3-independent-review/independent-controls.log",
+      "sha256": "c4be636703ff944eec6da44bae97e00e4e06ff7492cc49155b5e9a18232b9333"
+    },
+    {
+      "bytes": 5952,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3-independent-review/write_review.py",
+      "sha256": "14efeec667b484f62ca77503597b5d81c4ca5ab438b88c1715f09a487c1d1fe7"
+    }
+  ],
+  "reviewed_behavior": [
+    "Exact new checked-body/source kind and fresh method select the isolated full-TU/source/receiver route. Generic call summaries and pointer exemptions are not granted by this entry.",
+    "The exact 79/80 pair changes only the postcondition. All source/model/receiver/Plan/view inputs are freshly regenerated and physically rechecked before and after actual launch seams.",
+    "Generated C and original-source C++ have fixed separate roles. Replay can only consume freshly regenerated C++ bytes; CBMC and loop inventory can only consume C bytes. Canonical physical hash/size checks refuse aliases and substitutions.",
+    "Checked-only native failure overrides both recovery macros before oracle/model/source definitions. It prints and flushes exact failure/end metadata and calls _Exit; it never longjmps through proxy lifetimes and does not imply destructor execution on fatal paths.",
+    "Each sampled oracle row starts a fresh process. Successful source return evaluates its result before array destruction/lifetime exit; receiver preparation and independent draw-table initialization occur once.",
+    "Source-preserving projection V2 remains byte-identical. Lowered C is not used as the independent original-source C++ counterpart; agreement still uses the same explicit owned concrete model on both sides.",
+    "All six receiver context premises bind exact owned, recorded library rules. The unchanged entry#rule producer carries physical entry SHA references and owners; no free assumed_clause is manufactured.",
+    "Whole-state assigns everything is admitted only for the physically selected checked scalar pair. Unsupported source/effects/contracts/frames and malformed metadata preserve refusal or existing generic diagnostics.",
+    "Existing optional defaults and legacy prelude/harness behavior remain intact under the exact reviewed inverses. No WP summary fallback exists for checked concrete bodies."
+  ],
+  "shared_production_edited": false,
+  "six_hook_exact_base_inverse": [
+    "c_lowering.py",
+    "cbmc_adapter.py",
+    "cbmc_translator.py",
+    "formal_frame.py",
+    "proof_semantics.py",
+    "proof_setup.py"
+  ],
+  "verdict": "PASS: independent static standards/native-boundary preparation review only"
+}

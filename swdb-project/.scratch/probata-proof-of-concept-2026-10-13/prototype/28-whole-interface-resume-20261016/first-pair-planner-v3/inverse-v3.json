@@ -1,0 +1,9 @@
+{
+  "all_other_bytes_exact": true,
+  "replacement": {
+    "new": "'argv': argv, 'cwd': str(Path(selection['original_project']).parent),",
+    "old": "'argv': argv, 'cwd': selection['producer_project'],"
+  },
+  "schema": "exact-first-pair-planner-cwd-inverse-1",
+  "source_or_descriptor_rewritten": false
+}
