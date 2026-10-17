@@ -1,0 +1,1015 @@
+{
+  "actual_execution": false,
+  "command_edits": [
+    {
+      "new": [
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-I",
+        "-B",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/linux_memory_capture_v1.py",
+        "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/linux_memory_capture_policy_v1.json",
+        "d1bfb65ad9bf85aab9cd7dce14ef3b5002134878d86dbaae432814b3082c7cf6"
+      ],
+      "old": [
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-I",
+        "-B",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/linux_compiler_capture_v10.py",
+        "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/linux_compiler_capture_policy_v10.json",
+        "8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517"
+      ],
+      "path": [
+        "argv"
+      ]
+    },
+    {
+      "new": [
+        {
+          "bytes": 28899,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/linux_memory_capture_v1.py",
+          "sha256": "685ba0fd66de6fb891e634b616fd47d36bffed2fbfa03ecc90ba0925985933a5"
+        },
+        {
+          "bytes": 23441,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v4.py",
+          "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+        },
+        {
+          "bytes": 17211,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/compiler_unit_adapter_v4.py",
+          "sha256": "541c6af68717c5fba4968f23f123fdf51e79edd9a3dff501ff7fa025fc38f9b5"
+        },
+        {
+          "bytes": 3258,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/same_thread_memory_v1.cpp",
+          "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
+        },
+        {
+          "bytes": 1588,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_abi_probe_v1.cpp",
+          "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34"
+        },
+        {
+          "bytes": 133,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_include_v1/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 18385,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+          "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+        },
+        {
+          "bytes": 9610,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+          "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+        },
+        {
+          "bytes": 2709,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+          "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+        },
+        {
+          "bytes": 116503,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+          "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+        },
+        {
+          "bytes": 6812,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/lossless_gzip_v2.py",
+          "sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef"
+        },
+        {
+          "bytes": 1798,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selected-python-zlib-origin-observation-20261016.json",
+          "sha256": "bc53f66a5c159b43af8b3fbc69a0ec367c39197589e57fd8af505e5730ae4e3d"
+        },
+        {
+          "bytes": 666024,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/linux_memory_capture_policy_v1.json",
+          "sha256": "d1bfb65ad9bf85aab9cd7dce14ef3b5002134878d86dbaae432814b3082c7cf6"
+        }
+      ],
+      "old": [
+        {
+          "bytes": 30011,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/linux_compiler_capture_v10.py",
+          "sha256": "095eee7198167f5e89ae3a64deb2c42e8097951d957a91de0a7c8fd6efb60810"
+        },
+        {
+          "bytes": 23441,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v4.py",
+          "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+        },
+        {
+          "bytes": 17211,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/compiler_unit_adapter_v4.py",
+          "sha256": "541c6af68717c5fba4968f23f123fdf51e79edd9a3dff501ff7fa025fc38f9b5"
+        },
+        {
+          "bytes": 34803,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+          "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+        },
+        {
+          "bytes": 4524,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+          "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+        },
+        {
+          "bytes": 1588,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_abi_probe_v1.cpp",
+          "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34"
+        },
+        {
+          "bytes": 133,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_include_v1/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 18385,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+          "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+        },
+        {
+          "bytes": 9610,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+          "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+        },
+        {
+          "bytes": 2709,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+          "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+        },
+        {
+          "bytes": 116503,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+          "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+        },
+        {
+          "bytes": 6812,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/lossless_gzip_v2.py",
+          "sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef"
+        },
+        {
+          "bytes": 1798,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selected-python-zlib-origin-observation-20261016.json",
+          "sha256": "bc53f66a5c159b43af8b3fbc69a0ec367c39197589e57fd8af505e5730ae4e3d"
+        },
+        {
+          "bytes": 7959,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/strict_minify_v2.py",
+          "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897"
+        },
+        {
+          "bytes": 666177,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/linux_compiler_capture_policy_v10.json",
+          "sha256": "8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517"
+        }
+      ],
+      "path": [
+        "controller_inputs"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10",
+      "path": [
+        "raw_root"
+      ]
+    },
+    {
+      "new": [
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.d",
+            "-MT",
+            "caller",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/same_thread_memory_v1.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "caller-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ast.d",
+            "-MT",
+            "caller-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/same_thread_memory_v1.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "caller-ast",
+          "same_parse_id_scope": "original caller full TU",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ast.json.gz"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.d",
+            "-MT",
+            "abi",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/compiler_abi_probe_v1.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "abi-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ast.d",
+            "-MT",
+            "abi-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "-Xclang",
+            "-ast-dump-filter=dws_probe_",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/compiler_abi_probe_v1.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "abi-ast",
+          "same_parse_id_scope": "ABI literals only, IDs never joined",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ast.json"
+        }
+      ],
+      "old": [
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.d",
+            "-MT",
+            "caller",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/source_call_fixture_v2.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "caller-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.d",
+            "-MT",
+            "caller-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/source_call_fixture_v2.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "caller-ast",
+          "same_parse_id_scope": "original caller full TU",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.json.gz"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.d",
+            "-MT",
+            "abi",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/compiler_abi_probe_v1.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "abi-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ast.d",
+            "-MT",
+            "abi-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "-Xclang",
+            "-ast-dump-filter=dws_probe_",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/compiler_abi_probe_v1.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "abi-ast",
+          "same_parse_id_scope": "ABI literals only, IDs never joined",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ast.json"
+        }
+      ],
+      "path": [
+        "recipe",
+        "commands"
+      ]
+    },
+    {
+      "added": true,
+      "new": false,
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "AST_or_ABI_interpreted_in_measurement"
+      ]
+    },
+    {
+      "old": true,
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "complete_TU_parser_unchanged"
+      ],
+      "removed": true
+    },
+    {
+      "old": true,
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "complete_original_json"
+      ],
+      "removed": true
+    },
+    {
+      "added": true,
+      "new": "strict complete-stream role normalization/inverse, original source/runtime/dependency closure, same-TU/ABI/call/body admission",
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "mandatory_downstream"
+      ]
+    },
+    {
+      "old": 134217728,
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "minified_file_limit"
+      ],
+      "removed": true
+    },
+    {
+      "old": true,
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "streaming_strict_token_preserving_minification"
+      ],
+      "removed": true
+    },
+    {
+      "added": true,
+      "new": true,
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "unfiltered_original_frontend_stdout"
+      ]
+    },
+    {
+      "new": "Four actual commands exit0 with a complete unfiltered lossless original caller stream and independent ABI-literal outputs, exact source/control/runtime/dependency pre/post closure, bounded healthy guard and finite root settlement. No AST/ABI interpretation, source/call/body/native/model/public acceptance is granted; separate reviewed strict transport and source consumers remain mandatory.",
+      "old": "All four actual commands exit0, exact original-source/ABI consumer succeeds, all26 names/both RF overloads, complete before/after source/control/runtime and dependency pins, owned tree guard healthy and finite root settlement.",
+      "path": [
+        "root_acceptance"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10",
+      "path": [
+        "root_required_environment",
+        "PROBATA_OUTPUT"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/verifier.lock",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/verifier.lock",
+      "path": [
+        "root_required_environment",
+        "SWDB_VERIFIER_LOCK"
+      ]
+    },
+    {
+      "new": "INERT: exact compiler-observation-only packet; independent review and root admission required",
+      "old": "INERT; independent review and root admission pending",
+      "path": [
+        "status"
+      ]
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "different_success_boundary": "Compiler observation only. No strict JSON/source/ABI consumer runs or succeeds here.",
+  "entry_edits": [
+    {
+      "new": "RAW_NAME = \"probata-resume-20261016-t28-memory-tu-2baf722f-v1\"",
+      "offset": 572,
+      "old": "RAW_NAME = \"probata-resume-20261016-t28-full-tu-2baf722f-v10\""
+    },
+    {
+      "new": "",
+      "offset": 1078,
+      "old": "MINIFIER_SHA = \"b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897\"\n"
+    },
+    {
+      "new": "MEMORY_SOURCE_SHA = \"55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887\"\n",
+      "offset": 1078,
+      "old": "BINDER_SHA = \"217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8\"\n"
+    },
+    {
+      "new": "",
+      "offset": 3940,
+      "old": "def check_prepared(prepared, declarations):\n    if {row[\"name\"] for row in prepared[\"calls\"]} != {row[\"name\"] for row in declarations}:\n        raise ValueError(\"actual source fixture does not exercise all26 source names\")\n    if {row[\"formal_arity\"] for row in prepared[\"calls\"] if row[\"name\"] == \"get_new_reg\"} != {0, 1}:\n        raise ValueError(\"actual initialized/uninitialized register overload census differs\")\n\n"
+    },
+    {
+      "new": "def memory_observation_recipe(adapter, *, compiler, project, raw):\n    \"\"\"Keep the complete original caller TU and independent ABI-literal parse.\"\"\"\n    recipe = lossless_recipe(adapter, compiler=compiler, project=project, raw=raw)\n    old_source = str(Path(raw) / \"control/source_call_fixture_v2.cpp\")\n    new_source = str(Path(raw) / \"control/same_thread_memory_v1.cpp\")\n    for item in recipe[\"commands\"][:2]:\n        if item[\"argv\"].count(old_source) != 1:\n            raise ValueError(\"exact inherited original-source caller recipe required\")\n        item[\"argv\"] = [new_source if token == old_source else token for token in item[\"argv\"]]\n    recipe[\"lossless_caller_stdout\"] = {\"codec\": \"gzip-single-member\", \"expanded_limit\": 2147483648,\n        \"retained_file_limit\": STAGE_BYTES, \"unfiltered_original_frontend_stdout\": True,\n        \"expanded_memory_is_not_retained_disk_bytes\": True, \"raw_full_DOM_materialized\": False,\n        \"AST_or_ABI_interpreted_in_measurement\": False,\n        \"mandatory_downstream\": \"strict complete-stream role normalization/inverse, original source/runtime/dependency closure, same-TU/ABI/call/body admission\"}\n    return recipe\n\n\ndef stream_caller_ast(",
+      "offset": 9599,
+      "old": "def stream_caller_ast("
+    },
+    {
+      "new": "def complete_observation(commands, groups):\n    return (len(groups) == 2 and [row[\"label\"] for row in groups] == [\"caller\", \"abi\"]\n        and [row[\"phase\"] for row in commands] == [\"caller-preprocess\", \"caller-ast\", \"abi-preprocess\", \"abi-ast\"]\n        and all(type(row.get(\"returncode\")) is int and row[\"returncode\"] == 0 for row in commands))\n\n\ndef main(argv):",
+      "offset": 13133,
+      "old": "def main(argv):"
+    },
+    {
+      "new": "",
+      "offset": 20044,
+      "old": "    minifier = module(\"strict_minify_v2.py\", MINIFIER_SHA)\n"
+    },
+    {
+      "new": "",
+      "offset": 20149,
+      "old": "    binder = module(\"whole_interface_v4.py\", BINDER_SHA)\n    declarations = binder.inventory(project)\n"
+    },
+    {
+      "new": "(\"same_thread_memory_v1.cpp\", \"compiler_abi_probe_v1.cpp\", \"m5ops.h\")",
+      "offset": 20509,
+      "old": "(\"source_call_fixture_v2.cpp\", \"compiler_abi_probe_v1.cpp\", \"m5ops.h\")"
+    },
+    {
+      "new": "    if original_inputs[0][\"sha256\"] != MEMORY_SOURCE_SHA or original_inputs[0][\"bytes\"] != 3258:\n        raise ValueError(\"exact reviewed three-function memory source required\")\n    original_inputs += [pin(project / row[\"relative\"]) for row in policy[\"source_inputs\"]]",
+      "offset": 20580,
+      "old": "    original_inputs += [pin(project / row[\"relative\"]) for row in policy[\"source_inputs\"]]"
+    },
+    {
+      "new": "    recipe = memory_observation_recipe(adapter, compiler=compiler[\"command\"][0], project=str(project), raw=str(raw))",
+      "offset": 21097,
+      "old": "    recipe = lossless_recipe(adapter, compiler=compiler[\"command\"][0], project=str(project), raw=str(raw))"
+    },
+    {
+      "new": "    commands, groups, observation_complete, error, after_errors = [], [], False, None, []",
+      "offset": 21744,
+      "old": "    commands, groups, prepared, error, after_errors = [], [], None, None, []"
+    },
+    {
+      "new": "source_name = \"same_thread_memory_v1.cpp\" if label == \"caller\" else \"compiler_abi_probe_v1.cpp\"",
+      "offset": 24481,
+      "old": "source_name = \"source_call_fixture_v2.cpp\" if label == \"caller\" else \"compiler_abi_probe_v1.cpp\""
+    },
+    {
+      "new": "        observation_complete = complete_observation(commands, groups)\n",
+      "offset": 26480,
+      "old": "        stream_receipt = json.loads((out / \"caller.ast.gzip.json\").read_bytes())\n        def decode_check():\n            if time.monotonic() >= deadline - 10 or bytes_used() > TOTAL_BYTES - FINAL_METADATA_RESERVE:\n                raise ValueError(\"lossless decode entry deadline/output allowance exceeded\")\n        tentative = out / \"caller.ast.minified.tentative\"\n        with (out / \"caller.ast.json.gz\").open(\"rb\") as compressed, tentative.open(\"xb\") as target:\n            decoded = codec.DecodeReader(zlib_module, compressed, stream_receipt, expanded_limit=2147483648,\n                compressed_limit=STAGE_BYTES, check=decode_check)\n            identity = minifier.minify(decoded, target, raw_limit=2147483648,\n                retained_limit=STAGE_BYTES, check=decode_check)\n            if not decoded.verified or (identity[\"raw_bytes\"], identity[\"raw_sha256\"]) != (stream_receipt[\"expanded_bytes\"], stream_receipt[\"expanded_sha256\"]):\n                raise ValueError(\"complete original gzip/minified JSON identity differs\")\n        decode_check()\n        minified_path = out / \"caller.ast.minified.json\"\n        os.rename(tentative, minified_path)\n        minified_pin = pin(minified_path)\n        if (minified_pin[\"bytes\"], minified_pin[\"sha256\"]) != (identity[\"minified_bytes\"], identity[\"minified_sha256\"]):\n            raise ValueError(\"physical complete minified TU differs\")\n        save(out / \"caller.ast.identity.json\", identity)\n        groups[0][\"minified_ast\"] = minified_pin\n        groups[0][\"token_identity\"] = pin(out / \"caller.ast.identity.json\")\n        full_tu_raw = minified_path.read_bytes()\n        prepared = adapter.prepare_unit(binder.__dict__, full_tu_raw=full_tu_raw,\n            abi_raw=(out / \"abi.ast.json\").read_bytes(), source_path=control / \"source_call_fixture_v2.cpp\",\n            source_bytes=(control / \"source_call_fixture_v2.cpp\").read_bytes(), probe_path=control / \"compiler_abi_probe_v1.cpp\",\n            probe_bytes=(control / \"compiler_abi_probe_v1.cpp\").read_bytes(), declarations=declarations,\n            compiler_capture_pin=pin(out / \"compiler-observation.json\")[\"sha256\"],\n            full_tu_identity=identity, full_tu_compressed_bytes=stream_receipt[\"compressed_bytes\"])\n        del full_tu_raw\n        check_prepared(prepared, declarations)\n        save(out / \"source-preparation.json\", prepared)\n"
+    },
+    {
+      "new": "accepted = error is None and not after_errors and observation_complete and not cache_present and bytes_used() <= TOTAL_BYTES",
+      "offset": 27937,
+      "old": "accepted = error is None and not after_errors and prepared is not None and len(commands) == 4 and not cache_present and bytes_used() <= TOTAL_BYTES"
+    },
+    {
+      "new": "            \"compiler_observation_complete\": observation_complete,\n            \"source_names\": [], \"source_call_count\": 0, \"source_call_admitted\": False, \"ABI_interpreted\": False,\n            \"strict_complete_TU_consumer_passed\": False,\n            \"scope\": \"Actual four-phase Clang observation only; strict complete-stream role normalization and source/runtime/dependency/same-TU/ABI/call/body/public admission remain required\",",
+      "offset": 28236,
+      "old": "            \"source_names\": sorted({row[\"name\"] for row in prepared[\"calls\"]}) if prepared else [],\n            \"source_call_count\": len(prepared[\"calls\"]) if prepared else 0,\n            \"scope\": \"Actual Clang source/ABI preparation only; source/CPU/model/public admission remains required\","
+    }
+  ],
+  "new_exact_source": {
+    "bytes": 3258,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/same_thread_memory_v1.cpp",
+    "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
+  },
+  "policy_edits": [
+    {
+      "new": [
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.d",
+            "-MT",
+            "caller",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/same_thread_memory_v1.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "caller-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ast.d",
+            "-MT",
+            "caller-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/same_thread_memory_v1.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "caller-ast",
+          "same_parse_id_scope": "original caller full TU",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ast.json.gz"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.d",
+            "-MT",
+            "abi",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/compiler_abi_probe_v1.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "abi-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ast.d",
+            "-MT",
+            "abi-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "-Xclang",
+            "-ast-dump-filter=dws_probe_",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/compiler_abi_probe_v1.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component",
+          "phase": "abi-ast",
+          "same_parse_id_scope": "ABI literals only, IDs never joined",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ast.json"
+        }
+      ],
+      "old": [
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.d",
+            "-MT",
+            "caller",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/source_call_fixture_v2.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "caller-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.d",
+            "-MT",
+            "caller-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/source_call_fixture_v2.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "caller-ast",
+          "same_parse_id_scope": "original caller full TU",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.json.gz"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-E",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.d",
+            "-MT",
+            "abi",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/compiler_abi_probe_v1.cpp",
+            "-o",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ii"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "abi-preprocess"
+        },
+        {
+          "argv": [
+            "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "--no-default-config",
+            "-std=c++17",
+            "-fopenmp",
+            "-DNUM_CORES=4",
+            "-DTILE_SIZE=16384",
+            "-I/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project/apps/dx100/benchmarks/API",
+            "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/include",
+            "-x",
+            "c++",
+            "-fsyntax-only",
+            "-MD",
+            "-MF",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ast.d",
+            "-MT",
+            "abi-ast",
+            "-Xclang",
+            "-ast-dump=json",
+            "-Xclang",
+            "-ast-dump-filter=dws_probe_",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/compiler_abi_probe_v1.cpp"
+          ],
+          "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component",
+          "phase": "abi-ast",
+          "same_parse_id_scope": "ABI literals only, IDs never joined",
+          "source_coordinate_space": "original physical source buffers",
+          "stdout": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ast.json"
+        }
+      ],
+      "path": [
+        "capture_recipe",
+        "commands"
+      ]
+    },
+    {
+      "added": true,
+      "new": false,
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "AST_or_ABI_interpreted_in_measurement"
+      ]
+    },
+    {
+      "old": true,
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "complete_TU_parser_unchanged"
+      ],
+      "removed": true
+    },
+    {
+      "old": true,
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "complete_original_json"
+      ],
+      "removed": true
+    },
+    {
+      "added": true,
+      "new": "strict complete-stream role normalization/inverse, original source/runtime/dependency closure, same-TU/ABI/call/body admission",
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "mandatory_downstream"
+      ]
+    },
+    {
+      "old": 134217728,
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "minified_file_limit"
+      ],
+      "removed": true
+    },
+    {
+      "old": true,
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "streaming_strict_token_preserving_minification"
+      ],
+      "removed": true
+    },
+    {
+      "added": true,
+      "new": true,
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "unfiltered_original_frontend_stdout"
+      ]
+    },
+    {
+      "old": {
+        "bytes": 30011,
+        "sha256": "095eee7198167f5e89ae3a64deb2c42e8097951d957a91de0a7c8fd6efb60810"
+      },
+      "path": [
+        "controller_files",
+        "linux_compiler_capture_v10.py"
+      ],
+      "removed": true
+    },
+    {
+      "added": true,
+      "new": {
+        "bytes": 28899,
+        "sha256": "685ba0fd66de6fb891e634b616fd47d36bffed2fbfa03ecc90ba0925985933a5"
+      },
+      "path": [
+        "controller_files",
+        "linux_memory_capture_v1.py"
+      ]
+    },
+    {
+      "added": true,
+      "new": {
+        "bytes": 3258,
+        "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
+      },
+      "path": [
+        "controller_files",
+        "same_thread_memory_v1.cpp"
+      ]
+    },
+    {
+      "old": {
+        "bytes": 4524,
+        "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+      },
+      "path": [
+        "controller_files",
+        "source_call_fixture_v2.cpp"
+      ],
+      "removed": true
+    },
+    {
+      "old": {
+        "bytes": 7959,
+        "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897"
+      },
+      "path": [
+        "controller_files",
+        "strict_minify_v2.py"
+      ],
+      "removed": true
+    },
+    {
+      "old": {
+        "bytes": 34803,
+        "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+      },
+      "path": [
+        "controller_files",
+        "whole_interface_v4.py"
+      ],
+      "removed": true
+    },
+    {
+      "new": "685ba0fd66de6fb891e634b616fd47d36bffed2fbfa03ecc90ba0925985933a5",
+      "old": "095eee7198167f5e89ae3a64deb2c42e8097951d957a91de0a7c8fd6efb60810",
+      "path": [
+        "entry_sha256"
+      ]
+    },
+    {
+      "added": true,
+      "new": true,
+      "path": [
+        "observation_only"
+      ]
+    },
+    {
+      "new": "probata-resume-20261016-t28-memory-tu-2baf722f-v1",
+      "old": "probata-resume-20261016-t28-full-tu-2baf722f-v10",
+      "path": [
+        "raw_name"
+      ]
+    },
+    {
+      "new": "t28-three-memory-TU-compiler-observation-1",
+      "old": "t28-whole-source-compiler-capture-10",
+      "path": [
+        "schema"
+      ]
+    }
+  ],
+  "predecessor": {
+    "bytes": 30011,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/linux_compiler_capture_v10.py",
+    "sha256": "095eee7198167f5e89ae3a64deb2c42e8097951d957a91de0a7c8fd6efb60810"
+  },
+  "predecessor_command": {
+    "bytes": 14058,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/linux_compiler_capture_command_v10.json",
+    "sha256": "915ced6467e572a0d204d1fc5d30b45054ae66d554c33dca8ec7f4dfe45c2a35"
+  },
+  "predecessor_policy": {
+    "bytes": 666177,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/linux_compiler_capture_policy_v10.json",
+    "sha256": "8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517"
+  },
+  "prospective_node": 1,
+  "resource_source_runtime_dependency_gates_unchanged": true,
+  "successor": {
+    "bytes": 28899,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/linux_memory_capture_v1.py",
+    "sha256": "685ba0fd66de6fb891e634b616fd47d36bffed2fbfa03ecc90ba0925985933a5"
+  },
+  "unchanged_functions": [
+    "_stable_capture_stat",
+    "pin",
+    "save",
+    "recheck",
+    "original_helpers",
+    "check_derived_stub",
+    "compare_dependencies",
+    "finalization_payloads",
+    "finalize_capture",
+    "bind_zlib",
+    "lossless_recipe",
+    "stream_caller_ast"
+  ]
+}

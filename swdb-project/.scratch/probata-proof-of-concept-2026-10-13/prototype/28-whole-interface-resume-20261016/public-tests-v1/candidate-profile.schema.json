@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "2026-10-16 ET. One separately prepared positive SourceUnit candidate; no summary record attribution.",
+  "properties": {
+    "candidate": {
+      "pattern": "^candidate\\.",
+      "type": "string"
+    },
+    "contract": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "entry": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "library": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "prepared_unit": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "records": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "runs": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "schema": {
+      "const": "checked-whole-positive-candidate-profile-1"
+    }
+  },
+  "required": [
+    "schema",
+    "candidate",
+    "contract",
+    "prepared_unit",
+    "entry",
+    "library",
+    "records",
+    "runs"
+  ],
+  "type": "object"
+}

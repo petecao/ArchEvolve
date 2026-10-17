@@ -1,0 +1,20 @@
+test_complete_actual_join_accounts_every_goal_declaration_definition_and_support (__main__.Controls) ... ok
+test_declared_product_or_function_type_change_cannot_hide_behind_its_name (__main__.Controls) ... ok
+test_empty_needs_both_complete_maps_and_exact_definition (__main__.Controls) ... ok
+test_missing_or_false_source_goal_and_duplicate_task_are_refused (__main__.Controls) ... FAIL
+test_source_or_physical_identity_change_prevents_reconciliation (__main__.Controls) ... ok
+test_unknown_support_or_definition_remains_refused (__main__.Controls) ... ok
+
+======================================================================
+FAIL: test_missing_or_false_source_goal_and_duplicate_task_are_refused (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/g621-semantic-reconciliation-v1/pure_controls.py", line 51, in test_missing_or_false_source_goal_and_duplicate_task_are_refused
+    ns['reconcile'](old, value, context, semantic)
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.051s
+
+FAILED (failures=1)
+{"child_native_network_attempts": [], "controls": 6, "failures": 1, "errors": 0}

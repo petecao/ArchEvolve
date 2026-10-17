@@ -1,0 +1,64 @@
+{
+  "complete_available_capture": false,
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 77319,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-cold-v1/entry.py",
+    "sha256": "7154ecc6fdc030157be5cfed925f855b3b20f72091c95202281a27ab2d024e87"
+  },
+  "exact_command": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "200s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "exit_code": 1,
+  "postflight": {
+    "bytes": 2544,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-root-postflight-v1-20261016.json",
+    "sha256": "8cdcf5433228904c94b9cc2cd15684fd7828dfd054a37961e15d480957ebe0b9"
+  },
+  "postflight_exit_code": 0,
+  "preflight": {
+    "bytes": 2544,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-root-preflight-v1-20261016.json",
+    "sha256": "12bd6106abfe4a4f34b09388999d890b9f55b6fa07d016178408400ad0c01910"
+  },
+  "root_admission": {
+    "bytes": 2515,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-root-admission-v1-20261016.json",
+    "sha256": "83884e8670d7e3cb81a930228df9d08f8b46ca7fa1b5a914ac32609509e5c41a"
+  },
+  "scientific_cold_acceptance": false,
+  "source_caller_or_ticket_acceptance": false,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-root-actual-v1-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 180,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-root-actual-v1-stdout-20261016.json",
+    "sha256": "77545f563426800de30c7f670ec0b9308256c0a6351c080597e0d1e17a1ed8d5"
+  },
+  "total_seconds": 6.939898834039923,
+  "wall_seconds": 5.326081582985353
+}

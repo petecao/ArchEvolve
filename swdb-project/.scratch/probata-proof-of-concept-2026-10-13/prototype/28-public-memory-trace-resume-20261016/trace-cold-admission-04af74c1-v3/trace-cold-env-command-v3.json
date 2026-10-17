@@ -1,0 +1,44 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPATH=/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/cache",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/reader-source-cache",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace_cold_audit_v3.py",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace-cold-policy-04af74c1-v3.json",
+    "e2fe50f515a9eb287d5a559909671f01451dec932c4ec5d6256d9de472c86531"
+  ],
+  "command_packet": {
+    "bytes": 11928,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-command-04af74c1-v3.json",
+    "sha256": "bed80b2d67ef90e1059042d3f2bb30fc62301407a3d283d91d4419103afc5f34"
+  },
+  "control_bytes": 681445,
+  "controls": 17,
+  "date": "2026-10-16 ET",
+  "environment": {
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/cache"
+  },
+  "outer_timeout_seconds": 180,
+  "reader_executed": false,
+  "required_absent": [
+    "PYTHONNOUSERSITE",
+    "PYTHONSAFEPATH",
+    "SETUPTOOLS_USE_DISTUTILS"
+  ],
+  "scientific_reexecution": false
+}

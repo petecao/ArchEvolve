@@ -1,0 +1,100 @@
+{
+  "assembly": {
+    "bytes": 5870,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/prepare_source_dispatch_v1.py",
+    "sha256": "54700c31d74514170599021c846b5063966d11f2ea43ec8f7a15cbd92e5f216d"
+  },
+  "boundaries": {
+    "actual_tool_or_runtime_execution": false,
+    "current_0_2": false,
+    "full_ticket28": false,
+    "public_admission": false,
+    "source_module_modified": false,
+    "synthetic_fixture_semantics_not_executed": true
+  },
+  "date": "2026-10-16 ET",
+  "decision": "No production source-call admission for frozen V1 until ordinary\u2194MMIO aliasing is closed. Other reviewed assembly/refusal boundaries remain source-preparation only. Review the separately versioned narrow repair; do not relabel V1 or native86 results.",
+  "findings": [
+    {
+      "author_response": "public_review confirmed no current concrete producer gate closes this and is authoring V2 with source-derived six-region exclusion and runtime checks. Synthetic fixture addresses are already disjoint; old packets remain frozen.",
+      "classification": "Mandatory source/model mapping and refusal condition. This is not an optional hardware/body refinement theorem and cannot be silently added as a candidate premise.",
+      "consequence": "dws_object_pointer makes kind1; CPU access takes dxc_cpu_read/write memory-footprint path and ordinary cell instead of dxp_cpu_read/write_bits tile physical-pair/ownership/pending-mask path. A pending ALU/tile command need not carry a nonzero memory envelope. Memory command mapping likewise uses independent ordinary cells. This can bypass tile histories/ownership if later admitted as an ordinary alias.",
+      "file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_dispatch_v1.py",
+      "id": "ordinary_mmio_alias_history",
+      "line": 65,
+      "priority": "P1",
+      "problem": "prepare_atlas checks ordinary views only against other ordinary views. Neither it nor generated ordinary object descriptor/access/memory projection checks disjointness from the fixed tile/register/MMIO address window. The same physical bytes can acquire an independent ordinary dxm_memory cell history and tile/register byte history.",
+      "required_repair": "Preserve V1. Add exact source-derived complete modeled-MMIO guest and physical exclusion in atlas preparation, and recheck in generated bridge before ordinary CPU/memory/address projection; bind the geometry to the accepted source/backend domain. Alternatively a complete shared-byte history bridge is required. Add refusal controls for every region, boundary crossing, both guest-only/physical-only overlap and exact adjacent safe spans.",
+      "static_counterexample": {
+        "dtype": 0,
+        "extent": 1,
+        "guest_base": 17179869184,
+        "object_id": "alias_of_cacheable_tile0",
+        "physical_base": 17179869184,
+        "reason": "Passes nonempty/type/hash/alignment/nonwrap/ordinary-overlap guards, but aliases actual source cacheable tile0 bytes.",
+        "source_pin": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "title": "Refuse ordinary guest/physical spans that overlap modeled MMIO"
+    }
+  ],
+  "module": {
+    "bytes": 24640,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_dispatch_v1.py",
+    "sha256": "ffbbeb7f127cabbc3fb12c9297a0b0e62a0d115895f8dc3fd1a763e2fc7ed750"
+  },
+  "outputs": [
+    {
+      "bytes": 71594,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-dispatch-contracts-v1.json",
+      "sha256": "8b90af9356ee0107577d99fbd4d6c1665d4dc49305b234b6ea7ca15e2f69fa69"
+    },
+    {
+      "bytes": 2613,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-dispatch-synthetic-inputs-v1.json",
+      "sha256": "679aec9c5e20808d1ad792fad88f866c261d20785d99c5f3a850b3fcff9e7248"
+    },
+    {
+      "bytes": 10090,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_direct_families_v1.h",
+      "sha256": "f8f4463a7ca89d236a149ed8fdffb59619e84d70980c7453018f8d716713dc01"
+    },
+    {
+      "bytes": 9258,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_pointer_bridge_synthetic_v1.h",
+      "sha256": "cb08f79691a3e523e28cc3f6b675f166d48913048cf5f52abb0930406c054798"
+    },
+    {
+      "bytes": 45071,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_routes_synthetic_v1.h",
+      "sha256": "24c5529eba20e482db66eecb1464601292436010185588ff7566eb3916df3e57"
+    }
+  ],
+  "packet": {
+    "bytes": 20501,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-dispatch-preparation-v1.json",
+    "sha256": "0e2c2101630e399beb36f68469588617e781d02c51ae38309ec7ba96f4e74c14"
+  },
+  "readme": {
+    "bytes": 7049,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/README-source-dispatch-v1.md",
+    "sha256": "95574f2454df45c4d33daede1a97288e77695df98f37709afdb86ef08e010252"
+  },
+  "reviewer": "/root/lane_coordination",
+  "scope": "Frozen source-only consumer/emitter packet0e2c2101; no in-flight full-TU adapter orproductionroute review. No compiler/native/verifier/solver/test/SSH execution by reviewer.",
+  "static_passes": {
+    "CPU_pointer_domain": "Within classified disjoint ordinary storage,the same cell IDs and physical spans feed CPU and device memory projections. Pointer formation is bounded and handlesINT64_MIN subtraction without negation overflow,onepast formation and no onepast dereference; tile accesses retain dxp byte/pair gates. Noncacheable CPU access refuses; actual fullCPU instrumentation remains pending.",
+    "admission_scope": "Synthetic ABI/address headers andinert fixture supply source-assembly controls only. Actual completeTU/ABI/declaration correlation,source-expression/evaluation lowering,CPU effects andnew0.2 per-call production/public evidence remain mandatory. Owned MMIO-implements-semantics premise is accepted; optional hardware/body theorem is not a blocker.",
+    "deferred_value_semantics": "New routes do not cover values or deferred indices at issue. Conservative remaining-object envelopes,F2/first-ID/full-line/count-ready checks,immutable captured versions,old-value order and numeric safety remain in exact frozen backends/builders.",
+    "ordinary_aliases": "Same physical typed units share stable cell IDs independent of atlas registration order; same guest bytes require consistent translation/type; overlapping mixed dtype/width refuses. No registration call seeds value/initializedness/ownership/history. Cross-MMIO classification remains the finding.",
+    "physical_closure": "All66 current input/output rows and all49 frozen prior value rows physically match size/SHA. Reviewed binder V3 and prior value/backend/native fixture bytes remain unchanged.",
+    "routes": "All132 distinct contracts match exact27declarations/26names,header/body/source-line pins,and each generated c_name definition is unique.11direct family specializations retain exact packet role maps,prepare\u2192fixedbuilder\u2192bind with atomic-construction check. No candidate value callback is introduced.",
+    "source_binding": "bind_dispatch freshly calls pinned V3 recheck_binding and dispatch_plan, locates exactly the same caller/range, checks every effective argument index/subtree digest/scalar-vs-pointer kind and safe staged identifier. Pinned default-1 and fixed MAX6 are explicit. Actual expression evaluation/staging remains declared producer TCB,not established by a hash.",
+    "standards": "Pure stdlib module,dated documents,scoped prototype sources and source-owned fixed emitters; public source/value packets preserved.13retained no-child controls inspected as author evidence; no reviewer execution. Tests cover synthetic source bindings/refusals but do not close ordinary-MMIO aliasing."
+  },
+  "status": "CHANGES_REQUIRED_BEFORE_PRODUCTION_SOURCE_CALL_ADMISSION",
+  "tests": {
+    "bytes": 10480,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_dispatch_v1.py",
+    "sha256": "732289bae99f9dcdefa612f8b27c286cc5ec408eeb5adfe4a72a7b21133ee868"
+  }
+}

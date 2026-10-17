@@ -1,0 +1,72 @@
+{
+  "actual_compiler_or_native_or_verifier_execution": false,
+  "all_nested_source_runtime_guard_bodies_exact": true,
+  "author": {
+    "bytes": 6497,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/prepare.py",
+    "sha256": "77e1a5d8d039cb112b1d3b2e9a501b7689ac45965cef1539d8c53b35443668aa"
+  },
+  "compiler_worker_guard_delta": "Exact previous generation guard, only function name and log filename changed; inverse checked.",
+  "compressed_bootstrap_inverse_exact": true,
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 31573,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/entry.py",
+    "sha256": "61bc84133e0611ba5b32d4fc94b42f4762d3bedacc7857ce5d87ed53b8029ab8"
+  },
+  "expected": {
+    "bytes": 220101,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/expected.json",
+    "sha256": "297388f1aed0b6fbc0513d6227e390f75e03c2404748b52ebc4e75ccf764d54b"
+  },
+  "fixture": {
+    "bytes": 327,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/lowering/vector_owned_transfer.cc",
+    "sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2"
+  },
+  "predecessor": {
+    "bytes": 5399,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/public9-v3/inert-032e1851-public9-v3/packet.json",
+    "sha256": "b80164a7d869593b5c4fafbaebf291d8294170e1e8b256c6e9d685d33428e378"
+  },
+  "proof_or_source_or_caller_or_Typed_acceptance": false,
+  "proof_policy": {
+    "additional_original_function_AST_parses": 1,
+    "native_user_program_executions": 0,
+    "proof_records": 0,
+    "public_lower_calls": 1,
+    "verifier_calls": 0
+  },
+  "raw_C_AST_remain_remote": true,
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 150,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 536870912,
+    "per_file_bytes": 134217728,
+    "profile_seconds": 180,
+    "root_headroom_bytes": 4194304,
+    "root_outer_seconds": 360,
+    "root_post_exit_reserve_bytes": 524288,
+    "root_whole_seconds": 240,
+    "workers": 1
+  },
+  "root_command": {
+    "bytes": 103630,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/root-command.json",
+    "sha256": "2550eeef8d65eabc7017a9c19b212ac69da234bdbe1b920a565dfd5f02b55732"
+  },
+  "root_kind": "t25-owned-move-compiler-observation-v1",
+  "source_commit": "032e1851eec7b195c7a3737997d5f5ea1d1343a5",
+  "status": "INERT_UNEXECUTED_ROOT_REVIEW_REQUIRED",
+  "template": {
+    "bytes": 6691,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/main_template.py",
+    "sha256": "ed41eb3faf6e30f8722b25b3436f42253690e297b5c255a4d13d57192f12b565"
+  },
+  "worker": {
+    "bytes": 4039,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/worker.py",
+    "sha256": "bd3dfa7374666998326b2b9cac956b1d4b4e2246158ce747053488bbdbea6733"
+  }
+}

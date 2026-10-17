@@ -1,0 +1,51 @@
+{
+  "admission": {
+    "bytes": 1469,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-g644-postflight-root-once-admission-20261016.json",
+    "sha256": "9581286557b4df9c14341298e9a29f0427a42fcce83508d08b87a682543f26db"
+  },
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "35s",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "compiler_native_solver_or_mutation": false,
+  "date": "2026-10-16 ET",
+  "elapsed_seconds": 0.9384447089978494,
+  "exit_code": 0,
+  "output_within_caps": true,
+  "source": {
+    "bytes": 12358,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/header3-local-actual-v1/scoped-postflight-g644-v1.py",
+    "sha256": "11b1640f5d7028b27f678b23cad261a23918ed4f785c4f5a78ff78602325237d"
+  },
+  "started_utc": "2026-10-17T01:27:54.418247+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-v1-final-postflight-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 6368,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-v1-final-postflight-stdout-20261016.json",
+    "sha256": "d1913ffbfd4c88a324ae92fad54b270a72759fce0d1eaad9b4813ad339a092b8"
+  }
+}

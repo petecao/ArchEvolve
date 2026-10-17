@@ -1,0 +1,55 @@
+{
+  "actual_command_sha256": "c5accdb49dd2574b2bfd0cbf2a02320137756b39adcbdf5d3adc2cb3fc85f2e5",
+  "command_tail": [
+    "/data1/yanruj/probata-resume-20261016-c978393b/swdb-project",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1"
+  ],
+  "created": "2026-10-16 ET",
+  "interpreter_current_pin": {
+    "path": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "launch_policy": {
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "source": "/data1/yanruj/probata-resume-20261016-c978393b",
+    "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+    "timeout_seconds": 1500,
+    "workers": 1
+  },
+  "launch_sha256": "c2c4814ecf4dda505f115477cea25e262d1801e31fb9a054909bada2d11951b4",
+  "reader_artifacts": [
+    {
+      "bytes": 5724,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/reader/proof_report.cmi",
+      "sha256": "062ed72653f9ac4c305d6e9f13d62af1ac864b94a09de92e254995fff75556af"
+    },
+    {
+      "bytes": 6426,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/reader/proof_report.cmx",
+      "sha256": "f202b19905b6754492554794a444afc1af92a66640666c9bffc1a29b9a62c40a"
+    },
+    {
+      "bytes": 77968,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/reader/proof_report.cmxs",
+      "sha256": "a8ca2bda18e2b8b991fe645d6727bcf332dd8e7d5d4a26df7eeb12eb1ecc63e7"
+    },
+    {
+      "bytes": 12925,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/reader/proof_report.ml",
+      "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16"
+    },
+    {
+      "bytes": 61272,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/reader/proof_report.o",
+      "sha256": "3c6d4559ea5935f98c7d2a8c1f4c5924f20549ae596f3aeacf5a713b66e10204"
+    }
+  ],
+  "reader_source_matches_selected": true,
+  "scope": "Passive retained/current byte metadata only; no interpreter/tool probes, lock ownership inference or submitted-byte attestation.",
+  "source_after_sha256": "d802241ba136df7e6cfedc2fa31e3f190c37add263bdb17a39edc6ca888a2970",
+  "verifier_lock_file_present": false
+}

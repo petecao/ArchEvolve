@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "130s",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "date": "2026-10-16 ET",
+  "elapsed_seconds": 1.3120361249893904,
+  "exit_code": 0,
+  "native_verifier_compiler_or_job_rerun": false,
+  "remote_mutation": false,
+  "started_utc": "2026-10-17T01:22:42.117841+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-v1-complete-settlement-001-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdin_sha256": "548c300dbbead3493f56a1fae2ffdc14584dc71fec55697e28d12874eb1ccb46",
+  "stdout": {
+    "bytes": 49400,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-v1-complete-settlement-001-stdout-20261016.json",
+    "sha256": "43452f8b9465c900c9621f83fd61b6357fd4acaa8d95b651a9c9d3c4f458244a"
+  },
+  "within_output_cap": true
+}

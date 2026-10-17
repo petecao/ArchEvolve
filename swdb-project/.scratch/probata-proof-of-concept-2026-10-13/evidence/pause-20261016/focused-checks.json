@@ -1,0 +1,74 @@
+{
+  "schema": "probata-pause-focused-checks-v1",
+  "date_et": "2026-10-16",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "-m",
+    "not whole_store",
+    "--basetemp",
+    "/private/tmp/probata-pause-20261016-checks/pytest",
+    "tests/test_vector_allocating_payload.py",
+    "tests/test_vector_float_mode.py",
+    "tests/test_vector_owned_swap_header_witness.py"
+  ],
+  "cwd": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project",
+  "rss_cap_bytes": 8589934592,
+  "timeout_seconds": 90,
+  "result": {
+    "exit_code": 0,
+    "peak_rss_bytes": 91865088,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 5.39876541600097,
+    "cpu_seconds": 5.136919
+  },
+  "inputs": [
+    {
+      "path": "swdb/vector_allocating_payload.py",
+      "sha256": "b40ed5e0130bf52750c69484d72a3326dff9e9bd39a7b3f1e243f09489b1159f",
+      "bytes": 39511
+    },
+    {
+      "path": "swdb/vector_typed_payload.mlw",
+      "sha256": "89c5564a6f07169ceda50b2685ad513dc28c6c5e2778d5f396797d62b7905f5e",
+      "bytes": 8100
+    },
+    {
+      "path": "swdb/vector_float_mode.py",
+      "sha256": "b48124bf057279c5018abfe65b8b2065173e4fcced27c83d33abf269fc2d3867",
+      "bytes": 6079
+    },
+    {
+      "path": "swdb/vector_owned_swap_header_witness.py",
+      "sha256": "c66f73db459483af2ca23c7a880fff3fe4e4141c5d15b134730ffa4cdfa6a5db",
+      "bytes": 24198
+    },
+    {
+      "path": "tests/test_vector_allocating_payload.py",
+      "sha256": "d167d7bdfc95bc2133d20d7a751b3396d32706a0b7184160468a334e1a9c5f04",
+      "bytes": 12202
+    },
+    {
+      "path": "tests/test_vector_float_mode.py",
+      "sha256": "1f11f677f8dddfac0099b464765ffe931387868586d57eebb19562c8ad637add",
+      "bytes": 5543
+    },
+    {
+      "path": "tests/test_vector_owned_swap_header_witness.py",
+      "sha256": "c4e4d79b7876250db66a0f9748d7dd97286b69b3d80b5279f39540c8f6b03677",
+      "bytes": 9605
+    }
+  ],
+  "inputs_unchanged": true,
+  "log": {
+    "path": "/private/tmp/probata-pause-20261016-checks/pytest.log",
+    "sha256": "392bee3ecf10144406424ca4c0e4c52cfc38a9951c5196fb308ee519caf8338a"
+  },
+  "scope": "14 source/preparation controls; no compiler, native or proof acceptance; full default suite deferred at user stop"
+}

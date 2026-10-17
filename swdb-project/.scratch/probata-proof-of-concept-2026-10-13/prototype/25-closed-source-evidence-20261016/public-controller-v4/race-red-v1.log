@@ -1,0 +1,49 @@
+test_exact_lock_directory_can_disappear_between_scandir_and_lstat (race_red_against_preserved_v3.RaceControls.test_exact_lock_directory_can_disappear_between_scandir_and_lstat) ... ERROR
+test_exact_lock_directory_can_disappear_before_queued_scandir (race_red_against_preserved_v3.RaceControls.test_exact_lock_directory_can_disappear_before_queued_scandir) ... ERROR
+
+======================================================================
+ERROR: test_exact_lock_directory_can_disappear_between_scandir_and_lstat (race_red_against_preserved_v3.RaceControls.test_exact_lock_directory_can_disappear_between_scandir_and_lstat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/pure_controls.py", line 297, in test_exact_lock_directory_can_disappear_between_scandir_and_lstat
+    with tempfile.TemporaryDirectory(dir=HERE) as folder:self.run_walk(Path(folder),'stat')
+                                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/pure_controls.py", line 291, in run_walk
+    observed=entry['raw_extent'](root)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/inert-1433b8f5-node0/entry.py", line 107, in raw_extent
+    observed = item.stat(follow_symlinks=False)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/pure_controls.py", line 277, in stat
+    return self.item.stat(**kw)
+           ~~~~~~~~~~~~~~^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/tmp6u66eijd/closed-source-profile/verifier.lock'
+
+======================================================================
+ERROR: test_exact_lock_directory_can_disappear_before_queued_scandir (race_red_against_preserved_v3.RaceControls.test_exact_lock_directory_can_disappear_before_queued_scandir)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/pure_controls.py", line 300, in test_exact_lock_directory_can_disappear_before_queued_scandir
+    with tempfile.TemporaryDirectory(dir=HERE) as folder:self.run_walk(Path(folder),'open')
+                                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/pure_controls.py", line 291, in run_walk
+    observed=entry['raw_extent'](root)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/inert-1433b8f5-node0/entry.py", line 104, in raw_extent
+    with os.scandir(parent) as entries:
+         ~~~~~~~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.14_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.14_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.14_1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/pure_controls.py", line 286, in scan
+    return Scan(path) if mode=='stat' else real_scandir(path)
+                                           ~~~~~~~~~~~~^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/tmp87rllylv/closed-source-profile/verifier.lock'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.013s
+
+FAILED (errors=2)
+PREPARED_V3_REPRODUCTION: expected 2 FileNotFoundError cases; no project/tool/native/SSH execution

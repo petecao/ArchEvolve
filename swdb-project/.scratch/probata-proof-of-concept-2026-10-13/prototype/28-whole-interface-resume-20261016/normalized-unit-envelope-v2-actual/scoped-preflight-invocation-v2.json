@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=5s 35s /usr/bin/python3 -I -B -"
+  ],
+  "ended_utc": "2026-10-17T00:07:32.398149+00:00",
+  "local_refusal": null,
+  "returncode": 0,
+  "schema": "observer-scoped-preflight-invocation-1",
+  "source": {
+    "bytes": 22029,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v2/root-derived-scoped-preflight-v2.py",
+    "sha256": "8560034532f4c670a2f448ea16f12ffa1fc19d16d5aa91281a15e8a01557f6b6"
+  },
+  "source_unchanged": true,
+  "started_utc": "2026-10-17T00:07:31.521846+00:00",
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 4586,
+    "sha256": "f058cc325234aac3188c5d0e66505c7f49cedfb085080e0396b447910898b088"
+  },
+  "wall_seconds": 0.8762456669937819
+}

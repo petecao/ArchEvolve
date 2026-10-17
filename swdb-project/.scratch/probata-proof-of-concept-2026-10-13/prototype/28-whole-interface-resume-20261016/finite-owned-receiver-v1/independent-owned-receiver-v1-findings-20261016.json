@@ -1,0 +1,36 @@
+{
+  "composer": {
+    "bytes": 16712,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v1/finite_owned_receiver_v1.py",
+    "sha256": "832e7440062dce0fe0d8e7c4689324abd6d62add03ec84c5d09f5e7c0ab759e1"
+  },
+  "consistent_source_scopes": [
+    "Exact frozen finite producer regeneration and all five prepared artifact comparisons.",
+    "Bounded physical pins/full stable rechecks, one-shot untouched static guards, no node/event/command count clearing, no resets/claims/waits/payload initialization.",
+    "Selected abstract prestate representation and ordered full-u32 draw rows; no original C++/ABI/hardware-equivalence inference.",
+    "All base recorded proof_semantics assumptions retained in entry order with proper entry#rule/physical entry SHA references."
+  ],
+  "date": "2026-10-16 ET",
+  "finding": {
+    "function": "rule_rows/resolve_rules",
+    "id": "OWNED-FINITE-01",
+    "priority": "P2",
+    "problem": "Each of the six fixed entry rule IDs has an exact context-dependent facts digest in its statement. Distinct corpus facts therefore produce different physical entry snapshots; the18 contexts cannot compose under one exact0.2 entry. Unioning these record_assumption rules would record unrelated contexts on every normal proof.",
+    "required_repair": "Use invariant same-entry owned-premise rules and a separately pinned exact owned-selection/facts identity, preserving actual Library entry validation as the public authority seam. Add two differing contexts sharing one physical entry and wrong context/owner/rule/hash controls."
+  },
+  "no_actual_or_public_acceptance_inferred": true,
+  "packet": {
+    "bytes": 183840,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v1/source-packet-v1.json",
+    "sha256": "3849b499b251efe4dc1124021583d588a0bf885d7887537f2161c65d8d8b099d"
+  },
+  "physical_pin_occurrences_verified": 485,
+  "reviewer_execution": {
+    "compiler_native_solver_SSH_or_project_import": false,
+    "source_only": true,
+    "tests": false
+  },
+  "schema": "finite-owned-receiver-independent-source-findings-1",
+  "unique_physical_files_verified": 303,
+  "verdict": "HOLD_SAME_PHYSICAL_ENTRY_COMPOSITION"
+}

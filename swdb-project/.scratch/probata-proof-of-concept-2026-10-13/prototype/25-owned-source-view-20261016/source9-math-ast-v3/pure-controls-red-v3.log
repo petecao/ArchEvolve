@@ -1,0 +1,42 @@
+test_actual_main_path_guard_still_rejects_other_suffixes_and_escapes (__main__.Controls.test_actual_main_path_guard_still_rejects_other_suffixes_and_escapes) ... ok
+test_all26_actual_frozen_paths_satisfy_the_actual_main_guard (__main__.Controls.test_all26_actual_frozen_paths_satisfy_the_actual_main_guard) ... ok
+test_all_heads_and_every_ordered_reference_retained (__main__.Controls.test_all_heads_and_every_ordered_reference_retained) ... ok
+test_atom_byte_bounds_cover_opaque_and_math_atoms (__main__.Controls.test_atom_byte_bounds_cover_opaque_and_math_atoms) ... ok
+test_changed_goal_cannot_match_old_census (__main__.Controls.test_changed_goal_cannot_match_old_census) ... ok
+test_changed_or_incomplete_commands_cannot_match_frozen_census (__main__.Controls.test_changed_or_incomplete_commands_cannot_match_frozen_census) ... ok
+test_complete26_dedup_preserves_all_tasks_and_commands (__main__.Controls.test_complete26_dedup_preserves_all_tasks_and_commands) ... ok
+test_context_is_complete_old26_and_exact_three_theories (__main__.Controls.test_context_is_complete_old26_and_exact_three_theories) ... ok
+test_depth_file_and_complete_token_coverage_caps (__main__.Controls.test_depth_file_and_complete_token_coverage_caps) ... ok
+test_digest_collision_refuses_instead_of_dedup_overwrite (__main__.Controls.test_digest_collision_refuses_instead_of_dedup_overwrite) ... ok
+test_full_math_syntax_is_preserved_without_normalization (__main__.Controls.test_full_math_syntax_is_preserved_without_normalization) ... ok
+test_missing_support_or_reordered_command_cannot_match (__main__.Controls.test_missing_support_or_reordered_command_cannot_match) ... ok
+test_only_exact_three_syntax_helpers_and_no_semantics (__main__.Controls.test_only_exact_three_syntax_helpers_and_no_semantics) ... ok
+test_opaque_payloads_are_not_exported (__main__.Controls.test_opaque_payloads_are_not_exported) ... ok
+test_physical_read_and_nine_stat_repeat_with_local_synthetic_file (__main__.Controls.test_physical_read_and_nine_stat_repeat_with_local_synthetic_file) ... ok
+test_psmt2_par_declaration_is_preserved_as_complete_unknown_math_syntax (__main__.Controls.test_psmt2_par_declaration_is_preserved_as_complete_unknown_math_syntax) ... ERROR
+test_publication_is_complete_and_bounded (__main__.Controls.test_publication_is_complete_and_bounded) ... ok
+test_query_multiplicity_and_epilogue_are_closed (__main__.Controls.test_query_multiplicity_and_epilogue_are_closed) ... ok
+test_read_only_audit_rejects_mutating_flags_and_other_paths (__main__.Controls.test_read_only_audit_rejects_mutating_flags_and_other_paths) ... ok
+test_shared_assertion_retains_distinct_goal_and_support_roles (__main__.Controls.test_shared_assertion_retains_distinct_goal_and_support_roles) ... ok
+test_unknown_commands_refuse_even_with_consistent_census (__main__.Controls.test_unknown_commands_refuse_even_with_consistent_census) ... ok
+
+======================================================================
+ERROR: test_psmt2_par_declaration_is_preserved_as_complete_unknown_math_syntax (__main__.Controls.test_psmt2_par_declaration_is_preserved_as_complete_unknown_math_syntax)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-math-ast-v3/pure_controls.py", line 250, in test_psmt2_par_declaration_is_preserved_as_complete_unknown_math_syntax
+    trees = {}; result = ns['capture_task'](changed, row(changed), trees)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-math-ast-v3/observer.py", line 129, in capture_task
+    command_shape(command)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-math-ast-v3/observer.py", line 102, in command_shape
+    need(len(command) == 4 and isinstance(command[1], str) and isinstance(command[2], list),
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-math-ast-v3/syntax.py", line 9, in need
+    raise ValueError(label)
+ValueError: complete function declaration shape
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.035s
+
+FAILED (errors=1)
+child_native_network_attempts=[]

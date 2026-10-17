@@ -1,0 +1,231 @@
+{
+  "actual_pair_acceptance": false,
+  "artifacts": [
+    {
+      "bytes": 17592,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/initialized_cold_obligations_v1.py",
+      "sha256": "dfc647552f4a1bbfd33cc4745289257a9aca4e8b587ce45ca9aa757066950dc9"
+    },
+    {
+      "bytes": 8007,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/initialized_cold_identities_v1.py",
+      "sha256": "eaef8aeca8a448566ff724e0d7c06fbf89c1f59b985ef7dcbad0fa06009f4049"
+    },
+    {
+      "bytes": 2149,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-reference-wp-correct.c",
+      "sha256": "a324f08bed8b8101fcff22461e408b440f2f227f0d4d4ac6f5dcbed1611bccdb"
+    },
+    {
+      "bytes": 2150,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-reference-wp-wrong.c",
+      "sha256": "46244c04dd878c93606add23f68a68732a5fe550d3d6b7ca308fedd4312fe094"
+    },
+    {
+      "bytes": 10578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_initialized_cold_obligations.py",
+      "sha256": "f61b0ccd370cacabfc61239f4c3f1bcafb553d10ff60c3c2bad326f6bcdb621b"
+    },
+    {
+      "bytes": 4994,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/initialized_cold_obligations_preparation_v1.json",
+      "sha256": "19acd7286291cedba1b20d21e11a5ae5af4e20bba20f057187bbf277d8e48c88"
+    },
+    {
+      "bytes": 3331,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-obligations-independent-review-red.log",
+      "sha256": "ff35a97234f8e32964834fa93348db70b092560119fb2f4b2ecfd1e3bf1ea8be"
+    },
+    {
+      "bytes": 702,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-obligations-independent-review-green-final.log",
+      "sha256": "6a3ff8d3597712993a81e694cb48c4aabba4c905b7aaa6195e0715def29801af"
+    }
+  ],
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "full_ticket28": false,
+  "hardware_acceptance": false,
+  "historical_shape_observation": "Two old ordinary-register inventories each29properties/21goals have zero goal/property owner/site differences; no future initialized record read.",
+  "historical_shape_policy": {
+    "bytes": 1354238,
+    "path": "/private/tmp/probata-t28-register-cold-policy-v2-a3a8db54-20261016.json",
+    "sha256": "40b4431fa420eac49996d1debc8535347ac8edff83d4636a50d8c0ea3d2a6e3d"
+  },
+  "native_stats_sources": [
+    {
+      "bytes": 8107,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Stats.ml",
+      "sha256": "fe212d872116b22b01cb70a4852854b9268a49099abc3fbda95e28cb16d73186"
+    },
+    {
+      "bytes": 36565,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/register.ml",
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+    },
+    {
+      "bytes": 18517,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProofEngine.ml",
+      "sha256": "9bfc9ccaf58cd1ca5b5ff1d5f764c34bf93a798bf0aea7a97825ade5dd2edd75"
+    },
+    {
+      "bytes": 9406,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/VCS.ml",
+      "sha256": "95688db279e59b61f7e5068beb07b460778d91c5adf72be06a8e1e19e520b821"
+    }
+  ],
+  "origin": {
+    "explicit_changes": [
+      "initialized exact three-helper set",
+      "unique current rows replace expected snapshots; no historical/current equality claim",
+      "property/goal owner+line consistency with only exact helper dead-call native/record owner bridge",
+      "ordinary direct Valid requires successful native winner, proved1 and zero normalized failed/timeout/unknown/tactics/cached",
+      "complete remaining source text exact after quote-preserving ordinary-comment replacement; preserve ACSL block+line annotations and refuse phase/splice forms",
+      "initialized partial method ID and local YAML import"
+    ],
+    "old_reader": {
+      "bytes": 62198,
+      "path": "/private/tmp/probata-t28-register-cold-reader-v4-a3a8db54-20261016.py",
+      "sha256": "3068138a2608828b82ff8f3f41ae8db6e96775b44acfa51619f2d279febcbd34"
+    },
+    "unchanged_generic_functions": [
+      "unique",
+      "csv_properties",
+      "check_passed_smoke",
+      "current_csv",
+      "retained_wp_input_path",
+      "ephemeral_wp_context",
+      "dependency_DAG"
+    ],
+    "unchanged_identity_functions": [
+      "source_identity",
+      "checker_dependencies",
+      "checkers_identity",
+      "fixture_job_bounds"
+    ]
+  },
+  "primary_observations": [
+    "Stats.ml:71-83 success normalization;113-127 raw best-result counters and unsplit result",
+    "register.ml:284-333 serializes Stats provers and positive counters only",
+    "ProofEngine.ml:263-316 distinguishes unsplit results and tactical consolidation",
+    "proof_report.ml:77-91 derives inventory goal owner+line from its property"
+  ],
+  "pure_controls": {
+    "checker_dependency_count": 60,
+    "checker_sha256": "fd70bc99cfb214b32b002d17d359d441f47aabb0d3fc4a79440688c77e5371e4",
+    "errors": 0,
+    "failures": 0,
+    "fixture_bounds": {
+      "input_size": 1,
+      "threads": 1
+    },
+    "identity_replay": "Exact primary fixture transformation AST vs passive helper on synthetic method data; synthetic YAML adapter only, no external YAML package execution.",
+    "lowerer_byte_component_count": 36,
+    "refusal_subcases": 37,
+    "skips": 0,
+    "unittest_cases": 7
+  },
+  "reference": {
+    "correct_sha256": "a324f08bed8b8101fcff22461e408b440f2f227f0d4d4ac6f5dcbed1611bccdb",
+    "origin_audit": {
+      "bytes": 14773,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/independent-public-v3-actual-audit.json",
+      "sha256": "9e854972afda0bb54d38b80452eeb52ef2dbb6539d940c92be5d359ba634b28a"
+    },
+    "origin_manifest": {
+      "bytes": 28792,
+      "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/component/artifact-manifest.json",
+      "sha256": "9804039b0a5d1a269c745dec862001dccffc3b1c96efa50a4dce19ecbefff2d8"
+    },
+    "scope": "Correct reference byte-identical to separately audited public V3 compiler+named-stand-in wp_input.c; no native verdict transferred.",
+    "wrong_delta": "only postcondition711 to1107",
+    "wrong_sha256": "46244c04dd878c93606add23f68a68732a5fe550d3d6b7ca308fedd4312fe094"
+  },
+  "remaining_gates": [
+    "Root must compose and review complete raw/source/runtime/guard/launch/record/command/source-certificate closure.",
+    "Separate dependency_DAG must be called; current_goals alone cannot accept a run.",
+    "Expected method uses PyYAML at future call time; parser/runtime admission remains separate.",
+    "Physical source, parser/AST/LLVM/compiler/exporter observations and source/model correspondence remain TCB, not theorem.",
+    "Current inventory completeness relies on the pinned exporter contract; no previous-run inventory equality inferred.",
+    "Closed fixture comparator is conservative, not a general C/ACSL parser.",
+    "No actual/future initialized pair record, project import, compiler/native/verifier/SSH/branch/commit execution."
+  ],
+  "reviewer": "/root/ticket28/public_review",
+  "scope": "Incomplete source/preparation primitives; no actual/future initialized pair record consumed.",
+  "source_body_proof": false,
+  "source_freeze": {
+    "bytes": 6685614,
+    "commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+    "git_or_commit_tree_walk": false,
+    "manifest": {
+      "bytes": 107129,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_source_blobs_2baf722f.json",
+      "sha256": "d5ab93bc6515ffb4f58e119a5e2b98f9401e37c942abb994132172b2a5e6fabc"
+    },
+    "physically_rehashed_files": 496,
+    "selected_primary_sources": [
+      {
+        "bytes": 170578,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/c_lowering.py",
+        "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+      },
+      {
+        "bytes": 48874,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+        "sha256": "069dbc55b6ca8b12ea8b524027e2ca2b0922eb9e7be449c6f5725dbddbfe733f"
+      },
+      {
+        "bytes": 19033,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/bounded_initialization.py",
+        "sha256": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d"
+      },
+      {
+        "bytes": 63133,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_pointer_bounds.py",
+        "sha256": "7033e8e8338d0fc39a5359fd5ceff304842d9df7c8223cffef967246c5f530a0"
+      },
+      {
+        "bytes": 63276,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cbmc_translator.py",
+        "sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3"
+      },
+      {
+        "bytes": 68963,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cbmc_adapter.py",
+        "sha256": "a685bf063ce991372f68d115b7921da3b0afccea908e907bbf892f9094d191c0"
+      },
+      {
+        "bytes": 30455,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/stdlib_provenance.py",
+        "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+      },
+      {
+        "bytes": 12925,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_report.ml",
+        "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16"
+      },
+      {
+        "bytes": 7619,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/dx100_trust.py",
+        "sha256": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67"
+      },
+      {
+        "bytes": 5022,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/dx100_initialized_register.py",
+        "sha256": "0d4035feec5a239c09cd7a11e8a4a99e81df15d92fe311e212655038498cf49c"
+      },
+      {
+        "bytes": 7370,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/dx100_selector.py",
+        "sha256": "f101abed89976d651958bf9071d7ca00252d90cb6de4ae45ec0fca5b2c3ee120"
+      },
+      {
+        "bytes": 4037,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/methods/contract-fixture-1.yaml",
+        "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+      }
+    ],
+    "sha256_and_retained_git_blob_mismatches": 0
+  },
+  "status": "PASS_BOUNDED_INERT_READER_PRIMITIVE_SOURCE_REVIEW"
+}

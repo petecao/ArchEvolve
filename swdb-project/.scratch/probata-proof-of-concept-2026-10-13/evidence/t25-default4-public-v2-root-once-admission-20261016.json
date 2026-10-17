@@ -1,0 +1,49 @@
+{
+  "actual_run_by_receipt": false,
+  "conditions": [
+    "Run exact3af3ee75 once using Python3.12.6 -I -B with ordinary shared verifier lock unchanged. Outer root watchdog retains combined log and settled resources,8GiB tree cap/960s.",
+    "Actual success requires all four original model contracts proven, all ordinary/RTE/init/frame/smoke native contexts retained, no OOM/timeout/abnormal exit and source postchecks.",
+    "No generic allocating member, source/storage/lifetime/caller/default/full25 acceptance follows; subsequent independent scoped audit required."
+  ],
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 8565,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v2.py",
+    "sha256": "3af3ee7559e4c15d4f7e429ab96f4b83b12a3ddd40a16e521083df98b6f7fec0"
+  },
+  "independent_spec": {
+    "bytes": 7751,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-default4-public-v2-parent-spec-review-20261016.json",
+    "sha256": "a03e90ab6f7dbde6d064b9188e0c80038d6d412e877eb0424bcafeda0b7ae6c0"
+  },
+  "limits": {
+    "members": 4,
+    "outer_watchdog_seconds": 960,
+    "per_job_seconds": 180,
+    "per_leaf_outer_seconds": 240,
+    "profile_whole_seconds": 900,
+    "raw_bytes": 134217728,
+    "whole_tree_RSS_bytes": 8589934592,
+    "workers": 1
+  },
+  "packet": {
+    "bytes": 6033,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/source-packet-v2.json",
+    "sha256": "015a3ac0ffbc1b660087bccc2ea7958659e90a5d4d0a3cfe172fdcaf2396d6e9"
+  },
+  "preflight_point_observations": {
+    "memory_free_percent": 55,
+    "normal_lock_protocol": "Directory-based shared verifier hold is acquired by unchanged public prove, lock absent at point observation; no private lock substituted.",
+    "sandbox_ps_read_refusal_then_authorized_read_pass": true,
+    "selected_real_compiler_verifier_processes": [],
+    "source_HEAD": "a102e275cd23352aea8c268be3761d8a330b9be0",
+    "tmp_free_bytes": 50956361728
+  },
+  "root_review": {
+    "all16_unique_packet_pins_verified": true,
+    "all18_finalization_controls_fresh": true,
+    "entire_V1_controller_and_V2_delta_read": true,
+    "exact_original_models_no_allocator_free_or_payload_access": true
+  },
+  "verdict": "ADMIT_ONCE_FOUR_ORIGINAL_DEFAULT_CONSTRUCTOR_PUBLIC_PROOFS"
+}

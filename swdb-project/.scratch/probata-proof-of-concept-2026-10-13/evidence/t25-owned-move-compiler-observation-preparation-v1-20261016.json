@@ -1,0 +1,109 @@
+{
+  "compiler_or_native_or_verifier_execution": false,
+  "controls": {
+    "child_native_network_attempts": [],
+    "errors": 0,
+    "failures": 0,
+    "tests": 6
+  },
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 6758,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/prepare.py",
+      "sha256": "401e322c6b41278a2ee9fb4fea197a84184236509b4e924f818364ae42ca4800"
+    },
+    {
+      "bytes": 4039,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/worker.py",
+      "sha256": "bd3dfa7374666998326b2b9cac956b1d4b4e2246158ce747053488bbdbea6733"
+    },
+    {
+      "bytes": 6691,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/main_template.py",
+      "sha256": "ed41eb3faf6e30f8722b25b3436f42253690e297b5c255a4d13d57192f12b565"
+    },
+    {
+      "bytes": 5958,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/pure_controls.py",
+      "sha256": "9b161ceae21c21adb1ceb742848c84dbb5cb4498feb4125d11318f4f7e5d2ad4"
+    },
+    {
+      "bytes": 1130,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/pure-controls-v1.log",
+      "sha256": "8d78c93e8023075fa6e1f4c38872aae2efb7591b8540659517943c9e3ee12692"
+    },
+    {
+      "bytes": 1322,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/README.md",
+      "sha256": "0bc27043a7bb9e73369540fafdcf61914dbf3cf5972605fce8333673566a2c2b"
+    },
+    {
+      "bytes": 862,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/metadata-author-v1.log",
+      "sha256": "9eca93bd4604691443a02998e5d15d0b84cccefa96da0077905a0cf3db4683b5"
+    },
+    {
+      "bytes": 862,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/metadata-author-v2.log",
+      "sha256": "b600dcaa1377b6a9e7e8ad387442540784994b74999dd8feaeacc184ca5cc1f0"
+    },
+    {
+      "bytes": 327,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/lowering/vector_owned_transfer.cc",
+      "sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2"
+    },
+    {
+      "bytes": 31172,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/entry.py",
+      "sha256": "401dc56426f6a7ddcfac7748b7d0742d1b6f25ec31b254f759ba30c5b79f7a4e"
+    },
+    {
+      "bytes": 220101,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/expected.json",
+      "sha256": "297388f1aed0b6fbc0513d6227e390f75e03c2404748b52ebc4e75ccf764d54b"
+    },
+    {
+      "bytes": 3703,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/packet.json",
+      "sha256": "f908b31432e537a76a2846c718ae4d4c177e7e53d3ffec1a5a06f9fa5d8b4325"
+    },
+    {
+      "bytes": 103434,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/root-command.json",
+      "sha256": "f9ad667ba48f5f9177f982d7cf3682db6a30ee066abed2dfdc54fa97ab0cf7b0"
+    }
+  ],
+  "guards": {
+    "all_declared_runtime_tool_package_import_checks_inherited": true,
+    "all_nested_source_runtime_guard_bodies_byte_exact": true,
+    "historical_dynamic_loader_continuous_or_source_to_binary_closure_claimed": false,
+    "worker_guard_delta": "function/log names only, exact inverse recorded"
+  },
+  "independent_entry_review_and_root_admission_required": true,
+  "initial_author_snapshot": "Initial inert packet retained in initial-inert-nested-indentation-v1; only nested whitespace normalized and accurate compiler-only docstring applied before freeze; no actual execution",
+  "portable_move_boundary": "No moved-from size/emptiness observation; model source-zero reset is conditional on stronger complete pinned library/model correspondence, not standard-only C++17 semantics",
+  "predecessor": {
+    "bytes": 5399,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/public9-v3/inert-032e1851-public9-v3/packet.json",
+    "sha256": "b80164a7d869593b5c4fafbaebf291d8294170e1e8b256c6e9d685d33428e378"
+  },
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 150,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 536870912,
+    "per_file_bytes": 134217728,
+    "profile_seconds": 180,
+    "root_headroom_bytes": 4194304,
+    "root_outer_seconds": 360,
+    "root_post_exit_reserve_bytes": 524288,
+    "root_whole_seconds": 240,
+    "workers": 1
+  },
+  "source_commit": "032e1851eec7b195c7a3737997d5f5ea1d1343a5",
+  "source_effects": "Original fixture and full generated C/AST/anchors stay remote; no C transformation, verifier, native user program, method/catalog or proof record",
+  "source_or_member_or_Typed_or_caller_or_ticket_admission": false,
+  "status": "FROZEN_UNEXECUTED_COMPILER_ONLY_OBSERVATION",
+  "worker_actual_source_API": "one public c_lowering.lower; one additional pinned _Unit.function_node parse only to retain actual function AST"
+}

@@ -1,0 +1,683 @@
+{
+  "at_utc": "2026-10-16T18:03:15.633983+00:00",
+  "loader_configuration": [
+    {
+      "bytes": 120631,
+      "path": "/etc/ld.so.cache",
+      "resolved": "/etc/ld.so.cache",
+      "sha256": "8fb065f2778d117f7be502b543028b547bc221f3cf2e2798153b0c1d54a4e6a1",
+      "symlink": null
+    },
+    {
+      "bytes": 34,
+      "path": "/etc/ld.so.conf",
+      "resolved": "/etc/ld.so.conf",
+      "sha256": "d4b198c463418b493208485def26a6f4c57279467b9dfa491b70433cedb602e8",
+      "symlink": null
+    },
+    {
+      "bytes": 41,
+      "path": "/etc/ld.so.conf.d/000_cuda.conf",
+      "resolved": "/etc/ld.so.conf.d/000_cuda.conf",
+      "sha256": "a9327cff9435220eac872cffedc7f6144d915bdcb70d985304c72f4c3cb9a7d3",
+      "symlink": null
+    },
+    {
+      "bytes": 44,
+      "path": "/etc/ld.so.conf.d/988_cuda-12.conf",
+      "resolved": "/etc/ld.so.conf.d/988_cuda-12.conf",
+      "sha256": "93ff348ce54a0588c04b495e9c36a7057c46e96262350c7fa1bee2a649bdd479",
+      "symlink": null
+    },
+    {
+      "bytes": 46,
+      "path": "/etc/ld.so.conf.d/cuda-12-4.conf",
+      "resolved": "/etc/ld.so.conf.d/cuda-12-4.conf",
+      "sha256": "eea441d92bcf8839fb44134f6d9c8f20bb69e1f6637c5fa306c141cbfb2d8560",
+      "symlink": null
+    },
+    {
+      "bytes": 38,
+      "path": "/etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf",
+      "resolved": "/etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf",
+      "sha256": "af7edc777dd224bade078ba540538444db69856533c02e18a7f9fbbdd23bd181",
+      "symlink": null
+    },
+    {
+      "bytes": 46,
+      "path": "/etc/ld.so.conf.d/gds-12-2.conf",
+      "resolved": "/etc/ld.so.conf.d/gds-12-2.conf",
+      "sha256": "da14f1f545f871884e72533a5d7d8a1a96be86bac3120c6d54c2dff54aca8bb2",
+      "symlink": null
+    },
+    {
+      "bytes": 168,
+      "path": "/etc/ld.so.conf.d/i386-linux-gnu.conf",
+      "resolved": "/etc/ld.so.conf.d/i386-linux-gnu.conf",
+      "sha256": "023231b8d6d21a7f4b1a59b875576604395041c814c0fd640d4a1d3d29455e6a",
+      "symlink": null
+    },
+    {
+      "bytes": 44,
+      "path": "/etc/ld.so.conf.d/libc.conf",
+      "resolved": "/etc/ld.so.conf.d/libc.conf",
+      "sha256": "90d4c7e43e7661cd116010eb9f50ad5817e43162df344bd1ad10898851b15d41",
+      "symlink": null
+    },
+    {
+      "bytes": 100,
+      "path": "/etc/ld.so.conf.d/x86_64-linux-gnu.conf",
+      "resolved": "/etc/ld.so.conf.d/x86_64-linux-gnu.conf",
+      "sha256": "f03e4740e6922b4f4a1181cd696b52f62f9f10d003740a8940f7121795c59c98",
+      "symlink": null
+    },
+    {
+      "bytes": 56,
+      "path": "/etc/ld.so.conf.d/zz_amd64-biarch-compat.conf",
+      "resolved": "/etc/ld.so.conf.d/zz_amd64-biarch-compat.conf",
+      "sha256": "98a1d500c28ec0b9c449c271328552fe4b4238bdf89c7f9c929d0d375fe70e57",
+      "symlink": null
+    },
+    {
+      "bytes": 58,
+      "path": "/etc/ld.so.conf.d/zz_x32-biarch-compat.conf",
+      "resolved": "/etc/ld.so.conf.d/zz_x32-biarch-compat.conf",
+      "sha256": "af55087d2769067a6a7c9069fd70f9ac2adb0e0ae29bfbd4e9df7504396c9bf2",
+      "symlink": null
+    }
+  ],
+  "remaining_TCB": [
+    "runtime dlopen/plugins/locale/NSS resolution not derived by static DT_NEEDED",
+    "actual exec/preprocessor/assembler subprocess resolution must be guarded and recorded",
+    "no observed tool version or archive-to-installed equality established",
+    "native Python extension modules require separate dependency inventory"
+  ],
+  "roots": [
+    "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+    "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+    "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+    "/usr/bin/x86_64-linux-gnu-gcc-13",
+    "/usr/lib/gcc/x86_64-linux-gnu/13/cc1",
+    "/usr/bin/x86_64-linux-gnu-as",
+    "/usr/bin/python3.12"
+  ],
+  "scope": "Passive ELF64LE PT_INTERP/DT_NEEDED/RPATH/RUNPATH parsing and physical hashing only; no ldd, loader, tool, compiler or solver execution. Static candidate resolution is not loader trace or a dynamic closure proof.",
+  "static_elf_closure": {
+    "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc": {
+      "bytes": 19468160,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          134217729
+        ],
+        "interpreter": [
+          "/lib64/ld-linux-x86-64.so.2"
+        ],
+        "machine": 62,
+        "needed": [
+          "libstdc++.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+      "resolved_static_edges": [
+        {
+          "interpreter": "/lib64/ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libstdc++.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33"
+        },
+        {
+          "needed": "libm.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "needed": "libgcc_s.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "a62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995",
+      "symlink": null
+    },
+    "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc": {
+      "bytes": 7672128,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          134217729
+        ],
+        "interpreter": [
+          "/lib64/ld-linux-x86-64.so.2"
+        ],
+        "machine": 62,
+        "needed": [
+          "libstdc++.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+      "resolved_static_edges": [
+        {
+          "interpreter": "/lib64/ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libstdc++.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33"
+        },
+        {
+          "needed": "libgcc_s.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "251dafd4a42db2ba32913d5e72722eb683353c6886076760ecbe4c6128925e8e",
+      "symlink": null
+    },
+    "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument": {
+      "bytes": 16463920,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          134217729
+        ],
+        "interpreter": [
+          "/lib64/ld-linux-x86-64.so.2"
+        ],
+        "machine": 62,
+        "needed": [
+          "libstdc++.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+      "resolved_static_edges": [
+        {
+          "interpreter": "/lib64/ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libstdc++.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33"
+        },
+        {
+          "needed": "libm.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "needed": "libgcc_s.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "e2323b81b8403efbaf69909ac834a79484f556578e94cf56b89ee45133870f06",
+      "symlink": null
+    },
+    "/usr/bin/python3.12": {
+      "bytes": 8020928,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [
+          "/lib64/ld-linux-x86-64.so.2"
+        ],
+        "machine": 62,
+        "needed": [
+          "libm.so.6",
+          "libz.so.1",
+          "libexpat.so.1",
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/usr/bin/python3.12",
+      "resolved": "/usr/bin/python3.12",
+      "resolved_static_edges": [
+        {
+          "interpreter": "/lib64/ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libm.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "needed": "libz.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libz.so.1.3"
+        },
+        {
+          "needed": "libexpat.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libexpat.so.1.9.1"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink": null
+    },
+    "/usr/bin/x86_64-linux-gnu-as": {
+      "bytes": 745768,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          134217729
+        ],
+        "interpreter": [
+          "/lib64/ld-linux-x86-64.so.2"
+        ],
+        "machine": 62,
+        "needed": [
+          "libbfd-2.42-system.so",
+          "libz.so.1",
+          "libzstd.so.1",
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/usr/bin/x86_64-linux-gnu-as",
+      "resolved": "/usr/bin/x86_64-linux-gnu-as",
+      "resolved_static_edges": [
+        {
+          "interpreter": "/lib64/ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libbfd-2.42-system.so",
+          "selected": "/usr/lib/x86_64-linux-gnu/libbfd-2.42-system.so"
+        },
+        {
+          "needed": "libz.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libz.so.1.3"
+        },
+        {
+          "needed": "libzstd.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libzstd.so.1.5.5"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "21aff249b692b5c31a44007491f922dcb49f41323e362c57d2ada3f52eddb7f0",
+      "symlink": null
+    },
+    "/usr/bin/x86_64-linux-gnu-gcc-13": {
+      "bytes": 1023032,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [
+          "/lib64/ld-linux-x86-64.so.2"
+        ],
+        "machine": 62,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+      "resolved": "/usr/bin/x86_64-linux-gnu-gcc-13",
+      "resolved_static_edges": [
+        {
+          "interpreter": "/lib64/ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "needed": "ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        }
+      ],
+      "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+      "symlink": null
+    },
+    "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2": {
+      "bytes": 236616,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          1
+        ],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib64/ld-linux-x86-64.so.2",
+      "resolved": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "resolved_static_edges": [],
+      "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da",
+      "symlink": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+    },
+    "/usr/lib/x86_64-linux-gnu/libbfd-2.42-system.so": {
+      "bytes": 1479888,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libz.so.1",
+          "libzstd.so.1",
+          "libsframe.so.1",
+          "ld-linux-x86-64.so.2",
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libbfd-2.42-system.so",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libbfd-2.42-system.so",
+      "resolved_static_edges": [
+        {
+          "needed": "libz.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libz.so.1.3"
+        },
+        {
+          "needed": "libzstd.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libzstd.so.1.5.5"
+        },
+        {
+          "needed": "libsframe.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libsframe.so.1.0.0"
+        },
+        {
+          "needed": "ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "11f084bc6ff5fc64e91c0b6422040fab1245419e7ff29560a95c1176ce1b9ff4",
+      "symlink": null
+    },
+    "/usr/lib/x86_64-linux-gnu/libc.so.6": {
+      "bytes": 2129424,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          1
+        ],
+        "interpreter": [
+          "/lib64/ld-linux-x86-64.so.2"
+        ],
+        "machine": 62,
+        "needed": [
+          "ld-linux-x86-64.so.2"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libc.so.6",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "resolved_static_edges": [
+        {
+          "interpreter": "/lib64/ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        }
+      ],
+      "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf",
+      "symlink": null
+    },
+    "/usr/lib/x86_64-linux-gnu/libexpat.so.1.9.1": {
+      "bytes": 186624,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libexpat.so.1",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libexpat.so.1.9.1",
+      "resolved_static_edges": [
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "286682ecbc5e59a638963b1a4e6351e65eb32fcf4bdcb9cb7569b6a61fe06a8d",
+      "symlink": "libexpat.so.1.9.1"
+    },
+    "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1": {
+      "bytes": 183024,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+      "resolved_static_edges": [
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "needed": "ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        }
+      ],
+      "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb",
+      "symlink": null
+    },
+    "/usr/lib/x86_64-linux-gnu/libm.so.6": {
+      "bytes": 952616,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          1
+        ],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libm.so.6",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "resolved_static_edges": [
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "needed": "ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        }
+      ],
+      "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0",
+      "symlink": null
+    },
+    "/usr/lib/x86_64-linux-gnu/libsframe.so.1.0.0": {
+      "bytes": 35168,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libsframe.so.1",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libsframe.so.1.0.0",
+      "resolved_static_edges": [
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "1693a2dbd77c909d279ae34aa9b5d8d08d97f116f8d0ed724063df11151b3c69",
+      "symlink": "libsframe.so.1.0.0"
+    },
+    "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33": {
+      "bytes": 2592224,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libm.so.6",
+          "libc.so.6",
+          "ld-linux-x86-64.so.2",
+          "libgcc_s.so.1"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libstdc++.so.6",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+      "resolved_static_edges": [
+        {
+          "needed": "libm.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+        },
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        },
+        {
+          "needed": "ld-linux-x86-64.so.2",
+          "selected": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        {
+          "needed": "libgcc_s.so.1",
+          "selected": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+        }
+      ],
+      "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11",
+      "symlink": "libstdc++.so.6.0.33"
+    },
+    "/usr/lib/x86_64-linux-gnu/libz.so.1.3": {
+      "bytes": 113000,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libz.so.1",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libz.so.1.3",
+      "resolved_static_edges": [
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "86200da370f20476a2507e9097a789b5ef97269b4ca8d5e164ad82dab9d99892",
+      "symlink": "libz.so.1.3"
+    },
+    "/usr/lib/x86_64-linux-gnu/libzstd.so.1.5.5": {
+      "bytes": 755864,
+      "elf": {
+        "ELF": true,
+        "class_bits": 64,
+        "dt_flags_1": [
+          1
+        ],
+        "interpreter": [],
+        "machine": 62,
+        "needed": [
+          "libc.so.6"
+        ],
+        "rpath": [],
+        "runpath": []
+      },
+      "path": "/lib/x86_64-linux-gnu/libzstd.so.1",
+      "resolved": "/usr/lib/x86_64-linux-gnu/libzstd.so.1.5.5",
+      "resolved_static_edges": [
+        {
+          "needed": "libc.so.6",
+          "selected": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+        }
+      ],
+      "sha256": "0a2128bc10841fb29e76d08d945864dfb0b6a66da5df6df5d8299197439e54bb",
+      "symlink": "libzstd.so.1.5.5"
+    }
+  },
+  "unresolved_or_ambiguous": [
+    {
+      "missing": "/usr/lib/gcc/x86_64-linux-gnu/13/cc1"
+    }
+  ]
+}

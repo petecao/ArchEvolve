@@ -1,0 +1,36 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "55s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "date": "2026-10-16 ET",
+  "full_observer_or_scientific_rerun": false,
+  "kind": "inert compact structural syntax-context diagnostic v3; fresh root admission required",
+  "remote_writes_or_tool_children": false,
+  "stdin": {
+    "bytes": 22181,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v3/diagnostic-v3.py",
+    "sha256": "bf9666e4becc934fe263505b3fd0d358843279068554f1db8c1490fd664f255d"
+  },
+  "stdout_maximum_bytes": 32768
+}

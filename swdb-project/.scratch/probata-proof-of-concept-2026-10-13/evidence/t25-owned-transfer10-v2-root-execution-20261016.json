@@ -1,0 +1,118 @@
+{
+  "boundaries": {
+    "body_original_contract_source_Heap_Typed_lifetime_allocator_caller_default_model_or_public_record_admission": false,
+    "full_Python_dynamic_loader_or_continuous_runtime_closure_claim": false,
+    "historical_runtime_byte_identity_promotion": false,
+    "independent_cold_review_still_required": true,
+    "lease_claim_or_release": false,
+    "remote_raw_or_source_mutation": false,
+    "rerun_compiler_native_verifier_solver_or_profile_execution": false,
+    "scientific_acceptance": false
+  },
+  "date": "2026-10-16 ET",
+  "decision": "ROOT_PRODUCER_EXECUTION_COMPLETE_COLD_MATH_AUDIT_PENDING",
+  "inner": {
+    "bytes": 166,
+    "sha256": "5f2cfc22c67140782be5f5bb10a2e3bbe497d4697492574452dfcf0b6cf132df",
+    "value": {
+      "cpu_seconds": 32.523225,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 291246080,
+      "timed_out": false,
+      "wall_seconds": 29.589660208672285
+    }
+  },
+  "lane": {
+    "bytes": 840,
+    "sha256": "7ae82e3ec596311fff1850a1436dcc58d775f99f03cbabd1105467e7b2f67dc2",
+    "value": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "2220",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-d7f685c6-owned-transfer10-public-v2/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T21:52:07Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-d7f685c6-owned-transfer10-public-v2",
+        "lease_generation": 621,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.26,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T21:51:35Z"
+      }
+    }
+  },
+  "outer": {
+    "bytes": 175,
+    "sha256": "32012621bb97bb172fbfad71f8b6e8637ad817d724f9863fcadadd3d325fd2ae",
+    "value": {
+      "cpu_seconds": 40.691641000000004,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 344723456,
+      "timed_out": false,
+      "wall_seconds": 31.680814631283283
+    }
+  },
+  "passive_status": {
+    "bytes": 14163,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-transfer10-v2-actual-passive-status-decision-20261016.json",
+    "sha256": "f0732c23cf6d5956b0c604c2cabe386149159decffa003e700dfe374878eb197"
+  },
+  "producer": {
+    "all_ten_producer_proven": true,
+    "elapsed_seconds": 28.407262237742543,
+    "ordinary_goals": 10,
+    "ordinary_status": "ten valid producer/native goal observations, all Alt-Ergo",
+    "producer_complete": true,
+    "runs": 10,
+    "scope": "Ten conditional unbounded ownership-registry mathematical duties only. Eight original C source members retained as canonical context; their bodies/contracts are not proved or admitted by these standalone duties.",
+    "smoke_goals": 0,
+    "source_after_clean_reported": true,
+    "unexecuted": [],
+    "within_profile_budget": true
+  },
+  "raw_extent": {
+    "directories": 54,
+    "entries": 238,
+    "hard_whole_limit_bytes": 2147483648,
+    "post_exit_reserve_bytes": 524288,
+    "producer_result_raw_bytes_is_prefinal_not_final_whole_extent": 20497894,
+    "profile_limit_bytes": 2143289344,
+    "profile_regular_bytes": 20557157,
+    "profile_regular_files": 165,
+    "regular_bytes": 21000828,
+    "regular_files": 184,
+    "root_after_guard_snapshot_is_within_budget": true,
+    "root_headroom_bytes": 4194304,
+    "root_sibling_regular_bytes": 443671,
+    "root_sibling_regular_files": 19,
+    "specials": 0,
+    "symlinks": 0
+  },
+  "root_admission": {
+    "bytes": 2966,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-v2-root-admission-20261016.json",
+    "sha256": "2b7933e451be7490e504d040aec5be82fb8e7ae0395493bb5afcaadbd8cff8ec"
+  },
+  "root_preflight": {
+    "bytes": 1922,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-v2-root-live-preflight-20261016.json",
+    "sha256": "83531d6cc4eabd1e3a2a35d859cccdafe6342124bc9b4ce9fd4e2b352c37a187"
+  },
+  "scope": "Ten conditional unbounded ownership registry mathematical duties only,10ordinaryValid/zero normalchecklemma smokes. No sourcebody/Typed/lifetime/allocator/caller/default proof. Complete coldtask/hypothesis/import/consistency audit remains required.",
+  "source_commit": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08"
+}

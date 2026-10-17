@@ -1,0 +1,76 @@
+{
+  "checks": {
+    "actual_guards": "execute.py and watch.py each have exactly one cap_bytes=8589934592, anchor in the physically hash-matched original snapshot. Exact replacement selects the same cfg cap for each and the reverse must recover the admitted original bytes. Original8GiB setting leaves identical files. Adapted4GiB sources syntax-compile.",
+    "closed_cap_gate": "The optional field defaults to8589934592. type(value) is int plus exact membership accepts only4294967296 or8589934592; bool/float/string/None/0/negative/2GiB/16GiB/list/dict all refuse. Fourteen pure cases exercised only the two extracted gate statements.",
+    "environment_and_normal_policy": "run.sh requires one exact SWDB_VERIFIER_RSS_CAP_BYTES=8589934592 anchor and substitutes that leaf with the same cfg value. launch.json now declares that exact cfg value. Existing source/output path substitutions, source Python runtime and all other environment lines are unchanged.",
+    "guard_scope": "Outer watch still covers execute bootstrap, provenance probes, inner watchdog and command descendants; inner execute still monitors the command tree. Both timeout=launch timeout values and resource-result writes remain unchanged. Trusted watchdog monitor scope remains inherited.",
+    "inverse": "Reversing only the cap selector/cfg field, launch cap declaration, exact guard substitution/pins and run cap/receipt additions reconstructs the full V7 launcher byte-for-byte.",
+    "retention": "Fresh raw retains actual adapted execute.py/watch.py/run.sh plus root-guard-adaptation.json with selected cap, timeout and original/actual file hashes. Original raw wrappers remain retained; no rewrite of old evidence.",
+    "syntax": "Outer V7/V8 ASTs and extracted nested remote scripts compile successfully; no compiled code or launcher body executed.",
+    "unchanged_admission": "Same nonoptimized isolated admission, closed command/source review, branch/source SHA/delta hashes, clean detached worktree checks, source budget/raw24GiB floor, fresh exact namespace/control staging\u22641MiB, pinned socket/hostlock wrappers, lease admission, node binding,1worker environment, direct tmux env-i dispatch and timeout kill-after60/+120 outer wall remain byte-identical to V7 outside the reviewed resource additions."
+  },
+  "date": "2026-10-16 ET",
+  "expected_guard_pins": {
+    "execute.py": {
+      "actual_4GiB_bytes": 1603,
+      "actual_4GiB_sha256": "8442533f911e2ba7f10757a5b16ba451d4ece7d9d5dc292ce5b9d8c29eabdcbf",
+      "actual_8GiB_sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "original_bytes": 1603,
+      "original_sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "watch.py": {
+      "actual_4GiB_bytes": 470,
+      "actual_4GiB_sha256": "49be8a36d6e04b50e1ab599dad8b00f78a1c639132c3079c523c2c0c9177c5f0",
+      "actual_8GiB_sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c",
+      "original_bytes": 470,
+      "original_sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "findings": [],
+  "integration_boundary": {
+    "RSS_cap_is_descendant_tree_watchdog_bound": "Inherited watchdog polling enforcement; this is not a kernel memory cgroup/quota claim.",
+    "actual_native86_packet_not_approved_by_this_receipt": true,
+    "live_host_preflight_or_actual_admission_performed": false,
+    "observed_legacy_policy": {
+      "bytes": 657687,
+      "path": "prototype/28-whole-interface-resume-20261016/linux_native86_policy_v3.json",
+      "sha256": "3295a012dec61eece914c80eb53844d1638e2586667185ef26189c8569a02add"
+    },
+    "required_for_4GiB_dispatch": "The separately reviewed native86 command/policy must request rss_cap_bytes4294967296, pin the actual4GiB execute/watch hashes above, and bind the expected4GiB environment/budget. Legacy policy_v3 currently still pins8GiB originals and must be superseded before a4GiB actual. Root notified."
+  },
+  "launcher": {
+    "bytes": 12326,
+    "path": "prototype/resume-root-20261016/launch_reviewed_main_v8.py",
+    "sha256": "11ce37be0931f2129bec01b71843bfc59e206a81c9d6d250679300b1ded28c72"
+  },
+  "original_run_sh": {
+    "actual_run_hash": "Recorded after exact source/output path and cap substitutions in the fresh root-guard-adaptation.json; no actual namespace staged by reviewer.",
+    "bytes": 1083,
+    "sha256": "650f815cb7562767829d94e8868da56990c98301376b999af6c659fbe499fcf3"
+  },
+  "original_wrapper_metadata": {
+    "bytes": 35379,
+    "path": "evidence/resume-20261016-lane-coordination/mbit10-preflight-and-wrapper-snapshots.json",
+    "sha256": "1cb06ce419633d45b802b10247612380af302b2d7448f7c8f7e28895d70bac76"
+  },
+  "prior_reviewed_launcher": {
+    "bytes": 10916,
+    "path": "prototype/resume-root-20261016/launch_reviewed_main_v7.py",
+    "sha256": "e54ee1f4b159505b4f9c41d847404ec7adcb345f8158430862851005194243c8"
+  },
+  "repaired_during_review": [
+    {
+      "finding": "Inherited normal launch.json retained8GiB although adapted wrappers/environment used4GiB.",
+      "repair": "launch.update now binds rss_cap_bytes=cfg[rss_cap_bytes].",
+      "superseded_v8_sha256": "a608e7347c32feec457e73c6646a0a939e703ba303fc663ae406df3714f25ef7"
+    },
+    {
+      "finding": "Hash admission and subsequent adaptation used separate original-file reads.",
+      "repair": "The exact original execute/watch byte buffer is rehashed against admitted wrapper pins before transformation; run.encode is independently pinned before adaptation.",
+      "superseded_v8_sha256": "c5f0094e2d876324a17bf5457dab89c78d4cf6aca90e698b137f0912f742fc7a"
+    }
+  ],
+  "reviewer": "/root/lane_coordination",
+  "scope": "Final V8 versus reviewed V7; static source, exact inverse, nested-script syntax compilation and extracted pure integer gate controls only. No launcher/SSH/compiler/native/verifier/solver/job execution.",
+  "status": "PASS_STATIC_V8_LAUNCHER_RESOURCE_SUBSTITUTION"
+}

@@ -1,0 +1,60 @@
+{
+  "acceptance_boundary": "Source review and no-child controls only. Root owns exact staged/input/launch admission, live lane, guard execution, cold result audit, and all actual outcomes. No native success, public formal success, current0.2 or whole-ticket completion claimed.",
+  "authored_reviewed_controller": false,
+  "controls": {
+    "actual_controller_main_run": false,
+    "author_tests_independently_rerun": 6,
+    "child_native_network_audit_events": [],
+    "compiler_linker_native_ssh_version_execution": false,
+    "independent_errors": 0,
+    "independent_failures": 0,
+    "independent_skips": 0,
+    "independent_tests": 5,
+    "local_interpreter": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3"
+  },
+  "date": "2026-10-16 ET",
+  "files": {
+    "linux-native86-source-packet-v2.json": {
+      "bytes": 6434,
+      "sha256": "d782a0d0f993f807dec18b47d3e82e7edb9d9039557784009a45aa35247b4cfc"
+    },
+    "linux_native86_command_v2.json": {
+      "bytes": 7864,
+      "sha256": "bf0b7cb0d11da7b14a7d2a5b14a9621601aaa54c77c541c1ef89a0c3f4e8b2ed"
+    },
+    "linux_native86_entry_v2.py": {
+      "bytes": 23432,
+      "sha256": "a8c61c8ff71f1d5e613c7931935474f082ceb649ba6d85cbfd036c7b9f38c44d"
+    },
+    "linux_native86_policy_v2.json": {
+      "bytes": 657678,
+      "sha256": "8e9989cc79b7f74494c4a4599345419cb175c981d5df54884cc14d9594014bbe"
+    }
+  },
+  "independent_output": {
+    "bytes": 1042,
+    "sha256": "4f37ff0f17226265ffebaacd86ea68b8e8d2798211404c4ffeaa5f85dec610ee"
+  },
+  "independent_test": {
+    "bytes": 9742,
+    "sha256": "c2649459d38f782ff72b7c9266a7c9131404dd97126b8eddb2eb7697f83d4948"
+  },
+  "resolved_finding": {
+    "problem": "Final policy content rehash lacked explicit regular/non-symlink topology refusal.",
+    "repair": "V2 adds is_symlink/lstat-S_ISREG refusal in control_check; the only other entry delta is a fresh V2 raw namespace.",
+    "test": "Actual V1 control_check accepts same-bytes symlink replacement; V2 rejects it and a FIFO. Other source/runtime/profile/census/criteria unchanged.",
+    "v1_entry_sha256": "137429bc59d343e7902f951445e61b1eec4d9f7d70c506d3e26315929dedd2f9"
+  },
+  "review_scope": {
+    "census": "Each language requires exit0, exact 86-control JSON (66 family/dtype +6 history +6 subtract fold +2 action order +6 classified refusals) and empty sanitizer stderr. Harness independently demands dxw_controls==86.",
+    "header_timing": "First complete discovered system-header hashes are after preprocessing; this source-capture timing remains an explicit premise. Known staged source/runtime/LLVM-header inputs are checked before preprocessing.",
+    "postchecks": "Finally rechecks runtime/control/guard/input hashes, closed controller membership, used headers and frozen source/link inputs, and cache absence before acceptance. Generated object/binary inputs are rechecked after each native run; root requires complete manifest and outer settlement.",
+    "recipe": "Two languages, each original preprocessing then frozen-source compilation then explicit canonical BFD link then execution: eight phases. ASan+UBSan with -fno-sanitize-recover=all, closed environment and no-default-config; link trace inputs must be prior-admitted or the exact generated object.",
+    "resources": "One worker, live node0 lane, 180 seconds whole tree, 165-second internal allowance, 4-GiB tree RSS, 128-MiB individual child output files, 256-MiB raw budget, fixed disk floor, bounded phase timeouts. Staged control+policy bytes below 1 MiB. Root must reconcile actual whole-tree resource/exit/no-child settlement and cold artifacts.",
+    "runtime": "Policy native rows equal fresh passive V5 inventory: 608 unique physical pins, 158 unique alias rows, four complete file/link trees. The 2569 prior runtime pins have no overlapping hash disagreement. LLVM C++ and Clang resource header surfaces plus closed Python roots are checked before and after. Loader/cache/hardware-capability/dlopen selection remains an explicit OS TCB premise, not an observed loaded-code claim.",
+    "source": "Immutable project 2baf722f; five explicitly staged source inputs are separately pinned, do not import or modify the project, and retain their separate 49-pin semantics review. No source-call binder or public route is exercised.",
+    "startup": "Unchanged shared helpers and actual isolated entry-role observation, with the actual 4-GiB environment. The 8-GiB Python child-environment builder is unused; no pytest child or project import."
+  },
+  "reviewer": "/root/ticket28/memory_public_trace",
+  "status": "PASS FOR ROOT-ADMITTED PRIVATE NATIVE86 LINUX RUN"
+}

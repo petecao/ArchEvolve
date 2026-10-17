@@ -1,0 +1,16 @@
+test_final_profile_writes_keep_real_staged_root_sibling_headroom (owned10_v1_budget_reproduction.Controls.test_final_profile_writes_keep_real_staged_root_sibling_headroom) ... FAIL
+
+======================================================================
+FAIL: test_final_profile_writes_keep_real_staged_root_sibling_headroom (owned10_v1_budget_reproduction.Controls.test_final_profile_writes_keep_real_staged_root_sibling_headroom)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/pure_controls.py", line 200, in test_final_profile_writes_keep_real_staged_root_sibling_headroom
+    with self.assertRaisesRegex(ValueError,'projected aggregate'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)
+The unchanged V1 incorrectly admits one byte beyond its intended profile cap, consuming root headroom. No scientific/native run occurred.

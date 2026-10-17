@@ -1,0 +1,132 @@
+{
+  "actual_execution": false,
+  "all_other_predecessor_context_values_exact": true,
+  "context_only_added_key": "standard_abs_source",
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "added_functions": [],
+      "changed_existing_functions": [
+        "canon"
+      ],
+      "edits": [
+        {
+          "after": "\n    if head == \"+\":\n        # Standard mathematical SMT '+' only: preserve each complete operand.\n        # No FP/BV/custom operator or association/tree shape is changed.\n        args.sort(key=lambda x: json.dumps(x, sort_keys=True))\n    if head == \"=>\" and len(args) == 2:\n        antecedents = [args[0]]\n        conclusion = args[1]\n        while isinstance(conclusion, list) and len(conclusion) == 3 and conclusion[0] == \"=>\":\n            antecedents.append(conclusion[1])\n            conclusion = conclusion[2]\n        if len(antecedents) > 1:\n            complete = []\n            for premise in antecedents:\n                complete.extend(premise[1:] if isinstance(premise, list) and premise and premise[0] == \"and\" else [premise])\n            complete.sort(key=lambda x: json.dumps(x, sort_keys=True))\n            return [\"=>\", [\"and\", *complete], conclusion]",
+          "before": "",
+          "new_end": 6804,
+          "new_start": 5936,
+          "old_end": 5936,
+          "old_start": 5936
+        }
+      ],
+      "filename": "semantic_terms.py",
+      "offset_units": "Unicode codepoints",
+      "other_existing_function_ASTs_exact": true,
+      "predecessor_sha256": "9d8080959fd3ccf95cecfaf02f66e909351b3c2eb9f95af318b47edd20275147",
+      "successor_sha256": "0caf0330afed019637d03228a94f5af5cfc305e358f6eca51c631a881e163ef7",
+      "whole_text_inverse_exact": true
+    },
+    {
+      "added_functions": [
+        "absolute_definition"
+      ],
+      "changed_existing_functions": [
+        "inspect_task"
+      ],
+      "edits": [
+        {
+          "after": "absolute_definition(row):\n    \"\"\"Exact selected int.Abs body/type; a symbol name alone grants nothing.\"\"\"\n    expected = one('(define-fun abs1 ((x Int)) Int (ite (<= 0 x) x (- x)))')\n    matched = row == expected and digest(row) == 'ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe'\n    return {'complete_typed_body_matches': matched, 'form_sha256': digest(row),\n            'source_module': 'int.Abs', 'source_file_sha256': 'eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d',\n            'argument_types': ['Int'] if matched else None, 'return_type': 'Int' if matched else None,\n            'basis': 'Pinned complete int.Abs total definition; exact x>=0 source test equals0<=x. Driver symbol renaming/source-to-binary remains explicit TCB. No new axiom.'}\n\n\ndef ",
+          "before": "",
+          "new_end": 6553,
+          "new_start": 5758,
+          "old_end": 5758,
+          "old_start": 5758
+        },
+        {
+          "after": "\n    need(not any(row[0] in {'declare-fun','declare-const','define-fun','declare-sort'} and len(row)>1 and row[1] in {'+','=>'} for row in commands),\n         'canonical mathematical builtin names may not be redeclared')",
+          "before": "",
+          "new_end": 6828,
+          "new_start": 6608,
+          "old_end": 5813,
+          "old_start": 5813
+        },
+        {
+          "after": "standard_abs = absolute_definition(row) if row[1] == 'abs1' else None\n        if standard_abs is not None and standard_abs['complete_typed_body_matches']:\n            role = 'int.Abs.abs_total_definition'\n            equivalent = True\n        ",
+          "before": "",
+          "new_end": 7785,
+          "new_start": 7542,
+          "old_end": 6527,
+          "old_start": 6527
+        },
+        {
+          "after": ",\n                            'selected_standard_definition': standard_abs",
+          "before": "",
+          "new_end": 8021,
+          "new_start": 7947,
+          "old_end": 6689,
+          "old_start": 6689
+        }
+      ],
+      "filename": "encoding_probe.py",
+      "offset_units": "Unicode codepoints",
+      "other_existing_function_ASTs_exact": true,
+      "predecessor_sha256": "586df60ae0444fd4ab2fdd6c2670134fb0e93cb33f6f589af7c2b62d0b185d15",
+      "successor_sha256": "d2cb88eb53eb1c7ff1df71c1e8919481b013f57aa02d8e80c7f101624cb52623",
+      "whole_text_inverse_exact": true
+    },
+    {
+      "added_functions": [],
+      "changed_existing_functions": [
+        "main"
+      ],
+      "edits": [
+        {
+          "after": ",CONTEXT['standard_abs_source']['path']",
+          "before": "",
+          "new_end": 3752,
+          "new_start": 3713,
+          "old_end": 3713,
+          "old_start": 3713
+        },
+        {
+          "after": ")\n    standard_abs = physical_read(CONTEXT['standard_abs_source']['path'], CONTEXT['standard_abs_source'])\n    need(b'let function abs (x:int) : int = if x >= 0 then x else -x' in standard_abs, 'exact selected int.Abs total source definition')\n    module_begin, module_end = CONTEXT['standard_abs_source']['module_byte_range']\n    need(hashlib.sha256(standard_abs[module_begin:module_end]).hexdigest() == CONTEXT['standard_abs_source']['module_body_sha256'],\n         'exact complete selected int.Abs module slice'",
+          "before": "",
+          "new_end": 4295,
+          "new_start": 3781,
+          "old_end": 3742,
+          "old_start": 3742
+        },
+        {
+          "after": "'],\n              'standard_abs_source': CONTEXT['standard_abs_source",
+          "before": "",
+          "new_end": 4940,
+          "new_start": 4871,
+          "old_end": 4318,
+          "old_start": 4318
+        },
+        {
+          "after": "physical_read(CONTEXT['standard_abs_source']['path'],CONTEXT['standard_abs_source'])\n    ",
+          "before": "",
+          "new_end": 7988,
+          "new_start": 7899,
+          "old_end": 7277,
+          "old_start": 7277
+        },
+        {
+          "after": "=True, all22_selected_inputs_pre_post_equal",
+          "before": "",
+          "new_end": 8190,
+          "new_start": 8147,
+          "old_end": 7436,
+          "old_start": 7436
+        }
+      ],
+      "filename": "observer.py",
+      "offset_units": "Unicode codepoints",
+      "other_existing_function_ASTs_exact": true,
+      "predecessor_sha256": "2d0da611cb4320506bd22a31aafe16c38265420791f7dcd5de8d40250d61f7d5",
+      "successor_sha256": "1c2fb11c2eb47a290268fa05a89e325830363c3436dd814e33545e38070af76d",
+      "whole_text_inverse_exact": true
+    }
+  ]
+}

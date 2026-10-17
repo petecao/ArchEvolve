@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-16 ET",
+  "description": "Reverse these four changes in reverse order to reconstruct exact frozen V1. No original file is changed.",
+  "changes": [
+    {
+      "before": "'/private/tmp/probata-vector-default4-public-20261016-v1'",
+      "after": "'/private/tmp/probata-vector-default4-public-20261016-v2'"
+    },
+    {
+      "before": "def main():",
+      "after": "def completion_gate(results, members, *, wall_seconds, retained_bytes):\n    expected = ('std_vector_int_ctor', 'std_vector_float_ctor',\n                'std_vector_double_ctor', 'std_vector_int_ptr_ctor')\n    return (tuple(members) == expected and len(results) == 4\n        and tuple(row['member'] for row in results) == expected\n        and all(row['verdict'] == 'proven'\n            and type(row['resources'].get('exit_code')) is int\n            and row['resources']['exit_code'] == 0\n            and row['resources'].get('out_of_memory') is False\n            and row['resources'].get('timed_out') is False for row in results)\n        and type(wall_seconds) in (int, float) and 0 <= wall_seconds <= 900\n        and type(retained_bytes) is int and 0 <= retained_bytes <= 128 * 1024**2)\n\n\ndef main():"
+    },
+    {
+      "before": "    complete = len(results) == 4 and all(row['verdict'] == 'proven' for row in results)",
+      "after": "    final_total = sum(path.stat().st_size for path in output.rglob('*') if path.is_file())\n    settled_elapsed = time.monotonic() - started\n    complete = completion_gate(results, plan['members'],\n        wall_seconds=settled_elapsed, retained_bytes=final_total)"
+    },
+    {
+      "before": "        'wall_seconds': time.monotonic() - started, 'caller_admission': False}, sort_keys=True))\n    return 0 if complete else 1",
+      "after": "        'wall_seconds': settled_elapsed, 'retained_bytes': final_total,\n        'caller_admission': False}, sort_keys=True), flush=True)\n    return 0 if complete and time.monotonic() - started <= 900 else 1"
+    }
+  ]
+}

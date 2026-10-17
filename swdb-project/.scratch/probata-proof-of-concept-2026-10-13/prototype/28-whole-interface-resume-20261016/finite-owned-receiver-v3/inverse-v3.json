@@ -1,0 +1,11 @@
+{
+  "edits": [
+    {
+      "new": "need(canonical(selected_facts)==canonical(owned_selection_metadata(source_policy,prepared,cert['same_entry'],facts,policy['premise_owner'])),",
+      "old": "need(selected_facts==owned_selection_metadata(source_policy,prepared,cert['same_entry'],facts,policy['premise_owner']),"
+    }
+  ],
+  "restores_exact_v2_bytes": true,
+  "schema": "finite-owned-receiver-v3-type-identity-inverse-1",
+  "v2_module_sha256": "42d34d455e454455c22b44db4c95786844d19703a8b35749afe18c861c6c1877"
+}

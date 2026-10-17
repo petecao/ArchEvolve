@@ -1,0 +1,158 @@
+{
+  "actual_or_scientific_or_public_admission": false,
+  "axis": "Standards, narrow source-only successor",
+  "boundaries": [
+    "Closes only the source/protocol Standards HOLD. No native argv was sent to a binary and no compiler, verifier, solver, SSH, Git or controller main executed.",
+    "The one-step symbolic relation, four constant nodes/one command/action/cell scope, full-width before/issued and complete unchanged backend remain exactly V1.",
+    "The source-identical unbounded quotient remains a partial-correctness proof input. No fairness, eventual-one, termination or finite-prefix loop theorem is claimed.",
+    "Actual complete one-step CBMC, ordinary unbounded-loop WP ledger, all47 native controls and failure checks, same-entry/typed/receiver context and dedicated public method adoption remain pending."
+  ],
+  "closed_finding": {
+    "exact_domains": {
+      "before_issued": [
+        0,
+        4294967295
+      ],
+      "poll_count": [
+        0,
+        1000000
+      ],
+      "step_count": [
+        0,
+        3
+      ],
+      "zero_read_count": [
+        0,
+        0
+      ]
+    },
+    "id": "READY-NATIVE-01",
+    "parser_reasoning": "digit>maximum short-circuits the unsigned subtraction; otherwise value<=(maximum-digit)/10 implies value*10+digit<=maximum. All selected maxima are<=UINT32_MAX and therefore within unsigned long long. Bounds0/3/1000000/UINT32_MAX are enforced before unsigned/uint32_t conversion. Canonical zero is accepted; other zero-prefixed tokens refuse.",
+    "readback": "ready_begin mode=%s count=%llu before=%u issued=%u; flushed before backend, retaining existing ready_complete calls=%u or ready_failure and nonzero exit.",
+    "resolution": "Manual canonical decimal parser rejects empty, leading-zero multi-digit, sign, whitespace, suffix, nondecimal and over20-digit input; overflow/range is checked before multiplication/addition and every narrowing. Mode/count domains are closed and normalized begin readback is emitted/flushed before backend entry."
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_V2_SOURCE_ONLY_READY_NATIVE_01_REPAIRED",
+  "findings": [],
+  "frozen_source_edits": false,
+  "full_read": [
+    "Complete concrete_ready_v2.py and six-test source",
+    "Complete native-protocol-delta.patch and47 prospective argument rows",
+    "Prior V1 whole concrete relation, quotient, native protocol and eight backend function closure read is reused after exact equality checks"
+  ],
+  "inverse_checks": {
+    "all_old_function_ASTs_except_prepare_unchanged": true,
+    "all_prior_prepared_fields_exact_except": [
+      "concrete_c",
+      "concrete_c_sha256",
+      "native_control_plan",
+      "schema"
+    ],
+    "all_three_generated_C_outputs_fresh_in_memory_equal": true,
+    "both_generated_WP_files_exact_V1": true,
+    "entire_symbolic_CBMC_main_unchanged": true,
+    "full_source_diff_equals_retained_patch": true,
+    "new_functions": [
+      "native_controls"
+    ],
+    "prepared_JSON_exact": true,
+    "unchanged_constants": [
+      "CONCRETE_PREFIX",
+      "CONCRETE_SUFFIX",
+      "WP_PREFIX",
+      "CALLER",
+      "ZERO_CALLER",
+      "LOOP",
+      "BACKEND_SHA"
+    ]
+  },
+  "physical_controls": {
+    "all47_actual_native_cases_executed": false,
+    "all_before_after_canonical_regular_nine_stats_SHA": true,
+    "declared_rows": 12,
+    "errors": 0,
+    "external_attempts": [],
+    "failures": 0,
+    "full_pure_log": "test_complete_backend_and_identical_polling_caller (ready_review_tests.Controls.test_complete_backend_and_identical_polling_caller) ... ok\ntest_exact_backend_closure_and_no_source_header_invention (ready_review_tests.Controls.test_exact_backend_closure_and_no_source_header_invention) ... ok\ntest_mutated_query_or_completion_body_refuses (ready_review_tests.Controls.test_mutated_query_or_completion_body_refuses) ... ok\ntest_native_protocol_checks_full_token_and_range_before_narrowing (ready_review_tests.Controls.test_native_protocol_checks_full_token_and_range_before_narrowing) ... ok\ntest_one_step_relation_covers_stutter_and_completion (ready_review_tests.Controls.test_one_step_relation_covers_stutter_and_completion) ... ok\ntest_partial_loop_has_no_fairness_or_resource_counter (ready_review_tests.Controls.test_partial_loop_has_no_fairness_or_resource_counter) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.020s\n\nOK\n",
+    "reviewer_pure_tests": 6,
+    "rows": [
+      {
+        "bytes": 77268,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/concrete-ready.c",
+        "sha256": "0acbe6567672f92e394658682bf193880f142db53d6984bb9743f242479b6a69"
+      },
+      {
+        "bytes": 2083,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/wp-ready.c",
+        "sha256": "5920123a4f1c6ecfd6556a305c33cc768859824e9610dedf6bf990d6c8dbe9cb"
+      },
+      {
+        "bytes": 1909,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/wp-zero-read.c",
+        "sha256": "56878158957a020e7f997b0f637fe746a513c5db0b1ffc63f590f12acfac0299"
+      },
+      {
+        "bytes": 102759,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/prepared.json",
+        "sha256": "2564addbfca478e61cfc96208265ce7461ea833e7c8fbcfce24564b834ad91e3"
+      },
+      {
+        "bytes": 4746,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/native-protocol-delta.patch",
+        "sha256": "673cfdeec50f5b113f46bbf8f1d97f793af80d1d3f9fa905f77273d591f777b0"
+      },
+      {
+        "bytes": 916,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/pure-controls-green.log",
+        "sha256": "cab6b8a703c02ec616097e88a16dbad12098e8bdcc00832a7c358ef183bc42e5"
+      },
+      {
+        "bytes": 69747,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+        "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+      },
+      {
+        "bytes": 15842,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete_ready_v2.py",
+        "sha256": "70cc64c98b90e736f649de469648939935ffed88ba7e45fea35784d88f19ea6e"
+      },
+      {
+        "bytes": 4916,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/test_concrete_ready_v2.py",
+        "sha256": "33903b8f08c543d9873adddc6a7ddacc8de1ae46bf248939fc170fc4acdb732b"
+      },
+      {
+        "bytes": 3507,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/source-packet-v1.json",
+        "sha256": "aa71c4919e10a832424d0aea2cf36c24413c98bb081283e8522f31e8f75009ed"
+      },
+      {
+        "bytes": 10349,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-concrete-ready-independent-standards-review-v1-20261016.json",
+        "sha256": "510f564f9108c7ae1ab65f5817f18ce0131e28643e371265f219e53f4bd52e8a"
+      },
+      {
+        "bytes": 6042,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1-independent-review/independent-concrete-ready-v1-spec-review-20261016.json",
+        "sha256": "ae0515e013830787a5baa71337bc56336502463186ce71852d080a7554209b9b"
+      }
+    ],
+    "skips": 0
+  },
+  "prior_HOLD": {
+    "bytes": 10349,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-concrete-ready-independent-standards-review-v1-20261016.json",
+    "sha256": "510f564f9108c7ae1ab65f5817f18ce0131e28643e371265f219e53f4bd52e8a"
+  },
+  "prospective_native_plan": {
+    "count": 47,
+    "sha256": "223deeeaba451d312af4bda34b948dbed4887b5b692e4458d37de7c0a55c1d48",
+    "status": "Every actual_execution=false; exact exit, normalized begin/completion/failure protocol validation remains required by a separately reviewed native controller."
+  },
+  "reviewer": "ticket25/caller_assess, independent of root author",
+  "source_packet": {
+    "bytes": 4957,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/source-packet-v2.json",
+    "sha256": "95c2035f159daa77e553e87479fbe1072c9d5c2fa02df0ab7d36a30796f5638a"
+  }
+}

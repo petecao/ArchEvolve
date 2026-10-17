@@ -1,0 +1,38 @@
+test_PAM_literal_and_function_exact_reviewed_V3_identity (__main__.Controls.test_PAM_literal_and_function_exact_reviewed_V3_identity) ... ok
+test_actual_main_requires_explicit_isolated_mode (__main__.Controls.test_actual_main_requires_explicit_isolated_mode) ... ok
+test_bounded_file_pin_refuses_alias_and_alias_parent (__main__.Controls.test_bounded_file_pin_refuses_alias_and_alias_parent) ... ok
+test_cmdline_environment_cwd_exe_fd_all_match_without_payload_export (__main__.Controls.test_cmdline_environment_cwd_exe_fd_all_match_without_payload_export) ... ok
+test_exact_six_row_birth_UID_command_transport (__main__.Controls.test_exact_six_row_birth_UID_command_transport) ... ok
+test_only_exact_recovery_ref_and_nonforced_source_remove_mutations (__main__.Controls.test_only_exact_recovery_ref_and_nonforced_source_remove_mutations) ... FAIL
+test_raw_retention_nofollow_hash_and_literal_membership_detect_changes (__main__.Controls.test_raw_retention_nofollow_hash_and_literal_membership_detect_changes) ... ok
+test_raw_unknown_specials_refuse (__main__.Controls.test_raw_unknown_specials_refuse) ... ok
+test_source_manifest_checks_complete_Git_bytes_and_two_unfollowed_aliases (__main__.Controls.test_source_manifest_checks_complete_Git_bytes_and_two_unfollowed_aliases) ... ok
+test_tracked_unknown_modes_or_link_sets_refuse (__main__.Controls.test_tracked_unknown_modes_or_link_sets_refuse) ... ok
+test_transport_mutations_do_not_create_name_only_exceptions (__main__.Controls.test_transport_mutations_do_not_create_name_only_exceptions) ... ok
+
+======================================================================
+FAIL: test_only_exact_recovery_ref_and_nonforced_source_remove_mutations (__main__.Controls.test_only_exact_recovery_ref_and_nonforced_source_remove_mutations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/retire-1433-source-v1/pure_controls.py", line 141, in test_only_exact_recovery_ref_and_nonforced_source_remove_mutations
+    self.assertEqual(mutating, ["git(PRIMARY, 'worktree', 'remove', str(SOURCE), timeout=60)",
+AssertionError: Lists differ: ["git[110 chars] 40)", "git(PRIMARY, 'worktree', 'list', '--porcelain', '-z')"] != ["git[110 chars] 40)"]
+
+First list contains 1 additional elements.
+First extra element 2:
+"git(PRIMARY, 'worktree', 'list', '--porcelain', '-z')"
+
+  ["git(PRIMARY, 'worktree', 'remove', str(SOURCE), timeout=60)",
+-  "git(PRIMARY, 'update-ref', RECOVERY, COMMIT, '0' * 40)",
+?                                                          ^
+
++  "git(PRIMARY, 'update-ref', RECOVERY, COMMIT, '0' * 40)"]
+?                                                          ^
+
+-  "git(PRIMARY, 'worktree', 'list', '--porcelain', '-z')"]
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.018s
+
+FAILED (failures=1)
+{"actual_retirement_or_proc_or_SSH_or_Git": false, "child_native_network_attempts": [], "date": "2026-10-16 ET", "errors": 0, "failures": 1, "tests": 11}

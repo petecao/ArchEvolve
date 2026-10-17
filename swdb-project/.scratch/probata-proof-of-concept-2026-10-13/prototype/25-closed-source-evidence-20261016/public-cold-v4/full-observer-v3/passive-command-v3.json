@@ -1,0 +1,54 @@
+{
+  "actual_execution": false,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "190s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-",
+    "--generation",
+    "619",
+    "--ended-utc",
+    "2026-10-16T21:28:57Z"
+  ],
+  "date": "2026-10-16 ET",
+  "local_transport_deadline_seconds": 210,
+  "observer": {
+    "bytes": 1090100,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+    "sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666"
+  },
+  "prior_full_observer_refusal": {
+    "bytes": 3225,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-v2-refusal-decision-20261016.json",
+    "sha256": "114d39410166716438f38219b827fed14047a727a5bfdafbfd5d9e824b61d421"
+  },
+  "raw_payload_transfer": false,
+  "scientific_or_native_or_tool_execution": false,
+  "status": "INERT_REQUIRES_FRESH_PARENT_STATIC_REVIEW_AND_ROOT_ONCE_ADMISSION",
+  "stdin_file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+  "stdout_max_bytes": 4194304,
+  "successful_cheap_semantic_probe": {
+    "bytes": 3051,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-strict-yaml-probe-execution-v1-20261016.json",
+    "sha256": "bc26edb47de31632d7cccb9a8c80f904b452cac6cb8c62310ac346c65dfa74e8"
+  },
+  "transport": "Stream exact reviewed observer over SSH stdin; no remote staging or -c payload."
+}

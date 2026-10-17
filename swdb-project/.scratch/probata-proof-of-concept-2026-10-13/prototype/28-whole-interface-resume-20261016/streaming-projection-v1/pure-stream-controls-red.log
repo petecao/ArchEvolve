@@ -1,0 +1,27 @@
+test_all_scopes_competing_names_and_location_elision_are_preserved (__main__.Controls.test_all_scopes_competing_names_and_location_elision_are_preserved) ... ok
+test_complete_assertion_macro_subtree_is_kept (__main__.Controls.test_complete_assertion_macro_subtree_is_kept) ... ok
+test_duplicate_declaration_ids_refuse_identical_shared_type_ids_allow (__main__.Controls.test_duplicate_declaration_ids_refuse_identical_shared_type_ids_allow) ... ok
+test_every_owned_edge_is_scanned_and_unknown_metadata_nodes_refuse (__main__.Controls.test_every_owned_edge_is_scanned_and_unknown_metadata_nodes_refuse) ... ok
+test_full_caller_effects_calls_macro_api_and_unresolved_ids_refuse (__main__.Controls.test_full_caller_effects_calls_macro_api_and_unresolved_ids_refuse) ... ok
+test_full_input_hash_single_caller_and_distinct_consumer_boundary (__main__.Controls.test_full_input_hash_single_caller_and_distinct_consumer_boundary) ... ok
+test_input_output_and_work_limits_are_separate_and_fail_closed (__main__.Controls.test_input_output_and_work_limits_are_separate_and_fail_closed) ... ok
+test_late_selectors_missing_caller_wrong_physical_source_and_reserved_keys_refuse (__main__.Controls.test_late_selectors_missing_caller_wrong_physical_source_and_reserved_keys_refuse) ... ok
+test_passive_reader_refuses_projection_hash_partition_census_and_reference_mutations (__main__.Controls.test_passive_reader_refuses_projection_hash_partition_census_and_reference_mutations) ... 
+  test_passive_reader_refuses_projection_hash_partition_census_and_reference_mutations (__main__.Controls.test_passive_reader_refuses_projection_hash_partition_census_and_reference_mutations) (certificate=10) ... FAIL
+test_small_read_chunks_preserve_the_complete_stream_and_raw_partitions (__main__.Controls.test_small_read_chunks_preserve_the_complete_stream_and_raw_partitions) ... ok
+test_truncated_malformed_duplicate_keys_utf8_and_concatenated_roots_refuse (__main__.Controls.test_truncated_malformed_duplicate_keys_utf8_and_concatenated_roots_refuse) ... ok
+
+======================================================================
+FAIL: test_passive_reader_refuses_projection_hash_partition_census_and_reference_mutations (__main__.Controls.test_passive_reader_refuses_projection_hash_partition_census_and_reference_mutations) (certificate=10)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-projection-v1/test_stream_projection_v1.py", line 195, in test_passive_reader_refuses_projection_hash_partition_census_and_reference_mutations
+    with self.subTest(certificate=c.get('owned_nodes_visited')),self.assertRaises(Refused):
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.057s
+
+FAILED (failures=1)
+{"actual_compiler_or_scientific_execution": false, "child_events": [], "errors": 0, "failures": 1, "skips": 0, "source_sha256": "a5b5dc070a460d6f2fc96e21d40731104266f533409cae2406c10ef475ddd217", "tests": 11, "tests_sha256": "ba2e765559cfdb1eabfaeae895e7fc0623f883d2708366b6471f0e553de3c9ae"}

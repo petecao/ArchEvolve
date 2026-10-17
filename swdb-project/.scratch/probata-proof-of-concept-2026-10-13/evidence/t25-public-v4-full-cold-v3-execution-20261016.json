@@ -1,0 +1,85 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "190s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-",
+    "--generation",
+    "619",
+    "--ended-utc",
+    "2026-10-16T21:28:57Z"
+  ],
+  "child_settled": true,
+  "command": {
+    "bytes": 2079,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/passive-command-v3.json",
+    "sha256": "63f8766a003ba8e3de89c52e11ca6442b54e678ebfec75f00ed9723854c51f8b"
+  },
+  "compiler_native_solver_or_project_import": false,
+  "complete_postflight": {
+    "bytes": 3026,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-postflight-20261016.json",
+    "sha256": "d30c7d841b30b13a513de0b6e38e017201ed2ec9a908843ca877064ada598585"
+  },
+  "date": "2026-10-16 ET",
+  "ended_utc": "2026-10-16T22:34:26.031727+00:00",
+  "exit_code": 1,
+  "fresh_preflight": {
+    "bytes": 3026,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-preflight-20261016.json",
+    "sha256": "77fb1b36bd38867a59d60e2797fd6ac15d193bef4c3c0dd8e7dfde53a4ef6e7f"
+  },
+  "independent_parent_spec": {
+    "bytes": 3369,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-observer-v3-parent-static-review-20261016.json",
+    "sha256": "1d0793865e327e100320826dbcec98d674fc3f4e16e00f7f430d7dc50b256601"
+  },
+  "input_bytes_expected": 1090100,
+  "input_bytes_sent": 1090100,
+  "local_deadline_seconds": 210,
+  "local_refusal": null,
+  "postflight_exit_code": 0,
+  "root_admission": {
+    "bytes": 1680,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-root-admission-20261016.json",
+    "sha256": "144cadb53146c1a34a4914e00fa69a335f11162aee953f376b26bbe81b2fc60a"
+  },
+  "root_scoped_acceptance_remains_separate": true,
+  "started_utc": "2026-10-16T22:34:05.574624+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-actual-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr_cap_bytes": 32768,
+  "stdin": {
+    "bytes": 1090100,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+    "sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666"
+  },
+  "stdout": {
+    "bytes": 280,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-actual-stdout-20261016.json",
+    "sha256": "8bd118831b26cb32a7b61ed259e7345647286cf192ab285035c13fd26049a114"
+  },
+  "stdout_cap_bytes": 4194304,
+  "wall_seconds": 19.69959208299406
+}

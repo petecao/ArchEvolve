@@ -1,0 +1,273 @@
+{
+  "added_ASTs": [
+    "ProducerGate",
+    "finalize",
+    "model_fragments",
+    "publish"
+  ],
+  "all_existing_constant_expression_ASTs_exact": true,
+  "changed_existing_ASTs": [
+    "OutputWatch",
+    "main"
+  ],
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "        self.cleanup_error = None\n",
+      "new_lines": [
+        117,
+        118
+      ],
+      "old": "",
+      "old_lines": [
+        117,
+        117
+      ],
+      "operation": "insert"
+    },
+    {
+      "new": "            if self.error is None:\n                try:\n                    need(extent(self.root, active=True) <= BUDGET-FINAL_HEADROOM,\n                         'active aggregate observation extent exceeded')\n                except Exception as error:\n                    self.error = type(error).__name__+': '+str(error)\n            if self.error is not None:\n                try:\n                    self.kill_children()\n                except Exception as error:\n                    self.cleanup_error = type(error).__name__+': '+str(error)\n",
+      "new_lines": [
+        122,
+        133
+      ],
+      "old": "            try:\n                need(extent(self.root, active=True) <= BUDGET-FINAL_HEADROOM,\n                     'active aggregate observation extent exceeded')\n            except Exception as error:\n                self.error = type(error).__name__+': '+str(error)\n                self.kill_children()\n                return\n",
+      "old_lines": [
+        121,
+        128
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "\n\nclass ProducerGate:\n    \"\"\"A latched output/deadline failure forbids every later tool workflow.\n\n    The process audit also covers subprocesses inside imported producer APIs.\n    The sole post-trip child exception is the existing monitor thread's exact\n    read-only ps fallback used to inspect/kill descendants on a Mac lacking\n    psutil. It is an OS/RSS cleanup mechanism, never a compiler/prover allowance.\n    \"\"\"\n    def __init__(self, watch, deadline, *, clock=time.monotonic):\n        self.watch, self.deadline, self.clock = watch, deadline, clock\n\n    def check(self):\n        need(self.watch is None or self.watch.error is None,\n             'latched output guard forbids subsequent producers or completion')\n        need(self.clock() < self.deadline, 'whole original-C diagnostic budget spent')\n\n    def remaining(self, maximum):\n        self.check()\n        left = self.deadline-self.clock()\n        need(left > 0, 'whole original-C diagnostic budget spent')\n        return min(maximum, left)\n\n    def call(self, producer, *args, **kwargs):\n        self.check()\n        value = producer(*args, **kwargs)\n        self.check()\n        return value\n\n    def audit(self, event, args):\n        if event.startswith(('subprocess.', 'os.exec', 'os.spawn', 'os.posix_spawn', 'os.fork')) \\\n                or event == 'os.system':\n            # Only the fixed existing resource-snapshot fallback can run in the\n            # trusted cleanup thread after a latch. Every other child is gated.\n            monitor = getattr(getattr(self.watch, 'thread', None), 'ident', None)\n            cleanup_ps = (event == 'subprocess.Popen' and len(args) >= 2\n                          and args[0] == 'ps' and args[1] == ['ps', '-A', '-o', 'pid=,ppid=,rss=']\n                          and monitor is not None and threading.get_ident() == monitor)\n            if not cleanup_ps:\n                self.check()\n\n\ndef model_fragments(lowering, vector_member):\n    fragments = {}\n    for member in ('ctor_count_value', 'dtor', 'data', 'move_ctor'):\n        for name, text in vector_member('std_vector_int', 'int', member):\n            need(isinstance(name, str) and isinstance(text, str) and text,\n                 'complete named model fragment required')\n            need(name not in fragments or fragments[name] == text,\n                 'duplicate original model fragments disagree')\n            fragments[name] = text\n    need(tuple(fragments) == tuple(lowering.models),\n         'complete ordered original.models fragment membership differs')\n    rows = []\n    for name, text in fragments.items():\n        occurrences = lowering.text.count(text)\n        need(occurrences == 1, 'exact complete original model fragment absent or duplicated: '+name)\n        raw = text.encode()\n        rows.append({'name': name, 'fragment_sha256': sha(raw), 'bytes': len(raw),\n                     'occurrences_in_original_C': occurrences,\n                     'identity_kind': 'exact source fragment; not a self-contained model proof unit'})\n    return rows\n\n\ndef finalize(root, result, gate, started):\n    \"\"\"Project both exclusive writes before publication; recheck after close/hash.\n\n    A late failure may retain a complete-looking result as partial evidence.\n    Its explicit schema requires controller zero exit and settled publication.\n    It is never an admission Boolean by itself.\n    \"\"\"\n    gate.check()\n    need(not os.path.lexists(root/'result.json') and not os.path.lexists(root/'artifact-manifest.json'),\n         'exclusive final metadata paths required')\n    need(extent(root) <= BUDGET, 'settled profile exceeds complete output bound')\n    gate.check()\n    result.update(elapsed_seconds=gate.clock()-started, output_guard_error=getattr(gate.watch, 'error', None),\n                  output_cleanup_error=getattr(gate.watch, 'cleanup_error', None),\n                  within_whole_budget=True, requires_zero_exit_and_settled_publication=True)\n    existing = [{'relative': str(path.relative_to(root)), **pin(path)}\n                for path in sorted(root.rglob('*')) if path.is_file()]\n    result_raw = encoded(result)\n    result_pin = {'path': str(root/'result.json'), 'bytes': len(result_raw), 'sha256': sha(result_raw)}\n    manifest_rows = sorted([*existing, {'relative': 'result.json', **result_pin}], key=lambda row: row['relative'])\n    manifest_raw = encoded(manifest_rows)\n    manifest_pin = {'path': str(root/'artifact-manifest.json'),\n                    'bytes': len(manifest_raw), 'sha256': sha(manifest_raw)}\n    projected = extent(root)+len(result_raw)+len(manifest_raw)\n    need(projected <= BUDGET and len(result_raw) <= 8*1024**2 and len(manifest_raw) <= 8*1024**2,\n         'projected final metadata exceeds complete profile bound')\n    gate.check()\n    write(root, root/'result.json', result_raw, reserve=False)\n    gate.check()\n    need(pin(root/'result.json') == result_pin, 'final result changed after close')\n    gate.check()\n    write(root, root/'artifact-manifest.json', manifest_raw, reserve=False)\n    gate.check()\n    need(pin(root/'artifact-manifest.json') == manifest_pin, 'artifact manifest changed after close')\n    gate.check()\n    total = extent(root)\n    gate.check()\n    need(total == projected and total <= BUDGET, 'complete settled profile differs from projected extent')\n    return {'settled': True, 'aggregate_bytes': total, 'result': result_pin, 'manifest': manifest_pin}\n\n\ndef publish(root, result, gate):\n    summary = {'output': str(root), 'producer_complete': result['producer_complete'],\n        'normal_outcome': result.get('normal_outcome'), 'normal_reader_refusal': result.get('normal_reader_refusal'),\n        'error': result.get('error'), 'finalization_error': result.get('finalization_error'),\n        'output_guard_error': result.get('output_guard_error'), 'output_cleanup_error': result.get('output_cleanup_error'),\n        'ordinary': result.get('ordinary'), 'smokes': result.get('smokes'),\n        'requires_zero_exit_and_settled_publication': True, 'source_or_caller_admission': False}\n    raw = json.dumps(summary, sort_keys=True, allow_nan=False)\n    if len(raw.encode())+1 > 8192:\n        raw = json.dumps({'output': str(root)[:128], 'output_sha256': sha(str(root).encode()),\n            'producer_complete': result['producer_complete'], 'summary_truncated': True,\n            'complete_summary_sha256': sha(raw.encode()),\n            'error': str(result.get('error'))[:128],\n            'normal_reader_refusal': str(result.get('normal_reader_refusal'))[:128],\n            'output_guard_error': str(result.get('output_guard_error'))[:128],\n            'finalization_error': str(result.get('finalization_error'))[:128],\n            'requires_zero_exit_and_settled_publication': True, 'source_or_caller_admission': False},\n            sort_keys=True, allow_nan=False)\n    need(len(raw.encode())+1 <= 8192, 'compact publication exceeds its byte bound')\n    print(raw, flush=True)\n    try:\n        gate.check()\n        need(extent(root) <= BUDGET, 'settled publication exceeds output cap')\n        gate.check()\n    except Exception:\n        return 1\n    return 0 if result['producer_complete'] and result.get('finalized', {}).get('settled') else 1\n",
+      "new_lines": [
+        142,
+        275
+      ],
+      "old": "",
+      "old_lines": [
+        137,
+        137
+      ],
+      "operation": "insert"
+    },
+    {
+      "new": "    gate = ProducerGate(None, deadline)\n    sys.addaudithook(gate.audit)\n",
+      "new_lines": [
+        317,
+        319
+      ],
+      "old": "",
+      "old_lines": [
+        179,
+        179
+      ],
+      "operation": "insert"
+    },
+    {
+      "new": "        return gate.call(subprocess.check_output, ['git', '--no-optional-locks', '--no-replace-objects',\n",
+      "new_lines": [
+        325,
+        326
+      ],
+      "old": "        return subprocess.check_output(['git', '--no-optional-locks', '--no-replace-objects',\n",
+      "old_lines": [
+        185,
+        186
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "            '-C', str(project), *args], timeout=gate.remaining(30))\n",
+      "new_lines": [
+        327,
+        328
+      ],
+      "old": "            '-C', str(project), *args], timeout=30)\n",
+      "old_lines": [
+        187,
+        188
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "        return gate.remaining(maximum)\n",
+      "new_lines": [
+        338,
+        339
+      ],
+      "old": "        left = deadline-time.monotonic()\n        need(left > 0, 'whole original-C diagnostic budget spent')\n        return min(maximum, left)\n",
+      "old_lines": [
+        198,
+        201
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "    gate.watch = watch\n",
+      "new_lines": [
+        364,
+        365
+      ],
+      "old": "",
+      "old_lines": [
+        226,
+        226
+      ],
+      "operation": "insert"
+    },
+    {
+      "new": "            gate.check()\n",
+      "new_lines": [
+        367,
+        368
+      ],
+      "old": "",
+      "old_lines": [
+        228,
+        228
+      ],
+      "operation": "insert"
+    },
+    {
+      "new": "            compiler_tool = gate.call(c_lowering.locate)\n            compiler = gate.call(stdlib_provenance.runtime_identity, compiler_tool)\n            lowering_identity = gate.call(c_lowering.identity)\n            original = gate.call(c_lowering.lower, source, FUNCTION)\n",
+      "new_lines": [
+        371,
+        375
+      ],
+      "old": "            compiler = stdlib_provenance.runtime_identity(c_lowering.locate())\n            lowering_identity = c_lowering.identity()\n            original = c_lowering.lower(source, FUNCTION)\n",
+      "old_lines": [
+        231,
+        234
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "            problem = gate.call(stdlib_provenance.check, original.stdlib_provenance, gate.call(c_lowering.locate), source,\n",
+      "new_lines": [
+        376,
+        377
+      ],
+      "old": "            problem = stdlib_provenance.check(original.stdlib_provenance, c_lowering.locate(), source,\n",
+      "old_lines": [
+        235,
+        236
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "            fragments = model_fragments(original, std_models.vector_member)\n            allocator = {name: {'id': name, 'sha256': sha(text.encode())}\n                         for name, text in std_models.allocator('int')}\n            write(out, out/'modular-hypothesis-boundary.json', encoded({\n                'allocator_only_normal_reader_TCB': allocator,\n                'all_original_model_fragments': fragments,\n                'complete_original_models': list(original.models),\n                'no_new_extern_or_constructor_whitelist': True,\n                'conditional_model_poststates_not_source_ownership_or_nonvacuity': True}))\n",
+      "new_lines": [
+        383,
+        392
+      ],
+      "old": "",
+      "old_lines": [
+        242,
+        242
+      ],
+      "operation": "insert"
+    },
+    {
+      "new": "            tools = gate.call(adapter._tools)\n",
+      "new_lines": [
+        414,
+        415
+      ],
+      "old": "            tools = adapter._tools()\n",
+      "old_lines": [
+        264,
+        265
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "            reader = gate.call(proof_setup.compile_report_module, reader_dir, timeout=remaining(120))\n            frama_tool = gate.call(framac.locate)\n            write(out, out/'foundation.json', encoded(gate.call(engine.foundations, frama_tool.command,\n",
+      "new_lines": [
+        424,
+        427
+      ],
+      "old": "            reader = proof_setup.compile_report_module(reader_dir, timeout=remaining(120))\n            write(out, out/'foundation.json', encoded(engine.foundations(framac.locate().command,\n",
+      "old_lines": [
+        274,
+        276
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "            command = [*gate.call(framac.locate).command, '-machdep', 'x86_64', 'wp_input.c', '-print',\n",
+      "new_lines": [
+        431,
+        432
+      ],
+      "old": "            command = [*framac.locate().command, '-machdep', 'x86_64', 'wp_input.c', '-print',\n",
+      "old_lines": [
+        280,
+        281
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "            observed = gate.call(rss_watchdog.run, command, log=directory/'frama-c.log', cwd=directory,\n",
+      "new_lines": [
+        442,
+        443
+      ],
+      "old": "            observed = rss_watchdog.run(command, log=directory/'frama-c.log', cwd=directory,\n",
+      "old_lines": [
+        291,
+        292
+      ],
+      "operation": "replace"
+    },
+    {
+      "new": "",
+      "new_lines": [
+        455,
+        455
+      ],
+      "old": "            allocator = {name: {'id': name, 'sha256': sha(text.encode())}\n                         for name, text in std_models.allocator('int')}\n            write(out, out/'modular-hypothesis-boundary.json', encoded({\n                'allocator_only_normal_reader_TCB': allocator,\n                'all_original_models': [{'name': name, 'sha256': sha(std_models.model_text(name).encode())}\n                                        for name in original.models],\n                'no_new_extern_or_constructor_whitelist': True,\n                'conditional_model_poststates_not_source_ownership_or_nonvacuity': True}))\n",
+      "old_lines": [
+        304,
+        312
+      ],
+      "operation": "delete"
+    },
+    {
+      "new": "        result.update(output_guard_error=watch.error, output_cleanup_error=watch.cleanup_error)\n        try:\n            final = finalize(out, result, gate, started)\n            result['finalized'] = final\n        except Exception as error:\n            result.update(producer_complete=False, finalization_error=type(error).__name__+': '+str(error))\n        finally:\n            signal.alarm(0)\n    return publish(out, result, gate)\n",
+      "new_lines": [
+        477,
+        486
+      ],
+      "old": "        result.update(elapsed_seconds=time.monotonic()-started, output_guard_error=watch.error)\n        result['within_whole_budget'] = result['elapsed_seconds'] <= WHOLE\n        write(out, out/'result.json', encoded(result), reserve=False)\n        manifest = [{'relative': str(p.relative_to(out)), **pin(p)} for p in sorted(out.rglob('*')) if p.is_file()]\n        write(out, out/'artifact-manifest.json', encoded(manifest), reserve=False)\n        need(extent(out) <= BUDGET, 'complete settled output exceeds aggregate cap')\n        signal.alarm(0)\n    print(json.dumps({'output': str(out), 'producer_complete': result['producer_complete'],\n        'normal_outcome': result.get('normal_outcome'), 'normal_reader_refusal': result.get('normal_reader_refusal'),\n        'error': result.get('error'), 'ordinary': result.get('ordinary'), 'smokes': result.get('smokes'),\n        'source_or_caller_admission': False}, sort_keys=True), flush=True)\n    return 0 if result['producer_complete'] and result['within_whole_budget'] and watch.error is None else 1\n",
+      "old_lines": [
+        334,
+        346
+      ],
+      "operation": "replace"
+    }
+  ],
+  "forward_exact": true,
+  "inverse_exact": true,
+  "materializer_byte_identical": true,
+  "predecessor": {
+    "bytes": 19390,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/entry-template.py",
+    "sha256": "172ad3f27d16f7d27a4c2640f6707fdedd3a76071eee0a80c22f51da54f1bbc9"
+  },
+  "successor": {
+    "bytes": 26482,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v2/entry-template.py",
+    "sha256": "4e021a856879a624024f1e6b190eef0ef04ad4089de8ea09a6adf9c49efb23df"
+  },
+  "unchanged_top_level_ASTs": [
+    "sha",
+    "encoded",
+    "pin",
+    "normal_flags",
+    "need",
+    "extent",
+    "write",
+    "complete_census"
+  ]
+}

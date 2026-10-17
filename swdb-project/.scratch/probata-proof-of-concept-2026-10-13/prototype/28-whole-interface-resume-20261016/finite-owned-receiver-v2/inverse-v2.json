@@ -1,0 +1,52 @@
+{
+  "edits": [
+    {
+      "new": "def rule_rows(owner):",
+      "old": "def rule_rows(facts,owner):"
+    },
+    {
+      "new": "    return [dict(id='finite_context_'+role.replace('-','_'),statement=statement+' Owner: '+owner+'.',",
+      "old": "    binding=sha(canonical(facts))\n    return [dict(id='finite_context_'+role.replace('-','_'),statement=statement+' Owner: '+owner+'. Finite facts SHA-256: '+binding+'.',"
+    },
+    {
+      "new": "def resolve_rules(entry,entry_pin,entry_id,context,owner):",
+      "old": "def resolve_rules(entry,entry_pin,entry_id,context,facts,owner):"
+    },
+    {
+      "new": "by_id={row['id']:row for row in rows};wanted=rule_rows(owner)",
+      "old": "by_id={row['id']:row for row in rows};wanted=rule_rows(facts,owner)"
+    },
+    {
+      "new": "def owned_selection_metadata(source_policy,prepared,identity,facts,owner):\n    \"\"\"Pinned selection identity, never Boolean authority for its truth.\"\"\"\n    return dict(schema='finite-owned-selection-2',owner=owner,same_entry=identity,\n        source_plan=source_policy['source_plan'],context=source_policy['context'],receiver=source_policy['receiver'],\n        trace_policy=prepared['policy'],trace_certificate=prepared['certificate'],resource_profile=prepared['profile'],\n        draw_plan=prepared['draws'],owned_facts_sha256=sha(canonical(facts)),\n        scope='externally selected owned finite-entry representation only')\n\n\ndef receiver_text(context,profile):",
+      "old": "def receiver_text(context,profile):"
+    },
+    {
+      "new": "{'schema','composer','producer','receiver_basis','prepared','entry_id','premise_owner','owned_selection'}",
+      "old": "{'schema','composer','producer','receiver_basis','prepared','entry_id','premise_owner'}"
+    },
+    {
+      "new": "policy['schema']=='finite-owned-receiver-selection-2'",
+      "old": "policy['schema']=='finite-owned-receiver-selection-1'"
+    },
+    {
+      "new": "    assumptions=resolve_rules(entry,source_policy['entry'],policy['entry_id'],context,policy['premise_owner'])\n    selected_facts=reads.document(policy['owned_selection'])\n    need(selected_facts==owned_selection_metadata(source_policy,prepared,cert['same_entry'],facts,policy['premise_owner']),\n        'exact externally owned selection/context/receiver/facts binding differs')",
+      "old": "    assumptions=resolve_rules(entry,source_policy['entry'],policy['entry_id'],context,facts,policy['premise_owner'])"
+    },
+    {
+      "new": "schema='finite-owned-trace-integration-2'",
+      "old": "schema='finite-owned-trace-integration-1'"
+    },
+    {
+      "new": "schema='finite-owned-trace-composition-certificate-2'",
+      "old": "schema='finite-owned-trace-composition-certificate-1'"
+    },
+    {
+      "new": "owned_facts=facts,owned_facts_sha256=sha(canonical(facts)),owned_selection=policy['owned_selection'],\n        selected_owner=policy['premise_owner'],selected_metadata=selected_facts,record_assumptions=assumptions,",
+      "old": "owned_facts=facts,owned_facts_sha256=sha(canonical(facts)),record_assumptions=assumptions,"
+    }
+  ],
+  "exact_v1_sha256": "832e7440062dce0fe0d8e7c4689324abd6d62add03ec84c5d09f5e7c0ab759e1",
+  "receiver_text_body_unchanged": true,
+  "restored_exact_bytes": true,
+  "schema": "finite-owned-receiver-v2-inverse-1"
+}

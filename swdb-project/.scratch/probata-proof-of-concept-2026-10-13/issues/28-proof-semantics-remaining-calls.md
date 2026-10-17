@@ -1,27 +1,31 @@
 # 28 — Proof semantics for the remaining maa_* calls
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-16 ET (active implementation under renewed user approval)
+Updated: 2026-10-16 ET (paused by user; claim released)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 27
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("DX100 proof semantics", "Concurrency" (history read), "What a proven verdict asserts" (the seven assumption kinds), "Testing Decisions", S1, S2); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [14](../../formal-verification-2026-10-09/issues/14-dx100-wait-rule.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 1 week
 
 **What to build:** The proof semantics grows to the whole DX100 interface, so DX100 code of any kernel can be proven against it, not only BFS. Every remaining `maa_*` call of `dx100-mmio 1.0-e4fc4af` gets its contract, written per call from the interface and the gem5 source, never from a kernel. The new version adds the memory rules ticket 27 left out: a CPU access that overlaps an unfinished command's footprint (split by thread and by what DX100 does), device-against-device ordering by gem5's region stall, tile ownership as a proof obligation, the 8-byte tile pair, and a `get_tile_ready` that may answer either way. It also writes down what proofs trust at the call boundary and across cores: the MMIO code and the visibility entries of map 12 item 7. End to end: `swdb prove` on synthetic fixtures gives the verdict each rule predicts, and every verdict lists the matching assumption entries.
 
-## Current resumed checkpoint — 2026-10-16 17:21 ET
+## Current paused checkpoint — 2026-10-16 22:08 ET
 
-Trace25 has complete independent passive cold/root scoped acceptance:12proven,
-13refuted with all13 original C++ replays,3850goals and15625native-agreement runs.
-Absent original loop-discovery stdout and deleted executables remain explicit
-producer/runtime premises. No source/new0.2/full-interface claim follows.
-Initialized711/1107 remain provisional pending independently reviewed exact
-unused-arity0 classificationV8. Native86 retains private scoped adoption.
-CaptureV7 hit128MiB at callerAST; frozen losslessV8 has18passing controls and an
-explicit512MiB expanded-memory bound, unchanged retained/resource caps and
-selectedPython built-in zlib binding. Independent review, actual capture and
-source/receiver/CPU/new0.2 integration remain. All final acceptance boxes open.
+User requested stop; this claim is released. No owned job or SSH session is active.
+Applied coherentV5 and its reviewed source boundaries are retained. SemanticABI
+repair and finiteV4 pass source reviews; final69-path union remains scratch-only,
+with Spec and complementary lineage Standards but pending complete root body review.
+Actual observerV5 G626 exited1 without OOM/timeout: full-TU call binding refused
+an ambiguous declaration ID. No preparation/context/public result was adopted.
+Memory observer has inverse/staging-plan metadata HOLD findings. Public35 summaries,
+one genuine candidate and unbounded-ready actual proofs remain unexecuted.
+No acceptance checkbox is newly satisfied.
+
+Resume from [the exact pause handoff](../pause-20261016.md), then reclaim this ticket.
+The [publication record](../evidence/pause-20261016/delivery.json) identifies saved source.
+External Claude's resolved ticket7 work is preserved; older active sections below
+are historical. This ticket remains incomplete.
 
 ## Active implementation — 2026-10-15 21:19 ET
 

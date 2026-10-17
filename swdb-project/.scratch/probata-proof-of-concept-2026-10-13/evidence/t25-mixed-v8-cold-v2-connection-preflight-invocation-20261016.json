@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "35s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "elapsed_seconds": 0.6515270420350134,
+  "exit_code": 0,
+  "started_utc": "2026-10-17T00:02:21.598172+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-v2-connection-preflight-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdin_sha256": "c55ded60c18a474f2e85c5ab014ac61e7d82dc8e5dcf93b170f366fd27ecdd84",
+  "stdout": {
+    "bytes": 1479,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-v2-connection-preflight-stdout-20261016.json",
+    "sha256": "cf9d00ad7472e6fa6b483def509eda2dd9ad50d59b39dffba53f6ed81e48168a"
+  },
+  "uncertain_transport_result": false,
+  "within_output_cap": true
+}

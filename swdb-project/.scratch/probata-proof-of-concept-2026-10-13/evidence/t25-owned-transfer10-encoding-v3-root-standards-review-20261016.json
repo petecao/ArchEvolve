@@ -1,0 +1,33 @@
+{
+  "actual_query_executed": false,
+  "classification": "PASS_G621_ENCODING_V3_NARROW_STANDARDS_SOURCE_REVIEW",
+  "command": {
+    "bytes": 1341,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/command.json",
+    "sha256": "91623c301d14f635c55ea40ab6b44e064c860aa211a643ed629e860b1b7df19f"
+  },
+  "compiler_driver_foundation_TCB": "Source-to-driver alpha renaming, solver typing and source-to-binary remain explicit. This review grants no semantic adoption or fresh proof.",
+  "complete_three_file_inverses_and_assembled_entry": true,
+  "controls": 21,
+  "controls_log": {
+    "bytes": 2553,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-root-controls-20261016.log",
+    "sha256": "9181c1d8e53e797dc96145f73b391d3219d8c18ebb6abe9057dce17c3637e7f4"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 247600,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/entry.py",
+    "sha256": "cd85933706b161b4611dbb6e04cf04a2018127f525bcf8f1da73751b4deee7c6"
+  },
+  "findings": [],
+  "packet": {
+    "bytes": 8725,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/source-packet.json",
+    "sha256": "e90e9b2ef762ef1ecb6c954524ce2a406f7edf9afc108fcb7c7eb1bb73498b4d"
+  },
+  "reviewer": "root",
+  "scientific_acceptance": false,
+  "scope": "Only complete right-associated Boolean implication chains and mathematical SMT + operand ordering are canonicalized. No quantified barrier crossed or premise/operand dropped, no FP/BV/custom plus reordering. Exact typed total abs1 body binds selected complete int.Abs source; name alone grants no recognition. Full20 command/support/goal census and all22 physicalinput pre/post checks remain. Unknown definitions/support stay pending.",
+  "verified_declared_pins": 23
+}

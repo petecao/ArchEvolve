@@ -1,0 +1,75 @@
+# Diagnostic only. No normalization, source preparation or compiler is run.
+import ast,sys
+ABI=RAW/'component/abi.ast.json'
+ABI_EXPECTED={'bytes':127394,'sha256':'0416fecb76bfec1cd375b8d0940de7b1306e9d9b3d591fd0683f544c080ddf15'}
+DECODER=OUTPUT/'observer/control/compiler_unit_adapter_v3.py'
+DECODER_SHA='775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c'
+def stable_metadata(value):
+ return tuple(getattr(value,k)for k in ('st_dev','st_ino','st_mode','st_nlink','st_uid','st_gid','st_size','st_mtime_ns','st_ctime_ns'))
+def diagnostic_readonly(event,args):
+ if event=='open':
+  _path,mode,flags=args
+  if (isinstance(mode,str)and any(c in mode for c in 'wax+'))or flags&(1|2|64|512|1024):raise PermissionError('ABI census is read-only')
+ if event.startswith(('subprocess.','os.exec','os.spawn','os.posix_spawn','os.fork','socket.'))or event in {'os.system','ctypes.dlopen','os.mkdir','os.remove','os.unlink','os.rename','os.replace','os.rmdir','os.chmod','os.chown','os.link','os.symlink','os.truncate','os.utime','os.chdir','os.putenv','os.unsetenv'}:raise PermissionError('ABI census native/child/network/mutation refused')
+sys.addaudithook(diagnostic_readonly)
+before=ABI.lstat()
+if ABI.resolve(strict=True)!=ABI or not stat.S_ISREG(before.st_mode)or before.st_size!=ABI_EXPECTED['bytes']:raise ValueError('exact original ABI physical extent required')
+payload=read(ABI,ABI_EXPECTED['bytes'])
+if len(payload)!=ABI_EXPECTED['bytes']or hashlib.sha256(payload).hexdigest()!=ABI_EXPECTED['sha256']or stable_metadata(ABI.lstat())!=stable_metadata(before):raise ValueError('original ABI identity changed')
+decoder_source=read(DECODER)
+if hashlib.sha256(decoder_source).hexdigest()!=DECODER_SHA:raise ValueError('exact reviewed strict decoder lineage required')
+tree=ast.parse(decoder_source)
+nodes=[n for n in tree.body if isinstance(n,(ast.FunctionDef,ast.ClassDef))and n.name in {'Refused','need','strict_decoder'}]
+if {n.name for n in nodes}!={'Refused','need','strict_decoder'}:raise ValueError('strict decoder source selection differs')
+namespace={'json':json};exec(compile(ast.Module(body=nodes,type_ignores=[]),'<exact-reviewed-strict-ABI-decoder>','exec'),namespace)
+text=payload.decode('utf-8');at=0;strict_roots=0;strict_error=None
+strict=namespace['strict_decoder']()
+while at<len(text):
+ while at<len(text)and text[at].isspace():at+=1
+ if at==len(text):break
+ try:node,at=strict.raw_decode(text,at)
+ except (ValueError,RecursionError)as error:
+  strict_error={'type':type(error).__name__,'message':str(error)[:160],'root_index':strict_roots}
+  break
+ strict_roots+=1
+class Pairs(tuple):pass
+def nonfinite(value):raise ValueError('nonfinite ABI JSON refused')
+ordered=json.JSONDecoder(object_pairs_hook=lambda rows:Pairs(rows),parse_constant=nonfinite)
+roots=[];at=0
+while at<len(text):
+ while at<len(text)and text[at].isspace():at+=1
+ if at==len(text):break
+ node,at=ordered.raw_decode(text,at)
+ if not isinstance(node,Pairs):raise ValueError('ABI object root required')
+ roots.append(node)
+ if len(roots)>64:raise ValueError('bounded ABI root census')
+duplicates=[];object_count=0
+def walk(value):
+ global object_count
+ if isinstance(value,Pairs):
+  object_count+=1
+  if object_count>16384:raise ValueError('bounded ABI object census')
+  keys=[key for key,_ in value]
+  if len(keys)>256:raise ValueError('bounded ABI object keys')
+  repeated=sorted({key for key in keys if keys.count(key)>1})
+  if repeated:
+   kinds=[item for key,item in value if key=='kind']
+   safe_kinds=[kind if isinstance(kind,str)and kind.isidentifier()and len(kind)<=80 else '<non-identifier-or-nonscalar>' for kind in kinds]
+   row={'keys':keys,'duplicate_keys':repeated,'kind_values':safe_kinds,'object_pairs_sha256':hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()}
+   duplicates.append(row)
+   if len(duplicates)>64:raise ValueError('bounded ABI duplicate census')
+  for key,item in value:walk(item)
+ elif isinstance(value,list):
+  for item in value:walk(item)
+for root in roots:walk(root)
+if stable_metadata(ABI.lstat())!=stable_metadata(before):raise ValueError('original ABI changed during census')
+post_rounds=[]
+for attempt in range(3):
+ post=scan();post_rounds.append(post)
+ if post['vanished_process_or_descriptor_observations']==0:break
+if post['selected_original_readers']or post['unreadable_own_processes']or post['vanished_process_or_descriptor_observations']:raise ValueError('finite post-census original readers unresolved')
+result.update(schema='diagnostic-original-ABI-ordered-pair-census-1',original_abi={'path':str(ABI),**ABI_EXPECTED},strict_decoder_source={'path':str(DECODER),'bytes':len(decoder_source),'sha256':DECODER_SHA},strict_roots_before_error=strict_roots,strict_error=strict_error,complete_ordered_roots=len(roots),object_count=object_count,duplicate_objects=len(duplicates),duplicate_contexts=duplicates,original_ABI_unchanged=True,post_scans=post_rounds,ABI_source_or_public_admission=False,normalization_or_compiler_executed=False)
+encoded=json.dumps(result,sort_keys=True,separators=(',',':')).encode()
+if len(encoded)>65536:raise ValueError('compact ABI diagnostic output cap')
+print(encoded.decode())
+raise SystemExit(0)

@@ -1,6 +1,8 @@
 # Closed no-growth projected-C diagnostic
 
-2026-10-16 ET. Inert, pending independent entry review and root admission.
+2026-10-16 ET. Original inert packet retained; root admitted one actual run and
+its passive observation now independently reconciles. Caller admission remains
+unsupported.
 
 The source freeze is `615ddf504fed61b9f6c6e4663760d006ecaf255b`, published on
 `yanrujhou_main`. The prospective remote checkout is
@@ -57,4 +59,31 @@ establish reader behavior and provide no mathematical or source proof.
 
 Entry/preparation hashes are in `inert-615ddf50-public-v1/packet.json` and
 `../../evidence/t25-closed-no-growth-public-v1-inert-preparation-20261016.json`.
-No remote evaluation has been run by this author.
+The root coordinator admitted node1 generation630 at source `615ddf50`. Native
+WP returned 0 in 28.236 seconds, peak 285,749,248 bytes. All 17 ordinary native
+goals are Valid. Four smoke goals retain healthy nonproof outcomes; the entry
+requires smoke includes one Unknown attempt between two Timeouts, while the
+other three each retain three Timeouts. Normal smoke health remains separate
+from ordinary proof validity.
+
+The original entry returned 1 because its observer expected generation-only
+unregistered synthetic properties; the actual proof registered the constructor
+call smoke. Its exact callee owner, caller goal, source line129 and statement47
+remain unchanged. A separate passive observer accepts only that exact registered
+form, retains all 21 goals/72 properties and binds all 52 CSV rows to source
+properties. It indexes 19 printed exports for 11 owners plus ten internal-Qed
+inventory-only goals. All 314 raw files, 23,681,513 bytes, remain unchanged.
+
+The actual ordinary reader still returns `not_proven/unclassified_wp_outcome`:
+constructor `assigns *this` is not an admitted body dependency. No constructor
+extern whitelist was added. Source/Typed/lifetime correspondence remains open.
+The passive observer does not rewrite this outcome or the original entry
+refusal. No second compiler/solver proof run occurred.
+
+Passive V1 was source-reviewed and left unexecuted; V2 refused an overly narrow
+all-Timeout assumption, and V3 refused a missing named-assertion CSV binding.
+Those observer histories remain retained. V4 completed and independently
+reconciled source/runtime/import/CSV/raw metadata, without project imports or
+remote writes. Evidence is
+`../../evidence/t25-closed-no-growth-passive630-result-v4-20261016.json` and
+`../../evidence/t25-closed-no-growth-passive630-independent-review-20261016.md`.

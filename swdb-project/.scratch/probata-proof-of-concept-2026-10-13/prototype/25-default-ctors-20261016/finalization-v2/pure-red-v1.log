@@ -1,0 +1,145 @@
+test_boolean_exit_not_integer_zero (__main__.FinalGate.test_boolean_exit_not_integer_zero) ... FAIL
+test_boolean_extent_not_integer (__main__.FinalGate.test_boolean_extent_not_integer) ... FAIL
+test_changed_expected_members (__main__.FinalGate.test_changed_expected_members) ... FAIL
+test_duplicate_member (__main__.FinalGate.test_duplicate_member) ... FAIL
+test_final_metadata_quota (__main__.FinalGate.test_final_metadata_quota) ... FAIL
+test_final_row_nonzero_exit (__main__.FinalGate.test_final_row_nonzero_exit) ... FAIL
+test_final_row_out_of_memory (__main__.FinalGate.test_final_row_out_of_memory) ... FAIL
+test_final_row_timeout (__main__.FinalGate.test_final_row_timeout) ... FAIL
+test_flushed_publication_settles_before_success (__main__.FinalGate.test_flushed_publication_settles_before_success) ... FAIL
+test_gate_after_archives_source_and_final_metadata (__main__.FinalGate.test_gate_after_archives_source_and_final_metadata) ... FAIL
+test_incomplete (__main__.FinalGate.test_incomplete) ... ok
+test_missing_resource_flags (__main__.FinalGate.test_missing_resource_flags) ... FAIL
+test_negative_elapsed (__main__.FinalGate.test_negative_elapsed) ... FAIL
+test_not_proven (__main__.FinalGate.test_not_proven) ... ok
+test_safe_exact_four_and_limits (__main__.FinalGate.test_safe_exact_four_and_limits) ... ok
+test_settled_deadline (__main__.FinalGate.test_settled_deadline) ... FAIL
+test_unexpected_member (__main__.FinalGate.test_unexpected_member) ... FAIL
+test_wrong_order (__main__.FinalGate.test_wrong_order) ... FAIL
+
+======================================================================
+FAIL: test_boolean_exit_not_integer_zero (__main__.FinalGate.test_boolean_exit_not_integer_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 100, in test_boolean_exit_not_integer_zero
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_boolean_extent_not_integer (__main__.FinalGate.test_boolean_extent_not_integer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 103, in test_boolean_extent_not_integer
+    self.assertFalse(self.accept(extent=False))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_changed_expected_members (__main__.FinalGate.test_changed_expected_members)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 82, in test_changed_expected_members
+    self.assertFalse(self.accept(values, list(reversed(MEMBERS))))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_duplicate_member (__main__.FinalGate.test_duplicate_member)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 70, in test_duplicate_member
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_final_metadata_quota (__main__.FinalGate.test_final_metadata_quota)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 92, in test_final_metadata_quota
+    self.assertFalse(self.accept(extent=128 * 1024**2 + 1))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_final_row_nonzero_exit (__main__.FinalGate.test_final_row_nonzero_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 63, in test_final_row_nonzero_exit
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_final_row_out_of_memory (__main__.FinalGate.test_final_row_out_of_memory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 55, in test_final_row_out_of_memory
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_final_row_timeout (__main__.FinalGate.test_final_row_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 59, in test_final_row_timeout
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_flushed_publication_settles_before_success (__main__.FinalGate.test_flushed_publication_settles_before_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 129, in test_flushed_publication_settles_before_success
+    self.assertIn(('flush',True),[(item.arg,getattr(item.value,'value',None)) for item in printed[0].value.keywords])
+AssertionError: ('flush', True) not found in []
+
+======================================================================
+FAIL: test_gate_after_archives_source_and_final_metadata (__main__.FinalGate.test_gate_after_archives_source_and_final_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 115, in test_gate_after_archives_source_and_final_metadata
+    self.assertEqual(len(final_total),1);self.assertEqual(len(final_elapsed),1);self.assertEqual(len(final_gate),1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_missing_resource_flags (__main__.FinalGate.test_missing_resource_flags)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 96, in test_missing_resource_flags
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_negative_elapsed (__main__.FinalGate.test_negative_elapsed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 106, in test_negative_elapsed
+    self.assertFalse(self.accept(wall=-1.0))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_settled_deadline (__main__.FinalGate.test_settled_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 89, in test_settled_deadline
+    self.assertFalse(self.accept(wall=900.000001))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unexpected_member (__main__.FinalGate.test_unexpected_member)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 78, in test_unexpected_member
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_wrong_order (__main__.FinalGate.test_wrong_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py", line 74, in test_wrong_order
+    self.assertFalse(self.accept(values))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.001s
+
+FAILED (failures=15)
+{"actual_entry_main": false, "candidate": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v1.py", "child_native_network_or_write_attempts": [], "date": "2026-10-16 ET", "errors": 0, "failures": 15, "scientific_acceptance": false, "tests": 18}

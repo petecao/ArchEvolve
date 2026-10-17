@@ -1,0 +1,72 @@
+{
+  "basis": {
+    "bytes": 24791,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5/linux_observation_envelope_v5.py",
+    "sha256": "13de22dc3d1e20d8b7e652e8a48caa356e9985a566ced65f468f05f21ad10cc8"
+  },
+  "date": "2026-10-16 ET",
+  "logic_gates_removed_or_relaxed": false,
+  "replacements": [
+    {
+      "count": 1,
+      "new": "t28-memory-unit-observation-2baf722f-v3",
+      "old": "t28-unit-observation-2baf722f-v5"
+    },
+    {
+      "count": 2,
+      "new": "control/linux_memory_observation_envelope_v2.py",
+      "old": "control/linux_observation_envelope_v5.py"
+    },
+    {
+      "count": 2,
+      "new": "control/envelope-policy-v2.json",
+      "old": "control/envelope-policy-v5.json"
+    },
+    {
+      "count": 1,
+      "new": "OBSERVER_SHA = '19a7d7efc9de0d5097f7643dbdc378934bf2ca64f0992ab3ca0c9724275938c3'",
+      "old": "OBSERVER_SHA = '7ecdbffea04c87a2c198a17cf7b5fbd872bc4c663cc4d8da42a3c5e7bc1a088e'"
+    },
+    {
+      "count": 1,
+      "new": "RUNTIME_POLICY_SHA = 'd1bfb65ad9bf85aab9cd7dce14ef3b5002134878d86dbaae432814b3082c7cf6'",
+      "old": "RUNTIME_POLICY_SHA = '8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517'"
+    },
+    {
+      "count": 1,
+      "new": "observer/control/observe_memory_entry_v1.py",
+      "old": "observer/control/observe_entry_v3.py"
+    },
+    {
+      "count": 2,
+      "new": "same_thread_memory_v1.cpp",
+      "old": "source_call_fixture_v2.cpp"
+    },
+    {
+      "count": 3,
+      "new": "proof_units/same_thread_memory_v1.cpp",
+      "old": "proof_units/source.cpp"
+    },
+    {
+      "count": 1,
+      "new": "policy['library_source']['bytes'] == 3258",
+      "old": "policy['library_source']['bytes'] == 4524"
+    },
+    {
+      "count": 1,
+      "new": "'55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887'",
+      "old": "'3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd'"
+    },
+    {
+      "count": 1,
+      "new": "OBSERVER_CONTROLS = ('abi_role_transport_v1.py', 'closed_python_surface.py', 'compiler_unit_adapter_v3.py', 'compiler_unit_adapter_v4.py', 'dx100_whole_checked_v2.py', 'fixed-memory-modules-v2.json', 'lossless_gzip_v2.py', 'memory_capture_facts_v1.json', 'memory_normalized_capture_ingress_v1.py', 'memory_normalized_compiler_adapter_v1.py', 'memory_source_preparation_v1.py', 'observation_source_bridge_v1.py', 'observe_memory_entry_v1.py', 'receiver_state_draws_v2.py', 'role_normalized_gzip_v2.py', 'source_memory_selection_v1.py', 'strict_minify_v2.py', 'whole_interface_v4.py')",
+      "old": "OBSERVER_CONTROLS = ('abi_role_transport_v1.py', 'closed_python_surface.py', 'compiler_unit_adapter_v3.py', 'compiler_unit_adapter_v4.py', 'dx100_whole_checked_v2.py', 'fixed-modules-v3.json', 'lossless_gzip_v2.py', 'normalized_capture_ingress_v2.py', 'normalized_compiler_adapter_v1.py', 'normalized_unit_observation_v1.py', 'observation_source_bridge_v1.py', 'observe_entry_v3.py', 'receiver_state_draws_v2.py', 'role_normalized_gzip_v2.py', 'strict_minify_v2.py', 'whole_interface_v4.py')"
+    },
+    {
+      "count": 1,
+      "new": "OBSERVER_OUTPUTS = ('whole-unit-preparation.json', 'observed-input-pins.json', 'memory-source-units.json', 'unit-observation-result.json')",
+      "old": "OBSERVER_OUTPUTS = ('whole-unit-preparation.json', 'observed-input-pins.json', 'unit-observation-result.json')"
+    }
+  ],
+  "schema": "literal-memory-envelope-V4-inverse-1"
+}

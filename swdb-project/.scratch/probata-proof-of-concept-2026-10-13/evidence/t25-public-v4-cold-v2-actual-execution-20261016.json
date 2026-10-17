@@ -1,0 +1,48 @@
+{
+  "admission_sha256": "7757a841cea9d317cca39ea65396b2318f2d5d93112365764afbcca74c37adba",
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "190s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-",
+    "--generation",
+    "619",
+    "--ended-utc",
+    "2026-10-16T21:28:57Z"
+  ],
+  "date": "2026-10-16 ET",
+  "exit_code": 1,
+  "local_SSH_child_settled": true,
+  "observer_sha256": "55bfa4564acfcc387f28f8bb0dde57eeb4ea0ca6853e1b7071032111365d12d7",
+  "preflight_sha256": "822f958ea3d7e90e809e237ce3ba80fca6c6c747abbb82115fa5f56c54c312c6",
+  "seconds": 19.589922999963164,
+  "source_or_caller_admission": false,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-v2-actual-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 266,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-v2-actual-stdout-20261016.json",
+    "sha256": "0c1838fba545599918bce5b42294f9a11017d0281c74d6eb6e44830259b4eb52"
+  }
+}

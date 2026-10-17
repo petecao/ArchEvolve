@@ -1,0 +1,2639 @@
+{
+  "claim": "All local pinned reproducibility dependencies are present. External runtime/remote/historical inputs are retained assumptions or result provenance, not current normal-package source imports.",
+  "counts": {
+    "historical_external_runtime_or_system_input": 500,
+    "historical_temporary_input": 3,
+    "retained_remote_input": 153
+  },
+  "date": "2026-10-16 ET",
+  "external_rows": [
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-runtime-after.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-runtime-before.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-zlib-after.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-zlib-before.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi-ast.stderr"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi-preprocess.stderr"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi-preprocess.stdout"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ast.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller-ast.stderr"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller-preprocess.stderr"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller-preprocess.stdout"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.gzip.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.json.gz"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/compiler-observation.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/result.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/compiler_abi_probe_v1.cpp"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/linux_compiler_capture_policy_v10.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/linux_compiler_capture_v10.py"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/lossless_gzip_v2.py"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/source_call_fixture_v2.cpp"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/strict_minify_v2.py"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/source-after.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/caller.normalized.json.gz"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/inverse.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/rename-manifest.jsonl"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/transport.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/control/census.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/control/controller.py"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/control/policy.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/result.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v2/runtime-provenance.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/selected-zlib-runtime.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-bootstrap.py"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-command.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-execution.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-stderr.log"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-stdout.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cprover"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/crangler"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-analyzer"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-diff"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-harness"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-inspect"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-synthesizer"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/janalyzer"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/jbmc"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/jdiff"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/ls_parse.py"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/symtab2gb"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/cvc5-1.2.1/cvc5-Linux-x86_64-static/bin/cvc5"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam-2.6.1/opam"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/alt-ergo"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlfind"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlopt.opt"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/why3"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wp.cmxs"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/META"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/probata-verifiers/z3-5.1.0/z3-5.1.0-x64-glibc-2.39/bin/z3"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/clang_rt.crtbegin.o"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/clang_rt.crtend.o"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.asan-preinit.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.asan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.asan.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.asan.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.asan_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.asan_cxx.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.asan_static.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.builtins.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.cfi.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.cfi_diag.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ctx_profile.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.dd.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.dfsan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.dfsan.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.dyndd.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.fuzzer.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.fuzzer_interceptors.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.fuzzer_no_main.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.gwp_asan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan-preinit.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan_aliases.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan_aliases.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan_aliases.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan_aliases_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan_aliases_cxx.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.hwasan_cxx.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.lsan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.memprof-preinit.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.memprof.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.memprof.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.memprof.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.memprof_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.memprof_cxx.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.msan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.msan.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.msan_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.msan_cxx.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.nsan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.nsan.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.profile.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.rtsan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.safestack.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.scudo_standalone.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.scudo_standalone.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.scudo_standalone_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.stats.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.stats_client.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.tsan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.tsan.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.tsan.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.tsan_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.tsan_cxx.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.tysan.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_minimal.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_minimal.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_minimal.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_standalone.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_standalone.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_standalone.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_standalone_cxx.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.ubsan_standalone_cxx.a.syms"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.xray-basic.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.xray-dso.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.xray-fdr.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.xray-profiling.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libclang_rt.xray.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/libflang_rt.runtime.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/lib/x86_64-unknown-linux-gnu/liborc_rt.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/share/asan_ignorelist.txt"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/share/cfi_ignorelist.txt"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/share/dfsan_abilist.txt"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/share/hwasan_ignorelist.txt"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/share/msan_ignorelist.txt"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/libclang.so.22.1.8"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libc++.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libc++.modules.json"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libc++.so"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libc++.so.1.0"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libc++abi.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libc++abi.so.1.0"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libunwind.a"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libunwind.so.1.0"
+    },
+    {
+      "category": "retained_remote_input",
+      "path": "/data1/yanruj/venvs/swdb-test/pyvenv.cfg"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.cache"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/000_cuda.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/988_cuda-12.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/cuda-12-4.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/fakeroot-x86_64-linux-gnu.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/gds-12-2.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/i386-linux-gnu.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/libc.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/x86_64-linux-gnu.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/zz_amd64-biarch-compat.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/ld.so.conf.d/zz_x32-biarch-compat.conf"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/etc/python3.12/sitecustomize.py"
+    },
+    {
+      "category": "historical_temporary_input",
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/ALU.cc"
+    },
+    {
+      "category": "historical_temporary_input",
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/IndirectAccess.cc"
+    },
+    {
+      "category": "historical_temporary_input",
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/StreamAccess.cc"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/dash"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/python3.12"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/x86_64-linux-gnu-as"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/x86_64-linux-gnu-cpp-13"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/x86_64-linux-gnu-g++-13"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-13"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-9"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/bin/x86_64-linux-gnu-ld.bfd"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtbegin.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginT.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtend.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtfastmath.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadtable.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtprec32.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtprec64.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/crtprec80.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/ieee_arithmetic.mod"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/ieee_exceptions.mod"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/ieee_features.mod"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/omp_lib.f90"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/omp_lib.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/omp_lib.mod"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/omp_lib_kinds.mod"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/openacc.f90"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/openacc.mod"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/openacc_kinds.mod"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/finclude/openacc_lib.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/ISO_Fortran_binding.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/acc_prof.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/adxintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/ammintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/amxbf16intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/amxcomplexintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/amxfp16intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/amxint8intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/amxtileintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx2intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124fmapsintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124vnniwintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16vlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bitalgintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bwintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512cdintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512dqintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512erintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16vlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmaintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmavlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512pfintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2vlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmiintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmivlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlbwintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vldqintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnniintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnnivlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectvlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqvlintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avxifmaintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avxintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avxneconvertintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniint8intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/backtrace-supported.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/backtrace.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/bmi2intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/bmiintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/bmmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/cet.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/cetintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/cldemoteintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/clflushoptintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/clwbintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/clzerointrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/cmpccxaddintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/cpuid.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/cross-stdarg.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/enqcmdintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/f16cintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/float.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/fma4intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/fmaintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/fxsrintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/gcov.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/gfniintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/hresetintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/ia32intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/immintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/iso646.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/keylockerintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/lwpintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/lzcntintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/mm3dnow.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/movdirintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitxintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/nmmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/openacc.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/pconfigintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/pkuintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/pmmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/popcntintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/prfchiintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/prfchwintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/quadmath.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/quadmath_weak.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/raointintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/rdseedintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/rtmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/sanitizer/asan_interface.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/sanitizer/common_interface_defs.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/sanitizer/hwasan_interface.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/sanitizer/lsan_interface.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/sanitizer/tsan_interface.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/serializeintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/sgxintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/shaintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/smmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdalign.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdatomic.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdfix.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint-gcc.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/stdnoreturn.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/tbmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/tmmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/tsxldtrkintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/uintrintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/unwind.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/vaesintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/varargs.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/vpclmulqdqintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/waitpkgintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/wbnoinvdintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/wmmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/x86gprintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/x86intrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/xopintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/xsavecintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveoptintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/xsavesintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libasan.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libasan_preinit.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libatomic.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libbacktrace.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libcaf_single.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgcc.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgcc_eh.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgcc_s.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgcov.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgfortran.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgfortran.spec"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libhwasan.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libhwasan_preinit.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libitm.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libitm.spec"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/liblsan.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/liblsan_preinit.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libquadmath.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libsanitizer.spec"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libssp_nonshared.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libstdc++.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libstdc++exp.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libstdc++fs.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libsupc++.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libtsan.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libtsan_preinit.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/libubsan.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/plugin/libcc1plugin.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/gcc/x86_64-linux-gnu/13/plugin/libcp1plugin.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/libBLT.2.5.so.8.6"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/llvm-14/lib/libc++abi.so.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/llvm-14/lib/libunwind.so.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_asyncio.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_bz2.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_codecs_cn.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_codecs_hk.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_codecs_iso2022.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_codecs_jp.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_codecs_kr.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_codecs_tw.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_contextvars.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_crypt.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_ctypes.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_ctypes_test.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_curses.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_curses_panel.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_dbm.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_decimal.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_gdbm.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_hashlib.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_json.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_lsprof.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_lzma.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_multibytecodec.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_multiprocessing.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_posixshmem.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_queue.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_sqlite3.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_ssl.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_testbuffer.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_testcapi.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_testclinic.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_testimportmultiple.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_testinternalcapi.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_testmultiphase.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_testsinglephase.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_tkinter.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_xxinterpchannels.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_xxsubinterpreters.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_xxtestfuzz.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/_zoneinfo.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/audioop.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/mmap.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/ossaudiodev.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/readline.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/resource.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/termios.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/xxlimited.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/xxlimited_35.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/lib-dynload/xxsubtype.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3.12/site.py"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_ARC4.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_Salsa20.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_chacha20.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_pkcs1_decode.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_aes.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_aesni.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_arc2.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_blowfish.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_cast.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_cbc.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_cfb.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_ctr.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_des.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_des3.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_ecb.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_eksblowfish.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_ocb.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Cipher/_raw_ofb.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_BLAKE2b.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_BLAKE2s.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_MD2.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_MD4.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_MD5.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_RIPEMD160.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_SHA1.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_SHA224.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_SHA256.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_SHA384.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_SHA512.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_ghash_clmul.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_ghash_portable.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_keccak.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Hash/_poly1305.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Math/_modexp.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Protocol/_scrypt.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/PublicKey/_ec_ws.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/PublicKey/_ed25519.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/PublicKey/_ed448.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/PublicKey/_x25519.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Util/_cpuid_c.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/Cryptodome/Util/_strxor.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_brotli.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_capng.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_cffi_backend.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_dbus_bindings.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_dbus_glib_bindings.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_distutils_hack/override.py"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/_ldap.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/apport_python_hook.py"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/apt_inst.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/apt_pkg.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/boost/mpi.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/brlapi.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/cairo/_cairo.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/cryptography/hazmat/bindings/_rust.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/cups.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/distutils-precedence.pth"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/gi/_gi.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/gi/_gi_cairo.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/iotop/_ioprio.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/lxml/_elementpath.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/lxml/builder.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/lxml/etree.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/lxml/html/diff.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/lxml/objectify.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/lxml/sax.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/markupsafe/_speedups.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/netplan/_netplan_cffi.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/core/_multiarray_tests.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/core/_multiarray_umath.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/core/_operand_flag_tests.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/core/_rational_tests.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/core/_simd.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/core/_struct_ufunc_tests.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/core/_umath_tests.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/fft/_pocketfft_internal.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/linalg/_umath_linalg.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/linalg/lapack_lite.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/_bounded_integers.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/_common.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/_generator.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/_mt19937.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/_pcg64.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/_philox.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/_sfc64.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/bit_generator.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/numpy/random/mtrand.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/psutil/_psutil_linux.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/psutil/_psutil_posix.abi3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/pvectorc.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/systemd/_daemon.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/systemd/_journal.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/systemd/_reader.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/systemd/id128.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/systemd/login.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/python3/dist-packages/yaml/_yaml.cpython-312-x86_64-linux-gnu.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/Scrt1.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/crti.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/crtn.o"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6.4.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libXft.so.2.3.6"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1.3.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libapt-pkg.so.6.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libasan.so.8.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libatomic.so.1.2.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libavahi-client.so.3.2.9"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libavahi-common.so.3.5.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libbfd-2.42-system.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libblkid.so.1.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libboost_mpi.so.1.83.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libboost_mpi_python312.so.1.83.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libboost_python312.so.1.83.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libboost_serialization.so.1.83.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libbrlapi.so.0.8.5"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libbrotlidec.so.1.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libbsd.so.0.12.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libbz2.so.1.0.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libc_nonshared.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcairo-gobject.so.2.11800.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcairo.so.2.11800.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcap-ng.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcap.so.2.66"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcc1.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcom_err.so.2.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcrypt.so.1.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcrypto.so.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libctf.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libcups.so.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libdb-5.3.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3.32.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libdl.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libdl.so.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.7.0.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.7.0.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1.9.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libexslt.so.0.8.21"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8.1.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libfontconfig.so.1.12.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libfreetype.so.6.20.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgcrypt.so.20.4.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgdbm.so.6.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgfortran.so.5.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgio-2.0.so.0.8000.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgirepository-1.0.so.1.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libglib-2.0.so.0.8000.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgmodule-2.0.so.0.8000.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgmp.so.10.5.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgnutls.so.30.37.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0.8000.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgpg-error.so.0.34.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libhogweed.so.6.8"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libhwasan.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libhwloc.so.15.7.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libicudata.so.74.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libicuuc.so.74.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libidn2.so.0.4.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libisl.so.23.3.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libitm.so.1.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libjansson.so.4.14.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libk5crypto.so.3.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libkeyutils.so.1.10"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libkrb5.so.3.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libkrb5support.so.0.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/liblber.so.2.0.200"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libldap.so.2.0.200"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/liblsan.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/liblz4.so.1.9.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/liblzma.so.5.4.5"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libm.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so.6"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libmd.so.0.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libmount.so.1.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libmpc.so.3.3.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libmpfr.so.6.2.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libmpi.so.40.30.6"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libmvec.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libncursesw.so.6.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libnetplan.so.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libnettle.so.8.8"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libopen-pal.so.40.30.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libopen-rte.so.40.30.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libp11-kit.so.0.3.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libpanelw.so.6.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libpcre2-8.so.0.11.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libpixman-1.so.0.42.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libpng16.so.16.43.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libpthread.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libpthread.so.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libquadmath.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libreadline.so.8.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libresolv.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libresolv.so.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/librt.a"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/librt.so.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libsasl2.so.2.0.25"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libselinux.so.1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libsframe.so.1.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libssl.so.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0.38.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libtasn1.so.6.6.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libtcl8.6.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libtinfo.so.6.4"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libtk8.6.so"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libtsan.so.2.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libubsan.so.1.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libudev.so.1.7.8"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libunistring.so.5.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libuuid.so.1.3.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libxcb-render.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libxcb-shm.so.0.0.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libxml2.so.2.9.14"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libxslt.so.1.1.39"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libxxhash.so.0.8.2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libyaml-0.so.2.0.9"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libz.so.1.3"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/lib/x86_64-linux-gnu/libzstd.so.1.5.5"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/collect2"
+    },
+    {
+      "category": "historical_external_runtime_or_system_input",
+      "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so"
+    }
+  ],
+  "missing_local_project_inputs": [],
+  "pin_mismatches": [],
+  "schema": "coherent-V5-publication-reference-categories-1",
+  "total": 656
+}

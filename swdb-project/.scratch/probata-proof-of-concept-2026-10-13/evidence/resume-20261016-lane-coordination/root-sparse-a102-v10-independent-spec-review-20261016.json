@@ -1,0 +1,165 @@
+{
+  "axis": "Spec and source/controller semantics",
+  "date": "2026-10-16 ET",
+  "decision": "PASS_STATIC_ONLY",
+  "evidence_limits": [
+    "The selected inventory and content-addressed commit are statically checked; actual free space, Git materialization, runtime/source postchecks and all 13 scientific outcomes remain unobserved by this review.",
+    "Git/OS and shared primary object-store retention/immutability are explicit trusted boundaries. Snapshots and physical hashes are finite point observations, not continuous or adversarial-race immutability evidence.",
+    "The complete retained Git graph does not imply unselected source files were physically materialized or checked. No historical full source/compiler/runtime identity is relabeled, and no source-body, Heap, Typed, caller, default-method or model admission is granted.",
+    "The 1 GiB metadata allowance is a prospective source capacity reserve, not a measured clone size or a relaxation of the raw-mount budget.",
+    "The author retained eight child-free controls and their development path typo. I read the complete controls/log and independently verified pins/inverses/AST/inventory with stdlib only; I did not rerun the controls or execute launcher/helper functions."
+  ],
+  "findings": [],
+  "independent_checks": {
+    "all_declared_input_rows_rehashed": 14,
+    "all_predecessor_remote_function_ASTs_unchanged": true,
+    "complete_V9_byte_inverse": true,
+    "complete_production_change_entries": 24,
+    "embedded_helper_bytes_exact": true,
+    "inventory_sha256": "48d1dd271ee125508ddd6bc523089a2bf31e410629f70fdd29a0aeb4fdc9ff20",
+    "nested_remote_syntax_compilation_only": true,
+    "new_helper_functions": [
+      "sparse_git",
+      "sparse_inventory",
+      "sparse_materialize",
+      "sparse_pin",
+      "sparse_primary_snapshot"
+    ],
+    "package_inputs": 336,
+    "physical_projection_bytes": 6184848,
+    "physical_projection_files": 424,
+    "root_oids": {
+      "library/methods/probata-draft-1.yaml": "eef43f6012a25696d32234d82f371ca022cb3004",
+      "schemas": "3f29308dbf4523b4970a973b4d9cb79cecab1aee",
+      "swdb": "8a7b8844c50be710680ed7a7a4d9d96de3f994ff",
+      "tests/fixtures/proof/methods/contract-fixture-1.yaml": "494d26e2d1fc9aae6524e1287bb54d0f56e9b3d3",
+      "vocab": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+    },
+    "roots": [
+      "swdb",
+      "schemas",
+      "vocab",
+      "library/methods/probata-draft-1.yaml",
+      "tests/fixtures/proof/methods/contract-fixture-1.yaml"
+    ],
+    "source_floor_plus_selected_bytes_and_1GiB_metadata_reserve": 11817344912,
+    "unchanged_canonical_files": 42,
+    "unchanged_public_targets": 13
+  },
+  "launcher": {
+    "bytes": 21206,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v10.py",
+    "sha256": "c3442b97888e2076bbc77303bb185ff02345dbb80d727e99503af49ccb926a21"
+  },
+  "packet": {
+    "bytes": 8197,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/source-packet.json",
+    "sha256": "b339f9bb7861f22ee13b5ad28e6ef0a9c9a972867e00d7545028fee5c64d9781"
+  },
+  "preserved_retirement_refusal": {
+    "bytes": 3083,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/retire-1433-source-v1-automatic-approval-refusal-20261016.json",
+    "sha256": "47abf72b7c8e199e26d878e04f78e94b3c8d804bf3e419d27252528de9a41304"
+  },
+  "review_operations": {
+    "Git_commands": false,
+    "native_or_solver_calls": false,
+    "production_edits": false,
+    "project_imports": false,
+    "remote_calls": false,
+    "reviewer_tests": false,
+    "static_compile_nested_source": true,
+    "stdlib_hash_json_AST_reads": true
+  },
+  "reviewed_inputs": [
+    {
+      "bytes": 21206,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v10.py",
+      "sha256": "c3442b97888e2076bbc77303bb185ff02345dbb80d727e99503af49ccb926a21"
+    },
+    {
+      "bytes": 6564,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/sparse_source.py",
+      "sha256": "183ce0c8fca183f0b706d25ae6eb53a5cc99469c8960c34e5ccc89b0a078efc0"
+    },
+    {
+      "bytes": 878,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/source-projection-spec.json",
+      "sha256": "ea1a9dbfd67029a36c7712ee701c61bca42744aad27f2180a54211dc99b5f350"
+    },
+    {
+      "bytes": 68173,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/selected-Git-metadata.json",
+      "sha256": "0ad8741edb147faca6feade5de2c545eab2e1ce17816b827960af575853be0ab"
+    },
+    {
+      "bytes": 10487,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/launcher-v10.delta.json",
+      "sha256": "8c3b4e57c56c9075655c94f9279fbd5a97d8c641010184db2b712b76ff296a9e"
+    },
+    {
+      "bytes": 12895,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/launcher-v10.delta.patch",
+      "sha256": "18627baf0bfb07814c2fb56c50446108a5ebbf69970b132667855162ad0a4ace"
+    },
+    {
+      "bytes": 7226,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/pure_controls.py",
+      "sha256": "98170f86c6cd8bd16c722c76c795d0a5e0dd1656dc9154a85a0f1e88a32899ff"
+    },
+    {
+      "bytes": 1503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/pure-controls-v10.log",
+      "sha256": "4e75c7470698f285f1261d76224838322a9ed3e6527485c696e12ef11d12e412"
+    },
+    {
+      "bytes": 3058,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/pure-controls-development-path.log",
+      "sha256": "1004397e82fd9bcf58215c405aca44ebd4160fc686d50b4b59689118e9a66a1e"
+    },
+    {
+      "bytes": 3398,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/README.md",
+      "sha256": "21aa13f1dfc2a65b64812e1b1bfc51dd8e3127caff5fc44144d5e21128dda988"
+    },
+    {
+      "bytes": 44359,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/entry.py",
+      "sha256": "5f9613a100f9407d2338324591a5534ac2400372082ad1df7bbd47b9494f72fe"
+    },
+    {
+      "bytes": 278683,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/expected.json",
+      "sha256": "c02ece991fc80707bf057e81cc0bd55c55b0c318d2eb6d04cd1ea6abfe7d78e9"
+    },
+    {
+      "bytes": 5392,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/packet.json",
+      "sha256": "80dadd0365e0bed3472d610d388f57a5b2b3ab6b21984de34d85b23d694a27f2"
+    },
+    {
+      "bytes": 12901,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v9.py",
+      "sha256": "ec56a126e27ee74af10305652863a4eeebdb6b3bcf11a38d1970f3a8e45a5761"
+    }
+  ],
+  "reviewer": "/root/ticket25/caller_assess",
+  "root_fresh_actual_admission_required": true,
+  "scientific_acceptance": false,
+  "scope": "Independent static review of the exact V10 optional sparse source acquisition and physical projection. No clone, SSH, entry/main, compiler, native helper, solver or scientific execution; no experimental acceptance.",
+  "semantic_assessment": [
+    "The optional field must equal the complete exact a102 projection object; without it the V9 full-worktree acquisition and original 2 GiB source allowance remain.",
+    "Before clone, the helper binds immutable Git inventory, all five consumer OIDs and the 10 GiB floor plus 6,184,848 selected bytes plus 1 GiB metadata reserve. The capacity gate repeats immediately before materialization and the post-materialization 10 GiB floor remains required.",
+    "The destination must be the fresh exact a102 path and lexists must be false. Clone is shared/no-checkout/no-hardlinks/no-tags. Private git-dir/common-dir/alternates checks precede writes to only the new clone local sparse config and exclusively created own sparse pattern file. There is no old-path removal or primary worktree registration/config edit.",
+    "Post-checkout physical membership equals all 424 regular leaves and their allowed parent directories, with no source symlink/special/extra files. Complete Git blob IDs, byte sizes, executable modes, detached exact HEAD and clean status are checked.",
+    "Primary config/config.worktree/registered worktree config, worktree registration and retention-lock content/identity snapshots must remain equal. Complete source1433/raw and all preexisting paths remain untouched by this route; the earlier automatic approval refusal is retained.",
+    "All 24 reviewed production-change names and their immutable Git bytes are checked before acquisition. Included changes additionally retain physical hash checks; excluded changes must be absent physically and remain content-addressed Git inputs, without claiming physical verification.",
+    "The unchanged public13 entry reads all 336 package inputs and the exact five root consumers, freshly prepares/checks all 42 canonical inputs, and retains compiler/runtime/normal WP/native/reader/source postchecks. Its Linux admission and consumer closure do not require a managed-worktree shared common directory.",
+    "Whole-source inverse establishes unchanged V9 closed environment, lane/socket/dispatch/control staging, raw-disk/resource and all 13 proof criteria outside this explicit optional source acquisition."
+  ],
+  "source_review": {
+    "bytes": 4638,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/t25-owned-swap13-a102e275-sparse-v10-source-review.json",
+    "sha256": "f6b0638f94e2c4ebfde1be853e722ba9c05e3fae9489acbd45ab936a0b413099"
+  }
+}

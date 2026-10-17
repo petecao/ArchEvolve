@@ -1,0 +1,69 @@
+{
+  "author_receipt": {
+    "bytes": 2739,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole-interface-v2-source-repair-receipt.json",
+    "sha256": "abbe88c3822334024264d274b81ffeb24f85529bf4098f4bf28b7568efe6e82a"
+  },
+  "call_allocation_statement_unknown_node_arity_operator_and_cast_kinds_now_closed": true,
+  "created": "2026-10-16 ET",
+  "decision": "CHANGES_REQUIRED_BEFORE_ACTUAL_SOURCE_CALL_ADMISSION; PRIVATE_NATIVE86_UNAFFECTED",
+  "exact_pins": [
+    {
+      "bytes": 3571,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/prepare_whole_interface_v2.py",
+      "sha256": "436144c574174b6d1c9591a9d5a28c08edf59611d60e7681fbb1456b7039e471"
+    },
+    {
+      "bytes": 34661,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v2.py",
+      "sha256": "dbcb5d35c6a575884265f0e6c0e49e5603a71f6d392cff1915d6aeda61e1159b"
+    },
+    {
+      "bytes": 3383,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole-interface-v2-inverse-delta.json",
+      "sha256": "d0ee6b9b236ec1292859b71476efd3153495064b0592babd7d70f662e131d2c8"
+    },
+    {
+      "bytes": 5256,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_whole_interface_v2.py",
+      "sha256": "a88e14c2cf0c17f8a5d1a19766a28df862f6b9622f3b45911406ceebff886503"
+    },
+    {
+      "bytes": 1037,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/pure-whole-interface-v2.log",
+      "sha256": "571b1375fd8dd40f4ab5123f169c1aeb93e8f7e9e591a5a1ab9d34fac4fd0a20"
+    },
+    {
+      "bytes": 1617,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/README-binder-v2.md",
+      "sha256": "f3eeb460aa162445e6ecf5f1b46448302b277829815b962367069f11ea43d812"
+    }
+  ],
+  "findings": [
+    {
+      "author_response": "Agreed; V3 will remove the family and add argType/VLA-shaped refusals.",
+      "finding": "UnaryExprOrTypeTraitExpr admits zero children and a sizeof/alignof name without closing argType to a reviewed fixed non-variably-modified type. The type-owned expression surface is outside ordinary recursive inner checks. This unneeded node family should refuse until an actual compiler producer closes that type domain.",
+      "id": "TYPE_TRAIT_DOMAIN",
+      "line": 257
+    },
+    {
+      "finding": "Volatile rejection inspects only type.qualType. A node with qualType=VI and desugaredQualType=volatile int passes the check; volatile access does not become pure because its qualifier is hidden by a typedef.",
+      "id": "TYPEDEF_VOLATILE",
+      "line": 263,
+      "required": "Reject volatile in both source type spelling and canonical/desugared type spelling, with a retained synthetic refusal."
+    }
+  ],
+  "inverse_only_replaces_one_local_pure_predicate": true,
+  "native86_uses_binder": false,
+  "next": "Review separately frozen V3 closed grammar; V2 is retained history and must not be used for actual source-call admission.",
+  "origin": {
+    "bytes": 33171,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface.py",
+    "sha256": "b859035b88dd267a7515e208c5a524ea7bd2cacde147e43b6723e2067303b44c"
+  },
+  "original_new_array_effect_gap_repaired": true,
+  "public_admission": false,
+  "retained_pure_controls": "Author log records9cases,132synthetic bindings,66role cases and79refusals, zero failures/errors/skips. Read only; no independent execution.",
+  "reviewer": "/root/lane_coordination",
+  "scope": "Static source/AST/hash only; no helper import, tests, compiler, native, solver or SSH execution. Original V1/V2/value sources unchanged."
+}

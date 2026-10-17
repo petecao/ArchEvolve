@@ -1,0 +1,1334 @@
+{
+  "actual": {
+    "bytes": 243774,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-complete-record-probe-v2-actual-stdout-20261016.json",
+    "sha256": "49f1a2c3a89da9b21c175d7be2bc4a1f8f03350f112d541d86add005e3eb699f"
+  },
+  "all_failures": [
+    {
+      "case": "safe",
+      "function": "record_check",
+      "line": 319,
+      "passed": false,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "missing_bundle",
+      "function": "record_check",
+      "line": 319,
+      "passed": false,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "stale_method",
+      "function": "record_check",
+      "line": 319,
+      "passed": false,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "wrong_result",
+      "function": "record_check",
+      "line": 319,
+      "passed": false,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "default_method",
+      "function": "record_check",
+      "line": 319,
+      "passed": false,
+      "reason": "current frozen job plan/contract"
+    }
+  ],
+  "all_five_complete_plan_matrices": [
+    {
+      "all_record_predicates_reached": true,
+      "case": "safe",
+      "exact_plan_matrix": {
+        "actual_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580",
+        "bounds_null_preserved_in_both_plans": true,
+        "contract_materialization_matches": true,
+        "float_budget_type": "float",
+        "integer_budget_type": "int",
+        "integer_plan_matches": false,
+        "integer_plan_sha256": "ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81",
+        "source_float_plan_matches": true,
+        "source_float_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580"
+      },
+      "exception": null,
+      "failed_predicates": 1,
+      "predicate_count": 248,
+      "record": {
+        "bytes": 419032,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/closed-source-profile/pytest/test_public_closed_source_proo0/retained-public-record.json",
+        "sha256": "9e101791094b95f18a615e31511a0dd31efe85e0ae1be82ed0ca20891bee259a"
+      },
+      "safe_bounds_strict_JSON_matches": true
+    },
+    {
+      "all_record_predicates_reached": true,
+      "case": "missing_bundle",
+      "exact_plan_matrix": {
+        "actual_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580",
+        "bounds_null_preserved_in_both_plans": true,
+        "contract_materialization_matches": true,
+        "float_budget_type": "float",
+        "integer_budget_type": "int",
+        "integer_plan_matches": false,
+        "integer_plan_sha256": "ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81",
+        "source_float_plan_matches": true,
+        "source_float_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580"
+      },
+      "exception": null,
+      "failed_predicates": 1,
+      "predicate_count": 18,
+      "record": {
+        "bytes": 377778,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/closed-source-profile/pytest/test_public_closed_source_proo1/retained-public-record.json",
+        "sha256": "d2b42832b76cb9a0e510e967bcd91dde7dc854902073dd8d3ecb6be05ce38f19"
+      },
+      "safe_bounds_strict_JSON_matches": null
+    },
+    {
+      "all_record_predicates_reached": true,
+      "case": "stale_method",
+      "exact_plan_matrix": {
+        "actual_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580",
+        "bounds_null_preserved_in_both_plans": true,
+        "contract_materialization_matches": true,
+        "float_budget_type": "float",
+        "integer_budget_type": "int",
+        "integer_plan_matches": false,
+        "integer_plan_sha256": "ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81",
+        "source_float_plan_matches": true,
+        "source_float_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580"
+      },
+      "exception": null,
+      "failed_predicates": 1,
+      "predicate_count": 18,
+      "record": {
+        "bytes": 377778,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/closed-source-profile/pytest/test_public_closed_source_proo2/retained-public-record.json",
+        "sha256": "198338478006dbf39620a940602d9f7aae3b2f356da40d6ae06b65ec98ae08c5"
+      },
+      "safe_bounds_strict_JSON_matches": null
+    },
+    {
+      "all_record_predicates_reached": true,
+      "case": "wrong_result",
+      "exact_plan_matrix": {
+        "actual_plan_sha256": "8dd2ff5af20636fd4c0f427000db1cc0007830dded70fbe10a304b99b8ec53d2",
+        "bounds_null_preserved_in_both_plans": true,
+        "contract_materialization_matches": true,
+        "float_budget_type": "float",
+        "integer_budget_type": "int",
+        "integer_plan_matches": false,
+        "integer_plan_sha256": "f7676293231cb07bf811ceb0213dc2afbe7740092cb9ebfc5ab2f85db64d977b",
+        "source_float_plan_matches": true,
+        "source_float_plan_sha256": "8dd2ff5af20636fd4c0f427000db1cc0007830dded70fbe10a304b99b8ec53d2"
+      },
+      "exception": null,
+      "failed_predicates": 1,
+      "predicate_count": 18,
+      "record": {
+        "bytes": 377777,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/closed-source-profile/pytest/test_public_closed_source_proo3/retained-public-record.json",
+        "sha256": "9ab66d98c5ea2f91388f4e73b0b489e8a2d74cf37cc15c0ddd4c5b78bb4088a4"
+      },
+      "safe_bounds_strict_JSON_matches": null
+    },
+    {
+      "all_record_predicates_reached": true,
+      "case": "default_method",
+      "exact_plan_matrix": {
+        "actual_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580",
+        "bounds_null_preserved_in_both_plans": true,
+        "contract_materialization_matches": true,
+        "float_budget_type": "float",
+        "integer_budget_type": "int",
+        "integer_plan_matches": false,
+        "integer_plan_sha256": "ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81",
+        "source_float_plan_matches": true,
+        "source_float_plan_sha256": "f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580"
+      },
+      "exception": null,
+      "failed_predicates": 1,
+      "predicate_count": 18,
+      "record": {
+        "bytes": 377780,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/closed-source-profile/pytest/test_public_closed_source_proo4/retained-public-record.json",
+        "sha256": "aade3e0c90700375de38ce3da6a019da2d9f4e2b0e2f445891cda6b45407a19e"
+      },
+      "safe_bounds_strict_JSON_matches": null
+    }
+  ],
+  "boundaries": "All478 physical inputs/478-file complete raw are unchanged. Full source/runtime/consumer rehash remains the full observer obligation. Original scientific/native/refusal/adoption boundaries remain unchanged.",
+  "complete_predicate_matrix": [
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 407,
+      "passed": 1,
+      "reason": "exact root launch/source/lane/resource plan"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 412,
+      "passed": 1,
+      "reason": "exact selected node"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 415,
+      "passed": 2,
+      "reason": "root wrapper lineage"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 418,
+      "passed": 2,
+      "reason": "healthy settled producer whole-tree resource evidence required"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 422,
+      "passed": 1,
+      "reason": "root-confirmed settled lane generation"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 424,
+      "passed": 1,
+      "reason": "root final source integrity"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 426,
+      "passed": 1,
+      "reason": "complete original producer required; prior incomplete V3 cannot be promoted"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 429,
+      "passed": 1,
+      "reason": "bounded exact finalization evidence"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 434,
+      "passed": 1,
+      "reason": "strict settled verifier lock/queue closure"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 437,
+      "passed": 1,
+      "reason": "source-bound active-only transient lock evidence"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_before",
+      "line": 447,
+      "passed": 1,
+      "reason": "settled final producer inventory tolerated missing entries"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_junit",
+      "line": 452,
+      "passed": 5,
+      "reason": "actual compiler plan"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_junit",
+      "line": 455,
+      "passed": 1,
+      "reason": "complete actual five-case JUnit"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_junit",
+      "line": 458,
+      "passed": 1,
+      "reason": "exact ordered JUnit identities"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 286,
+      "passed": 1,
+      "reason": "physical YAML differs from retained JSON semantics"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 290,
+      "passed": 1,
+      "reason": "explicit fixture method lifecycle"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 291,
+      "passed": 1,
+      "reason": "selected method/file/setup pin"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 292,
+      "passed": 1,
+      "reason": "current method checker pins"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 295,
+      "passed": 1,
+      "reason": "fresh selected compiler/lowering identity in method"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 302,
+      "passed": 1,
+      "reason": "all four current source checker/bundle/method pins"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 304,
+      "passed": 1,
+      "reason": "missing-bundle control changed"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 307,
+      "passed": 1,
+      "reason": "record subject/admission boundary"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 310,
+      "passed": 1,
+      "reason": "fresh universal setup report"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 312,
+      "passed": 2,
+      "reason": "source/contract record pin"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 313,
+      "passed": 1,
+      "reason": "source summary content pins differ"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 315,
+      "passed": 1,
+      "reason": "complete original summary/control content or content hash differs"
+    },
+    {
+      "case": "safe",
+      "failed": 1,
+      "function": "record_check",
+      "line": 319,
+      "passed": 0,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 322,
+      "passed": 13,
+      "reason": "native proof report boundary"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 329,
+      "passed": 1,
+      "reason": "safe source verdict"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 330,
+      "passed": 1,
+      "reason": "safe source/Typed/current model boundary"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 332,
+      "passed": 1,
+      "reason": "source proof bounds"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 333,
+      "passed": 4,
+      "reason": "record current source checker pin"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 334,
+      "passed": 1,
+      "reason": "historical model records relabeled current"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 338,
+      "passed": 1,
+      "reason": "complete exact source-result report census"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 226,
+      "passed": 1,
+      "reason": "source proof basis"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 227,
+      "passed": 1,
+      "reason": "source contract/premises"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 228,
+      "passed": 1,
+      "reason": "current source/result pins"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 231,
+      "passed": 1,
+      "reason": "complete original source-rule derivation changed"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 233,
+      "passed": 1,
+      "reason": "complete current compiler certificate binding"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 234,
+      "passed": 1,
+      "reason": "retained original-TU certificate differs"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 236,
+      "passed": 1,
+      "reason": "all82 exact targets/full historical contexts"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 237,
+      "passed": 1,
+      "reason": "scientific evidence census/boundary"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 242,
+      "passed": 5,
+      "reason": "scientific preparation admission flag changed"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 243,
+      "passed": 1,
+      "reason": "new model record adoption"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 245,
+      "passed": 1,
+      "reason": "complete24/9/13 original census"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 248,
+      "passed": 1,
+      "reason": "full original ordinary goal ledger"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 252,
+      "passed": 1,
+      "reason": "original lowering source identity"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 254,
+      "passed": 1,
+      "reason": "binding primary manifest"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "source_result_check",
+      "line": 255,
+      "passed": 1,
+      "reason": "source rule primary manifest"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "bundle_check",
+      "line": 196,
+      "passed": 1,
+      "reason": "historical catalog scope"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "bundle_check",
+      "line": 198,
+      "passed": 1,
+      "reason": "complete scientific bundle membership"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "bundle_check",
+      "line": 218,
+      "passed": 82,
+      "reason": "historical complete target/source input"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "bundle_check",
+      "line": 220,
+      "passed": 82,
+      "reason": "historical primary observation input"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 341,
+      "passed": 3,
+      "reason": "source proof basis/native diagnostic changed"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 342,
+      "passed": 1,
+      "reason": "original/projected native outcomes promoted"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 345,
+      "passed": 1,
+      "reason": "complete historical method/domain/source identities"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 348,
+      "passed": 1,
+      "reason": "both original plain assumptions"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 350,
+      "passed": 3,
+      "reason": "explicit source/library/allocator/historical TCB omitted"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 351,
+      "passed": 1,
+      "reason": "pinned original library/allocator model"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 352,
+      "passed": 1,
+      "reason": "current source verdict reading"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 353,
+      "passed": 1,
+      "reason": "exact one current source-rule preflight"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 354,
+      "passed": 1,
+      "reason": "current preflight basis"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 356,
+      "passed": 1,
+      "reason": "current result preflight hash"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 357,
+      "passed": 1,
+      "reason": "fresh compiler/runtime changed"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 358,
+      "passed": 5,
+      "reason": "actual compiler physical component"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 359,
+      "passed": 1,
+      "reason": "current preflight compiler binding"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 360,
+      "passed": 1,
+      "reason": "current original-TU preflight"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 363,
+      "passed": 1,
+      "reason": "complete current absolute generated-input census"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 364,
+      "passed": 1,
+      "reason": "current original lowering hash"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 365,
+      "passed": 1,
+      "reason": "current native-free evaluation plan"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 366,
+      "passed": 1,
+      "reason": "full setup/run hash agreement"
+    },
+    {
+      "case": "safe",
+      "failed": 0,
+      "function": "record_check",
+      "line": 367,
+      "passed": 1,
+      "reason": "original complete lowering anchors/certificate lineage"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 286,
+      "passed": 1,
+      "reason": "physical YAML differs from retained JSON semantics"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 290,
+      "passed": 1,
+      "reason": "explicit fixture method lifecycle"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 291,
+      "passed": 1,
+      "reason": "selected method/file/setup pin"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 292,
+      "passed": 1,
+      "reason": "current method checker pins"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 295,
+      "passed": 1,
+      "reason": "fresh selected compiler/lowering identity in method"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 302,
+      "passed": 1,
+      "reason": "all four current source checker/bundle/method pins"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 304,
+      "passed": 1,
+      "reason": "missing-bundle control changed"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 307,
+      "passed": 1,
+      "reason": "record subject/admission boundary"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 310,
+      "passed": 1,
+      "reason": "fresh universal setup report"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 312,
+      "passed": 2,
+      "reason": "source/contract record pin"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 313,
+      "passed": 1,
+      "reason": "source summary content pins differ"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 315,
+      "passed": 1,
+      "reason": "complete original summary/control content or content hash differs"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 1,
+      "function": "record_check",
+      "line": 319,
+      "passed": 0,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 322,
+      "passed": 2,
+      "reason": "native proof report boundary"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 372,
+      "passed": 1,
+      "reason": "named unsupported control unexpectedly proved"
+    },
+    {
+      "case": "missing_bundle",
+      "failed": 0,
+      "function": "record_check",
+      "line": 373,
+      "passed": 1,
+      "reason": "unsupported control reached generated/native invocation"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 286,
+      "passed": 1,
+      "reason": "physical YAML differs from retained JSON semantics"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 290,
+      "passed": 1,
+      "reason": "explicit fixture method lifecycle"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 291,
+      "passed": 1,
+      "reason": "selected method/file/setup pin"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 292,
+      "passed": 1,
+      "reason": "current method checker pins"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 295,
+      "passed": 1,
+      "reason": "fresh selected compiler/lowering identity in method"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 300,
+      "passed": 1,
+      "reason": "stale method mutation not exact"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 304,
+      "passed": 1,
+      "reason": "missing-bundle control changed"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 307,
+      "passed": 1,
+      "reason": "record subject/admission boundary"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 310,
+      "passed": 1,
+      "reason": "fresh universal setup report"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 312,
+      "passed": 2,
+      "reason": "source/contract record pin"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 313,
+      "passed": 1,
+      "reason": "source summary content pins differ"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 315,
+      "passed": 1,
+      "reason": "complete original summary/control content or content hash differs"
+    },
+    {
+      "case": "stale_method",
+      "failed": 1,
+      "function": "record_check",
+      "line": 319,
+      "passed": 0,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 322,
+      "passed": 2,
+      "reason": "native proof report boundary"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 372,
+      "passed": 1,
+      "reason": "named unsupported control unexpectedly proved"
+    },
+    {
+      "case": "stale_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 373,
+      "passed": 1,
+      "reason": "unsupported control reached generated/native invocation"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 286,
+      "passed": 1,
+      "reason": "physical YAML differs from retained JSON semantics"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 290,
+      "passed": 1,
+      "reason": "explicit fixture method lifecycle"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 291,
+      "passed": 1,
+      "reason": "selected method/file/setup pin"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 292,
+      "passed": 1,
+      "reason": "current method checker pins"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 295,
+      "passed": 1,
+      "reason": "fresh selected compiler/lowering identity in method"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 302,
+      "passed": 1,
+      "reason": "all four current source checker/bundle/method pins"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 304,
+      "passed": 1,
+      "reason": "missing-bundle control changed"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 307,
+      "passed": 1,
+      "reason": "record subject/admission boundary"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 310,
+      "passed": 1,
+      "reason": "fresh universal setup report"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 312,
+      "passed": 2,
+      "reason": "source/contract record pin"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 313,
+      "passed": 1,
+      "reason": "source summary content pins differ"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 315,
+      "passed": 1,
+      "reason": "complete original summary/control content or content hash differs"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 1,
+      "function": "record_check",
+      "line": 319,
+      "passed": 0,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 322,
+      "passed": 2,
+      "reason": "native proof report boundary"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 372,
+      "passed": 1,
+      "reason": "named unsupported control unexpectedly proved"
+    },
+    {
+      "case": "wrong_result",
+      "failed": 0,
+      "function": "record_check",
+      "line": 373,
+      "passed": 1,
+      "reason": "unsupported control reached generated/native invocation"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 286,
+      "passed": 1,
+      "reason": "physical YAML differs from retained JSON semantics"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 290,
+      "passed": 1,
+      "reason": "explicit fixture method lifecycle"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 291,
+      "passed": 1,
+      "reason": "selected method/file/setup pin"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 292,
+      "passed": 1,
+      "reason": "current method checker pins"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 295,
+      "passed": 1,
+      "reason": "fresh selected compiler/lowering identity in method"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 301,
+      "passed": 1,
+      "reason": "default control retained opt-in pins"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 304,
+      "passed": 1,
+      "reason": "missing-bundle control changed"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 307,
+      "passed": 1,
+      "reason": "record subject/admission boundary"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 310,
+      "passed": 1,
+      "reason": "fresh universal setup report"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 312,
+      "passed": 2,
+      "reason": "source/contract record pin"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 313,
+      "passed": 1,
+      "reason": "source summary content pins differ"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 315,
+      "passed": 1,
+      "reason": "complete original summary/control content or content hash differs"
+    },
+    {
+      "case": "default_method",
+      "failed": 1,
+      "function": "record_check",
+      "line": 319,
+      "passed": 0,
+      "reason": "current frozen job plan/contract"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 322,
+      "passed": 2,
+      "reason": "native proof report boundary"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 372,
+      "passed": 1,
+      "reason": "named unsupported control unexpectedly proved"
+    },
+    {
+      "case": "default_method",
+      "failed": 0,
+      "function": "record_check",
+      "line": 373,
+      "passed": 1,
+      "reason": "unsupported control reached generated/native invocation"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_after",
+      "line": 462,
+      "passed": 1,
+      "reason": "all five distinct expected outcomes"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_after",
+      "line": 464,
+      "passed": 1,
+      "reason": "producer record census"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_after",
+      "line": 466,
+      "passed": 1,
+      "reason": "producer retained record hashes"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_after",
+      "line": 468,
+      "passed": 1,
+      "reason": "extra current model/proof records"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_after",
+      "line": 469,
+      "passed": 1,
+      "reason": "selected proof scratch survived successful settlement"
+    },
+    {
+      "case": "root",
+      "failed": 0,
+      "function": "root_after",
+      "line": 471,
+      "passed": 1,
+      "reason": "new native WP proof artifact"
+    }
+  ],
+  "counts": {
+    "equality_checks": 2337,
+    "failed_predicate_count": 5,
+    "predicate_count": 346,
+    "raw_manifest_bytes": 48835882,
+    "raw_manifest_files": 478,
+    "type_conflation_count": 0,
+    "unclassified_equality_count": 0
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_COMPLETE_METADATA_DIAGNOSTIC_ONLY_ONE_SOURCE_DERIVED_LITERAL_DEFECT",
+  "execution": {
+    "bytes": 3578,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-complete-record-probe-v2-execution-20261016.json",
+    "sha256": "7bcf12bb398bb35b50f9716a71caddd070e760ee1c24e0e62349c35c46791883"
+  },
+  "external_runtime_project_source_rehash_or_full_scientific_acceptance": false,
+  "inherited_refusal": {
+    "bytes": 3140,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-refusal-decision-20261016.json",
+    "sha256": "10a48d0a30fa2cfcdd797f5ceb06a2c47708d3464b4aa4b63314214182c2ecc7"
+  },
+  "physical_final_content_nine_stat_and_complete_raw_pre_post_equal": true,
+  "proposed_minimum_full_observer_repair": "Exact literal 'budget_seconds':300 becomes 'budget_seconds':300.0; no numeric coercion, contract/source/hash/plan shape weakening, new syntax or evidence admission",
+  "source_plan_lineage": {
+    "bytes": 1342,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/source-plan-lineage.json",
+    "sha256": "d32c8fea72e6e2c6cf394fbfd410be44a049a356f10e04986f0cba82f26cecad"
+  }
+}

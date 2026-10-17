@@ -1,0 +1,842 @@
+{
+  "actual_lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "2920",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-a102e275-t25-owned-swap13-public-v1/run.sh"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-10-17T00:13:48Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "probata-resume-20261016-a102e275-t25-owned-swap13-public-v1",
+    "lease_generation": 643,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 0.14,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-17T00:11:27Z"
+  },
+  "admission": {
+    "caller": false,
+    "default_method": false,
+    "heap_typed_bridge": false,
+    "mathematical_cold_semantics": false,
+    "public_record": false,
+    "source_body": false,
+    "ticket_complete": false
+  },
+  "all_thirteen_producer_proven": false,
+  "boundaries": [
+    "Normal outcome classification remains not_proven/solver_error for header.ready. Its complete native results are failed/unknown/timeout; final standard goal is timeout with Z3:5.1.0 success0. No exact per-solver attribution of failed/unknown is inferred from this aggregate.",
+    "Twelve normal ordinary Valid results are producer observations, awaiting complete source/formula/import/hypothesis/support cold semantic audit. The original full swap timeout remains preserved, and no reference theorem is imported by this receipt.",
+    "Global check lemmas generated zero smokes. No satisfiability/consistency witness is inferred. No refutation or counterexample is inferred from nonproof.",
+    "Current152 declared runtime hashes and three aliases plus original stored producer point checks are exact. OS loader/dlopen, between-check identity and source-to-binary relation remain explicit TCB; this does not retroactively establish earlier dynamic runtime closure.",
+    "Sparse source projection is exactly424 regular Git leaves/6184848 bytes for the five reviewed consumers. Complete selected commit objects remain in the shared primary object store; no full physical checkout claim. Primary configs/worktree registration/retention lock remained equal;1433 source remains intact.",
+    "All raw remains on mbit10. Only compact identities/status/log notices were transferred; no proof rerun or source/raw mutation occurred."
+  ],
+  "canonical": {
+    "all_exact": true,
+    "files": 42,
+    "manifest_sha256": "e9c8a671c82b270d88cdd137762585993b1af6a22d41b9c5aef554c271e57048"
+  },
+  "checks": {
+    "12proven": true,
+    "all_leaf_resources_healthy": true,
+    "all_native_complete": true,
+    "canonical42exact": true,
+    "complete13": true,
+    "declared_current_runtime_exact": true,
+    "no_dangling_or_extern": true,
+    "no_missing_noninternal": true,
+    "one_ordinary_each": true,
+    "public_records0": true,
+    "raw_stable": true,
+    "source_exact": true,
+    "whole_raw_under2GiB": true,
+    "zero_smokes": true
+  },
+  "date": "2026-10-16 ET",
+  "decision": "COMPLETE PRODUCER RUN / PARTIAL NORMAL PROOF RESULT / COLD MATHEMATICAL ACCEPTANCE PENDING",
+  "disk_capacity": "Filesystem         1B-blocks          Used   Available Use% Mounted on\n/dev/sdd1      1967300780032 1854916648960 12375252992 100% /data1\n/dev/sdb1      1967300780032 1795364974592 71926927360  97% /data",
+  "evidence": [
+    {
+      "bytes": 99898,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-sparse-v10-node1-complete-settlement-001-stdout-20261016.json",
+      "sha256": "f3b36553dec8e317a05e1e66fb7b465050557c7c6d1db771131ebf9843cb5107"
+    },
+    {
+      "bytes": 1337,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-sparse-v10-node1-complete-settlement-001-execution-20261016.json",
+      "sha256": "b9bd02be5ea1765396915a1077ed37b44a7760a7783f8dde27dc560720b1368d"
+    },
+    {
+      "bytes": 10533,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-sparse-v10-node1-settled-check-001-stdout-20261016.json",
+      "sha256": "55b645b51ba1f4fc990e574d8e716df9b022bbf4a3bdb4a156677fd9107afbe6"
+    },
+    {
+      "bytes": 3851,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-sparse-v10-node1-dispatch-execution-20261016.json",
+      "sha256": "04fd68800f396c598364ab4697d173c4cf7347a62ee5ec95df3218ebf01f8e48"
+    }
+  ],
+  "first_nonproof": {
+    "bounded_failure_notices": [
+      {
+        "line": 75,
+        "sha256": "10390f6816dec14bd56cb74bfa0a874d1013b311f57603c9013b25bb44500e2b",
+        "text": "[wp:why3:import] Importing logic valid: vector_owned_state::Owners::valid"
+      },
+      {
+        "line": 112,
+        "sha256": "500c651f8f0649a1f2c80d55e689c23da75117b16fae10704abbbb0b26d48bed",
+        "text": "[wp] 1 goal scheduled"
+      },
+      {
+        "line": 712,
+        "sha256": "cbc1c0df669689dc582a0db92547edb0e404fe130c9f16ee5535ab5cfa8c6a68",
+        "text": "[wp] [Timeout] typed_real_check_lemma_t25_owned_swap_parts_header_ready (Qed 1ms) (Z3)"
+      },
+      {
+        "line": 713,
+        "sha256": "b28c90830a989722165fb5a1c551710fd9549af2fc41d249e876a560ed78bc78",
+        "text": "[wp] Proved goals:    0 / 1"
+      }
+    ],
+    "census": {
+      "extern_properties": [],
+      "internal_qed_inventory_only": [],
+      "missing_noninternal_tasks": [],
+      "native_goal_count": 1,
+      "native_property_count": 4,
+      "ordinary_count": 1,
+      "smoke_count": 0
+    },
+    "common_exports": [
+      {
+        "begin_byte": 6688,
+        "end_byte": 17268,
+        "export_id": "check_lemma_t25_owned_swap_parts_header_ready",
+        "goal": "typed_real_check_lemma_t25_owned_swap_parts_header_ready",
+        "sha256": "aaeff4513ed34688628291ade59ec88e1c5d4a65ba380c952da3e952c65e1c4a"
+      },
+      {
+        "begin_byte": 17268,
+        "end_byte": 27384,
+        "export_id": "check_lemma_t25_owned_swap_parts_header_ready",
+        "goal": "typed_real_check_lemma_t25_owned_swap_parts_header_ready",
+        "sha256": "c0dfaec806b3a46b3c2a399320d2be70a48113144999b84b24644c0c4b5de4c2"
+      },
+      {
+        "begin_byte": 27384,
+        "end_byte": 41199,
+        "export_id": "check_lemma_t25_owned_swap_parts_header_ready",
+        "goal": "typed_real_check_lemma_t25_owned_swap_parts_header_ready",
+        "sha256": "1d30cb28da681e81fda3560e54020b48422b245cde27578502acf1f5d3a795ff"
+      }
+    ],
+    "dangling_dependencies": [],
+    "id": "swap.owner_correspondence.header.ready",
+    "metadata_pins": {
+      "command.json": {
+        "bytes": 2003,
+        "sha256": "bb66d7442fe094088a3af00283f24826cf808971536669b97eb3183d4f9e8532"
+      },
+      "frama-c.log": {
+        "bytes": 41199,
+        "sha256": "d06431fca777e74ccc23ce83c11341d265c013f345e91d87af810d5bb747312c"
+      },
+      "outcome.json": {
+        "bytes": 874,
+        "sha256": "e5401e3e6d12de510f9202dc1ce794559edd1770bb66f0c9712fc30a5516c12a"
+      },
+      "resources.json": {
+        "bytes": 162,
+        "sha256": "f1ca6e994966b2746ec52d5f3a3fd3ac7b1361f60e507a0c8b0f75abced1981a"
+      },
+      "task-census.json": {
+        "bytes": 3888,
+        "sha256": "f29cded08bab362bac7f42ab8c23bd4b92e1ed1c460ae1877f56982426bfe9c0"
+      },
+      "wp-goals.json": {
+        "bytes": 556,
+        "sha256": "d8a9a44314d746bbcae85450cfd3726b53c1c51fc0c7cff0dacea1e8f8303847"
+      },
+      "wp-inventory.json": {
+        "bytes": 2135,
+        "sha256": "cb209a8fb78aa7c72c68339fc17c9dfdfdcda9842b28a9eebaeaedf48068a72f"
+      },
+      "wp-properties.csv": {
+        "bytes": 59,
+        "sha256": "e80744db37896e1ca09718363ee8d52b497fb4614a19d542a94d10d9eb8f5653"
+      }
+    },
+    "native_complete": true,
+    "native_goals": [
+      {
+        "function": null,
+        "goal": "typed_real_check_lemma_t25_owned_swap_parts_header_ready",
+        "line": 4,
+        "passed": false,
+        "property": "check_lemma_t25_owned_swap_parts_header_ready",
+        "results": [
+          "failed",
+          "unknown",
+          "timeout"
+        ],
+        "smoke": false
+      }
+    ],
+    "native_properties": 4,
+    "outcome": {
+      "failure_class": "solver_error",
+      "reason": null,
+      "verdict": "not_proven"
+    },
+    "property_kinds": {
+      "lemma": 1,
+      "other": 3
+    },
+    "resources": {
+      "exit_code": 0,
+      "out_of_memory": false,
+      "output_limit": false,
+      "peak_rss_bytes": 911269888,
+      "timed_out": false,
+      "wall_seconds": 54.21376069821417
+    },
+    "standard_goals": [
+      {
+        "goal": "typed_real_check_lemma_t25_owned_swap_parts_header_ready",
+        "line": 4,
+        "passed": false,
+        "property": "check_lemma_t25_owned_swap_parts_header_ready",
+        "provers": [
+          {
+            "prover": "qed",
+            "success": 0,
+            "time": 0.0014
+          },
+          {
+            "prover": "Z3:5.1.0",
+            "success": 0,
+            "time": 0
+          }
+        ],
+        "smoke": false,
+        "verdict": "timeout"
+      }
+    ]
+  },
+  "foundation_pin": {
+    "bytes": 2515,
+    "sha256": "15722313197eb25c2a9f6adba152ec06fb72a24aa0baff628804b527ba8d99fb"
+  },
+  "fresh_leases": {
+    "mbit10-evaluation": {
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "state": "released"
+    },
+    "mbit10-evaluation-node0": {
+      "lease": {
+        "acquired_at": "2026-10-17T00:07:59Z",
+        "daemon_pid": 3954541,
+        "daemon_start_token": "sh3954541-1792195679",
+        "generation": 624,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "state": "released"
+    },
+    "mbit10-evaluation-node1": {
+      "lease": {
+        "acquired_at": "2026-10-17T00:11:27Z",
+        "daemon_pid": 3954989,
+        "daemon_start_token": "sh3954989-1792195887",
+        "generation": 643,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "state": "released"
+    }
+  },
+  "goals": {
+    "common_export_blocks": 16,
+    "native": 13,
+    "not_proven": 1,
+    "ordinary": 13,
+    "properties": 52,
+    "proven": 12,
+    "smoke": 0,
+    "standalone_smt_psmt2_files": 32,
+    "unique_export_goal_owners": 13
+  },
+  "inner_resources": {
+    "cpu_seconds": 189.121004,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 1013182464,
+    "timed_out": false,
+    "wall_seconds": 139.09338401909918
+  },
+  "inputs": {
+    "command": {
+      "bytes": 117958,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/root-command.json",
+      "sha256": "5a2232d95b1a0341f0fd78730908d262c697484d96a851cd86d0c257d4cec6d6"
+    },
+    "entry": {
+      "bytes": 44359,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/entry.py",
+      "sha256": "5f9613a100f9407d2338324591a5534ac2400372082ad1df7bbd47b9494f72fe"
+    },
+    "expected": {
+      "bytes": 278683,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/expected.json",
+      "sha256": "c02ece991fc80707bf057e81cc0bd55c55b0c318d2eb6d04cd1ea6abfe7d78e9"
+    },
+    "packet": {
+      "bytes": 5392,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/packet.json",
+      "sha256": "80dadd0365e0bed3472d610d388f57a5b2b3ab6b21984de34d85b23d694a27f2"
+    }
+  },
+  "kind": "producer-settlement-only",
+  "method_pin": {
+    "bytes": 8939,
+    "sha256": "278327822bdbf635a1929c705e8b4edf474bcbe7149eef1de3f292704845ce90"
+  },
+  "next": "Preserve all raw; independently cold-audit complete source/ordinary tasks/hypotheses/support for scoped12 results, and diagnose/refine only the header.ready pending obligation under a separately reviewed/admitted successor.",
+  "outer_resources": {
+    "cpu_seconds": 217.81196500000001,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 1066659840,
+    "timed_out": false,
+    "wall_seconds": 141.2431022329256
+  },
+  "passive_collector": {
+    "bytes": 13332,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/owned-swap13-node1-v10/settlement_metadata.py",
+    "sha256": "2af8b4fd7e2a4f9b3810ea5cc41a5021e1c552356a4b0df7ccc360ef3421720e"
+  },
+  "producer_complete": true,
+  "raw_retention": {
+    "raw_before_after_equal": true,
+    "raw_bytes": 21837313,
+    "raw_directories": 68,
+    "raw_files": 248,
+    "raw_links_or_specials": [],
+    "raw_manifest_sha256": "24d17000613901061b09810d8dbb32bc9accc62ddd23b60f337263fb5a67bf3e",
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-a102e275-t25-owned-swap13-public-v1"
+  },
+  "root_once_admission": {
+    "bytes": 5638,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-sparse-v10-node1-root-once-admission-20261016.json",
+    "sha256": "a39075896fdd70b8862bc1abf674c5863cfd39927c0e782b35c545ce45593340"
+  },
+  "runtime": {
+    "aliases": [
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libgmp.so.10",
+        "resolved": "/usr/lib/x86_64-linux-gnu/libgmp.so.10.5.0",
+        "target": "libgmp.so.10.5.0"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/libz.so.1",
+        "resolved": "/usr/lib/x86_64-linux-gnu/libz.so.1.3",
+        "target": "libz.so.1.3"
+      },
+      {
+        "path": "/usr/lib64/ld-linux-x86-64.so.2",
+        "resolved": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+      }
+    ],
+    "all_current_declared_pins_exact": true,
+    "compiler_runtime_receipt_pin": {
+      "bytes": 3285,
+      "sha256": "a97b504381668b139e0634c4d4ec1b882f4a309002a3a928df2f728e16908440"
+    },
+    "files": 152,
+    "files_sha256": "5134fe76fd0eaf340d8e5c0fa8ad9aaf8baacf61b8937313a9ee34c815d139d7",
+    "producer_runtime_receipt_pin": {
+      "bytes": 37237,
+      "sha256": "1caf6827b1ce560abc4346fccd1dd32f23adbac8699bdfd00df789cf25942601"
+    },
+    "scope": "Current declared physical pins plus original producer point checks. Loader/dlopen, source-to-binary and between-check identity remain TCB; no retroactive full historical dynamic closure."
+  },
+  "source": {
+    "all_git_blobs_exact": true,
+    "clean": true,
+    "commit": "a102e275cd23352aea8c268be3761d8a330b9be0",
+    "detached": true,
+    "inventory_sha256": "48d1dd271ee125508ddd6bc523089a2bf31e410629f70fdd29a0aeb4fdc9ff20",
+    "physical_bytes": 6184848,
+    "physical_files": 424,
+    "primary_configs_registrations_retention_lock_equal": true,
+    "private_config_and_sparse_patterns_equal": true,
+    "retained_1433_source_exists": true
+  },
+  "source_after": {
+    "commit": "a102e275cd23352aea8c268be3761d8a330b9be0",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "a102e275cd23352aea8c268be3761d8a330b9be0",
+  "source_consumer_receipts": [
+    {
+      "bytes": 142563,
+      "relative": "source-consumers-0.json",
+      "sha256": "ff18c65a5ec813bc434347eccb0c4acccc2bf7981ce9bd9805fd66d4fa5da3cd"
+    },
+    {
+      "bytes": 142563,
+      "relative": "source-consumers-1.json",
+      "sha256": "ff18c65a5ec813bc434347eccb0c4acccc2bf7981ce9bd9805fd66d4fa5da3cd"
+    }
+  ],
+  "targets": [
+    {
+      "id": "swap.owner_correspondence.heap.frontier",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 136814592,
+        "timed_out": false,
+        "wall_seconds": 1.0953045515343547
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.000636
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 0.104
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.heap.issued",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 185053184,
+        "timed_out": false,
+        "wall_seconds": 1.9762092540040612
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00103
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 0.923
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.heap.live",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 195014656,
+        "timed_out": false,
+        "wall_seconds": 2.783360534347594
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00104
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 1.88
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.heap.separated",
+      "native_results": [
+        "timeout",
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 544698368,
+        "timed_out": false,
+        "wall_seconds": 31.419828532263637
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00109
+        },
+        {
+          "prover": "CVC5:1.2.1",
+          "success": 1,
+          "time": 0.149
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.owners.frontier",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 163557376,
+        "timed_out": false,
+        "wall_seconds": 1.2264017220586538
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.000641
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 0.11
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.owners.exclusive",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 175841280,
+        "timed_out": false,
+        "wall_seconds": 1.489217889495194
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00117
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 0.476
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.owners.ranges",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 180862976,
+        "timed_out": false,
+        "wall_seconds": 1.7045297985896468
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00106
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 0.594
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.owners.disjoint",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 161984512,
+        "timed_out": false,
+        "wall_seconds": 1.205152646638453
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00135
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 0.0949
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.receiver.0",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 207073280,
+        "timed_out": false,
+        "wall_seconds": 4.937949695624411
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00083
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 3.91
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.receiver.8",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 211791872,
+        "timed_out": false,
+        "wall_seconds": 5.052894474007189
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.000664
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 4.01
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.receiver.16",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 211365888,
+        "timed_out": false,
+        "wall_seconds": 5.128805011510849
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.000772
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 4.03
+        }
+      ],
+      "standard_verdict": "valid"
+    },
+    {
+      "id": "swap.owner_correspondence.header.ready",
+      "native_results": [
+        "failed",
+        "unknown",
+        "timeout"
+      ],
+      "outcome": {
+        "failure_class": "solver_error",
+        "reason": null,
+        "verdict": "not_proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 911269888,
+        "timed_out": false,
+        "wall_seconds": 54.21376069821417
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.0014
+        },
+        {
+          "prover": "Z3:5.1.0",
+          "success": 0,
+          "time": 0
+        }
+      ],
+      "standard_verdict": "timeout"
+    },
+    {
+      "id": "swap.owner_correspondence.freeable.buffer",
+      "native_results": [
+        "valid"
+      ],
+      "outcome": {
+        "failure_class": null,
+        "reason": null,
+        "verdict": "proven"
+      },
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 196591616,
+        "timed_out": false,
+        "wall_seconds": 3.613421973772347
+      },
+      "standard_provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0.00136
+        },
+        {
+          "prover": "Alt-Ergo:2.6.4",
+          "success": 1,
+          "time": 2.52
+        }
+      ],
+      "standard_verdict": "valid"
+    }
+  ]
+}

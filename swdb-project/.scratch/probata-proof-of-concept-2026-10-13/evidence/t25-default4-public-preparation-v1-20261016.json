@@ -1,0 +1,81 @@
+{
+  "RSS_cap_bytes": 8589934592,
+  "canonical_originals": [
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1411,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_int_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_int_ctor.original.c",
+      "sha256": "9e4b81e87ab91f0e51d686553615cdccf721a861203bb175d8bca8e7c1dee440"
+    },
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1439,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_float_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_float_ctor.original.c",
+      "sha256": "2dc1ac63a6768f8acb8bd44f0704a8471aa05d7fc3f38b9b10cb44e678802ac0"
+    },
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1453,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_double_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_double_ctor.original.c",
+      "sha256": "9f3d9c0076c0de97097d75b2a69118c0390cedb2794259e48ee8a954bbade8d1"
+    },
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1461,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_int_ptr_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_int_ptr_ctor.original.c",
+      "sha256": "e908921cd7e6637a8d24bc1f0cfd0b78a113955bc754f96390b01dede83e8e57"
+    }
+  ],
+  "classification": "INERT_PROSPECTIVE_FOUR_DEFAULT_CONSTRUCTOR_PUBLIC_PROFILE",
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 7523,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v1.py",
+    "sha256": "785c7392cd85ad664f800813a26bfcce27add978de0e55f48fb654f6038e8c35"
+  },
+  "leaf_outer_seconds": 240,
+  "method": "method.wp-vector-default-constructors-v1",
+  "normal_job_seconds": 180,
+  "normal_public_route": true,
+  "original_inputs": {
+    "bytes": 2729,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/original-inputs.json",
+    "sha256": "e0d770b8a263e84cd61701efe1ab81c2ef585435e57fbe93336e438005cde11f"
+  },
+  "predecessor": {
+    "bytes": 7112,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/member_all32_public_v3.py",
+    "sha256": "062e7976f9fe3539aaa80ed57998aafd644d0d04f76c3b30e0d1c2b5b762c3d5"
+  },
+  "preflight": "Root fresh Mac memory/disk/shared-lock and exact source admission required; no actual execution by author.",
+  "proof_or_caller_admission": false,
+  "public_model_names": [
+    "std_vector_int_ctor",
+    "std_vector_float_ctor",
+    "std_vector_double_ctor",
+    "std_vector_int_ptr_ctor"
+  ],
+  "root_review_and_separate_actual_admission_required": true,
+  "runtime_solver_compiler_probes_executed": false,
+  "semantic_delta": "Only member names, explicit ordinary method identity, namespace/source and smaller four-member whole budget; no qualified checker or contract/domain change. Exact original model snapshots are retained.",
+  "source_commit": "a102e275cd23352aea8c268be3761d8a330b9be0",
+  "storage_limit_bytes": 134217728,
+  "whole_seconds": 900,
+  "workers": 1
+}

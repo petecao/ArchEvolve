@@ -1,0 +1,128 @@
+{
+  "author_retained_controls_only": {
+    "child_native_network_attempts": [],
+    "errors": 0,
+    "failures": 0,
+    "scope": "Canonical packet mutation, no test-module seed, command embedded-byte roundtrip, exact normal complete census, scoped live IPC and strict settlement/quotas, first failure retention. Not mathematical evidence.",
+    "tests": 13
+  },
+  "axis": "Independent executable-packet static review",
+  "boundaries": {
+    "actual_admission": false,
+    "scientific_acceptance": false,
+    "source_body_caller_default_adoption": false
+  },
+  "date": "2026-10-16 ET",
+  "decision": "CHANGES_REQUESTED_WHOLE_RAW_BUDGET",
+  "findings": [
+    {
+      "author_response": "Author accepted the defect and is preparing V2 fixed4MiB root headroom, strict sibling census and512KiB post-exit metadata reserve.",
+      "id": "ENTRY-STD-01",
+      "lines": [
+        667,
+        669,
+        670
+      ],
+      "observation": "raw_bytes and bounded_bytes count only --output=<root>/owned-transfer10-public-v1-profile. Bootstrap and root guards place staged entry/expected/preflight/wrappers beside that profile. Both final metadata writes use reserve=False; final settlement permits profile bytes up to2147483648. The combined raw root can exceed the advertised2GiB aggregate cap while producer_complete remains true.",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/entry.py",
+      "priority": "P2",
+      "requested_change": "Preserve V1. Retain explicit physical root sibling/post-exit headroom through both final writes and final settlement, or count entire root separately from leaf IPC classification. Add near-limit controls with actual staged siblings and both final writes; root checks final whole extent after post-exit metadata.",
+      "structural_counterexample_not_executed": {
+        "additional_known_entry_expected_siblings": 281359,
+        "final_manifest_bytes": 4186112,
+        "final_result_bytes": 8192,
+        "profile_after_final": 2147483648,
+        "profile_before_final": 2143289344,
+        "whole_raw_exceeds_cap": true
+      },
+      "title": "Keep root sibling artifacts inside the aggregate raw-output cap"
+    }
+  ],
+  "frozen_packet": {
+    "bytes": 5223,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/packet.json",
+    "sha256": "f4a868336af4866cadd297f02c8f99859a52969949e6af63122cffe0f333059a"
+  },
+  "frozen_preparation": {
+    "bytes": 7340,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-public-preparation-v1-20261016.json",
+    "sha256": "195e482434dee6ec303c1bfe1aa76e466ddf2575db363fff93e8e49c517d0633"
+  },
+  "inputs": [
+    {
+      "bytes": 13819,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/prepare.py",
+      "sha256": "1a792917f06a03050a2d13f10882443904e1e3b2893c9ebaea27f15e696139c3"
+    },
+    {
+      "bytes": 21937,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/entry_template.py",
+      "sha256": "f43e938185315f4748b56ebdbd0b5629722d24c7c3f1556be5f3e6dc9b8c9647"
+    },
+    {
+      "bytes": 7725,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/runtime_quota.py",
+      "sha256": "a8cee0e21a557882fea391653989123a3044248cbad0fe610b543655430ec9fc"
+    },
+    {
+      "bytes": 1921,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/reviewed_why3_package_check.py",
+      "sha256": "62ada266ff589a83b009c221c347dcabc5547cf86904238cdf9bfb7adf56d50d"
+    },
+    {
+      "bytes": 90513,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/why3-runtime-snapshot.json",
+      "sha256": "de07b17e79d6fa4fb2f632acc0653949f510087fdf33e3f2fe99db1b444f9529"
+    },
+    {
+      "bytes": 12582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/pure_controls.py",
+      "sha256": "8dead47e6978b72bda1de6cb69511a689ce6e15d860dd0e478222ea3ebcd07ac"
+    },
+    {
+      "bytes": 2246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/pure-controls-v2.log",
+      "sha256": "c1acb289a905a220ea477eb7a7283135dd0f2a27abfd9e007583eb6ac98a8db3"
+    },
+    {
+      "bytes": 13350,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/template-delta-final-v1.json",
+      "sha256": "a10d4ab8dd6e703b4b85cdb2a1375188db9064038a61e2625f9d2971df53c06a"
+    },
+    {
+      "bytes": 41509,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/entry.py",
+      "sha256": "a2c2f3854e182652b46cb612a2f762d8fdfddd713ad1a33b16b2e0f148545478"
+    },
+    {
+      "bytes": 239850,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/expected.json",
+      "sha256": "7fb3f40e7ec3eb2c1e2e53a91267738381db7c7f9656ec75fe74722a1c7ea078"
+    },
+    {
+      "bytes": 5223,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/packet.json",
+      "sha256": "f4a868336af4866cadd297f02c8f99859a52969949e6af63122cffe0f333059a"
+    },
+    {
+      "bytes": 110402,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/root-command.json",
+      "sha256": "22a4d77a89f9ca96aefac53cbaaae56648453e4d7ae3d1739d053541f0881b08"
+    }
+  ],
+  "passed_checks": {
+    "IPC_failure": "One exact active canonical leaf/tmp socket with target/input/cwd binding, ownedzero-size same-device S_IFSOCK; no socket open/connect/follow. Unknown links/specials refuse; active context cleared before settled walk. First error independently retained before finalization can fail.",
+    "bootstrap": "Exact embedded source/expectation roundtrip and byte-exact inverse to reviewed predecessor transport after declared namespace/hash/payload substitutions.",
+    "canonical": "21exact canonical files,10independent pending check lemmas,8original source units and identical registry-pinned V2 manifest; no old proofs imported.",
+    "helpers": "Six source/launch helpers exact copied bytes; guard inverse removes only per-file min cap; normal_task_census exact prior9target template; Why3 package checker inverse removes only digest-API adaptation.",
+    "normal_observation": "Normal command/flags/lineup/30second3solver portfolio, RTE/init/smokes/+real and machine policies remain. Complete native/standard/property/CSV/outcome/census/export tasks retained, unique sole ordinary lemma ownership and dependencies observed. Semantic term/hypothesis/support closure still needs independent cold audit. producer_complete separate from all_ten_producer_proven.",
+    "runtime": "Nine-package extension is exact frozen mixedV6 metadata.152selected physical files are148packagefiles+4ELFcandidates, with3literal aliases; inherited tools/WP/import/ten runtime sources/config and actual compiler composite checks remain. Python/loader/dlopen/source-to-binary/between-check TCB qualified; no historical or full2717consumer-closure claim.",
+    "scope": "No public proof record/universal setup/source/Typed/body/caller/default/model acceptance. Cold proof interpretation remains pending."
+  },
+  "verification": {
+    "actual_profile_execution": false,
+    "entry_project_import_test_compiler_native_verifier_solver_or_SSH_execution": false,
+    "physical_pins_checked": 12,
+    "source_AST_hash_and_compressed_metadata_only": true
+  }
+}

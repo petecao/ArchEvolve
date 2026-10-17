@@ -1,0 +1,81 @@
+{
+  "actual_compiler_native_solver_SSH_execution": false,
+  "controls": {
+    "errors": 0,
+    "external_attempts": 0,
+    "failures": 0,
+    "generated_concrete_WP_positive_WP_negative_and_prepared_JSON_exact": true,
+    "pins": 8,
+    "skips": 0,
+    "tests": 5
+  },
+  "date": "2026-10-16 Eastern",
+  "decision": "PASS_SYMBOLIC_SOURCE_RELATION_WITH_NATIVE_PROTOCOL_HOLD",
+  "known_hold": {
+    "id": "READY-NATIVE-01",
+    "reason": "The V1 native decimal parser can truncate/accept suffixes and does not print full argument readback; root is authoring a frozen successor. This does not change symbolic CBMC inputs or the WP quotient relation.",
+    "receipt_sha256": "510f564f9108c7ae1ab65f5817f18ce0131e28643e371265f219e53f4bd52e8a",
+    "source_unchanged": true
+  },
+  "new_findings": [],
+  "normal_public_seam": {
+    "candidate_attribution": false,
+    "generic_SourceUnit_remains_refused": true,
+    "recommended": "A dedicated fixed TraceUnit summary-only partial method in WPAdapter.run, before generic C++ source ingress; regenerate and pin exact C/refinement/entry/context in proof_setup.check_generated.",
+    "unqualified_model_path_not_appropriate": "The generic model path records DX100 semantics as not applicable; this exact logical query must retain same-entry finite_logical_ready and common assumptions."
+  },
+  "pins": [
+    {
+      "bytes": 3507,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/source-packet-v1.json",
+      "sha256": "aa71c4919e10a832424d0aea2cf36c24413c98bb081283e8522f31e8f75009ed"
+    },
+    {
+      "bytes": 2455,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1-independent-review/review_controls_v1.py",
+      "sha256": "c58be0bd0e308f709574c672442cc5adf776bf5d825b9bccb1317db4d99730f4"
+    },
+    {
+      "bytes": 852,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1-independent-review/fresh-pure-controls-v1.log",
+      "sha256": "9f8288bbba8c528c452536a92dc54c9da22fe019586c9f7a28b4663ac6611cf3"
+    },
+    {
+      "bytes": 10349,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-concrete-ready-independent-standards-review-v1-20261016.json",
+      "sha256": "510f564f9108c7ae1ab65f5817f18ce0131e28643e371265f219e53f4bd52e8a"
+    }
+  ],
+  "quotient": {
+    "caller_frame": "pending, visible, issued; loop frame pending and visible only",
+    "caller_source_exact_after_only_loop_annotation_removal": true,
+    "fairness_or_eventual_one_assumption": false,
+    "helper_choice_total_does_not_force_progress": true,
+    "loop_invariant": "issued remains fixed; pending is Boolean; completed implies visible equals issued.",
+    "negative": "One logical zero followed by observe violates pending-false observation precondition.",
+    "normal_exit_ready_one_supplies_completed_relation": true,
+    "normal_result": "issued",
+    "partial_correctness": true,
+    "unbounded_zero_sequences_permitted": true
+  },
+  "relation": {
+    "completed": "Query returns one without another choice or completion; the state remains in the completed relation.",
+    "frame": "The explicit postcondition covers every field read on the next fixed query/completion/observe path, including all counts, command topology/dependency fields, fixed action operands/kind and all settled constant node kinds/values. Irrelevant backend fields are not generalized into an arbitrary-state theorem.",
+    "instrumentation": "Unsigned choice counter is diagnostic. No prefix/resource counter appears in the common polling caller or WP loop invariant. A constant one-step answer suffices for each single call in this relation; the quotient choice permits a fresh unconstrained answer per iteration.",
+    "parameters": "pending and answer each in {0,1}; before and issued range over the complete uint32 domain. In the completed relation, visible equals issued.",
+    "pending_one": "Actual logical query consumes one binary choice and executes unchanged wait -> command cover -> settled root cover -> action completion -> device write. It returns one, clears pending, publishes issued, appends the sole write and marks the sole action done.",
+    "pending_zero": "Actual logical query consumes one binary choice, returns zero and leaves the command, visible memory, event count, action completion and all framed future-read fields unchanged.",
+    "read_boundary": "Concrete observe invokes actual dxc_cpu_memory_access for the same overlapping physical envelope and then requires pending false and initialized true. The zero-read negative is rejected at the actual pending store-footprint rule; no successful stale read is inferred.",
+    "scope": "One fixed synthetic command, one store action, one initialized ordinary uint32 cell, four immutable settled constant nodes; no other trace activity."
+  },
+  "remaining_acceptance": [
+    "Complete actual one-step CBMC goals with ordinary/RTE/domain/frame/unwinding checks and a healthy exact negative.",
+    "Actual WP helper/caller ordinary ledger with RTE/initialization/frame checks and healthy consistency probes under explicit partial-correctness method.",
+    "Native protocol successor review and actual selected full-backend prefix/zero-read results; finite samples alone do not prove the unbounded loop.",
+    "Same physical new0.2 entry, typed TraceUnit context, constructed receiver facts and exact actual refinement/loop records at a normal summary public boundary.",
+    "No original header query declaration, original C++ correspondence or MMIO hardware-body theorem is established or required here."
+  ],
+  "reviewer": "/root/ticket28",
+  "schema": "independent-concrete-ready-v1-spec-review-1",
+  "shared_source_modified": false
+}

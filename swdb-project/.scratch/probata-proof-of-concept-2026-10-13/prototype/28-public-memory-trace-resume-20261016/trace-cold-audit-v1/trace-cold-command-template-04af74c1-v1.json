@@ -1,0 +1,74 @@
+{
+  "command": [
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/reader-source-cache",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/trace_cold_audit_v1.py",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/trace-cold-policy-template-04af74c1-v1.json",
+    "f292d4e3158859869ef59697bcf9d777a4e8859923e949b3d396a35c2b58b6fb"
+  ],
+  "conditions": [
+    "Both policy admission Booleans remain false; root must update and repin after independent source review",
+    "No extra PYTHON* environment variables; null values mean unset",
+    "The explicit -X cache prefix must remain absent; outer environment cache may exist",
+    "stdout/stderr belong only under the fresh cold raw; original trace raw remains immutable"
+  ],
+  "control_files": {
+    "closed_python_surface.py": {
+      "bytes": 18385,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    "initialized_cold_identities_v2.py": {
+      "bytes": 8765,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/initialized_cold_identities_v2.py",
+      "sha256": "0c248fc3b50e69629fed8ab9a187dc5a947cc9aee3fb628aa8d604a6e79c5cc9"
+    },
+    "public_assertions_v1.py": {
+      "bytes": 5067,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/public_assertions_v1.py",
+      "sha256": "7fb5964e54a7a862e807b7154de43a46cd7ac34f22483d7858113cf37da13acd"
+    },
+    "python_startup_roles_v2.py": {
+      "bytes": 9610,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    "reviewed_cold_primitives_v1.py": {
+      "bytes": 10964,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/reviewed_cold_primitives_v1.py",
+      "sha256": "4b5ccd919ab71e54c70038a456c68c06b6f9e84af5ca6e690258094d79f428c4"
+    },
+    "t28-trace-v4-root-execution-20261016.json": {
+      "bytes": 26667,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/t28-trace-v4-root-execution-20261016.json",
+      "sha256": "c94420bdb85074be52aa2044158c9ee77cace37f4dbb0fac2274e64973a5e7ff"
+    },
+    "trace-cold-policy-template-04af74c1-v1.json": {
+      "bytes": 349805,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/trace-cold-policy-template-04af74c1-v1.json",
+      "sha256": "f292d4e3158859869ef59697bcf9d777a4e8859923e949b3d396a35c2b58b6fb"
+    },
+    "trace_cold_audit_v1.py": {
+      "bytes": 39266,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/control/trace_cold_audit_v1.py",
+      "sha256": "3cefa1c4eb7c05371afcdaf8b43d6f46927dfe80aed0be90e652bac0cf0157ee"
+    }
+  },
+  "control_total_bytes": 468529,
+  "date": "2026-10-16 ET",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": null,
+    "PYTHONPATH": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1/cache",
+    "PYTHONSAFEPATH": null,
+    "SETUPTOOLS_USE_DISTUTILS": null
+  },
+  "fresh_raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v1",
+  "reader_executed": false,
+  "scientific_execution": false,
+  "status": "INERT_UNADMITTED_AWAITING_INDEPENDENT_SOURCE_REVIEW"
+}

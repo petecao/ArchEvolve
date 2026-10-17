@@ -1,0 +1,179 @@
+{
+  "at_utc": "2026-10-16T18:08:16.272887+00:00",
+  "gcc_driver_aliases_and_children": [
+    {
+      "bytes": 1023032,
+      "chain": [
+        {
+          "path": "/usr/bin/gcc",
+          "target": "gcc-13"
+        },
+        {
+          "path": "/usr/bin/gcc-13",
+          "target": "x86_64-linux-gnu-gcc-13"
+        }
+      ],
+      "path": "/usr/bin/gcc",
+      "resolved": "/usr/bin/x86_64-linux-gnu-gcc-13",
+      "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26"
+    },
+    {
+      "bytes": 1027128,
+      "chain": [
+        {
+          "path": "/usr/bin/g++",
+          "target": "g++-13"
+        },
+        {
+          "path": "/usr/bin/g++-13",
+          "target": "x86_64-linux-gnu-g++-13"
+        }
+      ],
+      "path": "/usr/bin/g++",
+      "resolved": "/usr/bin/x86_64-linux-gnu-g++-13",
+      "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769"
+    },
+    {
+      "bytes": 1027128,
+      "chain": [
+        {
+          "path": "/usr/bin/cpp",
+          "target": "cpp-13"
+        },
+        {
+          "path": "/usr/bin/cpp-13",
+          "target": "x86_64-linux-gnu-cpp-13"
+        }
+      ],
+      "path": "/usr/bin/cpp",
+      "resolved": "/usr/bin/x86_64-linux-gnu-cpp-13",
+      "sha256": "c48f8b1b5ab757134970d17bc2ecd889df0d1245463036e834ab9be9d5e40765"
+    },
+    {
+      "bytes": 785112,
+      "chain": [
+        {
+          "path": "/usr/bin/cc",
+          "target": "/etc/alternatives/cc"
+        },
+        {
+          "path": "/etc/alternatives/cc",
+          "target": "/usr/bin/gcc-9"
+        },
+        {
+          "path": "/usr/bin/gcc-9",
+          "target": "x86_64-linux-gnu-gcc-9"
+        }
+      ],
+      "path": "/usr/bin/cc",
+      "resolved": "/usr/bin/x86_64-linux-gnu-gcc-9",
+      "sha256": "456a486763012c714771efa4baba75533f0d8f64f74814878676ea01620fa520"
+    },
+    {
+      "bytes": 1027128,
+      "chain": [
+        {
+          "path": "/usr/bin/c++",
+          "target": "/etc/alternatives/c++"
+        },
+        {
+          "path": "/etc/alternatives/c++",
+          "target": "/usr/bin/g++"
+        },
+        {
+          "path": "/usr/bin/g++",
+          "target": "g++-13"
+        },
+        {
+          "path": "/usr/bin/g++-13",
+          "target": "x86_64-linux-gnu-g++-13"
+        }
+      ],
+      "path": "/usr/bin/c++",
+      "resolved": "/usr/bin/x86_64-linux-gnu-g++-13",
+      "sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769"
+    },
+    {
+      "bytes": 745768,
+      "chain": [
+        {
+          "path": "/usr/bin/as",
+          "target": "x86_64-linux-gnu-as"
+        }
+      ],
+      "path": "/usr/bin/as",
+      "resolved": "/usr/bin/x86_64-linux-gnu-as",
+      "sha256": "21aff249b692b5c31a44007491f922dcb49f41323e362c57d2ada3f52eddb7f0"
+    },
+    {
+      "bytes": 1359128,
+      "chain": [
+        {
+          "path": "/usr/bin/ld",
+          "target": "x86_64-linux-gnu-ld"
+        },
+        {
+          "path": "/usr/bin/x86_64-linux-gnu-ld",
+          "target": "x86_64-linux-gnu-ld.bfd"
+        }
+      ],
+      "path": "/usr/bin/ld",
+      "resolved": "/usr/bin/x86_64-linux-gnu-ld.bfd",
+      "sha256": "e9ceb054c12207970f2726dfc07e9a66b411602748628baf27399f02a9bbb31b"
+    },
+    {
+      "bytes": 1023032,
+      "chain": [],
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+      "resolved": "/usr/bin/x86_64-linux-gnu-gcc-13",
+      "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26"
+    },
+    {
+      "bytes": 30487984,
+      "chain": [],
+      "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+      "resolved": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1",
+      "sha256": "5d1679131184e2de4435b426eb264bf13472fe026db8e5c6bc97445814e8e2f4"
+    },
+    {
+      "bytes": 32675168,
+      "chain": [],
+      "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus",
+      "resolved": "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus",
+      "sha256": "840b332fb62ec6f694ac77d91fe69ef7f80b0d69512ed89374af0ee7a506255d"
+    },
+    {
+      "bytes": 336056,
+      "chain": [],
+      "path": "/usr/libexec/gcc/x86_64-linux-gnu/13/collect2",
+      "resolved": "/usr/libexec/gcc/x86_64-linux-gnu/13/collect2",
+      "sha256": "4d1f341ae5b763b513258ee2812422a45e063c30a2f1924a0cf63d3699f3a158"
+    }
+  ],
+  "historical_deployment_metadata": [
+    {
+      "pin": {
+        "bytes": 676,
+        "path": "/data1/yanruj/probata-verifiers/records/versions-prebuilt.txt",
+        "resolved": "/data1/yanruj/probata-verifiers/records/versions-prebuilt.txt",
+        "sha256": "b81e6a466d487840d9ef4e6e4acfa19a965fb84641e647b052d39d5773a03c06"
+      },
+      "selected_cbmc_lines": [
+        "cbmc: 6.11.0 (cbmc-6.11.0)"
+      ]
+    },
+    {
+      "pin": {
+        "bytes": 1562,
+        "path": "/data1/yanruj/probata-verifiers/records/downloads.txt",
+        "resolved": "/data1/yanruj/probata-verifiers/records/downloads.txt",
+        "sha256": "a01ed6edad2a31af220e6ee7bc0a35e517ec6f9a2334ed37973c7b70c836c5a9"
+      },
+      "selected_cbmc_lines": [
+        "cbmc.deb b3721aa541038384d7801ea3aeabbcddc3e8845ac8f1cbff637cf8dec7481ac8 73477756 https://github.com/diffblue/cbmc/releases/download/cbmc-6.11.0/ubuntu-24.04-cbmc-6.11.0-Linux.deb"
+      ]
+    }
+  ],
+  "historical_version_is_not_current_observation": true,
+  "scope": "Passive exact executable/alias filesystem pins and selected historic deployment metadata; no current version/tool/native/compiler command executed"
+}

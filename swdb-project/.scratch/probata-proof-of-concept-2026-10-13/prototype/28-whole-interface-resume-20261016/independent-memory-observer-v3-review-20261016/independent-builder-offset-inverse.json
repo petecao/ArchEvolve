@@ -1,0 +1,108 @@
+{
+  "basis": {
+    "bytes": 9461,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-unit-envelope-v1/prepare_envelope_v1.py",
+    "sha256": "f3d4e8865e858d80ceb0cdb609b9de165a8e48748ad36eb8b3647c800cf3edf3"
+  },
+  "current": {
+    "bytes": 9461,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-unit-envelope-v2/prepare_envelope_v2.py",
+    "sha256": "f43cbff71136cfb0d51892b8024cfcfe3ee14c14041d24db2b9f9415b869fcdc"
+  },
+  "date": "2026-10-16 ET",
+  "direction": "replace current byte spans descending to reconstruct basis",
+  "edits": [
+    {
+      "basis": "BASE = WHOLE / 'normalized-unit-envelope-v4'\nMEMORY = WHOLE / 'memory-normalized-ingress-v2'\n",
+      "current": "BASE = WHOLE / 'normalized-unit-envelope-v5'\nMEMORY = WHOLE / 'memory-normalized-ingress-v3'\n",
+      "end": 320,
+      "start": 227
+    },
+    {
+      "basis": "RAW = '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-unit-observation-2baf722f-v2'\n",
+      "current": "RAW = '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-unit-observation-2baf722f-v3'\n",
+      "end": 485,
+      "start": 384
+    },
+    {
+      "basis": "    for path, expected in ((BASE / 'source-packet-v4.json', 'b74571794e41588c2110c9d0ccc9150c825c08a4ca83b78288db7fab21e06667'),\n        (MEMORY / 'source-packet-v2.json', '9904def8876809e84e737355c93f6a1c87bfb4751bf1c901a05a3b6629915df9')):\n",
+      "current": "    for path, expected in ((BASE / 'source-packet-v5.json', 'eb932238f0504c3330cc67aa1728f40fcc6956d0a18947c13693cdd40fdaa873'),\n        (MEMORY / 'source-packet-v3.json', '4563434cedfabd310b8846bb692b82b24ba37d01562b6d816f38437f1a453fcb')):\n",
+      "end": 2047,
+      "start": 1805
+    },
+    {
+      "basis": "    entry = (BASE / 'linux_observation_envelope_v4.py').read_text()\n",
+      "current": "    entry = (BASE / 'linux_observation_envelope_v5.py').read_text()\n",
+      "end": 2223,
+      "start": 2155
+    },
+    {
+      "basis": "    selected = document(MEMORY / 'observer/observation-policy-template-v1.json')\n",
+      "current": "    selected = document(MEMORY / 'observer/observation-policy-template-v2.json')\n",
+      "end": 2371,
+      "start": 2290
+    },
+    {
+      "basis": "    replace('t28-unit-observation-2baf722f-v4', 't28-memory-unit-observation-2baf722f-v2')\n    replace('control/linux_observation_envelope_v4.py', 'control/linux_memory_observation_envelope_v1.py', 2)\n    replace('control/envelope-policy-v4.json', 'control/envelope-policy-v1.json', 2)\n    replace(\"OBSERVER_SHA = '0d12e2ac33e5417abaac8c071a0d2d36492c6dc52651f23d0229dc94527e4fab'\",\n",
+      "current": "    replace('t28-unit-observation-2baf722f-v5', 't28-memory-unit-observation-2baf722f-v3')\n    replace('control/linux_observation_envelope_v5.py', 'control/linux_memory_observation_envelope_v2.py', 2)\n    replace('control/envelope-policy-v5.json', 'control/envelope-policy-v2.json', 2)\n    replace(\"OBSERVER_SHA = '7ecdbffea04c87a2c198a17cf7b5fbd872bc4c663cc4d8da42a3c5e7bc1a088e'\",\n",
+      "end": 3066,
+      "start": 2683
+    },
+    {
+      "basis": "    replace('observer/control/observe_entry_v2.py', 'observer/control/observe_memory_entry_v1.py')\n",
+      "current": "    replace('observer/control/observe_entry_v3.py', 'observer/control/observe_memory_entry_v1.py')\n",
+      "end": 3398,
+      "start": 3299
+    },
+    {
+      "basis": "    (HERE / 'linux_memory_observation_envelope_v1.py').write_text(entry)\n    (HERE / 'exact-envelope-inverse-v1.json').write_text(json.dumps({'schema': 'literal-memory-envelope-V4-inverse-1',\n        'date': '2026-10-16 ET', 'basis': pin(BASE / 'linux_observation_envelope_v4.py'), 'replacements': edits,\n",
+      "current": "    (HERE / 'linux_memory_observation_envelope_v2.py').write_text(entry)\n    (HERE / 'exact-envelope-inverse-v2.json').write_text(json.dumps({'schema': 'literal-memory-envelope-V4-inverse-1',\n        'date': '2026-10-16 ET', 'basis': pin(BASE / 'linux_observation_envelope_v5.py'), 'replacements': edits,\n",
+      "end": 4659,
+      "start": 4354
+    },
+    {
+      "basis": "    stage(HERE / 'linux_memory_observation_envelope_v1.py')\n",
+      "current": "    stage(HERE / 'linux_memory_observation_envelope_v2.py')\n",
+      "end": 5266,
+      "start": 5206
+    },
+    {
+      "basis": "    provenance = stage(MEMORY / 'source-packet-v2.json', 'memory-source-proposal.json')\n    for name, row in document(MEMORY / 'observer-staging-plan-v2.json')['external_provenance_mirrors'].items():\n",
+      "current": "    provenance = stage(MEMORY / 'source-packet-v3.json', 'memory-source-proposal.json')\n    for name, row in document(MEMORY / 'observer-staging-plan-v3.json')['external_provenance_mirrors'].items():\n",
+      "end": 5804,
+      "start": 5604
+    },
+    {
+      "basis": "    (HERE / 'envelope-policy-v1.json').write_bytes(canonical(policy))\n    total = sum(row['bytes'] for row in staged.values()) + (HERE / 'envelope-policy-v1.json').stat().st_size\n",
+      "current": "    (HERE / 'envelope-policy-v2.json').write_bytes(canonical(policy))\n    total = sum(row['bytes'] for row in staged.values()) + (HERE / 'envelope-policy-v2.json').stat().st_size\n",
+      "end": 7405,
+      "start": 7226
+    },
+    {
+      "basis": "    command = document(BASE / 'command-v4.json')\n",
+      "current": "    command = document(BASE / 'command-v5.json')\n",
+      "end": 7539,
+      "start": 7490
+    },
+    {
+      "basis": "            RAW + '/control/linux_memory_observation_envelope_v1.py', RAW, RAW + '/control/envelope-policy-v1.json',\n            pin(HERE / 'envelope-policy-v1.json')['sha256']], policy=pin(HERE / 'envelope-policy-v1.json'),\n",
+      "current": "            RAW + '/control/linux_memory_observation_envelope_v2.py', RAW, RAW + '/control/envelope-policy-v2.json',\n            pin(HERE / 'envelope-policy-v2.json')['sha256']], policy=pin(HERE / 'envelope-policy-v2.json'),\n",
+      "end": 7997,
+      "start": 7772
+    },
+    {
+      "basis": "    old_raw = document(BASE / 'command-v4.json')['raw']\n",
+      "current": "    old_raw = document(BASE / 'command-v5.json')['raw']\n",
+      "end": 8797,
+      "start": 8741
+    },
+    {
+      "basis": "    (HERE / 'command-v1.json').write_bytes(canonical(command))\n",
+      "current": "    (HERE / 'command-v2.json').write_bytes(canonical(command))\n",
+      "end": 9059,
+      "start": 8996
+    }
+  ],
+  "exact_reconstruction": true,
+  "frozen_author_inverse_remains_invalid": true
+}

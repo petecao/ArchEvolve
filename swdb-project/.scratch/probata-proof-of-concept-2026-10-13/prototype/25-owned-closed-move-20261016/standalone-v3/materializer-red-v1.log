@@ -1,0 +1,16 @@
+E
+======================================================================
+ERROR: test_nested_selection_equals_the_root_tree_and_materializes_all_declared_consumers (__main__.MaterializerGitControl.test_nested_selection_equals_the_root_tree_and_materializes_all_declared_consumers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v3/test_materializer_git.py", line 54, in test_nested_selection_equals_the_root_tree_and_materializes_all_declared_consumers
+    API['main']()
+    ~~~~~~~~~~~^^
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v3/materialize.py", line 56, in main
+    raise ValueError('complete source/helper/method selection is missing')
+ValueError: complete source/helper/method selection is missing
+
+----------------------------------------------------------------------
+Ran 1 test in 0.026s
+
+FAILED (errors=1)

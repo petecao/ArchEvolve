@@ -1,0 +1,151 @@
+(* 2026-10-16 ET. Definitions only. No source admission or imported project lemma.
+   Nominal bit fields preserve payload syntax without FP-to-int/real conversion.
+   This is a candidate mathematical interpretation, not a physical ABI encoding.
+   Bit-exact FP/pointer store transport is a separate source/implementation gate:
+   in particular no signaling-NaN or pointer-padding behavior is presumed. *)
+module TypedPayload
+  use int.Int
+  use map.Map
+  use heap_reallocation.Heap
+
+  type bits4 = B4 bool bool bool bool
+  type bits8 = B8 bits4 bits4
+  type bits11 = B11 bool bool bool bits4 bits4
+  type bits23 = B23 bool bool bool bits4 bits4 bits4 bits4 bits4
+  type bits32 = B32 bits8 bits8 bits8 bits8
+  type bits52 = B52 bits4 bits4 bits4 bits4 bits4 bits4 bits4
+                      bits4 bits4 bits4 bits4 bits4 bits4
+  type bits64 = B64 bits32 bits32
+  type binary32 = { sign32: bool; exponent32: bits8; fraction32: bits23 }
+  type binary64 = { sign64: bool; exponent64: bits11; fraction64: bits52 }
+
+  function z4 : bits4 = B4 False False False False
+  function o4 : bits4 = B4 True True True True
+  function z8 : bits8 = B8 z4 z4
+  function z11 : bits11 = B11 False False False z4 z4
+  function z23 : bits23 = B23 False False False z4 z4 z4 z4 z4
+  function z52 : bits52 = B52 z4 z4 z4 z4 z4 z4 z4 z4 z4 z4 z4 z4 z4
+  function zero32 : binary32 = { sign32 = False; exponent32 = z8; fraction32 = z23 }
+  function zero64 : binary64 = { sign64 = False; exponent64 = z11; fraction64 = z52 }
+  predicate nan32 (x:binary32) = x.exponent32 = B8 o4 o4 /\ x.fraction32 <> z23
+  predicate nan64 (x:binary64) = x.exponent64 = B11 True True True o4 o4 /\ x.fraction64 <> z52
+  predicate is_zero32 (x:binary32) = x.exponent32 = z8 /\ x.fraction32 = z23
+  predicate is_zero64 (x:binary64) = x.exponent64 = z11 /\ x.fraction64 = z52
+
+  (* Source images of valid, initialized pointer VALUES are required separately.
+     Neither constructor grants a valid/live pointee. Null representation is a
+     symbolic bits64 argument, never inferred from the all-zero FP constant. *)
+  type pointer_token
+  type int_pointer = NullIntPointer bits64 | EncodedIntPointer pointer_token bits64
+  predicate pointer_value_equal (x y:int_pointer) =
+    match x,y with
+    | NullIntPointer _,NullIntPointer _ -> true
+    | EncodedIntPointer a _,EncodedIntPointer b _ -> a = b
+    | _,_ -> false
+    end
+  type scalar_kind = Float32 | Float64 | IntPointer
+  type payload = Unwritten | F32 binary32 | F64 binary64 | IP int_pointer
+  predicate has_kind (kind:scalar_kind) (x:payload) =
+    match kind,x with
+    | Float32,F32 _ -> true
+    | Float64,F64 _ -> true
+    | IntPointer,IP _ -> true
+    | _,_ -> false
+    end
+  function stride (kind:scalar_kind) : int = if kind = Float32 then 4 else 8
+  predicate is_nan (x:payload) =
+    match x with F32 v -> nan32 v | F64 v -> nan64 v | _ -> false end
+  predicate is_zero (x:payload) =
+    match x with F32 v -> is_zero32 v | F64 v -> is_zero64 v | _ -> false end
+  predicate c_equal (x y:payload) =
+    not (is_nan x) /\ not (is_nan y) /\
+    (x = y \/
+      (match x,y with
+       | F32 a,F32 b -> is_zero32 a /\ is_zero32 b
+       | F64 a,F64 b -> is_zero64 a /\ is_zero64 b
+       | IP a,IP b -> pointer_value_equal a b
+       | _,_ -> false
+       end))
+  (* Proposed value/class relation for a separately versioned source contract.
+     It admits same-format NaN copies without requiring the NaN fraction/sign
+     or signaling/quiet bit to survive assignment. Exact x=y is stronger.
+     Physical copying, FP environment and pointer-token interpretation remain
+     unbound; this definition does not modify any original C/ACSL clause. *)
+  predicate value_copy (x y:payload) = c_equal x y \/
+    (match x,y with
+     | F32 a,F32 b -> nan32 a /\ nan32 b
+     | F64 a,F64 b -> nan64 a /\ nan64 b
+     | _,_ -> false
+     end)
+  function zero (kind:scalar_kind) (null_bits:bits64) : payload =
+    match kind with
+    | Float32 -> F32 zero32
+    | Float64 -> F64 zero64
+    | IntPointer -> IP (NullIntPointer null_bits)
+    end
+
+  (* Heap.memory still describes the unchanged integer/pointer header image.
+     Payload cells inhabit this distinct product component; no payload is ever
+     coerced to an integer cell. C source object types must select the component.
+     This file does not establish a total Typed byte/chunk encoding. *)
+  type state = { shape: heap; cells: map int (map int payload) }
+  function objects (s:state) : heap = s.shape
+  function read (s:state) (b offset:int) : payload = s.cells[b][offset]
+  function put (s:state) (b offset:int) (value:payload) : state =
+    { shape = { s.shape with initialized =
+        set s.shape.initialized b (set s.shape.initialized[b] offset True) };
+      cells = set s.cells b (set s.cells[b] offset value) }
+
+  (* Width-aware allocation; the existing int-specific Heap.allocate is not
+     silently reused for eight-byte elements. Access/freshness premises remain
+     separate from these total transition definitions. Old bytes are not filled. *)
+  predicate available (s:state) (count address:int) (kind:scalar_kind) =
+    0 <= count /\ 0 < address /\ aligned address (stride kind) /\
+    (forall old:int. live s.shape old ->
+      address <> numerical_address s.shape old /\
+      (address + stride kind * count <= numerical_address s.shape old \/
+       numerical_address s.shape old + bytes s.shape old <= address))
+  function allocate (s:state) (count address:int) (kind:scalar_kind) : state =
+    { shape = { s.shape with next = s.shape.next + 1;
+        allocated = set s.shape.allocated s.shape.next True;
+        alive = set s.shape.alive s.shape.next True;
+        dynamic = set s.shape.dynamic s.shape.next True;
+        writable = set s.shape.writable s.shape.next True;
+        extent = set s.shape.extent s.shape.next (stride kind * count);
+        address = set s.shape.address s.shape.next address;
+        initialized = set s.shape.initialized s.shape.next (fun _ -> False) };
+      cells = s.cells }
+
+  predicate typed_at (s:state) (b offset:int) (kind:scalar_kind) =
+    typed_reads s.shape b offset (stride kind) (stride kind) /\
+    initialized_at s.shape b offset /\ has_kind kind (read s b offset)
+  predicate prefix (s:state) (b count:int) (kind:scalar_kind) (value:payload) =
+    forall j:int. 0 <= j < count ->
+      initialized_at s.shape b (stride kind*j) /\ read s b (stride kind*j) = value
+  predicate class_prefix (s:state) (b count:int) (kind:scalar_kind) (value:payload) =
+    forall j:int. 0 <= j < count ->
+      initialized_at s.shape b (stride kind*j) /\ value_copy (read s b (stride kind*j)) value
+  predicate copied (before after:state) (source fresh count:int) (kind:scalar_kind) =
+    forall j:int. 0 <= j < count ->
+      initialized_at after.shape fresh (stride kind*j) /\
+      read after fresh (stride kind*j) = read before source (stride kind*j)
+  predicate class_copied (before after:state) (source fresh count:int) (kind:scalar_kind) =
+    forall j:int. 0 <= j < count ->
+      initialized_at after.shape fresh (stride kind*j) /\
+      value_copy (read after fresh (stride kind*j)) (read before source (stride kind*j))
+  predicate source_unchanged (before after:state) (source count:int) (kind:scalar_kind) =
+    forall j:int. 0 <= j < count ->
+      read before source (stride kind*j) = read after source (stride kind*j) /\
+      (initialized_at before.shape source (stride kind*j) <->
+       initialized_at after.shape source (stride kind*j))
+  predicate image (s:state) (b count:int) (kind:scalar_kind) =
+    forall j:int. 0 <= j < count -> typed_at s b (stride kind*j) kind
+  predicate reflexive_image (s:state) (b count:int) (kind:scalar_kind) =
+    forall j:int. 0 <= j < count -> not (is_nan (read s b (stride kind*j)))
+  predicate incoming_frame (before after:state) =
+    forall b:int. issued before.shape b ->
+      same_object before.shape after.shape b /\
+      (live before.shape b -> forall offset:int.
+        read before b offset = read after b offset /\
+        (initialized_at before.shape b offset <-> initialized_at after.shape b offset))
+end

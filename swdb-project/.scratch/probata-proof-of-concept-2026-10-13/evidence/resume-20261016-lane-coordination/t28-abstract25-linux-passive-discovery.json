@@ -1,0 +1,554 @@
+{
+  "at_utc": "2026-10-16T18:01:54.890379+00:00",
+  "cbmc_aliases": [
+    {
+      "bytes": 19468160,
+      "path": "/data1/yanruj/probata-verifiers/bin/cbmc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+      "sha256": "a62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995",
+      "symlink": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc"
+    },
+    {
+      "bytes": 16463920,
+      "path": "/data1/yanruj/probata-verifiers/bin/goto-instrument",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+      "sha256": "e2323b81b8403efbaf69909ac834a79484f556578e94cf56b89ee45133870f06",
+      "symlink": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument"
+    },
+    {
+      "bytes": 7672128,
+      "path": "/data1/yanruj/probata-verifiers/bin/goto-cc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+      "sha256": "251dafd4a42db2ba32913d5e72722eb683353c6886076760ecbe4c6128925e8e",
+      "symlink": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc"
+    }
+  ],
+  "cbmc_downloads": [],
+  "cbmc_package_files": [
+    {
+      "bytes": 19468160,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+      "sha256": "a62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995",
+      "symlink": null
+    },
+    {
+      "bytes": 10761176,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cprover",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cprover",
+      "sha256": "e131835647d4092ffac5b54bdcf779e2ef58468926ab309ff158de779e17b2ac",
+      "symlink": null
+    },
+    {
+      "bytes": 2357648,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/crangler",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/crangler",
+      "sha256": "99613ff5e7922f1cc0954037e05189b14e0452e6654d91c4d64ad809cba85293",
+      "symlink": null
+    },
+    {
+      "bytes": 11005864,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-analyzer",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-analyzer",
+      "sha256": "3092725925631f34c726b830839e6e1a66f391b664e73c2941354b908ead00b8",
+      "symlink": null
+    },
+    {
+      "bytes": 7672128,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+      "sha256": "251dafd4a42db2ba32913d5e72722eb683353c6886076760ecbe4c6128925e8e",
+      "symlink": null
+    },
+    {
+      "bytes": 9612056,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-diff",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-diff",
+      "sha256": "797ee0ecc3926e1bc3ec80e78f3db8eb6e12995d5d18a7c225f32bb59155df35",
+      "symlink": null
+    },
+    {
+      "bytes": 7672128,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-gcc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+      "sha256": "251dafd4a42db2ba32913d5e72722eb683353c6886076760ecbe4c6128925e8e",
+      "symlink": "goto-cc"
+    },
+    {
+      "bytes": 4517032,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-harness",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-harness",
+      "sha256": "f780aa7782e6247eaeaa30644f6bef9f75f7b8be55b386d775cda9e50b7cc9aa",
+      "symlink": null
+    },
+    {
+      "bytes": 2765904,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-inspect",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-inspect",
+      "sha256": "9ff365fd830007868e48f725e55db014527bcb7b4a64aafe09147cdc8a5f744a",
+      "symlink": null
+    },
+    {
+      "bytes": 16463920,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+      "sha256": "e2323b81b8403efbaf69909ac834a79484f556578e94cf56b89ee45133870f06",
+      "symlink": null
+    },
+    {
+      "bytes": 7672128,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-ld",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-cc",
+      "sha256": "251dafd4a42db2ba32913d5e72722eb683353c6886076760ecbe4c6128925e8e",
+      "symlink": "goto-cc"
+    },
+    {
+      "bytes": 17444840,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-synthesizer",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-synthesizer",
+      "sha256": "79bbee3067b91a39357019eab9a5f23135f8b2d3973973697619497c81c682b4",
+      "symlink": null
+    },
+    {
+      "bytes": 10511040,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/janalyzer",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/janalyzer",
+      "sha256": "868a886e211ead8f3a505875e98c58bcd7778519d360409a67b44bdc68483c15",
+      "symlink": null
+    },
+    {
+      "bytes": 17242392,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/jbmc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/jbmc",
+      "sha256": "200f4cbb273d94268cdf933ee1f7c5ea96c8abc95af83836c2ffc082a722ec35",
+      "symlink": null
+    },
+    {
+      "bytes": 7512728,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/jdiff",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/jdiff",
+      "sha256": "f950e08bdea5757602be43ca202d3aa6cbb5013822b1cbccdc7402dc314d487d",
+      "symlink": null
+    },
+    {
+      "bytes": 21699,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/ls_parse.py",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/ls_parse.py",
+      "sha256": "65e1339a2dbb8b51cff0823f140eb5a9b0db3e0b001a25b76dad13e443ec016f",
+      "symlink": null
+    },
+    {
+      "bytes": 5892816,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/symtab2gb",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/symtab2gb",
+      "sha256": "dfb8fb4b31c6dc8e15ed023cac86407b96cbba8550a280c200e95295a70d55c7",
+      "symlink": null
+    },
+    {
+      "bytes": 5648,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/etc/bash_completion.d/cbmc",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/etc/bash_completion.d/cbmc",
+      "sha256": "97b5c8908428da65d6cfa32f25f3269c73ab2880ded6b0e9ab8dd819476c413d",
+      "symlink": null
+    },
+    {
+      "bytes": 4404,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/include/cprover/api.h",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/include/cprover/api.h",
+      "sha256": "3cf24346d01b8a4d2a688291a3aabd9967f1d84fe18362c04ad8006583db53b3",
+      "symlink": null
+    },
+    {
+      "bytes": 713,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/include/cprover/api_options.h",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/include/cprover/api_options.h",
+      "sha256": "5aafe9693dda662e7b7269f0dde8b4a0b9d49085f34a23a4190cdb28dfcd0766",
+      "symlink": null
+    },
+    {
+      "bytes": 2245,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/include/cprover/verification_result.h",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/include/cprover/verification_result.h",
+      "sha256": "f46d412620acfe3a7cd31f286f9d147fb0a8675817eea117a81417e992d9af78",
+      "symlink": null
+    },
+    {
+      "bytes": 145599,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/lib/core-models.jar",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/lib/core-models.jar",
+      "sha256": "a31ef93bfe898d373bb7eca6aef3b9ee2ebf05b0fe8efb305f86528396ea49df",
+      "symlink": null
+    },
+    {
+      "bytes": 7456,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/lib/cprover-api.jar",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/lib/cprover-api.jar",
+      "sha256": "3c8c92f6a91f9ccf5b4d09df1615a3a8d3547d31a39bc3f9f249aa2bec6b199d",
+      "symlink": null
+    },
+    {
+      "bytes": 78631582,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/lib/libcprover.6.11.0.a",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/lib/libcprover.6.11.0.a",
+      "sha256": "6eafa2e456ca6fdc262231542677a80a99e876e39dea1623d2e73b1512ec4c41",
+      "symlink": null
+    },
+    {
+      "bytes": 17993,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/cbmc.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/cbmc.1",
+      "sha256": "1db4bbf6e508da4123fd031edeb4b9c23ed6c008337c81605b79fcde049537cb",
+      "symlink": null
+    },
+    {
+      "bytes": 1823,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/crangler.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/crangler.1",
+      "sha256": "e8b2ca53eb8c50d21eb29b726e3527eed649bd513dea8f49752d0e0727136742",
+      "symlink": null
+    },
+    {
+      "bytes": 28318,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-analyzer.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-analyzer.1",
+      "sha256": "5eb4c147a55cec3f30ddc140bfe220c6c8cfbd666335bffcc9b0cd4e9fa9ad0c",
+      "symlink": null
+    },
+    {
+      "bytes": 3959,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-cc.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-cc.1",
+      "sha256": "27ed58be66ee8cbc671eba096fa44326315bde4c77d537be26e1ee77bf49bddf",
+      "symlink": null
+    },
+    {
+      "bytes": 3688,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-diff.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-diff.1",
+      "sha256": "b30b5b60fa7adf1b382c8954875c6d298c0ef55307e206bc39976b1e132d48e9",
+      "symlink": null
+    },
+    {
+      "bytes": 3959,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-gcc.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-cc.1",
+      "sha256": "27ed58be66ee8cbc671eba096fa44326315bde4c77d537be26e1ee77bf49bddf",
+      "symlink": "goto-cc.1"
+    },
+    {
+      "bytes": 5466,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-harness.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-harness.1",
+      "sha256": "fa53aa382586a39818f56a153c489682e7e8503187cb2d86744f0df75b43d445",
+      "symlink": null
+    },
+    {
+      "bytes": 32748,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-instrument.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-instrument.1",
+      "sha256": "e632c1fb0d1380d684bf27dc60cfe7ba233c4edff8196d4d01cabb29dd791ec3",
+      "symlink": null
+    },
+    {
+      "bytes": 3959,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-ld.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-cc.1",
+      "sha256": "27ed58be66ee8cbc671eba096fa44326315bde4c77d537be26e1ee77bf49bddf",
+      "symlink": "goto-cc.1"
+    },
+    {
+      "bytes": 3704,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-synthesizer.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/goto-synthesizer.1",
+      "sha256": "dbdcc7540371c451b18c122af662827cf1f7b4cb37ae18d9f143a867aeeed034",
+      "symlink": null
+    },
+    {
+      "bytes": 13032,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/janalyzer.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/janalyzer.1",
+      "sha256": "038fc4a98ea9cdf862d316514ea638d228575a6293368b2699fb41efe780f161",
+      "symlink": null
+    },
+    {
+      "bytes": 16076,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/jbmc.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/jbmc.1",
+      "sha256": "22819cbaa2cef5114a7c4f7b205c5a9bb2927b65c5a65d71248a64106b6eff98",
+      "symlink": null
+    },
+    {
+      "bytes": 2126,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/jdiff.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/jdiff.1",
+      "sha256": "ac4122f8551af0344f5d76d65bfa9fcbcefec659992bd073f9f7cbfdd75ff3f6",
+      "symlink": null
+    },
+    {
+      "bytes": 3885,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/memory-analyzer.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/memory-analyzer.1",
+      "sha256": "4d0ac9647c93e9948dd9ee52da70d7dc321342c27f219fc274683cc6d38d3959",
+      "symlink": null
+    },
+    {
+      "bytes": 1145,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/symtab2gb.1",
+      "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/share/man/man1/symtab2gb.1",
+      "sha256": "9445774fe0f46f821662b06ef816e14f97bea57ba6c0fa143980393051769c28",
+      "symlink": null
+    }
+  ],
+  "deployment_records_listing_only": [
+    {
+      "bytes": 307,
+      "name": "baseline-after.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 574,
+      "name": "baseline-before.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 15454,
+      "name": "build-framac.log",
+      "type": "file"
+    },
+    {
+      "bytes": 28609,
+      "name": "build-genmc-attempt1.log",
+      "type": "file"
+    },
+    {
+      "bytes": 7847,
+      "name": "build-genmc-attempt2.log",
+      "type": "file"
+    },
+    {
+      "bytes": 28660,
+      "name": "build-genmc.log",
+      "type": "file"
+    },
+    {
+      "bytes": 543798,
+      "name": "build-llvm.log",
+      "type": "file"
+    },
+    {
+      "bytes": 3840,
+      "name": "build-rocq.log",
+      "type": "file"
+    },
+    {
+      "bytes": 1562,
+      "name": "downloads.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 683,
+      "name": "du-after-a.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 5651502,
+      "name": "home-after.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 5651502,
+      "name": "home-before.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 0,
+      "name": "home-marker",
+      "type": "file"
+    },
+    {
+      "bytes": 692,
+      "name": "lane-framac.json",
+      "type": "file"
+    },
+    {
+      "bytes": 690,
+      "name": "lane-genmc-attempt1.json",
+      "type": "file"
+    },
+    {
+      "bytes": 690,
+      "name": "lane-genmc-attempt2.json",
+      "type": "file"
+    },
+    {
+      "bytes": 690,
+      "name": "lane-genmc.json",
+      "type": "file"
+    },
+    {
+      "bytes": 688,
+      "name": "lane-llvm.json",
+      "type": "file"
+    },
+    {
+      "bytes": 688,
+      "name": "lane-rocq.json",
+      "type": "file"
+    },
+    {
+      "bytes": 71,
+      "name": "lane_b-attempt1.log",
+      "type": "file"
+    },
+    {
+      "bytes": 71,
+      "name": "lane_b-attempt2.log",
+      "type": "file"
+    },
+    {
+      "bytes": 291,
+      "name": "lane_b.log",
+      "type": "file"
+    },
+    {
+      "bytes": 2852,
+      "name": "opam-framac-33.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 534,
+      "name": "opam-rocq-9.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 3158,
+      "name": "setup_a.log",
+      "type": "file"
+    },
+    {
+      "bytes": 676,
+      "name": "versions-prebuilt.txt",
+      "type": "file"
+    },
+    {
+      "bytes": 98,
+      "name": "why3-provers.txt",
+      "type": "file"
+    }
+  ],
+  "deployment_scripts_selected_cbmc_metadata": [
+    {
+      "cbmc_relevant_lines": [
+        {
+          "line": 18,
+          "text": "get https://github.com/diffblue/cbmc/releases/download/cbmc-6.11.0/ubuntu-24.04-cbmc-6.11.0-Linux.deb b3721aa541038384d7801ea3aeabbcddc3e8845ac8f1cbff637cf8dec7481ac8 cbmc.deb"
+        },
+        {
+          "line": 24,
+          "text": "mkdir -p $P/saw-1.6 $P/crux-llvm-0.12 $P/cbmc-6.11.0 $P/z3-5.1.0 $P/cvc5-1.2.1 $P/civl-1.23 $P/genmc-0.19.0 $P/opam-2.6.1"
+        },
+        {
+          "line": 27,
+          "text": "dpkg-deb -x cbmc.deb $P/cbmc-6.11.0"
+        },
+        {
+          "line": 36,
+          "text": "for t in cbmc goto-cc goto-instrument goto-analyzer goto-diff symtab2gb; do"
+        },
+        {
+          "line": 37,
+          "text": "  if [ -e $P/cbmc-6.11.0/usr/bin/$t ]; then ln -sfn $P/cbmc-6.11.0/usr/bin/$t $P/bin/$t; fi"
+        },
+        {
+          "line": 42,
+          "text": "{ echo \"z3: $(z3 --version)\"; echo \"cvc5: $(cvc5 --version | head -1)\"; echo \"cbmc: $(cbmc --version)\""
+        },
+        {
+          "line": 46,
+          "text": "rm -f saw.tgz crux.tgz cbmc.deb z3.zip cvc5.zip opam civl.tgz genmc.tgz"
+        }
+      ],
+      "pin": {
+        "bytes": 3432,
+        "path": "/data1/yanruj/probata-verifiers/setup_a.sh",
+        "resolved": "/data1/yanruj/probata-verifiers/setup_a.sh",
+        "sha256": "a26f95403f21f00b7e8e9954f993a15a695a8f2a812e6dc255081efdd0b3271c",
+        "symlink": null
+      }
+    },
+    {
+      "cbmc_relevant_lines": [],
+      "pin": {
+        "bytes": 5751,
+        "path": "/data1/yanruj/probata-verifiers/setup_b.sh",
+        "resolved": "/data1/yanruj/probata-verifiers/setup_b.sh",
+        "sha256": "b08bc4b02b88651a21670f67cc49ef0c4c8255eb5996423fff70c63244c61dbf",
+        "symlink": null
+      }
+    },
+    {
+      "cbmc_relevant_lines": [
+        {
+          "line": 17,
+          "text": "# $PROBATA/bin holds symlinks: z3 5.1.0, cvc5 1.2.1, cbmc 6.11.0 tools, opam 2.6.1, crux-llvm, saw."
+        }
+      ],
+      "pin": {
+        "bytes": 1185,
+        "path": "/data1/yanruj/probata-verifiers/env.sh",
+        "resolved": "/data1/yanruj/probata-verifiers/env.sh",
+        "sha256": "b5e3ab3330b7f4e0cafc5aee98e5df47e464a60c6c1f99d5855ab86a12beb0d3",
+        "symlink": null
+      }
+    }
+  ],
+  "python_discovery": {
+    "bin_python": {
+      "bytes": 8020928,
+      "path": "/data1/yanruj/venvs/swdb-test/bin/python",
+      "resolved": "/usr/bin/python3.12",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "symlink": "python3"
+    },
+    "lib_children": [
+      "/data1/yanruj/venvs/swdb-test/lib/python3.12"
+    ],
+    "site_packages": {
+      "direct_children": [
+        "__pycache__",
+        "_pytest",
+        "execnet",
+        "execnet-2.1.2.dist-info",
+        "iniconfig",
+        "iniconfig-2.3.1.dist-info",
+        "pip",
+        "pip-24.0.dist-info",
+        "pluggy",
+        "pluggy-1.6.0.dist-info",
+        "py.py",
+        "pytest",
+        "pytest-9.1.1.dist-info",
+        "pytest_reportlog",
+        "pytest_reportlog-1.0.0.dist-info",
+        "pytest_xdist-3.8.0.dist-info",
+        "xdist"
+      ],
+      "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages"
+    },
+    "venv_cfg": {
+      "bytes": 190,
+      "path": "/data1/yanruj/venvs/swdb-test/pyvenv.cfg",
+      "resolved": "/data1/yanruj/venvs/swdb-test/pyvenv.cfg",
+      "sha256": "b113229cb7f8401efedaec27ac5b6db5467d92ca84468a51b6475bb682d12c45",
+      "symlink": null
+    },
+    "venv_cfg_fields": {
+      "command": "/usr/bin/python3 -m venv --system-site-packages /data1/yanruj/venvs/swdb-test",
+      "executable": "/usr/bin/python3.12",
+      "home": "/usr/bin",
+      "include-system-site-packages": "true",
+      "version": "3.12.3"
+    }
+  },
+  "scope": "passive filenames, physical hashes and deployment-selected CBMC metadata only; no tool execution"
+}

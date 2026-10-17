@@ -1,0 +1,91 @@
+{
+  "admitted": false,
+  "date": "2026-10-16 ET",
+  "original_entry": {
+    "bytes": null,
+    "path": null,
+    "sha256": null
+  },
+  "project": null,
+  "raw": null,
+  "raw_manifest": null,
+  "reader_admission": {
+    "admitted": false,
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": null,
+      "PYTHONNOUSERSITE": null,
+      "PYTHONPATH": null,
+      "PYTHONPYCACHEPREFIX": null,
+      "PYTHONSAFEPATH": null,
+      "SETUPTOOLS_USE_DISTUTILS": null
+    },
+    "pycache_prefix": null,
+    "role": "isolated-passive-cold-reader",
+    "sys_path": null
+  },
+  "reader_files": {
+    "closed_python_surface.py": {
+      "bytes": 18385,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    "initialized_cold_identities_v1.py": {
+      "bytes": 8007,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/initialized_cold_identities_v1.py",
+      "sha256": "eaef8aeca8a448566ff724e0d7c06fbf89c1f59b985ef7dcbad0fa06009f4049"
+    },
+    "initialized_cold_obligations_v1.py": {
+      "bytes": 17592,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/initialized_cold_obligations_v1.py",
+      "sha256": "dfc647552f4a1bbfd33cc4745289257a9aca4e8b587ce45ca9aa757066950dc9"
+    },
+    "passive_initialized_certificate_rechecker_v1.py": {
+      "bytes": 54571,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/passive_initialized_certificate_rechecker_v1.py",
+      "sha256": "41edf13d21aae4cd852b0acc4d917012e4718d91a5ceba100e587d003ca6d4ed"
+    },
+    "python_startup_roles_v2.py": {
+      "bytes": 9610,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    }
+  },
+  "reader_sha256": "9530165f5eec29e6931db739ad52b6ebe86333a69106034f7d009e8644508271",
+  "records": [
+    {
+      "expected_result": 711,
+      "id": null,
+      "record": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      }
+    },
+    {
+      "expected_result": 1107,
+      "id": null,
+      "record": {
+        "bytes": null,
+        "path": null,
+        "sha256": null
+      }
+    }
+  ],
+  "reference_directory": null,
+  "root_duties": [
+    "Fresh immutable whole raw manifest, final resources/lane/control/record pins",
+    "Selected isolated no-bytecode reader interpreter/environment/cache/source hashes",
+    "Independent exact source commit/Git readback and final process/lease settlement",
+    "Passive reader execution and independent source/result review"
+  ],
+  "schema": "initialized-cold-audit-policy-1",
+  "scope": "INERT template; no actual reader or record acceptance. Original conditional partial model711/1107 only; no source/body/hardware/current0.2/full28.",
+  "settled_lane": null,
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "source_consumer_receipt_sha256": null,
+  "source_policy": {
+    "bytes": null,
+    "path": null,
+    "sha256": null
+  }
+}

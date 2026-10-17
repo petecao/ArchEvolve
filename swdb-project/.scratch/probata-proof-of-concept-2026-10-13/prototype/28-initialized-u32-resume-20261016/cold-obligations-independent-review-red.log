@@ -1,0 +1,43 @@
+test_current_goal_property_site_and_owner (cold_review_test_red.ColdObligations) ... ok
+test_dependency_census_and_cycle (cold_review_test_red.ColdObligations) ... ok
+test_exact_initialized_input (cold_review_test_red.ColdObligations) ... test_only_explicit_helper_dead_call_owner_bridge (cold_review_test_red.ColdObligations) ... ok
+test_ordinary_direct_valid_requires_native_success (cold_review_test_red.ColdObligations) ... FAIL
+test_smoke_display_health (cold_review_test_red.ColdObligations) ... ok
+test_tsv_no_omitted_or_malformed_rows (cold_review_test_red.ColdObligations) ... ok
+
+======================================================================
+FAIL: test_exact_initialized_input (cold_review_test_red.ColdObligations) (changed='/* C lowering of trust_fixture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_initialized_cold_obligations.py", line 115, in test_exact_initialized_input
+    with self.assertRaises(AssertionError): reader.initialized_wp_source(changed, 711, HERE)
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_exact_initialized_input (cold_review_test_red.ColdObligations) (changed='/* C lowering of trust_fixture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_initialized_cold_obligations.py", line 115, in test_exact_initialized_input
+    with self.assertRaises(AssertionError): reader.initialized_wp_source(changed, 711, HERE)
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_exact_initialized_input (cold_review_test_red.ColdObligations) (changed='/* C lowering of trust_fixture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_initialized_cold_obligations.py", line 115, in test_exact_initialized_input
+    with self.assertRaises(AssertionError): reader.initialized_wp_source(changed, 711, HERE)
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_ordinary_direct_valid_requires_native_success (cold_review_test_red.ColdObligations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_initialized_cold_obligations.py", line 98, in test_ordinary_direct_valid_requires_native_success
+    reader.current_goals(record, inventory, native, rows, site)
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+FAILED (failures=4)

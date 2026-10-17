@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-16 ET",
+  "external_attempts_after_audit": [],
+  "failed": 0,
+  "input_pins": [
+    {
+      "bytes": 26810,
+      "path": "swdb/vector_allocating_payload.py",
+      "sha256": "fb72378f5db1941fcf7d977d5d8a2acd9a2483f810abd139d790f1f6a544d92a"
+    },
+    {
+      "bytes": 7609,
+      "path": "swdb/vector_typed_payload.mlw",
+      "sha256": "70be46be261ae739c4ac193b7a06dbcf77e91ff9718ce1cab2f0ecdaaa74fd47"
+    },
+    {
+      "bytes": 7222,
+      "path": "tests/test_vector_allocating_payload.py",
+      "sha256": "dcfcfbf6f494174d39e78fc3e2f5a5e4dd887660f4a264f6bd1890935a783909"
+    },
+    {
+      "bytes": 29179,
+      "path": "swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 171522,
+      "path": "swdb/c_lowering.py",
+      "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+    }
+  ],
+  "native_or_formal_workflow": false,
+  "passed": 3,
+  "rows": [
+    {
+      "passed": true,
+      "test": "test_typed_allocating_constructors_preserve_all_nine_original_units"
+    },
+    {
+      "passed": true,
+      "test": "test_typed_payload_transport_keeps_bits_categories_and_nan_equality_distinct"
+    },
+    {
+      "passed": true,
+      "test": "test_typed_constructor_derives_width_safe_unbounded_fill_copy_and_full_incoming_frame"
+    }
+  ],
+  "source_only_artifact_seam": true,
+  "stage": "green-v3"
+}

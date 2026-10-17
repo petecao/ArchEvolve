@@ -1,0 +1,1050 @@
+{
+  "actual_refusal_unchanged": true,
+  "boundary": "Physical metadata/source/runtime and selected-root generation lineage only. All original33/84 rows retained; four callee-labelled synthetic smokes are cross-bound to actual source-root call sites, never renamed or filtered. Common-task term/import/hypothesis interpretation is coordinated separately; original callee contracts remain unproved. Original entry refusal remains preserved.",
+  "call_smoke_source_lineage": [
+    {
+      "callee": "std_vector_int_ctor_count_value",
+      "event": "constructor",
+      "lowered_span_sha256": "0777bd96121df46a7bf7ed4f89b1b95d8464d3708645647760cc871e90946859",
+      "merged_line": 118,
+      "native_property_owner": "std_vector_int_ctor_count_value",
+      "native_smoke_goal": "typed_real_std_vector_int_ctor_count_value_wp_smoke_dead_call_s47",
+      "ordinary_precondition_goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_ctor_count_value_requires",
+      "standard_wp_owner": "vector_realloc_v3_no_growth",
+      "statement_id": 47
+    },
+    {
+      "callee": "std_vector_int_data",
+      "event": "data capture",
+      "lowered_span_sha256": "bd32da59e0ef92b8160ca40482de49fc06b2dddb2a8739acf1498b3218f4fced",
+      "merged_line": 121,
+      "native_property_owner": "std_vector_int_data",
+      "native_smoke_goal": "typed_real_std_vector_int_data_wp_smoke_dead_call_s48",
+      "ordinary_precondition_goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_data_requires",
+      "standard_wp_owner": "vector_realloc_v3_no_growth",
+      "statement_id": 48
+    },
+    {
+      "callee": "std_vector_int_reserve",
+      "event": "reserve",
+      "lowered_span_sha256": "553f51115f35ff2ebbd887b96730d48fd50d9b4319318fd9a6af0a8d7c0c6f57",
+      "merged_line": 124,
+      "native_property_owner": "std_vector_int_reserve",
+      "native_smoke_goal": "typed_real_std_vector_int_reserve_wp_smoke_dead_call_s49",
+      "ordinary_precondition_goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_reserve_requires",
+      "standard_wp_owner": "vector_realloc_v3_no_growth",
+      "statement_id": 49
+    },
+    {
+      "callee": "std_vector_int_dtor",
+      "event": "destructor",
+      "lowered_span_sha256": "4a5c7f3c22e99bacc8e73c10bb620f2a38b438d160dc8e602d6ba8e6f42cf56f",
+      "merged_line": 129,
+      "native_property_owner": "std_vector_int_dtor",
+      "native_smoke_goal": "typed_real_std_vector_int_dtor_wp_smoke_dead_call_s56",
+      "ordinary_precondition_goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_dtor_requires",
+      "standard_wp_owner": "vector_realloc_v3_no_growth",
+      "statement_id": 56
+    }
+  ],
+  "caller_acceptance": false,
+  "checks": 2299,
+  "common_tasks_in_place": [
+    {
+      "bytes": 1557,
+      "export_id": "vector_realloc_v3_no_growth_wp_smoke_default_requires",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_default_requires",
+      "log_byte_range": [
+        571,
+        2128
+      ],
+      "sha256": "b265dd1a42ca063b8adf1c62170f5e8676571ddc6f86a7ace55fb6363f45ad68"
+    },
+    {
+      "bytes": 35578,
+      "export_id": "vector_realloc_v3_no_growth_wp_smoke_dead_code_s49",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s49",
+      "log_byte_range": [
+        2128,
+        37706
+      ],
+      "sha256": "07f2d9b050d5f727499e9d702beddbf414a30bd7f09de72909049e2f64b8e6b5"
+    },
+    {
+      "bytes": 28688,
+      "export_id": "vector_realloc_v3_no_growth_wp_smoke_dead_code_s53",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s53",
+      "log_byte_range": [
+        37706,
+        66394
+      ],
+      "sha256": "84a93089cedbd298d02403dd83d2dfe329b0c7c63e4afbbb54b8efc81a3b0c44"
+    },
+    {
+      "bytes": 27755,
+      "export_id": "vector_realloc_v3_no_growth_wp_smoke_dead_code_s54",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s54",
+      "log_byte_range": [
+        66394,
+        94149
+      ],
+      "sha256": "1bf7a3abba73721f13144e2d9ae3550616a724de8596e6b0ae31b50c13efa77b"
+    },
+    {
+      "bytes": 31360,
+      "export_id": "vector_realloc_v3_no_growth_wp_smoke_dead_code_s58",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s58",
+      "log_byte_range": [
+        94149,
+        125509
+      ],
+      "sha256": "424b70ef975b2423e1a26593a815e2ddd7024a9ae720e9030af049a765055a5e"
+    },
+    {
+      "bytes": 11744,
+      "export_id": "std_vector_int_ctor_count_value_wp_smoke_dead_call_s47",
+      "goal": "typed_real_std_vector_int_ctor_count_value_wp_smoke_dead_call_s47",
+      "log_byte_range": [
+        125509,
+        137253
+      ],
+      "sha256": "d94d325e355be4e8177ff6014aaa25d10029fac07517f80d6fccc91b993267dc"
+    },
+    {
+      "bytes": 31352,
+      "export_id": "std_vector_int_dtor_wp_smoke_dead_call_s56",
+      "goal": "typed_real_std_vector_int_dtor_wp_smoke_dead_call_s56",
+      "log_byte_range": [
+        137253,
+        168605
+      ],
+      "sha256": "9cc6798afa7df3278422b54cfca7434add0c44f0697b1d589486c2277e133111"
+    },
+    {
+      "bytes": 13530,
+      "export_id": "std_vector_int_data_wp_smoke_dead_call_s48",
+      "goal": "typed_real_std_vector_int_data_wp_smoke_dead_call_s48",
+      "log_byte_range": [
+        168605,
+        182135
+      ],
+      "sha256": "078e795246091caa895aaa892f584e376066c9bfb1f9b0c148f0d0c61b2cd519"
+    },
+    {
+      "bytes": 27625,
+      "export_id": "std_vector_int_reserve_wp_smoke_dead_call_s49",
+      "goal": "typed_real_std_vector_int_reserve_wp_smoke_dead_call_s49",
+      "log_byte_range": [
+        182135,
+        209760
+      ],
+      "sha256": "3eeb8065aeeec8d9996dd007c2e28fa67daabb3cfe42b5af99f364f59935c4db"
+    },
+    {
+      "bytes": 30784,
+      "export_id": "vector_realloc_v3_no_growth_ensures",
+      "goal": "typed_real_vector_realloc_v3_no_growth_ensures",
+      "log_byte_range": [
+        209760,
+        240544
+      ],
+      "sha256": "14a14d3b7be4ac2ad0f9f781f3251f051f603fda3b24955891a09e958ff87253"
+    },
+    {
+      "bytes": 27442,
+      "export_id": "vector_realloc_v3_no_growth_assert_rte_initialization",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization",
+      "log_byte_range": [
+        240544,
+        267986
+      ],
+      "sha256": "03a44ffb2491aea42682edda7dadbf75ab97c4237bb532b6ecdfcd2eabcb89ac"
+    },
+    {
+      "bytes": 28598,
+      "export_id": "vector_realloc_v3_no_growth_assert_rte_initialization_2",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization_2",
+      "log_byte_range": [
+        267986,
+        296584
+      ],
+      "sha256": "66e5a54628b5149bd1d9ff44ab17b098044dd826863c574c96f62dbeb886ce63"
+    },
+    {
+      "bytes": 29043,
+      "export_id": "vector_realloc_v3_no_growth_assert_rte_mem_access",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_mem_access",
+      "log_byte_range": [
+        296584,
+        325627
+      ],
+      "sha256": "594c1acf37e921028f5440038432f749afa0158894392071ba96437e4c653f24"
+    },
+    {
+      "bytes": 1939,
+      "export_id": "vector_realloc_v3_no_growth_call_std_vector_int_ctor_count_value_requires",
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_ctor_count_value_requires",
+      "log_byte_range": [
+        325627,
+        327566
+      ],
+      "sha256": "7129fd11036f62face91990a85147767429a0ccbfece8c16f16a21ff248d9b2f"
+    },
+    {
+      "bytes": 13266,
+      "export_id": "vector_realloc_v3_no_growth_call_std_vector_int_data_requires",
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_data_requires",
+      "log_byte_range": [
+        327566,
+        340832
+      ],
+      "sha256": "9f33f47aef32ca101682160cf40ac3e272e4ce8e935a67669246dd3f9e04c5cd"
+    },
+    {
+      "bytes": 73219,
+      "export_id": "vector_realloc_v3_no_growth_call_std_vector_int_dtor_requires",
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_dtor_requires",
+      "log_byte_range": [
+        340832,
+        414051
+      ],
+      "sha256": "d16cdacc91fa91af51269f026c9d60403610b431d8066ea795ca6dc202edaf08"
+    }
+  ],
+  "compiler_or_native_or_verifier_reruns": 0,
+  "created": "2026-10-16 ET",
+  "csv_fields": [
+    "directory",
+    "file",
+    "line",
+    "function",
+    "property kind",
+    "status",
+    "property"
+  ],
+  "csv_rows": 58,
+  "csv_source_bindings": [
+    {
+      "function": "swdb_alloc_int",
+      "kind": "precondition",
+      "line": 28,
+      "native_bindings": [
+        {
+          "property": "swdb_alloc_int_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "swdb_alloc_int",
+      "kind": "postcondition",
+      "line": 31,
+      "native_bindings": [
+        {
+          "property": "swdb_alloc_int_ensures",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Considered valid"
+    },
+    {
+      "function": "swdb_alloc_int",
+      "kind": "assigns clause",
+      "line": 32,
+      "native_bindings": [
+        {
+          "property": "swdb_alloc_int_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Considered valid"
+    },
+    {
+      "function": "swdb_free",
+      "kind": "precondition",
+      "line": 38,
+      "native_bindings": [
+        {
+          "property": "swdb_free_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "swdb_free",
+      "kind": "assigns clause",
+      "line": 41,
+      "native_bindings": [
+        {
+          "property": "swdb_free_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Considered valid"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "precondition",
+      "line": 46,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "assigns clause",
+      "line": 47,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "postcondition",
+      "line": 49,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_ensures_2",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "postcondition",
+      "line": 50,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_ensures",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "postcondition",
+      "line": 51,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_exits",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "termination clause",
+      "line": 51,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_terminates",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "loop invariant",
+      "line": 56,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_loop_invariant_2",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "loop invariant",
+      "line": 57,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_loop_invariant_3",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "loop invariant",
+      "line": 58,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_loop_invariant",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "kind": "assigns clause",
+      "line": 59,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_loop_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_dtor",
+      "kind": "precondition",
+      "line": 65,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_dtor_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_dtor",
+      "kind": "postcondition",
+      "line": 68,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_dtor_ensures",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_dtor",
+      "kind": "postcondition",
+      "line": 69,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_dtor_exits",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_dtor",
+      "kind": "termination clause",
+      "line": 69,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_dtor_terminates",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_dtor",
+      "kind": "assigns clause",
+      "line": 69,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_dtor_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_data",
+      "kind": "precondition",
+      "line": 71,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_data_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_data",
+      "kind": "postcondition",
+      "line": 73,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_data_ensures",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_data",
+      "kind": "postcondition",
+      "line": 74,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_data_exits",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_data",
+      "kind": "termination clause",
+      "line": 74,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_data_terminates",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_data",
+      "kind": "assigns clause",
+      "line": 74,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_data_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "precondition",
+      "line": 76,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_requires_2",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "precondition",
+      "line": 77,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "assigns clause",
+      "line": 78,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "postcondition",
+      "line": 81,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_ensures_3",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "postcondition",
+      "line": 82,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_ensures",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "postcondition",
+      "line": 83,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_ensures_2",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "loop invariant",
+      "line": 86,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_loop_invariant_2",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "loop invariant",
+      "line": 87,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_loop_invariant",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "loop invariant",
+      "line": 88,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_loop_invariant_3",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_grow",
+      "kind": "assigns clause",
+      "line": 89,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_grow_loop_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "precondition",
+      "line": 98,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Valid"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "assigns clause",
+      "line": 99,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "postcondition",
+      "line": 102,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_ensures",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "postcondition",
+      "line": 103,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_ensures_3",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "postcondition",
+      "line": 104,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_ensures_4",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "postcondition",
+      "line": 105,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_ensures_2",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "postcondition",
+      "line": 106,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_exits",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "std_vector_int_reserve",
+      "kind": "termination clause",
+      "line": 106,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_terminates",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "precondition",
+      "line": 111,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_requires",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "postcondition",
+      "line": 113,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_ensures",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "postcondition",
+      "line": 114,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_exits",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Partially proven"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "termination clause",
+      "line": 114,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_terminates",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Partially proven"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "assigns clause",
+      "line": 114,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_assigns",
+          "reason": "exact native property/predicate text"
+        }
+      ],
+      "status": "Partially proven"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "precondition of std_vector_int_ctor_count_value",
+      "line": 118,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_ctor_count_value_requires_2",
+          "reason": "exact declared callee-precondition origin text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "precondition of std_vector_int_data",
+      "line": 121,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_data_requires_2",
+          "reason": "exact declared callee-precondition origin text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "precondition of std_vector_int_reserve",
+      "line": 124,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_reserve_requires_2",
+          "reason": "exact declared callee-precondition origin text"
+        }
+      ],
+      "status": "Valid"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "initialization",
+      "line": 128,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_assert_rte_initialization",
+          "reason": "exact native RTE predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "initialization",
+      "line": 128,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_assert_rte_initialization_2",
+          "reason": "exact native RTE predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "mem_access",
+      "line": 128,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_assert_rte_mem_access",
+          "reason": "exact native RTE predicate text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "precondition of std_vector_int_dtor",
+      "line": 129,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_dtor_requires_2",
+          "reason": "exact declared callee-precondition origin text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "initialization",
+      "line": 130,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_assert_rte_initialization_3",
+          "reason": "exact native RTE predicate text"
+        }
+      ],
+      "status": "Partially proven"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "precondition of std_vector_int_dtor",
+      "line": 134,
+      "native_bindings": [
+        {
+          "property": "std_vector_int_dtor_requires_3",
+          "reason": "exact declared callee-precondition origin text"
+        }
+      ],
+      "status": "Ignored"
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "kind": "user assertion",
+      "line": 134,
+      "native_bindings": [
+        {
+          "property": "vector_realloc_v3_no_growth_reachable_s59",
+          "reason": "exact source-unreachable fallback destructor reachability"
+        }
+      ],
+      "status": "Invalid or unreachable"
+    }
+  ],
+  "decision": "PASS_CONDITIONAL_GENERATION_OBSERVATION_SOURCE_RUNTIME_AND_CALL_SMOKE_LINEAGE",
+  "errors": [],
+  "goal_families": {
+    "access": 1,
+    "call_precondition": 4,
+    "frame": 13,
+    "initialization": 3,
+    "other_ordinary": 2,
+    "postcondition": 1,
+    "smoke": 9
+  },
+  "internal_qed_inventory_only_goals": [
+    "typed_real_vector_realloc_v3_no_growth_terminates",
+    "typed_real_vector_realloc_v3_no_growth_exits",
+    "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization_3",
+    "typed_real_vector_realloc_v3_no_growth_assigns_normal_part1",
+    "typed_real_vector_realloc_v3_no_growth_assigns_normal_part2",
+    "typed_real_vector_realloc_v3_no_growth_assigns_normal_part3",
+    "typed_real_vector_realloc_v3_no_growth_assigns_normal_part4",
+    "typed_real_vector_realloc_v3_no_growth_assigns_normal_part5",
+    "typed_real_vector_realloc_v3_no_growth_assigns_normal_part6",
+    "typed_real_vector_realloc_v3_no_growth_assigns_normal_part7",
+    "typed_real_vector_realloc_v3_no_growth_assigns_exit_part1",
+    "typed_real_vector_realloc_v3_no_growth_assigns_exit_part2",
+    "typed_real_vector_realloc_v3_no_growth_assigns_exit_part3",
+    "typed_real_vector_realloc_v3_no_growth_assigns_exit_part4",
+    "typed_real_vector_realloc_v3_no_growth_assigns_exit_part5",
+    "typed_real_vector_realloc_v3_no_growth_assigns_exit_part6",
+    "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_reserve_requires"
+  ],
+  "missing_dependencies": [],
+  "missing_origins": [],
+  "native_extern_properties": [
+    "swdb_free_assigns",
+    "swdb_alloc_int_assigns",
+    "swdb_free_allocates",
+    "swdb_alloc_int_allocates",
+    "swdb_alloc_int_ensures"
+  ],
+  "native_goal_count": 33,
+  "native_property_count": 84,
+  "native_standard_goal_ids_equal": true,
+  "passive_elapsed_seconds": 2.505435509607196,
+  "passive_limits": {
+    "address_space_cap_bytes": 268435456,
+    "alarm_seconds": 180
+  },
+  "proof_acceptance": false,
+  "raw_bytes_unchanged": 21214035,
+  "raw_content_transferred": false,
+  "raw_files_unchanged": 30,
+  "retained_actual_result": {
+    "error": "generated obligation escaped the sole original root function",
+    "error_type": "ValueError",
+    "generation_complete": false,
+    "generation_resources": {
+      "exit_code": 0,
+      "out_of_memory": false,
+      "output_limit": false,
+      "peak_rss_bytes": 134717440,
+      "timed_out": false,
+      "wall_seconds": 3.9610193548724055
+    },
+    "sha256": "cfec276a1fd54a097f53aae8f83c0f462e5d427c8b17164e379c234372d58f1f"
+  },
+  "retained_input_pins": {
+    "entry.py": "2311dea162593dbaf064a84e1ffb233ffa3dde1a90ccc27708c9a599df2f415b",
+    "expected.json": "25f044c1b0c12ac2122efe0c5b4e17409b842c11dd1024d6f19ea2d666b0dd27",
+    "generation/frama-c.log": "ce3ef3ba970c16e3d35622ad1a03a44906432dc76c52da31843e4a5b25d75fc6",
+    "generation/wp-goals.json": "4ed47fae65b0a70f474f21a59f4d9bf90aba4b14c0d7729a7441985f56a4105b",
+    "generation/wp-inventory.json": "6ec8cb26785d3e231b03f2028d77040f910de970d5ba40f1b4eda014a48854e3",
+    "generation/wp-normalized.c": "46636f316a457f3f9b09b6c2d8806f4a561c73267d9566a580ce119926722fa1",
+    "generation/wp-properties.csv": "0ccb06694f264c8a6c280d95113dadd17c7bac2269dd80b47b7fa0fdebf5222f",
+    "generation/wp_input.c": "aa223d8554e36fc8064f08b3bea3439358d266b4568a5a864a65955b94b1784a",
+    "lowering.original.c": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec",
+    "original.cc": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+  },
+  "runtime_source_pins": [
+    {
+      "name": "MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+    },
+    {
+      "name": "Cint.ml",
+      "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+    },
+    {
+      "name": "Factory.ml",
+      "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+    },
+    {
+      "name": "MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6"
+    },
+    {
+      "name": "MemLoader.ml",
+      "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8"
+    },
+    {
+      "name": "ctypes.ml",
+      "sha256": "a9f2a2f05e9e4e7ecabfd1324bff52ebd74f382e0db0989dba246a5ebfee8bec"
+    },
+    {
+      "name": "wp_parameters.ml",
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "name": "ProverWhy3.ml",
+      "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526"
+    },
+    {
+      "name": "register.ml",
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+    },
+    {
+      "name": "Why3Provers.ml",
+      "sha256": "39da8a23d9f1fe8743579f9a15e9421ebcc8c1b699cce0a1a3443dde3bbf3746"
+    }
+  ],
+  "scope": "2026-10-16 ET. Authorized passive in-place V3 metadata/source audit.\n\nRun via isolated system Python on mbit10. Stdlib and read-only Git only. No\nproject imports, raw transfers, writes, compilation, generation or solver calls.\n",
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "source_consumer_bytes_checked": 1338015867,
+  "source_consumer_files_checked": 1616,
+  "source_package_files_checked": 322,
+  "source_typed_bridge_established": false,
+  "unique_physical_paths_hashed": 2172
+}

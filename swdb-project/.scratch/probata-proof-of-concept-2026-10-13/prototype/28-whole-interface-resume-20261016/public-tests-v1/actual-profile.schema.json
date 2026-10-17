@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Exactly35 real summary proofs; no candidate attribution. Exact case/function/contract/prediction tuples are checked by the test, not inferred from observed outcomes.",
+  "properties": {
+    "cases": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate": {
+            "type": "null"
+          },
+          "case_id": {
+            "enum": [
+              "source-79",
+              "source-80",
+              "whole_same_thread_read_during_store",
+              "whole_same_thread_write_during_gather",
+              "whole_same_thread_read_during_gather",
+              "finite-history_latest_positive",
+              "finite-history_exact_issue_negative",
+              "finite-other_thread_cpu_read_positive",
+              "finite-pending_store_cpu_read_negative",
+              "finite-same_region_write_cover_positive",
+              "finite-same_region_read_read_noncover_negative",
+              "finite-different_region_noncover_negative",
+              "finite-owned_tile_positive",
+              "finite-wrong_owner_negative",
+              "finite-disjoint_owned_tiles_positive",
+              "finite-u64_second_half_conflict_negative",
+              "finite-u32_disjoint_half_positive",
+              "finite-prior_cpu_store_visible_positive",
+              "finite-covered_store_next_thread_load_positive",
+              "finite-critical_end_wait_positive",
+              "finite-critical_end_without_wait_negative",
+              "finite-outside_critical_store_positive",
+              "finite-pending_read_lifetime_end_negative",
+              "finite-pair_owned_positive",
+              "finite-pair_wrong_owner_negative",
+              "finite-command_wrong_owner_negative",
+              "finite-pair_command_half_negative",
+              "finite-u32_command_half_positive",
+              "finite-pair_cpu_half_read_negative",
+              "finite-u32_cpu_half_read_positive",
+              "finite-ready_relation_positive",
+              "finite-ready_always_one_negative",
+              "finite-ready_always_zero_negative",
+              "finite-ready_cpu_read_negative",
+              "finite-prior_cpu_store_old_value_negative"
+            ]
+          },
+          "contract": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "contract_id": {
+            "pattern": "^contract\\.",
+            "type": "string"
+          },
+          "expected_verdict": {
+            "enum": [
+              "proven",
+              "refuted"
+            ]
+          },
+          "function": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "SourceUnit",
+              "TraceUnit"
+            ]
+          },
+          "prepared_unit": {
+            "additionalProperties": false,
+            "properties": {
+              "bytes": {
+                "maximum": 8388608,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "path": {
+                "pattern": "^/",
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "bytes",
+              "sha256"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "case_id",
+          "kind",
+          "function",
+          "contract_id",
+          "expected_verdict",
+          "candidate",
+          "contract",
+          "prepared_unit"
+        ],
+        "type": "object"
+      },
+      "maxItems": 35,
+      "minItems": 35,
+      "type": "array"
+    },
+    "entry": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "library": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "records": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "runs": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "schema": {
+      "const": "checked-whole-actual-profile-1"
+    }
+  },
+  "required": [
+    "schema",
+    "cases",
+    "entry",
+    "library",
+    "records",
+    "runs"
+  ],
+  "type": "object"
+}

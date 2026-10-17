@@ -1,0 +1,71 @@
+{
+  "GREEN": {
+    "actual_exit_code": 0,
+    "compiler_native_verifier_network_attempts": 0,
+    "tests": 5
+  },
+  "RED": {
+    "actual_exit_code": 1,
+    "before_module_existed": true,
+    "observed": "ModuleNotFoundError: No module named concrete_ready_v1"
+  },
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 76158,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/concrete-ready.c",
+      "sha256": "135644755ad687e4d8f8c3d18859c080153501f8b1cc4c7e6e884d767633e05e"
+    },
+    {
+      "bytes": 2083,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/wp-ready.c",
+      "sha256": "5920123a4f1c6ecfd6556a305c33cc768859824e9610dedf6bf990d6c8dbe9cb"
+    },
+    {
+      "bytes": 1909,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/wp-zero-read.c",
+      "sha256": "56878158957a020e7f997b0f637fe746a513c5db0b1ffc63f590f12acfac0299"
+    },
+    {
+      "bytes": 94299,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/prepared.json",
+      "sha256": "9f7e06f8485c70b038b4c942d8ad5b2a8ce83f23443adc6b8b27adc06447c6fa"
+    },
+    {
+      "bytes": 757,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/pure-controls-green.log",
+      "sha256": "b6d04a1bb35d6e7da700e1af5077dde466dbfdb22c0adc72a6025fee9ddd3956"
+    },
+    {
+      "bytes": 69747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+      "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+    },
+    {
+      "bytes": 13578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete_ready_v1.py",
+      "sha256": "0bbe6f7b1b4a7920d0a0271b011068adbc752fb780e0a144a093b41fee0e08f0"
+    },
+    {
+      "bytes": 3840,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/test_concrete_ready_v1.py",
+      "sha256": "fe77093ae5731b1c064e7254510bcc1b698cbd0764aeb198f572bf5737126902"
+    }
+  ],
+  "nonclaims": [
+    "No original header get_tile_ready declaration",
+    "No fairness, eventual-one, termination or bounded-prefix loop theorem",
+    "No old 0.1 or generic WP summary/caller override",
+    "No total arbitrary backend-state relation; one fixed constructed command/action/cell scope only"
+  ],
+  "required_review": [
+    "Independent full concrete relation and quotient/loop source Spec review",
+    "Complementary source Standards review before actual tool admission"
+  ],
+  "runtime_admission": false,
+  "same_entry_and_typed_context_unbound": true,
+  "schema": "concrete-ready-source-preparation-1",
+  "scientific_acceptance": false,
+  "shared_source_hooks_changed": false,
+  "subject": "Unchanged complete logical model one-step refinement and same-source unbounded polling caller"
+}

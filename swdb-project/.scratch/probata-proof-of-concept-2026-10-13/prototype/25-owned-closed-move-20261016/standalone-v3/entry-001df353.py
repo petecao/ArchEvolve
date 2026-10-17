@@ -1,0 +1,1914 @@
+"""2026-10-16 ET. Inert complete original-C move WP observation.
+
+This deliberately calls the normal engine/report reader without creating a
+framework proof record. It never changes the ordinary public lifetime gate.
+The source commit and physical consumer pins must be frozen after root publishes
+the shared checkpoint. Do not run this unmaterialized template.
+"""
+import dataclasses
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import signal
+import stat
+import subprocess
+import sys
+import threading
+import time
+
+
+COMMIT = '001df353dc4aa46ab43c395997b760fb2b203ab2'
+SOURCE_PINS = ({'bytes': 5239,
+  'relative': 'library/methods/probata-draft-1.yaml',
+  'sha256': '497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5'},
+ {'bytes': 4299,
+  'relative': 'schemas/agreement_policy.schema.json',
+  'sha256': 'afb442d0af1ddab45e5c9a9964d03617be5410ee1d0ebc28a479ce757e648361'},
+ {'bytes': 6966,
+  'relative': 'schemas/agreement_report.schema.json',
+  'sha256': 'd35bd237a348d295d42c393b166eff89dd3677cbbc54e54a7c1129636cc9c216'},
+ {'bytes': 1455,
+  'relative': 'schemas/application.schema.json',
+  'sha256': 'a8ab12d489d35f6d7fc5314915d55660439a71b443e35847075f8611a47f2874'},
+ {'bytes': 26555,
+  'relative': 'schemas/attribution.schema.json',
+  'sha256': 'd1715a590c2aa4c6c5f8df6b3737d54ab60ee9731e8417fe72c0bd9d32f15c43'},
+ {'bytes': 18011,
+  'relative': 'schemas/campaign_summary.schema.json',
+  'sha256': 'a55ca54efb88c220389b6f350b17f5fc90d685bb153d9501634a2b99a2efe129'},
+ {'bytes': 4577,
+  'relative': 'schemas/candidate.schema.json',
+  'sha256': '9db86779763df50e37f3ef5e2fa3d0fe7fa383c4a97c429d48617b5a474fe4cc'},
+ {'bytes': 6281,
+  'relative': 'schemas/certification.schema.json',
+  'sha256': '7f26c7cc6ebf47bf848273d8fd00300751d3f219d4d87b2459c98ad272e6b9a2'},
+ {'bytes': 2579,
+  'relative': 'schemas/comparison_result.schema.json',
+  'sha256': '0eaa93761415515710a8a82c479d1ed552dd66beabcb2581d5cf2968657ddbf4'},
+ {'bytes': 4122,
+  'relative': 'schemas/compatibility/main_crosswalk.schema.json',
+  'sha256': '44cbaacceab4597d921d7eb8a694131d80199aa9f00708a37adbfda9b385608b'},
+ {'bytes': 4992,
+  'relative': 'schemas/cpu_allocator_resource_calibration.schema.json',
+  'sha256': '89b5293b83194608897f5125a2a6236f953e833535d256466188aa74ea4538a0'},
+ {'bytes': 4808,
+  'relative': 'schemas/cpu_bulk_resource_calibration.schema.json',
+  'sha256': '55ccdc33f6d80a24c1b0fac85ce38a0c510c01de349985821cc1d2d0111f14dc'},
+ {'bytes': 3600,
+  'relative': 'schemas/cpu_calibration.schema.json',
+  'sha256': '735f2939255fa104bb24b28db249188fede87114e759dbac6029b63b0a85b277'},
+ {'bytes': 3013,
+  'relative': 'schemas/cpu_error_band.schema.json',
+  'sha256': '58bd605f6770cf62d247931189ea54afafb221d845a5497036b0955f038abf81'},
+ {'bytes': 4824,
+  'relative': 'schemas/cpu_memory_resource_calibration.schema.json',
+  'sha256': '9dc191724e00b1e716e6e09a432df4b8662fa0a2857284c61dc115d7aad56185'},
+ {'bytes': 2239,
+  'relative': 'schemas/cpu_native_validation.schema.json',
+  'sha256': '5a02b89006360b63b960f86d80d8af2b93de4cf14347ce5421366e1a91715757'},
+ {'bytes': 3728,
+  'relative': 'schemas/cpu_service_calibration.schema.json',
+  'sha256': 'a4c2a877240c76dc85c69197dab6bafcd616d77f73140d099a6a8dca35beeb29'},
+ {'bytes': 12203,
+  'relative': 'schemas/envelope.schema.json',
+  'sha256': '156d4a416440b4e8a187e60d8e0557b87a4a7f6c9d06255a6d9152598dc3a9f7'},
+ {'bytes': 20420,
+  'relative': 'schemas/estimate.schema.json',
+  'sha256': 'b6f17c604667f574411d2e322b3533dc6ac7916d3e81a19a5620f3c08eb39937'},
+ {'bytes': 12812,
+  'relative': 'schemas/evaluation.schema.json',
+  'sha256': '43813e29b99fbd6e4d7c5139e1339b9f9876c2ab8c83793c3134cfe78a424c83'},
+ {'bytes': 1915,
+  'relative': 'schemas/evaluation_pair.schema.json',
+  'sha256': '13927d3dde1892d86627e5966364f36c12861f2effb9516b2d9321496c5a5184'},
+ {'bytes': 7950,
+  'relative': 'schemas/extensa_campaign.schema.json',
+  'sha256': '996dc3349f135e3f8d268bbf9d3ff290d5967311207d0f960a78e6b3bf2e8ed1'},
+ {'bytes': 3996,
+  'relative': 'schemas/hardware_target.schema.json',
+  'sha256': '654f54a75b531dea81ae17d37b6903d6b0239624f1126f668fe45aad368253c6'},
+ {'bytes': 27132,
+  'relative': 'schemas/implementation.schema.json',
+  'sha256': '5cccd4f205cab80fcb1d8ce3db95f4fefc53b5af8d2cfe5584a2a212202cbe8e'},
+ {'bytes': 4019,
+  'relative': 'schemas/input.schema.json',
+  'sha256': '28c804418132abc550266cf7c0b9d024a9a240e89d3cd87450db7ce41ba7bc1c'},
+ {'bytes': 4937,
+  'relative': 'schemas/intrinsic.schema.json',
+  'sha256': '8e3a755d2f7025a0868bc46aba882de064ce2f7be52870cb27f772c2933026da'},
+ {'bytes': 2538,
+  'relative': 'schemas/kernel.schema.json',
+  'sha256': 'f6512751cd3c2ffc2e5da9eefdb720bb02bd91d5d2037242362bd365928a9416'},
+ {'bytes': 6584,
+  'relative': 'schemas/library/library_entry.schema.json',
+  'sha256': '0ed6b1e052bf55721dce6237d7a7b93a7f1cc9802a4cf096c856bb9c735bac14'},
+ {'bytes': 8775,
+  'relative': 'schemas/library/method_version.schema.json',
+  'sha256': '1700f9639c37fa1d050179936619601667e438fcfed76d0eb50a96a8c317e97a'},
+ {'bytes': 5271,
+  'relative': 'schemas/machine.schema.json',
+  'sha256': '604cb91b7b2d4211ff71f43d99d5d6c795bb1ba38bae9f0452fb4abcc409d6cd'},
+ {'bytes': 5503,
+  'relative': 'schemas/messages/rewrite-proposal.schema.json',
+  'sha256': 'a0811249339d7ecbe31c1bc7f7b7106b4f51ee4c8f731959d6878149ab5991c8'},
+ {'bytes': 5846,
+  'relative': 'schemas/operation.schema.json',
+  'sha256': '9ba2178eb7e93a3fe70df5ce4d7499386a2f6bc0bf94caab43a596c373eb2da4'},
+ {'bytes': 7503,
+  'relative': 'schemas/paired_estimate.schema.json',
+  'sha256': 'bafc2cfdd2a39b86a2675a0eb3c2875d114eced978ccab11e2681e24379897e5'},
+ {'bytes': 9533,
+  'relative': 'schemas/profile.schema.json',
+  'sha256': 'cdbf1d70ef700d202344c1adef56635c6c4b5c0fcaccb315542a5a7b4562dcb9'},
+ {'bytes': 2485,
+  'relative': 'schemas/profile_package.schema.json',
+  'sha256': '5dc1a8e1ff301e47e74d017b1142db2dc55034607ab9add76784bd891f62adf7'},
+ {'bytes': 36527,
+  'relative': 'schemas/proof.schema.json',
+  'sha256': 'e803f92837d52035f09d1281aa43ce334fcea81942d3f0bd4a16959383a487f8'},
+ {'bytes': 4128,
+  'relative': 'schemas/proposal.schema.json',
+  'sha256': '0868c1b3ce37a1fb8fcd6a3ccffe7342b397ece5385c16cfdf21a8027d0a7d92'},
+ {'bytes': 2837,
+  'relative': 'schemas/protocol.schema.json',
+  'sha256': 'ae020482d5493dc9b3691e66c30891be4a1f3e564b351939445ccc25863e8d76'},
+ {'bytes': 6447,
+  'relative': 'schemas/region_profile.schema.json',
+  'sha256': 'd7478fb658414f87c8b4404fcc89ac44bd0f4872c0693364dd30f653118093c8'},
+ {'bytes': 4119,
+  'relative': 'schemas/retention.schema.json',
+  'sha256': '7d50ac9edf1f6677b56ae3e70bc3c62ceb0277bdec6ffee9a666c76a2a2c5f0c'},
+ {'bytes': 8549,
+  'relative': 'schemas/review.schema.json',
+  'sha256': 'd83d4baa311dfdb629596186957b3a0883032e087a8af69a2d8e97271f748a90'},
+ {'bytes': 2723,
+  'relative': 'schemas/source_snapshot.schema.json',
+  'sha256': '8f47f3d40bcab6f104c91e1a8aa4c4d789527cbb5b0435c40c2e703001fda766'},
+ {'bytes': 12975,
+  'relative': 'schemas/strategy.schema.json',
+  'sha256': '7d005d76b5d6253bb9c89b3d696e029391d66de16d6f971c61039b7f45109933'},
+ {'bytes': 44985,
+  'relative': 'schemas/target_description.schema.json',
+  'sha256': 'c9e4412480c98799a4bb7b7ebaf9a3a334dab212dad3dacf85017ce5a8d9ae30'},
+ {'bytes': 2250,
+  'relative': 'schemas/team_claim.schema.json',
+  'sha256': '5cbf8f436acad722587c42a00e8becfa320891a1aa715e6fa7b355e4f1ce7636'},
+ {'bytes': 1603,
+  'relative': 'schemas/workload.schema.json',
+  'sha256': '0e28a3c702355288e859144487d59bdc799e433f0cc2963f14fec8e0d7a3dfdd'},
+ {'bytes': 61352,
+  'relative': 'schemas/workload_characterization.schema.json',
+  'sha256': '13b0512005082a88c342ce8b3f8ee5a7f61b10ea6f6e54fb3f4a219b7d570e36'},
+ {'bytes': 54,
+  'relative': 'swdb/__init__.py',
+  'sha256': 'bcbd2c199a6b63c92302a8daf37c26909a76332b89452797351082ddba66b743'},
+ {'bytes': 52,
+  'relative': 'swdb/__main__.py',
+  'sha256': 'e3ee21171d56ed9ce3e04e6ff22689ca43bc23cb5743fefcd69675c0484faba0'},
+ {'bytes': 98,
+  'relative': 'swdb/_dx100_whole/__init__.py',
+  'sha256': 'f5f61c5460fa264b8d8a5690e3be19e60b592a162eed6b33614276b66853016e'},
+ {'bytes': 14281,
+  'relative': 'swdb/_dx100_whole/basis/compiler_unit_adapter_v2.py.source.txt',
+  'sha256': '1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317'},
+ {'bytes': 63276,
+  'relative': 'swdb/_dx100_whole/basis/harness/cbmc_translator.py.source.txt',
+  'sha256': '61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3'},
+ {'bytes': 9623,
+  'relative': 'swdb/_dx100_whole/basis/model-entry-v1/whole_model_v1.py.source.txt',
+  'sha256': '75c99c39664fc9b7b40838622b8fa03835977c7afbf35c5aab2a5704c4f538f4'},
+ {'bytes': 9975,
+  'relative': 'swdb/_dx100_whole/basis/model-entry-v3/whole_model_v3.py.source.txt',
+  'sha256': '2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50'},
+ {'bytes': 6468,
+  'relative': 'swdb/_dx100_whole/basis/source-integration-schema-v2.json.source.txt',
+  'sha256': '433e3e6149b0cc3be9f4f7e16db6bfdc3b1dc912115dee88783f5bed1052f792'},
+ {'bytes': 23687,
+  'relative': 'swdb/_dx100_whole/basis/source_argument_staging_v2.py.source.txt',
+  'sha256': '79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178'},
+ {'bytes': 25681,
+  'relative': 'swdb/_dx100_whole/basis/source_dispatch_v3.py.source.txt',
+  'sha256': 'd05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703'},
+ {'bytes': 6179,
+  'relative': 'swdb/_dx100_whole/basis/source_program_globals_v1.py.source.txt',
+  'sha256': '17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77'},
+ {'bytes': 30246,
+  'relative': 'swdb/_dx100_whole/basis/source_statements_v2.py.source.txt',
+  'sha256': '49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738'},
+ {'bytes': 15884,
+  'relative': 'swdb/_dx100_whole/basis/whole_adapters.h.source.txt',
+  'sha256': 'e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a'},
+ {'bytes': 3881,
+  'relative': 'swdb/_dx100_whole/basis/whole_closed_routes_v1.h.source.txt',
+  'sha256': '0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7'},
+ {'bytes': 34803,
+  'relative': 'swdb/_dx100_whole/basis/whole_interface_v4.py.source.txt',
+  'sha256': '217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8'},
+ {'bytes': 69747,
+  'relative': 'swdb/_dx100_whole/basis/whole_value_backend_v1.h.source.txt',
+  'sha256': 'c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f'},
+ {'bytes': 13765,
+  'relative': 'swdb/_dx100_whole/basis/whole_value_builders_v1.h.source.txt',
+  'sha256': '88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e'},
+ {'bytes': 18385,
+  'relative': 'swdb/_dx100_whole/closed_python_surface.py',
+  'sha256': '748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af'},
+ {'bytes': 15063,
+  'relative': 'swdb/_dx100_whole/compiler_unit_adapter_v3.py',
+  'sha256': '775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c'},
+ {'bytes': 5976,
+  'relative': 'swdb/_dx100_whole/lossless_gzip_v1.py',
+  'sha256': 'f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193'},
+ {'bytes': 6812,
+  'relative': 'swdb/_dx100_whole/lossless_gzip_v2.py',
+  'sha256': 'aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef'},
+ {'bytes': 2550,
+  'relative': 'swdb/_dx100_whole/model_primitives.py',
+  'sha256': '56e7ff7f8e9f6317ad3573c1c916891e328a12c1f189b716392a588e12dd5df1'},
+ {'bytes': 26112,
+  'relative': 'swdb/_dx100_whole/normalized_capture_ingress_v2.py',
+  'sha256': '3dbd9459d07c4a5d855715a664612fd9595c37d8f2b6957ee7f67cf185eac46f'},
+ {'bytes': 3640,
+  'relative': 'swdb/_dx100_whole/normalized_compiler_adapter_v1.py',
+  'sha256': '0bbf572196677dbc926bb5d331022c2766e44c287bd1ea3cce0ef077153a8a01'},
+ {'bytes': 34554,
+  'relative': 'swdb/_dx100_whole/receiver-memory-v1/receiver_memory_v1.py',
+  'sha256': 'f8cf91dee0e7b442812065b7935e176df48a417a308eb3798104b4320f654f23'},
+ {'bytes': 34554,
+  'relative': 'swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py',
+  'sha256': 'f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f'},
+ {'bytes': 34554,
+  'relative': 'swdb/_dx100_whole/receiver_memory_v1.py',
+  'sha256': 'f8cf91dee0e7b442812065b7935e176df48a417a308eb3798104b4320f654f23'},
+ {'bytes': 34554,
+  'relative': 'swdb/_dx100_whole/receiver_state_draws_v2.py',
+  'sha256': 'f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f'},
+ {'bytes': 4576,
+  'relative': 'swdb/_dx100_whole/resource_profile_v2.py',
+  'sha256': '6381bfb8b7b3813c25d6f994332a67c72b811c63f3665f2a10edc2584bfdafc5'},
+ {'bytes': 27967,
+  'relative': 'swdb/_dx100_whole/role_normalized_gzip_v2.py',
+  'sha256': '6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941'},
+ {'bytes': 23198,
+  'relative': 'swdb/_dx100_whole/runtime_projection_v2.py',
+  'sha256': '645b34878191a695fb61bd6dbf2dd3bcb0f984199482c9611a19b9f9a3a4e69b'},
+ {'bytes': 23244,
+  'relative': 'swdb/_dx100_whole/runtime_projection_v3.py',
+  'sha256': 'e60e1ed82a0bbc4983bb4acd9ca0204fd4238ef8ed555c9dc4a2ab8800a07284'},
+ {'bytes': 37560,
+  'relative': 'swdb/_dx100_whole/runtime_projection_v4.py',
+  'sha256': '56077c3476ba0f4af3b06089e937a0a5723318f7927ba81ea45c8556251cb7de'},
+ {'bytes': 11959,
+  'relative': 'swdb/_dx100_whole/source-memory-selection-v1/source_memory_selection_v1.py',
+  'sha256': '498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767'},
+ {'bytes': 23687,
+  'relative': 'swdb/_dx100_whole/source_argument_staging_v2.py',
+  'sha256': '79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178'},
+ {'bytes': 25681,
+  'relative': 'swdb/_dx100_whole/source_dispatch_v3.py',
+  'sha256': 'd05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703'},
+ {'bytes': 11959,
+  'relative': 'swdb/_dx100_whole/source_memory_selection_v1.py',
+  'sha256': '498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767'},
+ {'bytes': 6179,
+  'relative': 'swdb/_dx100_whole/source_program_globals_v1.py',
+  'sha256': '17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77'},
+ {'bytes': 30246,
+  'relative': 'swdb/_dx100_whole/source_statements_v2.py',
+  'sha256': '49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738'},
+ {'bytes': 15158,
+  'relative': 'swdb/_dx100_whole/unit_policy_registry_v2.py',
+  'sha256': '4f943d2e4f8f629d6599f236fb7d0fbb798f6bfa48b496e525ae319db8505c5d'},
+ {'bytes': 34803,
+  'relative': 'swdb/_dx100_whole/whole_interface_v4.py',
+  'sha256': '217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8'},
+ {'bytes': 2457,
+  'relative': 'swdb/_vendor/PROVENANCE.md',
+  'sha256': '44fa5fb9c51b64a6d09250e99ee9dae8005118e1027f83e2b508bdb288cc0f2b'},
+ {'bytes': 65,
+  'relative': 'swdb/_vendor/__init__.py',
+  'sha256': '16d63b7f58889ef2b36207c3dc29152b12d356e12f01da394057142d9cbf3483'},
+ {'bytes': 871,
+  'relative': 'swdb/_vendor/lark/__init__.py',
+  'sha256': '7b685e97ff945f0d6aa6d6d0db11fb0fad5256d38d8aff419a255c4b4692c503'},
+ {'bytes': 281,
+  'relative': 'swdb/_vendor/lark/__pyinstaller/__init__.py',
+  'sha256': '7ac6c784680432e5673b1a02d157e45d8a7d53ca77ff7dce286bafcd784b1450'},
+ {'bytes': 698,
+  'relative': 'swdb/_vendor/lark/__pyinstaller/hook-lark.py',
+  'sha256': '164fb487eb29aad3951e1fe489c71d1378b4428a9fb5e6f9413ceca7d15dd641'},
+ {'bytes': 2229,
+  'relative': 'swdb/_vendor/lark/ast_utils.py',
+  'sha256': 'ad5502923ed21030da40114238a0eedad80f97220a0945f9619afefe1a7d0f52'},
+ {'bytes': 3107,
+  'relative': 'swdb/_vendor/lark/common.py',
+  'sha256': '752238787884ee60760c13c4b2bef4bbad00aac733c37d956a4c77ed882a46e5'},
+ {'bytes': 10991,
+  'relative': 'swdb/_vendor/lark/exceptions.py',
+  'sha256': '743f1b6c9fbc10babbbec517b7952140f8aaef00dc03c6094daeb59235b4f7ab'},
+ {'bytes': 4103,
+  'relative': 'swdb/_vendor/lark/grammar.py',
+  'sha256': 'cfc776aa354b3296aa65756b8e2d86de14c5a149423feeedc0f3db4046d907f9'},
+ {'bytes': 99,
+  'relative': 'swdb/_vendor/lark/grammars/__init__.py',
+  'sha256': '0d3fa450e1f222d90fa134309bc3584e432c106c1a92316839debcf3341bb49d'},
+ {'bytes': 983,
+  'relative': 'swdb/_vendor/lark/grammars/common.lark',
+  'sha256': '75fa918d3e39873ae87edf46ead12440b3fb2c166954db39a4e4ad9de6640eab'},
+ {'bytes': 1637,
+  'relative': 'swdb/_vendor/lark/grammars/lark.lark',
+  'sha256': '9444a1a3aee2a8e71740c968ca59b7a3503546919f6c55012d70e30f815f256f'},
+ {'bytes': 10739,
+  'relative': 'swdb/_vendor/lark/grammars/python.lark',
+  'sha256': '814e81be5cfb9d2083eac127a02caf2b900724af607d1cdec6caaad75b830d28'},
+ {'bytes': 195,
+  'relative': 'swdb/_vendor/lark/grammars/unicode.lark',
+  'sha256': 'b0825a71a5d9a67b8a016d5d285c8a8f47110ce185a3be5655a6c0674640fb35'},
+ {'bytes': 4423,
+  'relative': 'swdb/_vendor/lark/indenter.py',
+  'sha256': 'e2bc945439b969a5b479c87adc8d7057d5703b2b9cf742c5b5dc2fd8cc219a82'},
+ {'bytes': 29687,
+  'relative': 'swdb/_vendor/lark/lark.py',
+  'sha256': '5a66e51fe13b3398f1a99707592f8572da7ae56c542c3e02613b086c138c7f59'},
+ {'bytes': 25121,
+  'relative': 'swdb/_vendor/lark/lexer.py',
+  'sha256': 'c7285cf58e4270fd8ed59cadc38369af3bf32c4755ee2ea830578072c93cb2ad'},
+ {'bytes': 54129,
+  'relative': 'swdb/_vendor/lark/load_grammar.py',
+  'sha256': '08040bd900abf451072b035cb940cfaa6b5f87de424766df478400d26e075d3a'},
+ {'bytes': 14568,
+  'relative': 'swdb/_vendor/lark/parse_tree_builder.py',
+  'sha256': 'ec3540f7c0f6c68f190060304f6860359c7acc3a2037a470ec9e268a3066b0dc'},
+ {'bytes': 11770,
+  'relative': 'swdb/_vendor/lark/parser_frontends.py',
+  'sha256': 'e86ec4046bfe2341e253ef5e953492ca65a63e7f5e67d79163f0925a9feca4c1'},
+ {'bytes': 99,
+  'relative': 'swdb/_vendor/lark/parsers/__init__.py',
+  'sha256': '0d3fa450e1f222d90fa134309bc3584e432c106c1a92316839debcf3341bb49d'},
+ {'bytes': 12291,
+  'relative': 'swdb/_vendor/lark/parsers/cyk.py',
+  'sha256': '38139f97ed58637872ebd8fa26ddb9bbdbb09e8f7f2af14e79e20b674bd5b77c'},
+ {'bytes': 15032,
+  'relative': 'swdb/_vendor/lark/parsers/earley.py',
+  'sha256': '3e571a110ee1c6776fc4aee824d712098c952508d83b0483488cfae9cfd49a28'},
+ {'bytes': 1719,
+  'relative': 'swdb/_vendor/lark/parsers/earley_common.py',
+  'sha256': '731bd7c35a13f2865e3eeb77afd18b1d714af8e5030c14e2195c6e2e8511a678'},
+ {'bytes': 31431,
+  'relative': 'swdb/_vendor/lark/parsers/earley_forest.py',
+  'sha256': '8db9c01910cdfda18df80a5f57aa5f9f083ac2b7608674ffdcf81608b55abc52'},
+ {'bytes': 7240,
+  'relative': 'swdb/_vendor/lark/parsers/grammar_analysis.py',
+  'sha256': '3b0cb0250dfd07e0fe1682fd5fe8081d8d7e7aedfeba85b276037ef0c36beb80'},
+ {'bytes': 12386,
+  'relative': 'swdb/_vendor/lark/parsers/lalr_analysis.py',
+  'sha256': 'aa9cf0fd26c51b8622100dd6dd2cd9849e916c68e745cb8e2848bf45fa11bb04'},
+ {'bytes': 5882,
+  'relative': 'swdb/_vendor/lark/parsers/lalr_interactive_parser.py',
+  'sha256': '1c2efc5f8608da965be5b4045225bc7da6383993f5f13b864454141ca5c4062c'},
+ {'bytes': 4703,
+  'relative': 'swdb/_vendor/lark/parsers/lalr_parser.py',
+  'sha256': 'f9c11ee58f37e727981b8c1a4e46d970777feb3976313330eceb27837db6a745'},
+ {'bytes': 3905,
+  'relative': 'swdb/_vendor/lark/parsers/lalr_parser_state.py',
+  'sha256': '3a49f179e4c603f38914e200917a6395f88099acd4da354f184bc7b4daec3629'},
+ {'bytes': 7996,
+  'relative': 'swdb/_vendor/lark/parsers/xearley.py',
+  'sha256': '732f6cf49ff2bbb7d6998e0cd619c26aa7bb58dbb052af556935d8d24b2a1696'},
+ {'bytes': 84,
+  'relative': 'swdb/_vendor/lark/py.typed',
+  'sha256': '7378ddb55e0e5a28ebded92975df409bcb48cfcc4d35b5a82e85203095991d73'},
+ {'bytes': 3862,
+  'relative': 'swdb/_vendor/lark/reconstruct.py',
+  'sha256': '582b5af75e425971975d038cad12f3927caf14e0e7134b0d94346196776d3e0e'},
+ {'bytes': 2581,
+  'relative': 'swdb/_vendor/lark/tools/__init__.py',
+  'sha256': 'bb7f07d1a4c433675911986d220a1b07f5ffa43351f8ce262941623cd273341f'},
+ {'bytes': 6390,
+  'relative': 'swdb/_vendor/lark/tools/nearley.py',
+  'sha256': 'f7a0785cb0be2db83f9f4bda804d1d920e2a4874863a361ea60fa482042c39e0'},
+ {'bytes': 1103,
+  'relative': 'swdb/_vendor/lark/tools/serialize.py',
+  'sha256': 'cf4264fbe877cde894f328c223d98d35e650baf63eb11dc9b2bf2030b985a08e'},
+ {'bytes': 5783,
+  'relative': 'swdb/_vendor/lark/tools/standalone.py',
+  'sha256': '32c8597164ed5c87ec309cf70361d6ce62f6e8be6ec03dde1efd76d17c3ed2e0'},
+ {'bytes': 9085,
+  'relative': 'swdb/_vendor/lark/tree.py',
+  'sha256': '36f1a5deb91ae06fc772db6b2d8d9945145896315f656f3735896540b42b0328'},
+ {'bytes': 6873,
+  'relative': 'swdb/_vendor/lark/tree_matcher.py',
+  'sha256': '8cffbbefb52fbd49712e7d257d8d2824b927133423b082ea4345f330da3c48af'},
+ {'bytes': 6084,
+  'relative': 'swdb/_vendor/lark/tree_templates.py',
+  'sha256': 'afd84cc67dd1d3d1f85ab9027f728a212ee1170eb567edcf4b002a9e3c3e1ac5'},
+ {'bytes': 13449,
+  'relative': 'swdb/_vendor/lark/utils.py',
+  'sha256': '08d980c85aeff0dd47c37b2b37ff434405e65c988f577242bf13a2ed2cf4d124'},
+ {'bytes': 21677,
+  'relative': 'swdb/_vendor/lark/visitors.py',
+  'sha256': 'e427fa991d2230c57b47476129e72fbdb164ac046de0b8f2ebf46844f9d0b23b'},
+ {'bytes': 1055,
+  'relative': 'swdb/_vendor/licenses/Lark-1.3.1-MIT.txt',
+  'sha256': '2eee60f52d4e11357bf89e72b034d050e285e47fda1361e5662fb322ee27d771'},
+ {'bytes': 13205,
+  'relative': 'swdb/_vendor/licenses/MemAcc-Apache-LLVM.txt',
+  'sha256': 'f2db94d30c9657f2556732f3e80973d49fc4d093eede0a54ffda88152296f695'},
+ {'bytes': 4537,
+  'relative': 'swdb/access.py',
+  'sha256': 'b450f087947cf8fcc87ce8460140fed77511ef0b066c05cd33d8d631cc094e32'},
+ {'bytes': 25477,
+  'relative': 'swdb/acsl_subset.py',
+  'sha256': '59c1cb99afc9f5d10349e9ec53875da5962379c39365b2c38252388858b6efe8'},
+ {'bytes': 63339,
+  'relative': 'swdb/analytic.py',
+  'sha256': 'ab4c1ea4f6271aec15b642c863350223ded85fc41e91bc4b0380e0031a16fee6'},
+ {'bytes': 20788,
+  'relative': 'swdb/analytic_binding.py',
+  'sha256': '4330a177fa5faf97288137094d34a71a4da34c711bf06914a75170b169436bdb'},
+ {'bytes': 3785,
+  'relative': 'swdb/analytic_composition.py',
+  'sha256': '5856253e1e7a60ddd74c2f1c4348b3040e06c1d5b73bdd88c29ecb5bdcace69f'},
+ {'bytes': 6371,
+  'relative': 'swdb/analytic_count_reuse.py',
+  'sha256': '0e04887886bf19c990efbded07ff9e1ce18a705545d8accacb22554486aef7df'},
+ {'bytes': 29160,
+  'relative': 'swdb/analytic_cpu_binding.py',
+  'sha256': 'a8adc94988eff15b512d8ef864551a0b88ab7cd63967e101a29e4cc60708a2b5'},
+ {'bytes': 4426,
+  'relative': 'swdb/analytic_cpu_openmp.py',
+  'sha256': '971fefd8e7676379076095e90523d4e5fae9e6f7d21d0c36dceb51851f815a91'},
+ {'bytes': 25798,
+  'relative': 'swdb/analytic_cpu_service.py',
+  'sha256': '2cc842cae996a69ca28afd831c8c011fd831f2b57e1961f7b95c657d41418ea6'},
+ {'bytes': 20296,
+  'relative': 'swdb/analytic_dx100_call.py',
+  'sha256': 'e34018a367ed84e5865e5733b10134f57bbcc740db1a9195e65cf3640f57adff'},
+ {'bytes': 1850,
+  'relative': 'swdb/analytic_estimate_binding.py',
+  'sha256': '9401712886e48849735692b0721901acc603fe7b4aface935ed40296db7df2fc'},
+ {'bytes': 544,
+  'relative': 'swdb/analytic_extensions.py',
+  'sha256': 'cf2e22f8ee6e3e4b7f4eed9d08657d765244a79f9594b735c9c7f3dec99a5984'},
+ {'bytes': 13568,
+  'relative': 'swdb/analytic_functional_binding.py',
+  'sha256': 'c44efa49477495045084424294b417b03aab69659365f5d6e61f3e3bb96b8b91'},
+ {'bytes': 2634,
+  'relative': 'swdb/analytic_llvm_support.py',
+  'sha256': 'd2cdbae4db5c021566191605df5145923bb8f21cc072d812d0c31755a480c484'},
+ {'bytes': 15477,
+  'relative': 'swdb/analytic_models.py',
+  'sha256': 'db725ca338391c30e9143ea1d77b0d0861e6f746ef3d386d4a4764c0adbf5bd5'},
+ {'bytes': 6899,
+  'relative': 'swdb/analytic_offload_models.py',
+  'sha256': 'ad3cab5f561a94b5c67004362eb021c23298c41b8e61110386d999de51f92062'},
+ {'bytes': 16775,
+  'relative': 'swdb/analytic_sensitivity.py',
+  'sha256': '1090a9a22c56567cbac493a369c3fdb46bb6b0b25384d32eb7eb0e03084c2402'},
+ {'bytes': 6512,
+  'relative': 'swdb/analytic_trial_scope.py',
+  'sha256': '8debe8a29753e850dd7c0a8b6755e7e6a1d71bfb775156e79a5177b661045438'},
+ {'bytes': 28173,
+  'relative': 'swdb/annotation.py',
+  'sha256': '98359ac3bf4c420f37d78540a9c1417698b4bc8163483da1258c14ac0f27cd44'},
+ {'bytes': 10612,
+  'relative': 'swdb/archevolve.py',
+  'sha256': '0387a983cacd8de24771df347629213a993783f0d196530b0bfd4fcf1d7c4ba3'},
+ {'bytes': 23242,
+  'relative': 'swdb/archevolve_proof.py',
+  'sha256': 'ffc5ad0df5bd93c28afd6b61927e1b2dded47544c5ef086cbdbd9b0d10b9f47a'},
+ {'bytes': 8085,
+  'relative': 'swdb/array_domains.py',
+  'sha256': '4ce7f64892b3e63c8dba65ef3c4f532e47842a287c38e0f5cc5f69d27e7780bd'},
+ {'bytes': 6244,
+  'relative': 'swdb/artifacts.py',
+  'sha256': '6368cc18061ee3ddc6256b96a76bf2cfaad3fae283104291723939b725c2dccd'},
+ {'bytes': 92503,
+  'relative': 'swdb/attribution.py',
+  'sha256': '31b24af34d186f548bc327cab6afc4b80b0aa22a0b8f02fbc3849e70c46f7805'},
+ {'bytes': 5643,
+  'relative': 'swdb/bc_native.py',
+  'sha256': '765b19687a6a3af71fa1ed530184f0ee674d4e65dddd916d4043c1c8a6e39eae'},
+ {'bytes': 12543,
+  'relative': 'swdb/bc_witness.py',
+  'sha256': '6c4d5b08bf93cc9250c8c9b51879ebe0ab2c546030801dcd0ec6c06a082ea6cb'},
+ {'bytes': 62823,
+  'relative': 'swdb/bfs_coverage.py',
+  'sha256': '47cc5b4296303e97bdee4fefed60ded5d97c16dd283f5ea16da734b8e942a2de'},
+ {'bytes': 16634,
+  'relative': 'swdb/bfs_discovery.py',
+  'sha256': '22b087249fb3929f8b79ef56542801a1b41da35becd0fe14db742218e36b5186'},
+ {'bytes': 52378,
+  'relative': 'swdb/bfs_native.py',
+  'sha256': '0b0762b33cf722740af677c4ebef0966ac6090265f565dff7a63175963bb2775'},
+ {'bytes': 20543,
+  'relative': 'swdb/bfs_native_pair.py',
+  'sha256': 'd8288b37c532523bcc6092faf126b92799dc3122b3e97cfe188421ff5f53be0d'},
+ {'bytes': 18638,
+  'relative': 'swdb/bfs_native_scalable.py',
+  'sha256': 'dd3cb75a23cff731adb4d79829ab7bdb50bd2770332af3703e8aa380364d9b27'},
+ {'bytes': 52069,
+  'relative': 'swdb/bfs_profiling.py',
+  'sha256': 'f59f289cbf6eb3bb2b8d8b1a3aec6d7528e7a8470a418b2186e7a9bcf85b74a0'},
+ {'bytes': 97563,
+  'relative': 'swdb/bfs_protocol.py',
+  'sha256': 'fdf5d38c29e321dbb300a3eb681f0c9a5619a0bd05733aabb410991de3589596'},
+ {'bytes': 27601,
+  'relative': 'swdb/bfs_region_comparison.py',
+  'sha256': 'd5d934e2d543a2663cc7a7e0df2c0d62e1eb7695a4c67bd9a5671c02adf22a7c'},
+ {'bytes': 7907,
+  'relative': 'swdb/bounded_chain.py',
+  'sha256': 'b63f7eb03e32c27ab8f27eaefbe9fe5fdc0e3b2aa5bcbfd998bb6022204bdf26'},
+ {'bytes': 13198,
+  'relative': 'swdb/bounded_entry_windows.py',
+  'sha256': '39354107afc0c96e075dbc8e0c321b1caad3086887254f5bb404dd6eb875fa58'},
+ {'bytes': 12381,
+  'relative': 'swdb/bounded_gate.py',
+  'sha256': '54b8c07000d4ad1c651fc6720df50b242cb9b85fe2c6ad5216b018c00c8ab9af'},
+ {'bytes': 22867,
+  'relative': 'swdb/bounded_initialization.py',
+  'sha256': 'd6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc'},
+ {'bytes': 19366,
+  'relative': 'swdb/bounded_std_initialization.py',
+  'sha256': '7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea'},
+ {'bytes': 171522,
+  'relative': 'swdb/c_lowering.py',
+  'sha256': '8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e'},
+ {'bytes': 8451,
+  'relative': 'swdb/callgrind_lines.py',
+  'sha256': '28a5d628aa4db2706fce54c3483332ecb7d32530bfc3aee534125580e0e74e6b'},
+ {'bytes': 118187,
+  'relative': 'swdb/campaign.py',
+  'sha256': '93ae48518c8a98ef255921250bc57756315fcd2871c0e185cadc0a68c76006b2'},
+ {'bytes': 11441,
+  'relative': 'swdb/campaign_export.py',
+  'sha256': '9f48b090186bc7679d5c9b3f4e937be0fdc2bcce7cc8988fcd38167a5d039953'},
+ {'bytes': 28581,
+  'relative': 'swdb/campaign_fixture.py',
+  'sha256': '24e5a469d13afd7bd7394062fcb9a3efed39ccf3d3488cb409f249589bd93c69'},
+ {'bytes': 76057,
+  'relative': 'swdb/campaign_targets.py',
+  'sha256': '2b2c6e228cab5f7369aa21a946d2e2c211a160636bdaeaf3c8c3f8de86efb29a'},
+ {'bytes': 5276,
+  'relative': 'swdb/capabilities.py',
+  'sha256': '786d2961fdea895e68621fe980f4a2b316ef6179e2b108c9bc006d7109328d3d'},
+ {'bytes': 77899,
+  'relative': 'swdb/cbmc_adapter.py',
+  'sha256': '0b04badc1d23bcf500cefb878c58599e8ad5f69fb8c122a7bd0014cec09d81eb'},
+ {'bytes': 29771,
+  'relative': 'swdb/cbmc_equivalence.py',
+  'sha256': '07edb9685ec3cfa222c30800f80ea781d46816d5db797dfaf6e8b1e0dcd017dd'},
+ {'bytes': 11131,
+  'relative': 'swdb/cbmc_product.py',
+  'sha256': 'df4af62add9747a5c107d314b9235d08de2d22d04265d6aedf30726516891fee'},
+ {'bytes': 64545,
+  'relative': 'swdb/cbmc_translator.py',
+  'sha256': '9319dea126f186f64aeec28d51ac6732fa50b8ad4b70787a977ab5bb5f9c3fbb'},
+ {'bytes': 82092,
+  'relative': 'swdb/certification.py',
+  'sha256': 'd367488b77df43a7e747ad55974d1b5fc787f63c42611984dacb3c0c03a7abf6'},
+ {'bytes': 34412,
+  'relative': 'swdb/certification_blinding.py',
+  'sha256': '9826cceb849230810a6108f0afec1324195a10abf26ac1fbd9db9764be3e787c'},
+ {'bytes': 9999,
+  'relative': 'swdb/certification_common.py',
+  'sha256': '4474004a85541c1c1d69e51b0537aac95403ce5b53983b02ef5e5d3976768543'},
+ {'bytes': 4954,
+  'relative': 'swdb/certification_faults.py',
+  'sha256': 'f73fd8644f81bbdd641eb2d3f109f89d7ecfef0178dd57c2e0bb821491228e68'},
+ {'bytes': 11162,
+  'relative': 'swdb/certification_feedback.py',
+  'sha256': '3c0082229e6621e8312ce32d19b86a564377504daed8e47c1589f82f6849a0c0'},
+ {'bytes': 18018,
+  'relative': 'swdb/certification_isolation.py',
+  'sha256': '0d8e823b38ca9ae5492e026b274fd88d9157bc9812d40087307d47f54e84f4af'},
+ {'bytes': 24117,
+  'relative': 'swdb/certification_legality.py',
+  'sha256': '9e34b60fcbebe85ca96ea8f9ae1a7f039c37c01ffd43f83250d0fb282de7b768'},
+ {'bytes': 33780,
+  'relative': 'swdb/certification_native.py',
+  'sha256': '9b05d4e3df575009604949b9a277885551e05f6339d15f29100baf7e4e9f8fac'},
+ {'bytes': 28592,
+  'relative': 'swdb/certification_procedures.py',
+  'sha256': 'f63894774adc799d54c88eb2120af7db2d58c287e8603f76190fd1486d50fc26'},
+ {'bytes': 18335,
+  'relative': 'swdb/certification_process.py',
+  'sha256': '274918c7c6ad367e5345864aa27d5ad352e62a8a70b058eee534f75ba3ea7b82'},
+ {'bytes': 9179,
+  'relative': 'swdb/check_mode.py',
+  'sha256': 'a96e9fda6043ea111b1336ee60a4a5588eb740c80f2b6e6bd599b8a3c52d4010'},
+ {'bytes': 31409,
+  'relative': 'swdb/cli.py',
+  'sha256': '64b8016237e492db687d4a9806f6938eeb4e527b21ee394aa317894e8dc9739f'},
+ {'bytes': 4943,
+  'relative': 'swdb/comparison.py',
+  'sha256': '770b159704745ee7f3a1bf70337c18605d62619c8f9253339bd7b45b8d131ad8'},
+ {'bytes': 26595,
+  'relative': 'swdb/counterexample_repair.py',
+  'sha256': '97018775316b9dacdae20d7457babefecdc21ac379100b75ed64a694fdcaf5e8'},
+ {'bytes': 4800,
+  'relative': 'swdb/cpp_lexical.py',
+  'sha256': '8e09cb0823b50c1e23ab269e7774c52f34c7795adfe62c53184112c72e98e4d5'},
+ {'bytes': 21566,
+  'relative': 'swdb/cpu_allocator_calibration.py',
+  'sha256': 'ca1a7d556a15aadb12aec9dcaf4b93bf3579d95b59aeb35d4dc270d7acea4749'},
+ {'bytes': 9786,
+  'relative': 'swdb/cpu_allocator_resource.py',
+  'sha256': '77fdf6e0607e5a7ab4f189b055d4ed0103a030d741dcba08f1919f427e90f199'},
+ {'bytes': 22206,
+  'relative': 'swdb/cpu_bulk_calibration.py',
+  'sha256': 'cc426f5b0ffc01d417c476eaeeae28266640415bedfd0f1a03e8c39794d2a6e2'},
+ {'bytes': 6761,
+  'relative': 'swdb/cpu_bulk_resource.py',
+  'sha256': '55ff6eb1ecb13c44c9baa9631169b531c4a20fe8cf2112fc68453097e02a37a8'},
+ {'bytes': 15852,
+  'relative': 'swdb/cpu_bulk_total_calibration.py',
+  'sha256': 'cf6b90bb3fc6a8c357acad162a8e5d61649129ff6dc8d4a71cbd1ec08743b2ea'},
+ {'bytes': 33330,
+  'relative': 'swdb/cpu_calibration.py',
+  'sha256': 'd5c1dc2a79a4a1c6cfb4a8fee9c69e04d7e815299f1e58b09297571f0615cf9f'},
+ {'bytes': 12985,
+  'relative': 'swdb/cpu_calibration_records.py',
+  'sha256': 'f25b3ac52c42383aa2499e987536046716e8db35a3a01ebae0df21655802614c'},
+ {'bytes': 10091,
+  'relative': 'swdb/cpu_effects.py',
+  'sha256': 'b0bc08577560dec348b7d56852265ab0b9a732462c5735bdcc5388fc88e370b7'},
+ {'bytes': 27633,
+  'relative': 'swdb/cpu_error_band.py',
+  'sha256': '30669b8460f61c496ae5b3b4eb6180634515b25b45be9f8149f0610b8202837f'},
+ {'bytes': 16672,
+  'relative': 'swdb/cpu_float_memory_calibration.py',
+  'sha256': '51e392248c830e81e15c8900abbb7d5be95ee8e8a7a5d73a27e359788c761e67'},
+ {'bytes': 22434,
+  'relative': 'swdb/cpu_library_call_calibration.py',
+  'sha256': '5a0bf9ca8da93ba66fe095981fc38865ec0784af2ba503c95001d46d5317f36e'},
+ {'bytes': 5127,
+  'relative': 'swdb/cpu_memory_admission.py',
+  'sha256': '2d8939807edd361b9962fda45dc75eb05680a2b99a87dbc97af4871b2b0d2656'},
+ {'bytes': 23940,
+  'relative': 'swdb/cpu_memory_calibration.py',
+  'sha256': '6ec6c1c0af911d8f6e809398870b9222073423b4f471acb15a1721b6d3d7ce19'},
+ {'bytes': 6762,
+  'relative': 'swdb/cpu_memory_resource.py',
+  'sha256': 'd9011ed6ee8034c0b62d4b63530e2055ed44cac0987c079bfb60d004c52ed236'},
+ {'bytes': 20382,
+  'relative': 'swdb/cpu_native_validation.py',
+  'sha256': '4d909fc950250bb47e0cc6d6f155287eea9021b78964a5f76dcabbb7b1dd1e90'},
+ {'bytes': 5548,
+  'relative': 'swdb/cpu_openmp_binding.py',
+  'sha256': '525c1c76c0f0da2e9c123ba0d8c3cb23cf976552becc1f8011b8386c6aa4a25e'},
+ {'bytes': 22829,
+  'relative': 'swdb/cpu_openmp_calibration.py',
+  'sha256': '5bc01b30affbd402926a056a0d85a7b82754f1bcc76a42f2d65f3f8344c90a00'},
+ {'bytes': 2122,
+  'relative': 'swdb/cpu_openmp_profiles.py',
+  'sha256': '6c937be0cbe3ffaebed09eda360e425193c560adc534fdc940b3d2b21cd68273'},
+ {'bytes': 18593,
+  'relative': 'swdb/cpu_pairing.py',
+  'sha256': '2414a132d222d548f8a97b8ade2df5c33c805acd467c1a85d8748a045c971793'},
+ {'bytes': 30855,
+  'relative': 'swdb/cpu_service_binding.py',
+  'sha256': '88787163c7cdda43ed40931800163ac130888fa901066d2cf2773b7002be226b'},
+ {'bytes': 16480,
+  'relative': 'swdb/cpu_service_calibration.py',
+  'sha256': '5ae25fc4bc4aa4c474317444953a01f72dcacfdee518da3343fa64b84b0ca69b'},
+ {'bytes': 1028,
+  'relative': 'swdb/cpu_service_controls.py',
+  'sha256': '260ce9711edc3eb286ed4ad4d95d1d4daffcc0b584409ed9b4b9290a04c5cf54'},
+ {'bytes': 3571,
+  'relative': 'swdb/cpu_service_counts.py',
+  'sha256': 'ac541f5df1cdaed12a60fb6a05d459100586eaca13a6d531e1753967b265d766'},
+ {'bytes': 8208,
+  'relative': 'swdb/cpu_service_native.py',
+  'sha256': 'f3d638bac2f11d06be3e4a8badef5a483b0ef5fa9f30e5da9660e47c4664eb99'},
+ {'bytes': 1035,
+  'relative': 'swdb/crosswalk.py',
+  'sha256': 'eb9dd243fdfb7fddceae461e8563734a8fba71bc829b76a085ce110009447486'},
+ {'bytes': 35729,
+  'relative': 'swdb/crux_adapter.py',
+  'sha256': '29f212e6d0a79ac43864fa8684edaf0b12e2f555eebe381c12bd72e2af711768'},
+ {'bytes': 7570,
+  'relative': 'swdb/cxx_cut.py',
+  'sha256': '4e8d6d8b674599eb53dafb881c949ee62a2a4c2e7b8c2ee6b896f0faf1599e86'},
+ {'bytes': 58820,
+  'relative': 'swdb/db.py',
+  'sha256': '6995c044eea9eff004d64af87f6879396f245e17a1b374f692d5cbbcfb1e605f'},
+ {'bytes': 26198,
+  'relative': 'swdb/derived.py',
+  'sha256': 'dacfbda08a00b1e70b78b36fa399780d0f09eb0e41d368fad699312b87289da1'},
+ {'bytes': 8210,
+  'relative': 'swdb/dispatch_preflight.py',
+  'sha256': 'f6cbd73a7d0d60a83ba18ed482672dcbac3d6d90c8f51434142c430f5680f78a'},
+ {'bytes': 63669,
+  'relative': 'swdb/dx100.py',
+  'sha256': '9b7e74eb00a6a11ea844a13a672a90f5cedb402bfad229f20e6ea1c9f170aad5'},
+ {'bytes': 21991,
+  'relative': 'swdb/dx100_allocation_source.py',
+  'sha256': '229a47016d1c239927fca0420c0d2be7cf8cd8a37e30b3d5f0d3ecbed8c53681'},
+ {'bytes': 2209,
+  'relative': 'swdb/dx100_author.py',
+  'sha256': 'acf9d66f129d22922d582fcf4f4df3b91936311ba463e951dee72913dff657a1'},
+ {'bytes': 23980,
+  'relative': 'swdb/dx100_candidate.py',
+  'sha256': '7d48201fc2d87d4ed52946cab6cbe834e1772841d89aac964fa7ab172427f676'},
+ {'bytes': 13654,
+  'relative': 'swdb/dx100_checked_adapter.py',
+  'sha256': '420c9a622e81934aef6bc9099d29911c2f84557c6f1d1c2e1c4a7bb32a15692b'},
+ {'bytes': 3920,
+  'relative': 'swdb/dx100_checked_native.py',
+  'sha256': '31224732087efeea58d06d9e7eecc63d0c1da1a0ead1e86ffcf15241e6932c1c'},
+ {'bytes': 5487,
+  'relative': 'swdb/dx100_checked_registry.py',
+  'sha256': '5b8799e8e6d0b05c8b1d321d9558d4d0fc1d27aa5ab59019afa3313cde487848'},
+ {'bytes': 41143,
+  'relative': 'swdb/dx100_checked_source.py',
+  'sha256': 'eaf7b6609a3404c31655110b1de15541246d913b14b67b53ebb3f7acbcbb89a2'},
+ {'bytes': 2965,
+  'relative': 'swdb/dx100_checkpoint.py',
+  'sha256': '006dd1bbe8c993323ad61cba0cf570f64bd5c1048af694e801ab54161ef30dd0'},
+ {'bytes': 17178,
+  'relative': 'swdb/dx100_coverage.py',
+  'sha256': '3ad613c740474db7b56913fb6027f8f1fdafdcb4a6baf7fe9e1b10f4857c6895'},
+ {'bytes': 5529,
+  'relative': 'swdb/dx100_diagnostic.py',
+  'sha256': 'e736c8e037a4af2d8dfb7958b32382e03e9eecda5f59c09a5a4560f9ea7d202c'},
+ {'bytes': 2351,
+  'relative': 'swdb/dx100_initialized_register_model.py',
+  'sha256': 'a568c08f6e8d928ecb46212b7120b29740d719c65ae7ae818b540bcf6790961f'},
+ {'bytes': 52100,
+  'relative': 'swdb/dx100_initialized_register_source.py',
+  'sha256': '01c043e544e50c30fc3d92b6be5a8b097f4dfef0606f53c29068a2ba008ac145'},
+ {'bytes': 3754,
+  'relative': 'swdb/dx100_inputs.py',
+  'sha256': '3746ab94ef05e15174e4f3171c2a5e226a5304fc255f0ac585754a09547c4a58'},
+ {'bytes': 8098,
+  'relative': 'swdb/dx100_interface.py',
+  'sha256': '6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf'},
+ {'bytes': 26579,
+  'relative': 'swdb/dx100_profile.py',
+  'sha256': '16233ffc69beef95739dcf862081fd2449480f40648d4c85dba779b25043bfd0'},
+ {'bytes': 2662,
+  'relative': 'swdb/dx100_register_model.py',
+  'sha256': '1ca71b6f3661ce5544277bec1bb8f20c8db72461cd40b99f11a2a08e7381fb76'},
+ {'bytes': 15021,
+  'relative': 'swdb/dx100_register_source.py',
+  'sha256': '8ab73239527717eb5b904ef42ed98ca95819be646f4c2b4016bb19dc2e0d925a'},
+ {'bytes': 1507,
+  'relative': 'swdb/dx100_resources.py',
+  'sha256': 'a94c8a3c5f92c520e11999ac05ff87943d9ec656f93956388bc6614ed57c0eb2'},
+ {'bytes': 23156,
+  'relative': 'swdb/dx100_size_source.py',
+  'sha256': 'fe070713b91257d73a77112a7114c3ec049d2dc3ca8dbe0c1dfa6404c35a70f3'},
+ {'bytes': 13018,
+  'relative': 'swdb/dx100_source_selector.py',
+  'sha256': '4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190'},
+ {'bytes': 12575,
+  'relative': 'swdb/dx100_stream_model.py',
+  'sha256': '4f512d0c51dbc4f72a7ed0cdf34e4b6ea850d736ca4ae1e35efe72ae850ab2ba'},
+ {'bytes': 25359,
+  'relative': 'swdb/dx100_stream_source.py',
+  'sha256': '28715eb5b7171244ca18027412db4e119d858812638ad32ce06dfe213c229e62'},
+ {'bytes': 13395,
+  'relative': 'swdb/dx100_whole_checked.py',
+  'sha256': '0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105'},
+ {'bytes': 37355,
+  'relative': 'swdb/dx100_witness.py',
+  'sha256': '89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de'},
+ {'bytes': 13234,
+  'relative': 'swdb/dx_array_domains.py',
+  'sha256': 'ec8b1585fc64bb0a672f352a79cbfc1ed6e4ec03150bd438be93445855a5c5fe'},
+ {'bytes': 10127,
+  'relative': 'swdb/estimate_protocol.py',
+  'sha256': '5d97eb914ddf8302a6034a043a9114c9df1f39415f67b4ce3519bea97f7e4e30'},
+ {'bytes': 2607,
+  'relative': 'swdb/estimation_contract.py',
+  'sha256': '6dfd028eb52fae2c0a3c0072011a512debf4f01c433fcab580b41d656053391f'},
+ {'bytes': 25670,
+  'relative': 'swdb/estimation_parameters.py',
+  'sha256': '1603428b67b7cc899d2e2ce6d42fbd2c178e93e51513800a76aee0dabca54ffc'},
+ {'bytes': 8107,
+  'relative': 'swdb/experimental_contracts.py',
+  'sha256': '417f07c7a44fa559eb6980a9ba5a088de7f5d38ead11045d8a99a90e3fdb5424'},
+ {'bytes': 7614,
+  'relative': 'swdb/extensa/PROVENANCE.md',
+  'sha256': 'b3ed38eff88b115fe704a651f18ea750107458ab36662eed4e7f46d2cf64dced'},
+ {'bytes': 625,
+  'relative': 'swdb/extensa/__init__.py',
+  'sha256': '27c6ef7d230f0b41a3258691f272464dbf3392334b5dba9a724067abba5f166c'},
+ {'bytes': 3803,
+  'relative': 'swdb/extensa/leakage.py',
+  'sha256': '3f411d46d983f6aa900b49245d7da74210e6dfb3f3b8591a0a130ec719036132'},
+ {'bytes': 78450,
+  'relative': 'swdb/extensa/probes.py',
+  'sha256': '1369e7e2d1c8253acf4094b7f773d44648ad9261839fd33587df99c4976de463'},
+ {'bytes': 8193,
+  'relative': 'swdb/extensa/profiles.py',
+  'sha256': 'd07c0110a7a9a0184183d953fb2eff9e50cb8eee75e852b2466b2d6d0d3d025b'},
+ {'bytes': 21472,
+  'relative': 'swdb/extensa/search.py',
+  'sha256': 'b1acf25544d5e1abe9a11e197da398ff3bca4cb1558c5a8b8b060e75cd391019'},
+ {'bytes': 276,
+  'relative': 'swdb/extensa/synthesis/__init__.py',
+  'sha256': 'c3af068159c0c91231ee143e639260c653c0f345c2f983b131f293a2e74adc1f'},
+ {'bytes': 12935,
+  'relative': 'swdb/extensa/synthesis/certify.py',
+  'sha256': '5267963083bcce0e875c9afe97c082c556c2dec8d0b5ba4033e38c965c2e3c52'},
+ {'bytes': 10562,
+  'relative': 'swdb/extensa/synthesis/differential_oracle.py',
+  'sha256': '715c839aa309a562de295eb4501a9f640ef5b12b4035420baff2d60c8f7a43a7'},
+ {'bytes': 3461,
+  'relative': 'swdb/extensa/synthesis/families.py',
+  'sha256': 'f4b28437e4a760fdf4a8b51dbe4cdcee8a077523dd00e3473248b675911a5f7a'},
+ {'bytes': 2102,
+  'relative': 'swdb/extensa/synthesis/mutants.py',
+  'sha256': 'dc2f346c842a056c04836d0395e74a09b5b0be9ea485a32bac4f5a2821308243'},
+ {'bytes': 30989,
+  'relative': 'swdb/extensa/synthesis/shape_classes.py',
+  'sha256': '30a75103312738dbbe2b4f117212785aee156ea61bef22af463b860b6ef1581e'},
+ {'bytes': 3219,
+  'relative': 'swdb/extensa/synthesis/spec.py',
+  'sha256': '5c67e0df657b1bfec4ba08a61d42129899adb64d3a3efdfb24efbecb5333d16a'},
+ {'bytes': 4471,
+  'relative': 'swdb/extensa/synthesis/synthesize.py',
+  'sha256': 'f4760a92b4c3b2674a14e29f4bb02b74344b5496a89bcbf5888e4b1c24bb254e'},
+ {'bytes': 303,
+  'relative': 'swdb/extensa/synthesis/targets/__init__.py',
+  'sha256': 'd4d298a62dba86d1788b72cf5a05548c0138fd1d6c7657aa73357cae60a24207'},
+ {'bytes': 6100,
+  'relative': 'swdb/extensa/synthesis/targets/base.py',
+  'sha256': 'd8e37b88ea823894e8273b6b207d2488ef8018b10b751b01714d1d7500dbd4c9'},
+ {'bytes': 1565,
+  'relative': 'swdb/extensa/synthesis/targets/cpu_like.py',
+  'sha256': '05baf4514b89435c396a3e8ca6abc3f022ce577da8a6521f2a4468a07958c924'},
+ {'bytes': 5687,
+  'relative': 'swdb/extensa/synthesis/testgen_backend.py',
+  'sha256': 'c010a17b9d579318a73d0ac72be9e22e737bd5f199d9f4f3867fc37b8c9f5d14'},
+ {'bytes': 43769,
+  'relative': 'swdb/extensa_agreement.py',
+  'sha256': '745c5cce8d19f4aeca6172359c8bb92f0da43b1c2ff3434608cdd0b6018c9a11'},
+ {'bytes': 24511,
+  'relative': 'swdb/extensa_boundary.py',
+  'sha256': '7abb71e0c3b83dea1b8faf45eb354e7f9e6f68e589d7cef17c4cf0bfd4ff399e'},
+ {'bytes': 25647,
+  'relative': 'swdb/extensa_pairing.py',
+  'sha256': '2231038b4c4fa05255b7c035108dac988bf66d3f78606e0ebde677c1eacf2322'},
+ {'bytes': 25138,
+  'relative': 'swdb/feature_reports.py',
+  'sha256': '561462bfc97f2bd7b6e093a0e17f707374e369793fef564df82ae701505f87bc'},
+ {'bytes': 27108,
+  'relative': 'swdb/formal_frame.py',
+  'sha256': 'bcee46cf9e585f1b7a16e7c8f89e7667a279359bc8db3865f87d04d522d56a98'},
+ {'bytes': 2160,
+  'relative': 'swdb/formula.py',
+  'sha256': 'cdeaffb72042173c1cac2f33522644bd5201082082b36705706ff0f85c652f99'},
+ {'bytes': 4763,
+  'relative': 'swdb/framac.py',
+  'sha256': '94db2a360fb0d29bf6f35f90b12f53b04e1a9a768139c88bbe8f7605fd8c2889'},
+ {'bytes': 14587,
+  'relative': 'swdb/functional_evaluation.py',
+  'sha256': 'b4cc95ccd75178cc919f2c09fd54aea631abc8a7190c01b38c6fc3d0799582f4'},
+ {'bytes': 19581,
+  'relative': 'swdb/handoff.py',
+  'sha256': 'c767cf9d9b305720ac7c21370518283cc10dbafdebb6942a13a1d6a0fefd8308'},
+ {'bytes': 9436,
+  'relative': 'swdb/handoff_level.py',
+  'sha256': '799fa03c9a661ca601aea1384e15ae22aa327d6e0b7c20293aa799f9e0df5111'},
+ {'bytes': 5192,
+  'relative': 'swdb/heap_bridge.mlw',
+  'sha256': '5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d'},
+ {'bytes': 375,
+  'relative': 'swdb/heap_model_environment.ml',
+  'sha256': 'ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b'},
+ {'bytes': 15468,
+  'relative': 'swdb/heap_model_packets.py',
+  'sha256': '805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185'},
+ {'bytes': 14470,
+  'relative': 'swdb/heap_model_vcs.py',
+  'sha256': 'f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092'},
+ {'bytes': 23986,
+  'relative': 'swdb/heap_model_view.py',
+  'sha256': '52b41faefd37d585fb2c8ff15c82e74fb602c6063848ec7808cbea816ea44451'},
+ {'bytes': 8386,
+  'relative': 'swdb/heap_reallocation.mlw',
+  'sha256': 'a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5'},
+ {'bytes': 24757,
+  'relative': 'swdb/helper_windows.py',
+  'sha256': '6ab445ad4ac32a1b72899f6debcf445c8afb7cd29d21503f21a2ab4a4bc145d5'},
+ {'bytes': 31769,
+  'relative': 'swdb/hint_check.py',
+  'sha256': '9d3f3fc90219723ab9e4fca280dec773f1c954827f632cfc13087cfbd22d13aa'},
+ {'bytes': 10157,
+  'relative': 'swdb/hint_tree.ml',
+  'sha256': 'b9ce42a7a7ae6f6ba896b563d0d1559802482cbcf6dcd77faa1a85cd75ce59e6'},
+ {'bytes': 2563,
+  'relative': 'swdb/host_identity.py',
+  'sha256': '815389013ab120308ff6fbd2e51c4713bc6894c9d3ae19a76cfa319bb583c00e'},
+ {'bytes': 3378,
+  'relative': 'swdb/host_observation.py',
+  'sha256': '80dc7df5bfb801c64ccd3e11494f2e88ed2b38b32f5ab440146ce5349cf96842'},
+ {'bytes': 3169,
+  'relative': 'swdb/intrinsic_source_views.py',
+  'sha256': 'f679650a0f03c4c6b99aaafa807a16f612d59814f91a044460a45ecbbd7db835'},
+ {'bytes': 6781,
+  'relative': 'swdb/isa.py',
+  'sha256': 'e6ed6002b073f722f6540fe9d17a6aab52f617b22b06e030f744703063be8444'},
+ {'bytes': 12219,
+  'relative': 'swdb/iteration_ladder.py',
+  'sha256': 'cd2d2f28193672d5b6d0546098e8b548518ce661d1a412bbefda41151be641ab'},
+ {'bytes': 11677,
+  'relative': 'swdb/kernels/__init__.py',
+  'sha256': '22b25e833489227e52a04d60243ff05161dca791ec81e956435a3136f2ba6d87'},
+ {'bytes': 21516,
+  'relative': 'swdb/kernels/bc.py',
+  'sha256': '86d6aa4cb55ee0d0b4e5e4463f1893c51ff4dc80b70ea1c44748744e3dd8ca4a'},
+ {'bytes': 6646,
+  'relative': 'swdb/kernels/bfs.py',
+  'sha256': 'bd77f6ba18fb4ea98ec187eebe41c4f79d3db9bf31e2eb47daffe45b96692bfd'},
+ {'bytes': 6683,
+  'relative': 'swdb/lanl.py',
+  'sha256': '0a7f51232a648a3770f3b321ae32a71b3e8f7d6312a1c6bf2f15325b43353fd1'},
+ {'bytes': 7250,
+  'relative': 'swdb/lanl_contracts.py',
+  'sha256': '568a619fc80fee5b22b0490afeae685ec191d2951699604728f908c6fe98bb88'},
+ {'bytes': 1680,
+  'relative': 'swdb/lanl_kernels.py',
+  'sha256': '7d063bb8ed808c0114d11857423f234842857df96defb0af96808caf8436646f'},
+ {'bytes': 12174,
+  'relative': 'swdb/lanl_performance.py',
+  'sha256': 'c5f9bdfd0d97404e9536684c2d6dcc012bce97dd4a5ae7b3f040d37f6173a684'},
+ {'bytes': 9008,
+  'relative': 'swdb/lanl_sources.py',
+  'sha256': '2f9b6bdf69d69d2f6f1a374a3cfcdc7e9a321ed761ec858333e7f5e13f955e0e'},
+ {'bytes': 7667,
+  'relative': 'swdb/lanl_validation.py',
+  'sha256': '8a5daa2dbbf7287368f3678a7131c2799868bf3c43f79bf7d42b99a27003b3b2'},
+ {'bytes': 32753,
+  'relative': 'swdb/level_rule.py',
+  'sha256': '5353e6b33e1a4648c4cb77b1bd39ec2c57ef4f554ffe98cbc4e2e048a24aea7a'},
+ {'bytes': 46103,
+  'relative': 'swdb/library.py',
+  'sha256': '70a22a19c7baee1a5f1562d99023d67486957f3e21c84d9f60ab491b9f3b8c3a'},
+ {'bytes': 36730,
+  'relative': 'swdb/library_operation_blinding.py',
+  'sha256': '5dfea94c2a30d095001d8f835883a3ab8c336908f858db710d6c15118444f9b1'},
+ {'bytes': 35279,
+  'relative': 'swdb/library_operations.py',
+  'sha256': '20cb67a0a61327510e67ba519866ef6adfcc0ecaeb30525f23452298520c3931'},
+ {'bytes': 36691,
+  'relative': 'swdb/llvm/Characterize.cpp',
+  'sha256': '3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f'},
+ {'bytes': 16243,
+  'relative': 'swdb/llvm/CountingRuntime.cpp',
+  'sha256': '43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e'},
+ {'bytes': 10233,
+  'relative': 'swdb/llvm/LiveObjects.hpp',
+  'sha256': '5f634c904a2659b75bec4f6fb1bfe5d85917999908ff5916798114b57bcf4e41'},
+ {'bytes': 8138,
+  'relative': 'swdb/llvm/LogicalCommands.hpp',
+  'sha256': 'b193b9dc080fb5dc01a0c50317cd4e3b0c7bb510f49f329b4c4012ee253fb950'},
+ {'bytes': 7949,
+  'relative': 'swdb/llvm/ObjectScopeRuntime.hpp',
+  'sha256': '39d52fea4be446d80c1c9adbdfcc4b06d2c7ab69ce69d1f667454ec9b5651373'},
+ {'bytes': 7485,
+  'relative': 'swdb/llvm/ObjectScopes.hpp',
+  'sha256': '5c81304e2ef3714b7da07c947cbec750342d1886e92d50defa920d9a9e9ab794'},
+ {'bytes': 11287,
+  'relative': 'swdb/llvm/OpenMPCallProjection.cpp',
+  'sha256': 'db19854dadbf8979ce3934fe2e219af28863c126234717d66eeabfc625cbd193'},
+ {'bytes': 9159,
+  'relative': 'swdb/llvm/SemanticCommands.hpp',
+  'sha256': '9ad207ea369f24f1ffe02ebdfbd328b0262f38d1b4b42fd0ef5bc7fe392c7912'},
+ {'bytes': 26978,
+  'relative': 'swdb/logic_library.py',
+  'sha256': '5cdafcd88e164f2ab34e5f503e57533cc1ce2d68d40fcaae04455a813a86640c'},
+ {'bytes': 7644,
+  'relative': 'swdb/machine.py',
+  'sha256': '258259e5765ae18f44f327a80d71860b3dbe2921114b3ea894e84bc73426b32e'},
+ {'bytes': 41874,
+  'relative': 'swdb/member_windows.py',
+  'sha256': 'e0966df226e758e588bc3f78e45def32bf0221dfdba9ff153a22f7e74cdc048d'},
+ {'bytes': 8849,
+  'relative': 'swdb/method_version.py',
+  'sha256': '115b4f56f7e77c8c7dfa6522cc446244d54f032c2d71f0463cecc8ba0d2d1b17'},
+ {'bytes': 35548,
+  'relative': 'swdb/model_domains.py',
+  'sha256': '0abeb81edf3a7c92b0465d9a617ef272f85f9263cc50427e3e46a1743d51e17a'},
+ {'bytes': 1278,
+  'relative': 'swdb/native/CpuAllocatorCount.cpp',
+  'sha256': '3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff'},
+ {'bytes': 2361,
+  'relative': 'swdb/native/CpuAllocatorTimer.cpp',
+  'sha256': '576026c6e9093f286e8c6f89e3c2adc201a4aa07424d287c65a9269405af8efb'},
+ {'bytes': 1235,
+  'relative': 'swdb/native/CpuAllocatorWork.h',
+  'sha256': '81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8'},
+ {'bytes': 1236,
+  'relative': 'swdb/native/CpuBulkCount.cpp',
+  'sha256': '1051a1ad01b55368257a5de825cf31864bf49f3a0088f0ee8425a6dd2d18ca24'},
+ {'bytes': 2399,
+  'relative': 'swdb/native/CpuBulkTimer.cpp',
+  'sha256': '5f2c71773bdb29e65501440500f3b4da695f1f9b3e026a6c177f1c17b7fcc536'},
+ {'bytes': 1503,
+  'relative': 'swdb/native/CpuBulkWork.h',
+  'sha256': 'a8926f80c4aaa74f247b915f52b63396b518990646bafe2690e679891a3c10be'},
+ {'bytes': 8215,
+  'relative': 'swdb/native/CpuCalibration.cpp',
+  'sha256': '3368e0a9afb761ce0564a2959977ae7a2aaf7483a475843099268ddd475c6f47'},
+ {'bytes': 627,
+  'relative': 'swdb/native/CpuCount.cpp',
+  'sha256': '9d739f2f19f19d0c91d6ad50d5439e2a3c6c073be41d1d14fe111b368ddfd3f3'},
+ {'bytes': 503,
+  'relative': 'swdb/native/CpuFloatMemoryCount.cpp',
+  'sha256': '2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297'},
+ {'bytes': 1790,
+  'relative': 'swdb/native/CpuFloatMemoryTimer.cpp',
+  'sha256': '647db310646980a1a76d64e6b82080a03f8195cc44e58d5121c936b62c09bd33'},
+ {'bytes': 496,
+  'relative': 'swdb/native/CpuFloatMemoryWork.h',
+  'sha256': '577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0'},
+ {'bytes': 598,
+  'relative': 'swdb/native/CpuLibraryCallCount.cpp',
+  'sha256': '0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e'},
+ {'bytes': 2385,
+  'relative': 'swdb/native/CpuLibraryCallTimer.cpp',
+  'sha256': '563839ee8f9160a0d91009454031ef5ab5ceb248721fef436e097b7dbb258f30'},
+ {'bytes': 4287,
+  'relative': 'swdb/native/CpuLibraryCallWork.h',
+  'sha256': '62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c'},
+ {'bytes': 1210,
+  'relative': 'swdb/native/CpuMemoryCount.cpp',
+  'sha256': 'b20f1471936856fdb6bae890a4097f98e5b6593b9f42caa4a42c42832289f4f8'},
+ {'bytes': 3516,
+  'relative': 'swdb/native/CpuMemoryTimer.cpp',
+  'sha256': 'c72b767e349128595b84582a191091af2c2e714a05dd106adc441d5bbb8da676'},
+ {'bytes': 3566,
+  'relative': 'swdb/native/CpuMemoryWork.h',
+  'sha256': '02e71c52dc1be92db92bbf06501a8828a375975ab18e2054d39397ee5ef66daf'},
+ {'bytes': 999,
+  'relative': 'swdb/native/CpuOpenmpCount.cpp',
+  'sha256': '825609efb5472afd1e60892c7ac15c6bb60863f4dd64dc97c7e1d7fa63d891db'},
+ {'bytes': 2259,
+  'relative': 'swdb/native/CpuOpenmpTimer.cpp',
+  'sha256': '16a2dfb752130c281e24f874b5008d584979ff4a7314a2a63b76238a8155354a'},
+ {'bytes': 6989,
+  'relative': 'swdb/native/CpuOpenmpWork.h',
+  'sha256': '2919d7a8123e711bcf198fde13c36689c7759be22a8d515054dfa14904b78d99'},
+ {'bytes': 351,
+  'relative': 'swdb/native/CpuServiceCount.cpp',
+  'sha256': '9745a510ad04ae9b9aa2250d5cd49577f09a5d73e1fc2a2e8b666e274409f2d9'},
+ {'bytes': 1172,
+  'relative': 'swdb/native/CpuServiceTimer.cpp',
+  'sha256': '14332e159810563b8d49a03569099f8a336d495cd5a8b0bd76663f8283d0e669'},
+ {'bytes': 555,
+  'relative': 'swdb/native/CpuServiceWork.h',
+  'sha256': '07d7bf48b5d9afb1b0725f2abf7a57f301c17d355b72676d214186ba1d7150cf'},
+ {'bytes': 1485,
+  'relative': 'swdb/native/CpuWork.h',
+  'sha256': '18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393'},
+ {'bytes': 24407,
+  'relative': 'swdb/nested_entry_reads.py',
+  'sha256': 'f194cc302cb20b2a4c5881699d756e0a7c301ad937098e0f244d0b6048cfbc11'},
+ {'bytes': 18754,
+  'relative': 'swdb/offload_observation.py',
+  'sha256': '015cd82004627dedcc0082e10e520fc91f10afeb19041a43063f76516b95e1c3'},
+ {'bytes': 1221,
+  'relative': 'swdb/paths.py',
+  'sha256': '788ec6ee5b17e77ec6ca0ab1b3034f7763a69cd71569d119af44a7c85f92b0ef'},
+ {'bytes': 25352,
+  'relative': 'swdb/predicate_grammar.py',
+  'sha256': '99c1b350046c981cf5e6c2fe5f5a5c3bb35dbd22fd1cc4b5c13a30a77c1238f1'},
+ {'bytes': 374,
+  'relative': 'swdb/problems.py',
+  'sha256': 'ecc53c60073324d03f975b0025221d877bf7226c07879f64ee45da2facec9c95'},
+ {'bytes': 912,
+  'relative': 'swdb/processes.py',
+  'sha256': 'bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289'},
+ {'bytes': 48808,
+  'relative': 'swdb/profile.py',
+  'sha256': '9ec9bd1c0cdf5cdf34b738867880216e7e659d810b28aba1793a1394d984053a'},
+ {'bytes': 36614,
+  'relative': 'swdb/profile_package.py',
+  'sha256': '2fbd8fc9d68f612414373fb52bea4998114ffdb55b038f05b6645461f0593cf2'},
+ {'bytes': 51186,
+  'relative': 'swdb/proof.py',
+  'sha256': '6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802'},
+ {'bytes': 12055,
+  'relative': 'swdb/proof_hint_wrapper.py',
+  'sha256': 'f73fb4cb4b480216a8dbbcbf29b4177d938d668fb30a6d3c625613e5028f813e'},
+ {'bytes': 31975,
+  'relative': 'swdb/proof_hinting.py',
+  'sha256': '4f2d5f51d4011578437bca361d14c985adf25bbd9103420810ccafa7a380e987'},
+ {'bytes': 20958,
+  'relative': 'swdb/proof_lane.py',
+  'sha256': 'f40248f4f0732b9db97aee13bb7d3b9578c32a749762ac277b55487d7c6e7831'},
+ {'bytes': 12925,
+  'relative': 'swdb/proof_report.ml',
+  'sha256': '8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16'},
+ {'bytes': 36135,
+  'relative': 'swdb/proof_semantics.py',
+  'sha256': '22c2f2bbe14064c5abf14177902c45b9be8a8cc40b5411e7a770465a9feee597'},
+ {'bytes': 53872,
+  'relative': 'swdb/proof_setup.py',
+  'sha256': 'f85605cd87561bbaadedcfcd4deb2fa00d3c967dd3031cb9f0a6c27bb4d64af7'},
+ {'bytes': 19362,
+  'relative': 'swdb/provider_adapters.py',
+  'sha256': '5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8'},
+ {'bytes': 66897,
+  'relative': 'swdb/provider_audit.py',
+  'sha256': '9a3bd196c01675f104516b36c95a150405c038381a5a815db4e6dc7668c739ed'},
+ {'bytes': 57615,
+  'relative': 'swdb/provider_guard.py',
+  'sha256': '6b6aaccae09e11d298ee0a59408f7be32452e33a8cbcc39ec5527a3554a73039'},
+ {'bytes': 18546,
+  'relative': 'swdb/provider_login.py',
+  'sha256': 'a658e5564f58158e83b60d825141b2510443f646a91d28518a746873b3ac96ba'},
+ {'bytes': 17033,
+  'relative': 'swdb/provider_roles.py',
+  'sha256': '4b080f9b8e79cced28b1dfad6a155a8f8e600ffc60dc18d647a68ab60b51856b'},
+ {'bytes': 38249,
+  'relative': 'swdb/provider_workspace.py',
+  'sha256': 'd1aa512ae42b9985ad9f2a9b5a7b10b62c4b940c90b8c0ade4069cbaf56daf8a'},
+ {'bytes': 11025,
+  'relative': 'swdb/read_only_checks.py',
+  'sha256': 'b7a560ef8eae9929185740b5b1f1fd35b803966f63b44d78fc9958b85523049d'},
+ {'bytes': 23773,
+  'relative': 'swdb/retention.py',
+  'sha256': 'bbaa46f702e3106532227f0103ddd58db0c896b9bfda8b683bd5d225df080707'},
+ {'bytes': 36354,
+  'relative': 'swdb/rewrite.py',
+  'sha256': '9647a64d0e601791a2f3b78498c53defbfb597fcaf20be45d824b7fd614879f6'},
+ {'bytes': 10331,
+  'relative': 'swdb/rocq_adapter.py',
+  'sha256': '833c886a5b359d34e0a71489556403249c0ca8c0d15fa3c4a95940700729b45b'},
+ {'bytes': 7623,
+  'relative': 'swdb/rss_watchdog.py',
+  'sha256': '8cbe4f803951cee080581862b69a0b7bf21e35c554dc5cfde4db7d9f2779e5b6'},
+ {'bytes': 26181,
+  'relative': 'swdb/rules.py',
+  'sha256': 'f55145cc68c4d28761e7473f4708c72b20185fd8549fff768a50ea07e47ac229'},
+ {'bytes': 4839,
+  'relative': 'swdb/schemas.py',
+  'sha256': '8da8921ff80fa4c64a0184887238dca19a9a11fb286dca99925343e3dd41178c'},
+ {'bytes': 5144,
+  'relative': 'swdb/sg_graph.py',
+  'sha256': '6580ddca362bf8bd987a0c7fc8d44e9e59ef18300ac16bbe7766884d4830a2a2'},
+ {'bytes': 5859,
+  'relative': 'swdb/sg_stream.py',
+  'sha256': 'f86b7e30a6edf56ca03728a86f52d11469c6504a3c8510578131100c0752ed52'},
+ {'bytes': 20770,
+  'relative': 'swdb/site_finder.py',
+  'sha256': 'f7b23f8f2e9f2e08a928ef0718527d3c2519c9c5cc25e10140ef2725d6d53167'},
+ {'bytes': 6177,
+  'relative': 'swdb/standard_model_view.py',
+  'sha256': 'a9b0ac93e830fa966114f0a853b638d93a2274f64cf48a0cd5fe14c1bd2774b1'},
+ {'bytes': 14444,
+  'relative': 'swdb/standard_range_calls.py',
+  'sha256': 'c6e6d076a7e0337736b0f84a2d1537f99db2b16c0e1ab50b35911c6eca384f4b'},
+ {'bytes': 9006,
+  'relative': 'swdb/standard_range_model.py',
+  'sha256': '5c8d385b2e506c77db69cfc664b5d33dc2514cd14d09ef79a8a1810f4c16084f'},
+ {'bytes': 10126,
+  'relative': 'swdb/standard_vector_member_view.py',
+  'sha256': '6636e5857616e8b93e26c1f0b9c0fed26ef5e9ec565e116586c683625c6fe966'},
+ {'bytes': 29179,
+  'relative': 'swdb/std_models.py',
+  'sha256': 'cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2'},
+ {'bytes': 30455,
+  'relative': 'swdb/stdlib_provenance.py',
+  'sha256': '4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4'},
+ {'bytes': 4978,
+  'relative': 'swdb/stdlib_source_admission.py',
+  'sha256': '151d41a22f68fc07613657f6484a408444f49a519d612f792e053a2bb0b9d1b4'},
+ {'bytes': 7424,
+  'relative': 'swdb/store.py',
+  'sha256': '60f28c237502021fe65eb512211226b5510791b532b0e7dd308293f90a12bf5a'},
+ {'bytes': 9490,
+  'relative': 'swdb/strategy.py',
+  'sha256': '09bc96c5f7b7366e99211c0695ddbac5bcad56cd20b7821ae818db9f5039c8fb'},
+ {'bytes': 5899,
+  'relative': 'swdb/summary_agreement.py',
+  'sha256': '9f64be85ee141dd97283667838b457be7276082a7548527df1b8219d4a1945da'},
+ {'bytes': 12679,
+  'relative': 'swdb/summary_bindings.py',
+  'sha256': '1c5d99b99753eb8c92f039722c15ece12b488af99003047b7cc9b2a81b2a6100'},
+ {'bytes': 17580,
+  'relative': 'swdb/terminal_release.py',
+  'sha256': '51c3bcdfe64b057642dfb2eab549fb49181d23b9ccb635ff8a193fd4ab8e09da'},
+ {'bytes': 5249,
+  'relative': 'swdb/validate.py',
+  'sha256': '014b150aed2c664ce3535134b521379f4b2807c5b001902c00952ac179622869'},
+ {'bytes': 3128,
+  'relative': 'swdb/vector_owned_effects.mlw',
+  'sha256': '6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5'},
+ {'bytes': 13172,
+  'relative': 'swdb/vector_owned_move_binding.py',
+  'sha256': '8752c13dbac1fa74ca658d9b8d0d1a775c4e44035886f9c3ec18370432720d5a'},
+ {'bytes': 36807,
+  'relative': 'swdb/vector_owned_move_composition.py',
+  'sha256': 'a8fe8f029ac28ed2df5e4cb06575ea74c97d721d66cab65cb29dd23fdb79c89f'},
+ {'bytes': 31224,
+  'relative': 'swdb/vector_owned_move_source.py',
+  'sha256': '978518aa169bf6975a906a43d96ffe450f9a2e1fefd158cccd338c67b16337bc'},
+ {'bytes': 10583,
+  'relative': 'swdb/vector_owned_source_view.py',
+  'sha256': 'c76c45afc64a84f6d1cbe1e23e05c175dc1b612abb5f23679d40e7db6c43f8f2'},
+ {'bytes': 2389,
+  'relative': 'swdb/vector_owned_state.mlw',
+  'sha256': 'a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6'},
+ {'bytes': 7014,
+  'relative': 'swdb/vector_owned_swap_header_cases.py',
+  'sha256': 'daa2ff0ec0c854fa28b534792bbdc099ae28a810671226d43494cec863148e03'},
+ {'bytes': 11992,
+  'relative': 'swdb/vector_owned_swap_parts.py',
+  'sha256': '99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b'},
+ {'bytes': 14594,
+  'relative': 'swdb/vector_owned_transfer.py',
+  'sha256': '6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085'},
+ {'bytes': 27179,
+  'relative': 'swdb/vector_ownership.py',
+  'sha256': '58bf8bbd370cd735bb5eceb6e6c49a6f08e97d97b4c73207ca7fe8727c6c6595'},
+ {'bytes': 31815,
+  'relative': 'swdb/vector_pipeline.py',
+  'sha256': 'fc7c06e21b10b71a2b6ac89dca409f0fe6237b530286ace110f791b8d330e382'},
+ {'bytes': 10906,
+  'relative': 'swdb/vector_reallocation_caller_packets.py',
+  'sha256': 'a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0'},
+ {'bytes': 6775,
+  'relative': 'swdb/vector_reallocation_caller_vcs.py',
+  'sha256': 'e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a'},
+ {'bytes': 10196,
+  'relative': 'swdb/vector_reallocation_caller_view.py',
+  'sha256': '47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413'},
+ {'bytes': 10760,
+  'relative': 'swdb/vector_reallocation_calls.py',
+  'sha256': 'd1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95'},
+ {'bytes': 2235,
+  'relative': 'swdb/vector_reallocation_capacity.py',
+  'sha256': 'e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617'},
+ {'bytes': 24960,
+  'relative': 'swdb/vector_reallocation_closed_binding.py',
+  'sha256': '3f5337fbbaddc13c6845a57d0d30d83c07a55f051526e1215bfc69eda525ccd5'},
+ {'bytes': 27207,
+  'relative': 'swdb/vector_reallocation_closed_evidence.py',
+  'sha256': '5d997dfbb1f2bef48ca07126d3a98697756254af1fc26d8f18a94aef009fc77f'},
+ {'bytes': 14256,
+  'relative': 'swdb/vector_reallocation_closed_lifetime.py',
+  'sha256': 'ac631823afe598629032482b9383a4bfb8f6673ca71f1f7795a55c6d905361ee'},
+ {'bytes': 16475,
+  'relative': 'swdb/vector_reallocation_closed_lifetime_parts.py',
+  'sha256': 'ce98fdba6a2439a72997cbc956daa1854a722cab3d8681897557384122f229f9'},
+ {'bytes': 8466,
+  'relative': 'swdb/vector_reallocation_closed_route.py',
+  'sha256': '429895c2a7b9bedaaa14f0dc8bdd5a76cede173f6a9a5a82d33713c988881d81'},
+ {'bytes': 11840,
+  'relative': 'swdb/vector_reallocation_closed_view.py',
+  'sha256': '758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757'},
+ {'bytes': 13396,
+  'relative': 'swdb/vector_reallocation_composition.py',
+  'sha256': 'fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108'},
+ {'bytes': 7516,
+  'relative': 'swdb/vector_reallocation_inventory.py',
+  'sha256': '0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07'},
+ {'bytes': 3768,
+  'relative': 'swdb/vector_reallocation_lifetime.py',
+  'sha256': 'd20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159'},
+ {'bytes': 8185,
+  'relative': 'swdb/vector_reallocation_model.py',
+  'sha256': '92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89'},
+ {'bytes': 8197,
+  'relative': 'swdb/vector_reallocation_private_frame.py',
+  'sha256': '062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da'},
+ {'bytes': 50364,
+  'relative': 'swdb/vector_reallocation_vcs.py',
+  'sha256': 'f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9'},
+ {'bytes': 5207,
+  'relative': 'swdb/vector_reallocation_view.py',
+  'sha256': '05eaa7414580b11a54b7f6ebf63db20b28fd6aea0c5de4da00fc70a3bd0c57d4'},
+ {'bytes': 6049,
+  'relative': 'swdb/verifier_lock.py',
+  'sha256': '35329946b838d80edd842d235ad477b6727d08eeebd66f28a0adc47ecb8bbeb8'},
+ {'bytes': 10398,
+  'relative': 'swdb/view.py',
+  'sha256': '534569e3b2f271fa5e6e1304d8cc3f19b959f8b986ff99d231cf9ce0e2dcc5f5'},
+ {'bytes': 3333,
+  'relative': 'swdb/vocab.py',
+  'sha256': 'c554826daf3cdcf215dee0ebfb71b09f52774c5c42ab3b61cbec0b3cf6679e43'},
+ {'bytes': 39895,
+  'relative': 'swdb/workflow.py',
+  'sha256': 'a05c722584264c910d36458717d4fe6d3554855895e50175bfab77e120c22655'},
+ {'bytes': 104308,
+  'relative': 'swdb/wp_adapter.py',
+  'sha256': '56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229'},
+ {'bytes': 16839,
+  'relative': 'swdb/wp_phase.py',
+  'sha256': '1a2c0905138e9eb6db6ef8380f083b7d192c0a3bd694bf3b792218b4d3d3f799'},
+ {'bytes': 64171,
+  'relative': 'swdb/wp_pointer_bounds.py',
+  'sha256': '62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241'},
+ {'bytes': 6561,
+  'relative': 'swdb/writer.py',
+  'sha256': '544d9604b1f1f331f6b45ea0a574eae8b90d523faaf4c9e58a0e8023ed8af4bf'},
+ {'bytes': 2336,
+  'relative': 'swdb/yamlio.py',
+  'sha256': '8c92d644f5abca0f7031ce52e1577892cf1b7c79bc730484112eedb3e39439c0'},
+ {'bytes': 12448,
+  'relative': 'tests/conftest.py',
+  'sha256': '7c3d36f8c0b6e23e6eacf622b31ce3e051fc31af1c494d1dfab97bf1012165bb'},
+ {'bytes': 327,
+  'relative': 'tests/fixtures/proof/lowering/vector_owned_transfer.cc',
+  'sha256': 'a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2'},
+ {'bytes': 4037,
+  'relative': 'tests/fixtures/proof/methods/contract-fixture-1.yaml',
+  'sha256': 'a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29'},
+ {'bytes': 3079,
+  'relative': 'tests/testkit/standard_library.py',
+  'sha256': 'e02a87c48bce91bb8d42fe1d2299362a945ccadc4528d252ed52e1be8517e351'},
+ {'bytes': 924,
+  'relative': 'vocab/address_shapes.yaml',
+  'sha256': 'cdcb602c3accb8ae8875460e96e9765c0644a58ab05770b5185db88bb3484ae6'},
+ {'bytes': 411,
+  'relative': 'vocab/array_roles.yaml',
+  'sha256': 'b88a7f30149dc95db2eb03a19e09a1db411496be71bd689ff844ee5cfd53eb88'},
+ {'bytes': 922,
+  'relative': 'vocab/basis.yaml',
+  'sha256': '33b1a4db8613a361c9815329cee352d8fd368215460da3611a987ee365b324e8'},
+ {'bytes': 549,
+  'relative': 'vocab/bottleneck_classes.yaml',
+  'sha256': 'f6ce03cc887e40d3dece1c1cb0cfd3ed9df69a64c3e42e492a768db231e19509'},
+ {'bytes': 597,
+  'relative': 'vocab/count_scopes.yaml',
+  'sha256': 'ac77bf69d50eb4c71d760d20e46b2d0f0dfcbf1a1e68802584258c9dbc87f915'},
+ {'bytes': 456,
+  'relative': 'vocab/degree_distributions.yaml',
+  'sha256': '402eb97cfc5817780b03a8cc9cbbc2deab2f6da0e10bf80966424be559bdfc62'},
+ {'bytes': 637,
+  'relative': 'vocab/domains.yaml',
+  'sha256': '74bace9433c38e27bc69a4c3e85bd320c6337a390a4016e5f10772a326aeb0ee'},
+ {'bytes': 1119,
+  'relative': 'vocab/effect_kinds.yaml',
+  'sha256': 'a36ab3a708dd182c0b46eef4b0e94812e9eb01160e070d18f0daa3cba7f456e3'},
+ {'bytes': 591,
+  'relative': 'vocab/implementation_origins.yaml',
+  'sha256': '05fc65309cbc94a30dac58f9f064c886833a5d8ea532c1067a686a850f34f3a6'},
+ {'bytes': 354,
+  'relative': 'vocab/index_localities.yaml',
+  'sha256': '93755d7241b3c1c02b6fb2457a04ff9897d51453863744f579e9c975e3748d47'},
+ {'bytes': 491,
+  'relative': 'vocab/index_transforms.yaml',
+  'sha256': '5198ca1f4d2d972a4093d409fa76dfd23ca48debb15c09f6a2f4b03ccb2609ec'},
+ {'bytes': 412,
+  'relative': 'vocab/input_densities.yaml',
+  'sha256': '57911d673c048d9edf2a3cc200f35e2f559a8340a757700dc3d95c0f08aadf7e'},
+ {'bytes': 402,
+  'relative': 'vocab/input_formats.yaml',
+  'sha256': 'e4483a3bdf95db1ff463504c3326d786bb2d54c2e6c9c0aeafb5841b51564110'},
+ {'bytes': 1449,
+  'relative': 'vocab/input_properties.yaml',
+  'sha256': '44e2b7c56aaea7c124dd2ba3d3a9aca62d79c86316930022a8866f913dd36034'},
+ {'bytes': 942,
+  'relative': 'vocab/intrinsic_memory_kinds.yaml',
+  'sha256': '4dba7ed860cd967c4394ffa96b89179d0bb8168c2ad671655bec11d69c1fd4c3'},
+ {'bytes': 1244,
+  'relative': 'vocab/isa_extensions.yaml',
+  'sha256': 'afdce05adadec55b8ca277adb5f39dcb7784946b3be22633d80d0f4276a7c28e'},
+ {'bytes': 228,
+  'relative': 'vocab/isa_families.yaml',
+  'sha256': '85a184ada5ec37e5b0f0e3f2d4f9dd221c669b1a7a0a815b30cdad55d3043cf0'},
+ {'bytes': 465,
+  'relative': 'vocab/layouts.yaml',
+  'sha256': 'cba510d68e36af47a0cfafe2745a64452c78b975fc11e6831678fa3099b1dc9e'},
+ {'bytes': 544,
+  'relative': 'vocab/loop_restructures.yaml',
+  'sha256': '1025be6dc902699d0d46e6827ca6e6b15f7a0a995dbe13d2c86a2c3dbd84cfcb'},
+ {'bytes': 341,
+  'relative': 'vocab/memory_limits.yaml',
+  'sha256': '0c9484f2533f70ff64aa8f9935dfa60d3f9f1367ac1be68aaf935ad66c135255'},
+ {'bytes': 3610,
+  'relative': 'vocab/metrics.yaml',
+  'sha256': '4d0ce198e90a75844775710ed13892f864cc8dbcf41cd3438e084c53ffa679d1'},
+ {'bytes': 503,
+  'relative': 'vocab/numerical_requirements.yaml',
+  'sha256': '6fcdf6eb2ed6c583891282da851a594bc535504979837ea7f76a471c87bf5177'},
+ {'bytes': 658,
+  'relative': 'vocab/orderings.yaml',
+  'sha256': '504ee1c2596ef0f809c430832d11233f5cf650fe35b4e8cca38d239eb59a2880'},
+ {'bytes': 461,
+  'relative': 'vocab/parallel_constructs.yaml',
+  'sha256': '8154d0c5fe995386984aa9a4b682e771f6837cf97cb5c7393e6691ca42b2ebfa'},
+ {'bytes': 415,
+  'relative': 'vocab/parallel_models.yaml',
+  'sha256': '1631d376f2a8320c8af0f3ba6777789660b23d03e47d007a2e89f546e329d826'},
+ {'bytes': 1113,
+  'relative': 'vocab/proof_assumption_kinds.yaml',
+  'sha256': 'd9891f2065dc961b706982d9344d38481e135bb3572999fffddc523d8b6efd84'},
+ {'bytes': 6226,
+  'relative': 'vocab/proof_failure_classes.yaml',
+  'sha256': '77d89f4528bcefb5dfc56184c1f7a4504402942b3beb84167fa15ebf0ec432ac'},
+ {'bytes': 3093,
+  'relative': 'vocab/proof_hint_kinds.yaml',
+  'sha256': '5cce1efb07a646c9ec0cff21b1bc38a1b449193b6fbe1b1f04dd85e1c10836bc'},
+ {'bytes': 3963,
+  'relative': 'vocab/proof_hint_rules.yaml',
+  'sha256': 'ea7a5b1fef3324ca64d3a9067aa30764f99e8c079584d5bda6c1f271cf0558f7'},
+ {'bytes': 3916,
+  'relative': 'vocab/proof_part_names.yaml',
+  'sha256': '59efcddcbc50b818af350db8b5dd204e6bbdcfa81b75f04e5dafa169f9659890'},
+ {'bytes': 1492,
+  'relative': 'vocab/proof_subject_kinds.yaml',
+  'sha256': '87170568275144921df5c4f79713fbcba5ac30c4f1154f8403ca20a6b3efe41d'},
+ {'bytes': 625,
+  'relative': 'vocab/provenance_kinds.yaml',
+  'sha256': 'ff2939677f4a312bd722fe4953c0b9a402594c990a7e6da17dda06cd89d28d5d'},
+ {'bytes': 5491,
+  'relative': 'vocab/record_kinds.yaml',
+  'sha256': '786e179adec97bf0ccb945d05688e3bf3d747141d60adf6a1afb910a144ca2b7'},
+ {'bytes': 406,
+  'relative': 'vocab/run_outcomes.yaml',
+  'sha256': '1fe70da6d640d6f5fb3181063137e3be705a4872fcd22ef05d37fee627a56975'},
+ {'bytes': 556,
+  'relative': 'vocab/run_parts.yaml',
+  'sha256': '28bbfac9db67090be6ea3838d1acb7cc81e2e74879cc4f019ed03e5947a7e119'},
+ {'bytes': 1154,
+  'relative': 'vocab/shared_action_kinds.yaml',
+  'sha256': 'cd1505544ec9ff397e232b738275f54277312e0611256d8b61dce126b54b2113'},
+ {'bytes': 301,
+  'relative': 'vocab/source_origins.yaml',
+  'sha256': '0545800494fe485b0120e7c816a8bd18349dfd914dcf8f9872b4c13fc58facda'},
+ {'bytes': 479,
+  'relative': 'vocab/strategy_targets.yaml',
+  'sha256': '627e7316535fcb5d39a66d7dd276715a56c0f2d97a0d97bbe6cd7a2d500ff9db'},
+ {'bytes': 384,
+  'relative': 'vocab/timer_formats.yaml',
+  'sha256': '92c682cf11adfb56deca21fe7d12ba3ff7dedab853e2de2e08d3cce2c2f8bce3'},
+ {'bytes': 773,
+  'relative': 'vocab/update_kinds.yaml',
+  'sha256': 'c2ec38c48b74e040f97acbc509cd40342244dc879bc4cb7d19f1b52d43fd87ba'})
+OUTPUT = '/private/tmp/probata-closed-move-original-b86-v3/profile'
+FUNCTION = 'vector_owned_move_capture'
+METHOD = 'method.wp-vector-owned-move-original-c-diagnostic-v1'
+SOURCE = 'tests/fixtures/proof/lowering/vector_owned_transfer.cc'
+SOURCE_SHA = 'a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2'
+LOWERED_SHA = '5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34'
+CLAUSES = (r'requires 0 <= n;', r'assigns \nothing;', r'ensures \result == (n > 0 ? 7 : 0);')
+CAP = 8*1024**3
+WHOLE = 600
+NATIVE_SECONDS = 420
+BUDGET = 128*1024**2
+FINAL_HEADROOM = 256*1024
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def encoded(value):
+    return (json.dumps(value, sort_keys=True, indent=2, allow_nan=False)+'\n').encode()
+
+
+def pin(path):
+    raw = path.read_bytes()
+    return {'path': str(path), 'bytes': len(raw), 'sha256': sha(raw)}
+
+
+def normal_flags(tools):
+    # Exact WpAdapter._wp settings construction, with its sole source root.
+    # Heap check-lemma flags would append another relative -wp-out and are
+    # deliberately not used for this original C caller observation.
+    selected = any(flag == '-wp-prover' or flag.startswith('-wp-prover=') for flag in tools['flags'])
+    return [*tools['flags'], '-machdep', 'x86_64',
+            *([] if selected else ['-wp-prover', ','.join(tools['provers'])]),
+            '-wp-timeout', str(tools['seconds']), '-wp-par', '1', '-wp-smoke-tests',
+            '-wp-fct='+FUNCTION]
+
+
+def need(value, reason):
+    if not value:
+        raise ValueError(reason)
+
+
+def extent(root, *, active=False):
+    """Only this fresh private TMPDIR admits transient sockets/disappearance.
+
+    All final settled paths must be regular files or physical directories.
+    Links, unknown specials and races outside that exact scratch root refuse.
+    """
+    root = Path(root)
+    scratch = root/'wp/tmp'
+    total = 0
+    todo = [root]
+    while todo:
+        directory = todo.pop()
+        try:
+            entries = list(os.scandir(directory))
+        except FileNotFoundError:
+            if active and directory.is_relative_to(scratch):
+                continue
+            raise
+        for entry in entries:
+            path = Path(entry.path)
+            try:
+                mode = entry.stat(follow_symlinks=False)
+            except FileNotFoundError:
+                if active and path.is_relative_to(scratch):
+                    continue
+                raise
+            if stat.S_ISDIR(mode.st_mode):
+                todo.append(path)
+            elif stat.S_ISREG(mode.st_mode):
+                total += mode.st_size
+            elif not (active and path.is_relative_to(scratch) and stat.S_ISSOCK(mode.st_mode)):
+                raise ValueError('unexpected linked/special observation artifact: '+str(path))
+    return total
+
+
+def write(root, path, raw, *, reserve=True):
+    need(type(raw) is bytes and len(raw) <= 8*1024**2, 'bounded metadata/source write required')
+    need(extent(root) + len(raw) <= BUDGET-(FINAL_HEADROOM if reserve else 0),
+         'whole observation output budget exceeded')
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open('xb') as handle:
+        handle.write(raw)
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+class OutputWatch:
+    def __init__(self, root, kill_children):
+        self.root, self.kill_children = root, kill_children
+        self.stop = threading.Event()
+        self.error = None
+        self.cleanup_error = None
+        self.thread = threading.Thread(target=self.loop, daemon=True)
+
+    def loop(self):
+        while not self.stop.is_set():
+            if self.error is None:
+                try:
+                    need(extent(self.root, active=True) <= BUDGET-FINAL_HEADROOM,
+                         'active aggregate observation extent exceeded')
+                except Exception as error:
+                    self.error = type(error).__name__+': '+str(error)
+            if self.error is not None:
+                try:
+                    self.kill_children()
+                except Exception as error:
+                    self.cleanup_error = type(error).__name__+': '+str(error)
+            self.stop.wait(.1)
+
+    def __enter__(self):
+        self.thread.start()
+        return self
+
+    def __exit__(self, *unused):
+        self.stop.set()
+        self.thread.join()
+
+
+class ProducerGate:
+    """A latched output/deadline failure forbids every later tool workflow.
+
+    The process audit also covers subprocesses inside imported producer APIs.
+    The sole post-trip child exception is the existing monitor thread's exact
+    read-only ps fallback used to inspect/kill descendants on a Mac lacking
+    psutil. It is an OS/RSS cleanup mechanism, never a compiler/prover allowance.
+    """
+    def __init__(self, watch, deadline, *, clock=time.monotonic):
+        self.watch, self.deadline, self.clock = watch, deadline, clock
+
+    def check(self):
+        need(self.watch is None or self.watch.error is None,
+             'latched output guard forbids subsequent producers or completion')
+        need(self.clock() < self.deadline, 'whole original-C diagnostic budget spent')
+
+    def remaining(self, maximum):
+        self.check()
+        left = self.deadline-self.clock()
+        need(left > 0, 'whole original-C diagnostic budget spent')
+        return min(maximum, left)
+
+    def call(self, producer, *args, **kwargs):
+        self.check()
+        value = producer(*args, **kwargs)
+        self.check()
+        return value
+
+    def audit(self, event, args):
+        if event.startswith(('subprocess.', 'os.exec', 'os.spawn', 'os.posix_spawn', 'os.fork')) \
+                or event == 'os.system':
+            # Only the fixed existing resource-snapshot fallback can run in the
+            # trusted cleanup thread after a latch. Every other child is gated.
+            monitor = getattr(getattr(self.watch, 'thread', None), 'ident', None)
+            cleanup_ps = (event == 'subprocess.Popen' and len(args) >= 2
+                          and args[0] == 'ps' and args[1] == ['ps', '-A', '-o', 'pid=,ppid=,rss=']
+                          and monitor is not None and threading.get_ident() == monitor)
+            if not cleanup_ps:
+                self.check()
+
+
+def model_fragments(lowering, vector_member):
+    fragments = {}
+    for member in ('ctor_count_value', 'dtor', 'data', 'move_ctor'):
+        for name, text in vector_member('std_vector_int', 'int', member):
+            need(isinstance(name, str) and isinstance(text, str) and text,
+                 'complete named model fragment required')
+            need(name not in fragments or fragments[name] == text,
+                 'duplicate original model fragments disagree')
+            fragments[name] = text
+    need(tuple(fragments) == tuple(lowering.models),
+         'complete ordered original.models fragment membership differs')
+    rows = []
+    for name, text in fragments.items():
+        occurrences = lowering.text.count(text)
+        need(occurrences == 1, 'exact complete original model fragment absent or duplicated: '+name)
+        raw = text.encode()
+        rows.append({'name': name, 'fragment_sha256': sha(raw), 'bytes': len(raw),
+                     'occurrences_in_original_C': occurrences,
+                     'identity_kind': 'exact source fragment; not a self-contained model proof unit'})
+    return rows
+
+
+def finalize(root, result, gate, started):
+    """Project both exclusive writes before publication; recheck after close/hash.
+
+    A late failure may retain a complete-looking result as partial evidence.
+    Its explicit schema requires controller zero exit and settled publication.
+    It is never an admission Boolean by itself.
+    """
+    gate.check()
+    need(not os.path.lexists(root/'result.json') and not os.path.lexists(root/'artifact-manifest.json'),
+         'exclusive final metadata paths required')
+    need(extent(root) <= BUDGET, 'settled profile exceeds complete output bound')
+    gate.check()
+    result.update(elapsed_seconds=gate.clock()-started, output_guard_error=getattr(gate.watch, 'error', None),
+                  output_cleanup_error=getattr(gate.watch, 'cleanup_error', None),
+                  within_whole_budget=True, requires_zero_exit_and_settled_publication=True)
+    existing = [{'relative': str(path.relative_to(root)), **pin(path)}
+                for path in sorted(root.rglob('*')) if path.is_file()]
+    result_raw = encoded(result)
+    result_pin = {'path': str(root/'result.json'), 'bytes': len(result_raw), 'sha256': sha(result_raw)}
+    manifest_rows = sorted([*existing, {'relative': 'result.json', **result_pin}], key=lambda row: row['relative'])
+    manifest_raw = encoded(manifest_rows)
+    manifest_pin = {'path': str(root/'artifact-manifest.json'),
+                    'bytes': len(manifest_raw), 'sha256': sha(manifest_raw)}
+    projected = extent(root)+len(result_raw)+len(manifest_raw)
+    need(projected <= BUDGET and len(result_raw) <= 8*1024**2 and len(manifest_raw) <= 8*1024**2,
+         'projected final metadata exceeds complete profile bound')
+    gate.check()
+    write(root, root/'result.json', result_raw, reserve=False)
+    gate.check()
+    need(pin(root/'result.json') == result_pin, 'final result changed after close')
+    gate.check()
+    write(root, root/'artifact-manifest.json', manifest_raw, reserve=False)
+    gate.check()
+    need(pin(root/'artifact-manifest.json') == manifest_pin, 'artifact manifest changed after close')
+    gate.check()
+    total = extent(root)
+    gate.check()
+    need(total == projected and total <= BUDGET, 'complete settled profile differs from projected extent')
+    return {'settled': True, 'aggregate_bytes': total, 'result': result_pin, 'manifest': manifest_pin}
+
+
+def publish(root, result, gate):
+    summary = {'output': str(root), 'producer_complete': result['producer_complete'],
+        'normal_outcome': result.get('normal_outcome'), 'normal_reader_refusal': result.get('normal_reader_refusal'),
+        'error': result.get('error'), 'finalization_error': result.get('finalization_error'),
+        'output_guard_error': result.get('output_guard_error'), 'output_cleanup_error': result.get('output_cleanup_error'),
+        'ordinary': result.get('ordinary'), 'smokes': result.get('smokes'),
+        'requires_zero_exit_and_settled_publication': True, 'source_or_caller_admission': False}
+    raw = json.dumps(summary, sort_keys=True, allow_nan=False)
+    if len(raw.encode())+1 > 8192:
+        raw = json.dumps({'output': str(root)[:128], 'output_sha256': sha(str(root).encode()),
+            'producer_complete': result['producer_complete'], 'summary_truncated': True,
+            'complete_summary_sha256': sha(raw.encode()),
+            'error': str(result.get('error'))[:128],
+            'normal_reader_refusal': str(result.get('normal_reader_refusal'))[:128],
+            'output_guard_error': str(result.get('output_guard_error'))[:128],
+            'finalization_error': str(result.get('finalization_error'))[:128],
+            'requires_zero_exit_and_settled_publication': True, 'source_or_caller_admission': False},
+            sort_keys=True, allow_nan=False)
+    need(len(raw.encode())+1 <= 8192, 'compact publication exceeds its byte bound')
+    print(raw, flush=True)
+    try:
+        gate.check()
+        need(extent(root) <= BUDGET, 'settled publication exceeds output cap')
+        gate.check()
+    except Exception:
+        return 1
+    return 0 if result['producer_complete'] and result.get('finalized', {}).get('settled') else 1
+
+
+def complete_census(inventory, standard):
+    """Inventory every row; interpretation/owner discrepancies remain visible.
+
+    No row is filtered or relabeled, and no normal-reader verdict is changed.
+    Exact source/call-site and full term/support interpretation follows cold.
+    """
+    need(inventory.get('complete') is True and inventory.get('version') == '1',
+         'complete fresh native inventory required')
+    native, properties = inventory['goals'], inventory['properties']
+    need(type(native) is list and type(properties) is list and type(standard) is list,
+         'complete native/property/standard lists required')
+    by_native = {row['goal']: row for row in native}
+    by_standard = {row['goal']: row for row in standard}
+    by_property = {row['property']: row for row in properties}
+    need(len(by_native) == len(native) and len(by_standard) == len(standard)
+         and len(by_property) == len(properties) and native and standard
+         and set(by_standard) <= set(by_native), 'unique complete report goal/property identities required')
+    need(all(row['property'] in by_property for row in native),
+         'native goal has no physical property')
+    missing = sorted({dep for row in properties for dep in row['dependencies'] if dep not in by_property})
+    origins = sorted({row['origin'] for row in properties
+                      if row['origin'] is not None and row['origin'] not in by_property})
+    need(not missing and not origins, 'complete property origin/dependency closure required')
+    return {'native_goals': len(native), 'ordinary': sum(not row['smoke'] for row in native),
+            'smokes': sum(bool(row['smoke']) for row in native), 'properties': len(properties),
+            'standard_goals': len(standard),
+            'inventory_only_goal_ids': sorted(set(by_native)-set(by_standard)),
+            'native_standard_pairs': [{'goal': name, 'native': by_native[name], 'standard': by_standard[name]}
+                                      for name in sorted(by_standard)],
+            'all_properties': properties, 'all_native_goals': native,
+            'missing_dependencies': missing, 'missing_origins': origins,
+            'source_call_site_term_hypothesis_and_import_interpretation': 'pending independent complete cold review',
+            'source_or_caller_admission': False}
+
+
+def main():
+    need(len(COMMIT) == 40 and SOURCE_PINS and OUTPUT.startswith('/private/tmp/'),
+         'unmaterialized diagnostic template must never execute')
+    started = time.monotonic()
+    deadline = started+WHOLE
+    gate = ProducerGate(None, deadline)
+    sys.addaudithook(gate.audit)
+    project = Path(__file__).resolve().parents[5]
+    out = Path(OUTPUT)
+    need(not os.path.lexists(out) and out.parent.resolve() == out.parent
+         and shutil.disk_usage(out.parent).free >= 20*1024**3,
+         'fresh canonical external output with full headroom required')
+    def git(*args):
+        return gate.call(subprocess.check_output, ['git', '--no-optional-locks', '--no-replace-objects',
+            '-c', 'core.fsmonitor=false', '-c', 'core.preloadIndex=false', '-c', 'index.threads=1',
+            '-C', str(project), *args], timeout=gate.remaining(30))
+    def source_check():
+        need(git('rev-parse', 'HEAD').decode().strip() == COMMIT, 'selected source commit changed')
+        for row in SOURCE_PINS:
+            path = project/row['relative']
+            need(not path.is_symlink() and path.is_file(), 'physical source consumer required')
+            raw = path.read_bytes()
+            need(len(raw) == row['bytes'] and sha(raw) == row['sha256']
+                 and raw == git('show', COMMIT+':swdb-project/'+row['relative']),
+                 'selected physical source consumer differs: '+row['relative'])
+    def remaining(maximum):
+        return gate.remaining(maximum)
+    source_check()
+    need(not any(name.startswith(('FRAMAC_WP', 'WP_')) or name in
+        {'SWDB_FRAMA_C', 'SWDB_OCAMLFIND', 'SWDB_VERIFIER_LOCK', 'SWDB_PROOF_REPORT_OUT'}
+        for name in os.environ), 'ambient verifier/lock selector refused')
+    sys.dont_write_bytecode = True
+    sys.path[:0] = [str(project), str(project/'tests')]
+    import yaml
+    from swdb import c_lowering, framac, heap_model_view as engine, hint_check, method_version
+    from swdb import proof_setup, rss_watchdog, std_models, stdlib_provenance, verifier_lock, wp_adapter
+    from swdb import vector_owned_move_source as rule
+    from swdb.library import Library
+    from testkit.standard_library import method_version as standard_method
+    out.mkdir(mode=0o700)
+    signal.alarm(WHOLE)
+    result = {'created': '2026-10-16 ET', 'source_commit': COMMIT, 'producer_complete': False,
+        'diagnostic_only': True, 'public_gate_refusal_unchanged': True, 'public_proof_record_created': False,
+        'source_Heap_Typed_lifetime_body_caller_or_default_admission': False}
+    def kill_children():
+        for pid in rss_watchdog.tree(os.getpid()):
+            if pid != os.getpid():
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+    watch = OutputWatch(out, kill_children)
+    gate.watch = watch
+    try:
+        with verifier_lock.hold('standalone original closed int move diagnostic') as held, watch:
+            gate.check()
+            write(out, out/'lock.json', encoded(held))
+            source = project/SOURCE
+            need(sha(source.read_bytes()) == SOURCE_SHA, 'complete original source changed')
+            compiler_tool = gate.call(c_lowering.locate)
+            compiler = gate.call(stdlib_provenance.runtime_identity, compiler_tool)
+            lowering_identity = gate.call(c_lowering.identity)
+            original = gate.call(c_lowering.lower, source, FUNCTION)
+            need(original.sha256 == LOWERED_SHA, 'exact original full C differs')
+            problem = gate.call(stdlib_provenance.check, original.stdlib_provenance, gate.call(c_lowering.locate), source,
+                models=tuple(sorted(set((*original.models, *original.std_models)))),
+                substitutions=original.stdlib_substitutions)
+            need(not problem, 'fresh original-TU library certificate refused: '+str(problem))
+            source_plan, canonical = rule.declaration(original, source, CLAUSES)
+            need(source_plan['source_grammar']['lowering_sha256'] == LOWERED_SHA,
+                 'public original source-rule inverse changed')
+            fragments = model_fragments(original, std_models.vector_member)
+            allocator = {name: {'id': name, 'sha256': sha(text.encode())}
+                         for name, text in std_models.allocator('int')}
+            write(out, out/'modular-hypothesis-boundary.json', encoded({
+                'allocator_only_normal_reader_TCB': allocator,
+                'all_original_model_fragments': fragments,
+                'complete_original_models': list(original.models),
+                'no_new_extern_or_constructor_whitelist': True,
+                'conditional_model_poststates_not_source_ownership_or_nonvacuity': True}))
+            for name, raw in canonical.items():
+                write(out, out/'source-rule'/name, raw)
+            write(out, out/'original-anchors.json', original.anchors_json.encode())
+            write(out, out/'compiler-use-time.json', encoded({'runtime': compiler,
+                'lowering_identity': lowering_identity, 'scope': 'fresh original lowering use-time certificate; no continuous loader/interposition guarantee'}))
+            block = '/*@ '+'\n    '.join(CLAUSES)+' */'
+            merged = hint_check.wp_base(original.text, original.anchors, {FUNCTION+'.contract': [block]})
+            write(out, out/'original-contract.json', encoded({'clauses': CLAUSES,
+                'caller_requires_added': [], 'full_original_lowering_sha256': LOWERED_SHA,
+                'wp_input_sha256': sha(merged.encode()), 'view_or_inline_edits': []}))
+            methods = out/'library/methods'
+            methods.mkdir(parents=True)
+            data = standard_method(lowering_identity)
+            data.update(id=METHOD, sequence=5, status='draft', created='2026-10-16',
+                description='Complete original-C move normal WP observation; no source or framework admission.')
+            data['models']['std_vector'] = std_models.identity()
+            entry = next(row for row in data['lineup'] if row['tool'] == 'frama-c-wp')
+            entry['flags'] += ['-wp-out', str(out/'retained-native'), '-wp-print', '-wp-proof-trace',
+                '-wp-msg-key', 'print-generated,why3:compile,why3:import,prover:pp_task']
+            write(out, methods/'wp-vector-owned-move-original-c-diagnostic-v1.yaml', yaml.safe_dump(data, sort_keys=False).encode())
+            method = method_version.select(out/'library', METHOD)
+            adapter = wp_adapter.WpAdapter(Library(out/'library'), 'standalone-original-closed-move', method)
+            tools = gate.call(adapter._tools)
+            flags = normal_flags(tools)
+            need(tools['seconds'] == 30 and tools['provers'] == ['alt-ergo', 'z3', 'cvc5']
+                 and not any(flag.startswith(('-wp-prop', '-wp-fct')) or flag == '-wp-gen' for flag in tools['flags']),
+                 'unchanged normal portfolio and all ordinary/RTE/init/smoke flags required')
+            proof_setup._lineup(method, adapter, tools, flags)
+            write(out, out/'method.json', encoded({'pin': method_version.pin(method),
+                'method': data, 'tools': tools, 'flags': flags}))
+            reader_dir = out/'reader'
+            reader_dir.mkdir()
+            reader = gate.call(proof_setup.compile_report_module, reader_dir, timeout=remaining(120))
+            frama_tool = gate.call(framac.locate)
+            write(out, out/'foundation.json', encoded(gate.call(engine.foundations, frama_tool.command,
+                out/'foundation', deadline)))
+            directory = out/'wp'
+            (directory/'tmp').mkdir(parents=True)
+            write(out, directory/'wp_input.c', merged.encode())
+            command = [*gate.call(framac.locate).command, '-machdep', 'x86_64', 'wp_input.c', '-print',
+                '-ocode', 'wp-normalized.c', '-then', *flags,
+                '-wp-report-json', 'wp-goals.json', '-then', '-load-module', str(reader),
+                '-report', '-report-untried', '-report-csv', 'wp-properties.csv']
+            proof_setup._wp_flags(command, directory)
+            proof_setup._lineup(method, adapter, tools, flags)
+            write(out, directory/'command.json', encoded({'argv': command, 'cwd': str(directory),
+                'timeout_seconds': remaining(NATIVE_SECONDS), 'input': pin(directory/'wp_input.c')}))
+            environment = dict(os.environ, PYTHONDONTWRITEBYTECODE='1',
+                TMPDIR=str(directory/'tmp'), SWDB_PROOF_REPORT_OUT=str(directory/'wp-inventory.json'),
+                SWDB_VERIFIER_RSS_CAP_BYTES=str(CAP))
+            observed = gate.call(rss_watchdog.run, command, log=directory/'frama-c.log', cwd=directory,
+                env=environment, cap_bytes=CAP, timeout=remaining(NATIVE_SECONDS))
+            resources = dataclasses.asdict(observed)
+            write(out, directory/'resources.json', encoded(resources))
+            result['native_resources'] = resources
+            need(watch.error is None and not observed.timed_out and not observed.out_of_memory,
+                 'native output/RSS/whole-wall guard refused')
+            for name in ('wp-goals.json', 'wp-properties.csv', 'wp-inventory.json', 'wp-normalized.c'):
+                need((directory/name).is_file(), 'complete original native reports absent: '+name)
+            census = complete_census(json.loads((directory/'wp-inventory.json').read_bytes()),
+                                     json.loads((directory/'wp-goals.json').read_bytes()))
+            need(census['ordinary'] > 0, 'complete original ordinary census required')
+            write(out, directory/'complete-census.json', encoded(census))
+            try:
+                outcome = wp_adapter.read_outcome(observed, (directory/'frama-c.log').read_text(errors='replace'),
+                    directory/'wp-goals.json', directory/'wp-properties.csv',
+                    inventory=directory/'wp-inventory.json', extern_contracts=allocator)
+                write(out, directory/'normal-outcome.json', encoded(outcome))
+                result['normal_outcome'] = {key: outcome[key] for key in ('verdict', 'failure_class', 'why')}
+            except wp_adapter.AdapterError as error:
+                result['normal_reader_refusal'] = str(error)
+                write(out, directory/'normal-reader-refusal.json', encoded({'type': type(error).__name__, 'message': str(error)}))
+            need(observed.exit_code == 0, 'native compiler/solver session failed; partial evidence preserved')
+            source_check()
+            rule.declaration(original, source, CLAUSES)
+            need(sha((directory/'wp_input.c').read_bytes()) == sha(merged.encode()),
+                 'complete original contract input changed')
+            result.update(producer_complete=True, ordinary=census['ordinary'], smokes=census['smokes'],
+                native_goals=census['native_goals'], properties=census['properties'],
+                native_tasks=sorted(str(p.relative_to(out)) for p in (out/'retained-native').rglob('*')
+                    if p.is_file() and p.suffix in {'.smt2', '.psmt2'}),
+                interpretation='Complete original normal engine observation; ordinary reader refusal or not_proven is preserved. Source/task/hypothesis/import and exact source-rule discharge remain separately pending.')
+    except Exception as error:
+        result.update(error_type=type(error).__name__, error=str(error))
+    finally:
+        result.update(output_guard_error=watch.error, output_cleanup_error=watch.cleanup_error)
+        try:
+            final = finalize(out, result, gate, started)
+            result['finalized'] = final
+        except Exception as error:
+            result.update(producer_complete=False, finalization_error=type(error).__name__+': '+str(error))
+        finally:
+            signal.alarm(0)
+    return publish(out, result, gate)
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

@@ -1,0 +1,41 @@
+{
+  "all_function_class_AST_and_remaining_source_exact": true,
+  "changed_top_level_AST_assignments": [
+    "YAML_BYTES",
+    "YAML_SHA"
+  ],
+  "date": "2026-10-16 ET",
+  "exact_text_inverse": [
+    {
+      "after_sha256": "85001477a6633fe8bd54ad13aa569d271aee471fb4879b57803e80a7aa1f8238",
+      "before_sha256": "bf66a3a18feb19fbaa01d7b5ccc7815a1e26da4759b85375cbc654293cb952e1",
+      "kind": "reader base64 literal"
+    },
+    {
+      "after_sha256": "12b8c407fef9f93d3805b7c98744cee2a09cbc14ba1b2bd493969b927fd0015a",
+      "before_sha256": "2a53544ffc5f00d39458b8afcf43eb752681e1226bf803055a1554f08b09fb3f",
+      "kind": "reader SHA literal"
+    }
+  ],
+  "expected_context": {
+    "bytes": 778795,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/expected.json",
+    "sha256": "1fc969264f7dddc624ca5e27bfdeba7289045aa460125bcb335a5d6c9543da77"
+  },
+  "new_reader": {
+    "bytes": 9903,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/strict-yaml-repair-v1/record_yaml_subset_v3.py",
+    "sha256": "d06565898c7350e3df500c51c8f84b936174574b09b9d5e30601f27b36367938"
+  },
+  "predecessor": {
+    "bytes": 1088800,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+    "sha256": "55bfa4564acfcc387f28f8bb0dde57eeb4ea0ca6853e1b7071032111365d12d7"
+  },
+  "production_or_scientific_gates_changed": false,
+  "successor": {
+    "bytes": 1090100,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+    "sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666"
+  }
+}

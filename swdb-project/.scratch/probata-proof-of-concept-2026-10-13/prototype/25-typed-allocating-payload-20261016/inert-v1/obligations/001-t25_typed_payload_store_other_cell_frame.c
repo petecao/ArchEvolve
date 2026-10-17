@@ -1,0 +1,4 @@
+//@ import \wp::why3: heap_reallocation::Heap;
+//@ import \wp::why3: vector_typed_payload::TypedPayload;
+/*@ check lemma t25_typed_payload_store_other_cell_frame: \forall TypedPayload::state s; \forall TypedPayload::scalar_kind kind; \forall TypedPayload::payload value; \forall integer b,n,k,address; \forall integer observed,offset; observed != b || offset != TypedPayload::stride(kind)*k ==> TypedPayload::read(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value),observed,offset) == TypedPayload::read(s,observed,offset) && (Heap::initialized_at(TypedPayload::objects(s),observed,offset) <==> Heap::initialized_at(TypedPayload::objects(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value)),observed,offset)) && Heap::same_object(TypedPayload::objects(s),TypedPayload::objects(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value)),observed);
+*/

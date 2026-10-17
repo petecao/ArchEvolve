@@ -1,0 +1,836 @@
+{
+  "contracts": {
+    "default_method": {
+      "clauses": [
+        {
+          "acsl": {
+            "text": "requires 0 <= n;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "pre",
+          "negative_control": {
+            "check": "pre",
+            "id": "pre-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "legality",
+          "statement": "Closed source pre"
+        },
+        {
+          "acsl": {
+            "text": "assigns \\nothing;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "frame",
+          "negative_control": {
+            "check": "frame",
+            "id": "frame-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source frame"
+        },
+        {
+          "acsl": {
+            "text": "ensures \\result == (n > 0 ? 7 : 0);",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "post",
+          "negative_control": {
+            "check": "post",
+            "id": "post-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source post"
+        }
+      ],
+      "concurrency_frame": [],
+      "correctness_check": {
+        "check": "fixture",
+        "kernel": "fixture"
+      },
+      "execution_witness": {
+        "check": "fixture"
+      },
+      "formal_frame": 1,
+      "id": "contract.fixture_vector_closed_no_growth",
+      "kind": "rewrite_contract",
+      "knobs": [],
+      "negative_controls": [
+        {
+          "check": "fixture",
+          "id": "overlapping_pointer",
+          "kind": "overlapping_pointer"
+        },
+        {
+          "check": "fixture",
+          "id": "double_claim",
+          "kind": "double_claim"
+        },
+        {
+          "check": "fixture",
+          "id": "dropped_operand",
+          "kind": "dropped_operand"
+        }
+      ],
+      "pattern_key": [
+        {
+          "address_shapes": [
+            "stream",
+            "single_valued_indirect"
+          ],
+          "roles": [
+            "index",
+            "target"
+          ],
+          "update_kind": "read"
+        }
+      ],
+      "preservation_obligations": [],
+      "proof_unit": {
+        "function": "vector_realloc_v3_no_growth",
+        "source": {
+          "path": "proof_units/vector_reallocation_v3.cc",
+          "root": "library",
+          "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+        }
+      },
+      "provenance": {
+        "origin": {
+          "intrinsic_specification": "vector-closed-source-fixture-20261016"
+        }
+      },
+      "requirement_map": [],
+      "runtime_guards": [],
+      "strategies": [],
+      "uses_intrinsics": [],
+      "uses_library_operations": [],
+      "version": "1.0"
+    },
+    "missing_bundle": {
+      "clauses": [
+        {
+          "acsl": {
+            "text": "requires 0 <= n;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "pre",
+          "negative_control": {
+            "check": "pre",
+            "id": "pre-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "legality",
+          "statement": "Closed source pre"
+        },
+        {
+          "acsl": {
+            "text": "assigns \\nothing;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "frame",
+          "negative_control": {
+            "check": "frame",
+            "id": "frame-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source frame"
+        },
+        {
+          "acsl": {
+            "text": "ensures \\result == (n > 0 ? 7 : 0);",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "post",
+          "negative_control": {
+            "check": "post",
+            "id": "post-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source post"
+        }
+      ],
+      "concurrency_frame": [],
+      "correctness_check": {
+        "check": "fixture",
+        "kernel": "fixture"
+      },
+      "execution_witness": {
+        "check": "fixture"
+      },
+      "formal_frame": 1,
+      "id": "contract.fixture_vector_closed_no_growth",
+      "kind": "rewrite_contract",
+      "knobs": [],
+      "negative_controls": [
+        {
+          "check": "fixture",
+          "id": "overlapping_pointer",
+          "kind": "overlapping_pointer"
+        },
+        {
+          "check": "fixture",
+          "id": "double_claim",
+          "kind": "double_claim"
+        },
+        {
+          "check": "fixture",
+          "id": "dropped_operand",
+          "kind": "dropped_operand"
+        }
+      ],
+      "pattern_key": [
+        {
+          "address_shapes": [
+            "stream",
+            "single_valued_indirect"
+          ],
+          "roles": [
+            "index",
+            "target"
+          ],
+          "update_kind": "read"
+        }
+      ],
+      "preservation_obligations": [],
+      "proof_unit": {
+        "function": "vector_realloc_v3_no_growth",
+        "source": {
+          "path": "proof_units/vector_reallocation_v3.cc",
+          "root": "library",
+          "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+        }
+      },
+      "provenance": {
+        "origin": {
+          "intrinsic_specification": "vector-closed-source-fixture-20261016"
+        }
+      },
+      "requirement_map": [],
+      "runtime_guards": [],
+      "strategies": [],
+      "uses_intrinsics": [],
+      "uses_library_operations": [],
+      "version": "1.0"
+    },
+    "safe": {
+      "clauses": [
+        {
+          "acsl": {
+            "text": "requires 0 <= n;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "pre",
+          "negative_control": {
+            "check": "pre",
+            "id": "pre-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "legality",
+          "statement": "Closed source pre"
+        },
+        {
+          "acsl": {
+            "text": "assigns \\nothing;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "frame",
+          "negative_control": {
+            "check": "frame",
+            "id": "frame-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source frame"
+        },
+        {
+          "acsl": {
+            "text": "ensures \\result == (n > 0 ? 7 : 0);",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "post",
+          "negative_control": {
+            "check": "post",
+            "id": "post-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source post"
+        }
+      ],
+      "concurrency_frame": [],
+      "correctness_check": {
+        "check": "fixture",
+        "kernel": "fixture"
+      },
+      "execution_witness": {
+        "check": "fixture"
+      },
+      "formal_frame": 1,
+      "id": "contract.fixture_vector_closed_no_growth",
+      "kind": "rewrite_contract",
+      "knobs": [],
+      "negative_controls": [
+        {
+          "check": "fixture",
+          "id": "overlapping_pointer",
+          "kind": "overlapping_pointer"
+        },
+        {
+          "check": "fixture",
+          "id": "double_claim",
+          "kind": "double_claim"
+        },
+        {
+          "check": "fixture",
+          "id": "dropped_operand",
+          "kind": "dropped_operand"
+        }
+      ],
+      "pattern_key": [
+        {
+          "address_shapes": [
+            "stream",
+            "single_valued_indirect"
+          ],
+          "roles": [
+            "index",
+            "target"
+          ],
+          "update_kind": "read"
+        }
+      ],
+      "preservation_obligations": [],
+      "proof_unit": {
+        "function": "vector_realloc_v3_no_growth",
+        "source": {
+          "path": "proof_units/vector_reallocation_v3.cc",
+          "root": "library",
+          "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+        }
+      },
+      "provenance": {
+        "origin": {
+          "intrinsic_specification": "vector-closed-source-fixture-20261016"
+        }
+      },
+      "requirement_map": [],
+      "runtime_guards": [],
+      "strategies": [],
+      "uses_intrinsics": [],
+      "uses_library_operations": [],
+      "version": "1.0"
+    },
+    "stale_method": {
+      "clauses": [
+        {
+          "acsl": {
+            "text": "requires 0 <= n;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "pre",
+          "negative_control": {
+            "check": "pre",
+            "id": "pre-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "legality",
+          "statement": "Closed source pre"
+        },
+        {
+          "acsl": {
+            "text": "assigns \\nothing;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "frame",
+          "negative_control": {
+            "check": "frame",
+            "id": "frame-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source frame"
+        },
+        {
+          "acsl": {
+            "text": "ensures \\result == (n > 0 ? 7 : 0);",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "post",
+          "negative_control": {
+            "check": "post",
+            "id": "post-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source post"
+        }
+      ],
+      "concurrency_frame": [],
+      "correctness_check": {
+        "check": "fixture",
+        "kernel": "fixture"
+      },
+      "execution_witness": {
+        "check": "fixture"
+      },
+      "formal_frame": 1,
+      "id": "contract.fixture_vector_closed_no_growth",
+      "kind": "rewrite_contract",
+      "knobs": [],
+      "negative_controls": [
+        {
+          "check": "fixture",
+          "id": "overlapping_pointer",
+          "kind": "overlapping_pointer"
+        },
+        {
+          "check": "fixture",
+          "id": "double_claim",
+          "kind": "double_claim"
+        },
+        {
+          "check": "fixture",
+          "id": "dropped_operand",
+          "kind": "dropped_operand"
+        }
+      ],
+      "pattern_key": [
+        {
+          "address_shapes": [
+            "stream",
+            "single_valued_indirect"
+          ],
+          "roles": [
+            "index",
+            "target"
+          ],
+          "update_kind": "read"
+        }
+      ],
+      "preservation_obligations": [],
+      "proof_unit": {
+        "function": "vector_realloc_v3_no_growth",
+        "source": {
+          "path": "proof_units/vector_reallocation_v3.cc",
+          "root": "library",
+          "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+        }
+      },
+      "provenance": {
+        "origin": {
+          "intrinsic_specification": "vector-closed-source-fixture-20261016"
+        }
+      },
+      "requirement_map": [],
+      "runtime_guards": [],
+      "strategies": [],
+      "uses_intrinsics": [],
+      "uses_library_operations": [],
+      "version": "1.0"
+    },
+    "wrong_result": {
+      "clauses": [
+        {
+          "acsl": {
+            "text": "requires 0 <= n;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "pre",
+          "negative_control": {
+            "check": "pre",
+            "id": "pre-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "legality",
+          "statement": "Closed source pre"
+        },
+        {
+          "acsl": {
+            "text": "assigns \\nothing;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "frame",
+          "negative_control": {
+            "check": "frame",
+            "id": "frame-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source frame"
+        },
+        {
+          "acsl": {
+            "text": "ensures \\result == 123;",
+            "uses": []
+          },
+          "discharge_mode": "runtime_guard",
+          "id": "post",
+          "negative_control": {
+            "check": "post",
+            "id": "post-control"
+          },
+          "proof_placement": {
+            "once": "self"
+          },
+          "role": "postcondition",
+          "statement": "Closed source post"
+        }
+      ],
+      "concurrency_frame": [],
+      "correctness_check": {
+        "check": "fixture",
+        "kernel": "fixture"
+      },
+      "execution_witness": {
+        "check": "fixture"
+      },
+      "formal_frame": 1,
+      "id": "contract.fixture_vector_closed_no_growth",
+      "kind": "rewrite_contract",
+      "knobs": [],
+      "negative_controls": [
+        {
+          "check": "fixture",
+          "id": "overlapping_pointer",
+          "kind": "overlapping_pointer"
+        },
+        {
+          "check": "fixture",
+          "id": "double_claim",
+          "kind": "double_claim"
+        },
+        {
+          "check": "fixture",
+          "id": "dropped_operand",
+          "kind": "dropped_operand"
+        }
+      ],
+      "pattern_key": [
+        {
+          "address_shapes": [
+            "stream",
+            "single_valued_indirect"
+          ],
+          "roles": [
+            "index",
+            "target"
+          ],
+          "update_kind": "read"
+        }
+      ],
+      "preservation_obligations": [],
+      "proof_unit": {
+        "function": "vector_realloc_v3_no_growth",
+        "source": {
+          "path": "proof_units/vector_reallocation_v3.cc",
+          "root": "library",
+          "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+        }
+      },
+      "provenance": {
+        "origin": {
+          "intrinsic_specification": "vector-closed-source-fixture-20261016"
+        }
+      },
+      "requirement_map": [],
+      "runtime_guards": [],
+      "strategies": [],
+      "uses_intrinsics": [],
+      "uses_library_operations": [],
+      "version": "1.0"
+    }
+  },
+  "date": "2026-10-16 ET",
+  "dynamic_method_field": "c_lowering.translators[0] from exact current closed-project-runtime.json lowering_identity.c_lowering, full file read before/after; not a source/runtime admission by this probe",
+  "full_scientific_or_runtime_audit": false,
+  "method_template": {
+    "acsl_version": "1.22",
+    "budgets": {
+      "bounded_job_minutes": 15,
+      "civl_k": 3,
+      "counterexample_repair_rounds": 5,
+      "hint_loop_wall_minutes": 60,
+      "hint_rounds": 10,
+      "wp_seconds_per_solver": 30
+    },
+    "c_lowering": {
+      "naming_rules": {
+        "id": "fixture.naming-rules",
+        "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "subset": {
+        "id": "fixture.cpp-subset",
+        "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "translators": [
+        {
+          "dynamic_current_root_runtime_identity": true
+        },
+        {
+          "id": "vector-closed-source-observation-1",
+          "sha256": "baefff1c2a1d34ab6062c35871669d480f6dd2a5ac92ef59d3e0403bd61561db"
+        },
+        {
+          "id": "vector-closed-scientific-binding-1",
+          "sha256": "986d2868da955a02025d1d2b130f3508dd7cb483d97b751c7ae19d8b4cc88402"
+        },
+        {
+          "id": "vector-closed-scientific-bundle-1",
+          "sha256": "42100d4ecb63de8718f6d16071f179ba3fb173cd94511730b195106426a1cb60"
+        },
+        {
+          "id": "vector-closed-source-route-1",
+          "sha256": "30ef20e9a612b5453218599de310403735dc3a55d7de771b0fc8f475f1c356e3"
+        }
+      ]
+    },
+    "checks": {
+      "proof_hint_check": {
+        "version": "0"
+      },
+      "proof_setup_check": {
+        "sha256": "e65fbdff00c807e4b7d74b1d4b9493a791d25569350a441e3872c50cc5b9fd0e",
+        "version": "1"
+      },
+      "verdict_reading": {
+        "sha256": "e65fbdff00c807e4b7d74b1d4b9493a791d25569350a441e3872c50cc5b9fd0e",
+        "version": "1"
+      }
+    },
+    "civl": {
+      "java": {
+        "flags": [
+          "-Xmx4g"
+        ],
+        "tool": "openjdk",
+        "version": "21.0.12.1"
+      },
+      "memory_model": "sequential_consistency",
+      "result_line": "All errors marked with '+' are absent"
+    },
+    "created": "2026-10-16",
+    "description": "Explicit closed-source interpretation fixture with exact historical WP mathematics.",
+    "evidence_kind": "contract_fixture",
+    "genmc": {
+      "error_exit_code": 42,
+      "memory_model": "rc11",
+      "memory_model_detector": "disabled"
+    },
+    "ghost_capacity_k": 8,
+    "id": "method.wp-vector-closed-source-v1",
+    "kind": "method_version",
+    "lineup": [
+      {
+        "flags": [
+          "-std=c++17",
+          "-fopenmp"
+        ],
+        "role": "front_end",
+        "tool": "clang",
+        "version": "22.1.8"
+      },
+      {
+        "flags": [
+          "--sat-solver",
+          "cadical"
+        ],
+        "role": "bounded_verifier",
+        "tool": "cbmc",
+        "version": "6.11"
+      },
+      {
+        "flags": [
+          "verify"
+        ],
+        "role": "concurrent_bounded_verifier",
+        "tool": "civl",
+        "version": "1.23"
+      },
+      {
+        "flags": [
+          "--rc11",
+          "--disable-mm-detector",
+          "--print-error-trace"
+        ],
+        "role": "second_refuter",
+        "tool": "genmc",
+        "version": "0.19.0"
+      },
+      {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init"
+        ],
+        "role": "unbounded_verifier",
+        "tool": "frama-c-wp",
+        "version": "33.0"
+      },
+      {
+        "flags": [],
+        "role": "solver",
+        "tool": "alt-ergo",
+        "version": "2.6.4"
+      },
+      {
+        "flags": [],
+        "role": "solver",
+        "tool": "z3",
+        "version": "5.1.0"
+      },
+      {
+        "flags": [],
+        "role": "solver",
+        "tool": "cvc5",
+        "version": "1.2.1"
+      },
+      {
+        "flags": [],
+        "role": "proof_assistant",
+        "tool": "rocq",
+        "version": "9.3.0"
+      }
+    ],
+    "logic_library": {
+      "id": "fixture.logic-library",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "sum_library": {
+        "id": "fixture.sum-library",
+        "sha256": "6666666666666666666666666666666666666666666666666666666666666666"
+      }
+    },
+    "models": {
+      "std_pair": {
+        "id": "fixture.std-pair-model",
+        "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+      },
+      "std_vector": {
+        "id": "swdb-std-models-2",
+        "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+      }
+    },
+    "openmp_runtime": {
+      "name": "libomp",
+      "version": "22.1.8"
+    },
+    "prompts": [
+      {
+        "id": "fixture.proof-hint-agent-prompt",
+        "sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+      }
+    ],
+    "proof_hint_vocabulary": [
+      "loop_invariant",
+      "loop_assigns",
+      "loop_variant",
+      "assert",
+      "ghost_declaration",
+      "ghost_statement",
+      "non_recursive_definition",
+      "same_run_lemma",
+      "wp_strategy"
+    ],
+    "rocq_development": {
+      "composition_theorem": "parallel_composition",
+      "dx100_reduction_lemma": "dx100_reduction",
+      "id": "fixture.rocq-development",
+      "sha256": "9999999999999999999999999999999999999999999999999999999999999999"
+    },
+    "sequence": 2,
+    "shared_action_kinds": [
+      "claim",
+      "min_update",
+      "atomic_add_or",
+      "openmp_reduction",
+      "queue_reserve"
+    ],
+    "sharing_classes": [
+      "read_only",
+      "thread_owned",
+      "shared_actions_only",
+      "lock_protected"
+    ],
+    "status": "draft"
+  },
+  "parent_expected_sha256": "1fc969264f7dddc624ca5e27bfdeba7289045aa460125bcb335a5d6c9543da77",
+  "policy_sha256": "e84f56859b73e1237d9c8b40b9ea50917e23e98de74202a0ed858eb39bfd9cce",
+  "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+  "source_inputs": [
+    {
+      "bytes": 4037,
+      "relative": "tests/fixtures/proof/methods/contract-fixture-1.yaml",
+      "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+    },
+    {
+      "bytes": 5239,
+      "relative": "library/methods/probata-draft-1.yaml",
+      "sha256": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5"
+    },
+    {
+      "bytes": 4145,
+      "relative": "tests/testkit/vector_closed_workflow.py",
+      "sha256": "37f109cfdda60c84c90e33458bb44999e4d01a91ccf4ee5dd799aec783e754b1"
+    },
+    {
+      "bytes": 29179,
+      "relative": "swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    }
+  ]
+}

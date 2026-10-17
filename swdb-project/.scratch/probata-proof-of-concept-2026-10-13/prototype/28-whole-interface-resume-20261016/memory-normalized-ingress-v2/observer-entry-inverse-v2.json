@@ -1,0 +1,57 @@
+{
+  "predecessor": {
+    "bytes": 11398,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-observation-v1/observe_entry_v1.py",
+    "sha256": "00886e67fe33b8b9ec37a1b86f494120c0ad3769b887d792fe8e1a38fc3b6926"
+  },
+  "replacements": [
+    {
+      "new": "MANIFEST_SHA = '791319838f360682ac1e75225bcbd792e65f84f422544a26c696b72cac6ba94d'",
+      "old": "MANIFEST_SHA = 'c03688336db98b8008f557e16fdf6adf589505b5aef2c795bc3c2a63021e3c36'"
+    },
+    {
+      "new": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3', 'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source', 'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2', 'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.strict_minify_v2', 'swdb._dx100_whole.abi_role_transport_v1', 'swdb._dx100_whole.memory_normalized_compiler_adapter_v1', 'swdb._dx100_whole.memory_normalized_capture_ingress_v1', 'swdb._dx100_whole.source_memory_selection_v1', 'swdb._dx100_whole.memory_source_preparation_v1')",
+      "old": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3',\n    'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source',\n    'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2',\n    'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.normalized_compiler_adapter_v1',\n    'swdb._dx100_whole.normalized_capture_ingress_v2', 'swdb._dx100_whole.normalized_unit_observation_v1')"
+    },
+    {
+      "new": "hashlib.sha256(values['fixed-memory-modules-v1.json'])",
+      "old": "hashlib.sha256(values['fixed-modules-v1.json'])"
+    },
+    {
+      "new": "parse(values['fixed-memory-modules-v1.json'])",
+      "old": "parse(values['fixed-modules-v1.json'])"
+    },
+    {
+      "new": "'55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887'",
+      "old": "'3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd'"
+    },
+    {
+      "new": "'only the exact three-memory source observation is supported'",
+      "old": "'only the exact first-source observation is supported'"
+    },
+    {
+      "new": "result = private.memory_normalized_capture_ingress_v1.observe_capture(policy, reads, project)",
+      "old": "result = private.normalized_unit_observation_v1.observe_capture(policy, reads, project)"
+    },
+    {
+      "new": "'whole-interface-original-tu-preparation-1' and prepared['normalized_transport']['kind'] == private.memory_normalized_capture_ingress_v1.KIND, 'observation must retain its distinct memory transport and non-admitting schema')",
+      "old": "'whole-interface-normalized-original-tu-preparation-1', 'observation must retain its non-admitting schema')"
+    },
+    {
+      "new": "        units = private.memory_source_preparation_v1.prepare_roots(normalized_tu=_tu,\n            source_path=path, preparation=prepared, declarations=declarations, abi=prepared['abi_observation']['abi'])\n        preparation = canonical(prepared); inputs = canonical([row.row() for row in reads.pins.values()])",
+      "old": "        preparation = canonical(prepared); inputs = canonical([row.row() for row in reads.pins.values()])"
+    },
+    {
+      "new": "        inputs_pin = write_new(output / 'observed-input-pins.json', inputs)\n        units_pin = write_new(output / 'memory-source-units.json', canonical(units))",
+      "old": "        inputs_pin = write_new(output / 'observed-input-pins.json', inputs)"
+    },
+    {
+      "new": "'preparation': prepared_pin, 'input_pins': inputs_pin, 'source_sha256': hashlib.sha256(original).hexdigest(),\n            'source_units': units_pin, 'source_unit_count': 3, 'per_unit_body_CPU_lifetime_mapping_receiver_checks_required': True,",
+      "old": "'preparation': prepared_pin, 'input_pins': inputs_pin, 'source_sha256': hashlib.sha256(original).hexdigest(),"
+    }
+  ],
+  "result_schema_inverse": {
+    "private-normalized-memory-unit-observation-result-1": "private-normalized-unit-observation-result-1"
+  },
+  "scientific_consumer_is_new_closed_memory_family": true
+}

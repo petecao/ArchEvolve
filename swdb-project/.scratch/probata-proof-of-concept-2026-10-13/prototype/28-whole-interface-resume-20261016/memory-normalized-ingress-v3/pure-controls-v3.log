@@ -1,0 +1,20 @@
+test_exact_observer_inverses_and_old_unchanged_modules (__main__.Controls.test_exact_observer_inverses_and_old_unchanged_modules) ... ok
+test_genuine_memory_capture_and_three_root_consumer_unchanged (__main__.Controls.test_genuine_memory_capture_and_three_root_consumer_unchanged) ... FAIL
+test_inventory_exact15_and_distinct_readers (__main__.Controls.test_inventory_exact15_and_distinct_readers) ... ok
+test_real18_control_readset_and_changed_module_refusal (__main__.Controls.test_real18_control_readset_and_changed_module_refusal) ... ok
+test_real_memory_consumer_physical_and_same_module_gates (__main__.Controls.test_real_memory_consumer_physical_and_same_module_gates) ... ok
+
+======================================================================
+FAIL: test_genuine_memory_capture_and_three_root_consumer_unchanged (__main__.Controls.test_genuine_memory_capture_and_three_root_consumer_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/test_memory_semantic_v3.py", line 80, in test_genuine_memory_capture_and_three_root_consumer_unchanged
+    self.assertEqual(policy['capture'],previous['capture']);self.assertIsNone(policy['capture']['prepared'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'kin[643 chars]22f-v3/control/memory-capture-execution.json',[7124 chars]4'}}} != {'kin[643 chars]22f-v2/control/memory-capture-execution.json',[7124 chars]4'}}}
+Diff is 14756 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.017s
+
+FAILED (failures=1)

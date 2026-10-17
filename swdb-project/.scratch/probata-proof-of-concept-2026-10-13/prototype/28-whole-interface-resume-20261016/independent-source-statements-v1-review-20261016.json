@@ -1,0 +1,39 @@
+{
+  "actual_compiler_or_public_acceptance": false,
+  "all_packet_pins_match": 23,
+  "checked": [
+    "Complete selected no-parameter scalar source body, exact call-site inventory and exact lexical assertion inventory remain closed; unknown effects/macros/control forms refuse",
+    "Each API argument is staged once from the pure source grammar; nested API expressions and multiple stateful unsequenced tile reads refuse; original lazy scalar structure stays intact",
+    "Typed ordinary-array initialization and CPU accesses share descriptor cells; scalar RHS-first stores preserve the original C++17 order",
+    "Pointer origins are checked at every formation/API/CPU use against exact live source array scopes; initialized copies are tracked and pointer assignment/return/opaque escapes refuse",
+    "Return evaluation precedes exited-scope pending-footprint checks; break/continue preserve outer source objects; loop-local arrays refuse",
+    "Pinned assertion header, original predicate source span, same-TU global noreturn failure declaration, string/file/line/function diagnostics and complete call count remain linked; SourceLoc leaves bind separate header spelling/caller expansion buffers",
+    "All12 source host globals bind original header declarations and C++ zero/null static initialization without device reset/payload/ownership/history grants"
+  ],
+  "classification": "PASS_SCOPED_INDEPENDENT_STATEMENT_STAGING_GLOBAL_SOURCE_PREPARATION",
+  "controls": {
+    "all_exit_codes": 0,
+    "all_skips": 0,
+    "argument_CPU": 13,
+    "no_child_audit_guard": true,
+    "source_globals": 3,
+    "statement": 14
+  },
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "full_ticket28": false,
+  "hardware_body_theorem_required": false,
+  "packet": {
+    "bytes": 7953,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-statements-preparation-v1.json",
+    "sha256": "d0215d5653e2191abe4e266899db1dd4bbfdf878514e764300ceaa77336f859d"
+  },
+  "production_files_edited": false,
+  "required_before_production": [
+    "Root-admitted actual original full TU/ABI/dependency/compiler observation",
+    "Exact fresh-program execution context, host receiver/global mapping, explicit device/ordinary allocation state and independent draw plan",
+    "Actual selected assertion-header profile and source-local atlas from that TU",
+    "Public source/RTE/unwinding integration, negative controls and real positive/negative verdicts with cold audit"
+  ],
+  "reviewer": "/root/ticket28"
+}

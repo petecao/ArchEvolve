@@ -1,0 +1,92 @@
+{
+  "SSH_window_released": true,
+  "actual_exit": 1,
+  "actual_invocation": {
+    "bytes": 1077,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/replay-invocation.json",
+    "sha256": "cb8f3ef7bec7ccd8aa80f111a9f0b993b37a283788f09acf43a757b9b832a0a2"
+  },
+  "actual_stdin": {
+    "bytes": 24950,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1/replay_entry_v1.py",
+    "sha256": "7a2b70e9c4883749b834f7598050420223bdc273548d68ea55eb88305edc31db"
+  },
+  "admission": {
+    "bytes": 4343,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-ABI-v2-retained-replay-v1-root-once-admission-20261016.json",
+    "sha256": "7361b29ba6bc97206db08510ce970815cac86c33de82068c7e32f1cb676abaa3"
+  },
+  "compiler_native_verifier_executed": false,
+  "date": "2026-10-16T21:28:01.847996-04:00",
+  "decision": "REFUSED_UNCHANGED_INTEGER_OBSERVATION_GATE",
+  "failed_predicate": {
+    "file": "compiler_unit_adapter_v3.py",
+    "function": "observed_abi",
+    "line": 131,
+    "message": "one observed integer ConstantExpr required"
+  },
+  "interpretation": "Exact original strict duplicate-key refusal and the role transport advanced to the unchanged derived ABI reader, which refused an integer ConstantExpr shape. No complete replay result or ABI theorem/source-call/public outcome is adopted.",
+  "local_readback": {
+    "bytes": 3267,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/local-readback-v1.json",
+    "sha256": "d88742876157497e1f3e14c20be155928669749c8b9fef8bd3ed654560655c3b"
+  },
+  "local_refusal": null,
+  "next_step": "Root authorized exact bounded transfer of both small synthetic ABI JSON artifacts and probe for complete offline shape/candidate diagnosis. Strict one-integer gate remains unchanged pending source/schema review.",
+  "no_retry": true,
+  "original_raw_written": false,
+  "outer_postflight": {
+    "all_three_leases_released": true,
+    "exit_code": 0,
+    "finite_selected_scanner_clean": true,
+    "invocation": {
+      "bytes": 1087,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/postflight-invocation.json",
+      "sha256": "78204579e9b6e550b61a76c4a925dc0fe4a1048123c7fb5d407cc35e8efdafbe"
+    },
+    "local_wall_seconds": 6.346929208026268,
+    "mapped_runtime_files": 14,
+    "original_outcomes_unchanged": true,
+    "remote_seconds": 5.716673457995057,
+    "selected_input_rechecks": 1044,
+    "source": {
+      "bytes": 24171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/outer_postflight_v1.py",
+      "sha256": "7550f9e4dbc12565022f8d6908019f0ff92e166d223106982bddc5187a119496"
+    },
+    "source_clean": true,
+    "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/postflight-stderr.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 10063,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/postflight-stdout.json",
+      "sha256": "38b4e806040aca7fcec3b52b0313f4dddf3b943cf273b804a5f0540fa958d495"
+    }
+  },
+  "runner": {
+    "bytes": 7905,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/run_once_v1.py",
+    "sha256": "a523bafbc682b51f59a5de35759c13b4c08d2876b6b674279bcee05c2c5974f1"
+  },
+  "schema": "retained-ABI-replay-v1-actual-refusal-1",
+  "staging": {
+    "bytes": 1081,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/staging-invocation.json",
+    "sha256": "3ad5bc54ffa7a2cb09b20e75b9acfa8af4b69d64d5853d9d50604fd1fecd2d74"
+  },
+  "stderr": {
+    "bytes": 689,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/replay-stderr.json",
+    "sha256": "fff3074032854bbcb4efb0ce3f24a03f47b7cf215aa86974c741df6ab537ac2f"
+  },
+  "stdout": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/replay-stdout.json",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "wall_seconds": 6.576284500013571
+}

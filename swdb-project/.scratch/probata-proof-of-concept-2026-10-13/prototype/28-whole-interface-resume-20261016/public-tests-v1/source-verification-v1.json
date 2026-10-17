@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "4 proposed Python modules parse without import",
+    "all JSON documents parse with unique keys",
+    "26 names/27 declarations/132 instances match pinned design",
+    "5 exact source contract/function tuples match actual closed registry",
+    "30 finite predictions and 35 exact case tuples match frozen preparation",
+    "no skip/xfail/importorskip calls or mock imports",
+    "unmaterialized input pins stay null and no fixture manifest exists",
+    "old0.1 physical SHA matches literal"
+  ],
+  "compiler_native_verifier_SSH_CLI_execution": false,
+  "date": "2026-10-16 ET",
+  "fixture_or_profile_materialized": false,
+  "legacy_entry": {
+    "bytes": 31989,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/proof_semantics/dx100_bfs_0_1.yaml",
+    "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+  },
+  "project_or_pytest_imports": 0,
+  "runtime_pytest_cases_executed": 0,
+  "scope": "source/AST/JSON consistency only",
+  "static_test_census": {
+    "explicit_summary_profile": 35,
+    "quiet": 30,
+    "separate_positive_candidate_profile": 1
+  }
+}

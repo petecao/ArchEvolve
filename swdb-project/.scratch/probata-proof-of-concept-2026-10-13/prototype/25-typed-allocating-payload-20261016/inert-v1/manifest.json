@@ -1,0 +1,1485 @@
+{
+  "allocator_library_TCB": {
+    "allocation_success_alone_establishes_frame": false,
+    "explicit_conditions": [
+      "actual initialized typed receiver/count/value/source objects and selected target ABI/storage layout",
+      "allocation result is fresh in never-issued identity history, valid writable aligned for the selected element type, freeable, and independent of receiver/source storage",
+      "allocation and eventual release frame every preexisting live source object outside declared receiver assigns; source callbacks/interposition must obey this frame",
+      "selected scalar assignment and FP environment implement the checked typed value/class relation; physical exact NaN/signaling/pointer-bit transport is not generally assumed",
+      "pointer values have an admitted initialized source representation and stable nominal value/category; raw arbitrary bits, pointee validity, dereference and lifetime do not follow",
+      "original max_size/count/byte arithmetic, complete original clause/CFG/access/init/frame/RTE ledger and actual selected tool/model mode must be bound"
+    ],
+    "free_or_release_executed_in_constructor": false,
+    "physical_representation_transport_proved": false,
+    "plain_allocation_success_assumption_required": "Allocation succeeds: every malloc (std::vector growth, new[]) returns usable memory, never null.",
+    "plain_library_assumption_required": "The pinned standard library (libc++ of clang {clang}) implements the modeled members of {types} as the C++ standard ({standard}) says, as the model {model} states them.",
+    "selected_FP_environment_or_pointer_ABI_bound": false,
+    "source_replacement_free_inferred_from_std_allocator_name": false
+  },
+  "caller_premises_added": [],
+  "checked_source_derivation": {
+    "administrative_storage": {
+      "arbitrary_incoming_administrative_separation_established": false,
+      "loop_counter": "fresh automatic size_t k, initialized zero, bounded increment and variant; scope end after loop",
+      "receiver_and_parameters": "receiver storage is original declared assigns region; initialized count/value or source pointer arguments are required source images"
+    },
+    "copy": {
+      "non_nan_condition_is_not_added_to_original_source_requires": true,
+      "receiver_source_backing_separation_derived_from_source_creation": false,
+      "source_destination_disjointness": "fresh backing identity differs from every issued incoming source identity",
+      "source_header_and_backing_image_required_before_receiver_zeroing": true,
+      "source_read_only_preserved_at_every_step": true,
+      "source_read_typed_and_initialized": "full source image and source_unchanged induction hypothesis; no pointee load for int*"
+    },
+    "elements": {
+      "double": {
+        "alignment_rule": "base is stride-aligned; offset is stride*k; no actual pointer integer conversion",
+        "all_nonnegative_parameters_checked": true,
+        "distance_basis": [
+          "distance",
+          "j",
+          "1"
+        ],
+        "earlier_store_distance_coefficients": [
+          8,
+          0,
+          8
+        ],
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "remainder_basis": [
+          "k",
+          "remaining",
+          "1"
+        ],
+        "remaining_after_increment_coefficients": [
+          0,
+          1,
+          0
+        ],
+        "remaining_after_store_coefficients": [
+          0,
+          8,
+          0
+        ],
+        "step_substitution": "n = k + remaining + 1; k = j + distance + 1",
+        "store_cases": [
+          "j = k: exact typed payload and initialization",
+          "j < k: positive stride distance; map-store keeps prior element",
+          "different incoming identity: map-store keeps every typed value/init cell"
+        ],
+        "stride": 8,
+        "variant_decrease": 1,
+        "zero_case": "no allocation, no payload read/store, no loop-counter activation; original header zeros only"
+      },
+      "float": {
+        "alignment_rule": "base is stride-aligned; offset is stride*k; no actual pointer integer conversion",
+        "all_nonnegative_parameters_checked": true,
+        "distance_basis": [
+          "distance",
+          "j",
+          "1"
+        ],
+        "earlier_store_distance_coefficients": [
+          4,
+          0,
+          4
+        ],
+        "maximum_bytes": 18446744073709551612,
+        "maximum_count": 4611686018427387903,
+        "remainder_basis": [
+          "k",
+          "remaining",
+          "1"
+        ],
+        "remaining_after_increment_coefficients": [
+          0,
+          1,
+          0
+        ],
+        "remaining_after_store_coefficients": [
+          0,
+          4,
+          0
+        ],
+        "step_substitution": "n = k + remaining + 1; k = j + distance + 1",
+        "store_cases": [
+          "j = k: exact typed payload and initialization",
+          "j < k: positive stride distance; map-store keeps prior element",
+          "different incoming identity: map-store keeps every typed value/init cell"
+        ],
+        "stride": 4,
+        "variant_decrease": 1,
+        "zero_case": "no allocation, no payload read/store, no loop-counter activation; original header zeros only"
+      },
+      "int *": {
+        "alignment_rule": "base is stride-aligned; offset is stride*k; no actual pointer integer conversion",
+        "all_nonnegative_parameters_checked": true,
+        "distance_basis": [
+          "distance",
+          "j",
+          "1"
+        ],
+        "earlier_store_distance_coefficients": [
+          8,
+          0,
+          8
+        ],
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "remainder_basis": [
+          "k",
+          "remaining",
+          "1"
+        ],
+        "remaining_after_increment_coefficients": [
+          0,
+          1,
+          0
+        ],
+        "remaining_after_store_coefficients": [
+          0,
+          8,
+          0
+        ],
+        "step_substitution": "n = k + remaining + 1; k = j + distance + 1",
+        "store_cases": [
+          "j = k: exact typed payload and initialization",
+          "j < k: positive stride distance; map-store keeps prior element",
+          "different incoming identity: map-store keeps every typed value/init cell"
+        ],
+        "stride": 8,
+        "variant_decrease": 1,
+        "zero_case": "no allocation, no payload read/store, no loop-counter activation; original header zeros only"
+      }
+    },
+    "incoming_frame": {
+      "dead_physical_bytes_preserved": false,
+      "metadata_rule": "well_formed bounds every issued key below next; allocate selects next, so all old allocation/lifetime metadata is unchanged",
+      "new_identity_not_previously_issued": true,
+      "observed_allocations": "every issued incoming identity, including dead identities and non-int objects",
+      "observed_live_payloads": "all live incoming source bytes/typed values and initialization outside the original assigns *this region",
+      "payload_rule": "fresh backing identity differs from every incoming issued identity; finite header stores affect only original assigns *this region",
+      "source_binding_still_required": true
+    },
+    "interpretation": "checked source effect/induction derivation into an explicitly conditional typed logical product; not physical C execution correspondence",
+    "mathematical_solver_acceptance_claimed": false,
+    "whole_source_body_rule_checked": true
+  },
+  "checker": {
+    "id": "vector-allocating-typed-payload-1",
+    "sha256": "1c6494432befd7bac5c06020c3a279fb46284b965c77b88d70feaf9830bb567c"
+  },
+  "created": "2026-10-16 ET",
+  "current_model_records_created": [],
+  "derivation": {
+    "bytes": 8748,
+    "path": "derivation.md",
+    "sha256": "aa713204b96cfb9a02693cb09f79df9f6e25ae575549cad1697aee49728061fe"
+  },
+  "incoming_source_component": {
+    "empty_incoming_heap_assumed": false,
+    "memory": "arbitrary incoming I, except the declared receiver write region R",
+    "opaque_global_Owners_premise": false,
+    "product": "I \u00d7 receiver R \u00d7 fresh typed backing F \u00d7 private counter A",
+    "restricted_to_payload_datatype": false,
+    "source_created_storage_separation_and_mapping_established": false,
+    "total_Typed_memory_encoding_claimed": false
+  },
+  "mathematical_evidence_bound": false,
+  "mathematical_obligations": [
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_store_exact_payload",
+      "id": "store.exact_payload",
+      "kind": "check_lemma",
+      "path": "obligations/000-t25_typed_payload_store_exact_payload.c",
+      "sha256": "ca78f4db01310996b6dc9acd25be16a20c27ab5d4b69cab2c86677d6a3108b1c",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall integer b,n,k,address; TypedPayload::has_kind(kind,value) ==> TypedPayload::read(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value),b,TypedPayload::stride(kind)*k) == value && Heap::initialized_at(TypedPayload::objects(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value)),b,TypedPayload::stride(kind)*k)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_store_other_cell_frame",
+      "id": "store.other_cell_frame",
+      "kind": "check_lemma",
+      "path": "obligations/001-t25_typed_payload_store_other_cell_frame.c",
+      "sha256": "bd4369fc2915208ae41d4cbb469079f0991d17928a9f3fe93bee237bc3a3dbf9",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall integer b,n,k,address; \\forall integer observed,offset; observed != b || offset != TypedPayload::stride(kind)*k ==> TypedPayload::read(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value),observed,offset) == TypedPayload::read(s,observed,offset) && (Heap::initialized_at(TypedPayload::objects(s),observed,offset) <==> Heap::initialized_at(TypedPayload::objects(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value)),observed,offset)) && Heap::same_object(TypedPayload::objects(s),TypedPayload::objects(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value)),observed)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_allocate_incoming_frame",
+      "id": "allocate.incoming_frame",
+      "kind": "check_lemma",
+      "path": "obligations/002-t25_typed_payload_allocate_incoming_frame.c",
+      "sha256": "d81c6e0814dbe9ae845497babd758cee03b88bd6f40aec97a44b8c807c6f3266",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && TypedPayload::available(s,n,address,kind) ==> TypedPayload::incoming_frame(s,TypedPayload::allocate(s,n,address,kind))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_allocate_fresh_extent",
+      "id": "allocate.fresh_extent",
+      "kind": "check_lemma",
+      "path": "obligations/003-t25_typed_payload_allocate_fresh_extent.c",
+      "sha256": "1502af149fe85515afa4c8ee362bb4211a313df693353185dbe547b6121ea2e4",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && TypedPayload::available(s,n,address,kind) ==> !Heap::issued(TypedPayload::objects(s),Heap::fresh_id(TypedPayload::objects(s))) && Heap::well_formed(TypedPayload::objects(TypedPayload::allocate(s,n,address,kind))) && Heap::freeable(TypedPayload::objects(TypedPayload::allocate(s,n,address,kind)),Heap::fresh_id(TypedPayload::objects(s)),0) && Heap::bytes(TypedPayload::objects(TypedPayload::allocate(s,n,address,kind)),Heap::fresh_id(TypedPayload::objects(s))) == TypedPayload::stride(kind)*n",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_allocate_uninitialized",
+      "id": "allocate.uninitialized",
+      "kind": "check_lemma",
+      "path": "obligations/004-t25_typed_payload_allocate_uninitialized.c",
+      "sha256": "e4b1585983acbb53bb5e1ad69aa186b41e1c7ef4a59d40044cd54e87c13b6754",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && TypedPayload::available(s,n,address,kind) ==> \\forall integer j; 0 <= j < n ==> !Heap::initialized_at(TypedPayload::objects(TypedPayload::allocate(s,n,address,kind)),Heap::fresh_id(TypedPayload::objects(s)),TypedPayload::stride(kind)*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_fill_empty",
+      "id": "fill.empty",
+      "kind": "check_lemma",
+      "path": "obligations/005-t25_typed_payload_fill_empty.c",
+      "sha256": "e033c0e9ae37bf8d11ca944234c5581b51d83ede5c2524693e70eb6b3f4dd6e0",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall integer b,n,k,address; TypedPayload::prefix(s,b,0,kind,value)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_fill_access",
+      "id": "fill.access",
+      "kind": "check_lemma",
+      "path": "obligations/006-t25_typed_payload_fill_access.c",
+      "sha256": "0e85df0ffe1ca1712b5978c6e5f86069b5cc6727bcfe1044f4adf0204ff868b0",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && k < n ==> Heap::typed_writes(TypedPayload::objects(s),b,TypedPayload::stride(kind)*k,TypedPayload::stride(kind),TypedPayload::stride(kind))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_fill_step",
+      "id": "fill.step",
+      "kind": "check_lemma",
+      "path": "obligations/007-t25_typed_payload_fill_step.c",
+      "sha256": "c5daf030a7acb56f8c28a48b41f1de8baafd40852031068761e6881114f73489",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && TypedPayload::has_kind(kind,value) && TypedPayload::prefix(s,b,k,kind,value) && k < n ==> TypedPayload::prefix(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,value),b,k+1,kind,value)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_fill_exit",
+      "id": "fill.exit",
+      "kind": "check_lemma",
+      "path": "obligations/008-t25_typed_payload_fill_exit.c",
+      "sha256": "b285aad8b1b8dfcd37e32cde37834bc3044ba41d37bf838657f25c99c76895ee",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && TypedPayload::has_kind(kind,value) && TypedPayload::prefix(s,b,k,kind,value) && k == n ==> \\forall integer j; 0 <= j < n ==> TypedPayload::read(s,b,TypedPayload::stride(kind)*j) == value && Heap::initialized_at(TypedPayload::objects(s),b,TypedPayload::stride(kind)*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_copy_empty",
+      "id": "copy.empty",
+      "kind": "check_lemma",
+      "path": "obligations/009-t25_typed_payload_copy_empty.c",
+      "sha256": "a3bde1e74582b66c3c8bea147fe504b7889f71aaece103ded08fb7de94b0c4a0",
+      "statement": "\\forall TypedPayload::state before; \\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer source; \\forall integer b,n,k,address; TypedPayload::copied(before,s,source,b,0,kind)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_copy_step",
+      "id": "copy.step",
+      "kind": "check_lemma",
+      "path": "obligations/010-t25_typed_payload_copy_step.c",
+      "sha256": "7445fcd120741c65fc33937cd33c8603c0c241b14abb23d3d848c701563b0d8c",
+      "statement": "\\forall TypedPayload::state before; \\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer source; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && source != b && TypedPayload::image(s,source,n,kind) && TypedPayload::source_unchanged(before,s,source,n,kind) && TypedPayload::copied(before,s,source,b,k,kind) && k < n ==> TypedPayload::copied(before,TypedPayload::put(s,b,TypedPayload::stride(kind)*k,TypedPayload::read(s,source,TypedPayload::stride(kind)*k)),source,b,k+1,kind) && TypedPayload::source_unchanged(before,TypedPayload::put(s,b,TypedPayload::stride(kind)*k,TypedPayload::read(s,source,TypedPayload::stride(kind)*k)),source,n,kind)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_copy_exit",
+      "id": "copy.exit",
+      "kind": "check_lemma",
+      "path": "obligations/011-t25_typed_payload_copy_exit.c",
+      "sha256": "60c7e1ed77a651a20857d09da10d6659b2688e6c37185b5345763c32b9443c4f",
+      "statement": "\\forall TypedPayload::state before; \\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer source; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && source != b && TypedPayload::image(s,source,n,kind) && TypedPayload::source_unchanged(before,s,source,n,kind) && TypedPayload::copied(before,s,source,b,k,kind) && k == n ==> \\forall integer j; 0 <= j < n ==> TypedPayload::read(s,b,TypedPayload::stride(kind)*j) == TypedPayload::read(before,source,TypedPayload::stride(kind)*j) && Heap::initialized_at(TypedPayload::objects(s),b,TypedPayload::stride(kind)*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_default_reflexive",
+      "id": "default.reflexive",
+      "kind": "check_lemma",
+      "path": "obligations/012-t25_typed_payload_default_reflexive.c",
+      "sha256": "849a3c1e278cf1a1f8b78929b13d564712a6f5d50dda42e12fd01f4f44b5a0dc",
+      "statement": "\\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::bits64 null_bits; TypedPayload::c_equal(TypedPayload::zero(kind,null_bits),TypedPayload::zero(kind,null_bits))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_value_non_nan_equality_lifting",
+      "id": "value.non_nan_equality_lifting",
+      "kind": "check_lemma",
+      "path": "obligations/013-t25_typed_payload_value_non_nan_equality_lifting.c",
+      "sha256": "0ea2497342f5a9fb91c47dd7fa5225f73696287ffc1891b26c9135d257990089",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall integer b,n,k,address; TypedPayload::has_kind(kind,value) && !TypedPayload::is_nan(value) && TypedPayload::prefix(s,b,n,kind,value) ==> \\forall integer j; 0 <= j < n ==> TypedPayload::c_equal(TypedPayload::read(s,b,TypedPayload::stride(kind)*j),value)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_copy_non_nan_equality_lifting",
+      "id": "copy.non_nan_equality_lifting",
+      "kind": "check_lemma",
+      "path": "obligations/014-t25_typed_payload_copy_non_nan_equality_lifting.c",
+      "sha256": "c33283ad89c6545358c4023477b89712ca67bc310441a055d615e98e8bdbfe98",
+      "statement": "\\forall TypedPayload::state before; \\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer source; \\forall integer b,n,k,address; TypedPayload::copied(before,s,source,b,n,kind) && TypedPayload::image(before,source,n,kind) && TypedPayload::reflexive_image(before,source,n,kind) ==> \\forall integer j; 0 <= j < n ==> TypedPayload::c_equal(TypedPayload::read(s,b,TypedPayload::stride(kind)*j),TypedPayload::read(before,source,TypedPayload::stride(kind)*j))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_nan_not_reflexive",
+      "id": "nan.not_reflexive",
+      "kind": "check_lemma",
+      "path": "obligations/015-t25_typed_payload_nan_not_reflexive.c",
+      "sha256": "076899ca493d1747ad988b831eea04398360c2a7f0749efe234dbd90b07c82d8",
+      "statement": "\\forall TypedPayload::payload value; TypedPayload::is_nan(value) ==> !TypedPayload::c_equal(value,value)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_value_copy_reflexive",
+      "id": "value_copy.reflexive",
+      "kind": "check_lemma",
+      "path": "obligations/016-t25_typed_payload_value_copy_reflexive.c",
+      "sha256": "72d4c1d97795ff136002f912311eb4d6c61990ee22cddb6582f018350101c8c7",
+      "statement": "\\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; TypedPayload::has_kind(kind,value) ==> TypedPayload::value_copy(value,value)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_class_fill_step",
+      "id": "class_fill.step",
+      "kind": "check_lemma",
+      "path": "obligations/017-t25_typed_payload_class_fill_step.c",
+      "sha256": "39499d214d54a86f7697069a0632c699e47a86ac5d32c8aa39db7f82ddd9cc85",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall TypedPayload::payload stored; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && TypedPayload::has_kind(kind,value) && TypedPayload::class_prefix(s,b,k,kind,value) && k < n && TypedPayload::has_kind(kind,stored) && TypedPayload::value_copy(stored,value) ==> TypedPayload::class_prefix(TypedPayload::put(s,b,TypedPayload::stride(kind)*k,stored),b,k+1,kind,value)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_class_fill_exit",
+      "id": "class_fill.exit",
+      "kind": "check_lemma",
+      "path": "obligations/018-t25_typed_payload_class_fill_exit.c",
+      "sha256": "ec2c89cf05dca50a12814bdb9965f2c9f6d97490a12ccb4a6c081bc09b3dc179",
+      "statement": "\\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall TypedPayload::payload value; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && TypedPayload::has_kind(kind,value) && TypedPayload::class_prefix(s,b,k,kind,value) && k == n ==> \\forall integer j; 0 <= j < n ==> TypedPayload::value_copy(TypedPayload::read(s,b,TypedPayload::stride(kind)*j),value) && Heap::initialized_at(TypedPayload::objects(s),b,TypedPayload::stride(kind)*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_class_copy_step",
+      "id": "class_copy.step",
+      "kind": "check_lemma",
+      "path": "obligations/019-t25_typed_payload_class_copy_step.c",
+      "sha256": "df0367887791a043ff3ac24269ad195feef8a880e63548adf84ce77dbb33b745",
+      "statement": "\\forall TypedPayload::state before; \\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer source; \\forall integer b,n,k,address; \\forall TypedPayload::payload stored; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && source != b && TypedPayload::image(s,source,n,kind) && TypedPayload::source_unchanged(before,s,source,n,kind) && TypedPayload::class_copied(before,s,source,b,k,kind) && k < n && TypedPayload::has_kind(kind,stored) && TypedPayload::value_copy(stored,TypedPayload::read(s,source,TypedPayload::stride(kind)*k)) ==> TypedPayload::class_copied(before,TypedPayload::put(s,b,TypedPayload::stride(kind)*k,stored),source,b,k+1,kind) && TypedPayload::source_unchanged(before,TypedPayload::put(s,b,TypedPayload::stride(kind)*k,stored),source,n,kind)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_typed_payload_class_copy_exit",
+      "id": "class_copy.exit",
+      "kind": "check_lemma",
+      "path": "obligations/020-t25_typed_payload_class_copy_exit.c",
+      "sha256": "cef5944b6b87553e3ea23da1e08d68f71d218477d0b0777eb59c20ec7a51b7af",
+      "statement": "\\forall TypedPayload::state before; \\forall TypedPayload::state s; \\forall TypedPayload::scalar_kind kind; \\forall integer source; \\forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && source != b && TypedPayload::image(s,source,n,kind) && TypedPayload::source_unchanged(before,s,source,n,kind) && TypedPayload::class_copied(before,s,source,b,k,kind) && k == n ==> \\forall integer j; 0 <= j < n ==> TypedPayload::value_copy(TypedPayload::read(s,b,TypedPayload::stride(kind)*j),TypedPayload::read(before,source,TypedPayload::stride(kind)*j)) && Heap::initialized_at(TypedPayload::objects(s),b,TypedPayload::stride(kind)*j)",
+      "status": "pending"
+    }
+  ],
+  "original_contract_proved": false,
+  "parent_model": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "pending_gates": [
+    "independent source/semantic reviews",
+    "actual normal complete mathematical/native/task/hypothesis/import/support audit",
+    "typed object/storage/allocator/representation correspondence and complete source ordinary obligation ledger",
+    "reviewed IEEE-aware original model successor, explicit model identity and consumer rebinding",
+    "actual public compiler/model/caller/framework admission"
+  ],
+  "source_Heap_Typed_bridge_established": false,
+  "source_admission": false,
+  "source_members": [
+    {
+      "element": "float",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_float_ctor_count",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "n",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": null,
+        "stride": 4,
+        "unbounded": true,
+        "variant": "n - k"
+      },
+      "member": "ctor_count",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": true,
+        "maximum_bytes": 18446744073709551612,
+        "maximum_count": 4611686018427387903,
+        "maximum_one_past_offset": 18446744073709551612,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": false,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": false,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "typed default or stable initialized pointer value"
+      },
+      "original_path": "original/std_vector_float_ctor_count.c",
+      "original_range": [
+        79,
+        2833
+      ],
+      "original_sha256": "3121aff03d46724d6d38f6e9c644b3b3e5ed1862c1439b0152a32fc8862392f5",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": false,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "count within original max_size"
+      ],
+      "view_path": "views/std_vector_float_ctor_count.c",
+      "view_sha256": "0061f1744b4de9adbe03b677135fb637c5308a025387bc441c5cd0008c543294"
+    },
+    {
+      "element": "float",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_float_ctor_count_value",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "n",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": null,
+        "stride": 4,
+        "unbounded": true,
+        "variant": "n - k"
+      },
+      "member": "ctor_count_value",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": true,
+        "maximum_bytes": 18446744073709551612,
+        "maximum_count": 4611686018427387903,
+        "maximum_one_past_offset": 18446744073709551612,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": false,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": true,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "every copied/fill payload is not NaN; distinct conditional mathematics only"
+      },
+      "original_path": "original/std_vector_float_ctor_count_value.c",
+      "original_range": [
+        79,
+        2853
+      ],
+      "original_sha256": "2063ca494feef7d191b54303eefb3b9203d0dfa00998e3896ff7e4ce9d890b14",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": false,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "count within original max_size"
+      ],
+      "view_path": "views/std_vector_float_ctor_count_value.c",
+      "view_sha256": "bbad47de5d0bec0f9a4747140e4050b46c1c9c6104e57fe39f19fa7f0518fb4f"
+    },
+    {
+      "element": "float",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_float_copy_ctor",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "other->size",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": "other->data[k]",
+        "stride": 4,
+        "unbounded": true,
+        "variant": "other->size - k"
+      },
+      "member": "copy_ctor",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": false,
+        "maximum_bytes": 18446744073709551612,
+        "maximum_count": 4611686018427387903,
+        "maximum_one_past_offset": 18446744073709551612,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": true,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": true,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "every copied/fill payload is not NaN; distinct conditional mathematics only"
+      },
+      "original_path": "original/std_vector_float_copy_ctor.c",
+      "original_range": [
+        79,
+        2937
+      ],
+      "original_sha256": "a6a073ac2dda8edb5d359d7fea24ff5206f6e99d2b58e98ef65a9c2b2e145713",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": true,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "original readable source",
+        "separated receivers"
+      ],
+      "view_path": "views/std_vector_float_copy_ctor.c",
+      "view_sha256": "e4352d72c8387c5046f4b55686dfaa8bfdb63f48810fee90fd11a6854fde6293"
+    },
+    {
+      "element": "double",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_double_ctor_count",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "n",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": null,
+        "stride": 8,
+        "unbounded": true,
+        "variant": "n - k"
+      },
+      "member": "ctor_count",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": true,
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "maximum_one_past_offset": 18446744073709551608,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": false,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": false,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "typed default or stable initialized pointer value"
+      },
+      "original_path": "original/std_vector_double_ctor_count.c",
+      "original_range": [
+        79,
+        2858
+      ],
+      "original_sha256": "64fc473e7031e7939a24d9aa874ee5e72122baf85ee11b1cf3b59c76639e7b87",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": false,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "count within original max_size"
+      ],
+      "view_path": "views/std_vector_double_ctor_count.c",
+      "view_sha256": "6de715f0c88044053a5ae4eedca1980283361e27cb521881067b4b9bb2aa5fa4"
+    },
+    {
+      "element": "double",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_double_ctor_count_value",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "n",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": null,
+        "stride": 8,
+        "unbounded": true,
+        "variant": "n - k"
+      },
+      "member": "ctor_count_value",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": true,
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "maximum_one_past_offset": 18446744073709551608,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": false,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": true,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "every copied/fill payload is not NaN; distinct conditional mathematics only"
+      },
+      "original_path": "original/std_vector_double_ctor_count_value.c",
+      "original_range": [
+        79,
+        2878
+      ],
+      "original_sha256": "44afa1aec738ac49013299ed66f86b34b654780614d90d8df035ae60defe31de",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": false,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "count within original max_size"
+      ],
+      "view_path": "views/std_vector_double_ctor_count_value.c",
+      "view_sha256": "988a732e565537bde9e5aff21c86736a04be90db672bdfc666363265a1c1a729"
+    },
+    {
+      "element": "double",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_double_copy_ctor",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "other->size",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": "other->data[k]",
+        "stride": 8,
+        "unbounded": true,
+        "variant": "other->size - k"
+      },
+      "member": "copy_ctor",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": false,
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "maximum_one_past_offset": 18446744073709551608,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": true,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": true,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "every copied/fill payload is not NaN; distinct conditional mathematics only"
+      },
+      "original_path": "original/std_vector_double_copy_ctor.c",
+      "original_range": [
+        79,
+        2961
+      ],
+      "original_sha256": "c48a97845ab60c7438437a0877fba6771ab175d9f54eab923e630f941dbfa217",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": true,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "original readable source",
+        "separated receivers"
+      ],
+      "view_path": "views/std_vector_double_copy_ctor.c",
+      "view_sha256": "813f0738ba360e93f5ab13cffdecd086f84b844c2dc33abde89a937fa800752c"
+    },
+    {
+      "element": "int *",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_int_ptr_ctor_count",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "n",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": null,
+        "stride": 8,
+        "unbounded": true,
+        "variant": "n - k"
+      },
+      "member": "ctor_count",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": true,
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "maximum_one_past_offset": 18446744073709551608,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": false,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": false,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "typed default or stable initialized pointer value"
+      },
+      "original_path": "original/std_vector_int_ptr_ctor_count.c",
+      "original_range": [
+        79,
+        2861
+      ],
+      "original_sha256": "7a4aba31253720d3480e57ef1e48c098db27e4596e8f40d309f441210a9e4ba2",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": false,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "count within original max_size"
+      ],
+      "view_path": "views/std_vector_int_ptr_ctor_count.c",
+      "view_sha256": "1b3bccef11598d151fa23e21943d8a91623fd836cfc2c3196f60bdaa104dfd80"
+    },
+    {
+      "element": "int *",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_int_ptr_ctor_count_value",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "n",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": null,
+        "stride": 8,
+        "unbounded": true,
+        "variant": "n - k"
+      },
+      "member": "ctor_count_value",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": true,
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "maximum_one_past_offset": 18446744073709551608,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": false,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": false,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "typed default or stable initialized pointer value"
+      },
+      "original_path": "original/std_vector_int_ptr_ctor_count_value.c",
+      "original_range": [
+        79,
+        2880
+      ],
+      "original_sha256": "00f71bcf900d786ecd11390ecbc24695a6207cf3c3d972757b340d3af68cda65",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": false,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "count within original max_size"
+      ],
+      "view_path": "views/std_vector_int_ptr_ctor_count_value.c",
+      "view_sha256": "38899886ea854cedaa55c2c778118957c6383b8daa8827e168ea6823b1e6ff8b"
+    },
+    {
+      "element": "int *",
+      "element_access": "typed copy or typed zero store; no arithmetic or pointee access",
+      "function": "std_vector_int_ptr_copy_ctor",
+      "layout_assertions_executed": false,
+      "loop": {
+        "allocator_calls_positive_branch": 1,
+        "count": "other->size",
+        "destination_store": "this->data[k]",
+        "payload_reads_or_writes_zero_branch": 0,
+        "source_read": "other->data[k]",
+        "stride": 8,
+        "unbounded": true,
+        "variant": "other->size - k"
+      },
+      "member": "copy_ctor",
+      "numeric_source_domain": {
+        "allocation_bytes_no_unsigned_wrap": true,
+        "applicability": "conditional typed source/domain image, not an extra original requires clause",
+        "count_constructor_original_max_size_clause_unchanged": false,
+        "maximum_bytes": 18446744073709551608,
+        "maximum_count": 2305843009213693951,
+        "maximum_one_past_offset": 18446744073709551608,
+        "original_readable_to_full_byte_bound_proved": false,
+        "signed_ptrdiff_bits": 64,
+        "size_t_bits": 64,
+        "source_object_extent_and_separation_discharge_required": true,
+        "target_layout_executed": false
+      },
+      "original_contract_modified": false,
+      "original_contract_proved": false,
+      "original_equality_contract": {
+        "WP_real_mode_is_IEEE_evidence": false,
+        "arbitrary_IEEE_domain_established": false,
+        "explicit_nonfinite_value_or_source_image_missing": false,
+        "new_source_requires_added": false,
+        "nonfinite_source_logical_promotion_characterized": false,
+        "original_ACSL_counterexample_established": false,
+        "original_equality_clauses_retained": true,
+        "plain_ACSL_equality_is_IEEE_comparison": false,
+        "separate_C_comparison_lifting_proves_original_ACSL_clause": false,
+        "separate_lifting_domain": "typed default or stable initialized pointer value"
+      },
+      "original_path": "original/std_vector_int_ptr_copy_ctor.c",
+      "original_range": [
+        79,
+        2969
+      ],
+      "original_sha256": "2af638f80d3711f7a2f45ad84d53bb93fed520af7fc48ee5e5c5d244fb3ce9b1",
+      "source_effects_checked": true,
+      "source_events": [
+        "zero receiver pointer/size/capacity",
+        "return on zero count",
+        "fresh typed allocation",
+        "set capacity",
+        "loop begin private k",
+        "typed payload copy/fill",
+        "loop end private k",
+        "set size"
+      ],
+      "source_frame": {
+        "copy_source_read_only": true,
+        "dead_physical_bytes_preserved": false,
+        "frees": [],
+        "incoming_live_bytes_and_identity_history_require_frame": true,
+        "pointer_escape": false,
+        "writes": [
+          "receiver fields",
+          "fresh backing element objects",
+          "fresh loop counter"
+        ]
+      },
+      "source_requires_unchanged": [
+        "valid writable receiver",
+        "original readable source",
+        "separated receivers"
+      ],
+      "view_path": "views/std_vector_int_ptr_copy_ctor.c",
+      "view_sha256": "e4e3d7febf6908d2c14bed40f04879bd5f3c006fd734d1c05cba18531a489e07"
+    }
+  ],
+  "type_registry": {
+    "canonical_sha256": "b1486dbee9273423bdf17af34339ca17b1111b7e2ec31f71c2aafdf4515ec1f6",
+    "canonical_values": {
+      "FLOAT_TYPES": [
+        "double",
+        "float"
+      ],
+      "INTEGER_TYPES": [
+        "bool",
+        "char",
+        "int",
+        "int16_t",
+        "int32_t",
+        "int64_t",
+        "int8_t",
+        "intptr_t",
+        "long",
+        "long int",
+        "long long",
+        "long long int",
+        "ptrdiff_t",
+        "short",
+        "short int",
+        "signed",
+        "signed char",
+        "signed int",
+        "size_t",
+        "uint16_t",
+        "uint32_t",
+        "uint64_t",
+        "uint8_t",
+        "uintptr_t",
+        "unsigned",
+        "unsigned char",
+        "unsigned int",
+        "unsigned long",
+        "unsigned long int",
+        "unsigned long long",
+        "unsigned long long int",
+        "unsigned short",
+        "unsigned short int"
+      ],
+      "INTERNAL_TYPES": {
+        "__ptrdiff_t": "ptrdiff_t",
+        "__size_t": "size_t"
+      }
+    },
+    "container_sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e",
+    "declarations": [
+      {
+        "bytes": 33,
+        "name": "FLOAT_TYPES",
+        "sha256": "2fdad9ce385d4872e749009de43d16dc405d04b484edf398198a92f1fd268e17"
+      },
+      {
+        "bytes": 527,
+        "name": "INTEGER_TYPES",
+        "sha256": "6da62218bbcfb5e1019f3995d31ac06a2d91419fe487a4e05ba9f242272ea810"
+      },
+      {
+        "bytes": 67,
+        "name": "INTERNAL_TYPES",
+        "sha256": "ba13f1dadd03b49ffdc0cd29fdba10a1f1bb653b064cda2b0c413e3823b6cf70"
+      }
+    ],
+    "source_module": "c_lowering.py"
+  },
+  "typed_payload": {
+    "ACSL_semantics_reference": {
+      "C_comparison_predicates": [
+        "\\eq_float",
+        "\\eq_double"
+      ],
+      "plain_equality": "logical real_of_float/double equality; nonfinite promotion is total but unspecified",
+      "section": "2.2.5",
+      "url": "https://www.frama-c.com/download/frama-c-acsl-implementation.pdf",
+      "version": "1.24"
+    },
+    "arbitrary_pointer_bits_admitted": false,
+    "classification_examples": [
+      {
+        "exponent_bits": "11111111",
+        "fraction_bits": "10000000000000000000001",
+        "id": "float.nan",
+        "is_nan": true,
+        "same_typed_payload": true,
+        "self_C_equal": false,
+        "sign": "0",
+        "source_or_hardware_encoding_proved": false
+      },
+      {
+        "exponent_bits": "11111111111",
+        "fraction_bits": "1000000000000000000000000000000000000000000000000001",
+        "id": "double.nan",
+        "is_nan": true,
+        "same_typed_payload": true,
+        "self_C_equal": false,
+        "sign": "0",
+        "source_or_hardware_encoding_proved": false
+      },
+      {
+        "exponent_bits": "00000000",
+        "fraction_bits": "00000000000000000000000",
+        "id": "float.negative_zero",
+        "is_nan": false,
+        "same_typed_payload": true,
+        "self_C_equal": true,
+        "sign": "1",
+        "source_or_hardware_encoding_proved": false
+      },
+      {
+        "exponent_bits": "11111111111",
+        "fraction_bits": "0000000000000000000000000000000000000000000000000000",
+        "id": "double.positive_infinity",
+        "is_nan": false,
+        "same_typed_payload": true,
+        "self_C_equal": true,
+        "sign": "0",
+        "source_or_hardware_encoding_proved": false
+      }
+    ],
+    "default_domain_version": "typed-transport-1",
+    "default_pointer_representation": "symbolic null representation, never assumed all-zero bits",
+    "float_store_preserves_physical_nan_bits_proved": false,
+    "floating_representation": "nominal binary32/binary64 sign, exponent and fraction bit fields",
+    "heap_theory": {
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    "integer_or_real_surrogate": false,
+    "non_nan_carveout_is_permanent_source_admission_policy": false,
+    "non_nan_lifting_is_a_new_caller_requires": false,
+    "nonfinite_ACSL_promotion_characterized": false,
+    "observed_WP_Cfloat_source": {
+      "Real_model": "float values become Real; is_NaN/infinite become false; this is not IEEE coverage",
+      "name": "Cfloat.ml",
+      "ranges": [
+        [
+          52,
+          59
+        ],
+        [
+          242,
+          254
+        ],
+        [
+          436,
+          459
+        ]
+      ],
+      "selected_runtime_binding_established": false,
+      "sha256": "fe077203e3ba53a06c8cc620c133f610cb391c0966e928a9bee766db0143ad38"
+    },
+    "original_ACSL_NaN_counterexample_established": false,
+    "original_FP_contract_requires_reviewed_model_successor": true,
+    "payload_transport_is_C_equality": false,
+    "plain_ACSL_float_equality_is_C_comparison": false,
+    "pointee_validity_or_liveness_implied": false,
+    "pointer_padding_or_representation_copy_proved": false,
+    "pointer_representation": "opaque typed int-pointer value category and symbolic 64 representation bits",
+    "pointer_value_token": "nominal noninteger token; no address/provenance/pointee relation granted",
+    "proposed_model_successor_relation": "TypedPayload.value_copy",
+    "proposed_relation_retains_same_format_nan_class_without_bit_identity": true,
+    "relation_examples": [
+      {
+        "C_equal": false,
+        "exact_payload": false,
+        "id": "float.nan_payload_change",
+        "left": {
+          "element": "float",
+          "exponent": "11111111",
+          "fraction": "10000000000000000000001",
+          "is_nan": true,
+          "is_zero": false,
+          "sign": "0"
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "element": "float",
+          "exponent": "11111111",
+          "fraction": "10000000000000000000010",
+          "is_nan": true,
+          "is_zero": false,
+          "sign": "1"
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": true
+      },
+      {
+        "C_equal": false,
+        "exact_payload": false,
+        "id": "double.nan_payload_change",
+        "left": {
+          "element": "double",
+          "exponent": "11111111111",
+          "fraction": "1000000000000000000000000000000000000000000000000001",
+          "is_nan": true,
+          "is_zero": false,
+          "sign": "0"
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "element": "double",
+          "exponent": "11111111111",
+          "fraction": "1000000000000000000000000000000000000000000000000010",
+          "is_nan": true,
+          "is_zero": false,
+          "sign": "1"
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": true
+      },
+      {
+        "C_equal": false,
+        "exact_payload": false,
+        "id": "float.nan_to_infinity",
+        "left": {
+          "element": "float",
+          "exponent": "11111111",
+          "fraction": "10000000000000000000001",
+          "is_nan": true,
+          "is_zero": false,
+          "sign": "0"
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "element": "float",
+          "exponent": "11111111",
+          "fraction": "00000000000000000000000",
+          "is_nan": false,
+          "is_zero": false,
+          "sign": "0"
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": false
+      },
+      {
+        "C_equal": false,
+        "exact_payload": false,
+        "id": "cross_format.nan",
+        "left": {
+          "element": "float",
+          "exponent": "11111111",
+          "fraction": "10000000000000000000001",
+          "is_nan": true,
+          "is_zero": false,
+          "sign": "0"
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "element": "double",
+          "exponent": "11111111111",
+          "fraction": "1000000000000000000000000000000000000000000000000001",
+          "is_nan": true,
+          "is_zero": false,
+          "sign": "0"
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": false
+      },
+      {
+        "C_equal": true,
+        "exact_payload": false,
+        "id": "float.signed_zero_change",
+        "left": {
+          "element": "float",
+          "exponent": "00000000",
+          "fraction": "00000000000000000000000",
+          "is_nan": false,
+          "is_zero": true,
+          "sign": "0"
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "element": "float",
+          "exponent": "00000000",
+          "fraction": "00000000000000000000000",
+          "is_nan": false,
+          "is_zero": true,
+          "sign": "1"
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": true
+      },
+      {
+        "C_equal": true,
+        "exact_payload": false,
+        "id": "pointer.same_value_changed_representation",
+        "left": {
+          "category": "encoded",
+          "element": "int *",
+          "representation_bits": "0000000000000000000000000000000000000000000000000000000000000001",
+          "value_token": "alpha"
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "category": "encoded",
+          "element": "int *",
+          "representation_bits": "1000000000000000000000000000000000000000000000000000000000000001",
+          "value_token": "alpha"
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": true
+      },
+      {
+        "C_equal": true,
+        "exact_payload": false,
+        "id": "pointer.null_changed_representation",
+        "left": {
+          "category": "null",
+          "element": "int *",
+          "representation_bits": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value_token": ""
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "category": "null",
+          "element": "int *",
+          "representation_bits": "1111111111111111111111111111111111111111111111111111111111111111",
+          "value_token": ""
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": true
+      },
+      {
+        "C_equal": false,
+        "exact_payload": false,
+        "id": "pointer.changed_value_same_bits",
+        "left": {
+          "category": "encoded",
+          "element": "int *",
+          "representation_bits": "0000000000000000000000000000000000000000000000000000000000000001",
+          "value_token": "alpha"
+        },
+        "pointer_bitpatterns_or_pointees_admitted": false,
+        "right": {
+          "category": "encoded",
+          "element": "int *",
+          "representation_bits": "0000000000000000000000000000000000000000000000000000000000000001",
+          "value_token": "beta"
+        },
+        "source_or_hardware_transport_admitted": false,
+        "value_copy": false
+      }
+    ],
+    "separate_equality_lifting_domain_version": "typed-transport-non-nan-equality-1",
+    "source_typed_encoding_or_IEEE_mode_binding_established": false,
+    "theory": {
+      "path": "theory/vector_typed_payload.mlw",
+      "sha256": "89c5564a6f07169ceda50b2685ad513dc28c6c5e2778d5f396797d62b7905f5e"
+    }
+  },
+  "version": 1
+}

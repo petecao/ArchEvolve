@@ -26,7 +26,7 @@ MODULES = ['__init__.py', 'std_models.py', 'heap_model_vcs.py',
 
 def main():
     stage = sys.argv[1]
-    assert stage in {'red', 'green', 'red-v2', 'green-v2', 'red-v3', 'green-v3', 'green-v4'}
+    assert stage in {'red', 'green', 'red-v2', 'green-v2', 'red-v3', 'green-v3', 'green-v4', 'green-v5'}
     output = Path('/private/tmp/probata-resume-20261016-t25-caller-view-' + stage)
     output.mkdir(exist_ok=False)
     (output / 'swdb').mkdir()
@@ -64,6 +64,9 @@ def main():
     lowering = types.SimpleNamespace(text=lowered.decode(), sha256=candidate['lowered_sha256'],
         vector_reallocation_candidate=copy.deepcopy(candidate), function=anchors['function'],
         models=anchors['models'], source_sha256=candidate['source_sha256'])
+    (output / 'testkit').mkdir()
+    for helper in ['__init__.py', 'vector_reallocation.py']:
+        (output / 'testkit' / helper).write_bytes((PROJECT / 'tests/testkit' / helper).read_bytes())
     test = output / 'test_caller_view.py'
     test.write_bytes((PROJECT / 'tests/test_vector_reallocation_caller_view.py').read_bytes())
     attempts = []

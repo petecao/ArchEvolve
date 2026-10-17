@@ -1,0 +1,55 @@
+{
+  "admission": {
+    "bytes": 2536,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-root-admission-20261016.json",
+    "sha256": "7757a841cea9d317cca39ea65396b2318f2d5d93112365764afbcca74c37adba"
+  },
+  "compiler_native_or_solver_rerun": false,
+  "date": "2026-10-16 ET",
+  "decision": "COLD_OBSERVER_REFUSED; original five-case producer result remains separate and unpromoted",
+  "default_admission": false,
+  "execution": {
+    "bytes": 1502,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-v2-actual-execution-20261016.json",
+    "sha256": "de27ad93e20d71982c7f286fa235ed8f10af1b977f603be72d00a09964b2a524"
+  },
+  "finite_settlement": "SSH child exited; bounded postflight passed exact original HEAD/lane/resources/source-after hashes and found no process matching the original source/raw. Current unrelated lanes ignored and preserved.",
+  "full_ticket25": false,
+  "limits": "The observer refused before full physical YAML/current record/source-rule reconciliation and before its complete raw after-census; partial observed closure is not promoted to complete cold acceptance. Root producer has five records, but this receipt supplies no independent completed workflow acceptance.",
+  "next": "Lead25 owns a narrow source-reviewed strict-YAML successor; no second proof run is needed. Preserve this original observer refusal.",
+  "observed": {
+    "error": "ValueError",
+    "exit_code": 1,
+    "reason": "YAML mapping colon",
+    "seconds": 19.589922999963164,
+    "stderr_bytes": 0,
+    "stdout_bytes": 266
+  },
+  "original_ended_utc": "2026-10-16T21:28:57Z",
+  "original_generation": 619,
+  "original_source": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+  "parent_review": {
+    "bytes": 12520,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-observer-parent-static-review-v2-20261016.json",
+    "sha256": "d184b5584803e9c6ff79e28527007e7ac941860e15f923bb32b0718a73b99ee5"
+  },
+  "postflight": {
+    "bytes": 2471,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-postflight-v1-20261016.json",
+    "sha256": "f0968a5f7247789887b999ff31e574dda119aadd9d797f47c958305c53fa59ff"
+  },
+  "preflight": {
+    "bytes": 2424,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-preflight-v1-20261016.json",
+    "sha256": "822f958ea3d7e90e809e237ce3ba80fca6c6c747abbb82115fa5f56c54c312c6"
+  },
+  "raw_C_AST_SMT_payload_transferred": false,
+  "raw_or_source_mutation": false,
+  "scientific_or_source_or_caller_acceptance": false,
+  "source_typed_bridge_established": false,
+  "stdout": {
+    "bytes": 266,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-v2-actual-stdout-20261016.json",
+    "sha256": "0c1838fba545599918bce5b42294f9a11017d0281c74d6eb6e44830259b4eb52"
+  }
+}

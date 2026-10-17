@@ -1,0 +1,183 @@
+{
+  "all_normalized_status_valid": true,
+  "caller_or_general_type_or_ticket_acceptance": false,
+  "classification": "FIRST_REAL_PUBLIC_QUALIFIED_VECTOR_INT_END_BODY_PROVEN",
+  "date": "2026-10-16 ET",
+  "evidence_reports_physically_rehashed": [
+    {
+      "bytes": 1504,
+      "name": "standard_vector_member_original",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/standard_vector_member_original.c",
+      "sha256": "6ba1bd181de0448611641b02598cc3b572715846ac676fe12e24d5c0457f4517"
+    },
+    {
+      "bytes": 2080,
+      "name": "standard_vector_member_view_certificate",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/standard_vector_member_view.json",
+      "sha256": "ba9c6907910ca056e971ac8313e0e60297adb89091bce5196efe9d48376e1c01"
+    },
+    {
+      "bytes": 2066,
+      "name": "wp_input",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp_input.c",
+      "sha256": "1f77d524d1b086aab77e90c4421aaeebf288c5bf8118c5a7f777e94d94befba2"
+    },
+    {
+      "bytes": 3033,
+      "name": "wp_log",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/frama-c.log",
+      "sha256": "2b08ec4a980e72278658fa53e45b33d6fcd797fc4e8f379423707c7bcda04c90"
+    },
+    {
+      "bytes": 7964,
+      "name": "wp_goals",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-goals.json",
+      "sha256": "1258eabac7f73475dafae58174062ac33ce25c68f8d80cc57a42316edb54f9a1"
+    },
+    {
+      "bytes": 1316,
+      "name": "wp_properties",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-properties.csv",
+      "sha256": "826b558556e97203fe89372af93f58bc16a4d473f05ec7507a1c3f666d31b585"
+    },
+    {
+      "bytes": 16613,
+      "name": "wp_inventory",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-inventory.json",
+      "sha256": "3ceb8bb3ba28fedf5e0389b92b3754dbd06caaf7bc1b4cdb776e9cc092d679a3"
+    },
+    {
+      "bytes": 6874,
+      "name": "wp_normalized",
+      "path": "/private/tmp/probata-vector-member-first-public-20261016-v1/runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-normalized.c",
+      "sha256": "e59ac8c5c6faf7bb390116705fde3427b35865d5e34c511cee5f577355b688af"
+    }
+  ],
+  "goal_count": 17,
+  "next": "Retain normal tasks/printed obligations for diverse four-type representative profile before scaling remaining registered bodies.",
+  "normal_flags": [
+    "-wp",
+    "-wp-rte",
+    "-wp-cache",
+    "none",
+    "-wp-model",
+    "+real",
+    "-wp-par",
+    "1",
+    "-machdep",
+    "x86_64",
+    "-rte-initialized",
+    "@all",
+    "-wp-no-filter-init",
+    "-machdep",
+    "x86_64",
+    "-wp-prover",
+    "alt-ergo,z3,cvc5",
+    "-wp-timeout",
+    "30",
+    "-wp-par",
+    "1",
+    "-wp-smoke-tests",
+    "-wp-fct=std_vector_int_end"
+  ],
+  "ordinary_goals": 14,
+  "original_contract_preserved": true,
+  "proof_setup_passed": true,
+  "public_record_path": "proofs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3.yaml",
+  "raw_manifest": [
+    {
+      "bytes": 4037,
+      "path": "library/methods/contract-fixture-1.yaml",
+      "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+    },
+    {
+      "bytes": 3391,
+      "path": "library/methods/wp-vector-member-source-v1.yaml",
+      "sha256": "3834c8edb7033e6f9a433f905f70109359bc3e4c98f3e923e43041e0041c8047"
+    },
+    {
+      "bytes": 1926,
+      "path": "plan.json",
+      "sha256": "1467188dedd0706301adac519b4aa376ce00c1aa761d164316de1a255edc556f"
+    },
+    {
+      "bytes": 29620,
+      "path": "public.log",
+      "sha256": "af5180a4cb126bbd920aeca2725a95f6abe350aef0b21f1f3891bdd821afdb7b"
+    },
+    {
+      "bytes": 0,
+      "path": "records/.swdb.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 23182,
+      "path": "records/proofs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3.yaml",
+      "sha256": "8430d9dc31d14b22d350f243f9f6425c4271d0b7b39ee2fec5f9a79625bb4609"
+    },
+    {
+      "bytes": 166,
+      "path": "resources.json",
+      "sha256": "8cfa3171a794583ee0f9afa91a23e8246134c7876a70b0d0238c259d532e2d4c"
+    },
+    {
+      "bytes": 933,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/adapter.log",
+      "sha256": "02a7759fe51c4609a2c3e02e2383dfa0ea73d28941c2bf72afd5008a9bc00e1b"
+    },
+    {
+      "bytes": 3033,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/frama-c.log",
+      "sha256": "2b08ec4a980e72278658fa53e45b33d6fcd797fc4e8f379423707c7bcda04c90"
+    },
+    {
+      "bytes": 1504,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/standard_vector_member_original.c",
+      "sha256": "6ba1bd181de0448611641b02598cc3b572715846ac676fe12e24d5c0457f4517"
+    },
+    {
+      "bytes": 2080,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/standard_vector_member_view.json",
+      "sha256": "ba9c6907910ca056e971ac8313e0e60297adb89091bce5196efe9d48376e1c01"
+    },
+    {
+      "bytes": 7964,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-goals.json",
+      "sha256": "1258eabac7f73475dafae58174062ac33ce25c68f8d80cc57a42316edb54f9a1"
+    },
+    {
+      "bytes": 16613,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-inventory.json",
+      "sha256": "3ceb8bb3ba28fedf5e0389b92b3754dbd06caaf7bc1b4cdb776e9cc092d679a3"
+    },
+    {
+      "bytes": 6874,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-normalized.c",
+      "sha256": "e59ac8c5c6faf7bb390116705fde3427b35865d5e34c511cee5f577355b688af"
+    },
+    {
+      "bytes": 1316,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp-properties.csv",
+      "sha256": "826b558556e97203fe89372af93f58bc16a4d473f05ec7507a1c3f666d31b585"
+    },
+    {
+      "bytes": 2066,
+      "path": "runs/proof.model.std_vector_int_end.20261016t230928z.a08f99f3/wp/wp_input.c",
+      "sha256": "1f77d524d1b086aab77e90c4421aaeebf288c5bf8118c5a7f777e94d94befba2"
+    }
+  ],
+  "raw_root": "/private/tmp/probata-vector-member-first-public-20261016-v1",
+  "record_id": "proof.model.std_vector_int_end.20261016t230928z.a08f99f3",
+  "resources": {
+    "cpu_seconds": 18.457167,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 493191168,
+    "timed_out": false,
+    "wall_seconds": 18.635391500021797
+  },
+  "retained_bytes": 104705,
+  "scope": "Actual normal public WP run on Mac under explicit typed contiguous input domain; no source/storage/lifetime caller discharge or generic dependency admission. Normalized native reports only; standalone SMT/support task closure not retained by this first ordinary route.",
+  "smokes": 3,
+  "source_commit": "1c45737f6cff9b43731d8da530be869a7e5d745e"
+}

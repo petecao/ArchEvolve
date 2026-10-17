@@ -1,0 +1,1362 @@
+{
+  "boundary": "Exact emitted assertion body hashes plus named primary source/module pins or explicit trusted encoder/generated context. This is source attribution and interpretation, not a proof of WP/Why3 translation correctness.",
+  "created": "2026-10-16 ET",
+  "hashes": {
+    "02ab727f89ca3a0d8caa632f11e47af4b05e81fb0099f9e55cbc4de8c9805444": {
+      "comment_label": "memcpy'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 30,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "09cba82ca1958b5145ac4dc77e87a48d958bfe0873b1007c09ebd30d45ee750d": {
+      "comment_label": "table_to_offset_monotonic",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 156,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "0cca3b092756a7de4a00ccf9cc64f63030602b6cf95aee8e68e91533d24841f1": {
+      "comment_label": "addr_le_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 32,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "13fb30885dcabda90e5fcab23a213d5f227cdc2f7e69de1f148c0973731fc6be": {
+      "comment_label": "null'def",
+      "family": "pinned standard WP address null definition",
+      "primary": [
+        {
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "semantic": "source definition null=address(0,0)",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "1a300825702c1919e226d5e5bc1d689dc7e24c34e13b0369d8518425ebad00d9": {
+      "comment_label": "abs'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 52,
+          "module": "int.Int",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw",
+          "source_sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+        },
+        {
+          "kind": "function",
+          "line": 94,
+          "module": "real.Real",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw",
+          "source_sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+        },
+        {
+          "kind": "function",
+          "line": 94,
+          "module": "real.RealInfix",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw",
+          "source_sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+        },
+        {
+          "kind": "function",
+          "line": 94,
+          "module": "real.FromInt",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw",
+          "source_sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+        },
+        {
+          "kind": "function",
+          "line": 52,
+          "module": "int.Abs",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw",
+          "source_sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+        },
+        {
+          "kind": "function",
+          "line": 52,
+          "module": "int.ComputerDivision",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw",
+          "source_sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+        }
+      ]
+    },
+    "1bb6ee4d88506fcc2ab43ad47fe6e7b8e2fc53a864f5c8fd58be652f55b484e1": {
+      "comment_label": "eqmem_memcpy",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 62,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "1bc1aa0430d0c0f9867aa679e9283cf8d140fbe9dbdafbcf66d12499d4f7931a": {
+      "comment_label": "eqmem'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 26,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "1d7a7d2655cdbe58032fdab095ae82b7645d378700270b47b53555e5ef63ed52": {
+      "comment_label": "addr_of_int_bijection",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 143,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "203b2c7fdcc54618375aa233204057b356357c206cd880d46138fbcae50d4247": {
+      "comment_label": "eqmem_included",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 43,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "20e975dceadcc88235c2045e3c892dff83a67e62d1c9f46a33d79dbb8f5ee179": {
+      "comment_label": "memcpy'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 30,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "22a52c176e651141c4fbaf36a4f882ec4af6c9db83385a8057fa07d787627bdb": {
+      "comment_label": "table_to_offset_monotonic",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 156,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "22a905e7dadb96f3a2066c2c5b9ef7ece4a5dd688cb7e126ba5ddbdf83adf9b2": {
+      "comment_label": "is_sint128'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 45,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "23a15b44cbf9808259f267171275aa50c3a74d7517164577eb60a63afc7a7be7": {
+      "comment_label": "addr_lt_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 36,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "24a2642fa40771d50390ddeca3afddb2249d78c07002137104209c5ad91862f4": {
+      "comment_label": "valid_string",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 69,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "251c3bebf571c0ebb130b67b6c119a0e0673b738ec5e6e5ca226ddbebf21fe2f": {
+      "comment_label": "addr_lt_bool_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 44,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "2aebabfd04dcd5cb27700375bd974155c731f15e1686f226edf746d3cd1a86c5": {
+      "comment_label": "addr_lt_bool_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 44,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "2b408a79d0c0acb465e93fa2be6c178ed07fcdb910216cbbf518f68a4b0c5633": {
+      "comment_label": "table_to_offset_monotonic",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 156,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "2d79d448db30bad6a6f26b9dfa88d0f3124e8fff8001edb71a5b31c5836b60cc": {
+      "comment_label": "witness_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "2dd98b3a40a58716d8ff940206a8ff6c9e746af97330e76169844ba4c317885f": {
+      "comment_label": "P_std_vector_int_valid'def",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "2fd6e91c084db3c60d871bc7d965dbd534ecb5986066826e71561cea8538af4d": {
+      "comment_label": "BridgeL",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "3092b56c1277cdaa991ee65776dc747955a2653c49f98d95256e0bf6a43633e0": {
+      "comment_label": "addr_le_bool_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 40,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "31e788b7112a6b7a50d1d345bcb3cb0ec5376da20e8a704eba78d39b0c94c994": {
+      "comment_label": "eqmem_update",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 56,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "349f2ae295cb4e71e459ed3539cb69273b65f6c225a57649032f3b54b79118a6": {
+      "comment_label": "valid_pointers_are_statically_allocated",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 133,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "356353944ceb6a8b5d635950cbbd2cca22f3ab89e106c0d379093a30b19d7bcf": {
+      "comment_label": "eqmem_sym",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 50,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "357c827266a4d7c8da8da818add513fcaf4a24cceb3d403b2f3993cb4885ec0d": {
+      "comment_label": "P_std_vector_int_readable'def",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "37931c3be41701aafc8ec55bf1908ef886f7a150efca39958f66bf665cec598f": {
+      "comment_label": "separated_included",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 97,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "3884c6edee2336a832f7f4b47e281aa666672b44348e1efc9d975847a2c7830a": {
+      "comment_label": "eqmem'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 26,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "3a4275194e8a2499a02dabf875aa3ce62e5ddedff3842134c8f57a4f94fcce48": {
+      "comment_label": "is_uint64'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 42,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "4119af9c5dc716b2648f3baf51672dcbf1e0ff538e2baa6fe2ed770b996358c9": {
+      "comment_label": "valid_rw'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 53,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "4284e4179c2ef0aa3df2d5043ebfa8ffc3b3956057a55074bbe4a25731874060": {
+      "comment_label": "Q_L_v_1168_linked",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "429c7643c0867a0e7ca50ee1e874b528df0685d23b940349ce1d3f1b14f4fdf0": {
+      "comment_label": "eqmem_single",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 38,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "42e536366587c6591f2bb0039f42482927ae6c7c07e88bda0ce996277bdba784": {
+      "comment_label": "global'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 21,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "45554b26f63914694c453d25303aa833cb2e1585cbdcc61ace579f1a12603db1": {
+      "comment_label": "BridgeR",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "4bb65a339df64bc90c19bc74385cae52b80216cea09fee6154fca49cb1d80d81": {
+      "comment_label": "Q_IsInit_S4_std_vector_int_framed",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "4e0a71aa1fc920ac819dd4cd5814d4e8b6522da715718931892a003fe55fe41f": {
+      "comment_label": "t2tb_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "530b34560611bef13b6b7e522b3f5eeae01837db825445aeb2d098623edf8029": {
+      "comment_label": "eqmem_included",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 43,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "54023cf3b2310e6b3a3a2f22a4e2f060de3edfae63849cd9eaaec1eae16af64f": {
+      "comment_label": "separated'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 81,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "563c0d4ecadf20feb902790691d741af1a4ef28841f6ee66903ec61ff4fe8479": {
+      "comment_label": "eqmem_memcpy",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 62,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "5a012fcc27dce3ca493090b4f337bafee92e8ce797d61b9c0fa5bd185f0d5ad2": {
+      "comment_label": "valid_rw_rd",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 65,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "5aa1cf70ba073a48e0090614deee909e05556ebe88adf8433ac80ed5230999d9": {
+      "comment_label": "is_uint64_chunk'def",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "5c0558b5f884a03363c860cf3bdd5a3ad289d614ff98ea19ab04a92b6462dd57": {
+      "comment_label": "framed'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 19,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "5d8c00bf08bc00a1a961195403ee081863e1e385680bebc5a2d3cc31ba2f9d2f": {
+      "comment_label": "eqmem_memcpy",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 62,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "5eb181fb61a317f05deaf7d32e944cb1200006fc016e893c1fbeb10572b10c9e": {
+      "comment_label": "eqmem_single",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 38,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "5fbabfc227b5744c8f8e9c21af718a923c4eb2f9e570485548e861a8f20e6938": {
+      "comment_label": "table_to_offset_zero",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 153,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "62f15631efa14c06ff667efee994ed72a49023100159a2949397402156095eff": {
+      "comment_label": "memcpy_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "63a55ff9cca705fd7d33ab46abb527e689da75f555d0ed486352706d7ab87e47": {
+      "comment_label": "is_uint8'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 36,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "6575259d41fad0fa169ac5ef660d2249f0ba34c9fd43bd1d015f8dfa1d2a0da6": {
+      "comment_label": "IsInit_S4_std_vector_int'def",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "6af3c44ea29438b45869679d818dc8bcb2cb001d31d2276b1be247bd36d8ab52": {
+      "comment_label": "addr_lt_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 36,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "7329d6a67fcd9e81ab23c867551a23a518a1bf2342ffef496586619e8896fcef": {
+      "comment_label": "eqmem'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 26,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "7a0f0da3ff944974f697d27c0a50063e46467bff99ee63bf3d93df54eb732b55": {
+      "comment_label": "is_sint16'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 39,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "7f2a0c1ffa6e27bb5312ec535bf1e5a6eb9be4b84defa8afd2d78319697d44b6": {
+      "comment_label": "is_sint32'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 41,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "7f9adf2173da9c71cdcd71c81b7114f23c9cd97d4139bde8c1867c44d8200690": {
+      "comment_label": "addr_le_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 32,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "7fa989a101a518c6f8a59fab0add998aa5a550986cf2d64eb4efa436d91880c7": {
+      "comment_label": "separated_sym",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 112,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "805f5d38ce548a56c496c7151abacfbe33f3c4bd5421117910c14ab7fba7e3df": {
+      "comment_label": "is_uint128'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 44,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "856a0f209a48e5e6019a83f2cbed4f34b582fa0b4def9d31d91c41ba02de96c8": {
+      "comment_label": "eqmem_update",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 56,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "866f55e60876f7853bc3d3c6b08408bde0a6a15900a4752c57a4953a7fa42ab9": {
+      "comment_label": "valid_string",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 69,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "87d7bfa736eb55c346b5d8355960be6a962ef981789e054f04c7415be1c59038": {
+      "comment_label": "eqmem'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 26,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "893c63ca656e0778a41344c5b3d5b5dc496ac387cadb8c3382af8771f3d97e62": {
+      "comment_label": "addr_lt_bool_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 44,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "894eb34f9f4b2168b268391716d3bdc58890805c25d72ffee3a41f0d598666fa": {
+      "comment_label": "t2tb_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "8a6df7b5b97f96fa978cd9ac7ee1503d987f40d590a6ab45826d56ffd0121013": {
+      "comment_label": "eqmem_single",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 38,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "8b45e1ed9b6e3cfbcc72f16f72369069f95d473a420f78e7c9de511134f2c9f3": {
+      "comment_label": "Q_IsInit_S4_std_vector_int_framed",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "8db1db86258eb0dbe4ec35145569ebd7a7e781fde07923c28edfda5ad1f6fcd5": {
+      "comment_label": "separated_trans",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 107,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "8e67102e89e17fc07f8ea35a88c67dc765839c07fff89e59748ae671855c9f2d": {
+      "comment_label": "Q_IsInit_S4_std_vector_int_framed",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "922f58edad0cb2cfaa1c4b49efdbc3027d46ef708c4e953628a798a19ba04b62": {
+      "comment_label": "eqmem_sym",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 50,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "95b1e1420bbda36947b80f99d0fbfdbb95dbab8003af2a84edb7e7e7735b8e2d": {
+      "comment_label": "BridgeL",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "95e93721a14f2521ca4630c5852856d279c1414208c3f44b29d2d3413d487621": {
+      "comment_label": "eqmem_update",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 56,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "96fd82fd74aa75e2789f95465b8d0fd08ed0a2116e2739660d03a6ca38de4b36": {
+      "comment_label": "Q_L_v_1168_region",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "98ff6ce340f374824f2bc4818d54185b0bdb5b70c03e6bcd2c0f36540244c47c": {
+      "comment_label": "addr_le_bool_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 40,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "9daf7f0cb096e9672c2642d6130f357abfc5823df17dd953b21fea76fa9b54b2": {
+      "comment_label": "memcpy'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 30,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "a23943d5e4f86626bdd377fe81eb0ee80f4bfa64e8eb593153b90ff117fbda28": {
+      "comment_label": "separated_sym",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 112,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "a23c7e26293d4978e5ec15380ed9e5492e3f572b49d19b7158843f87852e0f7d": {
+      "comment_label": "is_sint8'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 37,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "a67b238b19521e53a1e4c32989407843f012c435f2879a70199f1edb6269af0b": {
+      "comment_label": "BridgeL",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "a715070f045c660b058d453d9ba60839a9d6f5b01a096c1bc3e99c0471e1adb9": {
+      "comment_label": "addr_le_bool_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 40,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "aab89808a53820f86cad622048054e02b64299d6e707e7dfd66c698e765660e9": {
+      "comment_label": "shift'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 49,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "aadf50a7378833ee06723fefad2e7fe662e946d61a7b6a4356ae22154d334250": {
+      "comment_label": "t2tb_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "ab7378d7894d7b680e386707b6a19764763a6aacfde5281a1ea30397e6663cce": {
+      "comment_label": "t2tb_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "ac4c979bddd5ff572f3ba15466787bd35f7d5a778b6d2eda5547198875b9c8ab": {
+      "comment_label": "infix @_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "ac6dc80232b4e78fec47d39ee12b9c6ad82fd7af9c5d5bc7195e155dd31e3196": {
+      "comment_label": "addr_le_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 32,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "ae9208851f7f9f12d6bf1b7989838fc3456a2526526107c82e8792a92b488084": {
+      "comment_label": "BridgeL",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "aeb9df3252aa7c73e21cc7ca7ead564c6756f353d452b3d8e140e12ea6febe26": {
+      "comment_label": "statically_allocated'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 128,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "b0c7485bf5cd29ebc9eb7088f190115728c23aad5ee29924c477b030fb65dcb1": {
+      "comment_label": "is_sint64'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 43,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "b3a7f33919aac54c0df7eceaba4943d328af5199f3b3f8566b80762d9d1a0232": {
+      "comment_label": "valid_string",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 69,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "b65c2a80385aabe7a565cbd1763d4c3e212a3ce5485b4ca89ca6f29b614b3ae9": {
+      "comment_label": "is_sint32_chunk'def",
+      "family": "uniform source-generated record/stack/type/predicate context",
+      "primary": [
+        {
+          "generated_theory": "Compound/Globals/Chunk/Axiomatic14",
+          "semantic": "record fields logical0/1/2;3-cell receiver; scoped stack local; all-field initialization; source vector predicates",
+          "source": "exact wp_input.c and pinned Frama-C Typed/Var generator"
+        }
+      ]
+    },
+    "b856d548a0cefd9e9886a0074149ca5e2e8e09df7a1f9ad1330d0938cbaed0a7": {
+      "comment_label": "eqmem_update",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 56,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "b929b0db86defdf194a906a2a65dc091ea2ab9cb375ab212b8530f5bd93be734": {
+      "comment_label": "included'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 76,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "baaef890d8cae6546e26939e8838e9baeefcfc31c644ae829260a762de5ade81": {
+      "comment_label": "eqmem_update",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 56,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "bdbab2dcdb8aa8e0171232b2e7669c045671c9a062931446a250fc0ab50f63a1": {
+      "comment_label": "is_bool'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 35,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "bfa5ff274c10dea987ba45e824f82fe0da64c5706ab14404c47ab6e0ed2afdeb": {
+      "comment_label": "scinit'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 22,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "c035182c2088ad2e4b4c47381b4ea4045f2f4b2d7c763b6657932e555ffe677a": {
+      "comment_label": "valid_rd'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 56,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "c29b414dc9f020a7f7f9656de73ad6ece03c8932bcd4ef94551ebe7fc4613e03": {
+      "comment_label": "memcpy'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 30,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "c4d583de2f36cbb90d149aa43c609bc1e7972ce33c637b023ea7accc47f3420b": {
+      "comment_label": "eqmem_memcpy",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 62,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "c54e772ab3c2b4aa59c7189366f01caff3ce0f0173fa9b4c57067ff038ce2f24": {
+      "comment_label": "eqmem_single",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 38,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "cad9b74cdef6cfdb54708236222c8f4b3135a14bf973fc1a4d3642b5bbf42fcb": {
+      "comment_label": "eqmem_memcpy",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 62,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "cc07bf34a502317d475f5416c4476e67eb14ff6c8786bc0a0ebc81b03ba01775": {
+      "comment_label": "BridgeR",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "d30f828dc834613cafe62b48850fe550359d7be5e373f08ac7453e9aca4d707d": {
+      "comment_label": "separated_sym",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 112,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "d562fde41b975fe5905689b9d438fdd16719b529ddd85db85b9a030dee112c0f": {
+      "comment_label": "included_trans",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 102,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "d5ee7a6eb143d71330086991a180439eb466f61ac114b2640ceb19d78d9766a6": {
+      "comment_label": "is_uint16'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 38,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "d69d3f5123a7574f7ac06cae9e916d527c79cbb5b42bcd97026f1cab3c41e711": {
+      "comment_label": "BridgeR",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "dde2ef574f405f9fd6f7c8a39167b531774fce9475a2fb2657081b415c4547f2": {
+      "comment_label": "separated_1",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 87,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "e2327bde5e385f63a25fa1bd45b64334f2a0e0b373f1dc8a8fe9942ed66e0b92": {
+      "comment_label": "addr_lt_def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 36,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "e70462fbd84f568431b7fd154951f341d646d2987faaf1052dd5a7528e0ef572": {
+      "comment_label": "eqmem_single",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 38,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "e798cd0026556a6d27b2f306b9a47234d8f3c00a7c9a241311a6b8a6bc26f93f": {
+      "comment_label": "addr_of_null",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "axiom",
+          "line": 140,
+          "module": "frama_c_wp.memaddr.MemAddr",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+          "source_sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f"
+        }
+      ]
+    },
+    "ed173c49ec4b473ea346a7c28a3b2a54d344b8c2ee6336f8c66f087ec7d869c8": {
+      "comment_label": "memcpy'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "function",
+          "line": 30,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "eee2c4c186123bf61cc58970c14d0f173f0c810b134a3d274bf3d99aa2519359": {
+      "comment_label": "eqmem_single",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "lemma",
+          "line": 38,
+          "module": "frama_c_wp.memory.Memory",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw",
+          "source_sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9"
+        }
+      ]
+    },
+    "f8e0de091418b62bc7f60a4364eb6669d94cd1db9b329d5de9364c431f67edc7": {
+      "comment_label": "is_uint32'def",
+      "family": "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma",
+      "primary": [
+        {
+          "kind": "predicate",
+          "line": 40,
+          "module": "frama_c_wp.cint.Cint",
+          "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "source_sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        }
+      ]
+    },
+    "ff8c6cc938aa7aa881cd3224de888c9e6474778d029d70c9ed351ca4952cdaa7": {
+      "comment_label": "set_sort",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    },
+    "ff96cc819c135af3568fd7b801f7d79dbc8542f44c1f6393afca4f712d47f688": {
+      "comment_label": "BridgeR",
+      "family": "trusted Why3 polymorphic/Boolean encoding",
+      "primary": [
+        {
+          "encoder": "pinned Why3 polymorphic-to-monomorphic SMT typing/Boolean coercion encoding",
+          "semantic": "generic sort/bridge definition; no source result proposition"
+        }
+      ]
+    }
+  }
+}

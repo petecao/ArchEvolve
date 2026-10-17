@@ -1,0 +1,142 @@
+{
+  "date": "2026-10-16 ET",
+  "expected_control_basenames": [
+    "closed_python_surface.py",
+    "frozen-source-overlay-receipt-20261016.json",
+    "independent-trace-cold-v1-source-review-20261016.json",
+    "initialized_cold_identities_v2.py",
+    "provenance-04af-bounded_std_initialization.py",
+    "provenance-04af-proof_setup.py",
+    "provenance-04af-wp_adapter.py",
+    "public_assertions_v1.py",
+    "python_startup_roles_v2.py",
+    "reviewed_cold_primitives_v1.py",
+    "t28-trace-v4-root-execution-20261016.json",
+    "test_actual_metadata_shapes_v2.py",
+    "trace-actual-shape-pure-controls-result-v2.json",
+    "trace-cold-actual-shape-source-packet-v2.json",
+    "trace-cold-control-manifest-v3.json",
+    "trace-cold-policy-04af74c1-v3.json",
+    "trace_cold_audit_v3.py"
+  ],
+  "fresh_raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3",
+  "manifest_self_listed": false,
+  "payload_bytes": 670900,
+  "payload_file_count": 16,
+  "payload_files": {
+    "closed_python_surface.py": {
+      "bytes": 18385,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/closed_python_surface.py",
+      "purpose": "reviewed passive reader primitive",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py"
+    },
+    "frozen-source-overlay-receipt-20261016.json": {
+      "bytes": 18396,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/frozen-source-overlay-receipt-20261016.json",
+      "purpose": "root-staged immutable source provenance; shared edits preserved",
+      "sha256": "d794cec793cfa63600eaff5c64996f34e8ce3b0672918150a159b7a2bbc70f98",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-actual-shape-controls-v2/frozen-source-overlay-receipt-20261016.json"
+    },
+    "independent-trace-cold-v1-source-review-20261016.json": {
+      "bytes": 3381,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/independent-trace-cold-v1-source-review-20261016.json",
+      "purpose": "independent source review; not execution",
+      "sha256": "4b0f171576c7afaf6a3f40abcde1742e61796db88fb5382585e65190a6a39c5d",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-audit-v1/independent-trace-cold-v1-source-review-20261016.json"
+    },
+    "initialized_cold_identities_v2.py": {
+      "bytes": 8765,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/initialized_cold_identities_v2.py",
+      "purpose": "reviewed passive reader primitive",
+      "sha256": "0c248fc3b50e69629fed8ab9a187dc5a947cc9aee3fb628aa8d604a6e79c5cc9",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/initialized_cold_identities_v2.py"
+    },
+    "provenance-04af-bounded_std_initialization.py": {
+      "bytes": 14506,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/provenance-04af-bounded_std_initialization.py",
+      "purpose": "inert immutable04af control evidence only; not imported by reader",
+      "sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-actual-shape-controls-v2/frozen-source/swdb/bounded_std_initialization.py"
+    },
+    "provenance-04af-proof_setup.py": {
+      "bytes": 48874,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/provenance-04af-proof_setup.py",
+      "purpose": "inert immutable04af control evidence only; not imported by reader",
+      "sha256": "069dbc55b6ca8b12ea8b524027e2ca2b0922eb9e7be449c6f5725dbddbfe733f",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-actual-shape-controls-v2/frozen-source/swdb/proof_setup.py"
+    },
+    "provenance-04af-wp_adapter.py": {
+      "bytes": 95281,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/provenance-04af-wp_adapter.py",
+      "purpose": "inert immutable04af control evidence only; not imported by reader",
+      "sha256": "dbf887bf8515e6ce59086fdc99ec0b58558d742425311b8e404b5d4437b29ebf",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-actual-shape-controls-v2/frozen-source/swdb/wp_adapter.py"
+    },
+    "public_assertions_v1.py": {
+      "bytes": 5067,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/public_assertions_v1.py",
+      "purpose": "reviewed passive reader primitive",
+      "sha256": "7fb5964e54a7a862e807b7154de43a46cd7ac34f22483d7858113cf37da13acd",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-audit-v1/public_assertions_v1.py"
+    },
+    "python_startup_roles_v2.py": {
+      "bytes": 9610,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/python_startup_roles_v2.py",
+      "purpose": "reviewed passive reader primitive",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py"
+    },
+    "reviewed_cold_primitives_v1.py": {
+      "bytes": 10964,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/reviewed_cold_primitives_v1.py",
+      "purpose": "reviewed passive reader primitive",
+      "sha256": "4b5ccd919ab71e54c70038a456c68c06b6f9e84af5ca6e690258094d79f428c4",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-audit-v1/reviewed_cold_primitives_v1.py"
+    },
+    "t28-trace-v4-root-execution-20261016.json": {
+      "bytes": 26667,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/t28-trace-v4-root-execution-20261016.json",
+      "purpose": "exact original root observation provenance",
+      "sha256": "c94420bdb85074be52aa2044158c9ee77cace37f4dbb0fac2274e64973a5e7ff",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-trace-v4-root-execution-20261016.json"
+    },
+    "test_actual_metadata_shapes_v2.py": {
+      "bytes": 12828,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/test_actual_metadata_shapes_v2.py",
+      "purpose": "inert actual-metadata controls; never executed remotely",
+      "sha256": "78f6bbb4f78f46d8d17314358d08b97ce6f1d1f3452de692483eed4ebf82194d",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-actual-shape-controls-v2/test_actual_metadata_shapes_v2.py"
+    },
+    "trace-actual-shape-pure-controls-result-v2.json": {
+      "bytes": 315,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace-actual-shape-pure-controls-result-v2.json",
+      "purpose": "six author pure controls passed; not actual reader evidence",
+      "sha256": "98205a3cd1c2d93736a07e587d683989807fb6b767106101bca494c4193db1f5",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-actual-shape-controls-v2/pure-controls-result-v2.json"
+    },
+    "trace-cold-actual-shape-source-packet-v2.json": {
+      "bytes": 4402,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace-cold-actual-shape-source-packet-v2.json",
+      "purpose": "actual metadata controls source packet",
+      "sha256": "e7b1463d39037d31974372ccfc9501578393bc9bbcdb49386b8ed865eba96491",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-actual-shape-controls-v2/trace-cold-actual-shape-source-packet-v2.json"
+    },
+    "trace-cold-policy-04af74c1-v3.json": {
+      "bytes": 353644,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace-cold-policy-04af74c1-v3.json",
+      "purpose": "fresh frame-only trace admission request",
+      "sha256": "e2fe50f515a9eb287d5a559909671f01451dec932c4ec5d6256d9de472c86531",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-policy-04af74c1-v3.json"
+    },
+    "trace_cold_audit_v3.py": {
+      "bytes": 39815,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace_cold_audit_v3.py",
+      "purpose": "reviewed science unchanged; frame-only error successor pending review",
+      "sha256": "a323298395677ed638d1e92a53fd0d386f54cab5eb815c266d8cdd1d3aff63aa",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace_cold_audit_v3.py"
+    }
+  },
+  "reader_executed": false,
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b"
+}

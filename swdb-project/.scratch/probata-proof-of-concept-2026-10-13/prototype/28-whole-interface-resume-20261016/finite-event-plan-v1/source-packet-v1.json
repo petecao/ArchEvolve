@@ -1,0 +1,1134 @@
+{
+  "boundaries": {
+    "actual_c_or_model_execution": false,
+    "actual_concurrency": false,
+    "all_predictions_conditional_on_resolved_owned_receiver": true,
+    "exact_checked_receiver_prefix_and_draw_closure_required": true,
+    "future_same_new02_traceunit_registry_premise_resolution_required": true,
+    "initialization_or_ownership_grant": false,
+    "original_cpp_tu": false,
+    "public_formal_native_admission": false,
+    "ready_query_or_polling": false,
+    "standalone_static_receiver_composition": false
+  },
+  "critical_scope": "all store commands issued between literal begin/end command frontiers, either scheduled thread; no mutex theorem",
+  "date": "2026-10-16 ET",
+  "exact_model_and_hook_inputs": [
+    {
+      "bytes": 69747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+      "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+    },
+    {
+      "bytes": 15884,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_adapters.h",
+      "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+    },
+    {
+      "bytes": 13765,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_builders_v1.h",
+      "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+    },
+    {
+      "bytes": 3881,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_closed_routes_v1.h",
+      "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+    },
+    {
+      "bytes": 9975,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/model-entry-v3/whole_model_v3.py",
+      "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+    }
+  ],
+  "prepared_corpus": [
+    {
+      "bytes": 1705,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/anchors.json",
+      "sha256": "b762e2cd0cffe984295da2e94f9bd3d51300fe70815386181f721415bc21b0f0"
+    },
+    {
+      "bytes": 6922,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/certificate.json",
+      "sha256": "0cc8fd79346394196f4eeba393c5be02914a6d713e615771e20e9682e77fde99"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/context.json",
+      "sha256": "78728850c154fba0ec155c26717717399d0bc8a4e196f36134b512e99637f69b"
+    },
+    {
+      "bytes": 460,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/draw-plan.json",
+      "sha256": "4966594729ce1e5541f3464c8257def1adff211f7db02a8a37f66b25b5258e76"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1635,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/plan.json",
+      "sha256": "d1ccefdb9fd8a54bf772bd7f17e7b7a2a86855749be61aa0f02a34c3b034928f"
+    },
+    {
+      "bytes": 3272,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/policy.json",
+      "sha256": "a4ddda87d9e5f145d52ad3859a450048d6cfc13aa4a45beda04d9b3723ea723e"
+    },
+    {
+      "bytes": 1582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/profile.json",
+      "sha256": "b9f23ab90747e6e95e2ea0b56c6fa158abd1f205a5a03b10ddbf5afcd1258bfb"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/receiver.json",
+      "sha256": "be64a9b4e28c624f5636432fea884f041c200fcf1daa6a12a42b0df6b12fa953"
+    },
+    {
+      "bytes": 141732,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/trace.c",
+      "sha256": "26711daeef914e93b900df1cb06dce5c1e668588091c33a23c4af01a708adb37"
+    },
+    {
+      "bytes": 805,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/anchors.json",
+      "sha256": "4a65a75ad94f56a000048474f7b447a93a1fdf64b4c7a4c07b43768702e114a1"
+    },
+    {
+      "bytes": 6818,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/certificate.json",
+      "sha256": "742a9017085020e3870a3aa18aaf289ae33f1aa5108e397a7854be6584ff994b"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/context.json",
+      "sha256": "ace0203055547a3f74a37e72241aa0216b19c2c39b48608976871cbb88767134"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/draw-plan.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1135,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/plan.json",
+      "sha256": "68d5528cfc7f44adf5d02b99239c759f6a59d876642ce87e057b9f566f1da385"
+    },
+    {
+      "bytes": 3220,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/policy.json",
+      "sha256": "75e977cf5f510e4f0c34bf4e96047b240587f82c21ea4944418de4d12d571d39"
+    },
+    {
+      "bytes": 1161,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/profile.json",
+      "sha256": "2dc3b39756ea7c5ac7f57af271735ed88ac4c564d4c7eb8425e29381d6a753d4"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/receiver.json",
+      "sha256": "609a8bfb8a7336ac410111047b711dfbf00286b2bbe527e5c82b07d1b5a6c5f0"
+    },
+    {
+      "bytes": 139758,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/trace.c",
+      "sha256": "95e02a06d88d45b77de49d4d597c33c20e9c6e6cbd206a30440426bfc8eb0204"
+    },
+    {
+      "bytes": 762,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/anchors.json",
+      "sha256": "9001402804dbc420d1488583ab0a22827e24d915b5e9975b529ed1c77efd27cc"
+    },
+    {
+      "bytes": 6882,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/certificate.json",
+      "sha256": "062c4b23bd58e7dd2cf3ea3b764490cd3dd87ce21e90917c6ec140910c623f96"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/context.json",
+      "sha256": "d1f2fd41f2f2d68f31bc70ef8af3b8788f90fe7bc722959b11a8fb6d018bcd83"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/draw-plan.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1099,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/plan.json",
+      "sha256": "b73ecb7ef9a9f8ab7da3087fbc61951bd2e812724dba5aabc39ba81057ad1c19"
+    },
+    {
+      "bytes": 3252,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/policy.json",
+      "sha256": "8898498178a96d7f596586e32c2689f88a0394189939284363aa805036021fe0"
+    },
+    {
+      "bytes": 1103,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/profile.json",
+      "sha256": "1857f8e9227c7e6473acebac0a65ddbd796cc955add6b86f8f60a2b6e3c7ec69"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/receiver.json",
+      "sha256": "a1bdaf125bac3d2bb1a6cebb3af7b01274b4a4eaee51cdf655ef564c4ccf6bb1"
+    },
+    {
+      "bytes": 139707,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/trace.c",
+      "sha256": "66af30a1a99ed911f4bfae60ea78f9fa80594f4d86ed29a5d51f3ad0a98a7037"
+    },
+    {
+      "bytes": 1630,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/anchors.json",
+      "sha256": "3aefd192e751afdae93ca490445db216affead01a80d7b4acb9693bd3987cd89"
+    },
+    {
+      "bytes": 6882,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/certificate.json",
+      "sha256": "59b54769bce3a2301d510e2d4ce3700bd2d22d7557e03e7bad208e4ba1a2d434"
+    },
+    {
+      "bytes": 2275,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/context.json",
+      "sha256": "1f5c7c0ac37c4c9ae68d99dfc4f0a4f9955be5e52c7256fb2137c80437a13752"
+    },
+    {
+      "bytes": 460,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/draw-plan.json",
+      "sha256": "4966594729ce1e5541f3464c8257def1adff211f7db02a8a37f66b25b5258e76"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1615,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/plan.json",
+      "sha256": "efc0a2700fe81ad59b7fd75c2fefcacf84c0c8e720835908d6bbd0227eb151d6"
+    },
+    {
+      "bytes": 3252,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/policy.json",
+      "sha256": "109738b5c2698ec41961accecaa15f6d418720c617c4164584137d79e45d9d9c"
+    },
+    {
+      "bytes": 1582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/profile.json",
+      "sha256": "d100e48138b662cdd1633a355031565416d51fdbeac0b00d3df3e3c9e2ac78fd"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/receiver.json",
+      "sha256": "5b54feade485766ef9f69c94a286a0eec951f932f99a40fee2e853535dd8d684"
+    },
+    {
+      "bytes": 141562,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/trace.c",
+      "sha256": "5579bda3d292b92e607ebbf0f11328e97dfede12abfe890285fe67b0c8118673"
+    },
+    {
+      "bytes": 411,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/anchors.json",
+      "sha256": "d2476637470acc617c32612c6e908d66b4697d578f8fcf62ea40721b00e7400d"
+    },
+    {
+      "bytes": 6840,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/certificate.json",
+      "sha256": "2b5afbfedb3925590f14b096803da25c679bbd2b24f61125d80ccd0ef48354f2"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/context.json",
+      "sha256": "93aa10dd5ea3b8cda42040ef12ef6abf94cf762272a4c939d5e0af637804b252"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/draw-plan.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 899,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/plan.json",
+      "sha256": "ae36f616b513a5a677661bd4a619a4ac286f101aa5795017d275b1685fb510b6"
+    },
+    {
+      "bytes": 3231,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/policy.json",
+      "sha256": "9d0893d30265f9caaa43e72ed765b17f0033f1cd50307451fe00c75488ee9ceb"
+    },
+    {
+      "bytes": 917,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/profile.json",
+      "sha256": "dec6c4e0da1473d09e8e5d9088e8452ec60bf4e119ac20c89c592a9ee68c0ec9"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/receiver.json",
+      "sha256": "53e5ebd4d2f8666bdf3a3baf0dbdcdfe015ae49a6a5086de0a115504a138b07e"
+    },
+    {
+      "bytes": 138783,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/trace.c",
+      "sha256": "ac2ba07cc22d0700dfa07a311e35277073e273116d546ba847587ee9e0f11acd"
+    },
+    {
+      "bytes": 1735,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/anchors.json",
+      "sha256": "1759036f462281cf673cd3c2bc6e2afce2a24736ce93c8d8615d9f0d6f15daf4"
+    },
+    {
+      "bytes": 6834,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/certificate.json",
+      "sha256": "ddc9fac080db473a438c538b3d0aa1e85e636d34970fbadb1e6b3f37bf99cd06"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/context.json",
+      "sha256": "7e3c2f7ec45b1d7ce2d7bcefbaccd1d87e56e83d2550f5a9f5a1293d31df4475"
+    },
+    {
+      "bytes": 532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/draw-plan.json",
+      "sha256": "007121a5bc93cbc3acb5316c28eaf96905e9bbace1c385fdc4cab32b1482ea16"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1805,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/plan.json",
+      "sha256": "84cb370c71aa617368228a7c05df3b6da603354f1e10da7fb4b4dd99e56f6403"
+    },
+    {
+      "bytes": 3228,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/policy.json",
+      "sha256": "9badbb695dc24d5f3217322682796c0636bc47a25148f4a01738a78f0d3093d2"
+    },
+    {
+      "bytes": 1691,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/profile.json",
+      "sha256": "34df7672c224d8ee51ae3ae8a115682ed8c3ea66ec360ed83fcb0058a2c2b751"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/receiver.json",
+      "sha256": "f99e788668fe21501b23229890af42947abc1dfcafbb788e43231ec0939f3242"
+    },
+    {
+      "bytes": 141936,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/trace.c",
+      "sha256": "1328c15134ec2c1d41b8fed1036b4a8fbb61bf5ae7457017d055cf703dc337f5"
+    },
+    {
+      "bytes": 1650,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/anchors.json",
+      "sha256": "380d8c0028a10f93a2d5a62260e515194beda24a252df368c742af94e02c7a14"
+    },
+    {
+      "bytes": 6794,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/certificate.json",
+      "sha256": "86b30564f27646fd7df5dc55d4ecd22b7aa159228ddcae96dbf4e296e34ba75a"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/context.json",
+      "sha256": "d19a0f530c9867f36fcb9edc37b196b9d41a523ac3147ade7e748063e20feb00"
+    },
+    {
+      "bytes": 532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/draw-plan.json",
+      "sha256": "007121a5bc93cbc3acb5316c28eaf96905e9bbace1c385fdc4cab32b1482ea16"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1805,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/plan.json",
+      "sha256": "0ad27216e1ca58439d3029af6c88da4ffd2ec20cd7931c81870314a327adb473"
+    },
+    {
+      "bytes": 3208,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/policy.json",
+      "sha256": "7df1d9ce9a4ec376772c7882e91a810e8c1f7efab5ed0fb6bf833e785af03a67"
+    },
+    {
+      "bytes": 1691,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/profile.json",
+      "sha256": "67b98f4fc0818a09559ce11da0cdfbed15f6f87b7d77d678d450f85a4d19dc72"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/receiver.json",
+      "sha256": "2186ad5713d3bd7c170d166ec7ee66b9650bdc4e73ba1ff9044767caeef8dc67"
+    },
+    {
+      "bytes": 141796,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/trace.c",
+      "sha256": "8a7d63b590987e0f4e842508054cb223d60e3bb61bfb5c4525090e6619d6e1e0"
+    },
+    {
+      "bytes": 41125,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/manifest.json",
+      "sha256": "70977a8ffb5d0460406ed4fd4b360dae0488b150b49f2e9207c5c6e9bab68740"
+    },
+    {
+      "bytes": 1040,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/anchors.json",
+      "sha256": "7c4937425d44d75b16b4614c9cc0c9705e617e031dbca56767ca719e738fd314"
+    },
+    {
+      "bytes": 6850,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/certificate.json",
+      "sha256": "676697e43144a5b96643c5607634c9faa1f3ac2b7e6c6d1f6edc9eafa5fc0730"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/context.json",
+      "sha256": "a063a9322333a46f0b9228e5d66c60e7e09de6e8ada0c1da44898680f29f5fe2"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/draw-plan.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1261,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/plan.json",
+      "sha256": "926b1bf35c7f96c8571803486d2f2de6a7a8e519f640340a49f87ed1a6745d3a"
+    },
+    {
+      "bytes": 3236,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/policy.json",
+      "sha256": "1a2a0129e812974fdb1c5bf7820cfe37a1679552a238ff65acc9d8159624f7d7"
+    },
+    {
+      "bytes": 1275,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/profile.json",
+      "sha256": "c392c9c949c3e4ffe6152a4a9459b5e0de51bae6088544fcea074d5853b33642"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/receiver.json",
+      "sha256": "e32e1a5cf4dbceeaf6d913989eb74edbcbb6cbf78ec902dada492768527e483f"
+    },
+    {
+      "bytes": 140282,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/trace.c",
+      "sha256": "f7a672724048d8f26fdaeba3dba618cddfaa8c76e2f84aca16a6892dbc85eefb"
+    },
+    {
+      "bytes": 954,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/anchors.json",
+      "sha256": "d0e7ce124f5d4e375c6ddc995392d1bd212097ead374398db9afcebf93c8d212"
+    },
+    {
+      "bytes": 6858,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/certificate.json",
+      "sha256": "90f71d06de3edd8c2fdb0d12c84cadca2e1918bd0d10dd5218aadd7eb8e0952d"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/context.json",
+      "sha256": "617f18ebe73df84d2e40a1f7b404c980b66154f9f512c1f3747f9e30cce040b5"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/draw-plan.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1209,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/plan.json",
+      "sha256": "b2687d59f5fc17752fea57d22c330c37654b54e8df9e8e6a5bebd17cba3968ed"
+    },
+    {
+      "bytes": 3240,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/policy.json",
+      "sha256": "09361f2c1f826b9574a5682de6535198ca3b6dcb99f35d32878237c54e0aec58"
+    },
+    {
+      "bytes": 1224,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/profile.json",
+      "sha256": "81124c1dbce2372d9ad5413eecaaf8befb68e2a1610d906aaedb2e899c7744fe"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/receiver.json",
+      "sha256": "5365fe0fec62118b4eb4f7322669832ddc1c35a3db88285b4da3a00febdaddba"
+    },
+    {
+      "bytes": 140069,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/trace.c",
+      "sha256": "c28b74d1084b53a18274508a6e0bceade129ca3f999aa27dcdf68b0c0faccd70"
+    },
+    {
+      "bytes": 278,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/anchors.json",
+      "sha256": "4f67769f27fe8a5c576aea72720c29bcbb0d6003cba1695885b501e7032e7d9c"
+    },
+    {
+      "bytes": 6760,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/certificate.json",
+      "sha256": "78b786401339afab26fabae485ee196f47ca93852f1a6f625d97a0c5983e4b9f"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/context.json",
+      "sha256": "ecc1e9a85ffb31f628a85a3f66a3154fd050fa5872dcb1bb6cc8bf3234f4fba0"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/draw-plan.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 824,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/plan.json",
+      "sha256": "40d735c4f7883956a77f3dce5ec407908e479f14224cfed1a896002f50928974"
+    },
+    {
+      "bytes": 3191,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/policy.json",
+      "sha256": "128108792a6f3e8dc2faf78daf6161c56a0c2d76ca21be36a50c50d976294229"
+    },
+    {
+      "bytes": 858,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/profile.json",
+      "sha256": "5a40e0217f1e40976829488e877eb44ed718589b28d288a1febc2e9ec7c53906"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/receiver.json",
+      "sha256": "a3fc65764bfb0c2bf469215bf6772abfef900450a0cb7811f7f5754d16e3ac92"
+    },
+    {
+      "bytes": 138528,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/trace.c",
+      "sha256": "d874d08adc4b5934c66950ddb3491a3718bfa49dd0c9e05087bed2c52abe7ca9"
+    },
+    {
+      "bytes": 755,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/anchors.json",
+      "sha256": "c57b72dff3b0a07fe27c1b02d674d7ea2203ba28e65a815f28392b69cebaaca7"
+    },
+    {
+      "bytes": 6882,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/certificate.json",
+      "sha256": "7c1de954a7c54e50883fa7deb3817e5748d1814468c3929ebbe9c7e0d34b056f"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/context.json",
+      "sha256": "d0c9da1fe9e5f7e0e92a434f065bca4342ab3b011c28dd444dc170eccc26d5fe"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/draw-plan.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1117,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/plan.json",
+      "sha256": "e65b89c7fbbd48c70859c5ee7b03f711c08d77ba62122adfb46e3628d04b57e4"
+    },
+    {
+      "bytes": 3252,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/policy.json",
+      "sha256": "8f7d70609128bc77c8c68fcb0d0e5b3114f3e45f3f4fa3914399757a5fe67ed3"
+    },
+    {
+      "bytes": 1097,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/profile.json",
+      "sha256": "24f4ed2eb15584077bda42c88ef6d242f90b559eeda3b25d8df26daccb9dd93e"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/receiver.json",
+      "sha256": "2399e5d72d2c1e3f25396ceae8b4826b6a8dab7f15b6bbae160ba9d86ff52ce9"
+    },
+    {
+      "bytes": 139780,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/trace.c",
+      "sha256": "3972155435cfba913e4c9cc0e3fd8d5d46677542e5f7c7184056ac24950db18c"
+    },
+    {
+      "bytes": 948,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/anchors.json",
+      "sha256": "463982ff5d5cf2cb244e89300eb5f0fc279f1e682a6b2feb371a54871be90d6e"
+    },
+    {
+      "bytes": 6858,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/certificate.json",
+      "sha256": "fb27d1ded38694bfab08f4e67b8b38043708cb47244a8007d0b74d0c24a2dc33"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/context.json",
+      "sha256": "fecf9e4c064873e9cda51805d493d82662d94c2ec80dd1e210b6069ebb84561c"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/draw-plan.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1206,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/plan.json",
+      "sha256": "590dc6da6ccdff8f1b749aa5e402df5f8b74a547ea9344d9283f7b6498225b6c"
+    },
+    {
+      "bytes": 3240,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/policy.json",
+      "sha256": "5e3e5a1d13c946e1ba6aff7f8e1c650531e3a17ce642888acb22e89f39b9b959"
+    },
+    {
+      "bytes": 1218,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/profile.json",
+      "sha256": "248f368f64cb09e1ae8a443b83b4122be87909466dc517b9c3a84f505d8777f3"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/receiver.json",
+      "sha256": "b1ea64e4425be89417199fbd662075edcad7736f264caf944ed43d8aa33a3944"
+    },
+    {
+      "bytes": 140065,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/trace.c",
+      "sha256": "88a7cdf9d1727a69e1fd4542e10204499e4b5e6427cc6135cca2beaa51cd89c3"
+    },
+    {
+      "bytes": 1167,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/anchors.json",
+      "sha256": "f9068a25fe27a89d393ff407bbc256bc0c6fb2d504a9c974891a2aece28084a1"
+    },
+    {
+      "bytes": 6866,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/certificate.json",
+      "sha256": "c6b70038e39d8347b350432a86c13dd54c3b8f34c0466d47d0d430ab9b4658b3"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/context.json",
+      "sha256": "b3f8014f105d1efef60950d39faf7e95080f7387239dd764b6e33669de368fd1"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/draw-plan.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1321,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/plan.json",
+      "sha256": "3f4b0e2610af0d54b0aca992af025e31040d5fdb2af63ed0d1208a2ba4905126"
+    },
+    {
+      "bytes": 3244,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/policy.json",
+      "sha256": "352fa8025b5c5c13036f955c45bcc4d26baf7e46f17f94ff35e91f9de023a70c"
+    },
+    {
+      "bytes": 1335,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/profile.json",
+      "sha256": "62d251bc52c8ed3367794511a34d7a195548d7078921a8d3e2e3cf2b9dcbba7e"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/receiver.json",
+      "sha256": "68a5b812ffe2e2ce69de27437d78c314dab2c46a486eb6fe39bc270f8e73032d"
+    },
+    {
+      "bytes": 140522,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/trace.c",
+      "sha256": "3777ac9fed3784c1873dae264222801ee0e9ab7a74ae98e9ba43790f4d051aee"
+    },
+    {
+      "bytes": 1703,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/anchors.json",
+      "sha256": "361b7c0d9e392cd8cf6de4b73b391dd578b41b268cd263ae4e6e0a199515c4a1"
+    },
+    {
+      "bytes": 6922,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/certificate.json",
+      "sha256": "766885c8b97ee6c12b6a5af114b2059b5d63d1eefbbe3dd11273c9c046199282"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/context.json",
+      "sha256": "93680514b1646ea211ce89d05703bda4301099ccc5caac50918dabeebf9bf1d0"
+    },
+    {
+      "bytes": 532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/draw-plan.json",
+      "sha256": "007121a5bc93cbc3acb5316c28eaf96905e9bbace1c385fdc4cab32b1482ea16"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1619,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/plan.json",
+      "sha256": "22515382071c46e9bb359d38c694cae7397e3f2798891281fcf4f3116a6fe129"
+    },
+    {
+      "bytes": 3272,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/policy.json",
+      "sha256": "0c940be04bc5376ec2184be9cf0ad64d3526c11a702a64fc1675fe0200c71f61"
+    },
+    {
+      "bytes": 1580,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/profile.json",
+      "sha256": "817b128052a6c7284e8749f777964b60802d09a960c2f1878e2bcd58922f6094"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/receiver.json",
+      "sha256": "ff60fdf35611400ea4a8ba5f9507d7e541ab600faca7dfb9089569a48ea53aa6"
+    },
+    {
+      "bytes": 141726,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/trace.c",
+      "sha256": "68d5b8831db2b2c3058631811e2818350d7f6fc2f161dfbd59d7180d5982bf3a"
+    },
+    {
+      "bytes": 1600,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/anchors.json",
+      "sha256": "fd31c88377b0cd9d12eef441065a6bf466951c0c6b932b63a31cd24ff87182fc"
+    },
+    {
+      "bytes": 6866,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/certificate.json",
+      "sha256": "87eaca20dfe609d572247ba3c8a6bbc89074715644cd13b61fff3824dea596dc"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/context.json",
+      "sha256": "6d4f3126ad183d1574d500fd513d1218a4148e01213384d842545dff36f433a7"
+    },
+    {
+      "bytes": 460,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/draw-plan.json",
+      "sha256": "4966594729ce1e5541f3464c8257def1adff211f7db02a8a37f66b25b5258e76"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1613,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/plan.json",
+      "sha256": "ed855b3a6bf8dddc1b1974bc41b431b608e831a6cf95783bd26d64e1275623da"
+    },
+    {
+      "bytes": 3244,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/policy.json",
+      "sha256": "ff90f1903cfff4b2a8b6cf9885da1a2c0d0239efe2a593a752b45ba9e054bbd5"
+    },
+    {
+      "bytes": 1582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/profile.json",
+      "sha256": "d100e48138b662cdd1633a355031565416d51fdbeac0b00d3df3e3c9e2ac78fd"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/receiver.json",
+      "sha256": "c1d3272091009b01be33b8a5e99f9bc463a19a30c8343aa93287d524d5c22260"
+    },
+    {
+      "bytes": 141496,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/trace.c",
+      "sha256": "9507dc647b1d2c88f8aff0b990991e1aa90b9acf7d0342fdf2028f06fcb8dc5a"
+    },
+    {
+      "bytes": 1102,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/anchors.json",
+      "sha256": "a075b856cf025608a21cdbfb358c0cbabda6ef59a301ec311c6f302b77af7e30"
+    },
+    {
+      "bytes": 6818,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/certificate.json",
+      "sha256": "11b10c6dbd507165f867b4771e607c1d08e3e2d3654859b9165f69d18646b301"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/context.json",
+      "sha256": "5479a6d22d58e191bb965cc7118a2d24dd3801623d325180585757c7558d64e8"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/draw-plan.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1329,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/plan.json",
+      "sha256": "883a041ac88d5ffe2ee40e645c8232678c79ffa7bf56922943fe4dac597ea110"
+    },
+    {
+      "bytes": 3220,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/policy.json",
+      "sha256": "3fbf910b6b453d09ca61d4241b070bca6b0e1d8e31454d6a1e017c6444f5efe6"
+    },
+    {
+      "bytes": 1336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/profile.json",
+      "sha256": "6001a60275b882e8819dfe557946419437668ff3f960050bd9dc9cf9d00c7e73"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/receiver.json",
+      "sha256": "742e390fd1caea09aa366905b4a126a2d10ff0ac99b26e297c490e621f683cf3"
+    },
+    {
+      "bytes": 140371,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/trace.c",
+      "sha256": "c06f6c85acbc178f3a258b2870cf55a67bef0e03d5237acb95489f04dc1e5d7f"
+    },
+    {
+      "bytes": 1179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/anchors.json",
+      "sha256": "9dbeeebfe94bf6ea4ecb5a34ca53711c5bc71cd7202af15ad23e67b6ac4ccc7b"
+    },
+    {
+      "bytes": 6874,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/certificate.json",
+      "sha256": "1ff806fcb91430aaaa8377e4e70d98d5defd90797ba5feb69782265e5164129c"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/context.json",
+      "sha256": "92525c2ec130dfb8bbec9d59f6f0ecb6d46582f42f578dbcc3d4e5d3db212544"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/draw-plan.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 1342,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/plan.json",
+      "sha256": "624e14836cf42ea6e001faf64eff84464e36c8b82793c45a22e916a43a255b21"
+    },
+    {
+      "bytes": 3248,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/policy.json",
+      "sha256": "fe21477516add7b95f16577b5afa76b50b6c4bacff1bdaeae815aaefac4dfe65"
+    },
+    {
+      "bytes": 1336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/profile.json",
+      "sha256": "de0b6eca9062f522a9aa58e9bf45d580aec1fc8f27422f2199921f703726cdda"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/receiver.json",
+      "sha256": "a55eece9890e31d3d3dd888a18f859e56b4c3dc74e00041506fbbd27353b4b4a"
+    },
+    {
+      "bytes": 140525,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/trace.c",
+      "sha256": "ec9c558a4acb62ba36425eb4fdc8786533abd98ef4160eaa8d6d38dd100d8173"
+    },
+    {
+      "bytes": 95,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/anchors.json",
+      "sha256": "1a67c80d300e03d8d26a4f2a29373046a12236d06429e832a00e7462b6ea5fa6"
+    },
+    {
+      "bytes": 6768,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/certificate.json",
+      "sha256": "42531a0468b505e39d0c7fe4e477e0288b48dddd21046ef1310f186abe7ec281"
+    },
+    {
+      "bytes": 2242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/context.json",
+      "sha256": "99ace60f0cf464340e83677e2ecbb2c2c08aeb0b8b6c0eaf3f1c5014f747c6ba"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/draw-plan.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/entry-prospective.json",
+      "sha256": "8b0b63a8a2353ad363d8b5e604a5391d9db2ef1b5fa694c29851c0fecb906018"
+    },
+    {
+      "bytes": 707,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/plan.json",
+      "sha256": "a6e7ffc3847c1cf6564a7efc66ae28fd76128169678521347a48cc2b71c8f816"
+    },
+    {
+      "bytes": 3195,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/policy.json",
+      "sha256": "63fdeddcb523c4b281be8f1db16b22879bc83b151285cff3c9f227c6e7c3e3f7"
+    },
+    {
+      "bytes": 742,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/profile.json",
+      "sha256": "fd620a169e0427efe96258a3c111614b787ae8fb36983b57344766d9f7cb5978"
+    },
+    {
+      "bytes": 446,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/receiver.json",
+      "sha256": "23ce8d77469977ca92715739c553fa43f63c255bdc9fb292035d7de2094aa1e1"
+    },
+    {
+      "bytes": 138156,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/trace.c",
+      "sha256": "af034b30129dd310cfa69638413a2aaa72a7bc6706f4cc04a6281170c5d0376d"
+    }
+  ],
+  "producer_api": "event_plan_v1.prepare(OwnedSelection) -> PreparedTrace",
+  "profiles": [
+    {
+      "draw_count": 4,
+      "id": "history_latest_positive",
+      "node_limit": 256,
+      "nodes_required": 129,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 4,
+      "id": "history_exact_issue_negative",
+      "node_limit": 256,
+      "nodes_required": 129,
+      "predicted_verdict": "predicted_invalid"
+    },
+    {
+      "draw_count": 2,
+      "id": "other_thread_cpu_read_positive",
+      "node_limit": 128,
+      "nodes_required": 64,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 1,
+      "id": "pending_store_cpu_read_negative",
+      "node_limit": 64,
+      "nodes_required": 61,
+      "predicted_verdict": "predicted_invalid"
+    },
+    {
+      "draw_count": 3,
+      "id": "same_region_write_cover_positive",
+      "node_limit": 128,
+      "nodes_required": 125,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 4,
+      "id": "same_region_read_read_noncover_negative",
+      "node_limit": 256,
+      "nodes_required": 128,
+      "predicted_verdict": "predicted_invalid"
+    },
+    {
+      "draw_count": 3,
+      "id": "different_region_noncover_negative",
+      "node_limit": 128,
+      "nodes_required": 125,
+      "predicted_verdict": "predicted_invalid"
+    },
+    {
+      "draw_count": 1,
+      "id": "owned_tile_positive",
+      "node_limit": 16,
+      "nodes_required": 3,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 1,
+      "id": "wrong_owner_negative",
+      "node_limit": 16,
+      "nodes_required": 1,
+      "predicted_verdict": "predicted_invalid"
+    },
+    {
+      "draw_count": 1,
+      "id": "disjoint_owned_tiles_positive",
+      "node_limit": 16,
+      "nodes_required": 4,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 2,
+      "id": "u64_second_half_conflict_negative",
+      "node_limit": 128,
+      "nodes_required": 75,
+      "predicted_verdict": "predicted_invalid"
+    },
+    {
+      "draw_count": 2,
+      "id": "u32_disjoint_half_positive",
+      "node_limit": 128,
+      "nodes_required": 67,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 2,
+      "id": "prior_cpu_store_visible_positive",
+      "node_limit": 128,
+      "nodes_required": 66,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 3,
+      "id": "covered_store_next_thread_load_positive",
+      "node_limit": 128,
+      "nodes_required": 127,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 1,
+      "id": "critical_end_wait_positive",
+      "node_limit": 64,
+      "nodes_required": 61,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 1,
+      "id": "critical_end_without_wait_negative",
+      "node_limit": 64,
+      "nodes_required": 61,
+      "predicted_verdict": "predicted_invalid"
+    },
+    {
+      "draw_count": 1,
+      "id": "outside_critical_store_positive",
+      "node_limit": 64,
+      "nodes_required": 61,
+      "predicted_verdict": "predicted_valid"
+    },
+    {
+      "draw_count": 2,
+      "id": "pending_read_lifetime_end_negative",
+      "node_limit": 128,
+      "nodes_required": 64,
+      "predicted_verdict": "predicted_invalid"
+    }
+  ],
+  "remaining_gates": [
+    "independent source review",
+    "same-entry public TraceUnit registry and premise-owner lookup",
+    "separately reviewed owned receiver prefix and exact entry/node/event/draw compatibility",
+    "independent full-u32 draw Plan/replay/method binding",
+    "root-admitted compiler/native/formal profiles and actual paired results"
+  ],
+  "resource_rule": "smallest power of two strictly above exact static node bound plus closure; first129+0 selects256; capacity assertions retained",
+  "schema": "finite-event-plan-source-packet-1",
+  "source_files": [
+    {
+      "bytes": 23943,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/event_plan_v1.py",
+      "sha256": "07c94720ec30625d9b934dea2685d49e75a949661c8852ae0997b0d8070b488b"
+    },
+    {
+      "bytes": 8698,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/corpus_v1.py",
+      "sha256": "dbae08db88783f30d8684d21f63388c09804ee5a283ccb836f93e489cfbb624a"
+    },
+    {
+      "bytes": 3524,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/build_corpus_v1.py",
+      "sha256": "819d07508ac9e41618a0a8459a3ad4548828691d596902b3f25bb1e0a67e2cf7"
+    },
+    {
+      "bytes": 9210,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/test_event_plan_v1.py",
+      "sha256": "212d2b5c4405c6937baac7bb41fc502f24276f3a460694c85552d86fcba47a83"
+    },
+    {
+      "bytes": 5890,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/README.md",
+      "sha256": "f122cbba35060071186d6c5204ea0442378822a92c80afa078f197490ef55c22"
+    },
+    {
+      "bytes": 5082,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/resource-derivation.md",
+      "sha256": "15d447b0453ceaa2679e463b4e0541027a6a0516bd964df41e4bb5c5f84ff571"
+    },
+    {
+      "bytes": 112,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/source-controls-green-v1.log",
+      "sha256": "a9d4177efda744048302f685ce622aff3fc36c99a68830197d3c955df62230f1"
+    }
+  ],
+  "status": "FROZEN_SOURCE_ONLY_AWAITING_INDEPENDENT_REVIEW",
+  "validation": {
+    "all_generated_policy_certificate_output_pins_reconciled": true,
+    "cases": 18,
+    "compiler_native_solver_ssh_or_project_import": false,
+    "metadata_reconciliation_only": true,
+    "pure_test_cases": 13,
+    "test_exit": 0
+  }
+}

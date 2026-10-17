@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-16 ET",
+  "external_attempts_after_audit": [],
+  "failed": 1,
+  "input_pins": [
+    {
+      "bytes": 17564,
+      "path": "swdb/vector_allocating_payload.py",
+      "sha256": "4f43839b08da6bc233890a55aad5830c8737fc44d885218aa87995bd56ad47b4"
+    },
+    {
+      "bytes": 6379,
+      "path": "swdb/vector_typed_payload.mlw",
+      "sha256": "b7a0d7d175a1a182fdc22bc34ef3823742fe5753110a7a9869f024f6eedae7c6"
+    },
+    {
+      "bytes": 7180,
+      "path": "tests/test_vector_allocating_payload.py",
+      "sha256": "3170af0556f76e368a9b1dab962b509d347f4fed551f03de199fdb14f1b7c836"
+    },
+    {
+      "bytes": 29179,
+      "path": "swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 171522,
+      "path": "swdb/c_lowering.py",
+      "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+    }
+  ],
+  "native_or_formal_workflow": false,
+  "passed": 2,
+  "rows": [
+    {
+      "passed": true,
+      "test": "test_typed_allocating_constructors_preserve_all_nine_original_units"
+    },
+    {
+      "passed": true,
+      "test": "test_typed_payload_transport_keeps_bits_categories_and_nan_equality_distinct"
+    },
+    {
+      "error": "'checked_source_derivation'",
+      "passed": false,
+      "test": "test_typed_constructor_derives_width_safe_unbounded_fill_copy_and_full_incoming_frame",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/run_pure.py\", line 56, in <module>\n    function(**{key: available[key] for key in inspect.signature(function).parameters})\n    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_allocating_payload.py\", line 82, in test_typed_constructor_derives_width_safe_unbounded_fill_copy_and_full_incoming_frame\n    rules = plan['checked_source_derivation']\n            ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'checked_source_derivation'\n"
+    }
+  ],
+  "source_only_artifact_seam": true,
+  "stage": "red-v3"
+}

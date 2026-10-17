@@ -1,0 +1,45 @@
+--- public_default4_v1.py
++++ public_default4_v2.py
+@@ -14,9 +14,23 @@
+ import time
+ 
+ 
++def completion_gate(results, members, *, wall_seconds, retained_bytes):
++    expected = ('std_vector_int_ctor', 'std_vector_float_ctor',
++                'std_vector_double_ctor', 'std_vector_int_ptr_ctor')
++    return (tuple(members) == expected and len(results) == 4
++        and tuple(row['member'] for row in results) == expected
++        and all(row['verdict'] == 'proven'
++            and type(row['resources'].get('exit_code')) is int
++            and row['resources']['exit_code'] == 0
++            and row['resources'].get('out_of_memory') is False
++            and row['resources'].get('timed_out') is False for row in results)
++        and type(wall_seconds) in (int, float) and 0 <= wall_seconds <= 900
++        and type(retained_bytes) is int and 0 <= retained_bytes <= 128 * 1024**2)
++
++
+ def main():
+     project = Path(__file__).resolve().parents[4]
+-    output = Path('/private/tmp/probata-vector-default4-public-20261016-v1')
++    output = Path('/private/tmp/probata-vector-default4-public-20261016-v2')
+     assert not output.exists() and shutil.disk_usage(output.parent).free > 20 * 1024**3
+     commit = subprocess.check_output(['git', '-C', str(project), 'rev-parse', 'HEAD'], text=True).strip()
+     assert commit == 'a102e275cd23352aea8c268be3761d8a330b9be0'
+@@ -115,10 +129,14 @@
+             break
+     for row in pins:
+         assert hashlib.sha256((project / row['relative']).read_bytes()).hexdigest() == row['sha256']
+-    complete = len(results) == 4 and all(row['verdict'] == 'proven' for row in results)
++    final_total = sum(path.stat().st_size for path in output.rglob('*') if path.is_file())
++    settled_elapsed = time.monotonic() - started
++    complete = completion_gate(results, plan['members'],
++        wall_seconds=settled_elapsed, retained_bytes=final_total)
+     print(json.dumps({'output': str(output), 'results': results, 'all_four_proven': complete,
+-        'wall_seconds': time.monotonic() - started, 'caller_admission': False}, sort_keys=True))
+-    return 0 if complete else 1
++        'wall_seconds': settled_elapsed, 'retained_bytes': final_total,
++        'caller_admission': False}, sort_keys=True), flush=True)
++    return 0 if complete and time.monotonic() - started <= 900 else 1
+ 
+ 
+ 

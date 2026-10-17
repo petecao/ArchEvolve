@@ -1,0 +1,80 @@
+{
+  "actual_execution_or_scientific_adoption": false,
+  "bootstrap_bytes": 117692,
+  "bootstrap_roundtrip_exact": true,
+  "canonical_files": 42,
+  "classification": "PASS_SWAP13_ACTUAL_ENTRY_COMPLEMENTARY_STANDARDS_SOURCE_REVIEW",
+  "command": {
+    "bytes": 117958,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/root-command.json",
+    "sha256": "5a2232d95b1a0341f0fd78730908d262c697484d96a851cd86d0c257d4cec6d6"
+  },
+  "controls": 16,
+  "controls_log": {
+    "bytes": 2757,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-root-public-controls-20261016.log",
+    "sha256": "7d7f735a44b847d4dd0e1ef54f662d481eb719a7cb19a4535cf0d339f8f46db8"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 44359,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/entry.py",
+    "sha256": "5f9613a100f9407d2338324591a5534ac2400372082ad1df7bbd47b9494f72fe"
+  },
+  "expected": {
+    "bytes": 278683,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/expected.json",
+    "sha256": "c02ece991fc80707bf057e81cc0bd55c55b0c318d2eb6d04cd1ea6abfe7d78e9"
+  },
+  "findings": [],
+  "only_changed_existing_functions": [
+    "canonical_check",
+    "main"
+  ],
+  "only_removed_unreachable_functions": [
+    "layout_checks",
+    "layout_dependencies",
+    "layout_pin"
+  ],
+  "packet": {
+    "bytes": 5392,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/packet.json",
+    "sha256": "80dadd0365e0bed3472d610d388f57a5b2b3ab6b21984de34d85b23d694a27f2"
+  },
+  "physical_source_blobs": 336,
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 180,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "per_file_bytes": 134217728,
+    "profile_seconds": 2600,
+    "root_headroom_bytes": 4194304,
+    "root_outer_seconds": 2920,
+    "root_post_exit_reserve_bytes": 524288,
+    "root_whole_seconds": 2800,
+    "workers": 1
+  },
+  "same_inherited_function_ASTs": [
+    "active_ipc_path",
+    "bounded_bytes",
+    "bounded_json",
+    "consumer_closure",
+    "guarded_generation",
+    "linux_admission",
+    "need",
+    "normal_task_census",
+    "physical_ancestors",
+    "pin",
+    "preserve_primary_error",
+    "raw_bytes",
+    "root_sibling_census",
+    "sha",
+    "surface",
+    "why3_dependency_check",
+    "why3_runtime_check",
+    "write"
+  ],
+  "scope": "Thirteen independent same-antecedent conclusion parts only, complete normal portfolio/flags/native tasks. Original8/layout are not executed or adopted; all historical source/ownership/caller dependencies remain explicit and pending.",
+  "verified_declared_pins": 23
+}

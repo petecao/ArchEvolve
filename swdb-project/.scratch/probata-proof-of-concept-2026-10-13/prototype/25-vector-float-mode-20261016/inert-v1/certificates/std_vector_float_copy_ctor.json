@@ -1,0 +1,34 @@
+{
+  "IEEE_bit_payload_preservation_proved": false,
+  "actual_driver_and_goal_evidence_required": true,
+  "checker": {
+    "id": "vector-float-copy-mode-1",
+    "sha256": "b48124bf057279c5018abfe65b8b2065173e4fcced27c83d33abf269fc2d3867"
+  },
+  "comparison_boundary": "plain ACSL logical equality is distinct from C IEEE eq_float/eq_double",
+  "element_type": "float",
+  "finite_or_non_NaN_requires_added": false,
+  "function": "std_vector_float_copy_ctor",
+  "intended_value_sort": "f32",
+  "method": "method.wp-vector-float-copy-v1",
+  "model_option": "+float",
+  "original_acsl_clauses_modified": false,
+  "original_source_sha256": "a6a073ac2dda8edb5d359d7fea24ff5206f6e99d2b58e98ef65a9c2b2e145713",
+  "parent_model": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "pending": [
+    "actual installed WP model and complete driver/import/task binding",
+    "original ACSL real promotion including unspecified nonfinite values",
+    "source storage, initialization, allocator freshness/framing/freeability and lifetime",
+    "source-to-symbolic float store correspondence and implementation representation",
+    "every ordinary/RTE/frame/init goal and normal consistency control"
+  ],
+  "representation_boundary": "no physical NaN payload, signaling state or signed-zero bit guarantee",
+  "semantic_scope": "symbolic same-format copy/store; no C floating arithmetic or format conversion",
+  "solver_boundary": "version/driver names alone establish no native IEEE capability or proof result",
+  "source_modified": false,
+  "source_or_lifetime_or_caller_admitted": false,
+  "version": 1
+}

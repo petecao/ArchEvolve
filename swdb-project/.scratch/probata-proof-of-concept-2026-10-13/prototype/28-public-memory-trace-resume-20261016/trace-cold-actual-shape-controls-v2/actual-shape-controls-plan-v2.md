@@ -1,0 +1,9 @@
+# Trace cold V1 actual retained metadata controls
+
+2026-10-16 ET. Controls-only successor; the frozen reader, primitives, policy and V1 packet remain unchanged and unadmitted.
+
+Six pure controls exercise the exact frozen startup_receipts, normalized_runtime, fixture_identities, CBMC release gate and copied admit_reader functions against retained compact JSON metadata. Actual initial/post-package paths, flags, selected compiler components, lowering/checker identities and full source identity expressions are consumed. The lowerer and proof_setup identities are independently reconstructed from exact hash-checked source bytes. Three concurrently changed local modules use a root-staged immutable04af overlay; the full60-source-plus-two-vocabulary check is recorded separately by root. No shared edit is changed.
+
+Physical filesystem/process/import admission is explicitly inert in these controls: the selected source project is virtual, site/YAML imports are metadata stand-ins, closed-root physical validation is supplied as an admitted test seam, cache absence is a stand-in, and method parsing receives the exact frozen YAML bytes but returns a tiny typed transformation fixture. These controls validate projection/data-access shapes; they do not execute the reader, admit actual runtime, parse actual proof records or accept an actual method. The frozen reader retains its real physical/import/parser checks.
+
+The actual metadata baseline passes. Wrong flags/paths/parser/naming context and an unadmitted CBMC patch fail; unknown runtime.version is never invented. Exact6.11.0 raw version stdout/stderr and tool hashes are checked without a tool call. All six controls pass with zero failures/errors/skips. No new reader/policy/runtime behavior is introduced and no compiler/native/verifier/solver/version/SSH/Git/project import is run. Independent review and root admission remain required.

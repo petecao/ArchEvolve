@@ -1,0 +1,71 @@
+{
+  "at_utc": "2026-10-16T18:17:10.937261+00:00",
+  "canonical": "/usr/lib/python3.12/dist-packages",
+  "counts": {
+    "directories": 1,
+    "entries": 2,
+    "files": 1,
+    "symlinks": 0
+  },
+  "exists": true,
+  "inventory": [
+    {
+      "kind": "directory",
+      "relative": "pybind11-2.11.1.dist-info"
+    },
+    {
+      "bytes": 7,
+      "kind": "file",
+      "relative": "pybind11-2.11.1.dist-info/INSTALLER",
+      "sha256": "53ad2edfc7474c3122e601b9f23fca705eae85b405c7c52b9b53d400618a9bd4"
+    }
+  ],
+  "inventory_sha256": "dd912d4724a7087387b2adaf717414a4c959bb5d6cd5898c98188027197c6f57",
+  "path": "/usr/lib/python3.12/dist-packages",
+  "pth": [],
+  "root_is_symlink": false,
+  "scope": "Passive exact subtree and pinned startup source/AST only; selected interpreter/startup/packages not executed",
+  "site_functions": [
+    {
+      "begin_line": 222,
+      "end_line": 245,
+      "name": "addsitedir",
+      "sha256": "39941776135d8d9f7e1b7dca511a853ee78407381ec224fc1fa6f927f7a191a5",
+      "source": "def addsitedir(sitedir, known_paths=None):\n    \"\"\"Add 'sitedir' argument to sys.path if missing and handle .pth files in\n    'sitedir'\"\"\"\n    _trace(f\"Adding directory: {sitedir!r}\")\n    if known_paths is None:\n        known_paths = _init_pathinfo()\n        reset = True\n    else:\n        reset = False\n    sitedir, sitedircase = makepath(sitedir)\n    if not sitedircase in known_paths:\n        sys.path.append(sitedir)        # Add path component\n        known_paths.add(sitedircase)\n    try:\n        names = os.listdir(sitedir)\n    except OSError:\n        return\n    names = [name for name in names\n             if name.endswith(\".pth\") and not name.startswith(\".\")]\n    for name in sorted(names):\n        addpackage(sitedir, name, known_paths)\n    if reset:\n        known_paths = None\n    return known_paths"
+    },
+    {
+      "begin_line": 362,
+      "end_line": 406,
+      "name": "getsitepackages",
+      "sha256": "c84c50ebf799571ee344bf03b9f85fd10fa0a776fd6208f58253ccc46b335992",
+      "source": "def getsitepackages(prefixes=None):\n    \"\"\"Returns a list containing all global site-packages directories.\n\n    For each directory present in ``prefixes`` (or the global ``PREFIXES``),\n    this function will find its `site-packages` subdirectory depending on the\n    system environment, and will return a list of full paths.\n    \"\"\"\n    sitepackages = []\n    seen = set()\n\n    if prefixes is None:\n        prefixes = PREFIXES\n\n    is_virtual_environment = sys.base_prefix != sys.prefix or hasattr(sys, \"real_prefix\")\n\n    for prefix in prefixes:\n        if not prefix or prefix in seen:\n            continue\n        seen.add(prefix)\n\n        if os.sep == '/':\n            libdirs = [sys.platlibdir]\n            if sys.platlibdir != \"lib\":\n                libdirs.append(\"lib\")\n\n            if is_virtual_environment:\n                sitepackages.append(os.path.join(prefix, \"lib\",\n                                                 \"python%d.%d\" % sys.version_info[:2],\n                                                 \"site-packages\"))\n            sitepackages.append(os.path.join(prefix, \"local/lib\",\n                                             \"python%d.%d\" % sys.version_info[:2],\n                                             \"dist-packages\"))\n            sitepackages.append(os.path.join(prefix, \"lib\",\n                                             \"python3\",\n                                             \"dist-packages\"))\n            # this one is deprecated for Debian\n            for libdir in libdirs:\n                path = os.path.join(prefix, libdir,\n                                    \"python%d.%d\" % sys.version_info[:2],\n                                    \"dist-packages\")\n                sitepackages.append(path)\n        else:\n            sitepackages.append(prefix)\n            sitepackages.append(os.path.join(prefix, \"Lib\", \"site-packages\"))\n    return sitepackages"
+    },
+    {
+      "begin_line": 408,
+      "end_line": 415,
+      "name": "addsitepackages",
+      "sha256": "264c816c2c64544f93dd242996c01dbbec5849347e8ace06973257c620e3df7b",
+      "source": "def addsitepackages(known_paths, prefixes=None):\n    \"\"\"Add site-packages to sys.path\"\"\"\n    _trace(\"Processing global site-packages\")\n    for sitedir in getsitepackages(prefixes):\n        if os.path.isdir(sitedir):\n            addsitedir(sitedir, known_paths)\n\n    return known_paths"
+    },
+    {
+      "begin_line": 516,
+      "end_line": 568,
+      "name": "venv",
+      "sha256": "6c242ef69602de9393556747034cda5478545775e738b8bdf92f0d432a307c3b",
+      "source": "def venv(known_paths):\n    global PREFIXES, ENABLE_USER_SITE\n\n    env = os.environ\n    if sys.platform == 'darwin' and '__PYVENV_LAUNCHER__' in env:\n        executable = sys._base_executable = os.environ['__PYVENV_LAUNCHER__']\n    else:\n        executable = sys.executable\n    exe_dir = os.path.dirname(os.path.abspath(executable))\n    site_prefix = os.path.dirname(exe_dir)\n    sys._home = None\n    conf_basename = 'pyvenv.cfg'\n    candidate_conf = next(\n        (\n            conffile for conffile in (\n                os.path.join(exe_dir, conf_basename),\n                os.path.join(site_prefix, conf_basename)\n            )\n            if os.path.isfile(conffile)\n        ),\n        None\n    )\n\n    if candidate_conf:\n        virtual_conf = candidate_conf\n        system_site = \"true\"\n        # Issue 25185: Use UTF-8, as that's what the venv module uses when\n        # writing the file.\n        with open(virtual_conf, encoding='utf-8') as f:\n            for line in f:\n                if '=' in line:\n                    key, _, value = line.partition('=')\n                    key = key.strip().lower()\n                    value = value.strip()\n                    if key == 'include-system-site-packages':\n                        system_site = value.lower()\n                    elif key == 'home':\n                        sys._home = value\n\n        sys.prefix = sys.exec_prefix = site_prefix\n\n        # Doing this here ensures venv takes precedence over user-site\n        addsitepackages(known_paths, [sys.prefix])\n\n        # addsitepackages will process site_prefix again if its in PREFIXES,\n        # but that's ok; known_paths will prevent anything being added twice\n        if system_site == \"true\":\n            PREFIXES.insert(0, sys.prefix)\n        else:\n            PREFIXES = [sys.prefix]\n            ENABLE_USER_SITE = False\n\n    return known_paths"
+    },
+    {
+      "begin_line": 611,
+      "end_line": 638,
+      "name": "main",
+      "sha256": "1ce31eab3d02b18963e7b3cca1a69b3ce669a8cadacb1033d639e8f2d6979d0e",
+      "source": "def main():\n    \"\"\"Add standard site-specific directories to the module search path.\n\n    This function is called automatically when this module is imported,\n    unless the python interpreter was started with the -S flag.\n    \"\"\"\n    global ENABLE_USER_SITE\n\n    orig_path = sys.path[:]\n    known_paths = removeduppaths()\n    if orig_path != sys.path:\n        # removeduppaths() might make sys.path absolute.\n        # fix __file__ and __cached__ of already imported modules too.\n        abs_paths()\n\n    known_paths = venv(known_paths)\n    if ENABLE_USER_SITE is None:\n        ENABLE_USER_SITE = check_enableusersite()\n    known_paths = addusersitepackages(known_paths)\n    known_paths = addsitepackages(known_paths)\n    setquit()\n    setcopyright()\n    sethelper()\n    if not sys.flags.isolated:\n        enablerlcompleter()\n    execsitecustomize()\n    if ENABLE_USER_SITE:\n        execusercustomize()"
+    }
+  ],
+  "site_source_pin": {
+    "bytes": 23903,
+    "path": "/usr/lib/python3.12/site.py",
+    "sha256": "619436355cbe91c3b29681ab486ee63f5f2e0a7d6274dfae747bdb94e60bca55"
+  },
+  "total_bytes": 7
+}

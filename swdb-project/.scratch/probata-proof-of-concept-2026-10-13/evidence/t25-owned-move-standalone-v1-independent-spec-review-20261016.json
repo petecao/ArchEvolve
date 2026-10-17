@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-16 ET",
+  "decision": "HOLD_THREE_ACTIONABLE_PRE_ADMISSION_DEFECTS",
+  "existing_pure_controls": {
+    "external_attempts": [],
+    "log": "test_active_extent_guard_kills_only_through_explicit_callback (<run_path>.Controls.test_active_extent_guard_kills_only_through_explicit_callback) ... ok\ntest_aggregate_extent_and_final_metadata_respect_same_cap (<run_path>.Controls.test_aggregate_extent_and_final_metadata_respect_same_cap) ... ok\ntest_complete_census_refuses_each_missing_or_duplicate_identity (<run_path>.Controls.test_complete_census_refuses_each_missing_or_duplicate_identity) ... ok\ntest_complete_census_retains_every_ordinary_smoke_owner_and_inventory_row (<run_path>.Controls.test_complete_census_retains_every_ordinary_smoke_owner_and_inventory_row) ... ok\ntest_normal_source_flags_retain_sole_absolute_output_and_full_portfolio (<run_path>.Controls.test_normal_source_flags_retain_sole_absolute_output_and_full_portfolio) ... ok\ntest_transient_socket_exception_is_exact_owned_scratch_and_active_only (<run_path>.Controls.test_transient_socket_exception_is_exact_owned_scratch_and_active_only) ... ok\ntest_unknown_links_are_refused_even_in_native_scratch (<run_path>.Controls.test_unknown_links_are_refused_even_in_native_scratch) ... ok\ntest_unmaterialized_template_refuses_before_any_tool (<run_path>.Controls.test_unmaterialized_template_refuses_before_any_tool) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nOK\n",
+    "passed": true,
+    "tests": 8
+  },
+  "findings": [
+    {
+      "file": "entry-template.py",
+      "id": "settled-finalization-budget",
+      "lines": [
+        335,
+        346
+      ],
+      "priority": "P2",
+      "problem": "within_whole_budget is fixed before final result write, full artifact read/hash, manifest fsync and flushed publication; no settled clock is checked after those effects.",
+      "pure_actual_AST_counterexample": {
+        "WHOLE": 600,
+        "clock_after_mocked_final_writes": 603.0,
+        "filesystem_or_children_executed": false,
+        "initial_elapsed": 599.0,
+        "returned_exit_code": 0,
+        "within_whole_budget_retained": true
+      },
+      "repair": "Preserve V1; V2 must project final metadata then check settled extent/deadline after close/pin/publication and require zero completion only under that settled gate."
+    },
+    {
+      "file": "entry-template.py",
+      "id": "latched-output-guard-producer-fence",
+      "lines": [
+        120,
+        128
+      ],
+      "priority": "P2",
+      "problem": "OutputWatch records one error, kills only currently observed descendants, and returns. Main can subsequently launch another compiler/report/foundation/native producer after a failure while no child exists; remaining() ignores the latched error.",
+      "pure_actual_AST_counterexample": {
+        "any_child_spawned": false,
+        "latched_error": "previous output census failure",
+        "subsequent_remaining120_returns": 120
+      },
+      "repair": "Latch output failure through every subsequent external-producer boundary and final result; keep a failure fence/cleanup active as needed until all owned producers settle. No later launch may occur after a reported guard error."
+    },
+    {
+      "file": "entry-template.py",
+      "id": "helper-fragment-renderer-resolution",
+      "lines": [
+        305,
+        310
+      ],
+      "priority": "P1",
+      "problem": "original.models retains allocator/deallocator names. std_models.model_text only resolves vector/pair model units, so the all_original_models comprehension calls encode() on None after the expensive native run, before normal outcome reading.",
+      "pure_source_renderer_reproduction": {
+        "actual_native_run": false,
+        "complete_ordered_names": [
+          "swdb_alloc_int",
+          "swdb_free",
+          "std_vector_int_ctor_count_value",
+          "std_vector_int_dtor",
+          "std_vector_int_data",
+          "std_vector_int_move_ctor"
+        ],
+        "exception": "AttributeError: 'NoneType' object has no attribute 'encode'",
+        "unresolved_helpers": [
+          "swdb_alloc_int",
+          "swdb_free"
+        ]
+      },
+      "repair": "Resolve every original model name through the exact source-checked member/allocator fragment inventory; preserve all helpers and require complete unique binding. c_lowering.model_text also does not resolve these helpers."
+    }
+  ],
+  "frozen_files_rehashed": [
+    {
+      "bytes": 19390,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/entry-template.py",
+      "sha256": "172ad3f27d16f7d27a4c2640f6707fdedd3a76071eee0a80c22f51da54f1bbc9"
+    },
+    {
+      "bytes": 7755,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/test_controls.py",
+      "sha256": "e7a2f837446ca9aac547552d935432c9d0e029ffcb2dfd7641ae80f72553e51b"
+    },
+    {
+      "bytes": 4915,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/materialize.py",
+      "sha256": "0ad561812278ef0687cf8a66f0c2db87ec7ba853b847b230108adce7a5ee2adf"
+    },
+    {
+      "bytes": 2970,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/README.md",
+      "sha256": "c3ac7453b2b272fd467c98a37cf01c2848b135a2aaeb6dc89adb682305334b7a"
+    },
+    {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/controls-v2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 106,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/controls-v2.stderr",
+      "sha256": "c6352adff70a6982c739a1cd77bbb43d2425eefd2dc2112b92b0ceebf2a6ca31"
+    }
+  ],
+  "limits": [
+    "No controller main, materializer main, compiler, native helper, prover, solver, version query, scientific run or SSH was executed.",
+    "Pure controls use mocked filesystem/time/process boundaries; they are source/readiness evidence only.",
+    "No source/Heap/Typed/lifetime/caller/default or model scientific acceptance is granted. All V1 bytes remain unchanged."
+  ],
+  "nonblocking_scope_checks": [
+    "Original327B fixture and full5642B original C hash are frozen; public source-rule exact grammar/model/CFG and original three clauses are retained.",
+    "Normal_flags matches WpAdapter._wp source settings rather than check-lemma engine flags; one explicit root, no property filter, full native/RTE/init/smoke machinery, absolute retained-native output, all three normal30s provers.",
+    "Fresh report module, complete native/property/standard inventory and all CSV/normalized/log/task artifacts are retained. Owner discrepancies remain visible; no rewrites/filter or constructor/body Extern whitelist are introduced.",
+    "Normal read_outcome result/refusal is preserved as observation; only original allocator contracts are allowed. No framework proof record is written; original public ownership refusal stays unchanged.",
+    "Materializer has no concrete source/output yet; exact fresh published HEAD/selected physical sources and whole inverse are required before independent concrete review and root once-admission.",
+    "Existing shared lock and one Mac worker are used; full8GiB/720s outer guard, runtime/OS/loader scope and final source/process/lock settlement remain explicit coordinator duties, not established by this template review."
+  ],
+  "preparation": {
+    "bytes": 3300,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v1/preparation-v1.json",
+    "sha256": "47bb4f9088d45b010ecc560c4b703df73b914a4fc7aac068c33009126d310cfa"
+  },
+  "reviewer": "caller_assess independent Spec/operational source review"
+}

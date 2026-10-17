@@ -1,0 +1,170 @@
+{
+  "actual_tool_or_profile_execution": false,
+  "added_selected_sources": [
+    "swdb/vector_reallocation_caller_view.py",
+    "swdb/vector_reallocation_closed_binding.py",
+    "swdb/vector_reallocation_closed_evidence.py",
+    "swdb/vector_reallocation_closed_lifetime.py",
+    "swdb/vector_reallocation_closed_lifetime_parts.py",
+    "swdb/vector_reallocation_closed_route.py",
+    "swdb/vector_reallocation_closed_view.py",
+    "swdb/vector_reallocation_private_frame.py",
+    "tests/test_pair_pointer_initialization.py"
+  ],
+  "admission_pending": {
+    "known_source_refusal": false,
+    "reason": "Published dcdecf source includes reviewed initializedness repair. Exact root30-control success and a pinned root admission receipt remain pending.",
+    "root_authorized": false,
+    "supersession": "Preserve V1/V2 and this pending V3; bind actual root30 receipt in a separately reviewed final admission successor."
+  },
+  "byte_identical_policy_fields": [
+    "runtime_files",
+    "native_runtime",
+    "linux_clang_components",
+    "linux_header_surfaces",
+    "tools",
+    "config",
+    "wp_artifacts",
+    "ocaml_packages",
+    "portable_import_surfaces",
+    "python_surface_binding",
+    "actual_initialized_lineup",
+    "naming",
+    "reporter",
+    "stdlib_count",
+    "stdlib_sha256",
+    "why3_stdlib",
+    "guard",
+    "finalization",
+    "selection",
+    "profile_seconds",
+    "mixed_native_c_wrapper",
+    "accepted_cbmc_release_family",
+    "cbmc_version_output"
+  ],
+  "changed_selected_sources": {
+    "schemas/proof.schema.json": {
+      "after": "404a3a512a20dc593b3874abcbf253caa9e3fda8e2c6173c4d4352743fe31265",
+      "before": "05bccdafa723c253fe8e3faf251992e2862b5451ad89907a155d2c251dbab871"
+    },
+    "swdb/bounded_std_initialization.py": {
+      "after": "7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea",
+      "before": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607"
+    },
+    "swdb/proof_setup.py": {
+      "after": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16",
+      "before": "069dbc55b6ca8b12ea8b524027e2ca2b0922eb9e7be449c6f5725dbddbfe733f"
+    },
+    "swdb/wp_adapter.py": {
+      "after": "e30ac5b1b05666db401bce03726f78a336926b47807d729ec1d11a080a5389af",
+      "before": "dbf887bf8515e6ce59086fdc99ec0b58558d742425311b8e404b5d4437b29ebf"
+    }
+  },
+  "classification": "INERT_PUBLISHED_SOURCE_REBIND_PENDING_ROOT30",
+  "consumer_oid_changes": {
+    "schemas": {
+      "after": {
+        "oid": "b5f08b1b538eddb3cc455bb48b749a4479eb974d"
+      },
+      "before": {
+        "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+      }
+    },
+    "swdb": {
+      "after": {
+        "oid": "eddb8023558779f2702a260d4687d56f08ff16ce"
+      },
+      "before": {
+        "oid": "2f6c5b41f2b5f83f037d4808d867c76bfd346b04"
+      }
+    },
+    "tests/fixtures": {
+      "after": {
+        "oid": "d35170293e5aae1541130323e2cf10faf58a28e8"
+      },
+      "before": {
+        "oid": "c465ef42d31d8b55c993fb4eef4607a5aed5511e"
+      }
+    },
+    "tests/test_pair_pointer_initialization.py": {
+      "after": {
+        "oid": "305c4972abbd6d6f911062f75b62a0fb8f2c9972"
+      },
+      "before": null
+    },
+    "tests/testkit": {
+      "after": {
+        "oid": "8a582aa1aa67532d6bad93948e7c6311e157e6c9"
+      },
+      "before": {
+        "oid": "27d26a01477b673e6dde03c101a8adf06a26808d"
+      }
+    }
+  },
+  "consumer_root_count": 14,
+  "date": "2026-10-16 ET",
+  "new_policy": {
+    "bytes": 670464,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v3/policy.json",
+    "sha256": "608c8511bb8ccbb6cb523c5f31dbe897f92717a97808af05b5856739791bba15"
+  },
+  "parent_policy": {
+    "bytes": 659627,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v2/policy.json",
+    "sha256": "6b109531e4c305cc803b4192c1ec6d0c0dcaebf974c66e0f593d0dac8b848087"
+  },
+  "removed_selected_sources": [],
+  "root_control_receipt_required": {
+    "expected_raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2",
+    "file": "root30-control-admission.json",
+    "final_root_receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-pointer-controls-v2-root-admission-20261016.json",
+    "required_schema": "mixed-pair-root30-admission-1",
+    "status": "PENDING"
+  },
+  "selected_source_count": 509,
+  "source_checker_identities": {
+    "bounded_initialization": {
+      "id": "swdb-bounded-initialization-1",
+      "sha256": "4e8c65414513388c412e83412e5333207d8fefc3ea88e2ac9976c36bc50050f8"
+    },
+    "cbmc_translator": {
+      "id": "swdb-cbmc-translator-4",
+      "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+    },
+    "proof_setup": {
+      "proof_setup_check": {
+        "sha256": "71dc2d3514c37274f7b46ca583e62cf9497a131ffa069a19ab727eb18359f646",
+        "version": "1"
+      },
+      "verdict_reading": {
+        "sha256": "71dc2d3514c37274f7b46ca583e62cf9497a131ffa069a19ab727eb18359f646",
+        "version": "1"
+      }
+    },
+    "std_models": {
+      "id": "swdb-std-models-2",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    "wp_pointer_bounds": {
+      "id": "swdb-wp-pointer-bounds-1",
+      "sha256": "7033e8e8338d0fc39a5359fd5ceff304842d9df7c8223cffef967246c5f530a0"
+    }
+  },
+  "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "top_level_changed_or_added_policy_fields": [
+    "controller_files",
+    "linux_launch_binding",
+    "pytest_alias_policy",
+    "raw_name",
+    "root_control_admission",
+    "schema",
+    "scope",
+    "source_admission",
+    "source_checker_identities",
+    "source_checker_material",
+    "source_commit",
+    "source_consumer_trees",
+    "source_files",
+    "startup_roles"
+  ]
+}

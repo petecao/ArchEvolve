@@ -1,0 +1,30 @@
+{
+  "active_visible_own_verifier_processes": [],
+  "date": "2026-10-16 ET",
+  "disk_free_bytes": 52107866112,
+  "earlier_preflight_refusals": [
+    "project .venv has no psutil; no actual diagnostic started",
+    "sandbox denies ps/sysctl process visibility; no actual diagnostic started"
+  ],
+  "entry_sha256": "749ef51deef3a7094e1a51f38d26163af121fe6299b1c1e3a233a50cc4a1f1a2",
+  "memory_available_bytes": 12512526336,
+  "memory_total_bytes": 38654705664,
+  "original_shared_lock_candidates": {
+    "/tmp/claude/swdb-verifier.lock": {
+      "directory": false,
+      "exists": false,
+      "files": []
+    },
+    "/tmp/swdb-verifier-501.lock": {
+      "directory": false,
+      "exists": false,
+      "files": []
+    }
+  },
+  "own_process_access_denied": [],
+  "preflight_only": true,
+  "selected_environment": [],
+  "source_HEAD": "abb598a485cca67c77798e690382b44beb48c9e3",
+  "time_UTC": "2026-10-17T00:42:18.403003+00:00",
+  "unknown_uid_processes": []
+}

@@ -1,0 +1,94 @@
+{
+  "classification": "FROZEN_OFFLINE_COMPLETE_G621_SOURCE_ENCODING_INTERPRETATION_JOIN",
+  "controls": {
+    "final_run": {
+      "external_native_network_attempts": [],
+      "failed": 0,
+      "passed": 6
+    },
+    "first_run": {
+      "failed": 1,
+      "finding": "duplicate same-owner physical task row was not rejected despite expected source count; source join now requires distinct actual keys",
+      "passed": 5
+    },
+    "prior_actual_raw_and_observers_unchanged": true
+  },
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 13149,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/g621-semantic-reconciliation-v1/reconcile.py",
+      "sha256": "53f4fb5cdc402967b235241003cf9c95dc3267a7bf46c62ef8ca47db71725696"
+    },
+    {
+      "bytes": 4536,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/g621-semantic-reconciliation-v1/pure_controls.py",
+      "sha256": "a7d2f7bbce22b563144b4243c6e0fa1419a7057f24b8e75861ad3ba5be3c3207"
+    },
+    {
+      "bytes": 13048,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/g621-semantic-reconciliation-v1/reconcile.initial-v1.py",
+      "sha256": "377f729b5669c0fc3a08f3f790871c4c6243f58c648f2ae8bfa7ce2795fe5117"
+    },
+    {
+      "bytes": 1383,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/g621-semantic-reconciliation-v1/pure-controls-v1.log",
+      "sha256": "6d3867fda1ebbeb1a0c8b92130e55e42a417b68afbc247b5f2c24d4bc9acc3dc"
+    },
+    {
+      "bytes": 733,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/g621-semantic-reconciliation-v1/pure-controls-v2.log",
+      "sha256": "5030235d626d0ff765a6481ec062d827c9b9697acf675bfd01d4596e6ef45625"
+    },
+    {
+      "bytes": 101267,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-complete-interpretation-v2-20261016.json",
+      "sha256": "e872b1f96c961a2516c4ef39b9baae823b121aa253a11a9eeef08530596671ab"
+    },
+    {
+      "bytes": 792560,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-cold-v3-root-stdout-20261016.json",
+      "sha256": "cf62bd6a0bf73a171fc8e7ddd68f32c1bb38dcc4f7e8a055264cbc6a2f8e5f5e"
+    },
+    {
+      "bytes": 202354,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-actual-stdout-20261016.json",
+      "sha256": "55d0ded63730d704de907feac25844825a2079fb3f6f8e328c50ea80ffc9108f"
+    },
+    {
+      "bytes": 5552,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-actual-execution-20261016.json",
+      "sha256": "0bc648cabb63e039d6ac95f4429ad3f866453376a0a01a70c50584ccd1c21434"
+    },
+    {
+      "bytes": 15336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/semantic_terms.py",
+      "sha256": "0caf0330afed019637d03228a94f5af5cfc305e358f6eca51c631a881e163ef7"
+    },
+    {
+      "bytes": 10147,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/encoding_probe.py",
+      "sha256": "d2cb88eb53eb1c7ff1df71c1e8919481b013f57aa02d8e80c7f101624cb52623"
+    },
+    {
+      "bytes": 207385,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/context.json",
+      "sha256": "03f9f790e108557d7f63766a4150c9714f8020f3142145998ca269d1ba4c613c"
+    },
+    {
+      "bytes": 3178,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-parent-spec-review-20261016.json",
+      "sha256": "485c35f0c1862e64919a45e52fb6a9b8096f6fbc073a6ed8b2cc8a0171478327"
+    },
+    {
+      "bytes": 2184,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-root-standards-review-20261016.json",
+      "sha256": "3d0c863c2ffcc3d53e7bd6459338aa97a67c203dd0945582e8d7269f72410aa3"
+    }
+  ],
+  "independent_root_review_required": true,
+  "interpretation": "Offline exact complete join only: all20 source formulas, every five complete typed declaration signatures, each source/abs definition, empty constructor and both complete typed constant maps, all684 support instances. Standard support retains exact known-formula hashes and explicit pinned primary source proposition families under normal source-to-driver/foundation TCB.",
+  "no_SSH_compiler_solver_verifier_native_or_scientific_rerun": true,
+  "no_automatic_scientific_admission": true,
+  "scientific_or_source_or_body_or_Heap_or_Typed_or_caller_or_default_or_public_record_admission": false
+}

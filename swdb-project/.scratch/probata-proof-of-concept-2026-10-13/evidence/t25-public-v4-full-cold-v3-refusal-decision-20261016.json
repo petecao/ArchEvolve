@@ -1,0 +1,54 @@
+{
+  "actual_scope": "Exact admitted observer6e51a0f1 executed once; 19.699592 seconds, exit1, complete stdin and bounded output, no transport error.",
+  "complete_finite_postflight": {
+    "bytes": 3026,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-postflight-20261016.json",
+    "sha256": "d30c7d841b30b13a513de0b6e38e017201ed2ec9a908843ca877064ada598585"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "REFUSED_OR_INCOMPLETE_FULL_COLD_OBSERVER; no root adoption",
+  "diagnosis": "Frozen CLI parses budget minutes as float and _run_job multiplies by60; current observer hashes integer300 instead of source-derived300.0. This static cause will be tested against all five complete retained record/job contexts in a separate reviewed cheap diagnostic.",
+  "execution": {
+    "bytes": 3532,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-execution-20261016.json",
+    "sha256": "9b594f1bfb1dc06bb947002b43791c293592fa8ee548ccc67a29294ebf2520e9"
+  },
+  "fresh_preflight": {
+    "bytes": 3026,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-preflight-20261016.json",
+    "sha256": "77fb1b36bd38867a59d60e2797fd6ac15d193bef4c3c0dd8e7dfde53a4ef6e7f"
+  },
+  "last_failure": {
+    "actual_partial_or_refused_run_promoted": false,
+    "classification": "REFUSED_OR_INCOMPLETE_COLD_OBSERVER",
+    "default_or_caller_admission": false,
+    "error": "ValueError",
+    "full_ticket25": false,
+    "reason": "current frozen job plan/contract",
+    "source_typed_bridge_established": false
+  },
+  "limits": {
+    "all_final_P_input_checks_completed": false,
+    "finite_postflight_pass_is_full_scientific_acceptance": false,
+    "full_observer_automatically_retried": false,
+    "full_raw_before_after_census_completed": false,
+    "full_source_runtime_after_refusal_rehash_claimed": false,
+    "original_actual_producer_or_proof_results_modified": false,
+    "scientific_source_Typed_default_or_full_ticket_adoption": false
+  },
+  "retained_cheap_semantic_success": {
+    "bytes": 3051,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-strict-yaml-probe-execution-v1-20261016.json",
+    "sha256": "bc26edb47de31632d7cccb9a8c80f904b452cac6cb8c62310ac346c65dfa74e8"
+  },
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-actual-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 280,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-actual-stdout-20261016.json",
+    "sha256": "8bd118831b26cb32a7b61ed259e7345647286cf192ab285035c13fd26049a114"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "case_count": 19,
+  "case_counts": {
+    "tests/test_pair_pointer_workflow.py::test_each_mixed_pair_body_reaches_public_parser_with_exact_contract": 4,
+    "tests/test_pair_pointer_workflow.py::test_mixed_pair_lowering_and_native_identity_agree_without_pointee_access": 1,
+    "tests/test_pair_pointer_workflow.py::test_unknown_pointer_pair_input_refuses_and_missing_models_do_not_launch": 1,
+    "tests/test_pair_workflow.py::test_changed_initializedness_source_invalidates_frozen_translator_before_standin": 1,
+    "tests/test_pair_workflow.py::test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke": 4,
+    "tests/test_pair_workflow.py::test_pair_caller_without_current_member_proofs_never_launches_standin": 1,
+    "tests/test_pair_workflow.py::test_pair_copy_and_assignment_do_not_initialize_unknown_source_storage": 3,
+    "tests/test_pair_workflow.py::test_profile_refuses_output_anywhere_inside_full_checkout_before_creation": 1,
+    "tests/test_pair_workflow.py::test_public_pair_lowering_preserves_values_copies_fields_and_self_assignment": 1,
+    "tests/test_pair_workflow.py::test_uninitialized_pair_constructor_input_is_refused_by_public_lowering": 1,
+    "tests/test_pair_workflow.py::test_wrong_pair_field_has_a_defined_concrete_witness": 1
+  },
+  "command": {
+    "bytes": 5006,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/pair-pointer-controls-command-v1.json",
+    "sha256": "6fa0de5e4a2892934ae87d814dbcd195a3766b977074a89ccca1116877872f82"
+  },
+  "created": "2026-10-16 ET",
+  "decision": "PASS static prospective controls entry review",
+  "entry": {
+    "bytes": 4709,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/pair_pointer_controls_v1.py",
+    "sha256": "6f909af7c85898325898e5cfb1a02b5bf1f7702fb61bbe51cad4bccb7ecb5864"
+  },
+  "execution_performed": false,
+  "independent_checks": [
+    "command embeds exact entry bytes and isolated bytecode-disabled interpreter",
+    "all 11 selected functions exist, no formal opt-in or skipped test selected; parameterization independently yields19 cases",
+    "complete AST equals reviewed predecessor after only source/environment/selection/scope/case-gate normalization",
+    "WP/CBMC actual environment disabled; stand-in helper overrides WP only with intentional parser failure",
+    "same cwd/cache/physical binary pins/progress/JUnit/error/skip/exit failure handling",
+    "all actual resource/lane/source admission and outcomes remain pending"
+  ],
+  "predecessor": {
+    "bytes": 3965,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/focused_regressions_v3.py",
+    "sha256": "52402c8617f1b21668f8325e9b58c632218492c5e0ad96140751ea67097a0489"
+  },
+  "preparation": {
+    "bytes": 1353,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/pair-pointer-controls-preparation-v1.json",
+    "sha256": "ab91470e66ac04ed85817de1efa4307dcd34af38d1449ed7417e0da8f5e7bc42"
+  },
+  "scientific_acceptance": false,
+  "source_commit": "18f04e569b949f465d6732db9505e3a264805040"
+}

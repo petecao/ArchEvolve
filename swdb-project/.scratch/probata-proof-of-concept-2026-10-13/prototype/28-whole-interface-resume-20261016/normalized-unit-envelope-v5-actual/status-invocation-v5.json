@@ -1,0 +1,36 @@
+{
+  "actual_exit": 0,
+  "actual_launcher_or_lease_or_output_creation": false,
+  "actual_wall_seconds": 0.9879894590121694,
+  "argv": [
+    "/usr/bin/ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "20s",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "date": "2026-10-16 Eastern",
+  "exact_script_after": true,
+  "local_refusal": null,
+  "output": {
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/status-stderr-v5.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 19140,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/status-stdout-v5.json",
+      "sha256": "4004edfb2ccab803534481c300433fb849daa4d30630a9df717f04558ae0a996"
+    }
+  }
+}

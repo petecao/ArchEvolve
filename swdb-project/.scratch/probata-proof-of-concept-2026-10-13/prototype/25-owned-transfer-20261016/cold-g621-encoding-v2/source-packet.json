@@ -1,0 +1,105 @@
+{
+  "actual_query_executed": false,
+  "actual_tools_executed": false,
+  "canonicalizer_delta": "No canonicalizer change from admitted V1. Only emit the first goal canonical mismatch path/operator shape and digests; exact helper inverse retained.",
+  "classification": "FROZEN_INERT_BOUNDED_ENCODING_PROBE",
+  "date": "2026-10-16 ET",
+  "inputs": [
+    {
+      "bytes": 5129,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/source-packet.json",
+      "sha256": "95dff18be1c7ae566a2fcc762a781cb37fa9b6bd32162e7a9ed27474ed07f5c8"
+    },
+    {
+      "bytes": 6797,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/encoding_probe.py",
+      "sha256": "790fb8363b3d827ef53898fd44bcdf15370e6a916e28db0e7fc9ac03c6514b11"
+    },
+    {
+      "bytes": 188079,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v1-actual-stdout-20261016.json",
+      "sha256": "65cff41c22f33c3196942ad4451b85e899d44473ef3926ee6b7b9902cbb70ed9"
+    },
+    {
+      "bytes": 792560,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-cold-v3-root-stdout-20261016.json",
+      "sha256": "cf62bd6a0bf73a171fc8e7ddd68f32c1bb38dcc4f7e8a055264cbc6a2f8e5f5e"
+    },
+    {
+      "bytes": 14205,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/semantic_terms.py",
+      "sha256": "c5f1bc8c78134a751d78b0d790a788c443906fc452a46c90791c0b4937813d9c"
+    },
+    {
+      "bytes": 200208,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/context.json",
+      "sha256": "684df95d44ff149f0c76664953dedabec83dd44c9bd3ad849c0014ee59e2e90d"
+    },
+    {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    }
+  ],
+  "mathematical_acceptance": false,
+  "outputs": [
+    {
+      "bytes": 14468,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/semantic_terms.py",
+      "sha256": "9d8080959fd3ccf95cecfaf02f66e909351b3c2eb9f95af318b47edd20275147"
+    },
+    {
+      "bytes": 8815,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/encoding_probe.py",
+      "sha256": "586df60ae0444fd4ab2fdd6c2670134fb0e93cb33f6f589af7c2b62d0b185d15"
+    },
+    {
+      "bytes": 7998,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/observer.py",
+      "sha256": "2d0da611cb4320506bd22a31aafe16c38265420791f7dcd5de8d40250d61f7d5"
+    },
+    {
+      "bytes": 206620,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/context.json",
+      "sha256": "5b11b32609630d99d59511c0b69768a64bab7ccb8da20d92ded62879387a87ab"
+    },
+    {
+      "bytes": 9319,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/pure_controls.py",
+      "sha256": "fae6e3087a06eb7cd634eed43633bfd698e3df5768e3e48c71a0acfd50ba06e8"
+    },
+    {
+      "bytes": 1072,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/pure-controls.log",
+      "sha256": "dd762c616db49d3123edfff6b15bb03b6f9feedbfa5dac0770c32995fe7105bf"
+    },
+    {
+      "bytes": 4103,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/freeze.py",
+      "sha256": "890963d94be4cdafe2bc3d7684c52d23d94661983cced23e3fa1cb691a76cd6f"
+    },
+    {
+      "bytes": 1673,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/README.md",
+      "sha256": "b6ea932b190b370d9ea537e74ced8a70271183d95d0a70f250e7d070314fadb1"
+    },
+    {
+      "bytes": 243867,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/entry.py",
+      "sha256": "1c6fbfb2026f4d4ba70610c1bd9cdfe83ee0b0e3a4b069bcad9d7bc51566fb2e"
+    },
+    {
+      "bytes": 1341,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v2/command.json",
+      "sha256": "d0eb7f9e98623ce360a5fb9e11a1cf5db9cb31928cd4a3a2d55064eeb545ea31"
+    }
+  ],
+  "pure_controls": {
+    "child_native_network_attempts": [],
+    "passed": 14
+  },
+  "root_exact_admission_required": true,
+  "scientific_acceptance": false,
+  "scope": "Same exact twenty pinned tasks/source and V1 decisions; additionally one first canonical goal mismatch path/shape/hash. No raw terms or atoms serialized, no new normalization, role/support admission or proof adoption.",
+  "source_body_Typed_caller_default_or_public_record_acceptance": false
+}

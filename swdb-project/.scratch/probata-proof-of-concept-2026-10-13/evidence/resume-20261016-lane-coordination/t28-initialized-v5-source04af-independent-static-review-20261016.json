@@ -1,0 +1,91 @@
+{
+  "author_controls": {
+    "bytes": 7097,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_source_04af_packets_v1.py",
+    "sha256": "b7526e9b47db1a71b18c8ac694b0095683eea4cd875ab98bd2a4eea857516a95"
+  },
+  "author_pure_control_claim": {
+    "changed_unlisted_staged_helper_refused": true,
+    "command": "python3 -I -B swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_source_04af_packets_v1.py",
+    "elapsed_s": 0.028,
+    "no_child_or_native_events": true,
+    "passed": 5,
+    "source_and_runtime_policy_inverse": true
+  },
+  "basis": {
+    "command": {
+      "bytes": 6798,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_command_2baf722f_v4.json",
+      "sha256": "39346b58d963edc9cd2a8e33da34b8cabcb10b649f004fc53e8ea79afc1cdfc1"
+    },
+    "policy": {
+      "bytes": 521578,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_policy_2baf722f_v4.json",
+      "sha256": "44b5746071fbbd5db6852e6fd27f14abfdb3216395f73b6c99f047729c8b2b35"
+    }
+  },
+  "boundaries": {
+    "actual_pair_launched": false,
+    "actual_public_pair_result_or_cold_acceptance": false,
+    "full_ticket28_or_source_body_hardware_caller_acceptance": false,
+    "proof_acceptance": false,
+    "root_fresh_host_lane_runtime_admission_still_required": true
+  },
+  "builder": {
+    "bytes": 9093,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/prepare_source_04af_packets_v1.py",
+    "sha256": "37ef92a97fa9d29e85190a5c2985b176e6153c1fcca5baedfa9d6ab15e7346d7"
+  },
+  "checks": {
+    "builder": "Only finite read-only Git rev-parse/cat-file/ls-tree calls; no tool/version/prover/dispatch path. Bases,entry and staged helper membership/bytes are exact-pinned; opaque selected blob reader rejects catalog paths,unknown blob shape/extent/trailing data. Five author controls inspected and retained as author evidence, not rerun.",
+    "command_inverse": "Replacing only source bindings,source trees,controller-input metadata,status,argv tail and controller remote paths reconstructs prior V4 command. Prefix opam exec/switch/Python-I-B exact, node0/time/RSS/worker/raw budget unchanged. New controller rows add explicit basename name fields; helpers retain identical path,size,hash.",
+    "entry": "Actual entry bytes identical9a6246962ed8288829b609711c2fc3d77f436b9411de5bbad58148937895bf6d. runtime_controller_version stays4. Entry takes source identity from pinned policy, with no old2baf source hardcode; full before/after runtime/source/control checks remain.",
+    "fresh_namespace": "Source04af74c121a733589fbe1a2087ad602deaef598b,project/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project,raw/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5,node0. Original outcomes/raw namespaces remain separate.",
+    "immutable_source": "Independent read-only git --no-replace-objects cat-file hashing matches all496selected04af blobs (6698257B). All11consumer roots independently match the commit OIDs using metadata only. No records/catalog payload selected/read; compiler/native tools not invoked. Selected file membership stays identical to V4.",
+    "physical_staging": "All6staged files are nonsymlink regular physical files with exact size/hash; unique basename names,total700193B<1MiB. Same4helper bytes and role/root observation record as prior V4.",
+    "policy_inverse": "Replacing only source_commit,raw_name,source_files,source_consumer_trees and startup_roles.source_project reconstructs the exact prior V4 policy object. All runtime,tool/import/header/parser/META/Python/link/startup,model/711-vs1107,lineup,normal proof/RTE/init/smoke/frame and reporter gates are unchanged.",
+    "source_model": "Original dx100_initialized_register_model a568c08f and dx100_size_source fe070713 unchanged. Source observer exactly previously reviewed combined01c043e5; testkit bounds helper4d55a093. Other selected changed pins bounded_initialization d6586a77,cbmc_adapter2ef59469,conftest7c3d36f8 are explicit fresh source bindings; fresh actual evidence remains required."
+  },
+  "command": {
+    "bytes": 7076,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_command_04af74c1_v5.json",
+    "sha256": "58067d2f84fe7263e2aba6cd48854a0c721d306ea5dbe525c200839cba1c9511"
+  },
+  "critical_selected_source_pins": {
+    "swdb/bounded_initialization.py": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc",
+    "swdb/cbmc_adapter.py": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a",
+    "swdb/dx100_initialized_register_model.py": "a568c08f6e8d928ecb46212b7120b29740d719c65ae7ae818b540bcf6790961f",
+    "swdb/dx100_initialized_register_source.py": "01c043e544e50c30fc3d92b6be5a8b097f4dfef0606f53c29068a2ba008ac145",
+    "swdb/dx100_size_source.py": "fe070713b91257d73a77112a7114c3ec049d2dc3ca8dbe0c1dfa6404c35a70f3",
+    "tests/conftest.py": "7c3d36f8c0b6e23e6eacf622b31ce3e051fc31af1c494d1dfab97bf1012165bb",
+    "tests/testkit/dx100_trust.py": "4d55a093a7a92eeb57c9878760bc48ae71c6d5683bbdbf50760be15997cb0982"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "Static PASS for exact V5 source rebind; root may perform separately authorized fresh lane/runtime admission and actual run. This creates no scientific result or retroactive promotion of previous outcomes.",
+  "entry": {
+    "bytes": 31408,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_entry_v4.py",
+    "sha256": "9a6246962ed8288829b609711c2fc3d77f436b9411de5bbad58148937895bf6d"
+  },
+  "findings": [],
+  "manifest": {
+    "bytes": 2981,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/fresh-source-04af-packets-source-manifest-v1.json",
+    "sha256": "57ac235d0b50fde85af7836c4416a37c04590bfe483bb07edbc0b1b7aaa6b62f"
+  },
+  "policy": {
+    "bytes": 521578,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_policy_04af74c1_v5.json",
+    "sha256": "bae7dc4c11e44bfd763ece9178dcc99f1aaffac3e492efdd3477137fae846637"
+  },
+  "reviewer": "/root/lane_coordination",
+  "root_guard": {
+    "external_timeout_seconds": 1320,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 8589934592,
+    "whole_tree_seconds": 1200,
+    "workers": 1
+  },
+  "scope": "Fresh source04af binding to unchanged reviewed initialized V4 runtime entry; no actual launch/SSH/compiler/native/verifier/solver/test execution. Trace V3 reviewed separately next.",
+  "status": "PASS_STATIC_INITIALIZED_V5_SOURCE_REBIND"
+}

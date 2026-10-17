@@ -1,0 +1,85 @@
+{
+  "c_lowering.py": [
+    {
+      "count": 1,
+      "new": "    whole_source: object | None = None  # exact checked source unit, freshly revalidated\n    vector_reallocation_candidate: dict = field(default_factory=dict)",
+      "old": "    vector_reallocation_candidate: dict = field(default_factory=dict)"
+    },
+    {
+      "count": 1,
+      "new": "        if self.whole_source is not None:\n            data[\"whole_source\"] = self.whole_source.certificate\n        if self.summaries:\n",
+      "old": "        if self.summaries:\n"
+    },
+    {
+      "count": 1,
+      "new": "          array_domains=None, array_domain_contract=None, whole_source_selection=None):",
+      "old": "          array_domains=None, array_domain_contract=None):"
+    },
+    {
+      "count": 1,
+      "new": "    if whole_source_selection is not None:\n        from swdb import dx100_checked_source\n        if includes or summaries or semantics or array_domains or array_domain_contract:\n            raise Unsupported('checked whole source cannot mix generic summary/window inputs')\n        try:\n            unit = dx100_checked_source.compose(whole_source_selection, source=source,\n                                               function=function, defines=defines)\n            return Lowering(**dx100_checked_source.lowering_fields(unit))\n        except (dx100_checked_source.Refused, ValueError, OSError, TypeError, KeyError, AttributeError) as exc:\n            raise Unsupported('checked whole source: ' + str(exc)) from None\n    tool = locate()\n",
+      "old": "    tool = locate()\n"
+    }
+  ],
+  "cbmc_translator.py": [
+    {
+      "count": 1,
+      "new": "            state=(), finish=(), array_domains=None, whole_source=None):",
+      "old": "            state=(), finish=(), array_domains=None):"
+    },
+    {
+      "count": 1,
+      "new": "    profile = None\n    if whole_source is not None:\n        from swdb import dx100_checked_source\n        if call is not None or check or cap != 0:\n            raise Untranslatable('checked whole source requires its original scalar proof interface')\n        try:\n            profile = dx100_checked_source.harness_profile(whole_source, interface, rows,\n                sizes, knobs, setup, state, finish, array_domains)\n        except (dx100_checked_source.Refused, ValueError, TypeError, KeyError) as exc:\n            raise Untranslatable(str(exc)) from None\n        setup = profile['setup']\n    for name in sizes:\n        if not interface.scalar(name):",
+      "old": "    for name in sizes:\n        if not interface.scalar(name):"
+    },
+    {
+      "count": 1,
+      "new": "    lines += [f\"  {statement}\" for statement in setup]\n    if profile is not None:\n        plan.draws.extend(profile[\"draws\"])  # setup already drew each slot exactly once\n",
+      "old": "    lines += [f\"  {statement}\" for statement in setup]\n"
+    },
+    {
+      "count": 1,
+      "new": "        elif profile is not None and draw[\"role\"] == \"whole-model-choice\":\n            lines.append(f\"  {_print('input ' + draw['name'], draw['ctype'], draw['c_lvalue'])};\")\n        else:\n            lines.append(f\"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};\")",
+      "old": "        else:\n            lines.append(f\"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};\")"
+    },
+    {
+      "count": 1,
+      "new": "            frame = \"1\" if profile is not None else _frame(clause, interface, cap, caps, counter, logic)\n            lines.append(f'  SWDB_PROP({frame}, \"{clause.name}\");')",
+      "old": "            lines.append(f'  SWDB_PROP({_frame(clause, interface, cap, caps, counter, logic)}, \"{clause.name}\");')"
+    },
+    {
+      "count": 1,
+      "new": "        \"    fflush(stdout);\",\n        *((\"    if (fgets(swdb_line, sizeof swdb_line, stdin)) return 3;\", \"    return 0;\") if profile is not None else ()),\n        \"  }\",",
+      "old": "        \"    fflush(stdout);\",\n        \"  }\","
+    }
+  ],
+  "formal_frame.py": [
+    {
+      "count": 1,
+      "new": "    from swdb import dx100_checked_source\n    selection = dx100_checked_source.select_baseline(library, unit)\n    if selection is not None:\n        # Source bytes and summary names do not identify an atlas/receiver/TU.\n        # Always freshly compose this route, bypassing the generic _LOWERED cache.\n        try:\n            return c_lowering.lower(path, unit['function'], defines=dx100_checked_source.DEFINES,\n                                    whole_source_selection=selection)\n        except c_lowering.LoweringError as exc:\n            return exc\n    options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines",
+      "old": "    options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines"
+    }
+  ],
+  "proof_semantics.py": [
+    {
+      "count": 1,
+      "new": "    from swdb import dx100_whole_checked\n    if dx100_whole_checked.checked(data):\n        return dx100_whole_checked.check(library, data, error)\n    rules = {r.get(\"id\") for r in data.get(\"rules\") or [] if isinstance(r, dict)}",
+      "old": "    rules = {r.get(\"id\") for r in data.get(\"rules\") or [] if isinstance(r, dict)}"
+    },
+    {
+      "count": 1,
+      "new": "def model_for(library, entry_id, defines=(), *, source_unit=None):",
+      "old": "def model_for(library, entry_id, defines=()):"
+    },
+    {
+      "count": 1,
+      "new": "def model_for(library, entry_id, defines=(), *, source_unit=None):\n    \"\"\"The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults.\"\"\"\n    data = library.get(entry_id)\n    from swdb import dx100_whole_checked, dx100_checked_source\n    if dx100_whole_checked.checked(data):\n        if source_unit is None or source_unit.selection.entry_id != entry_id:\n            raise ValueError('whole checked model requires its exact complete source/receiver unit')\n        dx100_whole_checked.policy(library, data)\n        dx100_checked_source.recheck(source_unit)\n        return Model(**dx100_checked_source.model_fields(source_unit))\n    if source_unit is not None:\n        raise ValueError('a checked whole source unit cannot select a legacy model')\n    constants = _constants(data, defines)\n",
+      "old": "def model_for(library, entry_id, defines=(), *, source_unit=None):\n    \"\"\"The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults.\"\"\"\n    data = library.get(entry_id)\n    constants = _constants(data, defines)\n"
+    },
+    {
+      "count": 2,
+      "new": "    from swdb import dx100_whole_checked\n    for entry in current(library):\n        if dx100_whole_checked.checked(library.get(entry)):\n            continue  # whole units gain no generic per-call or pointer exemptions\n        model = model_for(library, entry, defines)",
+      "old": "    for entry in current(library):\n        model = model_for(library, entry, defines)"
+    }
+  ]
+}

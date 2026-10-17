@@ -1,0 +1,111 @@
+{
+  "canonical": {
+    "bytes": 163904,
+    "directories": 4,
+    "exact_physical_rows": true,
+    "files": 43,
+    "no_links_or_specials": true
+  },
+  "changed_context_pins": [],
+  "classification": "INDEPENDENT_COMPLEMENTARY_STANDARDS_PASS_TYPED_ALLOCATING_PAYLOAD_SOURCE_PREPARATION",
+  "controls": {
+    "all_five_recorded_input_pins_equal_current": true,
+    "external_attempts": [],
+    "failed": 0,
+    "fresh_reexecution_in_this_review": false,
+    "passed": 5,
+    "reason": "Exact retained final source pins and full test/harness source independently verified; no new changes or unresolved control failures justify duplicating the pure run.",
+    "retained_final_public_result": {
+      "bytes": 1688,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/history/green-v7/result.json",
+      "sha256": "32df259abfa5308de16a3778c43913e52e7b47732c45b4ab32f3971df451b195"
+    }
+  },
+  "date": "2026-10-16 ET",
+  "findings": [],
+  "inputs": [
+    {
+      "bytes": 39511,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_allocating_payload.py",
+      "sha256": "b40ed5e0130bf52750c69484d72a3326dff9e9bd39a7b3f1e243f09489b1159f"
+    },
+    {
+      "bytes": 8100,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_typed_payload.mlw",
+      "sha256": "89c5564a6f07169ceda50b2685ad513dc28c6c5e2778d5f396797d62b7905f5e"
+    },
+    {
+      "bytes": 12202,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_allocating_payload.py",
+      "sha256": "d167d7bdfc95bc2133d20d7a751b3396d32706a0b7184160468a334e1a9c5f04"
+    },
+    {
+      "bytes": 15345,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/preparation-v1.json",
+      "sha256": "fbc90f9f1923467b72ef519f406215b764ea12b924da3f236de6a9782c6b6024"
+    },
+    {
+      "bytes": 5034,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/README.md",
+      "sha256": "b2876878ff8aad7e38f4f5cf6865a291b0b8a97cb99899c06d9e982f082cdb20"
+    },
+    {
+      "bytes": 8748,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/inert-v1/derivation.md",
+      "sha256": "aa713204b96cfb9a02693cb09f79df9f6e25ae575549cad1697aee49728061fe"
+    },
+    {
+      "bytes": 2674,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/run_pure.py",
+      "sha256": "a11cb775685b6215b7f4e3ea60978b3a6ddce7e15f3dff5aaa5bd777464caf6a"
+    },
+    {
+      "bytes": 5596,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/materialize_v1.py",
+      "sha256": "9888f255d203ad6cabea7b7184debdedf40b8268bb7a1d06be7942835aba392a"
+    }
+  ],
+  "mathematical_physical_IEEE_source_Heap_Typed_body_lifetime_caller_default_or_public_record_admission": false,
+  "physical_audit": {
+    "bytes": 26149,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-typed-payload-standards-physical-audit-v1-20261016.json",
+    "sha256": "63724a89c8fcc96e3ee3a940742e1416007d7372c6276e3c92a8acd21ca4190f"
+  },
+  "physical_unique_pins": 71,
+  "read_complete": [
+    "full39511B Python module",
+    "full8100B definitions-only Why3 theory",
+    "full12202B public test module",
+    "all nine complete original float/double/int-pointer constructor units",
+    "21 complete conditional mathematical target sources",
+    "all original/view inverse rows and complete source/effect/affine derivation",
+    "README and retained TDD/public-control harness"
+  ],
+  "review": {
+    "IEEE_and_logic": "Exact payload equality, C comparison and same-format value/class copy are explicit separate relations. Same-format NaNs may change payload/sign/quiet bits; signed zero can compare equal without bit identity. Original plain ACSL logical equality is not substituted by the C comparison relation. The final source explicitly withdraws the early NaN counterexample inference; no original ACSL counterexample or +real-to-IEEE source coverage is claimed. The proposed relation remains a separately versioned successor needing actual mode/source/store interpretation.",
+    "admission": "All21 targets are pending check_lemma with empty project dependencies; original source parsing/native goals/properties/tasks/hypotheses/support, storage/allocator/representation mode, normal source obligation ledger and public framework remain required. check_launch unconditionally refuses and all source/model/caller records remain unadmitted.",
+    "deep_module_and_identity": "The isolated declaration/prepare/check seam owns canonical sources, typed definitions, source derivation and conditional targets. Literal registry declarations plus canonical values enter identity; the whole lowerer container is recorded separately. No speculative global memory framework or caller policy is introduced.",
+    "incoming_frame": "Incoming source memory is arbitrary outside original receiver assigns. Private fresh backing and counter components remain explicit source/allocator/storage correspondence conditions; allocation success alone proves no frame, global Owners validity or empty incoming heap. Dead identity history is distinguished from reusable physical bytes.",
+    "pointer_boundary": "Symbolic null bits and stable nominal initialized pointer values grant no arbitrary representation validity, dereference/pointee lifetime, bounds, provenance or ownership.",
+    "source_effect_and_counter": "Exact source grammar covers header zeros, zero return, allocation, capacity store, full typed fill/copy loop, k scope and size store. Full writable-region/exit k=n, initialization, previous-cell/source frame and n-k decrease are retained; no one-past exit write premise. Original copy readable/receiver separation is not silently promoted to max-byte/source-backing separation.",
+    "source_scope": "Exactly3element types \u00d73allocating members. Complete original model/helpers/contracts remain byte-exact under the fixed parent model; each layout view contains the entire unchanged original at the checked range. No std_models or shared proof/setup/adapter edits.",
+    "tests": "Five public tests call prepare/check/check_launch and mutate copies of canonical source/theory/manifest/membership. Full-source extra-call/annotation/index/address refusals and all-nine inverse checks use the public seam. No test-module imports/private-helper assertions or fabricated compiler certificate. Retained GREEN7 binds exact current five source/test/model/lowerer inputs and records5PASS/0fail/0external attempts.",
+    "typed_payload_and_width": "FP values are nominal binary32/binary64 fields; pointer categories/tokens and representation bits remain separate. The product carries independent typed payload cells plus unchanged Heap header state. Width-aware allocation and affine4/8-byte store/access/variant arguments do not reuse int-only4*n allocation or coerce payloads to Integer/Real. Physical Typed chunk/object mapping remains pending."
+  },
+  "review_compiler_native_solver_SSH_Git_or_shared_mutation": false,
+  "reviewer": "lane_coordination; parent25 owns independent Spec",
+  "smell_baseline_judgment": "No actionable documented-standard violation or Fowler smell. Closed source templates/serialized proof statements are intentional domain artifacts; source-specific branches and the separate typed product avoid widening public defaults.",
+  "source_packet": {
+    "bytes": 1475,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/source-packet-v1.json",
+    "sha256": "92eeb8c4f304c43ee0daa46b33955614aac96d591d3f0b90737b64689734a893"
+  },
+  "standards_sources": [
+    "root and swdb-project/AGENTS.md",
+    ".claude/rules/miscellaneous.md",
+    ".claude/rules/learned-workflow.md",
+    ".claude/rules/timezone.md",
+    "tests/conftest.py public/shared seam conventions",
+    "mattpocock code-review Fowler heuristic baseline"
+  ]
+}

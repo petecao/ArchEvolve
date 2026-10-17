@@ -1,0 +1,17 @@
+{
+  "created": "2026-10-16 ET",
+  "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/tmpdir.py",
+  "sha256": "5099f71d89413191c9e7515c9d4fe9fc7083bb73306f2cf1f73a9f89c862ed90",
+  "bytes": 13271,
+  "static_selected_source": [
+    {
+      "line": 121,
+      "snippet": "        return basename\n\n    def mktemp(self, basename: str, numbered: bool = True) -> Path:\n        \"\"\"Create a new temporary directory managed by the factory.\n\n        :param basename:\n            Directory base name, must be a relative path.\n\n        :param numbered:\n            If ``True``, ensure the directory is unique by adding a numbered\n            suffix greater than any existing one: ``basename=\"foo-\"`` and ``numbered=True``\n            means that this function will create directories named ``\"foo-0\"``,\n            ``\"foo-1\"``, ``\"foo-2\"`` and so on.\n\n        :returns:\n            The path to the new directory.\n        \"\"\""
+    },
+    {
+      "line": 282,
+      "snippet": "\n\ndef _mk_tmp(request: FixtureRequest, factory: TempPathFactory) -> Path:\n    name = request.node.name\n    name = re.sub(r\"[\\W]\", \"_\", name)\n    MAXVAL = 30\n    name = name[:MAXVAL]\n    return factory.mktemp(name, numbered=True)\n\n\n@fixture\ndef tmp_path(\n    request: FixtureRequest, tmp_path_factory: TempPathFactory\n) -> Generator[Path]:\n    \"\"\"Return a temporary directory (as :class:`pathlib.Path` object)\n    which is unique to each test function invocation.\n    The temporary directory is created as a subdirectory"
+    }
+  ],
+  "scope": "Pinned pytest source text only, no import/test/tool execution"
+}

@@ -1,0 +1,22 @@
+{
+  "predecessor": {
+    "bytes": 12901,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v9.py",
+    "sha256": "ec56a126e27ee74af10305652863a4eeebdb6b3bcf11a38d1970f3a8e45a5761"
+  },
+  "replacements": [
+    {
+      "new": "assert run_unset in ([],['LIBRARY_PATH'],['LIBRARY_PATH','LD_LIBRARY_PATH'])",
+      "old": "assert run_unset in ([],['LIBRARY_PATH'])"
+    },
+    {
+      "new": "adapted_run=adapted_run.replace(selector_line,'unset '+' '.join(cfg['run_environment_unset'])+'\\n'+selector_line)",
+      "old": "adapted_run=adapted_run.replace(selector_line,'unset LIBRARY_PATH\\n'+selector_line)"
+    },
+    {
+      "new": "'scope':'Exact reviewed resource-literal and closed pre-interpreter environment-unset substitutions; original wrappers and launch remain retained'",
+      "old": "'scope':'Exact resource-literal substitution only; reviewed original wrappers and launch remain retained'"
+    }
+  ],
+  "schema": "exact-observer-loader-launcher-v11-inverse-1"
+}

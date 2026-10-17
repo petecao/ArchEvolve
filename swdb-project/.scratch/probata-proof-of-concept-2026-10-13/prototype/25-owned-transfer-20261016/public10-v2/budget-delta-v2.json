@@ -1,0 +1,421 @@
+{
+  "date": "2026-10-16 ET",
+  "deltas": [
+    {
+      "child": {
+        "bytes": 22545,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/entry_template.py",
+        "sha256": "890575e54b2bc4a33b2d885cca9ae92c59695dccc4f6d989c3792ef592d1eef0"
+      },
+      "edits": [
+        {
+          "new_lines": [
+            "    need(policy['root_headroom_bytes'] == 4194304 and policy['root_post_exit_reserve_bytes'] == 524288,\n",
+            "         'exact root sibling and post-exit metadata headroom required')\n"
+          ],
+          "new_range": [
+            137,
+            139
+          ],
+          "old_lines": [],
+          "old_range": [
+            137,
+            137
+          ]
+        },
+        {
+          "new_lines": [
+            "        bounded_json(out/'root-siblings-before.json', root_sibling_census(out, policy), out, policy)\n"
+          ],
+          "new_range": [
+            196,
+            197
+          ],
+          "old_lines": [],
+          "old_range": [
+            194,
+            194
+          ]
+        },
+        {
+          "new_lines": [
+            "        bounded_json(out/'root-siblings-after.json', root_sibling_census(out, policy), out, policy, reserve=False)\n"
+          ],
+          "new_range": [
+            313,
+            314
+          ],
+          "old_lines": [],
+          "old_range": [
+            310,
+            310
+          ]
+        },
+        {
+          "new_lines": [
+            "        siblings = root_sibling_census(out, policy)\n",
+            "        if (settled > policy['output_budget_bytes']-policy['root_headroom_bytes']\n",
+            "                or settled+siblings['bytes']+policy['root_post_exit_reserve_bytes'] > policy['output_budget_bytes']\n",
+            "                or time.monotonic() >= deadline):\n"
+          ],
+          "new_range": [
+            317,
+            321
+          ],
+          "old_lines": [
+            "        if settled > policy['output_budget_bytes'] or time.monotonic() >= deadline:\n"
+          ],
+          "old_range": [
+            313,
+            314
+          ]
+        }
+      ],
+      "name": "entry_template.py",
+      "parent": {
+        "bytes": 21937,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/entry_template.py",
+        "sha256": "f43e938185315f4748b56ebdbd0b5629722d24c7c3f1556be5f3e6dc9b8c9647"
+      }
+    },
+    {
+      "child": {
+        "bytes": 9424,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/runtime_quota.py",
+        "sha256": "98fe2e782f6f86e1030c36c5fb29bad3420e130a4af572c022d0db05c2b79948"
+      },
+      "edits": [
+        {
+          "new_lines": [
+            "    need(before-previous+len(data)+reserved <= policy['output_budget_bytes']-policy['root_headroom_bytes'],\n"
+          ],
+          "new_range": [
+            94,
+            95
+          ],
+          "old_lines": [
+            "    need(before-previous+len(data)+reserved <= policy['output_budget_bytes'],\n"
+          ],
+          "old_range": [
+            94,
+            95
+          ]
+        },
+        {
+          "new_lines": [
+            "    need(raw_bytes(output_root)+reserved <= policy['output_budget_bytes']-policy['root_headroom_bytes'],\n"
+          ],
+          "new_range": [
+            98,
+            99
+          ],
+          "old_lines": [
+            "    need(raw_bytes(output_root)+reserved <= policy['output_budget_bytes'],\n"
+          ],
+          "old_range": [
+            98,
+            99
+          ]
+        },
+        {
+          "new_lines": [
+            "         and total+policy['metadata_reserve_bytes'] <= policy['output_budget_bytes']-policy['root_headroom_bytes'],\n"
+          ],
+          "new_range": [
+            156,
+            157
+          ],
+          "old_lines": [
+            "         and total+policy['metadata_reserve_bytes'] <= policy['output_budget_bytes'],\n"
+          ],
+          "old_range": [
+            156,
+            157
+          ]
+        },
+        {
+          "new_lines": [
+            "\n",
+            "\n",
+            "def root_sibling_census(profile, policy):\n",
+            "    \"\"\"All physical staged/root siblings, with fixed space for post-exit metadata.\"\"\"\n",
+            "    root=profile.parent\n",
+            "    physical_ancestors(root, profile)\n",
+            "    total, count, files, pending = 0, 0, 0, [root]\n",
+            "    while pending:\n",
+            "        parent=pending.pop()\n",
+            "        physical_ancestors(root,parent)\n",
+            "        with os.scandir(parent) as entries:\n",
+            "            for item in entries:\n",
+            "                path=Path(item.path)\n",
+            "                count += 1\n",
+            "                need(count <= ENTRY_LIMIT, 'root sibling census entry cap exceeded')\n",
+            "                observed=item.stat(follow_symlinks=False)\n",
+            "                if path==profile:\n",
+            "                    need(stat.S_ISDIR(observed.st_mode), 'exact physical profile sibling required')\n",
+            "                    continue\n",
+            "                if stat.S_ISDIR(observed.st_mode):pending.append(path)\n",
+            "                else:\n",
+            "                    need(stat.S_ISREG(observed.st_mode) and observed.st_size <= policy['per_file_bytes'],\n",
+            "                         'root sibling must be a bounded regular physical file')\n",
+            "                    total += observed.st_size;files += 1\n",
+            "    need(total+policy['root_post_exit_reserve_bytes'] <= policy['root_headroom_bytes'],\n",
+            "         'root staged/metadata siblings exceed fixed headroom and post-exit reserve')\n",
+            "    return {'bytes':total,'regular_files':files,'root_headroom_bytes':policy['root_headroom_bytes'],\n",
+            "            'post_exit_reserve_bytes':policy['root_post_exit_reserve_bytes'],\n",
+            "            'scope':'Physical siblings at this observation; final root collector must bound the entire raw after its own metadata settles.'}\n"
+          ],
+          "new_range": [
+            161,
+            190
+          ],
+          "old_lines": [],
+          "old_range": [
+            161,
+            161
+          ]
+        }
+      ],
+      "name": "runtime_quota.py",
+      "parent": {
+        "bytes": 7725,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/runtime_quota.py",
+        "sha256": "a8cee0e21a557882fea391653989123a3044248cbad0fe610b543655430ec9fc"
+      }
+    },
+    {
+      "child": {
+        "bytes": 14039,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/prepare.py",
+        "sha256": "87ac4eee276dcc86a8fba68e243833970ef418e25e7b9fc6ece58e24e9ee74f6"
+      },
+      "edits": [
+        {
+          "new_lines": [
+            "OUTPUT = HERE/'inert-d7f685c6-public10-v2'\n"
+          ],
+          "new_range": [
+            19,
+            20
+          ],
+          "old_lines": [
+            "OUTPUT = HERE/'inert-d7f685c6-public10-v1'\n"
+          ],
+          "old_range": [
+            19,
+            20
+          ]
+        },
+        {
+          "new_lines": [
+            "    policy.update(metadata_reserve_bytes=4*1024**2, root_headroom_bytes=4*1024**2, root_post_exit_reserve_bytes=512*1024, per_file_bytes=128*1024**2, profile_seconds=1900, root_whole_seconds=2100, root_outer_seconds=2220)\n"
+          ],
+          "new_range": [
+            126,
+            127
+          ],
+          "old_lines": [
+            "    policy.update(metadata_reserve_bytes=4*1024**2, per_file_bytes=128*1024**2, profile_seconds=1900, root_whole_seconds=2100, root_outer_seconds=2220)\n"
+          ],
+          "old_range": [
+            126,
+            127
+          ]
+        },
+        {
+          "new_lines": [
+            "    guards['guarded_generation'] = guards['guarded_generation'].replace(\"policy['output_budget_bytes']\", \"(policy['output_budget_bytes']-policy['root_headroom_bytes'])\").replace('resource.RLIMIT_FSIZE, (file_allowance, file_allowance)', 'resource.RLIMIT_FSIZE, (min(file_allowance, policy[\\'per_file_bytes\\']), min(file_allowance, policy[\\'per_file_bytes\\']))')\n"
+          ],
+          "new_range": [
+            148,
+            149
+          ],
+          "old_lines": [
+            "    guards['guarded_generation'] = guards['guarded_generation'].replace('resource.RLIMIT_FSIZE, (file_allowance, file_allowance)', 'resource.RLIMIT_FSIZE, (min(file_allowance, policy[\\'per_file_bytes\\']), min(file_allowance, policy[\\'per_file_bytes\\']))')\n"
+          ],
+          "old_range": [
+            148,
+            149
+          ]
+        },
+        {
+          "new_lines": [
+            "        ('copy-prefix10-diagnostic','owned-transfer10-public-v2')]\n"
+          ],
+          "new_range": [
+            164,
+            165
+          ],
+          "old_lines": [
+            "        ('copy-prefix10-diagnostic','owned-transfer10-public-v1')]\n"
+          ],
+          "old_range": [
+            164,
+            165
+          ]
+        },
+        {
+          "new_lines": [
+            "        'source_commit':SOURCE,'remote_project':REMOTE,'root_kind':'t25-owned-transfer10-public-v2',\n"
+          ],
+          "new_range": [
+            182,
+            183
+          ],
+          "old_lines": [
+            "        'source_commit':SOURCE,'remote_project':REMOTE,'root_kind':'t25-owned-transfer10-public-v1',\n"
+          ],
+          "old_range": [
+            182,
+            183
+          ]
+        },
+        {
+          "new_lines": [
+            "        'reviewed_helpers_exact':list(names),'reviewed_guard_helpers_exact':[], 'guard_delta':'Live aggregate allowance retains fixed root headroom; RLIMIT_FSIZE is the minimum of that projected allowance and128MiB per-file cap', 'why3_runtime_snapshot':pin(HERE/'why3-runtime-snapshot.json'), 'runtime_quota':pin(HERE/'runtime_quota.py'), 'why3_package_checker':pin(HERE/'reviewed_why3_package_check.py'),\n"
+          ],
+          "new_range": [
+            189,
+            190
+          ],
+          "old_lines": [
+            "        'reviewed_helpers_exact':list(names),'reviewed_guard_helpers_exact':[], 'guard_delta':'Only RLIMIT_FSIZE is the minimum of projected aggregate allowance and128MiB per-file cap', 'why3_runtime_snapshot':pin(HERE/'why3-runtime-snapshot.json'), 'runtime_quota':pin(HERE/'runtime_quota.py'), 'why3_package_checker':pin(HERE/'reviewed_why3_package_check.py'),\n"
+          ],
+          "old_range": [
+            189,
+            190
+          ]
+        }
+      ],
+      "name": "prepare.py",
+      "parent": {
+        "bytes": 13819,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/prepare.py",
+        "sha256": "1a792917f06a03050a2d13f10882443904e1e3b2893c9ebaea27f15e696139c3"
+      }
+    },
+    {
+      "child": {
+        "bytes": 14879,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/pure_controls.py",
+        "sha256": "963fc1a2a2887b3d875c9d24c25de2eadd1232aff175759985582a8f9b4fafcb"
+      },
+      "edits": [
+        {
+          "new_lines": [
+            "PACKET=HERE/'inert-d7f685c6-public10-v2'\n"
+          ],
+          "new_range": [
+            17,
+            18
+          ],
+          "old_lines": [
+            "PACKET=HERE/'inert-d7f685c6-public10-v1'\n"
+          ],
+          "old_range": [
+            17,
+            18
+          ]
+        },
+        {
+          "new_lines": [
+            "        policy={'per_file_bytes':4096,'metadata_reserve_bytes':2048,'output_budget_bytes':8192,'root_headroom_bytes':0}\n"
+          ],
+          "new_range": [
+            155,
+            156
+          ],
+          "old_lines": [
+            "        policy={'per_file_bytes':4096,'metadata_reserve_bytes':2048,'output_budget_bytes':8192}\n"
+          ],
+          "old_range": [
+            155,
+            156
+          ]
+        },
+        {
+          "new_lines": [
+            "            with self.assertRaisesRegex(ValueError,'regular file'):entry['bounded_bytes'](link,b'new',root,{'per_file_bytes':100,'metadata_reserve_bytes':1,'output_budget_bytes':100,'root_headroom_bytes':0})\n"
+          ],
+          "new_range": [
+            168,
+            169
+          ],
+          "old_lines": [
+            "            with self.assertRaisesRegex(ValueError,'regular file'):entry['bounded_bytes'](link,b'new',root,{'per_file_bytes':100,'metadata_reserve_bytes':1,'output_budget_bytes':100})\n"
+          ],
+          "old_range": [
+            168,
+            169
+          ]
+        },
+        {
+          "new_lines": [
+            "            root=Path(folder);policy={'metadata_reserve_bytes':65536,'output_budget_bytes':131072,'root_headroom_bytes':0}\n"
+          ],
+          "new_range": [
+            173,
+            174
+          ],
+          "old_lines": [
+            "            root=Path(folder);policy={'metadata_reserve_bytes':65536,'output_budget_bytes':131072}\n"
+          ],
+          "old_range": [
+            173,
+            174
+          ]
+        },
+        {
+          "new_lines": [
+            "\n",
+            "    def test_final_profile_writes_keep_real_staged_root_sibling_headroom(self):\n",
+            "        with tempfile.TemporaryDirectory(dir=HERE)as folder:\n",
+            "            root=Path(folder);profile=root/'owned-transfer10-public-v2-profile';profile.mkdir()\n",
+            "            # Actual prospective entry/context/bootstrap metadata bytes, never\n",
+            "            # an installed runtime or scientific result surrogate.\n",
+            "            for name,data in [('owned-transfer10-public-v2-entry.py',entry_bytes),\n",
+            "                              ('owned-transfer10-public-v2-expected.json',(PACKET/'expected.json').read_bytes()),\n",
+            "                              ('launch.json',(PACKET/'root-command.json').read_bytes())]:\n",
+            "                (root/name).write_bytes(data)\n",
+            "            policy={'per_file_bytes':134217728,'metadata_reserve_bytes':1024,\n",
+            "                    'root_headroom_bytes':4194304,'root_post_exit_reserve_bytes':524288,\n",
+            "                    'output_budget_bytes':4194304+8192}\n",
+            "            (profile/'payload').write_bytes(b'x'*6192)\n",
+            "            entry['bounded_bytes'](profile/'result.json',b'r'*1000,profile,policy,reserve=False)\n",
+            "            entry['bounded_bytes'](profile/'artifact-manifest.json',b'm'*1000,profile,policy,reserve=False)\n",
+            "            self.assertEqual(entry['raw_bytes'](profile),8192)\n",
+            "            # V1 erroneously admitted this because reserve=False consumed the\n",
+            "            # root allowance; V2 must refuse before writing even one more byte.\n",
+            "            with self.assertRaisesRegex(ValueError,'projected aggregate'):\n",
+            "                entry['bounded_bytes'](profile/'overflow.json',b'x',profile,policy,reserve=False)\n",
+            "            self.assertFalse((profile/'overflow.json').exists())\n",
+            "            census=entry['root_sibling_census'](profile,policy)\n",
+            "            self.assertEqual(census['bytes'],sum(p.stat().st_size for p in root.iterdir()if p.is_file()))\n",
+            "            self.assertLessEqual(census['bytes']+8192+524288,policy['output_budget_bytes'])\n",
+            "            extra=policy['root_headroom_bytes']-policy['root_post_exit_reserve_bytes']-census['bytes']+1\n",
+            "            (root/'too-much-late-metadata').write_bytes(b'x'*extra)\n",
+            "            with self.assertRaisesRegex(ValueError,'fixed headroom'):\n",
+            "                entry['root_sibling_census'](profile,policy)\n"
+          ],
+          "new_range": [
+            180,
+            209
+          ],
+          "old_lines": [],
+          "old_range": [
+            180,
+            180
+          ]
+        }
+      ],
+      "name": "pure_controls.py",
+      "parent": {
+        "bytes": 12582,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/pure_controls.py",
+        "sha256": "8dead47e6978b72bda1de6cb69511a689ce6e15d860dd0e478222ea3ebcd07ac"
+      }
+    }
+  ],
+  "runtime_snapshot_and_package_checker_unchanged": true,
+  "scientific_expected_and21canonical_files_unchanged": true
+}

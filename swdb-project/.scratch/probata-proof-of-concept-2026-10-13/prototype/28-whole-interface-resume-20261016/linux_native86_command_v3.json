@@ -1,0 +1,142 @@
+{
+  "Mac_counted_token_required": false,
+  "actual_launched": false,
+  "argv": [
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v3/control/linux_native86_entry_v3.py",
+    "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v3",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v3/control/linux_native86_policy_v3.json",
+    "3295a012dec61eece914c80eb53844d1638e2586667185ef26189c8569a02add"
+  ],
+  "compile_recipe": "Original -x c/-std=c11 and -x c++/-std=c++17 preprocessing -MD -MF -MT; first dependency hashes after preprocessing, then frozen .i/.ii compile, explicit canonical BFD -Wl,-t link and exact native JSON with empty sanitizer stderr. --no-default-config for every driver phase; ASan+UBSan, -O1 -g -fno-omit-frame-pointer -fno-sanitize-recover=all.",
+  "controller_inputs": [
+    {
+      "bytes": 23441,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v3.py",
+      "sha256": "c2c02a2ad8c4467260b132572195224661b858cbd659a0813b8895b33c5925b1"
+    },
+    {
+      "bytes": 9088,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_values_native_v1.c",
+      "sha256": "8dadfd0ed8e323834bc2259473fba89db38525a09bd95b0b4c5f8093e3412fd5"
+    },
+    {
+      "bytes": 69747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+      "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+    },
+    {
+      "bytes": 15884,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_adapters.h",
+      "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+    },
+    {
+      "bytes": 13765,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_builders_v1.h",
+      "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+    },
+    {
+      "bytes": 3881,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_closed_routes_v1.h",
+      "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+    },
+    {
+      "bytes": 18385,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9610,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 2709,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 116503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 657687,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_policy_v3.json",
+      "sha256": "3295a012dec61eece914c80eb53844d1638e2586667185ef26189c8569a02add"
+    }
+  ],
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "exact_native_result_each_language": {
+    "action_order_cases": 2,
+    "controls": 86,
+    "family_dtype_cases": 66,
+    "history_cases": 6,
+    "refusals": 6,
+    "subtract_fold_cases": 6
+  },
+  "full_ticket28": false,
+  "node": 0,
+  "physical_runtime_inventory": {
+    "bytes": 481121,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/native86-linux-runtime-passive-v5.json",
+    "sha256": "7931ec1657ad9267bde4cc96c2df61948c40e9d126307901ab880dc9e4333722"
+  },
+  "private_native_only": true,
+  "project": "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+  "public_formal": false,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v3",
+  "root_acceptance": "Recheck every staged/source/runtime pin before launch; exact launch/execute/watch/live lane, outer guard exit0/time<=180/RSS<=4GiB/finalnull/nochildren, entry accepted true, eight zero-exit phases, two exact censuses, absent caches, complete manifests and cold independent reconciliation.",
+  "root_creates_fresh_raw_root": true,
+  "root_environment_requirement": "No extra PYTHON selectors, compiler include/library selectors, LD_PRELOAD/LD_AUDIT, sanitizer options or symbolizer overrides; child environment is closed by the entry.",
+  "root_guard": {
+    "disk_floor_bytes": 53687091200,
+    "external_timeout_seconds": 300,
+    "per_file_limit_bytes": 134217728,
+    "queue_seconds": 300,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 4294967296,
+    "whole_tree_seconds": 180,
+    "workers": 1
+  },
+  "root_places_exact_controller_metadata": {
+    "closed_control_membership": [
+      "closed_python_surface.py",
+      "linux_native86_entry_v3.py",
+      "linux_native86_policy_v3.json",
+      "python_role_observer_v2.py",
+      "python_startup_roles_v2.py",
+      "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "whole_adapters.h",
+      "whole_closed_routes_v1.h",
+      "whole_value_backend_v1.h",
+      "whole_value_builders_v1.h",
+      "whole_values_native_v1.c"
+    ]
+  },
+  "root_required_environment": {
+    "PROBATA_OUTPUT": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v3",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPYCACHEPREFIX": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v3/entry-source-cache",
+    "SWDB_VERIFIER_LOCK": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v3/verifier.lock",
+    "SWDB_VERIFIER_RSS_CAP_BYTES": "4294967296"
+  },
+  "root_reviewed_wrapper_hashes": {
+    "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+    "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+  },
+  "root_socket_lane_only": true,
+  "source": "/data1/yanruj/probata-resume-20261016-2baf722f",
+  "source_call_admission": false,
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "source_packet_preparation": {
+    "bytes": 14503,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/value-source-preparation-v1.json",
+    "sha256": "4d5177fd68f7acce3fcba4266b046909bcaca0a48ec9addae204877827ed9cd9"
+  },
+  "status": "INERT / UNLAUNCHED; independent review and root admission required"
+}

@@ -1,0 +1,32 @@
+test_all_23_exact_enum_nodes (__main__.Controls.test_all_23_exact_enum_nodes) ... ok
+test_complete_actual_pipelines_old_red_new_green (__main__.Controls.test_complete_actual_pipelines_old_red_new_green) ... FAIL
+test_complete_physical_before_after (__main__.Controls.test_complete_physical_before_after) ... ok
+test_endian_selects_own_typed_apvalue_never_operand (__main__.Controls.test_endian_selects_own_typed_apvalue_never_operand) ... ok
+test_exact_stream_and_probe_selection_refuse_changes (__main__.Controls.test_exact_stream_and_probe_selection_refuse_changes) ... ok
+test_full_source_inverse_and_unchanged_nodes (__main__.Controls.test_full_source_inverse_and_unchanged_nodes) ... ok
+test_integral_range_and_source_coordinate_refusals (__main__.Controls.test_integral_range_and_source_coordinate_refusals) ... ERROR
+test_old_literal_pipeline_is_byte_behavior_unchanged (__main__.Controls.test_old_literal_pipeline_is_byte_behavior_unchanged) ... ok
+test_primary_source_bindings_and_probe_syntax (__main__.Controls.test_primary_source_bindings_and_probe_syntax) ... ok
+test_wrong_shape_type_cast_value_and_extra_expression_refuse (__main__.Controls.test_wrong_shape_type_cast_value_and_extra_expression_refuse) ... ok
+
+======================================================================
+ERROR: test_integral_range_and_source_coordinate_refusals (__main__.Controls.test_integral_range_and_source_coordinate_refusals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-enum-repair-v1/test_enum_repair_v1.py", line 140, in test_integral_range_and_source_coordinate_refusals
+    else:changed['inner'][0]['inner'][0]['range']['end']['offset']+=1
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'offset'
+
+======================================================================
+FAIL: test_complete_actual_pipelines_old_red_new_green (__main__.Controls.test_complete_actual_pipelines_old_red_new_green)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-enum-repair-v1/test_enum_repair_v1.py", line 75, in test_complete_actual_pipelines_old_red_new_green
+    self.assertIsNone(binder.validate_abi(result['abi']))
+AssertionError: {'byte_order': 'little', 'int_bits': 32, 'pointer_bits': 64, 'canonical_types': {'uint32_t': 'unsigned int', 'int32_t': 'int', 'float': 'float', 'uint64_t': 'unsigned long', 'int64_t': 'long', 'double': 'double'}, 'sizes': [4, 4, 4, 8, 8, 8], 'alignments': [4, 4, 4, 8, 8, 8]} is not None
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.232s
+
+FAILED (failures=1, errors=1)

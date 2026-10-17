@@ -1,0 +1,102 @@
+{
+  "created": "2026-10-16 ET",
+  "observed_utc": "2026-10-16T20:50:53.460703+00:00",
+  "classification": "PRE_COMPILER_CONTROLLER_STAT_REFUSAL",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v5",
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "300",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v5/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T20:46:11Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-2baf722f-t28-full-tu-v5",
+        "lease_generation": 616,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.09,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T20:46:09Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 1,
+      "peak_rss_bytes": 85905408,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 2.241384321823716,
+      "cpu_seconds": 2.413214
+    },
+    "resources.json": {
+      "cpu_seconds": 0.151119,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 33476608,
+      "timed_out": false,
+      "wall_seconds": 0.1684410534799099
+    },
+    "source-after.json": {
+      "commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "root-guard-adaptation.json": {
+      "rss_cap_bytes": 4294967296,
+      "timeout_seconds": 180,
+      "run_environment_unset": [
+        "LIBRARY_PATH"
+      ],
+      "files": {
+        "execute.py": {
+          "original_sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+          "actual_sha256": "8442533f911e2ba7f10757a5b16ba451d4ece7d9d5dc292ce5b9d8c29eabdcbf"
+        },
+        "watch.py": {
+          "original_sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c",
+          "actual_sha256": "49be8a36d6e04b50e1ab599dad8b00f78a1c639132c3079c523c2c0c9177c5f0"
+        },
+        "run.sh": {
+          "original_sha256": "650f815cb7562767829d94e8868da56990c98301376b999af6c659fbe499fcf3",
+          "actual_sha256": "b605778291436f9d32ee070658c216bc41fda2cfd78ba6a2ce51cb14e21cc79f"
+        }
+      },
+      "scope": "Exact resource-literal substitution only; reviewed original wrappers and launch remain retained"
+    }
+  },
+  "failure": {
+    "bytes": 924,
+    "sha256": "873493069c6be730d734c921c56b40ba634ed01d3bbdaa9d90687532ddf85c43",
+    "traceback": [
+      "Traceback (most recent call last):",
+      "  File \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v5/control/linux_compiler_capture_v5.py\", line 376, in <module>",
+      "    raise SystemExit(main(sys.argv))",
+      "                     ^^^^^^^^^^^^^^",
+      "  File \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v5/control/linux_compiler_capture_v5.py\", line 188, in main",
+      "    control_check()",
+      "  File \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v5/control/linux_compiler_capture_v5.py\", line 181, in control_check",
+      "    if path.name != name or pin(path) != {\"path\": str(path), **value}:",
+      "                            ^^^^^^^^^",
+      "  File \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v5/control/linux_compiler_capture_v5.py\", line 41, in pin",
+      "    raise ValueError(\"capture input changed while hashing\")",
+      "ValueError: capture input changed while hashing"
+    ]
+  },
+  "no_component_directory": true,
+  "root_source_diagnosis": "pin compares entire lstat tuple across a read, including access time; legitimate read-updated atime triggers the immutable-content guard. Require a separately reviewed stable-field successor excluding only atime.",
+  "source_or_public_or_scientific_acceptance": false,
+  "raw_payload_transferred": false
+}

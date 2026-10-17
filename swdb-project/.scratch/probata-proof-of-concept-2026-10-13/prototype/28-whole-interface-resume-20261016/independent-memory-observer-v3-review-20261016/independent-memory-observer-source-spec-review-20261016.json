@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-16 ET",
+  "exact_source_inverses": [
+    {
+      "basis": {
+        "bytes": 24791,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5/linux_observation_envelope_v5.py",
+        "sha256": "13de22dc3d1e20d8b7e652e8a48caa356e9985a566ced65f468f05f21ad10cc8"
+      },
+      "current": {
+        "bytes": 24981,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-unit-envelope-v2/linux_memory_observation_envelope_v2.py",
+        "sha256": "02644cd7f97a2d08e3926e7fddb6ab2ee9d5464db253a2662bf3b59b901a3e87"
+      },
+      "exact": true
+    },
+    {
+      "basis": {
+        "bytes": 2774,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v2/observer/modules/observation_source_bridge_v1.py",
+        "sha256": "53edf556c0115bfff5307e9c6cec5969dcfe02e960c710ab26c0e676de17c72a"
+      },
+      "current": {
+        "bytes": 2850,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/observer/modules/observation_source_bridge_v1.py",
+        "sha256": "ff7a881fde6f7caa53fc6109ad056a1fbc3f3e1ede5d45f492a8884d7c4e1350"
+      },
+      "exact": true
+    },
+    {
+      "basis": {
+        "bytes": 12103,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v2/observer/observe_memory_entry_v1.py",
+        "sha256": "9c516247ce86a6c235960348824245fdd769aab5990e79253726661074314c72"
+      },
+      "current": {
+        "bytes": 12149,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/observer/observe_memory_entry_v1.py",
+        "sha256": "19a7d7efc9de0d5097f7643dbdc378934bf2ca64f0992ab3ca0c9724275938c3"
+      },
+      "exact": true
+    }
+  ],
+  "exact_union_modules": 4,
+  "execution_boundary": {
+    "compiler_native_verifier_SSH_Git": false,
+    "full_actual_TU_consumed": false,
+    "observer_main": false,
+    "project_import": false
+  },
+  "findings": [
+    {
+      "bad_reverse_counts": [
+        {
+          "advertised": 1,
+          "index": 14,
+          "new": "MEMORY / 'source-packet-v3.json'",
+          "observed": 2
+        },
+        {
+          "advertised": 1,
+          "index": 4,
+          "new": "MEMORY / 'source-packet-v3.json', '4563434cedfabd310b8846bb692b82b24ba37d01562b6d816f38437f1a453fcb'",
+          "observed": 0
+        }
+      ],
+      "boundary": "author inverse metadata only; exact current builder behavior is reconstructible",
+      "file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-unit-envelope-v2/builder-inverse-v2.json",
+      "id": "builder-inverse-overlap",
+      "independent_nonoverlapping_inverse": {
+        "bytes": 6695,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/independent-memory-observer-v3-review-20261016/independent-builder-offset-inverse.json",
+        "sha256": "9546b140102900c1c85b052480279a505406af6ef83d725469cef3515174b115"
+      },
+      "ordered_forward_reconstruction_exact": true
+    },
+    {
+      "actual_envelope_stage_sources_and_policy_are_correct": true,
+      "advertised_controls": 17,
+      "file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/observer-staging-plan-v3.json",
+      "id": "stale-staging-plan",
+      "missing": [
+        "compiler_unit_adapter_v4.py",
+        "fixed-memory-modules-v2.json"
+      ],
+      "obsolete": [
+        "fixed-memory-modules-v1.json"
+      ],
+      "required_controls": 18,
+      "stale_hashes": [
+        "memory_normalized_capture_ingress_v1.py",
+        "memory_normalized_compiler_adapter_v1.py",
+        "observation_source_bridge_v1.py",
+        "observe_memory_entry_v1.py"
+      ],
+      "stale_policy": {
+        "bytes": 14928,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v2/observer/observation-policy-template-v1.json",
+        "sha256": "7724850bc93031fbd72963455942f0789b32ae5798b1f57c6993c672c5cfa606"
+      }
+    }
+  ],
+  "packet_file_and_basis_pin_occurrences": 63,
+  "packets": [
+    {
+      "bytes": 16151,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/source-packet-v3.json",
+      "sha256": "4563434cedfabd310b8846bb692b82b24ba37d01562b6d816f38437f1a453fcb"
+    },
+    {
+      "bytes": 8551,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-unit-envelope-v2/source-packet-v2.json",
+      "sha256": "cb552c8cd5b8ecf819ac991486f009f4b1bf2212dc16c4f6023198c54d36af43"
+    }
+  ],
+  "pending": [
+    "version metadata correction with root-selected lane/guard and exact filled policy/command pins",
+    "fresh root runtime/source/reader/lane preflight and once-only actual admission",
+    "actual complete DOM/resource/source preparation; no inference from pure controls",
+    "owned ordinary mapping/body CPU lifetime/receiver/draw and public proof acceptance remain separate"
+  ],
+  "pure_tests": {
+    "count": 25,
+    "failures": 0,
+    "logs": [
+      {
+        "bytes": 779,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/independent-memory-observer-v3-review-20261016/ingress-semantic-controls.log",
+        "sha256": "c21773e8b9d39b8fdd62a8068391264105c35caf3a670e641ced146a2e5ed13e"
+      },
+      {
+        "bytes": 2002,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/independent-memory-observer-v3-review-20261016/envelope-controls.log",
+        "sha256": "9cf224a770e2e9cc0fe75b03c64f0669f0991adc621fd84e4a7a93e7864f9b7d"
+      },
+      {
+        "bytes": 354,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/independent-memory-observer-v3-review-20261016/real-staging-controls.log",
+        "sha256": "d4cdd2a3c0dae3525a162080b1aa7be7fefcd17739a46ecdfe67e47237d3bee1"
+      },
+      {
+        "bytes": 904,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/independent-memory-observer-v3-review-20261016/root-environment-controls.log",
+        "sha256": "a7453118596ebfb6c005caf131d8c0d882075eb5035b4df23844047b4ee58f82"
+      }
+    ],
+    "no_child_native_network_audit": true
+  },
+  "schema": "independent-memory-observer-source-spec-review-1",
+  "source_observer_semantic_or_resource_blocker_found": false,
+  "verdict": "HOLD_METADATA_CORRECTION",
+  "verified": [
+    "distinct physical generic775ab2ec and semanticb5bd7293 readers; explicit consumer identity and before/after pin gates",
+    "complete18 inner controls/15 fixed modules;36 flat payloads plus policy;736053B",
+    "G642 successful four-phase observation/source55b9/genuine normalized memory transport remain separate from first3148 and V10 refusal",
+    "whole original TU/40 calls/three12-14-14 roots and pending body/CPU/lifetime/mapping/receiver gates preserved",
+    "exact inherited Linux runtime/startup/source/4GiB1200s1180s/256MiB4MiB1MiB/20GiB/finalization logic",
+    "prepared/node/guard null, root_metadata_complete false and actual_executed false; argv remains inert"
+  ]
+}

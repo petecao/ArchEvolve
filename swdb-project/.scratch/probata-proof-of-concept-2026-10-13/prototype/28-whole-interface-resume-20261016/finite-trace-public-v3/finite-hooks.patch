@@ -1,0 +1,110 @@
+--- a/swdb/cbmc_adapter.py
++++ b/swdb/cbmc_adapter.py
+@@ -176,6 +176,10 @@
+         context = {"job": job, "out": out, "log": log, "reports": [], "tools": tools, "bounds": dict(job.bounds),
+                    "settings": {"tool": "cbmc", "flags": [], "translator": tools["translator"]["id"],
+                                 "build_constants": list(self.defines), "verifier_launched": False}}
++        from swdb import dx100_finite_trace, dx100_finite_trace_adapter
++        finite_selection = dx100_finite_trace.select_baseline(self.library,self.contract,entry)
++        if finite_selection is not None:
++            return dx100_finite_trace_adapter.run(self,job,entry,context,finite_selection)
+         if summary_job:
+             source = self.library.resolve((entry.get("proof_unit") or {}).get("source"))
+         else:
+--- a/swdb/formal_frame.py
++++ b/swdb/formal_frame.py
+@@ -92,8 +92,10 @@
+ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
+     clauses = data.get('clauses') if isinstance(data.get('clauses'), list) else []
+     clauses = [c if isinstance(c, dict) else {} for c in clauses]
+-    from swdb import dx100_checked_source
+-    whole_format = dx100_checked_source.checked_unit_format(library,entry_id,data)
++    from swdb import dx100_checked_source, dx100_finite_trace
++    whole_format = dx100_finite_trace.checked_unit_format(library,entry_id,data)
++    if whole_format is None:
++        whole_format = dx100_checked_source.checked_unit_format(library,entry_id,data)
+     for reason in whole_format or ():
+         error('whole_source_unit_contract',reason)
+     if 'enables' in data:
+@@ -344,6 +346,13 @@
+ def lowered(library, unit):
+     """The C lowering of a proof_unit's baseline function (cached per source sha256), or the LoweringError."""
+     from swdb import c_lowering, proof_semantics
++    from swdb import dx100_finite_trace
++    try:
++        finite = dx100_finite_trace.lowering_for(library,unit)
++        if finite is not None:
++            return finite
++    except (ValueError,OSError,TypeError,KeyError,AttributeError) as exc:
++        return c_lowering.LoweringError(str(exc))
+     path = library.resolve(unit['source'])
+     from swdb import dx100_checked_source
+     selection = dx100_checked_source.select_baseline(library, unit)
+--- a/swdb/proof_semantics.py
++++ b/swdb/proof_semantics.py
+@@ -545,6 +545,10 @@
+         if source_unit is None or source_unit.selection.entry_id != entry_id:
+             raise ValueError('whole checked model requires its exact complete source/receiver unit')
+         dx100_whole_checked.policy(library, data)
++        from swdb import dx100_finite_trace
++        if type(source_unit) is dx100_finite_trace.TraceUnit:
++            dx100_finite_trace.recheck(source_unit)
++            return Model(**dx100_finite_trace.model_fields(source_unit))
+         dx100_checked_source.recheck(source_unit)
+         return Model(**dx100_checked_source.model_fields(source_unit))
+     if source_unit is not None:
+--- a/swdb/proof_setup.py
++++ b/swdb/proof_setup.py
+@@ -155,9 +155,20 @@
+         entry = fresh.get(job.unit.contract) or {}
+         _placements(entry)
+         job.setup["contract_library"] = library.root
++    finite_selection = None
++    if library is not None and job.unit.contract:
++        from swdb import dx100_finite_trace
++        finite_selection = dx100_finite_trace.select_baseline(library,job.unit.contract,library.get(job.unit.contract))
++        if finite_selection is not None:
++            finite = dx100_finite_trace.compose(finite_selection)
++            report['hashes']['finite_trace'] = _sha(finite.certificate_json)
++            job.setup['finite_trace_certificate_sha256'] = _sha(finite.certificate_json)
++            for row in finite.input_pins:
++                if row['bytes'] <= 8*1024*1024:
++                    job.setup['files'][row['path']] = row['sha256']
+     # Scan the actual translation units of both sides; scripted fixtures have no
+     # real source traversal and supply their own explicit manifest.
+-    if library is not None and not str(job.unit.contract or "").startswith("c_model."):
++    if library is not None and finite_selection is None and not str(job.unit.contract or "").startswith("c_model."):
+         from swdb.wp_adapter import _unit_source
+         trees = [job.unit.tree]
+         baseline = (getattr(adapter, "spec", {}) or {}).get("baseline") or {}
+@@ -366,7 +377,15 @@
+             _fail("lowering_hash", "baseline C lowering differs from its planned pin")
+         hashes["baseline_lowering"] = _sha(baseline.text)
+     if adapter.name in {"cbmc", "crux-llvm-c", "crux-llvm-cxx"}:
+-        if context.get('whole_source_unit') is not None:
++        if context.get('finite_trace_unit') is not None:
++            from swdb import dx100_finite_trace_adapter
++            try:
++                hashes['finite_trace'] = dx100_finite_trace_adapter.check_launch(adapter,job,context,[path for path,_ in inputs])
++                if job.setup.get('finite_trace_certificate_sha256') != _sha(context['finite_trace_unit'].certificate_json):
++                    _fail('finite_trace','selected finite certificate differs from startup')
++            except (ValueError,OSError,TypeError,KeyError,AttributeError) as exc:
++                _fail('finite_trace',str(exc))
++        elif context.get('whole_source_unit') is not None:
+             from swdb import dx100_checked_adapter
+             try:
+                 hashes['whole_source'] = dx100_checked_adapter.check_launch(adapter,job,context,[('c',path) for path,_ in inputs])
+@@ -489,7 +508,12 @@
+         if not context.get('vector_closed_source'):
+             _wp_flags(list(command) if command else flags, scratch or job.scratch)
+     elif adapter.name == "cbmc":
+-        check_cbmc_flags(list(command) if command else flags)
++        if context.get('finite_trace_unit') is not None:
++            from swdb import dx100_finite_trace_adapter
++            hashes['finite_phase'] = dx100_finite_trace_adapter.check_command(context,command)
++            check_cbmc_flags(flags)
++        else:
++            check_cbmc_flags(list(command) if command else flags)
+         from swdb import bounded_entry_windows, c_lowering
+         try:
+             adapter.check_entry_windows(job, context, inputs)

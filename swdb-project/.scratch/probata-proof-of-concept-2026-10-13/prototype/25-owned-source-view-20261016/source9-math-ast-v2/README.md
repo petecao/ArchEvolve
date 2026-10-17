@@ -1,0 +1,3 @@
+# Source9 complete26 AST capture V2 — 2026-10-16 ET
+
+V1 refused before any selected input read: its path guard admitted only .psmt2, while the frozen complete26 context includes18 .psmt2 and8 .smt2 task paths. V2 changes only that exact guard to permit both already-pinned suffixes. The full29-file allowset, all task/content/command censuses, syntax helpers, resources, output cap and false admission flags are byte-identical. Two added controls evaluate the actual main path gate over every real context path and reject other suffixes/escapes. Original V1, its refusal and both successful finite source/process pre/postflights remain intact. A new exact root review/once-admission is required; no solver/proof rerun.

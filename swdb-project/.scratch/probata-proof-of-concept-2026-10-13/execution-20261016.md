@@ -1,96 +1,38 @@
-# Tickets 25 and 28 — active execution
+# Tickets 25 and 28 — paused execution
 
-Updated: 2026-10-16 ET.
+Updated: 2026-10-16 22:08 ET. The user stopped implementation and requested
+progress/ticket synchronization and consolidation onto `yanrujhou_main`.
+Historical admission records below retain their original identities.
 
-User explicitly resumed tickets 25 and 28 with implementation, tests, reviews,
-commits, pushes to `yanrujhou_main`, and mbit10 evaluation authorized. The saved
-pause remains historical. External Claude Code owns ticket 7; its changes,
-runtime slots, and lease ownership must be preserved.
+Baseline: `c978393b119a3614229a37f0f2c8ca2a097c750b`.
+Reviewed applied source checkpoint: `b86ea2b931c45e126c61c83f6fe1949aac44e96d`.
+External Claude ticket7 merge and subsequent documentation/rule commits are preserved.
 
-Baseline: `c978393b119a3614229a37f0f2c8ca2a097c750b` on `yanrujhou_main`.
+1. [x] Stop agents and new work; preserve settled outcomes and unfinished packets.
+2. [x] Release tickets25/28 to ready-for-agent and delete this effort heartbeat.
+3. [x] Save exact review gaps, stale commands, raw evidence pointers and resume steps.
+4. [x] Run14 focused checkpoint controls; full default suite/final review deferred.
+5. [ ] Publish and verify the pause checkpoint; see the delivery record for completion.
 
-1. [x] Read governing rules, ticket acceptance criteria, and saved checkpoints;
-   claim tickets 25 and 28.
-2. [x] Repair/review the next public run packets and inspect
-   current resources before admitting any compiler or verifier.
-3. [ ] **In progress:** run fresh guarded evaluations through available socket lanes; repair
-   failures without weakening contracts or using sibling proofs as premises.
-4. [ ] Run appropriate focused checks and the full default suite; complete
-   independent Standards and Spec reviews.
-5. [ ] Reconcile acceptance criteria and tickets, commit only owned changes,
-   push, verify remote source synchronization, and release owned resources.
+## Current checkpoint — 2026-10-16 22:08 ET
 
-## Ownership and assumptions
+Updated: 2026-10-16 22:08 ET. **Paused at the user's request.**
+Tickets **25 and 28 are ready-for-agent**, with both claims released and all
+acceptance boxes unchanged. Counts: **36 resolved / 27 ready-for-agent / 0 claimed**.
+Work is consolidated on `yanrujhou_main`; external Claude's ticket7 work is preserved.
+The effort heartbeat was deleted. No automatic work or evaluation remains scheduled.
 
-- Root coordinates source freezes, Git publication, actual tool admission,
-  shared resource usage, and tracker reconciliation.
-- `ticket25` owns ticket 25 source/preparation; `ticket28` owns ticket 28.
-  `lane_coordination` performs read-only host/runtime preflight.
-- Existing synthetic/public test seams are the agreed test boundaries under
-  the user's autonomous delegation. New acceptance checks must observe public
-  behavior and preserve every scientific criterion.
-- Existing scoped proof results retain their original identities and limits.
-  Tests, stand-ins, syntax checks, and mathematical sublemmas do not establish
-  complete member-body, caller, hardware, or ticket acceptance.
-- At most two mbit10 jobs, one per socket, only through current
-  `socket_lane.sh`. Fresh leases and process state decide availability; neither
-  lane is reserved by this document.
-- Preserve uncommitted ticket 7 and unrelated cleanup scratch. Do not resurrect
-  the retired integration branch or blindly execute historical tmp commands.
+| Item | Progress | Change | Health | ETA |
+| --- | --- | --- | --- | --- |
+| Ticket25 | Scoped member/default/math results retained | Typed/float prep and move/swap proposals frozen | Full source/caller/type closure remains open | Unknown |
+| Ticket28 | Coherent V5 published; final union preserved as proposal | Actual observer G626 refused ambiguous full-TU declaration ID | No current0.2 public acceptance; memory metadata HOLD | Unknown |
+| Resources | Agents stopped; no owned local or SSH job | Last remote status22:03 ET showed all3 leases released | Stronger observer postflight remains pending | Unknown |
+| Checkpoint | 14 focused checks pass; full suite deferred at user stop | Applied code, proposals, reviews and compact evidence saved | Historical source-bound commands need fresh review | Unknown |
 
-## Current checkpoint — 2026-10-16 17:21 ET
-
-| Item | Progress and change | Health | ETA / next action |
-| --- | --- | --- | --- |
-| Publication | d7f685c6 pushed/read back; method and ownership preparations reviewed | Six CLI/four ownership controls pass | Final integration/full suite pending |
-| Vector public route | V3 first3 cases expected; lock-file race interrupted fourth | V4 has23 passing controls | Independent review then full5 workflow |
-| Mixed pair | 30controls pass; formal first model interrupted on Why3 IPC | Runtime/lifecycle repair active | Unknown; reviewed successor |
-| Initialized u32 | 711/1107 outcomes retained | Unused-arity0 cold classification under review | Complete exact passive audit |
-| Trace25 | Cold/root accepts12proven/13refuted/all13replays | Abstract trace scope only | Source/current0.2 integration remains |
-| Whole interface | Lossless same-TU V8 has18 passing controls | New512MiB expanded bound; retained/resource caps unchanged | Review/capture/source-new0.2 integration |
-| Resources | 17:19bothsocket/legacyreleased;13.2GiBdata1/67.3GiBdata | Finite selected-tool scan empty; recovery/raw preserved | Fresh check every dispatch; next table17:51 ET |
-
-At 17:21 ET, source checkpoint `d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08`
-is pushed and independently read back. It adds the reviewed ownership-transfer
-preparation to the published method-forwarding fix1433b8f5. Six real CLI
-selection controls pass; ownership preparation V2 has four pure controls and
-both review axes. Fresh ten-duty mathematics and complete original move/swap
-source/Heap transitions remain required. Original compound timeouts stay intact.
-
-Public source-route V3 completed three expected cases (safe source-rule proven,
-missing-bundle and stale-method not_proven), then its active output walker raced
-the ordinary removal of verifier.lock. The interrupted run has no complete
-five-case/JUnit acceptance. Frozen V4 has23 no-child controls and awaits review.
-Mixed-pair30 controls passed; its first formal WP job was interrupted when the
-walker refused a legitimate Why3 IPC socket. A lifecycle-aware successor and
-prospective Why3server package/runtime binding are under review. The earlier
-common runtime inventory did not pin this helper; historical WP results retain
-the original producer/Why3 runtime TCB, without retroactive byte-identity claims.
-
-Trace25 now has complete independent passive cold/root scoped acceptance:
-12proven /13refuted, all13 original C++ replays,3850 goals and15625 retained
-native-agreement runs. Original --show-loops stdout and deleted replay
-executables remain explicit producer/runtime premises; no hardware, source-call,
-new0.2 or whole-interface claim follows. Initialized711/1107 outcomes remain
-provisional while the exact unreachable arity0 property classification V8 is
-independently reviewed. Native86 retains private scoped cold adoption.
-
-Whole-interface capture V7 reached the caller AST and hit the exact128MiB file
-limit. Its partial AST and failure remain remote. Frozen lossless same-TU V8 has
-18passing no-child controls, an explicit512MiB expanded-memory limit, unchanged
-128MiB retained-file/256MiB total/4GiB/180s guards, and exact selected built-in
-zlib/interpreter/libz binding. Independent review and actual capture remain;
-source/receiver/CPU/new0.2 integration advances independently.
-
-Both tickets remain claimed and every final acceptance item stays open. Census
-is35resolved /26ready-for-agent /2claimed. Full defaults, final whole-change
-reviews and primary mbit10 Git-only synchronization remain pending. At17:19 ET,
-both socket and legacy leases were released, finite selected-tool scan empty,
-data1 free13.2GiB and data free67.3GiB. Fresh checks remain mandatory before any
-run. Obsolete18f and57c source freezes were retired after reader/recovery checks;
-all raw, exact Git restoration commits and required2baf/04af sources remain.
-External Claude Code owns ticket7; its code, tracker and resources are untouched.
-Next required progress table:17:51 ET.
+Next action: read [the exact pause handoff](pause-20261016.md), reclaim the chosen
+ticket and inspect current source/resources before running anything.
+[Publication and sync record](evidence/pause-20261016/delivery.json).
+Older dated sections are historical; this current section supersedes active claims below.
 
 ## Historical admission checkpoints
 

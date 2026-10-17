@@ -1,0 +1,7 @@
+# Mixed pair prospective V8 — 2026-10-16 ET
+
+This inert successor evaluates the published branch-free fixture at36266e10. It retains all eight current model/caller/WP/CBMC/replay criteria, global smoke policy, runtime and resource guards. Every entry function is byte-identical to V7 except the root-control predicate binds its separate literal historical dcd source. The old30-case run remains an old-source prerequisite; it is never relabeled as executed on36266.
+
+The complete selected source projection has513 leaves and14 consumer roots. Existing leaf changes are exactly proof.py's reviewed method forwarding repair and the two-hunk fixture; four new isolated ownership preparation files are explicitly pinned. The current proof_setup composite is freshly derived with the changed proof.py input. All lock/scratch selected source text remains exact. All2717 runtime physical pins, Why3 package/dependency inventory, native gates, loader qualifications, budgets and console/finalization guards retain their V7 scope.
+
+Thirty-seven no-child controls pass, including exact entry inverse, historical-control separation, full current source/checker projection, and all preceding runtime/IPC/resource/negative/replay controls. Two initial inherited tests assumed old source/checker hashes; their failed logs are retained as preparation errors. No compiler/native/verifier/SSH/profile was executed. Root independent review and fresh source/lane admission remain required.

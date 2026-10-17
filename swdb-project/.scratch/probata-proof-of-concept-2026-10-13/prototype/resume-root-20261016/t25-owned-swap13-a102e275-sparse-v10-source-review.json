@@ -1,0 +1,69 @@
+{
+  "baseline": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "control_files": [],
+  "created": "2026-10-16 ET",
+  "files_after": {
+    "swdb-project/swdb/bounded_initialization.py": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc",
+    "swdb-project/swdb/bounded_std_initialization.py": "7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea",
+    "swdb-project/swdb/cbmc_adapter.py": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a",
+    "swdb-project/swdb/dx100_initialized_register_source.py": "01c043e544e50c30fc3d92b6be5a8b097f4dfef0606f53c29068a2ba008ac145",
+    "swdb-project/swdb/proof.py": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802",
+    "swdb-project/swdb/proof_setup.py": "e65f083540d0c4aafca8c2a2183f71dad644fd314aff02ff04cd2331fabcc79d",
+    "swdb-project/swdb/standard_vector_member_view.py": "6636e5857616e8b93e26c1f0b9c0fed26ef5e9ec565e116586c683625c6fe966",
+    "swdb-project/swdb/vector_owned_effects.mlw": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+    "swdb-project/swdb/vector_owned_source_view.py": "c76c45afc64a84f6d1cbe1e23e05c175dc1b612abb5f23679d40e7db6c43f8f2",
+    "swdb-project/swdb/vector_owned_state.mlw": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+    "swdb-project/swdb/vector_owned_swap_parts.py": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b",
+    "swdb-project/swdb/vector_owned_transfer.py": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085",
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+    "swdb-project/swdb/vector_reallocation_caller_view.py": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413",
+    "swdb-project/swdb/vector_reallocation_closed_binding.py": "075f557a22a34b03fcebe2699d3a21c4ebe44ff3b8afddf9cb585d6ff090d0b2",
+    "swdb-project/swdb/vector_reallocation_closed_evidence.py": "5d997dfbb1f2bef48ca07126d3a98697756254af1fc26d8f18a94aef009fc77f",
+    "swdb-project/swdb/vector_reallocation_closed_lifetime.py": "ac631823afe598629032482b9383a4bfb8f6673ca71f1f7795a55c6d905361ee",
+    "swdb-project/swdb/vector_reallocation_closed_lifetime_parts.py": "ce98fdba6a2439a72997cbc956daa1854a722cab3d8681897557384122f229f9",
+    "swdb-project/swdb/vector_reallocation_closed_route.py": "429895c2a7b9bedaaa14f0dc8bdd5a76cede173f6a9a5a82d33713c988881d81",
+    "swdb-project/swdb/vector_reallocation_closed_view.py": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757",
+    "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108",
+    "swdb-project/swdb/vector_reallocation_private_frame.py": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da",
+    "swdb-project/swdb/wp_adapter.py": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229",
+    "swdb-project/swdb/wp_pointer_bounds.py": "62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241"
+  },
+  "planned_raw_budget_bytes": 2147483648,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-a102e275-t25-owned-swap13-public-v1",
+  "readers": [
+    "root",
+    "ticket25",
+    "lane_coordination"
+  ],
+  "review_evidence": {
+    "bytes": 3375,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-root-public-admission-20261016.json",
+    "sha256": "1e76dd5e268364124b2394f84f1a4b3a9f7975ab43eece2e8149089757c9b206"
+  },
+  "rss_cap_bytes": 8589934592,
+  "source_checkout": {
+    "bytes": 6184848,
+    "consumer_oids": {
+      "library/methods/probata-draft-1.yaml": "eef43f6012a25696d32234d82f371ca022cb3004",
+      "schemas": "3f29308dbf4523b4970a973b4d9cb79cecab1aee",
+      "swdb": "8a7b8844c50be710680ed7a7a4d9d96de3f994ff",
+      "tests/fixtures/proof/methods/contract-fixture-1.yaml": "494d26e2d1fc9aae6524e1287bb54d0f56e9b3d3",
+      "vocab": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+    },
+    "date": "2026-10-16 ET",
+    "files": 424,
+    "inventory_sha256": "48d1dd271ee125508ddd6bc523089a2bf31e410629f70fdd29a0aeb4fdc9ff20",
+    "metadata_headroom_bytes": 1073741824,
+    "mode": "isolated-shared-sparse-a102-v1",
+    "package_files": 336,
+    "roots": [
+      "swdb",
+      "schemas",
+      "vocab",
+      "library/methods/probata-draft-1.yaml",
+      "tests/fixtures/proof/methods/contract-fixture-1.yaml"
+    ],
+    "source_commit": "a102e275cd23352aea8c268be3761d8a330b9be0"
+  },
+  "source_commit": "a102e275cd23352aea8c268be3761d8a330b9be0"
+}

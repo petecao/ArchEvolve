@@ -1,0 +1,12 @@
+{
+  "created": "2026-10-16 ET",
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "status": "REFUSED_BEFORE_SSH",
+  "cause": "generic launcher expected bare argv; reviewed command packet contains metadata dict",
+  "raw_created": false,
+  "source_checkout_created": false,
+  "lease_acquired": false,
+  "compiler_or_solver_executed": false,
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v5.py\", line 9, in <module>\n    assert isinstance(command,list) and command and all(isinstance(s,str) for s in command)\nAssertionError\n",
+  "repair": "V7 exact raw override and pinned exclusive control staging, with unchanged controller argv; independent review required"
+}

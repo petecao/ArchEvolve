@@ -1,0 +1,36 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "55s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "date": "2026-10-16 ET",
+  "full_observer_or_scientific_rerun": false,
+  "kind": "INERT complete remaining record/job metadata diagnostic only; fresh review/root admission required",
+  "remote_writes_or_tool_children": false,
+  "stdin": {
+    "bytes": 1100773,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v1/record-probe-v1.py",
+    "sha256": "302eabec081b33aea3f57962afe517a48779b501fc9e18a896cf42339966f015"
+  },
+  "stdout_maximum_bytes": 262144
+}

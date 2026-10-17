@@ -1,0 +1,40 @@
+{
+  "boundary": "This reviews binding to root-provided guard bytes, not their behavior. Root must complete independent V8 guard review, physical rehash, actual 180-second/4-GiB/one-worker launch and final settlement/cold reconciliation. Source/runtime/flags/census unchanged; no native/proof success claimed.",
+  "checks": {
+    "all_manifest_pins_checked": true,
+    "author_pure_tests_independently_rerun": 8,
+    "entry_inverse": "One raw basename substitution only; otherwise byte-identical V3.",
+    "guard_files": {
+      "execute.py": "8442533f911e2ba7f10757a5b16ba451d4ece7d9d5dc292ce5b9d8c29eabdcbf",
+      "watch.py": "49be8a36d6e04b50e1ab599dad8b00f78a1c639132c3079c523c2c0c9177c5f0"
+    },
+    "native_compiler_linker_entry_ssh_version_execution": false,
+    "policy_command_inverse": "Both JSON documents exactly equal V3 after reversing only raw/versioned filenames, derived entry/policy pins, and the two explicit root-provided outer guard hashes.",
+    "skips": 0
+  },
+  "date": "2026-10-16 ET",
+  "files": {
+    "linux-native86-source-packet-v4.json": {
+      "bytes": 6434,
+      "sha256": "9eaa2bc26badea1b2a470975a6124ba51eadc3265a886049b0010a1d07fa29da"
+    },
+    "linux_native86_command_v4.json": {
+      "bytes": 7927,
+      "sha256": "fe518dfcdb0f5910f25d6678b5faa5500140d61a775b5c4873a10f8fc9324f70"
+    },
+    "linux_native86_entry_v4.py": {
+      "bytes": 23441,
+      "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+    },
+    "linux_native86_policy_v4.json": {
+      "bytes": 657687,
+      "sha256": "14be0baf2dece709210abb6039b0ab7ede41c5e8d5d1dfbe08ed47b6f3ba9f5b"
+    }
+  },
+  "inherited_source_review": {
+    "bytes": 4620,
+    "sha256": "5cda7c23b547d9b87641d9ff5e0d9243739394c05d74cb601d26bbdced29b7f0"
+  },
+  "reviewer": "/root/ticket28/memory_public_trace",
+  "status": "PASS NARROW V4 CONTROLLER BINDING; root V8 guard review and physical admission remain separate"
+}

@@ -1,0 +1,46 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "45s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "child_settled": true,
+  "date": "2026-10-16 ET",
+  "exit_code": 0,
+  "input_bytes_expected": 4348,
+  "input_bytes_sent": 4348,
+  "kind": "Fresh finite original G619/source1433/scoped argv-reader preflight; unrelated jobs ignored",
+  "local_refusal": null,
+  "root_admission": {
+    "bytes": 2330,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-complete-record-probe-v2-root-admission-20261016.json",
+    "sha256": "e6363dfb88c4caad4c42c904291aae5a3f688387115135d6182a47064e2f40cd"
+  },
+  "stderr": "",
+  "stdin": {
+    "bytes": 4348,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/preflight-v1.py",
+    "sha256": "f6d0a68e12308dcab1b277dd409ca3cb4333dcfb7d3509ce3d95177c7f5526b9"
+  },
+  "stdout": "{\"head\": {\"bytes\": 41, \"path\": \"/data1/yanruj/ArchEvolve/.git/worktrees/probata-resume-20261016-1433b8f5/HEAD\", \"sha256\": \"b39fd7363ffa8155d021cbf6d2296cc9f0c9785d048ffcc13bb3de2b2626b1b6\"}, \"matching_original_source_or_raw_processes\": [], \"metadata\": {\"lane.json\": {\"bytes\": 842, \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/lane.json\", \"sha256\": \"53104a2029fdbd5b1c8b4d9a21443ec4c69910feca470d2bbcd011349b01d0d4\"}, \"outer-resources.json\": {\"bytes\": 167, \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/outer-resources.json\", \"sha256\": \"1710a0ecafd4a0e2ea03bbe036c691b0a2e64a70439760e1d781fb18086b5a2b\"}, \"resources.json\": {\"bytes\": 167, \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/resources.json\", \"sha256\": \"d6462ea32fa50df36e1196ab86b12e0d939b6d085fd86669f2785c816fbb4a8c\"}, \"source-after.json\": {\"bytes\": 112, \"path\": \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/source-after.json\", \"sha256\": \"8371fca293d8c81cac9c89672117a4158aa93a8f89d4c67a643d9cade2a24187\"}}, \"native_tool_or_child_or_project_import\": false, \"processes_scanned\": 704, \"raw_or_source_mutation\": false, \"raw_root\": \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4\", \"scientific_acceptance\": false, \"source_commit\": \"1433b8f58baa63538d1e8aa8a33d9ce566826407\", \"status\": \"PASS_ORIGINAL_SETTLED_PREFLIGHT\", \"unrelated_current_lanes_ignored\": true}\n",
+  "wall_seconds": 0.6299319170066155
+}

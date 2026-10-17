@@ -1,0 +1,196 @@
+{
+  "created": "2026-10-16 ET",
+  "decision": "PASS_STATIC_EXECUTABLE_PACKET_REVIEW_WITH_SCOPED_RUNTIME_BOUNDARY",
+  "exact_pins": {
+    "author": {
+      "bytes": 13855,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/author-public-v1.py",
+      "sha256": "884fdd2a7ba6d7a4c3282ae986c2400163228d501fe31bf0a35deffe6c374555"
+    },
+    "entry": {
+      "bytes": 34712,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/entry.py",
+      "sha256": "76a687229c3d28e504102aad1bdd2c3efc47b1992cf1703c94a2291ec6f7c263"
+    },
+    "expected": {
+      "bytes": 188656,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/expected.json",
+      "sha256": "a10f2ee5864b8c39c22e72b29f34e3195b59839e0fdc9a6ae9e5c6c5f7ecd4b2"
+    },
+    "pure_preparation_receipt": {
+      "bytes": 8456,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-lifetime-glue-preparation-20261016.json",
+      "sha256": "63eaafaec86dd9fa60db8483df5988648504e5c802cd3632c5eebb959fb10ef3"
+    },
+    "root_command": {
+      "bytes": 90722,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/root-command.json",
+      "sha256": "bcc571f2916e00b2ca3cdbec4b8fdd837e1ad405f2b032491119cb5a84231080"
+    },
+    "template": {
+      "bytes": 21677,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/entry-template-public-v1.py",
+      "sha256": "e40388f50903233cdec7562ce5934645808816a18755beb6a5918f555ac9a5f0"
+    }
+  },
+  "findings_requiring_source_change_before_this_scoped_root_admission": [],
+  "helpers_and_bootstrap": {
+    "argv_outside_bootstrap_unchanged": true,
+    "bootstrap_boundary": "Pinned opam exec/switch/Python command; exact root marker; deny ambient WP/Why3/OCaml selectors; exact Clang token/path/wrapper+driver hashes checked before compiler execution; external entry/expected staged exclusively with digest checks. Root socket-lane/watch/execute ownership remains required; SWDB_VERIFIER_LOCK is context metadata, not an acquired advisory lock.",
+    "bootstrap_bytes": 90456,
+    "bootstrap_inverse_changes_only": [
+      "entry hash literal",
+      "expected hash literal",
+      "compressed entry bytes",
+      "compressed expected bytes",
+      "early preflight metadata filename namespace",
+      "entry/expectation/profile namespace"
+    ],
+    "bootstrap_inverse_exact_to_prefix10_predecessor": true,
+    "compressed_embeds_roundtrip_exact": true,
+    "exact_predecessor_functions": [
+      "sha",
+      "pin",
+      "write",
+      "surface",
+      "linux_admission",
+      "consumer_closure",
+      "initialize_workspace",
+      "guarded_generation",
+      "raw_bytes",
+      "bounded_bytes",
+      "bounded_json",
+      "lineage"
+    ],
+    "function_source_text_equal": true,
+    "normal_task_census_exact_to_math9_predecessor": true,
+    "root_command_length": 9
+  },
+  "inherited_runtime_boundary": {
+    "before_and_after": [
+      "9 selected physical tool paths/hashes",
+      "2 WP runtime artifacts",
+      "complete57 Why3 stdlib+93 driver+30 WP support file membership/hash",
+      "10 named WP runtime source hashes",
+      "exact Why3 configuration hash"
+    ],
+    "fresh_before_lowering_only": [
+      "Clang wrapper/driver identity",
+      "libclang parser identity",
+      "1983 LLVM standard/resource header aggregate",
+      "full compiler frontend/context and original-TU provenance"
+    ],
+    "full_python_or_os_loader_closure_attested": false,
+    "judgment": "This is the predecessor-scoped standalone normal-WP runtime policy, with no weakened inherited check and no universal proof-setup/runtime attestation. Do not report it as complete before/after physical compiler/Python/OS closure. Root may add passive final physical checks prospectively; no static receipt asserts those checks ran.",
+    "no_added_final_llvm_parser_or_header_rehash_in_this_entry": true
+  },
+  "normal_proof_observation": {
+    "actual_prepare_check_required": true,
+    "check_lemmas": 6,
+    "complete_command": "Use normal engine.flags/engine.command, ordinary _wp_flags/_lineup and native report/outcome readers. No -wp-prop/-wp-fct selection, -wp-gen or -wp-no-why3-detect. RTE/init/smoke/default property selection and normal native/standard/property/normalized outputs remain required.",
+    "dependencies_per_target": [],
+    "full_canonical_packet_exact": true,
+    "integer_model": "Machine",
+    "interpretation_boundary": "Census is mechanical completeness/ownership metadata. Full imported definitions/axioms/hypotheses, actual submitted tasks, native/CSV outcomes and runtime/retention still require an independent cold audit. No theorem follows from declaration names or outer exit0.",
+    "no_public_records": "The standalone seed is external. Final check refuses any public proof YAML record; no public View/model/body/caller admission or universal setup attestation is created.",
+    "old_constructor_destructor_private_frame_results_imported_as_proof_premises": false,
+    "portfolio": [
+      "alt-ergo",
+      "z3",
+      "cvc5"
+    ],
+    "portfolio_seconds": 30,
+    "result_statuses_distinct": "producer_complete records complete observation of all6; all_six_producer_proven separately checks all six outcome verdicts. A complete run may contain unknown/refuted/error outcomes and still return0 if the producer and time budget completed. Root must read both fields and all outcomes; proof_acceptance remains false.",
+    "retention": "Per-target actual argv/input/resources/outcome, native goals/properties, CSV, normalized C, common task export offsets/hashes/declaration positions and prover artifacts remain under fresh raw root. Missing common tasks only admit explicit internal-Qed valid entries with success1; all noninternal required tasks must have retained export fragments.",
+    "sole_lemma_ownership": "Each target census requires complete unique native goal/property inventory, one independent non-Extern no-dependency lemma, all ordinary goals owned by that exact target lemma, complete dependency/origin closure and equal standard/native property/function/line/smoke/passed bindings.",
+    "target_ids": [
+      "receiver.entry",
+      "constructor.frame",
+      "buffer.identity",
+      "zero.cleanup",
+      "positive.exit_image",
+      "positive.cleanup"
+    ],
+    "wp_memory": "Typed/Fits + Var wrapper",
+    "wp_model_flags": [
+      "+real"
+    ]
+  },
+  "packet": {
+    "bytes": 4159,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/packet.json",
+    "sha256": "853a2f425917e49ba5beed3c3f13ac3856e5c0abf061b0c042b457442b348bc0"
+  },
+  "portable_manifest_gate": {
+    "canonical_files": 16,
+    "decision": "PASS_EXACT_SINGLE_LEAF_NORMALIZATION",
+    "exact_nonmanifest_files": 15,
+    "expected_full_mac_manifest": {
+      "bytes": 48844,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-reviewed-working-source/manifest.json",
+      "sha256": "54bb92af5068634433af157a9fc3391b839060461683f33ada8ab20ff2911b0e"
+    },
+    "fresh_host_digest_required_to_be_64_lowercase_hex": true,
+    "fresh_linux_full_certificate_retention": [
+      "anchors.fresh.json includes original.stdlib_provenance in full",
+      "canonical-inputs/manifest.json contains fresh full source-view certificate and its host-specific digest",
+      "compiler-runtime.json retains fresh compiler and lowering identities"
+    ],
+    "fresh_revalidation": "Fresh c_lowering.lower on exact original caller; lowered bytes and host-independent lineage equal expected; stdlib_provenance.check checks complete original-TU/default-allocator provenance against actual selected compiler/models/substitutions; public packets.prepare and packets.check each reconstruct the current full manifest. The module check independently rejects every extra/missing directory/file, symlink and special input and requires all16 exact bytes. Canonical_check repeats before each leaf and at successful end using the retained fresh original lowering.",
+    "full_manifest_deep_copy_except_one_leaf_equals_expected": true,
+    "lineage_receipt": {
+      "bytes": 1681,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-lifetime-portable-certificate-lineage-20261016.json",
+      "sha256": "47bf6e19a714b101f6e7d3eb4950d06c4e37c456e113f404cf9c8f7b66851ccc"
+    },
+    "lineage_receipt_boundary": "Prior Mac/Linux portable certificate equality is a retained author metadata observation, not fresh remote evidence from this static review or a premise of the new proof.",
+    "only_removed_path": "source_view.library_allocator_binding.certificate_sha256",
+    "original_full_manifest_not_mutated": true,
+    "removed_mac_host_certificate_sha256": "6671573d49e88ac7d292f5c8e60c19d43149e84cc359faaf2d64a0a7e535057a",
+    "scientific_data_unchanged": "Every other manifest field remains exact: source predicates, original requires/assigns, ABI/type/model/allocator data, source/event/CFG/inverse bindings, assumptions/TCB, source hashes, formula text/hash, six obligation IDs/order, origins/dependencies, semantic interpretation and pending source/Typed/caller boundaries. No recursive deletion of certificate-like fields, source metadata or hashes exists."
+  },
+  "remote_project": "/data1/yanruj/probata-resume-20261016-fb197c5d/swdb-project",
+  "resource_and_failure_policy": {
+    "cap_bytes": 8589934592,
+    "fresh_output_outside_repo": true,
+    "incremental_results": "A result is written after each target, plus final result and physical artifact-manifest. All source/canonical/runtime checks must pass before successful producer completion.",
+    "leaf_timeout_seconds": 180,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 1300,
+    "root_outer_seconds": 1620,
+    "root_whole_seconds": 1500,
+    "scope": "Root1500-second whole guard /1620external with8GiB and1worker is mandatory. Local profile1300deadline and180maximum per-leaf timeout. Leaf watcher plus aggregate2GiB raw budget/4MiB metadata reserve and per-process file limit. Every post-spawn guard path kills its owned session/known descendants and reaps. Partial errors retain error/result/artifact metadata; output/timeout/RSS failures prevent producer_complete.",
+    "workers": 1
+  },
+  "reviewed_source_modified": false,
+  "reviewer": "/root/lane_coordination",
+  "root_admission_and_actual_results": "PENDING; this review creates neither a proof outcome nor an execution receipt",
+  "scientific_and_admission_boundaries": {
+    "formula_spec_and_source_standards": "Separate completed reviews; this receipt reviews executable composition, not a new proof of the six formulas.",
+    "mandatory_after_actual": "Independent complete source/runtime/resources/native goals/property/CSV/task/hypothesis/prover/retention cold audit before scoped mathematical acceptance.",
+    "owned_tcb": "Existing standard-library/default-allocator success/fresh/freeable/frame/release/lifetime model contracts are explicitly trusted. Full-TU screening does not attest absence of linked replacements/interposition.",
+    "still_false": [
+      "proof_acceptance",
+      "body_acceptance",
+      "source_typed_bridge_established",
+      "caller_acceptance",
+      "public_proof_record_created",
+      "universal_proof_setup_attested",
+      "ticket_closure"
+    ]
+  },
+  "scope": "Read-only independent source/AST/JSON/physical SHA-256 and opaque Git blob/ID review. No project/controller/helper import, compiler, native helper, verifier, solver, test, SSH, lease or job execution.",
+  "source_and_compiler_checks": {
+    "actual_compiler_identity_still_required_at_execution": true,
+    "boundary": "Source package rows bind exact fb197 bytes. Runtime equality and compiler/context identity must be freshly observed, not inferred from the static forecast. Source consumer closure rejects links/special files and extra/missing files and checks exact physical Git blobs without filters, then SHA-256; clean exact HEAD and source closure repeat at successful end.",
+    "compiler_forecast_c_lowering_sha256": "0800c7e6575460eca529436a3c8facc4bf6c64fa7b03763b07f3cc875fd60a89",
+    "compiler_forecast_independently_reconstructed_from_exact_git_bytes": true,
+    "compiler_forecast_tail_sources": 29,
+    "consumer_tree_or_blob_oids_verified": 6,
+    "fresh_stdlib_checker_source_sha_matches": true,
+    "opaque_source_package_blob_hashes_verified": 326,
+    "test_helper_blob_hashes_verified": 8
+  },
+  "source_commit": "fb197c5ddd173065ca781766886c6a797684a838"
+}

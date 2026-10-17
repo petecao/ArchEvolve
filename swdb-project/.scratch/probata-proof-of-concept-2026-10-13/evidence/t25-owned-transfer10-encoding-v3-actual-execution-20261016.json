@@ -1,0 +1,151 @@
+{
+  "actual": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "90s",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 1.133635666,
+    "exit_code": 2,
+    "started_utc": "2026-10-16T23:36:33.990174+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-actual-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "cd85933706b161b4611dbb6e04cf04a2018127f525bcf8f1da73751b4deee7c6",
+    "stdout": {
+      "bytes": 202354,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-actual-stdout-20261016.json",
+      "sha256": "55d0ded63730d704de907feac25844825a2079fb3f6f8e328c50ea80ffc9108f"
+    },
+    "within_output_cap": true
+  },
+  "admission": {
+    "bytes": 3507,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-root-admission-20261016.json",
+    "sha256": "30ab6bd1866a9cc57eac3bd69f1bc8d92a3286bac21e20607ebdc486c0b4e806"
+  },
+  "all22_selected_inputs_pre_post_equal": true,
+  "all_scientific_source_body_Typed_caller_acceptance": false,
+  "classification": "BOUNDED_ENCODING_METADATA_CAPTURE_ONLY",
+  "command": {
+    "bytes": 1341,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/command.json",
+    "sha256": "91623c301d14f635c55ea40ab6b44e064c860aa211a643ed629e860b1b7df19f"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 247600,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/entry.py",
+    "sha256": "cd85933706b161b4611dbb6e04cf04a2018127f525bcf8f1da73751b4deee7c6"
+  },
+  "expected_metadata_exit2": true,
+  "postflight": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "35s",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 0.745967458,
+    "exit_code": 0,
+    "started_utc": "2026-10-16T23:36:35.123959+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-postflight-v3-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "c19d0da21c83059505d9a8097bf7f4f3b61145580bd7fdbc43dabaeca34bc69e",
+    "stdout": {
+      "bytes": 2544,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-postflight-v3-stdout-20261016.json",
+      "sha256": "39c10c9ad391556a4c3d39c3784a73f5dcbaaa9b3853a5bcbdb22f58dea456dc"
+    },
+    "within_output_cap": true
+  },
+  "postflight_passed": true,
+  "preflight": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "35s",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 0.7156609169999999,
+    "exit_code": 0,
+    "started_utc": "2026-10-16T23:36:33.273466+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-preflight-v3-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "c19d0da21c83059505d9a8097bf7f4f3b61145580bd7fdbc43dabaeca34bc69e",
+    "stdout": {
+      "bytes": 2544,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-preflight-v3-stdout-20261016.json",
+      "sha256": "0f62c738b809190a08a3af459560b62a01dcf64aaa011d7cf6877385b1564546"
+    },
+    "within_output_cap": true
+  },
+  "preflight_script": {
+    "bytes": 9166,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/root-admitted-scoped-preflight-v3.py",
+    "sha256": "c19d0da21c83059505d9a8097bf7f4f3b61145580bd7fdbc43dabaeca34bc69e"
+  },
+  "proof_native_compiler_verifier_solver_rerun": false,
+  "remote_raw_mutation": false,
+  "status": "ACTUAL_ONCE_METADATA_CAPTURED_POSTFLIGHT_PASSED"
+}

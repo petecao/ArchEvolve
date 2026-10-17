@@ -1,0 +1,189 @@
+{
+  "OS_PAM_current_SSH_identity_TCB": "Exact preflightV3 only; unrelated unreadables and unresolved PID/descriptor races refuse.",
+  "actual": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "90s",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 1.9463424159999998,
+    "exit_code": 2,
+    "started_utc": "2026-10-16T23:30:29.280946+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-actual-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "96322858040ce28b027ab00ad03d4135940a171a491cddac90863e0931d7d128",
+    "stdout": {
+      "bytes": 495726,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-actual-stdout-20261016.json",
+      "sha256": "d91cea36637b708ecd535685e8a2e00fc9cce868832b2f656b6abca656cb4446"
+    },
+    "within_output_cap": true
+  },
+  "admission": {
+    "bytes": 2801,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-root-admission-v1-20261016.json",
+    "sha256": "464112021831450d90a165cc73a1b6c61d5ddb5ba4a46620f4a86aa7d96604f9"
+  },
+  "command": {
+    "bytes": 1074,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-report-diagnostic-v1/command.json",
+    "sha256": "c1b770b5e49e9c21386a6d31ec554173da8d717cbbfc608c87a6fc6c829a9f9e"
+  },
+  "complete_raw_pre_post_equal": true,
+  "connection": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "35s",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 0.859008458,
+    "exit_code": 0,
+    "started_utc": "2026-10-16T23:30:27.139440+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-connection-preflight-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "ce7a24a302ecd2eb3b86f450d309eabeb780b9620f6c33884ab389d4975819e1",
+    "stdout": {
+      "bytes": 1479,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-connection-preflight-stdout-20261016.json",
+      "sha256": "ef2436c3912c06f73b5b05a9e06ae37d551aa3e84f11d77b3437a1d65d95466b"
+    },
+    "within_output_cap": true
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 79487,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-report-diagnostic-v1/entry.py",
+    "sha256": "96322858040ce28b027ab00ad03d4135940a171a491cddac90863e0931d7d128"
+  },
+  "mathematical_source_body_Typed_caller_default_or_public_record_acceptance": false,
+  "postflight": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "35s",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 1.179662209,
+    "exit_code": 0,
+    "started_utc": "2026-10-16T23:30:31.227931+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-postflight-v3-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "47503408a206078d83d3dc4c50bbc04da19afd215aeed9118043e0752cef1095",
+    "stdout": {
+      "bytes": 2544,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-postflight-v3-stdout-20261016.json",
+      "sha256": "ba356c468acb573d29c874d386fd49b2f6c9f1032df4e2deabf3b06b6b865b6d"
+    },
+    "within_output_cap": true
+  },
+  "preflight": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "35s",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 1.2814594169999998,
+    "exit_code": 0,
+    "started_utc": "2026-10-16T23:30:27.998843+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-preflight-v3-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "47503408a206078d83d3dc4c50bbc04da19afd215aeed9118043e0752cef1095",
+    "stdout": {
+      "bytes": 2544,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-preflight-v3-stdout-20261016.json",
+      "sha256": "a62ae767761a3cc1df77546ab22b4712bf5db3149e19d499f6df4bd4cc90013a"
+    },
+    "within_output_cap": true
+  },
+  "preflight_script": {
+    "bytes": 9151,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-cold-v1/root-scoped-preflight-v1.py",
+    "sha256": "47503408a206078d83d3dc4c50bbc04da19afd215aeed9118043e0752cef1095"
+  },
+  "proof_native_compiler_verifier_solver_rerun": false,
+  "remote_raw_mutation": false,
+  "status": "ACTUAL_ONCE_METADATA_CAPTURED_POSTFLIGHT_PASSED"
+}

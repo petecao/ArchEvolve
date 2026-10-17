@@ -1,27 +1,31 @@
 # 25 — std::vector and std::pair models
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-16 ET (active implementation under renewed user approval)
+Updated: 2026-10-16 ET (paused by user; claim released)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-agent
 **Blocked by:** 22, 24
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": the C++ subset and the standard-library model; "Modules", library content: the `std::vector` and `std::pair` models; "What a proven verdict asserts": the assumption set; "Records and levels": the method-version file lists the `std::vector` model; "Testing Decisions", seam 1; choice S1); decisions: [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 6, 7; also [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) item 11 (undefined behavior is a proof obligation)
 **Time estimate:** about 1 week
 
 **What to build:** Candidate artifacts that use `std::vector<T>` (not `bool`) or `std::pair` can be proven, and no verifier ever runs libc++ internals. Each type is modeled: a C struct (for the vector: data, size, capacity) plus one C function per member, each with an ACSL contract citing the standard's clauses (`[vector]` for the vector). Vector members: construction by count, by count and value, copy, move; destruction; `operator[]`, `at`, `data`, `size`, `empty`; `begin`, `end` and range-for; `push_back`, `resize`, `reserve`, `clear`, `swap`. The C lowering tool lowers each use to a model call; WP reads the ACSL; 22's translator turns the same contracts into SAW overrides. The model catches what tests miss. Growth frees the old buffer, so a stale pointer or iterator fails the proof. `at` out of range is a proof obligation. Growing a shared vector outside `critical` is stated here as a sharing-class obligation of the model. Its tests live elsewhere: the WP obligation in 45 — Per-thread lowering (it reads not proven, since WP never refutes), and the refutation at threads ≥ 2 in 46 — CIVL adapter. Proof records gain two assumption entries: "the pinned standard library implements the modeled members as the standard says" (trusted tool) and "allocation succeeds".
 
-## Current resumed checkpoint — 2026-10-16 17:21 ET
+## Current paused checkpoint — 2026-10-16 22:08 ET
 
-Published1433b8f5 fixes explicit summary/model method selection (six CLI
-controls, both reviews); d7f685c6 publishes reviewed ownership preparation V2
-(four pure controls). Its fresh ten mathematical duties and complete original
-move/swap source/Heap transitions remain pending. PublicV3 produced expected
-safe/missing/stale records, then an ordinary verifier.lock disappearance
-interrupted its fourth case; no full5/JUnit acceptance follows. FrozenV4 has23
-passing no-child controls and awaits independent review. Mixed-pair30controls
-passed; formalV5 first-job Why3 IPC refusal remains, with prospective lifecycle
-and helper/runtime closure repair underway. Historical WP helper identity stays
-within the explicit original producer/runtime TCB. Full ticket acceptance open.
+User requested stop; this claim is released. No owned job or SSH session is active.
+Scoped32 member/default4/source9 results and published move59 binding/composition
+are retained. Typed allocating payload and isolated float selector pass both source
+review axes; neither actual typed21 proof nor shared float adoption has run.
+Move outerV2 Spec passes; root Standards, latest-head rebind and actual original-C
+run remain pending. Retained001 commands are stale and must refuse unchanged.
+Swap13 is12/13; Header3 is0/3. Witness3 source is reviewed; ordinary entry is inert.
+Mixed-pair V8 lacks original WP task retention. Full source/lifetime/caller/type
+and version adoption remain open. No acceptance checkbox is newly satisfied.
+
+Resume from [the exact pause handoff](../pause-20261016.md), then reclaim this ticket.
+The [publication record](../evidence/pause-20261016/delivery.json) identifies saved source.
+External Claude's resolved ticket7 work is preserved; older active sections below
+are historical. This ticket remains incomplete.
 
 ## Active implementation — 2026-10-15 21:14 ET
 

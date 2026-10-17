@@ -1,0 +1,67 @@
+{
+  "aggregate_output_limit_bytes": 32768,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "55s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "command": {
+    "bytes": 998,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v3/command.json",
+    "sha256": "4b25ddee90b9fef55fa80534b25ceb02db75dd8e5aed426b797d3b36bc3b393b"
+  },
+  "date": "2026-10-16 ET",
+  "ended_utc": "2026-10-16T22:12:39.180537+00:00",
+  "exit_code": 0,
+  "full_observer_or_scientific_rerun": false,
+  "independent_parent_spec": {
+    "bytes": 3884,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-yaml-diagnostic-v3-parent-static-review-20261016.json",
+    "sha256": "64c26f116b17eb7b93aa881fd4df53836e9697874647623218b26b3b500eebb2"
+  },
+  "kind": "once-only compact structural syntax-context metadata inspection",
+  "local_refusal": null,
+  "local_transport_deadline_seconds": 70,
+  "raw_payload_transferred": false,
+  "root_admission": {
+    "bytes": 1700,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-yaml-diagnostic-v3-root-admission-20261016.json",
+    "sha256": "8a9462168a933721c41d240bf0ab7b26662ef358ab497fb0231f185016d3aab2"
+  },
+  "started_utc": "2026-10-16T22:12:38.265412+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-yaml-diagnostic-actual-v3-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdin": {
+    "bytes": 22181,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v3/diagnostic-v3.py",
+    "sha256": "bf9666e4becc934fe263505b3fd0d358843279068554f1db8c1490fd664f255d"
+  },
+  "stdout": {
+    "bytes": 13305,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-yaml-diagnostic-actual-v3-20261016.json",
+    "sha256": "4d7838367969d70aa4e0557ec596dd189dda0305f575be3516abd2a8d8984750"
+  },
+  "wall_seconds": 0.9161564590176567
+}

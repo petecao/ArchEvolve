@@ -1,0 +1,735 @@
+{
+  "accepted_scoped_member_count": 32,
+  "actual_solver_consumed_bytes_attested": false,
+  "auditor": {
+    "bytes": 24872,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-member-cold-20261016/audit_member32_v6.py",
+    "sha256": "4548f34fd29726660187fb3e34f17cb4efa13b58047e0ab82f59fa60bef68ed0"
+  },
+  "boundaries": [
+    "Original model version2 remains immutable; only the32 named nonallocating members are covered.",
+    "All ordinary native goals are Valid; healthy smoke timeout/unknown never proves consistency, source-state satisfiability or an ordinary theorem.",
+    "All212 original archived task bytes and every support/definition/declaration are retained and indexed. Source-to-driver formula equivalence and primary-source attribution of every standard theory assertion were not independently reconstructed in this audit; they remain explicit normal WP/compiler/driver/foundation TCB.",
+    "Method uses normal installed Frama-C/WP33 and solver binaries through opam. Full historical package/Python/native dependency/loader closure, source-to-binary correctness, actual solver-consumed bytes and continuous before/after runtime immutability are not established by record pins or this passive audit.",
+    "The compiler-runtime header aggregate is recorded at use. This audit does not reproduce all1982 header bytes, libclang binding, SDK closure, preprocessing/machdep correspondence or historical parse behavior.",
+    "Printed internal-Qed contexts and termination/exit inventory-only CFG results remain normal trusted WP/Qed/CFG results, not standalone independently checked SMT proofs.",
+    "Qualified typed input domain is not admitted for an arbitrary incoming C/C++ pointer. Generic source caller, default-model integration, construction/reallocation/move/swap/destruction, element payload computation and full ticket25 acceptance remain open."
+  ],
+  "checks": 6391,
+  "classification": "PASS_SCOPED_32_QUALIFIED_PUBLIC_MEMBER_BODIES",
+  "counts": {
+    "CSV_rows": 244,
+    "distinct_declarations": 82,
+    "distinct_definition_bodies": 36,
+    "distinct_support_assertions": 232,
+    "external_ordinary_Valid": 92,
+    "internal_Qed_Valid": 76,
+    "inventory_only": 64,
+    "ordinary": 232,
+    "printed_contexts": 208,
+    "properties": 332,
+    "records": 32,
+    "smokes": 40,
+    "support_assertion_instances": 29116,
+    "tasks": 212
+  },
+  "date": "2026-10-16 ET",
+  "default_catalog_admission": false,
+  "fresh_physical_tool_candidates": [
+    {
+      "actual_use_time_resolution_independently_attested": false,
+      "candidate_recorded_installation_path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+      "current_physical_digest_matches_record": true,
+      "path_exists": true,
+      "physical_file": {
+        "bytes": 139144,
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      },
+      "record_digest": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395",
+      "tool": "clang"
+    },
+    {
+      "actual_use_time_resolution_independently_attested": false,
+      "candidate_recorded_installation_path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/libclang.dylib",
+      "current_physical_digest_matches_record": true,
+      "path_exists": true,
+      "physical_file": {
+        "bytes": 40342368,
+        "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/libclang.dylib",
+        "sha256": "6418cb410462a1c2ae9b9321a8874f0ca03db740eeb31497a151ce33e1cfff1b"
+      },
+      "record_digest": "6418cb410462a1c2ae9b9321a8874f0ca03db740eeb31497a151ce33e1cfff1b",
+      "tool": "libclang"
+    },
+    {
+      "actual_use_time_resolution_independently_attested": false,
+      "candidate_recorded_installation_path": "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+      "current_physical_digest_matches_record": true,
+      "path_exists": true,
+      "physical_file": {
+        "bytes": 30192400,
+        "path": "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+        "sha256": "412ccd77e77caf5bceb5ca1fd4e0a3efab04cda64af07706126cd5409cb05475"
+      },
+      "record_digest": "412ccd77e77caf5bceb5ca1fd4e0a3efab04cda64af07706126cd5409cb05475",
+      "tool": "frama-c"
+    },
+    {
+      "actual_use_time_resolution_independently_attested": false,
+      "candidate_recorded_installation_path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "current_physical_digest_matches_record": true,
+      "path_exists": true,
+      "physical_file": {
+        "bytes": 14986640,
+        "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+        "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae"
+      },
+      "record_digest": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae",
+      "tool": "alt-ergo"
+    },
+    {
+      "actual_use_time_resolution_independently_attested": false,
+      "candidate_recorded_installation_path": "/Users/yanrujhou/.opam/framac-33/bin/z3",
+      "path_exists": false,
+      "tool": "z3"
+    },
+    {
+      "actual_use_time_resolution_independently_attested": false,
+      "candidate_recorded_installation_path": "/Users/yanrujhou/.opam/framac-33/bin/cvc5",
+      "path_exists": false,
+      "tool": "cvc5"
+    }
+  ],
+  "full_cold_census": {
+    "bytes": 10021488,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-independent-cold-v6-20261016.json",
+    "sha256": "5057fdd46f6a34b5d057a1d59e0b0cbeae2c0290d59f762cc2d8374fecc1ee0c"
+  },
+  "full_primary_source_support_interpretation_complete": false,
+  "full_runtime_loader_closure_attested": false,
+  "full_ticket25_acceptance": false,
+  "generic_member_dependency_admission": false,
+  "members": [
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_data",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_data.20261016t231511z.09613379",
+      "record_yaml": {
+        "bytes": 20357,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_data.20261016t231511z.09613379.yaml",
+        "sha256": "a34fe09d86516ec201a12a21469aeb5609ae726927fd7bf9e23bcf3988ca728e"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_size",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_size.20261016t231520z.84e7138f",
+      "record_yaml": {
+        "bytes": 20356,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_size.20261016t231520z.84e7138f.yaml",
+        "sha256": "82ddab664fa3530b8016b544a57c71ce9e4150f17bea82584cbdf0c977d931e9"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_empty",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_empty.20261016t231527z.d4aee971",
+      "record_yaml": {
+        "bytes": 20395,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_empty.20261016t231527z.d4aee971.yaml",
+        "sha256": "52d1ebe605e4711db1f17559f9e05e62f8fae06621087a6c06579cc893bb2465"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_begin",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_begin.20261016t231535z.28171506",
+      "record_yaml": {
+        "bytes": 20396,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_begin.20261016t231535z.28171506.yaml",
+        "sha256": "d1dac07cc8eae08ae44f9e954e876af0e82ca251981e9c0a62b0a579beccea00"
+      }
+    },
+    {
+      "SMT_tasks": 16,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 3,
+      "member": "std_vector_int_end",
+      "ordinary": 14,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_end.20261016t231542z.a4b46e4b",
+      "record_yaml": {
+        "bytes": 23309,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_end.20261016t231542z.a4b46e4b.yaml",
+        "sha256": "f0e6e72db4e55756c0430de05fb770707a51d473bec84c39a88a55d2cbb3102f"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_operator_index",
+      "ordinary": 7,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_operator_index.20261016t231601z.b26d77b2",
+      "record_yaml": {
+        "bytes": 21616,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_operator_index.20261016t231601z.b26d77b2.yaml",
+        "sha256": "b0847ccdd696810416ccfd6bc15eeb2b1f1ace6ed27bc3f5c10f9a1e477e2024"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": true,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_at",
+      "ordinary": 8,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_at.20261016t231609z.9fca101b",
+      "record_yaml": {
+        "bytes": 21488,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_at.20261016t231609z.9fca101b.yaml",
+        "sha256": "0f496dc0e432a63f547cf59a81e6712bf3cc4b95dcd0759f67e24d58b84267c5"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_clear",
+      "ordinary": 5,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_clear.20261016t231617z.ddc4c6ed",
+      "record_yaml": {
+        "bytes": 20159,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_clear.20261016t231617z.ddc4c6ed.yaml",
+        "sha256": "ee2ed20330d672ff70e03d7744777a4637b7da35421e8ad6f6cab7f5ac31d564"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_float_data",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_data.20261016t231623z.bf4bb3cc",
+      "record_yaml": {
+        "bytes": 20447,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_data.20261016t231623z.bf4bb3cc.yaml",
+        "sha256": "f568c5eac60a55629088533690e96d9e3ba51bb65fa6d0b771fcf33d2fd73ff7"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_float_size",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_size.20261016t231631z.a24bbb02",
+      "record_yaml": {
+        "bytes": 20447,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_size.20261016t231631z.a24bbb02.yaml",
+        "sha256": "a5611f81aa76647f54bce03625e6815634cd33f6ef109ccf4169ded8878ac01a"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_float_empty",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_empty.20261016t231638z.9a8994a1",
+      "record_yaml": {
+        "bytes": 20486,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_empty.20261016t231638z.9a8994a1.yaml",
+        "sha256": "85755e9cf4e812ff998e5f1d8d4b0cedec2b08536d39abcb891ff8bc2582cc83"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_float_begin",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_begin.20261016t231646z.6f7cdf99",
+      "record_yaml": {
+        "bytes": 20486,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_begin.20261016t231646z.6f7cdf99.yaml",
+        "sha256": "ea24672af8bc4741f97d6f15624c024da2329ea96d375f8efc5533afddd61000"
+      }
+    },
+    {
+      "SMT_tasks": 16,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 3,
+      "member": "std_vector_float_end",
+      "ordinary": 14,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_end.20261016t231653z.5b9480c5",
+      "record_yaml": {
+        "bytes": 23459,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_end.20261016t231653z.5b9480c5.yaml",
+        "sha256": "57fb67f0323cdcc9c04a4c4805f81de39fe855b00432c2579002ab7e369c4322"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_float_operator_index",
+      "ordinary": 7,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_operator_index.20261016t231712z.471d18fb",
+      "record_yaml": {
+        "bytes": 21719,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_operator_index.20261016t231712z.471d18fb.yaml",
+        "sha256": "7c9fa9fba89a8d8c70621dc65c37ddfab5477eb2984462d11dd22b41d3ad6947"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": true,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_float_at",
+      "ordinary": 8,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_at.20261016t231720z.e7f32dc3",
+      "record_yaml": {
+        "bytes": 21592,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_at.20261016t231720z.e7f32dc3.yaml",
+        "sha256": "d3ae701f0bfafc7fcda3c2b7cb984dd1a26cbe8c88be92f398550b0c52e5dc15"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "float",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_float_clear",
+      "ordinary": 5,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_float_clear.20261016t231728z.50cd3989",
+      "record_yaml": {
+        "bytes": 20244,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_float_clear.20261016t231728z.50cd3989.yaml",
+        "sha256": "153a3ffc81f298c7710f7ffffedc2de210df0722a145bbe5c0e49fcf75c2e18e"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_double_data",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_data.20261016t231734z.c7c94743",
+      "record_yaml": {
+        "bytes": 20491,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_data.20261016t231734z.c7c94743.yaml",
+        "sha256": "582dc0e16c7d43aae7fb122ff306e8fe53137296dec572463413acd436caf84f"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_double_size",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_size.20261016t231742z.54231dbb",
+      "record_yaml": {
+        "bytes": 20491,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_size.20261016t231742z.54231dbb.yaml",
+        "sha256": "d9e705c6d140b802fa4bae419f3bdc942fb7b9b372095b7ca5988130cda8e710"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_double_empty",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_empty.20261016t231750z.e40692e8",
+      "record_yaml": {
+        "bytes": 20531,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_empty.20261016t231750z.e40692e8.yaml",
+        "sha256": "25dfeeda4fec26145032bde12a689a9e1e9a97ca96dfdf9274b00f5c6888e1f1"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_double_begin",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_begin.20261016t231757z.79efc87b",
+      "record_yaml": {
+        "bytes": 20531,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_begin.20261016t231757z.79efc87b.yaml",
+        "sha256": "7b51eecce34093c59f9a47907c509a7208445701e52422e75b210d458cf2b72e"
+      }
+    },
+    {
+      "SMT_tasks": 16,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 3,
+      "member": "std_vector_double_end",
+      "ordinary": 14,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_end.20261016t231805z.849e1cec",
+      "record_yaml": {
+        "bytes": 23535,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_end.20261016t231805z.849e1cec.yaml",
+        "sha256": "c466d623ead84c52d2c9a42f4ea8c57368b5c3809de92d7c2dbbbdf6b2b81099"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_double_operator_index",
+      "ordinary": 7,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_operator_index.20261016t231823z.7ff711b5",
+      "record_yaml": {
+        "bytes": 21768,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_operator_index.20261016t231823z.7ff711b5.yaml",
+        "sha256": "be9c5557ba5bf338836c660a8c9a62c5bf2a6d2725bfa800d9122871b075541b"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": true,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_double_at",
+      "ordinary": 8,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_at.20261016t231831z.39a68396",
+      "record_yaml": {
+        "bytes": 21641,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_at.20261016t231831z.39a68396.yaml",
+        "sha256": "9177777e373b74798c9b358da77d8340ce18b2df74bf29510abaed00d0a3f6cb"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "double",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_double_clear",
+      "ordinary": 5,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_double_clear.20261016t231839z.7d8acd5c",
+      "record_yaml": {
+        "bytes": 20284,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_double_clear.20261016t231839z.7d8acd5c.yaml",
+        "sha256": "1690bcb8250425c5809e67db50f6301c88270219f73ef1f6c59ed29bbae405a9"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_ptr_data",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_data.20261016t231846z.5d118e34",
+      "record_yaml": {
+        "bytes": 20527,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_data.20261016t231846z.5d118e34.yaml",
+        "sha256": "188d557605ffa8338bcb59f94d0c4c93d8981323ece489e1071ff4c155b7b392"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_ptr_size",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_size.20261016t231854z.f5a36e01",
+      "record_yaml": {
+        "bytes": 20529,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_size.20261016t231854z.f5a36e01.yaml",
+        "sha256": "7489e078e268acf12f3a12c258b3c6ec5daf69a3e8391a34f7ed86980a4da381"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_ptr_empty",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_empty.20261016t231902z.ba240a7c",
+      "record_yaml": {
+        "bytes": 20567,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_empty.20261016t231902z.ba240a7c.yaml",
+        "sha256": "0f98619087c70561b63c6de86e4756e1dfeb20ca31388a5df1d84c220120304a"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_ptr_begin",
+      "ordinary": 6,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_begin.20261016t231909z.d6eaf35d",
+      "record_yaml": {
+        "bytes": 20568,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_begin.20261016t231909z.d6eaf35d.yaml",
+        "sha256": "58c8582284e1a2fe114ab105ada487aec33a12c004f2943d4c41467b17f4781c"
+      }
+    },
+    {
+      "SMT_tasks": 16,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 3,
+      "member": "std_vector_int_ptr_end",
+      "ordinary": 14,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_end.20261016t231917z.e2877ed4",
+      "record_yaml": {
+        "bytes": 23602,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_end.20261016t231917z.e2877ed4.yaml",
+        "sha256": "b9b02078c6f93a7bfb59b91f42f53462a857b347f155c9191704d638ff2045e1"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_ptr_operator_index",
+      "ordinary": 7,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_operator_index.20261016t231936z.73e68bd5",
+      "record_yaml": {
+        "bytes": 21808,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_operator_index.20261016t231936z.73e68bd5.yaml",
+        "sha256": "7feccb5370adf427ff7a61b9dedd66bc8f51aa733b70ddbea19ae421e8a2e574"
+      }
+    },
+    {
+      "SMT_tasks": 6,
+      "at_guard_ordinary": true,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_ptr_at",
+      "ordinary": 8,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_at.20261016t231945z.9775c27d",
+      "record_yaml": {
+        "bytes": 21688,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_at.20261016t231945z.9775c27d.yaml",
+        "sha256": "34953a1f45c6de634d0aa6e73337bc893606e62259e00070dfcd4f365ee893bf"
+      }
+    },
+    {
+      "SMT_tasks": 5,
+      "at_guard_ordinary": false,
+      "current_contract_unchanged": true,
+      "element": "int *",
+      "full_prelaunch_job_and_command_plan_reconstructed": true,
+      "healthy_nonproof_smokes": 1,
+      "member": "std_vector_int_ptr_clear",
+      "ordinary": 5,
+      "physical_C_and_generated_view_reconstructed": true,
+      "record_id": "proof.model.std_vector_int_ptr_clear.20261016t231953z.d0bee443",
+      "record_yaml": {
+        "bytes": 20319,
+        "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/records/proofs/proof.model.std_vector_int_ptr_clear.20261016t231953z.d0bee443.yaml",
+        "sha256": "7a8a5eb6fc95e9a30f048b82405870707af50d0689f5ccb52251a9d1dcd37086"
+      }
+    }
+  ],
+  "method": {
+    "bytes": 3516,
+    "path": "/private/tmp/probata-vector-member-all32-public-20261016-v3/library/methods/wp-vector-member-source-v1.yaml",
+    "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+  },
+  "no_compiler_solver_verifier_native_network_or_ssh_execution": true,
+  "old_reader_refusals_preserved": [
+    {
+      "bytes": 242,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-independent-cold-v1-20261016.json",
+      "sha256": "544763e2a43999be3dcb5225611fbf21d77461f3432466b1ece35aae7f670654"
+    },
+    {
+      "bytes": 250,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-independent-cold-v2-20261016.json",
+      "sha256": "111761fe8fb8a18ed43c988df1da6d0ecdba5cdb3e45e411e8889843a639b935"
+    },
+    {
+      "bytes": 245,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-independent-cold-v3-20261016.json",
+      "sha256": "c5d29556782a5ae5f3c69184d25a0f5fe1f62b0287e57ad765ff728074b1b1c4"
+    },
+    {
+      "bytes": 238,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-independent-cold-v4-20261016.json",
+      "sha256": "35f103682eb4e5ddcb48d799b9efb337fd123d43bdf1f3ef786971eb64474648"
+    },
+    {
+      "bytes": 244,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-independent-cold-v5-20261016.json",
+      "sha256": "5cf8c1db8ce2309505d97806ecdfc6de476f56e2ca5acd55cf6a0eee5a755aed"
+    }
+  ],
+  "raw_manifest_sha256": "3b8a85a6dc055c209b09787b3ac1828d479b8a15f080c88a84167ee9358c3954",
+  "raw_not_mutated": true,
+  "raw_pre_post_equal": true,
+  "raw_regular_bytes": 9045675,
+  "raw_regular_files": 665,
+  "raw_root": "/private/tmp/probata-vector-member-all32-public-20261016-v3",
+  "refusal_repairs": "Metadata-reader-only: public paths are records-relative; literal c_lowering scalar registry is supplied from AST without importing tools; planned job bounds are None while resulting proof bounds are unbounded; only end dead-code smoke sites s4/s5 legitimately have no native property target; at macro definition remains while its executable guarded abort is projected. No scientific input or outcome changed.",
+  "reviewer": "ticket25, independent of root author and actual producer",
+  "scope": "Exact32 source1c457 C bodies under unchanged original contracts and the explicit typed contiguous storage domain, with four at negated-guard obligations. Normal WP/Qed/CFG/standard-theory/driver/solver soundness is explicit TCB. This is a qualified member-body result, never caller domain discharge.",
+  "source_commit": "1c45737f6cff9b43731d8da530be869a7e5d745e",
+  "source_cpp_caller_admission": false,
+  "source_pins": [
+    {
+      "bytes": 10126,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/standard_vector_member_view.py",
+      "sha256": "6636e5857616e8b93e26c1f0b9c0fed26ef5e9ec565e116586c683625c6fe966"
+    },
+    {
+      "bytes": 104308,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py",
+      "sha256": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229"
+    },
+    {
+      "bytes": 64171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_pointer_bounds.py",
+      "sha256": "62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241"
+    },
+    {
+      "bytes": 53397,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "sha256": "e65f083540d0c4aafca8c2a2183f71dad644fd314aff02ff04cd2331fabcc79d"
+    },
+    {
+      "bytes": 36527,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/schemas/proof.schema.json",
+      "sha256": "e803f92837d52035f09d1281aa43ce334fcea81942d3f0bd4a16959383a487f8"
+    },
+    {
+      "bytes": 3079,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/standard_library.py",
+      "sha256": "e02a87c48bce91bb8d42fe1d2299362a945ccadc4528d252ed52e1be8517e351"
+    }
+  ]
+}

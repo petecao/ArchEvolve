@@ -1,0 +1,98 @@
+{
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1",
+  "files": {
+    "resources.json": {
+      "sha256": "4a2ac566a9c43374d43a1b3fd9c46aa7e0ebe3ee9d3c498bfe501ff378297d25",
+      "bytes": 174,
+      "value": {
+        "cpu_seconds": 24.327697999999998,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 299098112,
+        "timed_out": false,
+        "wall_seconds": 24.16513295751065
+      }
+    },
+    "outer-resources.json": {
+      "sha256": "dd6b0baec5cf76794127f423c86b8185f7dc25f15d09f58dca99f472595ff0e1",
+      "bytes": 166,
+      "value": {
+        "exit_code": 1,
+        "peak_rss_bytes": 352575488,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 26.584941339679062,
+        "cpu_seconds": 31.580632
+      }
+    },
+    "source-after.json": {
+      "sha256": "a185a8f90eeed849768421e0c786f76c8ae4c1573e2287ab6114d1098c7be818",
+      "bytes": 112,
+      "value": {
+        "commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      }
+    },
+    "lane.json": {
+      "sha256": "bc180c91032baa4113c84a1b2e1a8e91c16cb2bd97fe3f81eb602d833c5a8c72",
+      "bytes": 834,
+      "value": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "1320",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1/run.sh"
+          ],
+          "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+          "ended_utc": "2026-10-16T17:45:05Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-resume-20261016-2baf722f-t28-initialized-pair-v1",
+          "lease_generation": 626,
+          "lease_name": "mbit10-evaluation-node1",
+          "load1_at_start": 1.02,
+          "load1_max": 32,
+          "node": 1,
+          "numa_memory_policy": "bind:1",
+          "numactl": "--cpunodebind=1 --membind=1",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-16T17:44:39Z"
+        }
+      }
+    },
+    "initialized-collection.json": {
+      "sha256": "c97304f421a4c562d6419309462c4d19f8a6f38834154475a036a126fbc72304",
+      "bytes": 669,
+      "value": {
+        "cwd": "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+        "expected": [
+          "tests/test_dx100_initialized_register_actual.py::test_actual_initialized_u32_original_partial_pair[correct-initialized-result]",
+          "tests/test_dx100_initialized_register_actual.py::test_actual_initialized_u32_original_partial_pair[wrong-crossregister-result]"
+        ],
+        "selected": [
+          "tests/test_dx100_initialized_register_actual.py::test_actual_initialized_u32_original_partial_pair[correct-initialized-result]",
+          "tests/test_dx100_initialized_register_actual.py::test_actual_initialized_u32_original_partial_pair[wrong-crossregister-result]"
+        ],
+        "exit_code": 0
+      }
+    },
+    "initialized-profile/junit-census.json": {
+      "sha256": "aacaea32b1092adb5581b29fefa15e77a375d2d0154d733c803aff1910387dcc",
+      "bytes": 143,
+      "value": {
+        "accepted": false,
+        "scope": "pytest workflow census only; independent complete cold audit still required",
+        "error": "AssertionError"
+      }
+    }
+  },
+  "created": "2026-10-16 ET",
+  "status": "REFUSED_NO_PROOF_ACCEPTANCE",
+  "original_raw_preserved": true
+}

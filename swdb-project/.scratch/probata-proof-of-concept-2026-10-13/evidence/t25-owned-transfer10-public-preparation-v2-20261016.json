@@ -1,0 +1,137 @@
+{
+  "SSH_used": false,
+  "actual_run": false,
+  "canonical_science_unchanged": {
+    "files": 21,
+    "source_members": 8,
+    "targets": 10
+  },
+  "date": "2026-10-16 ET",
+  "finding_resolved": "ENTRY-STD-01: every live generation, projected metadata write (including reserve=False), post-fsync check and final profile settlement retains4MiB root sibling headroom. Physical sibling census observes actual staged inputs and preserves512KiB for post-exit root metadata; final root collector must still check whole settled raw<=2GiB.",
+  "green": {
+    "child_native_network_attempts": [],
+    "errors": 0,
+    "failures": 0,
+    "tests": 14
+  },
+  "guards": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 180,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "per_file_bytes": 134217728,
+    "profile_seconds": 1900,
+    "root_headroom_bytes": 4194304,
+    "root_outer_seconds": 2220,
+    "root_post_exit_reserve_bytes": 524288,
+    "root_whole_seconds": 2100,
+    "workers": 1
+  },
+  "independent_V1_review": {
+    "bytes": 8771,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-transfer10-v1-independent-entry-review-20261016.json",
+    "sha256": "d6f3cb618ce243df634ebbe2a107a98a33a07d33fe1649a282d55569d9c66c1e"
+  },
+  "inputs": [
+    {
+      "bytes": 22545,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/entry_template.py",
+      "sha256": "890575e54b2bc4a33b2d885cca9ae92c59695dccc4f6d989c3792ef592d1eef0"
+    },
+    {
+      "bytes": 9424,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/runtime_quota.py",
+      "sha256": "98fe2e782f6f86e1030c36c5fb29bad3420e130a4af572c022d0db05c2b79948"
+    },
+    {
+      "bytes": 14039,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/prepare.py",
+      "sha256": "87ac4eee276dcc86a8fba68e243833970ef418e25e7b9fc6ece58e24e9ee74f6"
+    },
+    {
+      "bytes": 14879,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/pure_controls.py",
+      "sha256": "963fc1a2a2887b3d875c9d24c25de2eadd1232aff175759985582a8f9b4fafcb"
+    },
+    {
+      "bytes": 90513,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/why3-runtime-snapshot.json",
+      "sha256": "de07b17e79d6fa4fb2f632acc0653949f510087fdf33e3f2fe99db1b444f9529"
+    },
+    {
+      "bytes": 1921,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/reviewed_why3_package_check.py",
+      "sha256": "62ada266ff589a83b009c221c347dcabc5547cf86904238cdf9bfb7adf56d50d"
+    },
+    {
+      "bytes": 17290,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/budget-delta-v2.json",
+      "sha256": "a503230a30a7a0ee83e212a54b36566e8929a81b73ff6960d768755e8c025bac"
+    },
+    {
+      "bytes": 1368,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/metadata-author-v1.log",
+      "sha256": "f42d9f37ebf05141db3775cc3ddf8a08b73dc4c6dd971ecb2fcbe229d844a787"
+    },
+    {
+      "bytes": 2403,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/pure-controls-v1.log",
+      "sha256": "86901653cdb275c738d2c2dec3fdbb6bfd6f47a6d2408e464163b425d9b0d355"
+    },
+    {
+      "bytes": 1214,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/budget-red-v1.log",
+      "sha256": "b7c5d40cbe99d84d8f5f02d88901ccd1c133665202d3db7388b98e9afbfeceb6"
+    },
+    {
+      "bytes": 1044,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/reproduce-v1-budget-gap.py",
+      "sha256": "5214d3f74c44c48ddaba8cdcc4cb8b597c1ebb5b470102ffed744f531c8cf916"
+    },
+    {
+      "bytes": 43880,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/inert-d7f685c6-public10-v2/entry.py",
+      "sha256": "663fcd74640b4d04f7d3ae38b5587924fc10501cd82831a014f18e05eaf31c94"
+    },
+    {
+      "bytes": 239930,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/inert-d7f685c6-public10-v2/expected.json",
+      "sha256": "ff336dc468cb526061000c41125dabb1a285b5399f58ac27a3ca72f7a6ca46cf"
+    },
+    {
+      "bytes": 5347,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/inert-d7f685c6-public10-v2/packet.json",
+      "sha256": "983f285b9e8fcd8cc96bdc93c1430b4afae868c070e0ad175fbf659e6bcd06f1"
+    },
+    {
+      "bytes": 111050,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/inert-d7f685c6-public10-v2/root-command.json",
+      "sha256": "12bcda644bfb6fde4877b6d5d82a2648c77e1b7b021ab154a4a198cae27bb0c1"
+    }
+  ],
+  "packet": {
+    "bytes": 5347,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/inert-d7f685c6-public10-v2/packet.json",
+    "sha256": "983f285b9e8fcd8cc96bdc93c1430b4afae868c070e0ad175fbf659e6bcd06f1"
+  },
+  "parent_preparation": {
+    "bytes": 7340,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-public-preparation-v1-20261016.json",
+    "sha256": "195e482434dee6ec303c1bfe1aa76e466ddf2575db363fff93e8e49c517d0633"
+  },
+  "proof_or_source_or_default_or_caller_admission": false,
+  "red": {
+    "actual_native_or_science": false,
+    "basis": "Unchanged V1 admits a one-byte overrun of the intended profile allowance after both final metadata writes; expected ValueError not raised",
+    "failures": 1,
+    "tests": 1
+  },
+  "root_command": {
+    "bytes": 111050,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v2/inert-d7f685c6-public10-v2/root-command.json",
+    "sha256": "12bcda644bfb6fde4877b6d5d82a2648c77e1b7b021ab154a4a198cae27bb0c1"
+  },
+  "runtime_scope_unchanged": "Fresh nine-package/148-file Why3/server/dependency plus152 distinct physical candidates/three aliases; inherited selected tools/WP/import/config and explicit original producer/Python/loader/dlopen/between-check TCB. No retroactive closure claim.",
+  "source_commit": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08",
+  "status": "INERT_PENDING_INDEPENDENT_BUDGET_RECHECK_AND_ROOT_ADMISSION"
+}

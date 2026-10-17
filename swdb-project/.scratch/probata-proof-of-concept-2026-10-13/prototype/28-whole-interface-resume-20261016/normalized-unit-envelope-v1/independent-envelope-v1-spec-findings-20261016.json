@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-16 ET",
+  "findings": [
+    {
+      "file": "envelope-policy-v1.json",
+      "id": "ENVELOPE-01",
+      "predicate": "disk_floor_bytes=2147483648",
+      "priority": "P2",
+      "problem": "The declared 2GiB floor does not enforce the governing raw-mount20GB run floor.",
+      "repair": "Bind explicit20GiB floor plus full planned256MiB allowance."
+    },
+    {
+      "file": "linux_observation_envelope_v1.py",
+      "function": "read",
+      "id": "ENVELOPE-02",
+      "priority": "P2",
+      "problem": "pin hashes physical bytes before matching lstat size against the advertised bounded count; a larger replacement file is fully hashed/read before refusal.",
+      "repair": "Check original physical regular shape+exact bounded extent before any read/hash; use bounded consumption and stable postcheck."
+    },
+    {
+      "file": "linux_observation_envelope_v1.py",
+      "function": "main",
+      "id": "ENVELOPE-03",
+      "priority": "P2",
+      "problem": "observation_complete is published and timer canceled before a final deadline/extent check after serialization/write/stdout.",
+      "repair": "Retain zero-exit/settled-publication acceptance boundary; late deadline/quota refuses with separately closed metadata."
+    },
+    {
+      "file": "command-v1.json",
+      "id": "ENVELOPE-04",
+      "predicate": "root_created_directories vs stage_layout fresh-root requirement",
+      "priority": "P2",
+      "problem": "Command metadata says root creates observer/library roots that the entry requires absent.",
+      "repair": "Distinguish root flat staging from envelope-created derived roots."
+    }
+  ],
+  "pins_verified": 24,
+  "reviewer_execution": {
+    "SSH": false,
+    "compiler_native_solver": false,
+    "project_imports": false,
+    "tests": false
+  },
+  "schema": "linux-normalized-observer-envelope-spec-review-1",
+  "source_packet": {
+    "bytes": 8893,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v1/source-packet-v1.json",
+    "sha256": "ea78f99927f9e0ab6f6a27bdee40b9d38ca0450fd0d758aade0fe69b991f3f17"
+  },
+  "unchanged_science": {
+    "no_AST_ABI_source_call_public_admission": true,
+    "observer_entry": "00886e67fe33b8b9ec37a1b86f494120c0ad3769b887d792fe8e1a38fc3b6926",
+    "observer_packet": "92abfc70bdda5a6dc3faef884ebb1ccad0ffaf065289e95351c82021922a259b",
+    "source_role": "complete original2baf TU, separately parsed literal ABI roots; no cross-parse ID join"
+  },
+  "verdict": "REQUEST_CHANGES_SOURCE_ONLY"
+}

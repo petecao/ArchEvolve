@@ -1,0 +1,44 @@
+{
+  "actual_original_wp_generation": false,
+  "author": {
+    "bytes": 6368,
+    "path": "prototype/25-original-no-growth-generation-20261016/author-v3.py",
+    "sha256": "f8204eb0950af29f192d05c9525cbf6d72f2b31b680bc78181dc7648c3e34ba7"
+  },
+  "author_history": [
+    {
+      "cause": "asserted one bootstrap namespace occurrence; frozen V2 bootstrap has five artifact/argv references",
+      "outcome": "refused before output packet creation"
+    },
+    {
+      "change": "corrected expected exact occurrence count to five",
+      "outcome": "inert V3 authored and independently reviewed"
+    }
+  ],
+  "boundary": "V2 actually failed pre-tool. V3 independent source review passes; only root can admit a fresh actual run, and generation never becomes proof acceptance.",
+  "created": "2026-10-16 ET",
+  "model_or_caller_acceptance": false,
+  "physical_source_read": {
+    "bytes": 4068,
+    "path": "evidence/t25-original-no-growth-v3-physical-source-pins-20261016.json",
+    "sha256": "c5b17b214df35e86089702d0699ef91508627aefcc0051080eba716bb7edd8ba"
+  },
+  "repair": "exact installed source basename casing only",
+  "review": {
+    "bytes": 3066,
+    "path": "evidence/t25-original-no-growth-generation-v3-independent-review-20261016.md",
+    "sha256": "88e57459a77c192c4fbcddbf499668fd3cd88fcef4045d266847fdfe70f4899f"
+  },
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "source_typed_bridge_established": false,
+  "v2_actual_failure": {
+    "bytes": 1929,
+    "path": "evidence/t25-original-no-growth-generation-v2-actual-failure-20261016.json",
+    "sha256": "376c6d486fabf85cec53c0f49e267531257ccff39386a476231b69bd07349e5c"
+  },
+  "v3_packet": {
+    "bytes": 7874,
+    "path": "prototype/25-original-no-growth-generation-20261016/inert-c978393b-v3/packet.json",
+    "sha256": "13a0996a3bd3d9f079ee743d81014dd170ea54c75e07ff028ea4e42612900ae5"
+  }
+}

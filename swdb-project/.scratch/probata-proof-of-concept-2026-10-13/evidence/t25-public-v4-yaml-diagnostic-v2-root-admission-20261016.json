@@ -1,0 +1,23 @@
+{
+  "command": {
+    "bytes": 990,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/command.json",
+    "sha256": "7d4df9cde43ca69abbf7d9c97db4bfbf6f751a9b245dc0d25e1dbdc1aa6650ee"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "ADMIT_ONCE_PASSIVE_YAML_SYNTAX_V2_AFTER_PARENT_SPEC_PASS",
+  "guard": "Same env-i, selectedPython-I-B,256MiBAS,40CPU/45alarm/55outer/70local and32KiB stdout cap.",
+  "prior_admission": {
+    "bytes": 1870,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-yaml-diagnostic-root-admission-20261016.json",
+    "sha256": "451d27eb2835fb810f0402f94d2f9e290d9d95c8e70a0e56f1f909f303107569"
+  },
+  "required_before_execution": "Parent ticket25 independent source review PASS with exact source18e78f4f/command7d4df9cd; bind review in execution receipt.",
+  "root_review": "Exact read/audit/stable/shape/limit/frozen reader unchanged. Only identifier metadata key labels, line/scalar lengths/hashes/styles and explicit lexical boolean classifications added. No semantic values or YAML/source payload returned; 20 exact immutable inputs retained.",
+  "scope": "Locate emitted YAML forms only; no full observer, proof, compiler, native or semantic acceptance rerun.",
+  "source": {
+    "bytes": 21431,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/diagnostic-v2.py",
+    "sha256": "18e78f4f471f23dbfed850dae2feb0323be2b6b9bcbf41b78b8c8472e4dc3744"
+  }
+}

@@ -1,0 +1,9 @@
+# Mixed pair prospective V7 — 2026-10-16 ET
+
+This narrow successor repairs the settled-failure console path identified in root's V6 Standards review. V6 and its failed review/counterexample remain preserved. Root must independently review and admit V7 before any actual execution.
+
+All console emissions now pass through one emitter that checks the encoded JSON record, including its newline, is at most8192 bytes before writing any stdout. A successfully finalized failure emits `console_failure(result)`; the full diagnostic remains unchanged in `mixed-result.json`, within the existing16KiB result cap. Successful producer completion retains its complete console result and also passes the encoded-size gate.
+
+All25 preexisting entry functions retain exact V6 bytes. The module changes only the fresh V7 raw namespace, adds the emitter/final-console selector, and routes all three console paths through them. The509 source leaves,14 consumer roots,2717 runtime pins, original eight-record science, root30 receipt, all runtime/IPC/lifecycle gates, and every resource/finalization cap remain unchanged. The prior Why3 runtime qualification remains: fresh package/server pins are prospective and do not establish historical byte identity or actual loader selection.
+
+The36 no-child controls include the prior33 plus a successfully finalized worst-case failure with duplicated4096-byte primary reasons and a1024-byte secondary reason; its old full-result console exceeds8KiB while the new summary stays within the cap and all reasons remain on disk. Oversized ASCII/Unicode emissions refuse before any write, the producer-success console remains complete, and AST controls check all console writes use the common gate and all original functions are unchanged. No compiler/native/verifier/solver/SSH/profile execution occurred.

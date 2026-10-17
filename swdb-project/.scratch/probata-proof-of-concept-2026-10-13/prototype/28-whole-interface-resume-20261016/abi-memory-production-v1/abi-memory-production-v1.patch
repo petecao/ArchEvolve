@@ -1,0 +1,1469 @@
+--- /dev/null
++++ b/swdb-project/swdb/_dx100_whole/abi_role_transport_v1.py
+@@ -0,0 +1,181 @@
++"""Closed ABI-only paired-Type transport; never a source-TU/ID join.
++
++The artificial container exists solely to reuse the exact reviewed complete
++token grammar and role renamer. It is removed before the unchanged ABI reader.
++Original compiler bytes, derived strict bytes and their inverse are distinct.
++"""
++import hashlib
++import io
++import json
++from pathlib import Path
++import stat
++
++from swdb._dx100_whole import role_normalized_gzip_v2 as normalizer
++from swdb._dx100_whole import strict_minify_v2 as tokens
++
++NORMALIZER_SHA = '6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941'
++TOKENS_SHA = 'b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897'
++FAMILIES = {
++    'first-source-v10': (127394, '0416fecb76bfec1cd375b8d0940de7b1306e9d9b3d591fd0683f544c080ddf15'),
++    'three-memory-g642': (127541, '493764cb6cbb2783db0cdfbbaf1bfd7d3b6efc73ff27df77eb9e5d6e8603b55c'),
++}
++LIMIT = 262144
++PREFIX = b'{"kind":"TranslationUnitDecl","inner":['
++SUFFIX = b']}'
++
++
++class Refused(ValueError):
++    pass
++
++
++def need(value, message):
++    if not value:
++        raise Refused(message)
++
++
++def sha(raw):
++    return hashlib.sha256(raw).hexdigest()
++
++
++def stable(value):
++    return tuple(getattr(value, key) for key in ('st_dev', 'st_ino', 'st_mode', 'st_nlink', 'st_uid',
++        'st_gid', 'st_size', 'st_mtime_ns', 'st_ctime_ns'))
++
++
++def primitive(module, expected):
++    path = Path(module.__file__)
++    before = path.lstat()
++    need(stat.S_ISREG(before.st_mode) and path.resolve(strict=True) == path and before.st_size <= LIMIT,
++         'canonical bounded ABI primitive source required')
++    raw = path.read_bytes()
++    need(sha(raw) == expected and stable(path.lstat()) == stable(before), 'ABI primitive identity changed')
++    return {'path': str(path), 'bytes': len(raw), 'sha256': expected}
++
++
++class Pairs(tuple):
++    pass
++
++
++def no_constant(_value):
++    raise Refused('nonfinite ABI JSON refused')
++
++
++def strict_pairs(rows):
++    result = {}
++    for key, value in rows:
++        need(key not in result, 'unknown duplicate ABI key remains')
++        result[key] = value
++    return result
++
++
++def roots(raw, *, strict):
++    """Return exact original token spans, without merging declarations or IDs."""
++    need(type(raw) is bytes and 0 < len(raw) <= LIMIT, 'bounded ABI stream required')
++    try:
++        text = raw.decode('ascii')
++    except UnicodeError as error:
++        raise Refused('closed selected ABI stream must remain ASCII') from error
++    decoder = json.JSONDecoder(object_pairs_hook=strict_pairs if strict else Pairs, parse_constant=no_constant)
++    rows = []
++    at = 0
++    while at < len(text):
++        while at < len(text) and text[at] in ' \t\r\n':
++            at += 1
++        if at == len(text):
++            break
++        begin = at
++        try:
++            value, at = decoder.raw_decode(text, at)
++        except (ValueError, RecursionError) as error:
++            raise Refused('malformed ABI JSON stream') from error
++        need(isinstance(value, dict if strict else Pairs), 'ABI object root required')
++        rows.append(raw[begin:at])
++        need(len(rows) <= 29, 'bounded ABI root census required')
++    need(rows, 'nonempty ABI root stream required')
++    return rows
++
++
++def minified_tokens(raw):
++    """Whitespace-only identity projection after complete grammar validation."""
++    output = bytearray()
++    quoted = escaped = False
++    for byte in raw:
++        if quoted:
++            output.append(byte)
++            if escaped:
++                escaped = False
++            elif byte == 92:
++                escaped = True
++            elif byte == 34:
++                quoted = False
++        elif byte == 34:
++            quoted = True
++            output.append(byte)
++        elif byte not in b' \t\r\n':
++            output.append(byte)
++    need(not quoted and not escaped, 'complete ABI string closure required')
++    return bytes(output)
++
++
++def _transport(raw, *, expected_roots, expected_renames):
++    """Private token engine; public selection additionally pins exact originals."""
++    selected = roots(raw, strict=False)
++    need(len(selected) == expected_roots, 'exact complete ABI root count required')
++    wrapped = PREFIX + b','.join(selected) + SUFFIX
++    need(len(wrapped) <= LIMIT, 'bounded synthetic ABI transport container required')
++    output = io.BytesIO()
++    manifest = io.BytesIO()
++    normalization = normalizer.normalize(io.BytesIO(wrapped), output, manifest, tokens.__dict__, lambda: None)
++    normalized_wrapper = output.getvalue()
++    inverse_manifest = manifest.getvalue()
++    need(normalization['duplicate_events'] == normalization['prospective_role_renames'] == expected_renames
++         and normalization['unknown_or_mismatched_duplicate_events'] == 0,
++         'only exact complete ABI paired-Type roles may be renamed')
++    need(normalization['original_minified_token_sha256'] == sha(minified_tokens(wrapped)),
++         'complete original ABI container token identity differs')
++    inverse = normalizer.inverse_stream_identity(io.BytesIO(normalized_wrapper), inverse_manifest, normalization, lambda: None)
++    need(normalized_wrapper.startswith(PREFIX) and normalized_wrapper.endswith(SUFFIX),
++         'synthetic ABI transport container changed')
++    inner = normalized_wrapper[len(PREFIX):-len(SUFFIX)]
++    # Each normalized root is located by the strict decoder. The comma delimiters
++    # are container-only bytes and are removed, never source/declaration tokens.
++    decoder = json.JSONDecoder(object_pairs_hook=strict_pairs, parse_constant=no_constant)
++    text = inner.decode('ascii')
++    at = 0
++    pieces = []
++    while at < len(text):
++        begin = at
++        value, at = decoder.raw_decode(text, at)
++        need(type(value) is dict, 'strict normalized ABI root required')
++        pieces.append(inner[begin:at])
++        if at < len(text):
++            need(text[at] == ',', 'exact synthetic ABI root separator required')
++            at += 1
++    need(len(pieces) == expected_roots and PREFIX + b','.join(pieces) + SUFFIX == normalized_wrapper,
++         'complete strict ABI root/container inverse differs')
++    derived = b'\n'.join(pieces) + b'\n'
++    need(0 < len(derived) <= LIMIT and len(roots(derived, strict=True)) == expected_roots,
++         'complete strict ABI output required')
++    receipt = {'schema': 'closed-ABI-paired-type-transport-1', 'original_bytes': len(raw), 'original_sha256': sha(raw),
++        'derived_strict_bytes': len(derived), 'derived_strict_sha256': sha(derived), 'root_count': expected_roots,
++        'role_renames': expected_renames, 'normalization': normalization, 'inverse': inverse,
++        'inverse_manifest_sha256': sha(inverse_manifest), 'synthetic_container': True,
++        'synthetic_container_is_original_TU': False, 'source_call_IDs_joined': False,
++        'all_root_tokens_preserved_except_documented_role_key': True, 'source_ABI_or_public_admission': False}
++    return derived, receipt
++
++
++def normalize_abi(raw):
++    need(type(raw) is bytes and 0 < len(raw) <= LIMIT, 'bounded original ABI bytes required before hashing')
++    identity = (len(raw), sha(raw))
++    family = [name for name, expected in FAMILIES.items() if identity == expected]
++    need(len(family) == 1, 'only exact retained first/memory ABI artifacts are selected')
++    before = [primitive(normalizer, NORMALIZER_SHA), primitive(tokens, TOKENS_SHA)]
++    derived, receipt = _transport(raw, expected_roots=29, expected_renames=4)
++    need([primitive(normalizer, NORMALIZER_SHA), primitive(tokens, TOKENS_SHA)] == before,
++         'ABI primitive source changed during transport')
++    return derived, {**receipt, 'selected_family': family[0],
++        'primitive_sources':[{
++            'role':role, 'bytes':row['bytes'], 'sha256':row['sha256']}
++            for role,row in zip(('paired-type-normalizer','strict-token-grammar'),before)],
++        'eligibility_observed_by_this_call': True, 'prior_memory_ABI_eligibility_inferred': False}
+--- /dev/null
++++ b/swdb-project/swdb/_dx100_whole/capture_family_dispatch_v1.py
+@@ -0,0 +1,19 @@
++"""Closed source family selection; original first-source gates stay unchanged."""
++from swdb import dx100_checked_source as source
++from swdb._dx100_whole import normalized_capture_ingress_v2 as first
++from swdb._dx100_whole import memory_normalized_capture_ingress_v1 as memory
++NORMALIZED_KINDS = (first.KIND, memory.KIND)
++
++
++def complete_capture(policy, reads, project):
++    selected = policy.get('capture')
++    source.need(type(selected) is dict, 'typed closed source capture required')
++    kind = selected.get('kind')
++    if kind in (source.CAPTURE_KIND, first.KIND):
++        return first.complete_capture(policy, reads, project)
++    if kind == memory.KIND:
++        source.need(type(policy.get('proof_source')) is dict
++            and policy['proof_source'].get('sha256') == memory.SOURCE_SHA,
++            'memory capture cannot authorize another source family')
++        return memory.complete_capture(policy, reads, project)
++    raise ValueError('unprepared or unknown source capture family refused')
+--- /dev/null
++++ b/swdb-project/swdb/_dx100_whole/memory_capture_facts_v1.json
+@@ -0,0 +1,454 @@
++{
++  "bootstrap": {
++    "bytes": 3470,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/bootstrap_v1.py",
++    "sha256": "50c2e8f88370b6e4a07f913ea55c2d9f360011ad462a90612a9e4973f2fcc48c"
++  },
++  "capture_execution": {
++    "bytes": 7501,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1-actual/actual-observation-reconciliation-v2.json",
++    "sha256": "d2a30efc347b0a84174fe641e2436b308e33f896e269d6136fdda0cd4190a8b4"
++  },
++  "case_calls": [
++    12,
++    14,
++    14
++  ],
++  "codec": {
++    "codec": "gzip-single-member",
++    "compiler_zero_exit_and_source_runtime_checks_separately_required": true,
++    "compressed_bytes": 12666345,
++    "compressed_limit": 134217728,
++    "compressed_sha256": "8f19a9369b02fde545e7d979d8c5e7852078cc004d8330e7a54ba0c70a7f2aba",
++    "expanded_bytes": 177082275,
++    "expanded_limit": 201326592,
++    "expanded_sha256": "5895fc09a89f41b352368a16fb32b3c5065e8add0672a06fcb29a6be0afa8319",
++    "level": 1,
++    "memLevel": 8,
++    "method": 8,
++    "schema": "lossless-original-tu-gzip-1",
++    "strategy": 0,
++    "wbits": 31
++  },
++  "command": {
++    "bytes": 14738,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/command_v1.json",
++    "sha256": "6768d0c5c80a37b130f693bdb3f3ca931ec5373f839e04eea555d8ec75a35bf9"
++  },
++  "controller": {
++    "bytes": 322473,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/memory_role_controller_v1.py",
++    "sha256": "356424b0c07e79aa535f507c2ab7a42947f656e6959bdb41baf2c015c25e0a0c"
++  },
++  "input_count": 911,
++  "input_map_sha256": "bf408c4a8cc2d6359ac51718821bc1d0813de36a276d8367180a6dca3827daf4",
++  "invocation": {
++    "bytes": 791,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1-actual/actual-transform-invocation-v1.json",
++    "sha256": "a614363bb0f69e3cc7e5d831a6ccaa78a19f6785976611e3563b3d7b22446995"
++  },
++  "kind": "complete-memory-original-tu-paired-type-gzip-1",
++  "normalization": {
++    "actual_source_ABI_or_public_admission": false,
++    "arrays": 160336,
++    "complete_duplicate_group_census_sha256": "1d14117a0f66c2c84a534e28f539ff74e317e70e943c545acefe7e8d6bbf8298",
++    "complete_original_JSON_token_grammar_checked": true,
++    "duplicate_event_census_sha256": "f94be8686f64da3a3cfc248a4ef336cd1e348855b1592af4638f915f20c6e2e0",
++    "duplicate_events": 116,
++    "duplicate_group_count": 1,
++    "duplicate_group_limit": 16,
++    "duplicate_groups": [
++      {
++        "count": 116,
++        "signature": {
++          "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++          "node_kind_identity": {
++            "decoded_string_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++            "ordered_merkle_sha256": "7b161f9b29a279be9cbe5baf30dc0a246628e9df1a5f3274485b8a98a140d825",
++            "value_kind": "string"
++          },
++          "ordinal": 2,
++          "reason": "UsingType.type.original-and-desugared"
++        }
++      }
++    ],
++    "expanded_role_transport_refused": false,
++    "inverse_manifest_bytes": 31776,
++    "inverse_manifest_rows": 116,
++    "inverse_manifest_sha256": "1e88f88833b191e6489e3469413a8cc210903eec5e3ed69158dd7fa6e019dcb1",
++    "keys": 7245430,
++    "max_depth": 80,
++    "normalization_is_original_token_identity": false,
++    "normalized_AST_admitted": false,
++    "normalized_bytes": 177082275,
++    "normalized_expanded_stream_written": true,
++    "normalized_sha256": "5895fc09a89f41b352368a16fb32b3c5065e8add0672a06fcb29a6be0afa8319",
++    "normalized_uncompressed_file_written": false,
++    "objects": 2420550,
++    "ordered_duplicate_pairs_overwritten_or_dropped": false,
++    "ordered_graph_merkle_sha256": "dfa9cd15934ac8aa49a241bc7c7acc4749a77e71a6fccdfe389cccf248d6c888",
++    "original_TU_source_ABI_or_public_admission": false,
++    "original_minified_token_bytes": 177080187,
++    "original_minified_token_sha256": "5ddd90248ab0e6bbe298feb5c8ec48e6af28bd3fd9a7a3581cf4330e4f52d08a",
++    "peak_live_key_charge": 17583,
++    "peak_live_summary_charge": 87244,
++    "plain_normalized_file_cap_fit": false,
++    "prospective_normalized_key": "swdbClangDesugaredType",
++    "prospective_normalized_token_bytes": 177082275,
++    "prospective_normalized_token_sha256": "5895fc09a89f41b352368a16fb32b3c5065e8add0672a06fcb29a6be0afa8319",
++    "prospective_role_renames": 116,
++    "raw_bytes": 537439896,
++    "raw_sha256": "c89c00e8b03717a6ab3c9733d7fbb14aeb46c0d7f2ea4c6d7e87097ad0e9ba67",
++    "role_normalization_and_expanded_cap_eligible": true,
++    "sample_limit": 8,
++    "samples": [
++      {
++        "first_key_span": [
++          15000597,
++          15000603
++        ],
++        "first_value_merkle_sha256": "530d8f1fb8a08213c9239c5fbebaff3a65b1ca33a3217ded44d9e0a0a9078984",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          15001156,
++          15001162
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "e9fe76de850d9a13887ac3097c996e084027f8656e55d97c9de6118cf37b2009",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 15000388,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      },
++      {
++        "first_key_span": [
++          110716981,
++          110716987
++        ],
++        "first_value_merkle_sha256": "26e5559a52b380d92560d8916b44d9bd535c92a6e805b3f2e3e5c85ae82b66f2",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          110717286,
++          110717292
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "a7c36ee63cffcc1bb1f4561d532325be6ebb7a249839c982d820defb0045e657",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 110716868,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      },
++      {
++        "first_key_span": [
++          110988122,
++          110988128
++        ],
++        "first_value_merkle_sha256": "26e5559a52b380d92560d8916b44d9bd535c92a6e805b3f2e3e5c85ae82b66f2",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          110988523,
++          110988529
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "a7c36ee63cffcc1bb1f4561d532325be6ebb7a249839c982d820defb0045e657",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 110987973,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      },
++      {
++        "first_key_span": [
++          113925863,
++          113925869
++        ],
++        "first_value_merkle_sha256": "8dc9fa487732a8c2736fee000b4168f070774cd95665e1b2abbf50dfa9370e65",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          113926200,
++          113926206
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "05bdb6e949638c695ab86a788e0a45a70fea75534542d91ad2dc53792a44fee6",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 113925738,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      },
++      {
++        "first_key_span": [
++          113931095,
++          113931101
++        ],
++        "first_value_merkle_sha256": "8dc9fa487732a8c2736fee000b4168f070774cd95665e1b2abbf50dfa9370e65",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          113931432,
++          113931438
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "05bdb6e949638c695ab86a788e0a45a70fea75534542d91ad2dc53792a44fee6",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 113930970,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      },
++      {
++        "first_key_span": [
++          113936329,
++          113936335
++        ],
++        "first_value_merkle_sha256": "8dc9fa487732a8c2736fee000b4168f070774cd95665e1b2abbf50dfa9370e65",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          113936666,
++          113936672
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "05bdb6e949638c695ab86a788e0a45a70fea75534542d91ad2dc53792a44fee6",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 113936204,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      },
++      {
++        "first_key_span": [
++          113941563,
++          113941569
++        ],
++        "first_value_merkle_sha256": "8dc9fa487732a8c2736fee000b4168f070774cd95665e1b2abbf50dfa9370e65",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          113941900,
++          113941906
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "05bdb6e949638c695ab86a788e0a45a70fea75534542d91ad2dc53792a44fee6",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 113941438,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      },
++      {
++        "first_key_span": [
++          129776785,
++          129776791
++        ],
++        "first_value_merkle_sha256": "2d206213e0ce8bf638bbdf5cfa24ee7765f10ec7f8fe17f3b23d4754c254ce2f",
++        "key_sha256": "1303c06b0b014d0ce7b988ab173a13f31227d417058ff4bbe6f8c222b4ad913c",
++        "key_span": [
++          129777086,
++          129777092
++        ],
++        "large_sample_metadata_omitted": true,
++        "next_value_merkle_sha256": "c9f2fd28e841762e0f86bed7093463640c75fef8cb3e9310d639f4e04be98b15",
++        "node_kind_sha256": "5ecc871782336fd8f9f94c27d70e4a3a33bfc5328acb35ccecb26ffe6c7c44c4",
++        "object_start": 129776672,
++        "ordinal": 2,
++        "reason": "UsingType.type.original-and-desugared",
++        "role_qualified": true,
++        "values_structurally_identical": false
++      }
++    ],
++    "schema": "llvm22-original-tu-role-expanded-2",
++    "unknown_or_mismatched_duplicate_events": 0,
++    "values": 7626137
++  },
++  "original": {
++    "abi": {
++      "bytes": 127541,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ast.json",
++      "sha256": "493764cb6cbb2783db0cdfbbaf1bfd7d3b6efc73ff27df77eb9e5d6e8603b55c"
++    },
++    "compressed_tu": {
++      "bytes": 38749539,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ast.json.gz",
++      "sha256": "3c2f00b300a4aa532fa0b9e08c95fda7643a148413a7e10de1934662f32b85c3"
++    },
++    "gzip_receipt": {
++      "bytes": 541,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/caller.ast.gzip.json",
++      "sha256": "a7b687e20ae0e13707abb23cb4ea8c47966c0b67f5125dec0830aae78108e4af"
++    },
++    "observation": {
++      "bytes": 408779,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/compiler-observation.json",
++      "sha256": "b8f7e85a358e5670bb63bec658cbdf2f16ecc79d1400a1d97e9e0b76e91489c8"
++    },
++    "policy": {
++      "bytes": 666024,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/linux_memory_capture_policy_v1.json",
++      "sha256": "d1bfb65ad9bf85aab9cd7dce14ef3b5002134878d86dbaae432814b3082c7cf6"
++    },
++    "probe": {
++      "bytes": 1588,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/compiler_abi_probe_v1.cpp",
++      "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34"
++    },
++    "result": {
++      "bytes": 633,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/result.json",
++      "sha256": "a13298dda8f5252b0ea8c8a0d2b57fa1d4d9ca376e8c1b8172f4bd33ca386855"
++    },
++    "runtime_after": {
++      "bytes": 9580,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/capture-runtime-after.json",
++      "sha256": "9b80ab96d17393608722d248f22f41892ee1ce45bee14a1901c131afd812ed2c"
++    },
++    "runtime_before": {
++      "bytes": 9035,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/capture-runtime-before.json",
++      "sha256": "9bf4dc41f2583017d5b5a8f1c7c983f8df9f4a0b3753868a132ba5930920acf9"
++    },
++    "source": {
++      "bytes": 3258,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/same_thread_memory_v1.cpp",
++      "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
++    },
++    "source_after": {
++      "bytes": 112,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/source-after.json",
++      "sha256": "a185a8f90eeed849768421e0c786f76c8ae4c1573e2287ab6114d1098c7be818"
++    },
++    "zlib_after": {
++      "bytes": 628,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/capture-zlib-after.json",
++      "sha256": "1452c916ee289ffbc21b097d5d191d93ac04a6caa8f40d4ffe13070c829ad2f3"
++    },
++    "zlib_before": {
++      "bytes": 628,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/capture-zlib-before.json",
++      "sha256": "1452c916ee289ffbc21b097d5d191d93ac04a6caa8f40d4ffe13070c829ad2f3"
++    }
++  },
++  "original_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1",
++  "original_wire": {
++    "codec": "gzip-single-member",
++    "compiler_zero_exit_and_source_runtime_checks_separately_required": true,
++    "compressed_bytes": 38749539,
++    "compressed_limit": 134217728,
++    "compressed_sha256": "3c2f00b300a4aa532fa0b9e08c95fda7643a148413a7e10de1934662f32b85c3",
++    "expanded_bytes": 537439896,
++    "expanded_limit": 2147483648,
++    "expanded_sha256": "c89c00e8b03717a6ab3c9733d7fbb14aeb46c0d7f2ea4c6d7e87097ad0e9ba67",
++    "level": 1,
++    "memLevel": 8,
++    "method": 8,
++    "schema": "lossless-original-tu-gzip-1",
++    "strategy": 0,
++    "wbits": 31
++  },
++  "postflight": {
++    "bytes": 192481,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1-actual/postflight-stdout-v2.json",
++    "sha256": "0a9a1b1643e9528d5a87caebfa4ad61b8fa2b6709699ddb59862e7c1497f29a5"
++  },
++  "reconciliation": {
++    "bytes": 10127,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1-actual/actual-reconciliation-v1.json",
++    "sha256": "70410b5d04589a2759fc49d9001bbb80ef54ff34744d67f25dc9727a3caf7f71"
++  },
++  "root_adoption": {
++    "bytes": 3125,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-memory-role-gzip-v1-root-scoped-acceptance-20261016.json",
++    "sha256": "efbe8ae05f7b30a6cc01043adf35c919d332eb4d3656396124d60f7bfe5f529c"
++  },
++  "schema": "exact-memory-source-capture-facts-1",
++  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
++  "stderr": {
++    "bytes": 0,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1-actual/actual-transform-stderr-v1.log",
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++  },
++  "stdout": {
++    "bytes": 295,
++    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1-actual/actual-transform-stdout-v1.json",
++    "sha256": "c13164a4e279d1ae9a338818532d1738101fad0a48352502bc88b2ed29825b06"
++  },
++  "transform_outputs": {
++    "component/caller.normalized.json.gz": {
++      "bytes": 12666345,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/caller.normalized.json.gz",
++      "sha256": "8f19a9369b02fde545e7d979d8c5e7852078cc004d8330e7a54ba0c70a7f2aba"
++    },
++    "component/census.json": {
++      "bytes": 7202,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/census.json",
++      "sha256": "c645be2282be347cb283f1820c579e1008bc0673b81fb7eb8bf5a2adb48b347c"
++    },
++    "component/inputs-after.json": {
++      "bytes": 165061,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/inputs-after.json",
++      "sha256": "7e4e2ef7745fbf93840ae9eda6c7d849e421c1937c0b580a65e0b14d4e2dc514"
++    },
++    "component/inputs-before.json": {
++      "bytes": 165061,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/inputs-before.json",
++      "sha256": "7e4e2ef7745fbf93840ae9eda6c7d849e421c1937c0b580a65e0b14d4e2dc514"
++    },
++    "component/inverse.json": {
++      "bytes": 609,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/inverse.json",
++      "sha256": "50a7e9a56b0dd0b8e7e3537e3ca1d9b0886bc80072de3ca90de7a1f1d9e34a74"
++    },
++    "component/rename-manifest.jsonl": {
++      "bytes": 31776,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/rename-manifest.jsonl",
++      "sha256": "1e88f88833b191e6489e3469413a8cc210903eec5e3ed69158dd7fa6e019dcb1"
++    },
++    "component/runtime-after.json": {
++      "bytes": 6307,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/runtime-after.json",
++      "sha256": "7481dd47f470e151bc1c3c4c7376279a51c9387bdbeb5a678a9800473715683d"
++    },
++    "component/runtime-before.json": {
++      "bytes": 6307,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/runtime-before.json",
++      "sha256": "7481dd47f470e151bc1c3c4c7376279a51c9387bdbeb5a678a9800473715683d"
++    },
++    "component/transport.json": {
++      "bytes": 8010,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/component/transport.json",
++      "sha256": "5ba6556204527fdd65f79dfe3b6dc0728f936c1f6ac876e17fb72d53bbd054c4"
++    },
++    "control/controller.py": {
++      "bytes": 322473,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/control/controller.py",
++      "sha256": "356424b0c07e79aa535f507c2ab7a42947f656e6959bdb41baf2c015c25e0a0c"
++    },
++    "control/normalizer.py": {
++      "bytes": 27967,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/control/normalizer.py",
++      "sha256": "6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941"
++    },
++    "control/policy.json": {
++      "bytes": 192569,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/control/policy.json",
++      "sha256": "335769de4bdb0a2c35573198db2d63177d2378d8b0d3692eb74d91efd0ebac15"
++    },
++    "control/strict_minify_v2.py": {
++      "bytes": 7959,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/control/strict_minify_v2.py",
++      "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897"
++    },
++    "result.json": {
++      "bytes": 169385,
++      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1/result.json",
++      "sha256": "2b0fc38f38ab302e8a6a241b436b74bd7f220e0342646f6640fa19eda43b67a8"
++    }
++  },
++  "transform_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1"
++}
+--- /dev/null
++++ b/swdb-project/swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py
+@@ -0,0 +1,361 @@
++"""Closed G642 memory-family source ingress. No compiler/native/proof execution."""
++import hashlib
++import io
++import json
++import math
++import os
++from pathlib import Path
++import re
++import stat
++from swdb import dx100_checked_source as source
++from swdb._dx100_whole import lossless_gzip_v2 as codec
++from swdb._dx100_whole import role_normalized_gzip_v2 as normalizer
++from swdb._dx100_whole import closed_python_surface as closed
++from swdb._dx100_whole import memory_normalized_compiler_adapter_v1 as memory_compiler
++KIND='complete-memory-original-tu-paired-type-gzip-1'
++COMMIT='2baf722fdaa6cba24b859eae3172a6f597417d72'
++SOURCE_SHA='55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887'
++EXPANDED=201326592
++FILE=134217728
++TOTAL=268435456
++CODEC_SHA='aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef'
++NORMALIZER_SHA='6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941'
++CLOSED_SHA='748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af'
++MEMORY_COMPILER_SHA='e5b4b27cda6c1ace50bbde3d3118d016db09e4631a7d3e4ac0073fa4deb4c313'
++
++
++def need(value,message):source.need(value,message)
++
++def exact(value,keys,message):need(type(value) is dict and set(value)==set(keys),message)
++
++def same_bytes(left,right):
++    return (type(left) is dict and type(right) is dict and type(left.get('bytes')) is int and left['bytes']>=0
++        and type(left.get('sha256')) is str and re.fullmatch('[0-9a-f]{64}',left['sha256']) is not None
++        and all(left.get(key)==right.get(key) for key in ('bytes','sha256')))
++
++def stream_stable(rows):
++    """Cheap per-chunk shapes; full runtime/content checks bracket the decoder."""
++    for row in rows:
++        path=Path(row['path']);metadata=path.lstat()
++        need(path.resolve(strict=True)==path and stat.S_ISREG(metadata.st_mode) and metadata.st_size==row['bytes'],
++            'physical normalized stream input shape changed')
++
++def make_dependencies(text, target, cwd):
++    """Closed Make syntax copied from reviewed memory53 preparation entry."""
++    if not text.startswith(target + ":"):
++        raise ValueError("dependency target differs")
++    text = text[len(target) + 1:]
++    result, token, index = [], "", 0
++    while index < len(text):
++        char = text[index]
++        if char == "\\":
++            index += 1
++            if index >= len(text): raise ValueError("truncated dependency escape")
++            char = text[index]
++            if char == "\n":
++                index += 1
++                continue
++            if char not in " \t#\\:": raise ValueError("unsupported dependency escape")
++            token += char
++        elif char in "$#": raise ValueError("dependency expansion/comments refused")
++        elif char.isspace():
++            if token:
++                result.append(token)
++                token = ""
++        else: token += char
++        index += 1
++    if token: result.append(token)
++    if not result: raise ValueError("empty dependency set")
++    return sorted({str((Path(cwd) / value).resolve(strict=True)) for value in result})
++
++def physical_runtime(policy,reads):
++    """Current physical closure; historical process/loader observations stay TCB.
++
++    This is the reviewed native physical_runtime recipe with all regular inputs
++    additionally registered in Inputs for the final content recheck. The exact
++    closed helper verifies its own full Python membership/alias/absence surface.
++    """
++    python=closed.verify_python_metadata(policy['python_surface_binding'])
++    def current(path,expected=None):
++        path=Path(path)
++        if expected is None:
++            with path.open('rb') as stream:expected=hashlib.file_digest(stream,'sha256').hexdigest()
++        row={'path':str(path),'bytes':path.lstat().st_size,'sha256':expected}
++        reads.absolute(row,retain=False)
++        return row
++    for path,expected in policy['runtime_files'].items():current(path,expected)
++    headers=policy['linux_header_surfaces']
++    need(set(headers)=={'libc++','clang-resource'},'two exact LLVM header surfaces required')
++    for header in headers.values():
++        root=Path(header['path'])
++        need(root.resolve(strict=True)==root and not root.is_symlink() and root.is_dir(),'physical LLVM header root required')
++        rows=[]
++        for path in sorted(root.rglob('*')):
++            mode=path.lstat().st_mode
++            if stat.S_ISDIR(mode):continue
++            need(stat.S_ISREG(mode),'nonregular LLVM header input')
++            row=current(path)
++            rows.append({'relative':str(path.relative_to(root)),'bytes':row['bytes'],'sha256':row['sha256']})
++        need(len(rows)==header['count'] and source.digest(rows)==header['inventory_sha256'],'LLVM header membership/content differs')
++    native=policy['native_runtime']
++    need(native.get('admitted') is True and native.get('pins') and native.get('trees'),'complete pinned native runtime closure required')
++    for row in native['pins']:reads.absolute(row,retain=False)
++    for alias in native['aliases']:
++        path=Path(alias['path'])
++        need(path.is_symlink() and os.readlink(path)==alias['target'] and str(path.resolve(strict=True))==alias['resolved'],
++            'native runtime link chain differs')
++    for absent in native['absence']:need(not os.path.lexists(absent),'native runtime absence changed')
++    for tree in native['trees']:
++        root=Path(tree['path'])
++        need(root.resolve(strict=True)==root and not root.is_symlink() and root.is_dir(),'physical native runtime root required')
++        found=[]
++        for path in sorted(root.rglob('*')):
++            mode=path.lstat().st_mode
++            if stat.S_ISDIR(mode):continue
++            if stat.S_ISLNK(mode):
++                found.append({'relative':str(path.relative_to(root)),'symlink':os.readlink(path),'resolved':str(path.resolve(strict=True))})
++            elif stat.S_ISREG(mode):
++                row=current(path)
++                found.append({'relative':str(path.relative_to(root)),'bytes':row['bytes'],'sha256':row['sha256']})
++            else:need(False,'special native runtime input')
++        need(found==tree['files'],'native runtime membership/content differs')
++    return {'python':python,'runtime_files':len(policy['runtime_files']),'native_pins':len(native['pins']),
++        'native_roots':len(native['trees']),'scope':'physical source/runtime identity; no proof or native result'}
++
++"""Fixed memory-only same-TU ingress body; utility functions are copied exactly."""
++
++def facts(reads):
++    path = Path(__file__).with_name('memory_capture_facts_v1.json')
++    raw = reads.absolute({'path': str(path), 'bytes': 21487,
++        'sha256': '9862edaf233ebb7d6146dfdb7e825864e1c4314bd5e034a9a8800c97b20a3f3a'}, limit=65536)
++    value = source.contracts.document(raw)
++    need(value['kind'] == KIND and value['source_commit'] == COMMIT, 'fixed G642 memory facts required')
++    return value
++
++
++def fixed(row, expected, *, original_path=False):
++    exact(row, {'path', 'bytes', 'sha256'}, 'closed physical memory role required')
++    need(same_bytes(row, expected) and (not original_path or row['path'] == expected['path']),
++         'exact retained memory role identity differs')
++
++
++def original_gate(result):
++    need(result.get('accepted') is True and result.get('compiler_observation_complete') is True
++         and result.get('error') is None and result.get('after_input_errors') == []
++         and result.get('bytecode_cache_present') is False and result.get('source_call_count') == 0
++         and result.get('source_names') == [] and 'finalization_refusal' not in result
++         and all(result.get(name) is False for name in ('ABI_interpreted','source_call_admitted',
++             'strict_complete_TU_consumer_passed','native_or_solver_executed','public_proof','current_0_2','full_ticket28')),
++         'exact successful G642 observation-only boundary required')
++
++
++def transform_gate(value, f):
++    need(value.get('schema') == 'passive-memory-paired-type-gzip-transform-result-1'
++         and value.get('normalization_complete') is True
++         and value.get('completion_requires_controller_zero_exit_and_settled_publication') is True
++         and value.get('original_compiler_observation_accepted') is True
++         and value.get('original_AST_ABI_source_call_admitted') is False
++         and value.get('source_call_ABI_public_or_full28_admission') is False
++         and value.get('compiler_or_native_or_solver_executed') is False
++         and value.get('selected_inputs_unchanged') is True and value.get('output_root') == f['transform_root']
++         and value.get('source_fixture_sha256') == SOURCE_SHA
++         and value.get('original_observation') == f['original']['observation']
++         and value.get('expanded_normalized_limit_bytes') == EXPANDED
++         and value.get('physical_file_limit_bytes') == FILE and value.get('aggregate_retained_limit_bytes') == TOTAL
++         and type(value.get('wall_seconds')) in (int,float) and math.isfinite(value['wall_seconds'])
++         and 0 < value['wall_seconds'] < 900, 'complete exact memory byte-transform required')
++
++
++def execution_gate(adoption, reconciliation, invocation, publication, transform, f):
++    need(adoption.get('verdict') == 'ACCEPT_LOSSLESS_MEMORY_AST_BYTE_TRANSPORT_ONLY'
++         and adoption.get('actual_reconciliation', {}).get('sha256') == f['reconciliation']['sha256'],
++         'exact root-adopted byte-transport scope required')
++    need(reconciliation.get('zero_exit') is True and reconciliation.get('empty_stderr') is True
++         and reconciliation.get('output_root') == f['transform_root']
++         and reconciliation.get('original_memory_compiler_generation') == 642
++         and reconciliation.get('physical_output_count') == 14
++         and reconciliation.get('physical_output_bytes') == 13777031,
++         'retained actual finite memory settlement differs')
++    need(type(invocation.get('returncode')) is int and invocation['returncode'] == 0
++         and invocation.get('local_refusal') is None and invocation.get('input_source_unchanged') is True
++         and invocation.get('stdin_sha256') == transform['controller']['sha256']
++         and invocation.get('command_packet_sha256') == f['command']['sha256']
++         and same_bytes(invocation.get('stdout'), transform['stdout'])
++         and same_bytes(invocation.get('stderr'), transform['stderr']) and transform['stderr']['bytes'] == 0
++         and type(invocation.get('local_wall_seconds')) in (int,float)
++         and math.isfinite(invocation['local_wall_seconds']) and 0 < invocation['local_wall_seconds'] <= 1000,
++         'settled exact passive controller invocation required')
++    need(publication == {'normalization_complete': True, 'result': transform['result'],
++         'source_call_ABI_or_public_admission': False}, 'exact settled memory publication differs')
++    accepted = adoption['accepted']
++    need((accepted['expanded_bytes'], accepted['expanded_sha256'], accepted['normalized_gzip_bytes'],
++          accepted['normalized_gzip_sha256'], accepted['original_minified_token_sha256']) ==
++         (f['codec']['expanded_bytes'], f['codec']['expanded_sha256'], f['codec']['compressed_bytes'],
++          f['codec']['compressed_sha256'], f['normalization']['original_minified_token_sha256']),
++         'root acceptance identities differ from fixed genuine memory transport')
++
++
++def input_output_closure(settled, policy, transform, f):
++    wanted = [{'path':path, **row} for path,row in policy['physical_inputs'].items()]
++    need(len(wanted) == f['input_count'] and source.digest(policy['physical_inputs']) == f['input_map_sha256']
++         and settled['input_pins'] == wanted, 'closed complete911-input memory selection differs')
++    expected = [row for name,row in sorted(f['transform_outputs'].items()) if name != 'result.json']
++    need(settled.get('outputs') == expected and len(expected) == 13
++         and sum(row['bytes'] for row in f['transform_outputs'].values()) == 13777031,
++         'exact complete14-file memory output census differs')
++    need(all(row['bytes'] <= FILE for row in expected) and sum(row['bytes'] for row in expected) + transform['result']['bytes'] <= TOTAL,
++         'actual memory output extent exceeds admitted limits')
++    return wanted + expected
++
++
++def _derive(policy, reads, project):
++    selected = policy['capture']
++    exact(selected, {'kind','original','transform','prepared'}, 'closed memory capture required')
++    need(selected['kind'] == KIND, 'unknown memory capture family refused')
++    need(type(policy.get('proof_source')) is dict and policy['proof_source'].get('sha256') == SOURCE_SHA,
++         'exact memory proof-buffer family required before consumption')
++    f = facts(reads); original, transform = selected['original'], selected['transform']
++    exact(original, set(f['original']) | {'zlib_runtime','execution'}, 'complete genuine G642 original roles required')
++    remote = {'controller':'control/controller.py','policy':'control/policy.json','result':'result.json',
++        'transport':'component/transport.json','inverse':'component/inverse.json','manifest':'component/rename-manifest.jsonl',
++        'normalized_gzip':'component/caller.normalized.json.gz','census':'component/census.json',
++        'runtime_before':'component/runtime-before.json','runtime_after':'component/runtime-after.json'}
++    mirrors = ('command','bootstrap','root_adoption','reconciliation','postflight','invocation','stdout','stderr')
++    exact(transform, set(remote) | set(mirrors), 'closed actual memory transform/provenance roles required')
++    for role, expected in f['original'].items(): fixed(original[role], expected, original_path=True)
++    fixed(original['execution'], f['capture_execution'])
++    for role,name in remote.items(): fixed(transform[role], f['transform_outputs'][name], original_path=True)
++    for role in mirrors: fixed(transform[role], f[role])
++    original_policy, result = (reads.document(original[name]) for name in ('policy','result')); original_gate(result)
++    need(original_policy['source_project'] == str(project) and original_policy['source_commit'] == COMMIT,
++         'exact original2baf project role required')
++    transform_policy = reads.document(transform['policy'])
++    observation = reads.document(original['observation']); commands = observation['commands']
++    need(observation.get('source_commit') == COMMIT and observation.get('original_source_coordinates') is True
++         and len(commands) == 4 and commands == transform_policy['original_commands']
++         and [row['phase'] for row in commands] == ['caller-preprocess','caller-ast','abi-preprocess','abi-ast'],
++         'same original full-TU memory compiler observations differ')
++    expected_inputs = [{'path':f['original_root']+'/control/'+name, **original_policy['controller_files'][name]}
++        for name in ('same_thread_memory_v1.cpp','compiler_abi_probe_v1.cpp','m5ops.h')]
++    expected_inputs += [{'path':str(project)+'/'+row['relative'], 'bytes':row['bytes'],'sha256':row['sha256']}
++                       for row in original_policy['source_inputs']]
++    need(observation['inputs'] == expected_inputs, 'exact memory source/header/control inputs differ')
++    for name,row in original_policy['controller_files'].items():
++        reads.absolute({'path':f['original_root']+'/control/'+name, **row}, retain=False)
++    for actual, expected in zip(commands, original_policy['capture_recipe']['commands']):
++        need(actual['phase'] == expected['phase'] and actual['argv'] == expected['argv'] and actual['cwd'] == expected['cwd']
++             and type(actual['returncode']) is int and actual['returncode'] == 0
++             and type(actual['timeout_seconds']) in (int,float)
++             and 0 < actual['timeout_seconds'] <= (120 if actual['phase'] == 'caller-ast' else 45),
++             'exact original memory compiler recipe/exit/configuration required')
++        for role in ('stdout','stderr'): reads.absolute(actual[role], retain=False)
++        need(actual['stderr']['bytes'] == 0, 'original memory compiler stderr must be empty')
++    capture_execution = reads.document(original['execution'])
++    need(capture_execution.get('generation') == 642 and capture_execution.get('source_fixture_sha256') == SOURCE_SHA
++         and capture_execution.get('raw_root') == f['original_root']
++         and capture_execution.get('verdict') == 'PASS_ACTUAL_COMPILER_OBSERVATION_METADATA_ONLY',
++         'retained finite G642 compiler observation attribution required')
++    before, after = (reads.document(original[name]) for name in ('runtime_before','runtime_after'))
++    need(after == {'runtime':before,'after_errors':[]}, 'original memory runtime before/after differs')
++    need(reads.document(original['source_after']) == {'commit':COMMIT,'source_unchanged':True,'tracked_changes':''},
++         'original memory source-after differs')
++    need(physical_runtime(original_policy, reads) == before, 'current full physical runtime differs from original observation')
++    for name in ('zlib_before','zlib_after'):
++        need(reads.document(original[name]) == original_policy['zlib_binding'], 'original decoder runtime differs')
++    need([group['label'] for group in observation['groups']] == ['caller','abi'], 'complete memory source/probe groups required')
++    for index,group in enumerate(observation['groups']):
++        label = group['label']; selected_source = original['source'] if label == 'caller' else original['probe']
++        names = [row['path'] for row in group['dependencies']]
++        required = {selected_source['path'], str(project)+'/apps/dx100/benchmarks/API/MAA.hpp',
++            str(project)+'/apps/dx100/benchmarks/API/MAA_gem5.hpp', f['original_root']+'/control/include/gem5/m5ops.h'}
++        need(len(names) == len(set(names)) and required <= set(names), 'complete memory used-header/source closure required')
++        for role,target in (('preprocess_dependency',label),('ast_dependency',label+'-ast')):
++            need(make_dependencies(reads.absolute(group[role]).decode('utf-8'), target, commands[index*2]['cwd']) == names,
++                 'original memory preprocessing/AST dependency membership differs')
++        need(group['ast'] == commands[index*2+1]['stdout'] == (original['compressed_tu'] if label == 'caller' else original['abi']),
++             'original same-TU AST artifact differs')
++        for row in group['dependencies']: reads.absolute(row, retain=False)
++        for name in ('frozen','preprocess_dependency','ast','ast_dependency'): reads.absolute(group[name], retain=False)
++    wire = reads.document(original['gzip_receipt'])
++    need(wire == f['original_wire'] == commands[1]['lossless_stdout']
++         and observation['groups'][0]['expanded_stream_receipt'] == original['gzip_receipt'],
++         'genuine original G642 wire/gzip identities differ')
++    adoption, reconciliation, invocation, publication = (reads.document(transform[name])
++        for name in ('root_adoption','reconciliation','invocation','stdout'))
++    execution_gate(adoption,reconciliation,invocation,publication,transform,f)
++    post = reads.document(transform['postflight']); settled = reads.document(transform['result']); transform_gate(settled,f)
++    need(post['transform_result'] == settled and post['original_raw_unchanged'] is True and post['transform_raw_unchanged'] is True,
++         'settled retained compact memory context differs')
++    for row in input_output_closure(settled,transform_policy,transform,f): reads.absolute(row, retain=False)
++    for role in mirrors: reads.selected(transform[role], retain=False)
++    for role in ('runtime_before','runtime_after'):
++        need(reads.document(transform[role]) == before, 'full memory transform runtime differs from compiler runtime')
++    root = f['transform_root']
++    need(reads.document(f['transform_outputs']['component/inputs-before.json']) == settled['input_pins']
++         == reads.document(f['transform_outputs']['component/inputs-after.json']), 'retained memory input before/after differs')
++    transport = reads.document(transform['transport']); census = reads.document(transform['census'])
++    need(transport['normalization'] == census == f['normalization'] and transport['normalized_gzip_codec'] == f['codec']
++         and census['complete_original_JSON_token_grammar_checked'] is True and census['duplicate_events'] == 116
++         and census['prospective_role_renames'] == census['inverse_manifest_rows'] == 116
++         and census['unknown_or_mismatched_duplicate_events'] == 0 and census['normalized_AST_admitted'] is False
++         and transport['original_TU_source_ABI_or_public_admission'] is False,
++         'complete genuine memory role/token/census identities required')
++    runtime = reads.document(original['zlib_runtime'])
++    exact(runtime, {'schema','origin','version','physical_inputs'}, 'closed selected decoder descriptor required')
++    need(runtime['schema'] == 'selected-stdlib-zlib-runtime-1', 'exact decoder runtime schema required')
++    for row in runtime['physical_inputs']: reads.absolute(row, retain=False)
++    import zlib
++    need(zlib.__spec__.origin == runtime['origin'] and zlib.ZLIB_RUNTIME_VERSION == runtime['version'],
++         'actual selected decoder runtime differs')
++    for module, expected in ((codec,CODEC_SHA),(normalizer,NORMALIZER_SHA),(closed,CLOSED_SHA),
++                             (memory_compiler,MEMORY_COMPILER_SHA),(source.compiler,memory_compiler.LEGACY_SHA)):
++        path = Path(module.__file__); reads.absolute({'path':str(path),'bytes':path.stat().st_size,'sha256':expected}, retain=False)
++    need(memory_compiler.legacy is source.compiler, 'one unchanged generic full-TU consumer required')
++    compressed = reads.selected(transform['normalized_gzip'], limit=FILE)
++    manifest = reads.selected(transform['manifest'], limit=33554432)
++    def decoder_check(): stream_stable((transform['normalized_gzip'],transform['manifest']))
++    inverse = normalizer.verify_inverse_gzip(zlib,io.BytesIO(compressed),manifest,transport,codec.__dict__,decoder_check)
++    need(inverse == reads.document(transform['inverse']) == post['inverse'], 'fresh complete memory inverse differs')
++    decoded = codec.DecodeReader(zlib,io.BytesIO(compressed),f['codec'],expanded_limit=EXPANDED,compressed_limit=FILE,check=decoder_check)
++    chunks = []
++    while True:
++        chunk = decoded.read(65536)
++        if not chunk: break
++        chunks.append(chunk)
++    need(decoded.verified, 'complete memory normalized decoder closure required')
++    full_tu = b''.join(chunks); del chunks
++    source_bytes, probe_bytes = (reads.selected(original[role]) for role in ('source','probe'))
++    need(len(source_bytes) == 3258 and hashlib.sha256(source_bytes).hexdigest() == SOURCE_SHA
++         == policy['proof_source']['sha256'] and reads.portable(policy['proof_source']) == source_bytes,
++         'exact original/selected memory proof buffer required')
++    source_path, probe_path = reads.path(original['source']), reads.path(original['probe'])
++    declarations = source.binder.inventory(project)
++    prepared = memory_compiler.prepare_unit(source.binder.__dict__, transport_kind=KIND, full_tu_raw=full_tu,
++        abi_raw=reads.selected(original['abi']), source_path=source_path, source_bytes=source_bytes,
++        probe_path=probe_path, probe_bytes=probe_bytes, declarations=declarations,
++        compiler_capture_pin=original['observation']['sha256'], full_tu_compressed_bytes=f['codec']['compressed_bytes'],
++        full_tu_expanded_limit=EXPANDED)
++    tu = source.compiler.resolve_locations(source.compiler.parse_json_roots(full_tu,full_tu=True,expanded_limit=EXPANDED)[0],source_path)
++    need(physical_runtime(original_policy,reads) == before, 'current memory physical runtime changed during preparation')
++    reads.recheck()
++    binding = {**f['codec'], 'transport_kind':KIND, 'source_family':'three-same-thread-memory-1',
++        'original_compiler_stream':wire, 'original_capture_accepted':True, 'original_source_call_admitted':False,
++        'root_adoption':transform['root_adoption'], 'transform_result':transform['result'], 'inverse':transform['inverse'],
++        'normalized_gzip':transform['normalized_gzip'], 'original_minified_token_sha256':f['normalization']['original_minified_token_sha256']}
++    return source_path,source_bytes,tu,declarations,prepared,binding
++
++
++def complete_capture(policy, reads, project):
++    need(type(policy.get('capture')) is dict and policy['capture'].get('prepared') is not None,
++         'public memory ingress requires the separately observed exact preparation')
++    result = _derive(policy,reads,project)
++    need(result[4] == reads.document(policy['capture']['prepared']), 'fresh full memory preparation differs from selected observation')
++    reads.recheck()
++    return result
++
++
++def observe_capture(policy, reads, project):
++    need(type(policy.get('capture')) is dict and policy['capture'].get('prepared') is None,
++         'private memory observation requires explicit unknown preparation')
++    return _derive(policy,reads,project)
++
+--- /dev/null
++++ b/swdb-project/swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py
+@@ -0,0 +1,79 @@
++"""Exact G642/source55b9 normalized stream into the unchanged TU consumer.
++
++The generic semantic preparation schema stays intact for the strict reviewed
++three-root helper. A separate mandatory transport field distinguishes every
++original/derived memory identity. No first-source transport is accepted here.
++"""
++import hashlib
++from pathlib import Path
++from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy
++from swdb._dx100_whole import abi_role_transport_v1 as abi_transport
++
++KIND = 'complete-memory-original-tu-paired-type-gzip-1'
++EFFECTIVE_LIMIT = 201326592
++LEGACY_CEILING = 536870912
++EXPANDED_BYTES = 177082275
++EXPANDED_SHA = '5895fc09a89f41b352368a16fb32b3c5065e8add0672a06fcb29a6be0afa8319'
++COMPRESSED_BYTES = 12666345
++SOURCE_SHA = '55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887'
++SOURCE_BYTES = 3258
++SOURCE_PATH = '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/control/same_thread_memory_v1.cpp'
++CAPTURE_SHA = 'b8f7e85a358e5670bb63bec658cbdf2f16ecc79d1400a1d97e9e0b76e91489c8'
++ORIGINAL_WIRE_SHA = 'c89c00e8b03717a6ab3c9733d7fbb14aeb46c0d7f2ea4c6d7e87097ad0e9ba67'
++ORIGINAL_TOKEN_SHA = '5ddd90248ab0e6bbe298feb5c8ec48e6af28bd3fd9a7a3581cf4330e4f52d08a'
++LEGACY_SHA = '775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c'
++CASES = (('whole_same_thread_read_during_store', 12), ('whole_same_thread_write_during_gather', 14),
++         ('whole_same_thread_read_during_gather', 14))
++
++
++def need(value, message):
++    if not value: raise ValueError(message)
++
++
++def check_cases(prepared):
++    calls = prepared.get('calls')
++    need(type(calls) is list and len(calls) == sum(count for _, count in CASES)
++         and all(type(row) is dict for row in calls), 'complete memory call census required')
++    callers = {'_Z' + str(len(name)) + name + 'v': count for name, count in CASES}
++    need({row.get('caller_mangled') for row in calls} == set(callers), 'exact three original memory callers required')
++    for caller, count in callers.items():
++        rows = [row for row in calls if row['caller_mangled'] == caller]
++        need(len(rows) == count and len({tuple(row['call_range']) for row in rows}) == count,
++             'complete distinct per-caller original API calls required')
++
++
++def prepare_unit(api, *, transport_kind, full_tu_raw, abi_raw, source_path, source_bytes, probe_path, probe_bytes,
++                 declarations, compiler_capture_pin, full_tu_compressed_bytes, full_tu_expanded_limit):
++    need(type(transport_kind) is str and transport_kind == KIND, 'exact memory normalized transport required')
++    need(type(full_tu_expanded_limit) is int and full_tu_expanded_limit == EFFECTIVE_LIMIT
++         and type(full_tu_raw) is bytes and len(full_tu_raw) == EXPANDED_BYTES <= EFFECTIVE_LIMIT
++         and hashlib.sha256(full_tu_raw).hexdigest() == EXPANDED_SHA
++         and type(full_tu_compressed_bytes) is int and full_tu_compressed_bytes == COMPRESSED_BYTES,
++         'exact bounded memory normalized stream required')
++    need(str(source_path) == SOURCE_PATH and type(source_bytes) is bytes and len(source_bytes) == SOURCE_BYTES
++         and hashlib.sha256(source_bytes).hexdigest() == SOURCE_SHA and compiler_capture_pin == CAPTURE_SHA,
++         'exact original G642 source and compiler observation required')
++    path = Path(legacy.__file__)
++    need(hashlib.sha256(path.read_bytes()).hexdigest() == LEGACY_SHA, 'unchanged generic compiler consumer required')
++    derived_abi, abi_receipt = abi_transport.normalize_abi(abi_raw)
++    need(abi_receipt['selected_family'] == 'three-memory-g642', 'exact genuine G642 original ABI family required')
++    prepared = legacy.prepare_unit(api, full_tu_raw=full_tu_raw, abi_raw=derived_abi, source_path=source_path,
++        source_bytes=source_bytes, probe_path=probe_path, probe_bytes=probe_bytes, declarations=declarations,
++        compiler_capture_pin=compiler_capture_pin, full_tu_compressed_bytes=full_tu_compressed_bytes,
++        full_tu_expanded_limit=LEGACY_CEILING)
++    need(hashlib.sha256(path.read_bytes()).hexdigest() == LEGACY_SHA, 'generic compiler consumer changed')
++    need(prepared.get('schema') == 'whole-interface-original-tu-preparation-1'
++         and prepared.get('raw_full_tu_sha256') == EXPANDED_SHA and prepared.get('original_source_sha256') == SOURCE_SHA
++         and prepared.get('public_admission') is False, 'complete memory preparation identity differs')
++    check_cases(prepared)
++    need(prepared['abi_observation']['raw_probe_sha256'] == abi_receipt['derived_strict_sha256'],
++         'unchanged legacy ABI reader must identify its actual derived strict memory input')
++    return {**prepared, 'abi_observation': {**prepared['abi_observation'],
++        'original_raw_probe_sha256': abi_receipt['original_sha256'],
++        'paired_type_role_transport': abi_receipt}, 'normalized_transport': {'kind': KIND, 'source_family': 'three-same-thread-memory-1',
++        'source_sha256': SOURCE_SHA, 'effective_expanded_limit_bytes': EFFECTIVE_LIMIT,
++        'legacy_consumer_implementation_ceiling_bytes': LEGACY_CEILING,
++        'normalized_expanded_bytes': EXPANDED_BYTES, 'normalized_expanded_sha256': EXPANDED_SHA,
++        'compressed_bytes': COMPRESSED_BYTES, 'original_wire_expanded_sha256': ORIGINAL_WIRE_SHA,
++        'original_minified_token_sha256': ORIGINAL_TOKEN_SHA,
++        'original_wire_identity_is_normalized_identity': False, 'compiler_run_or_public_admission_inferred': False}}
+--- /dev/null
++++ b/swdb-project/swdb/_dx100_whole/memory_source_preparation_v1.py
+@@ -0,0 +1,113 @@
++"""Three exact source-root certificates and separately selected body projection.
++
++No source program/model is executed. No context, mapping, resource ownership,
++receiver, runtime or public acceptance is granted by these derived outputs.
++"""
++import hashlib
++import json
++from pathlib import Path
++from swdb import dx100_checked_source as source
++from swdb._dx100_whole import source_memory_selection_v1 as selection
++from swdb._dx100_whole import memory_normalized_compiler_adapter_v1 as compiler
++
++
++def need(value, message):
++    if not value: raise ValueError(message)
++
++
++def canonical(value):
++    return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
++
++
++def digest(value): return hashlib.sha256(canonical(value)).hexdigest()
++
++
++def prepare_roots(*, normalized_tu, source_path, preparation, declarations, abi):
++    """Recheck the complete same graph and every selected function; never filter it."""
++    api = source.binder.__dict__
++    compiler.check_cases(preparation)
++    transport = preparation.get('normalized_transport')
++    need(type(transport) is dict and transport.get('kind') == compiler.KIND
++         and transport.get('source_sha256') == compiler.SOURCE_SHA
++         and transport.get('normalized_expanded_sha256') == compiler.EXPANDED_SHA
++         and transport.get('original_wire_identity_is_normalized_identity') is False,
++         'closed memory transport must survive complete preparation')
++    graph = digest(normalized_tu); prepared_sha = digest(preparation)
++    need(graph == preparation['normalized_full_tu_sha256'] and preparation['abi_observation']['abi'] == abi,
++         'actual same-TU graph and ABI observation differ')
++    rows = []
++    for name, _count in compiler.CASES:
++        root = selection.selected_root(api,normalized_tu=normalized_tu,source_path=source_path,
++            preparation=preparation,function=name,declarations=declarations,abi=abi)
++        need(root['profile']['function'] == name and root['original_normalized_tu_sha256'] == graph,
++             'exact selected original memory root differs')
++        rows.append({'schema':'memory-source-unit-preparation-1','function':name,
++            'source_sha256':compiler.SOURCE_SHA,'complete_preparation_sha256':prepared_sha,
++            'normalized_transport':transport,'original_normalized_tu_sha256':graph,
++            'selected_root':root,'selected_root_sha256':digest(root),
++            'body_CPU_lifetime_mapping_receiver_checks_required':True,
++            'owned_context_or_public_admission':False})
++    need(digest(normalized_tu) == graph and digest(preparation) == prepared_sha,
++         'complete graph or preparation changed during three-root selection')
++    need(len({row['selected_root']['selected_declaration_id'] for row in rows}) == 3,
++         'three distinct original declaration identities required')
++    return {'schema':'memory-three-source-unit-preparation-1','source_sha256':compiler.SOURCE_SHA,
++        'complete_preparation_sha256':prepared_sha,'units':rows,'same_TU_graph_modified_or_filtered':False,
++        'actual_body_CPU_lifetime_or_public_acceptance':False}
++
++
++def prepare_body(*, reads, mapping_pin, physical_inputs, root_certificate, normalized_tu,
++                 source_path, preparation, declarations, abi, assertion_header_pin):
++    """Root supplies the actual mapping; this emits checks, never ownership.
++
++    Final normal SourceUnit composition must still call the fixed receiver and
++    exact allocation/lifetime instrumentation, and compare these observations.
++    """
++    from swdb._dx100_whole import source_argument_staging_v2 as staging
++    from swdb._dx100_whole import source_dispatch_v3 as dispatch
++    from swdb._dx100_whole import source_statements_v2 as statements
++    from swdb._dx100_whole import receiver_memory_v1 as receiver
++    from swdb._dx100_whole import runtime_projection_v4 as runtime
++    mapping = reads.document(mapping_pin)
++    need(type(mapping) is dict and set(mapping) == {'schema','owner','source_sha256','capture_observation_sha256',
++        'physical_inputs_sha256','function','object'} and mapping['schema'] == 'root-selected-memory-source-object-mapping-1'
++        and type(mapping['owner']) is str and mapping['owner'].strip()
++        and mapping['source_sha256'] == compiler.SOURCE_SHA
++        and mapping['capture_observation_sha256'] == compiler.CAPTURE_SHA
++        and mapping['physical_inputs_sha256'] == digest(physical_inputs), 'exact external memory mapping selection required')
++    function = mapping['function']; profile = selection.profile(function)
++    roots = prepare_roots(normalized_tu=normalized_tu, source_path=source_path,
++        preparation=preparation,declarations=declarations,abi=abi)
++    current = next(row for row in roots['units'] if row['function'] == function)
++    need(current == root_certificate, 'complete selected original source certificate differs')
++    need(type(mapping['object']) is dict and set(mapping['object']) == {'object_id','guest_base','physical_base'},
++         'exact one-object ordinary mapping required')
++    owners = [node for node in statements.walk(normalized_tu) if node.get('kind') == 'FunctionDecl'
++        and node.get('id') == current['selected_root']['selected_declaration_id']]
++    need(len(owners) == 1, 'one actual selected original definition required')
++    owner = owners[0]; bodies = [node for node in owner.get('inner',[]) if node.get('kind') == 'CompoundStmt']
++    arrays = [node for node in statements.walk(owner) if node.get('kind') == 'VarDecl'
++        and node.get('name') == 'data' and node.get('type',{}).get('qualType') in ('std::uint32_t[16]','std::uint32_t [16]')]
++    need(len(bodies) == len(arrays) == 1, 'exact selected data16 automatic declaration required')
++    node = arrays[0]; caller = profile['caller_mangled']
++    source_pin = digest({'source_sha256':compiler.SOURCE_SHA,'caller':caller,'local_id':node['id'],'declaration_sha256':digest(node)})
++    atlas = dispatch.prepare_atlas([{**mapping['object'],'extent':16,'dtype':0,'source_pin':source_pin}])
++    allocations = [{'object_index':0,'object_id':mapping['object']['object_id'],'caller':caller,'local_id':node['id'],
++        'declaration_sha256':digest(node),'declaration_range':list(source.binder._span(node)),
++        'scope_end_offset':source.binder._span(bodies[0])[1],'allocation_thread':0,
++        'allocation_origin':'checked-original-automatic-declaration'}]
++    receiver.check_allocations(allocations,atlas,compiler.SOURCE_SHA,1)
++    runtime.memory_object(atlas,allocations,profile,caller,0,source.binder.__dict__,owner)
++    need(not any(item.get('kind') in {'ForStmt','WhileStmt','DoStmt'} for item in statements.walk(owner)),
++         'exact no-loop memory source profile required')
++    stage = staging.Stager(source.binder.__dict__,dispatch.__dict__,normalized_tu,caller=caller,
++        source_path=source_path,source_text=Path(source_path).read_text(encoding='ascii'),declarations=declarations,
++        abi=abi,atlas=atlas,live_local_ids=set(),thread='owned_thread')
++    checked = statements.Lowerer(stage,preparation,assertion_header_pin=assertion_header_pin).lower()
++    need(checked['public_admission'] is False and checked['receiver_state_and_harness_draw_binding_required'] is True,
++         'body projection cannot substitute for owned receiver/draw binding')
++    reads.document(mapping_pin); reads.recheck()
++    return {'schema':'memory-source-body-preparation-1','function':function,
++        'root_certificate_sha256':digest(current),'mapping_pin':mapping_pin,'atlas':atlas,'allocations':allocations,
++        'statements':checked,'statement_preparation_sha256':digest(checked),
++        'owned_runtime_context_receiver_preparation_still_required':True,'public_admission':False}
+--- a/swdb-project/swdb/_dx100_whole/normalized_capture_ingress_v2.py
++++ b/swdb-project/swdb/_dx100_whole/normalized_capture_ingress_v2.py
+@@ -30,7 +30,7 @@
+ ROOT_EXECUTION_SHA='77e31a0c6541b6162450afbef5f7113148409dd6c346501815e88197ddb40d3a'
+ TRANSFORM_RESULT_SHA='387215380fc35422ec92ff0d751421a8d7e29a05555b3efa6c1169d9966f16a1'
+ CLOSED_SHA='748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af'
+-NORMALIZED_COMPILER_SHA='0bbf572196677dbc926bb5d331022c2766e44c287bd1ea3cce0ef077153a8a01'
++NORMALIZED_COMPILER_SHA='8acf26651a1e682bb6857128f1a0d5e184b52f489cccd32ea60eb471c1a65ff3'
+ NORMALIZER_SHA='6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941'
+ CODEC_SHA='aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef'
+ RAW_SHA='cd7f4fa566146b9b061c2084b52b1143efc054d4c4d75cbe4f7911c81e326622'
+--- a/swdb-project/swdb/_dx100_whole/normalized_compiler_adapter_v1.py
++++ b/swdb-project/swdb/_dx100_whole/normalized_compiler_adapter_v1.py
+@@ -8,6 +8,7 @@
+ from pathlib import Path
+ 
+ from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy
++from swdb._dx100_whole import abi_role_transport_v1 as abi_transport
+ 
+ KIND='complete-original-tu-paired-type-gzip-2'
+ EFFECTIVE_LIMIT=201326592
+@@ -31,7 +32,9 @@
+     The legacy function has a fixed 512 MiB implementation parameter. Passing
+     that unchanged sentinel below does not enlarge this wrapper's 192 MiB bound:
+     the exact bytes/type/count/hash are checked first, and all parser input bytes
+-    are the same already checked object. The legacy function is not modified.
++    are the same already checked full-TU object. The ABI inlet separately retains
++    its original identity and passes an explicitly derived strict stream. The
++    legacy function is not modified.
+     """
+     need(type(transport_kind) is str and transport_kind==KIND,'exact normalized transport discriminator required')
+     need(type(full_tu_expanded_limit) is int and full_tu_expanded_limit==EFFECTIVE_LIMIT
+@@ -41,13 +44,20 @@
+         'exact bounded first normalized stream identity required')
+     legacy_path=Path(legacy.__file__)
+     need(hashlib.sha256(legacy_path.read_bytes()).hexdigest()==LEGACY_SHA,'unchanged physical legacy compiler consumer required')
+-    prepared=legacy.prepare_unit(api,full_tu_raw=full_tu_raw,abi_raw=abi_raw,source_path=source_path,source_bytes=source_bytes,
++    derived_abi, abi_receipt=abi_transport.normalize_abi(abi_raw)
++    need(abi_receipt['selected_family']=='first-source-v10','exact first-source original ABI family required')
++    prepared=legacy.prepare_unit(api,full_tu_raw=full_tu_raw,abi_raw=derived_abi,source_path=source_path,source_bytes=source_bytes,
+         probe_path=probe_path,probe_bytes=probe_bytes,declarations=declarations,compiler_capture_pin=compiler_capture_pin,
+         full_tu_compressed_bytes=full_tu_compressed_bytes,full_tu_expanded_limit=LEGACY_CEILING)
+     need(hashlib.sha256(legacy_path.read_bytes()).hexdigest()==LEGACY_SHA,'legacy compiler consumer changed during preparation')
+     need(prepared.get('schema')=='whole-interface-original-tu-preparation-1' and prepared.get('raw_full_tu_sha256')==EXPANDED_SHA
+         and prepared.get('public_admission') is False,'legacy complete-TU preparation identity differs')
++    need(prepared['abi_observation']['raw_probe_sha256']==abi_receipt['derived_strict_sha256'],
++        'unchanged legacy ABI reader must identify its actual derived strict input')
+     return {**prepared,'schema':'whole-interface-normalized-original-tu-preparation-1',
++        'abi_observation':{**prepared['abi_observation'],
++            'original_raw_probe_sha256':abi_receipt['original_sha256'],
++            'paired_type_role_transport':abi_receipt},
+         'normalized_transport':{'kind':KIND,'effective_expanded_limit_bytes':EFFECTIVE_LIMIT,
+             'legacy_consumer_implementation_ceiling_bytes':LEGACY_CEILING,'normalized_expanded_bytes':EXPANDED_BYTES,
+             'normalized_expanded_sha256':EXPANDED_SHA,'compressed_bytes':COMPRESSED_BYTES,
+--- /dev/null
++++ b/swdb-project/swdb/_dx100_whole/strict_minify_v2.py
+@@ -0,0 +1,138 @@
++"""2026-10-16 ET. Strict token-preserving full JSON identity projection.
++
++No AST nodes are omitted and no JSON value/key/order/token spelling changes.
++Complete gzip provenance and downstream full-TU semantic checks remain required.
++No compiler, subprocess, network or project imports.
++"""
++import hashlib
++import json
++import re
++
++CHUNK=65536
++MAX_RETAINED=134217728
++MAX_RAW=2147483648
++
++
++class Refused(ValueError):pass
++
++
++def need(ok,message):
++    if not ok:raise Refused(message)
++
++
++class Reader:
++    def __init__(self,source,limit,check):
++        self.source=source;self.limit=limit;self.check=check;self.buffer=b'';self.at=0;self.count=0;self.hash=hashlib.sha256();self.eof=False
++    def fill(self):
++        if self.at==len(self.buffer) and not self.eof:
++            self.check();chunk=self.source.read(CHUNK)
++            need(type(chunk) is bytes and len(chunk)<=CHUNK,'bounded original binary JSON read required')
++            self.count+=len(chunk);need(self.count<=self.limit,'complete raw JSON allowance exceeded')
++            self.hash.update(chunk);self.buffer=chunk;self.at=0;self.eof=not chunk
++    def available(self):
++        self.fill();return self.buffer[self.at:]
++    def peek(self):
++        self.fill();return self.buffer[self.at] if self.at<len(self.buffer) else None
++    def take(self,count=1):
++        self.fill();need(0<count<=len(self.buffer)-self.at,'truncated original JSON stream')
++        start=self.at;self.at+=count;return self.buffer[start:self.at]
++    def whitespace(self):
++        while True:
++            value=self.available()
++            if not value:return
++            match=re.search(rb'[^ \t\r\n]',value);count=match.start() if match else len(value)
++            if count:self.take(count)
++            if match:return
++
++
++class Minifier:
++    def __init__(self,source,sink,*,raw_limit,retained_limit,check):
++        need(type(raw_limit) is int and 0<raw_limit<=MAX_RAW and type(retained_limit) is int
++            and 0<retained_limit<=MAX_RETAINED,'explicit raw/retained identity-projection limits required')
++        self.reader=Reader(source,raw_limit,check);self.sink=sink;self.check=check;self.raw_limit=raw_limit
++        self.retained_limit=retained_limit;self.output=bytearray();self.output_bytes=0;self.output_hash=hashlib.sha256()
++        self.tokens=0;self.max_depth=0;self.key_bytes=0;self.peak_key_bytes=0;self.objects=0;self.arrays=0;self.keys=0
++    def emit(self,value):
++        need(type(value) is bytes and self.output_bytes+len(value)<=self.retained_limit,'complete minified TU exceeds retained file cap')
++        self.output_bytes+=len(value);self.output_hash.update(value)
++        # Never combine a maximum string token with the existing buffer into a
++        # write larger than the final metadata reserve. Every write <=64 KiB.
++        at=0
++        while at<len(value):
++            amount=min(CHUNK-len(self.output),len(value)-at)
++            self.output.extend(value[at:at+amount]);at+=amount
++            if len(self.output)==CHUNK:self.flush()
++    def flush(self):
++        self.check()
++        if self.output:
++            need(self.sink.write(self.output)==len(self.output),'short minified artifact write');self.output.clear()
++    def string(self,*,key=False):
++        r=self.reader;need(r.take()==b'"','JSON string required');token=bytearray(b'"')
++        while True:
++            available=r.available();need(available,'truncated JSON string')
++            match=re.search(rb'["\\\x00-\x1f]',available);count=match.start() if match else len(available)
++            if count:token.extend(r.take(count))
++            need(len(token)<= (4096 if key else 1048576),'bounded compiler JSON key/string required')
++            if not match:continue
++            marker=r.take();token.extend(marker)
++            if marker==b'"':break
++            need(marker==b'\\','raw JSON string control byte refused');token.extend(r.take())
++        need(len(token)<= (4096 if key else 1048576),'bounded complete compiler JSON string required')
++        try:decoded=json.loads(token.decode('utf-8'))
++        except (ValueError,UnicodeError) as error:raise Refused('invalid compiler JSON UTF8/escape') from error
++        need(type(decoded) is str,'ordinary JSON string required');self.emit(bytes(token));return decoded
++    def scalar(self):
++        r=self.reader;byte=r.peek()
++        if byte==34:self.string();return
++        for token in (b'true',b'false',b'null'):
++            if byte==token[0]:
++                for part in token:need(r.take()==bytes([part]),'malformed JSON literal')
++                self.emit(token);return
++        token=bytearray()
++        while r.peek() is not None and r.peek() in b'-+0123456789.eE':
++            token.extend(r.take());need(len(token)<=128,'bounded JSON number required')
++        need(re.fullmatch(rb'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?',token),'malformed JSON scalar')
++        # Preserve the numeric lexeme; the unchanged full-TU decoder retains its
++        # finite-number policy rather than reformatting a value here.
++        self.emit(bytes(token))
++    def value(self,depth=0):
++        need(depth<=256,'bounded complete compiler JSON depth required');self.max_depth=max(self.max_depth,depth)
++        self.tokens+=1;need(self.tokens<=20000000,'bounded complete JSON token count required')
++        if self.tokens%4096==0:self.check()
++        r=self.reader;r.whitespace();byte=r.peek()
++        if byte==123:
++            self.objects+=1;self.emit(r.take());r.whitespace();seen=set();charged=0
++            if r.peek()!=125:
++                while True:
++                    key=self.string(key=True);need(key not in seen,'duplicate compiler JSON key')
++                    seen.add(key);count=len(key.encode('utf-8','surrogatepass'))+64;charged+=count;self.key_bytes+=count;self.keys+=1
++                    self.peak_key_bytes=max(self.peak_key_bytes,self.key_bytes)
++                    need(len(seen)<=1024 and self.key_bytes<=16777216,'bounded live JSON key census required')
++                    r.whitespace();need(r.take()==b':','JSON object colon required');self.emit(b':');self.value(depth+1);r.whitespace()
++                    marker=r.take();need(marker in (b',',b'}'),'JSON object delimiter required');self.emit(marker)
++                    if marker==b'}':break
++                    r.whitespace()
++            else:self.emit(r.take())
++            self.key_bytes-=charged
++        elif byte==91:
++            self.arrays+=1;self.emit(r.take());r.whitespace()
++            if r.peek()!=93:
++                while True:
++                    self.value(depth+1);r.whitespace();marker=r.take();need(marker in (b',',b']'),'JSON array delimiter required');self.emit(marker)
++                    if marker==b']':break
++            else:self.emit(r.take())
++        else:self.scalar()
++    def run(self):
++        self.value();self.reader.whitespace();need(self.reader.peek() is None,'one complete original JSON stream only')
++        need(self.key_bytes==0,'complete JSON key-stack closure required');self.flush()
++        return {'schema':'full-tu-token-preserving-identity-1','raw_bytes':self.reader.count,'raw_sha256':self.reader.hash.hexdigest(),
++            'minified_bytes':self.output_bytes,'minified_sha256':self.output_hash.hexdigest(),'raw_limit':self.raw_limit,
++            'retained_limit':self.retained_limit,'objects':self.objects,'arrays':self.arrays,'values':self.tokens,'keys':self.keys,
++            'max_depth':self.max_depth,'peak_live_key_charge':self.peak_key_bytes,'complete_JSON_syntax_and_duplicate_key_check':True,
++            'outside_string_whitespace_only_removed':True,'all_token_spellings_and_key_order_preserved':True,
++            'AST_nodes_elided':False,'independent_filtered_parse_join':False,'downstream_complete_TU_consumer_required':True,
++            'compiler_success_or_source_admission_inferred':False}
++
++
++def minify(source,sink,*,raw_limit,retained_limit,check):
++    return Minifier(source,sink,raw_limit=raw_limit,retained_limit=retained_limit,check=check).run()
+--- a/swdb-project/swdb/dx100_checked_source.py
++++ b/swdb-project/swdb/dx100_checked_source.py
+@@ -172,17 +172,24 @@
+ 
+ def producer_paths():
+     """Actual fixed imported/read/exec consumers, including transport and aliases."""
+-    from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress
++    from swdb._dx100_whole import capture_family_dispatch_v1 as ingress
+     from swdb._dx100_whole import closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2
+     from swdb._dx100_whole import runtime_projection_v3, normalized_compiler_adapter_v1
++    from swdb._dx100_whole import normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1
++    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1
++    from swdb._dx100_whole import abi_role_transport_v1, strict_minify_v2
+     modules = (compiler, codec, model, receiver, memory_receiver, staging, dispatch,
+         globals_observer, statements, binder, unit_registry, memory_selection, memory_runtime, resources,
+-        ingress, closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)
++        ingress, normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1,
++        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,
++        abi_role_transport_v1, strict_minify_v2,
++        closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)
+     rows = [(Path(module.__file__).name, Path(module.__file__)) for module in modules]
+     need(len({name for name, _path in rows}) == len(rows), 'producer module names must be unique')
+     paths = dict(rows)
+     fixed = {
+         'dx100_checked_source.py': Path(__file__), 'dx100_whole_checked.py': Path(contracts.__file__),
++        'memory_capture_facts_v1.json': Path(__file__).parent / '_dx100_whole/memory_capture_facts_v1.json',
+         'package/__init__.py': Path(__file__).with_name('__init__.py'),
+         '_dx100_whole/__init__.py': Path(__file__).parent / '_dx100_whole/__init__.py',
+         'runtime_projection_v2.py': Path(__file__).parent / '_dx100_whole/runtime_projection_v2.py',
+@@ -214,8 +221,8 @@
+     need(type(capture) is dict, 'typed complete capture selection required')
+     if capture.get('kind') == CAPTURE_KIND:
+         return capture['compressed_tu'], capture['observation']
+-    from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress
+-    need(capture.get('kind') == ingress.KIND, 'unknown complete capture input roles')
++    from swdb._dx100_whole import capture_family_dispatch_v1 as ingress
++    need(capture.get('kind') in ingress.NORMALIZED_KINDS, 'unknown complete capture input roles')
+     return capture['transform']['normalized_gzip'], capture['original']['observation']
+ 
+ 
+@@ -393,7 +400,7 @@
+     requested = reads.portable(policy['proof_source'])
+     need(Path(source).resolve(strict=True) == Path(selection.library.resolve(policy['proof_source']))
+          and sha(requested) == source_sha, 'exact selected registered proof buffer required')
+-    from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress
++    from swdb._dx100_whole import capture_family_dispatch_v1 as ingress
+     captured_path, original, tu, declarations, prepared, stream_receipt = ingress.complete_capture(policy, reads, selection.project)
+     need(requested == original, 'explicit first-fixture identical-buffer projection differs')
+     expected = policy['expected']

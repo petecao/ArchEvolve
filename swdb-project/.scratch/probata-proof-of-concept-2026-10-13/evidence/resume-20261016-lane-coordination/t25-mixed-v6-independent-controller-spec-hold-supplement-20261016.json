@@ -1,0 +1,21 @@
+{
+  "actual_execution_by_this_reviewer": false,
+  "date": "2026-10-16 ET",
+  "decision": "HOLD V6 admission: independent root resource-contract finding supersedes the prior no-blocker conclusion",
+  "finding": "Final print after successful finalization emits the full result even for a refused workflow; the declared 8 KiB per console-record cap is not enforced on that path.",
+  "next": "Root is preparing a V7 bounded-console repair and regression control; exact successor review/admission required. Source/scientific/runtime findings otherwise unchanged.",
+  "prior_review": {
+    "bytes": 13692,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-mixed-v6-independent-controller-spec-review-20261016.json",
+    "sha256": "7764fb098a81a77430a98c03aed7f97d28e8addc0156235914615f48dd306fcb"
+  },
+  "review_limit_correction": "My review checked the two explicit console_failure wrappers but missed the final full-result print. The initial receipt is preserved as review history; no actual or scientific success was claimed.",
+  "reviewer": "/root/ticket25/caller_assess",
+  "root_reported_counterexample": {
+    "actual_profile_executed": false,
+    "console_bytes": 10063,
+    "declared_console_cap": 8192,
+    "final_payload_bytes": 10189
+  },
+  "scientific_acceptance": false
+}

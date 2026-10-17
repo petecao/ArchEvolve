@@ -1,0 +1,183 @@
+--- a/swdb/c_lowering.py
++++ b/swdb/c_lowering.py
+@@ -202,6 +202,7 @@
+     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
+     stdlib_provenance: dict = field(default_factory=dict)  # original full-TU declarations and header closure
+     stdlib_substitutions: tuple = ()  # printer-requested free std calls, independently bound in the original TU
++    whole_source: object | None = None  # exact checked source unit, freshly revalidated
+     vector_reallocation_candidate: dict = field(default_factory=dict)  # pending obligations; grants no origin
+ 
+     @property
+@@ -212,6 +213,8 @@
+     def anchors_json(self):
+         data = {"tool": self.tool, "function": self.function, "c_lowering_sha256": self.sha256,
+                 "anchors": list(self.anchors)}
++        if self.whole_source is not None:
++            data["whole_source"] = self.whole_source.certificate
+         if self.summaries:
+             data["summaries"] = list(self.summaries)
+         if self.models:
+@@ -2707,7 +2710,7 @@
+ # --- lowering ---------------------------------------------------------------------------------------
+ 
+ def lower(source, function, includes=(), defines=(), summaries=None, semantics=None,
+-          array_domains=None, array_domain_contract=None):
++          array_domains=None, array_domain_contract=None, whole_source_selection=None):
+     """The C lowering of `function` (and of every function, class and global it uses) from the C++ file `source`.
+ 
+     `summaries` maps the C++ name of a function to the summary that stands for it ({name: summary ID or
+@@ -2719,6 +2722,16 @@
+     gets a generated hazard probe (`SWDB_TILE_READ` / `SWDB_TILE_WRITE`, ID `<function>.probe<N>`), listed in
+     `Lowering.probes` with its C++ source range so the C++ side gets the same probe. A tile pointer used any
+     other way is outside the subset. Without `semantics` the output is unchanged."""
++    if whole_source_selection is not None:
++        from swdb import dx100_checked_source
++        if includes or summaries or semantics or array_domains or array_domain_contract:
++            raise Unsupported('checked whole source cannot mix generic summary/window inputs')
++        try:
++            unit = dx100_checked_source.compose(whole_source_selection, source=source,
++                                               function=function, defines=defines)
++            return Lowering(**dx100_checked_source.lowering_fields(unit))
++        except (dx100_checked_source.Refused, ValueError, OSError, TypeError, KeyError, AttributeError) as exc:
++            raise Unsupported('checked whole source: ' + str(exc)) from None
+     tool = locate()
+     if tool.missing:
+         raise LoweringError(tool.missing)
+--- a/swdb/cbmc_translator.py
++++ b/swdb/cbmc_translator.py
+@@ -1067,7 +1067,7 @@
+ 
+ 
+ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, check=False, setup=(),
+-            state=(), finish=(), array_domains=None):
++            state=(), finish=(), array_domains=None, whole_source=None):
+     """(C text of the harness, Plan) for the proof unit `interface` and its clause list `rows` (Clause).
+ 
+     `sizes`: {parameter: bound} (each an integer parameter of the unit); `cap`: the length of every interface
+@@ -1079,6 +1079,17 @@
+     `array_domains` (2026-10-15 ET) only plans entry extents against capacity. Planner metadata alone is
+     insufficient for proof admission: checked WP/CBMC paths require independent source certificates;
+     unchecked adapter paths and runtime-check refuse these jobs."""
++    profile = None
++    if whole_source is not None:
++        from swdb import dx100_checked_source
++        if call is not None or check or cap != 0:
++            raise Untranslatable('checked whole source requires its original scalar proof interface')
++        try:
++            profile = dx100_checked_source.harness_profile(whole_source, interface, rows,
++                sizes, knobs, setup, state, finish, array_domains)
++        except (dx100_checked_source.Refused, ValueError, TypeError, KeyError) as exc:
++            raise Untranslatable(str(exc)) from None
++        setup = profile['setup']
+     for name in sizes:
+         if not interface.scalar(name):
+             raise Untranslatable(f"size bound {name} is not an integer parameter of {interface.function}")
+@@ -1109,6 +1120,8 @@
+         lines.append(f"  {name} = ({ctype}) swdb_next();")
+         plan.draws.append({"name": name, "role": "knob", "ctype": ctype, "range": list(legal)})
+     lines += [f"  {statement}" for statement in setup]
++    if profile is not None:
++        plan.draws.extend(profile["draws"])  # setup already drew each slot exactly once
+     for name in state:
+         lines.append(f"  {name} = (int) swdb_next();")
+         plan.draws.append({"name": name, "role": "state", "ctype": "int"})
+@@ -1117,6 +1130,8 @@
+         if draw["role"] == "element":
+             pointer, index = draw["name"].split("[")
+             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], f'swdb_buf_{pointer}[{index[:-1]}]')};")
++        elif profile is not None and draw["role"] == "whole-model-choice":
++            lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], draw['c_lvalue'])};")
+         else:
+             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};")
+     # A sanitizer may terminate inside the target without returning to main's final flush.
+@@ -1155,7 +1170,8 @@
+                               logic=logic, post=True)
+             lines.append(f'  SWDB_PROP({text}, "{clause.name}");')
+         elif clause.kind == "assigns":
+-            lines.append(f'  SWDB_PROP({_frame(clause, interface, cap, caps, counter, logic)}, "{clause.name}");')
++            frame = "1" if profile is not None else _frame(clause, interface, cap, caps, counter, logic)
++            lines.append(f'  SWDB_PROP({frame}, "{clause.name}");')
+     lines.append(f'  SWDB_REACH("{REACH_END}");')
+     lines.append("#if defined(SWDB_DIFFERENTIAL)")
+     if result:
+@@ -1209,6 +1225,7 @@
+         "#endif",
+         "    else printf(\" end=%s\\n\", code == 1 ? \"check\" : \"infeasible\");",
+         "    fflush(stdout);",
++        *(("    if (fgets(swdb_line, sizeof swdb_line, stdin)) return 3;", "    return 0;") if profile is not None else ()),
+         "  }",
+         "  return 0;",
+         "}",
+--- a/swdb/proof_semantics.py
++++ b/swdb/proof_semantics.py
+@@ -136,6 +136,9 @@
+ 
+ def check(library, entry_id, data, error):
+     """The checks of an entry that covers calls (called by swdb.formal_frame for proof_semantics entries)."""
++    from swdb import dx100_whole_checked
++    if dx100_whole_checked.checked(data):
++        return dx100_whole_checked.check(library, data, error)
+     rules = {r.get("id") for r in data.get("rules") or [] if isinstance(r, dict)}
+     interface = data.get("hardware_interface")
+     calls = data.get("calls")
+@@ -523,9 +526,18 @@
+     return re.sub(declaration, lambda _match: "\n".join(rows), text), objects
+ 
+ 
+-def model_for(library, entry_id, defines=()):
++def model_for(library, entry_id, defines=(), *, source_unit=None):
+     """The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults."""
+     data = library.get(entry_id)
++    from swdb import dx100_whole_checked, dx100_checked_source
++    if dx100_whole_checked.checked(data):
++        if source_unit is None or source_unit.selection.entry_id != entry_id:
++            raise ValueError('whole checked model requires its exact complete source/receiver unit')
++        dx100_whole_checked.policy(library, data)
++        dx100_checked_source.recheck(source_unit)
++        return Model(**dx100_checked_source.model_fields(source_unit))
++    if source_unit is not None:
++        raise ValueError('a checked whole source unit cannot select a legacy model')
+     constants = _constants(data, defines)
+     parts = [f"/* Generated by swdb.proof_semantics: the C model of {entry_id} (version {data.get('version')}). */"]
+     parts += [f"#define {name} {value}" for name, value in constants.items()]
+@@ -554,7 +566,10 @@
+     """
+     from swdb import bounded_initialization, dx_array_domains
+     found = {}
++    from swdb import dx100_whole_checked
+     for entry in current(library):
++        if dx100_whole_checked.checked(library.get(entry)):
++            continue  # whole units gain no generic per-call or pointer exemptions
+         model = model_for(library, entry, defines)
+         policy = bounded_initialization._dx100_policy(library, model, defines)
+         if policy is None:
+@@ -570,7 +585,10 @@
+     """Every audited external call needs its exact prototype and model binding."""
+     from swdb import bounded_initialization
+     found = {}
++    from swdb import dx100_whole_checked
+     for entry in current(library):
++        if dx100_whole_checked.checked(library.get(entry)):
++            continue  # whole units gain no generic per-call or pointer exemptions
+         model = model_for(library, entry, defines)
+         policy = bounded_initialization._dx100_policy(library, model, defines)
+         if policy is None:
+--- a/swdb/formal_frame.py
++++ b/swdb/formal_frame.py
+@@ -340,6 +340,16 @@
+     """The C lowering of a proof_unit's baseline function (cached per source sha256), or the LoweringError."""
+     from swdb import c_lowering, proof_semantics
+     path = library.resolve(unit['source'])
++    from swdb import dx100_checked_source
++    selection = dx100_checked_source.select_baseline(library, unit)
++    if selection is not None:
++        # Source bytes and summary names do not identify an atlas/receiver/TU.
++        # Always freshly compose this route, bypassing the generic _LOWERED cache.
++        try:
++            return c_lowering.lower(path, unit['function'], defines=dx100_checked_source.DEFINES,
++                                    whole_source_selection=selection)
++        except c_lowering.LoweringError as exc:
++            return exc
+     options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines
+     summaries = {**summarized(library, unit['function']), **options.get('summaries', {})}   # ticket 24: summaries
+     options['summaries'] = summaries

@@ -1,0 +1,267 @@
+{
+  "date": "2026-10-16 ET",
+  "observed_utc": "2026-10-16T20:42:26.317627+00:00",
+  "status": "ROOT_CONTROLS_PASSED",
+  "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2",
+  "cases": 30,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "cache_absent": true,
+  "guard": {
+    "cpu_seconds": 228.575405,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 294875136,
+    "timed_out": false,
+    "wall_seconds": 226.8016241947189,
+    "rss_cap_bytes": 8589934592,
+    "workers": 1,
+    "whole_seconds": 1200
+  },
+  "outer": {
+    "exit_code": 0,
+    "peak_rss_bytes": 348352512,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 228.90730455797166,
+    "cpu_seconds": 276.180743
+  },
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T20:41:38Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2",
+        "lease_generation": 615,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.72,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T20:37:49Z"
+      }
+    },
+    "launch.json": {
+      "created_utc": "2026-10-16T20:37:49.495448+00:00",
+      "source": "/data1/yanruj/probata-resume-20261016-dcdecf31",
+      "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+      "node": 0,
+      "command": [
+        "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/pytest-source-cache",
+        "-c",
+        "\"\"\"2026-10-16 ET. Mixed-pair public controls at immutable sourcedcdecf31; no real WP/CBMC.\"\"\"\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nimport xml.etree.ElementTree as ET\n\nassert sys.flags.isolated and sys.flags.dont_write_bytecode and not sys.flags.optimize\nraw = Path(os.environ['PROBATA_OUTPUT']).resolve()\nsource = Path('/data1/yanruj/probata-resume-20261016-dcdecf31')\nassert Path.cwd().resolve() == source, 'root wrapper must start at the immutable repository root'\nproject = source / 'swdb-project'\nassert project.is_dir()\nos.chdir(project)\nassert raw.is_dir() and sys.pycache_prefix == str(raw / 'pytest-source-cache')\nassert not Path(sys.pycache_prefix).exists()\nassert os.environ['SWDB_VERIFIER_RSS_CAP_BYTES'] == '8589934592'\nclang = '/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++'\nfor path, digest in {'/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++': '3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4', '/data1/yanruj/venvs/swdb-test/bin/python': 'e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f', '/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc': 'a62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995'}.items():\n    assert hashlib.sha256(Path(path).read_bytes()).hexdigest() == digest, path\nos.environ.update(SWDB_CLANG=clang,\n                  SWDB_CBMC='none', SWDB_FRAMA_C='none', SWDB_PAIR_ACTUAL='0', SWDB_MIXED_PAIR_ACTUAL='0',\n                  PYTHONNOUSERSITE='1', PYTHONSAFEPATH='1', PYTHONPATH=str(project),\n                  PYTHONDONTWRITEBYTECODE='1', PYTHONPYCACHEPREFIX=str(raw / 'pytest-source-cache'),\n                  PYTEST_DISABLE_PLUGIN_AUTOLOAD='1')\nsys.path[:0] = [str(project), str(project / 'tests')]\nimport pytest\n\nnodes = ['tests/test_pair_pointer_initialization.py', 'tests/test_pair_pointer_workflow.py::test_mixed_pair_lowering_and_native_identity_agree_without_pointee_access', 'tests/test_pair_pointer_workflow.py::test_unknown_pointer_pair_input_refuses_and_missing_models_do_not_launch', 'tests/test_pair_pointer_workflow.py::test_each_mixed_pair_body_reaches_public_parser_with_exact_contract', 'tests/test_pair_workflow.py::test_public_pair_lowering_preserves_values_copies_fields_and_self_assignment', 'tests/test_pair_workflow.py::test_uninitialized_pair_constructor_input_is_refused_by_public_lowering', 'tests/test_pair_workflow.py::test_pair_copy_and_assignment_do_not_initialize_unknown_source_storage', 'tests/test_pair_workflow.py::test_wrong_pair_field_has_a_defined_concrete_witness', 'tests/test_pair_workflow.py::test_pair_caller_without_current_member_proofs_never_launches_standin', 'tests/test_pair_workflow.py::test_changed_initializedness_source_invalidates_frozen_translator_before_standin', 'tests/test_pair_workflow.py::test_profile_refuses_output_anywhere_inside_full_checkout_before_creation', 'tests/test_pair_workflow.py::test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke']\nprogress = []\n\n\nclass Progress:\n    def pytest_runtest_logreport(self, report):\n        progress.append({'nodeid': report.nodeid, 'when': report.when, 'outcome': report.outcome})\n        (raw / 'focus-progress.json').write_text(json.dumps(progress, indent=2) + '\\n')\n\n\narguments = ['-q', '--tb=short', '-p', 'no:cacheprovider', '--rootdir', str(project),\n             '--basetemp', str(raw / 'pytest'), '--junitxml', str(raw / 'junit.xml'), *nodes]\n(raw / 'focus-arguments.json').write_text(json.dumps(arguments, indent=2) + '\\n')\nstatus = int(pytest.main(arguments, plugins=[Progress()]))\ncensus = {'exit_code': status, 'cases': 0, 'failures': [], 'errors': [], 'skips': [],\n          'cache_absent': not Path(sys.pycache_prefix).exists(), 'source': str(project),\n          'scope': '30 public control cases only: 11 child-free initializedness and 19 compiler/native/parser cases; Clang/native sanitizers or explicit parser-error stand-ins. No actual WP/CBMC/formal acceptance.'}\nif (raw / 'junit.xml').is_file():\n    root = ET.parse(raw / 'junit.xml').getroot()\n    cases = list(root.iter('testcase'))\n    census.update(cases=len(cases),\n                  failures=[c.get('name') for c in cases if c.find('failure') is not None],\n                  errors=[c.get('name') for c in cases if c.find('error') is not None],\n                  skips=[c.get('name') for c in cases if c.find('skipped') is not None])\n(raw / 'focus-result.json').write_text(json.dumps(census, indent=2) + '\\n')\nif status == 0 and (census['cases'] != 30 or census['skips'] or census['failures'] or census['errors'] or not census['cache_absent']):\n    raise SystemExit('incomplete regression selection, skipped/failed cases or bytecode cache created')\nraise SystemExit(status)\n"
+      ],
+      "timeout_seconds": 1200,
+      "rss_cap_bytes": 8589934592,
+      "workers": 1,
+      "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+      "planned_raw_budget_bytes": 2147483648,
+      "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+      "readers": [
+        "root",
+        "ticket25"
+      ],
+      "log_name": "acceptance.log",
+      "reviewed_wrapper_reuse": {
+        "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+        "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 348352512,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 228.90730455797166,
+      "cpu_seconds": 276.180743
+    },
+    "resources.json": {
+      "cpu_seconds": 228.575405,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 294875136,
+      "timed_out": false,
+      "wall_seconds": 226.8016241947189
+    },
+    "focus-result.json": {
+      "exit_code": 0,
+      "cases": 30,
+      "failures": [],
+      "errors": [],
+      "skips": [],
+      "cache_absent": true,
+      "source": "/data1/yanruj/probata-resume-20261016-dcdecf31/swdb-project",
+      "scope": "30 public control cases only: 11 child-free initializedness and 19 compiler/native/parser cases; Clang/native sanitizers or explicit parser-error stand-ins. No actual WP/CBMC/formal acceptance."
+    },
+    "source-after.json": {
+      "commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    }
+  },
+  "formal_WP_CBMC_disabled": true,
+  "actual_flags": {
+    "SWDB_PAIR_ACTUAL": "0",
+    "SWDB_MIXED_PAIR_ACTUAL": "0"
+  },
+  "physical_metadata_pins": {
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/lane.json",
+      "bytes": 844,
+      "sha256": "e49c36dc9888a747f669c5df1dd3dade387afe1c6a46dcb67b9cd07b13a2da47"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/launch.json",
+      "bytes": 6062,
+      "sha256": "e52e2c9f88d870726016f9983be61f042c1d66d3c03d2f10d15250bbec74fcd2"
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/resources.json",
+      "bytes": 166,
+      "sha256": "6761d05c680e28d2a8fabefb9ef54b81c9dd13e1919291d2811d4b6b4ff9bcd9"
+    },
+    "outer-resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/outer-resources.json",
+      "bytes": 167,
+      "sha256": "1e3a9fcc6d4467f268168790fa586067d03d46838256b12d9b2cba348b315fbd"
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/source-after.json",
+      "bytes": 112,
+      "sha256": "d705d9b008da719dbd30f5cc50ad4d54414cc1248c813fc0accf908c753655cd"
+    },
+    "focus-result.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/focus-result.json",
+      "bytes": 392,
+      "sha256": "1df9e4d25b2942208de0ca20556a752376c2cff1e435ff73d88135744b349a06"
+    },
+    "junit.xml": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/junit.xml",
+      "bytes": 5034,
+      "sha256": "cee90dae141b5b64c2ee330c031c715b94cb30d0463f1608e774448f7574b244"
+    },
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/execute.py",
+      "bytes": 1603,
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "watch.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/watch.py",
+      "bytes": 470,
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/run.sh",
+      "bytes": 1120,
+      "sha256": "4f7625933ebd0dd32ce0e1b804006b3f9910f915e37e1e568aed3fa9c5195211"
+    },
+    "dispatch-argv.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/dispatch-argv.json",
+      "bytes": 476,
+      "sha256": "805e150bc6058f12fcba744f91841cd28dbcfe0e501ef6dcb32da717abc0bfd3"
+    }
+  },
+  "raw_files": 635,
+  "raw_bytes": 50775933,
+  "finite_selected_process_scan": {
+    "selected": [],
+    "read_failures": [],
+    "exited_races": [],
+    "scope": "Owned cmdline references to this exact raw root only; no universal or inaccessible-private-surface claim"
+  },
+  "leases_at_observation": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T19:54:40Z",
+      "lease": {
+        "acquired_at": "2026-10-16T19:50:35Z",
+        "daemon_pid": 3921443,
+        "daemon_start_token": "sh3921443-1792180235",
+        "generation": 635,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T19:54:40Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-16T20:41:38Z",
+      "lease": {
+        "acquired_at": "2026-10-16T20:37:49Z",
+        "daemon_pid": 3929247,
+        "daemon_start_token": "sh3929247-1792183069",
+        "generation": 615,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T20:41:38Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "watchdog_boundary": "Successful retained guard/outer results and exact wrapper bytes; no separately recorded final-null field is invented.",
+  "scope": "11 pure initializedness cases and19 actual Clang/native/explicit parser-error stand-in controls. No formal WP/CBMC or eight-record/full-ticket acceptance.",
+  "raw_payload_transferred": false
+}

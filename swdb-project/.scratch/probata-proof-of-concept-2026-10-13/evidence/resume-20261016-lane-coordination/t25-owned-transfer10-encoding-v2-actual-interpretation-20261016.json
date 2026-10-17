@@ -1,0 +1,582 @@
+{
+  "V2_task_decisions_byte_equivalent_to_V1_after_removing_diagnostic_fields": true,
+  "actual_elapsed_seconds": 1.1274344579999998,
+  "actual_exit": 2,
+  "actual_stderr_bytes": 0,
+  "actual_stdout": {
+    "bytes": 198747,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v2-actual-stdout-20261016.json",
+    "sha256": "b04c4ae7f0497edeaaca697c58b7310eb1c1bdc70a0190cf90d1a5bf5af9691c"
+  },
+  "actual_stdout_bytes": 198747,
+  "all_20_selected_input_pre_post_equal": true,
+  "all_ten_goal_pairs": [
+    {
+      "actual_canonical_sha256": "dd1df0a250028c4563da90cd64533e6698fabcb99b18f0aa9061b5cd5532000b",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "9f895950bc8c48e5e3fd5fe6d0d3f5c369ebea8f350095502618b713ecc7c540",
+      "first_difference": {
+        "actual_node_sha256": "bc13cd7340fb284177b2812d020b07474138f9f3db8115db48f01aff146b3c25",
+        "actual_shape": {
+          "items": 3,
+          "kind": "list",
+          "operator": "=",
+          "unknown_head_sha256": null
+        },
+        "expected_node_sha256": "37804c2d5da851ba9a455de778c7050abb50649902b926084643d97c5b866e8b",
+        "expected_shape": {
+          "items": 4,
+          "kind": "list",
+          "operator": "and",
+          "unknown_head_sha256": null
+        },
+        "path": [
+          1,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "buffer.fresh",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "1885bbf0766204a369ed88223459f0a187021b02e51c8b5588c6727c79796bed",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "1885bbf0766204a369ed88223459f0a187021b02e51c8b5588c6727c79796bed",
+      "first_difference": null,
+      "goal_equivalent": true,
+      "id": "empty.valid",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "ef774100a3194e4669d2327f42b3eb50dc864f733930c2e3d7ed5d37f46cf703",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "c864baf6a6607f1b791788455049ff877ac63892603af13856ef9bb570260871",
+      "first_difference": {
+        "actual_node_sha256": "bbcedfa6e9534dadec5350f6dccf43f9785118c9d2d6c808e7c293ba82d4660a",
+        "actual_shape": {
+          "items": 2,
+          "kind": "list",
+          "operator": "not",
+          "unknown_head_sha256": null
+        },
+        "expected_node_sha256": "fd3f0667e68e31ce64cc8299063aae276359e00cecd5f0870cdac63d33ea45d9",
+        "expected_shape": {
+          "items": 3,
+          "kind": "list",
+          "operator": "and",
+          "unknown_head_sha256": null
+        },
+        "path": [
+          1,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "move.frame",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "90d022d3fa356e6522e3711b1b8b75c4189c0d2a4b5ff7990c4741ee84dee1f5",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "4c9c523f9c633c8bed8de7ad238adfc5efa6685f2f7a6dc22f1b737e57e1aaaa",
+      "first_difference": {
+        "actual_node_sha256": "bbcedfa6e9534dadec5350f6dccf43f9785118c9d2d6c808e7c293ba82d4660a",
+        "actual_shape": {
+          "items": 2,
+          "kind": "list",
+          "operator": "not",
+          "unknown_head_sha256": null
+        },
+        "expected_node_sha256": "c512ba4d3b505efe79a59f9dd69b392f2d496879bcbbe8d0eade93de0a703a93",
+        "expected_shape": {
+          "items": 6,
+          "kind": "list",
+          "operator": "and",
+          "unknown_head_sha256": null
+        },
+        "path": [
+          1,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "move.transfer",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "f05fcd5620b3e1e0714138e10f15fe3f6daae2dd2f0f9047b184cce2fdb011a2",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "944005017f5a8acac6997f0a42442273649507255153ac20ae7f52b9797e3954",
+      "first_difference": {
+        "actual_node_sha256": "391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf",
+        "actual_shape": {
+          "atom_type": "str",
+          "category": "other",
+          "kind": "atom",
+          "sha256": "391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf"
+        },
+        "expected_node_sha256": "69357a623d793fe4d93f8995e1891e512507345accf7bdb7a00527ef0a8e0d4d",
+        "expected_shape": {
+          "atom_type": "str",
+          "category": "alpha_binder",
+          "kind": "atom",
+          "sha256": "69357a623d793fe4d93f8995e1891e512507345accf7bdb7a00527ef0a8e0d4d"
+        },
+        "path": [
+          1,
+          2,
+          2,
+          3,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "receiver.fresh",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "4be62140433921b19153e95664c8f6de22ab5128c370e835733190ed73d5b3b0",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "db95d3e5f309e98ce93eb84446f5103240aea755100440ece2934bfbd94b8d0e",
+      "first_difference": {
+        "actual_node_sha256": "bbcedfa6e9534dadec5350f6dccf43f9785118c9d2d6c808e7c293ba82d4660a",
+        "actual_shape": {
+          "items": 2,
+          "kind": "list",
+          "operator": "not",
+          "unknown_head_sha256": null
+        },
+        "expected_node_sha256": "63db40dcca8c3da1ac4661b10c4f885897a5f483a6c87070ef0df8f1c25f9f32",
+        "expected_shape": {
+          "items": 4,
+          "kind": "list",
+          "operator": "and",
+          "unknown_head_sha256": null
+        },
+        "path": [
+          1,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "retire.frame",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "4ba982ffb72aca42c2ef2ebb81711e65d2210f869d412d371b3726151c9fa257",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "96dcd9caafee8cce940a47350a66de5a2cbb9efca5fd30fe957e335ec6fc5e93",
+      "first_difference": {
+        "actual_node_sha256": "bbcedfa6e9534dadec5350f6dccf43f9785118c9d2d6c808e7c293ba82d4660a",
+        "actual_shape": {
+          "items": 2,
+          "kind": "list",
+          "operator": "not",
+          "unknown_head_sha256": null
+        },
+        "expected_node_sha256": "a76b1000f92c682cd698e6e6cbfd72d0fc8f1bc6adbc8938e3e217d1361ad010",
+        "expected_shape": {
+          "items": 6,
+          "kind": "list",
+          "operator": "and",
+          "unknown_head_sha256": null
+        },
+        "path": [
+          1,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "shared_backing.rejected",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "228e5e0051ff32c7c238a453b7537b293cb00dfd2806cee508ef49d08cc7b0d1",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "4c381fc5fa62c5a8eb95e49f5d52fb942a39d88df1c3d7cecd222c7ee7b54048",
+      "first_difference": {
+        "actual_node_sha256": "4ff134e3afd45368079ae6bcdbc47829c5089bdaba12840b6960f739c0840279",
+        "actual_shape": {
+          "items": 3,
+          "kind": "list",
+          "operator": "active_owner",
+          "unknown_head_sha256": null
+        },
+        "expected_node_sha256": "69eae04252d4674a00927967672a72327b1cfbe49d9cfa65ed2cbe68b170fa6f",
+        "expected_shape": {
+          "items": 4,
+          "kind": "list",
+          "operator": "and",
+          "unknown_head_sha256": null
+        },
+        "path": [
+          1,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "swap.exchange",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "aff6b539a2f7c28dbeb63812feac18c4426fbf0af1b63864e220b2e62a9ae680",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "5dc44032c61b434d58438af88111327877a95ce2eb944bf8af5014fb6376492b",
+      "first_difference": {
+        "actual_node_sha256": "bbcedfa6e9534dadec5350f6dccf43f9785118c9d2d6c808e7c293ba82d4660a",
+        "actual_shape": {
+          "items": 2,
+          "kind": "list",
+          "operator": "not",
+          "unknown_head_sha256": null
+        },
+        "expected_node_sha256": "fd3f0667e68e31ce64cc8299063aae276359e00cecd5f0870cdac63d33ea45d9",
+        "expected_shape": {
+          "items": 3,
+          "kind": "list",
+          "operator": "and",
+          "unknown_head_sha256": null
+        },
+        "path": [
+          1,
+          2,
+          1
+        ]
+      },
+      "goal_equivalent": false,
+      "id": "swap.frame",
+      "materialized_copies": 2
+    },
+    {
+      "actual_canonical_sha256": "40f5466e76b5680b8e62b48efbb99ab20f7e987e8392e1c5bdd388ab49f1cdf8",
+      "copies_have_identical_comparison": true,
+      "expected_canonical_sha256": "40f5466e76b5680b8e62b48efbb99ab20f7e987e8392e1c5bdd388ab49f1cdf8",
+      "first_difference": null,
+      "goal_equivalent": true,
+      "id": "swap.self",
+      "materialized_copies": 2
+    }
+  ],
+  "classification": "ACTUAL_ONCE_ENCODING_DIFFERENCE_CAPTURED_ALL_EIGHT_STILL_PENDING",
+  "date": "2026-10-16 ET",
+  "execution": {
+    "bytes": 6901,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v2-actual-execution-20261016.json",
+    "sha256": "561f08005f0d5cc38201132b3a5f3ad4c2b06117507f81c43fc744f57ae8c3ae"
+  },
+  "fresh_exact_services_and_process_visibility": [
+    {
+      "PAM_exact_admitted_identity_sha256": "49b3da308dc7a28b226ab532a2e76297c202f0f2098a3f06a030b747639cf457",
+      "current_SSH_chain": [
+        {
+          "argv": [
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-"
+          ],
+          "comm": "python3",
+          "parent": 3950863,
+          "pid": 3950864,
+          "start_ticks": "669461947",
+          "uids": [
+            "114316761",
+            "114316761",
+            "114316761",
+            "114316761"
+          ]
+        },
+        {
+          "argv": [
+            "/usr/bin/timeout",
+            "--signal=TERM",
+            "--kill-after=5s",
+            "35s",
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-"
+          ],
+          "comm": "timeout",
+          "parent": 3950862,
+          "pid": 3950863,
+          "start_ticks": "669461946",
+          "uids": [
+            "114316761",
+            "114316761",
+            "114316761",
+            "114316761"
+          ]
+        },
+        {
+          "argv": [
+            "sshd: yanruj@notty",
+            "",
+            ""
+          ],
+          "comm": "sshd",
+          "parent": 3950814,
+          "pid": 3950862,
+          "start_ticks": "669461941",
+          "uids": [
+            "114316761",
+            "114316761",
+            "114316761",
+            "114316761"
+          ]
+        },
+        {
+          "argv": [
+            "sshd: yanruj [priv]",
+            ""
+          ],
+          "comm": "sshd",
+          "parent": 3855973,
+          "pid": 3950814,
+          "start_ticks": "669461889",
+          "uids": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "argv": [
+            "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+          ],
+          "comm": "sshd",
+          "parent": 1,
+          "pid": 3855973,
+          "start_ticks": "664833076",
+          "uids": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "argv": [
+            "/usr/lib/systemd/systemd",
+            "--system",
+            "--deserialize=120",
+            "splash"
+          ],
+          "comm": "systemd",
+          "parent": 0,
+          "pid": 1,
+          "start_ticks": "70",
+          "uids": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "descriptor_links_checked": 203,
+      "final_unresolved_disappearances": 0,
+      "own_processes_checked": 12,
+      "phase": "preflight",
+      "root_owned_SSH_daemon_sha256": "95b291d957f87dd200796c4986c97b6f4d970e26ad620ec9174e69c13ec5c137",
+      "scan_rounds": 1,
+      "selected_G621_readers": [],
+      "unrelated_unreadables": []
+    },
+    {
+      "PAM_exact_admitted_identity_sha256": "49b3da308dc7a28b226ab532a2e76297c202f0f2098a3f06a030b747639cf457",
+      "current_SSH_chain": [
+        {
+          "argv": [
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-"
+          ],
+          "comm": "python3",
+          "parent": 3950968,
+          "pid": 3950969,
+          "start_ticks": "669462132",
+          "uids": [
+            "114316761",
+            "114316761",
+            "114316761",
+            "114316761"
+          ]
+        },
+        {
+          "argv": [
+            "/usr/bin/timeout",
+            "--signal=TERM",
+            "--kill-after=5s",
+            "35s",
+            "/usr/bin/python3",
+            "-I",
+            "-B",
+            "-"
+          ],
+          "comm": "timeout",
+          "parent": 3950967,
+          "pid": 3950968,
+          "start_ticks": "669462131",
+          "uids": [
+            "114316761",
+            "114316761",
+            "114316761",
+            "114316761"
+          ]
+        },
+        {
+          "argv": [
+            "sshd: yanruj@notty",
+            "",
+            ""
+          ],
+          "comm": "sshd",
+          "parent": 3950919,
+          "pid": 3950967,
+          "start_ticks": "669462127",
+          "uids": [
+            "114316761",
+            "114316761",
+            "114316761",
+            "114316761"
+          ]
+        },
+        {
+          "argv": [
+            "sshd: yanruj [priv]",
+            ""
+          ],
+          "comm": "sshd",
+          "parent": 3855973,
+          "pid": 3950919,
+          "start_ticks": "669462086",
+          "uids": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "argv": [
+            "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+          ],
+          "comm": "sshd",
+          "parent": 1,
+          "pid": 3855973,
+          "start_ticks": "664833076",
+          "uids": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "argv": [
+            "/usr/lib/systemd/systemd",
+            "--system",
+            "--deserialize=120",
+            "splash"
+          ],
+          "comm": "systemd",
+          "parent": 0,
+          "pid": 1,
+          "start_ticks": "70",
+          "uids": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      ],
+      "descriptor_links_checked": 203,
+      "final_unresolved_disappearances": 0,
+      "own_processes_checked": 12,
+      "phase": "postflight",
+      "root_owned_SSH_daemon_sha256": "95b291d957f87dd200796c4986c97b6f4d970e26ad620ec9174e69c13ec5c137",
+      "scan_rounds": 1,
+      "selected_G621_readers": [],
+      "unrelated_unreadables": []
+    }
+  ],
+  "joint_interpretation": {
+    "receiver_fresh_arithmetic_difference": {
+      "actual_node_matches_known_source_literal_1_digest": true,
+      "inference_only": "Compatible with reordered operands in mathematical integer addition. The peer operand/full subtree is not exported by this probe; no full expression equality or general arithmetic normalization is established.",
+      "known_source_literal_1_sha256": "391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf",
+      "path": [
+        1,
+        2,
+        2,
+        3,
+        2,
+        1
+      ],
+      "source_side_node_category": "alpha-bound frontier variable",
+      "source_side_parent_operator": "+"
+    },
+    "remaining_scope": "No new source goal, definition, record constructor, support axiom or binder rule is admitted. abs1 and complete encoding declarations remain pending; recognized empty shape does not silently remove its unknown-definition classification. Syntactic mismatch is not a semantic counterexample.",
+    "seven_implication_antecedent_differences": {
+      "actual_first_differing_operators": {
+        "buffer.fresh": "=",
+        "move.frame": "not",
+        "move.transfer": "not",
+        "retire.frame": "not",
+        "shared_backing.rejected": "not",
+        "swap.exchange": "active_owner",
+        "swap.frame": "not"
+      },
+      "finding": "The canonical trees share the outer negation/universal-binder/implication structure until its antecedent. Source transcriptions collect multiple premises in and; the observed first actual node is a single equality, negation or active_owner application.",
+      "ids": [
+        "buffer.fresh",
+        "move.frame",
+        "move.transfer",
+        "retire.frame",
+        "shared_backing.rejected",
+        "swap.exchange",
+        "swap.frame"
+      ],
+      "inference_only": "This is compatible with a curried implication chain from separate premises. One first-node witness does not establish that all original antecedents or the conclusion survive; it cannot admit that encoding. A separately reviewed complete comparison must preserve the complete premise multiset and consequent.",
+      "shared_path": [
+        1,
+        2,
+        1
+      ],
+      "source_side_first_differing_operator": "and",
+      "source_side_parent_operator": "=>"
+    }
+  },
+  "next_reviewable_option": "If further authorized, author a narrow prospective comparison using only the propositional identity A=>(B=>C) iff (A and B)=>C and mathematical Int addition commutation; compare COMPLETE normalized formulas with complete antecedents/conclusions and mutation controls. Preserve all current raw/source and previous refusal/admission boundaries. No such rule is applied or queried here.",
+  "nonadmission": {
+    "actual_solver_submission_attestation": false,
+    "blanket_normalization_or_support_admission": false,
+    "mathematical_or_scientific_acceptance": false,
+    "proof_native_compiler_solver_verifier_rerun": false,
+    "remote_writes_or_raw_mutation": false,
+    "runtime": "Exact current admitted OS/PAM/current-SSH scope only; no universal protected-descriptor, historical helper/loader or continuous runtime identity claim.",
+    "source_Heap_Typed_body_caller_default_public_record_acceptance": false
+  },
+  "postflight": {
+    "bytes": 2544,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v2-postflight-v3-stdout-20261016.json",
+    "sha256": "076e22db24c3842e8e4092e84c68e9c606ff11d562918eb4173ed8bbd23fa955"
+  },
+  "preflight": {
+    "bytes": 2544,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v2-preflight-v3-stdout-20261016.json",
+    "sha256": "2d6aec11d5da656ef5587bf98c069209aa9ec0edf9f643a445fb7ca5c69024be"
+  }
+}

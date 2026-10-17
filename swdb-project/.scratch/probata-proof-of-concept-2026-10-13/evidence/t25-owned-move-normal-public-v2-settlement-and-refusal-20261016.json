@@ -1,0 +1,117 @@
+{
+  "actual_compiler_source_observation_only": true,
+  "classification": "PUBLIC_FRAMEWORK_OWNERSHIP_GATE_REFUSAL_BEFORE_WP",
+  "complete_native_diagnostic": false,
+  "date": "2026-10-16 ET",
+  "execution": {
+    "bytes": 808,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-normal-public-v2-actual-execution-20261016.json",
+    "sha256": "3d7c98d8d5b39b1ee74ee463b6b36742b41ad4867d50ce268f348f3b8d53d5a0"
+  },
+  "failure_class": "unsupported_construct",
+  "handler": {
+    "failure_class": "unsupported_construct",
+    "handler": "Extend the C lowering or the C++ subset; add the case to the regression corpus.",
+    "minimal_reproduction": [],
+    "regression_corpus": "add the case (input, class, cause) to tests/fixtures/proof/regression_corpus/",
+    "why": "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs a checked view; terminal-release check: no current ownership certificate; vector ownership: the optional saved scalar must read exactly the live captured alias"
+  },
+  "native_tasks": 0,
+  "next": "Retain this original framework refusal. A separately reviewed standalone original-C diagnostic can obtain full ordinary/RTE/init/frame/smoke reports without changing caller admission.",
+  "ordinary": 0,
+  "raw_files": 13,
+  "raw_manifest": [
+    {
+      "bytes": 933,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/diagnostic.json",
+      "relative": "diagnostic.json",
+      "sha256": "e60d305320016436cbaeafe987c2105952c7c800140373e27b7f214873e04ea5"
+    },
+    {
+      "bytes": 4037,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/library/methods/contract-fixture-1.yaml",
+      "relative": "library/methods/contract-fixture-1.yaml",
+      "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+    },
+    {
+      "bytes": 3425,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/library/methods/wp-vector-owned-move-diagnostic-v1.yaml",
+      "relative": "library/methods/wp-vector-owned-move-diagnostic-v1.yaml",
+      "sha256": "a1b396ad684ca2fa4bd4dc67bccbfc91a6a26888e1c9565190771c672f19fe91"
+    },
+    {
+      "bytes": 327,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/library/proof_units/vector_owned_transfer.cc",
+      "relative": "library/proof_units/vector_owned_transfer.cc",
+      "sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2"
+    },
+    {
+      "bytes": 1729,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/library/rewrite_contracts/fixture_vector_owned_move_capture.yaml",
+      "relative": "library/rewrite_contracts/fixture_vector_owned_move_capture.yaml",
+      "sha256": "117466a001d6c9a38d88aa6d2ddec6340c1216e0ecf6f25f4741176103975e94"
+    },
+    {
+      "bytes": 3690,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/plan.json",
+      "relative": "plan.json",
+      "sha256": "b0e227301fddd1f224def25418b81c8393ae32970cae17df2efdcb8beb70b1ec"
+    },
+    {
+      "bytes": 396388,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/public.log",
+      "relative": "public.log",
+      "sha256": "3e99c078ec6c1c29c62a8db99402791936fc14807a752b1334377712674a19dc"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/records/.swdb.lock",
+      "relative": "records/.swdb.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 303175,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/records/proofs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce.yaml",
+      "relative": "records/proofs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce.yaml",
+      "sha256": "1c401a388dc9876f9f2a1dc4fa53b459ce872b137122775dd283af3cc88a872f"
+    },
+    {
+      "bytes": 165,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/resources.json",
+      "relative": "resources.json",
+      "sha256": "73aa3ee2cd1d9265c7b351803edd68651b404c60bb9fdf33949d158af30c305d"
+    },
+    {
+      "bytes": 248,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/runs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce/adapter.log",
+      "relative": "runs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce/adapter.log",
+      "sha256": "971affe8964470639f294a11134a0411525833744830c3ac5d824d016a4aa71c"
+    },
+    {
+      "bytes": 533,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/runs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce/wp/handler.json",
+      "relative": "runs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce/wp/handler.json",
+      "sha256": "061f1c5264cf8f0a80ae1e6d0c2b1bd8681da892dece1e141036af7bb5c1fec6"
+    },
+    {
+      "bytes": 328968,
+      "path": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2/runs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce/wp/stdlib_provenance_unit.json",
+      "relative": "runs/proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce/wp/stdlib_provenance_unit.json",
+      "sha256": "760e7925f5a106e9d490b145a38e2720ce44bb07cc402abbf84d618472c440a8"
+    }
+  ],
+  "raw_regular_bytes": 1043618,
+  "raw_root": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v2",
+  "record_id": "proof.contract.fixture_vector_owned_move_capture.20261017t004306z.dbb100ce",
+  "record_promoted_or_gate_weakened": false,
+  "record_verdict": "not_proven",
+  "science_source_Heap_Typed_caller_admission": false,
+  "selected_verifier_processes_after": [],
+  "shared_lock_after": {
+    "/tmp/claude/swdb-verifier.lock": false,
+    "/tmp/swdb-verifier-501.lock": false
+  },
+  "source_pins_unchanged": true,
+  "time_UTC": "2026-10-17T00:44:09.863171+00:00",
+  "verifier_launched": false
+}

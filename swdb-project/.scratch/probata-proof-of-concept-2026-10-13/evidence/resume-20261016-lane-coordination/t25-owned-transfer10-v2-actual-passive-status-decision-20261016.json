@@ -1,0 +1,419 @@
+{
+  "boundaries": {
+    "body_original_contract_source_Heap_Typed_lifetime_allocator_caller_default_model_or_public_record_admission": false,
+    "full_Python_dynamic_loader_or_continuous_runtime_closure_claim": false,
+    "historical_runtime_byte_identity_promotion": false,
+    "independent_cold_review_still_required": true,
+    "lease_claim_or_release": false,
+    "remote_raw_or_source_mutation": false,
+    "rerun_compiler_native_verifier_solver_or_profile_execution": false,
+    "scientific_acceptance": false
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PRODUCER_METADATA_COMPLETE_PENDING_INDEPENDENT_COLD_REVIEW",
+  "empty_logs": {
+    "acceptance.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tail": ""
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tail": ""
+    }
+  },
+  "finite_census": {
+    "bytes": 63559,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-transfer10-v2-actual-passive-failure-census-20261016.json",
+    "sha256": "2edfe47e5b98427d1e223f8f47549a6fbed071c6fa65a7065d1ff14d2f66bfca"
+  },
+  "independent_checks_completed": "Finite no-follow lstat and whole regular-byte accounting; selected status/guard/lane/result/resource JSON physical hashes; selected producer source/runtime/canonical/compiler/method/foundation/retention-index JSON physical hashes; fresh read-only Git source identity and host/lease/disk preflight. No raw C/AST/SMT/binary opened or copied.",
+  "initial_failure_hypothesis_corrected": "A released lane and zero selected tool processes reflected normal completion. There is no fast failure or exception in the observed status metadata.",
+  "inner_guard": {
+    "bytes": 166,
+    "sha256": "5f2cfc22c67140782be5f5bb10a2e3bbe497d4697492574452dfcf0b6cf132df",
+    "value": {
+      "cpu_seconds": 32.523225,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 291246080,
+      "timed_out": false,
+      "wall_seconds": 29.589660208672285
+    }
+  },
+  "lane": {
+    "bytes": 840,
+    "sha256": "7ae82e3ec596311fff1850a1436dcc58d775f99f03cbabd1105467e7b2f67dc2",
+    "value": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "2220",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-d7f685c6-owned-transfer10-public-v2/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T21:52:07Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-d7f685c6-owned-transfer10-public-v2",
+        "lease_generation": 621,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.26,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T21:51:35Z"
+      }
+    }
+  },
+  "live_state_at_second_observation": {
+    "leases": {
+      "mbit10-evaluation-node0.meta.json": {
+        "state": "released"
+      },
+      "mbit10-evaluation-node1.meta.json": {
+        "state": "released"
+      },
+      "mbit10-evaluation.meta.json": {
+        "state": "released"
+      }
+    },
+    "selected_tool_processes_at_first_observation": [],
+    "utc": "2026-10-16T21:55:34.212523+00:00"
+  },
+  "not_completed": "No independent proof-term/hypothesis/import/Extern/support reconstruction, raw proof-file content rehash or theorem interpretation. The producer retention index advertises164entries and is physically pinned, but its raw file hashes were not independently recomputed here. Zero smoke goals on global check-lemma route does not establish satisfiability or hypothesis consistency.",
+  "outer_guard": {
+    "bytes": 175,
+    "sha256": "32012621bb97bb172fbfad71f8b6e8637ad817d724f9863fcadadd3d325fd2ae",
+    "value": {
+      "cpu_seconds": 40.691641000000004,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 344723456,
+      "timed_out": false,
+      "wall_seconds": 31.680814631283283
+    }
+  },
+  "per_target_metadata": [
+    {
+      "id": "empty.valid",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 135774208,
+        "timed_out": false,
+        "wall_seconds": 0.9409810975193977
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "receiver.fresh",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 135245824,
+        "timed_out": false,
+        "wall_seconds": 1.1297782016918063
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "buffer.fresh",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 134721536,
+        "timed_out": false,
+        "wall_seconds": 1.1281117582693696
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "move.transfer",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 135774208,
+        "timed_out": false,
+        "wall_seconds": 1.133691655471921
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "move.frame",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 135245824,
+        "timed_out": false,
+        "wall_seconds": 0.9789726762101054
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "swap.exchange",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 163557376,
+        "timed_out": false,
+        "wall_seconds": 1.1120526352897286
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "swap.frame",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 134590464,
+        "timed_out": false,
+        "wall_seconds": 1.0998400589451194
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "swap.self",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 135770112,
+        "timed_out": false,
+        "wall_seconds": 1.074674199335277
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "retire.frame",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 160935936,
+        "timed_out": false,
+        "wall_seconds": 1.0708380974829197
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    },
+    {
+      "id": "shared_backing.rejected",
+      "ordinary": 1,
+      "resources": {
+        "exit_code": 0,
+        "out_of_memory": false,
+        "output_limit": false,
+        "peak_rss_bytes": 135344128,
+        "timed_out": false,
+        "wall_seconds": 1.071203539147973
+      },
+      "smokes": 0,
+      "verdict": "proven"
+    }
+  ],
+  "primary_error_absent": true,
+  "producer_result": {
+    "all_ten_producer_proven": true,
+    "elapsed_seconds": 28.407262237742543,
+    "ordinary_goals": 10,
+    "ordinary_status": "ten valid producer/native goal observations, all Alt-Ergo",
+    "producer_complete": true,
+    "runs": 10,
+    "scope": "Ten conditional unbounded ownership-registry mathematical duties only. Eight original C source members retained as canonical context; their bodies/contracts are not proved or admitted by these standalone duties.",
+    "smoke_goals": 0,
+    "source_after_clean_reported": true,
+    "unexecuted": [],
+    "within_profile_budget": true
+  },
+  "proof_metadata_pins": {
+    "owned-transfer10-public-v2-profile/artifact-manifest.json": {
+      "advertised_entries": 164,
+      "advertised_hashes_only_not_independently_rehashed": true,
+      "advertised_total_bytes": 20498752,
+      "bytes": 58405,
+      "sha256": "b3648d1b2e726cf567d717186ef09c13e34f7fc4f6a3e18624cdbf81f20da78f"
+    },
+    "owned-transfer10-public-v2-profile/canonical-precheck.json": {
+      "bytes": 4265,
+      "sha256": "09ca5b673553021a1b4df98d22b76d48a14d8bb1920b98c6931c025361d26641",
+      "summary": {
+        "canonical_files": 21,
+        "checker": {
+          "id": "vector-owned-transfer-1",
+          "sha256": "53c06e10f6d175ccfd98fbf3e087a76283a8b2a36db4bf5634835d5997a6e559"
+        },
+        "old_proofs_imported": 0,
+        "target_ids": [
+          "empty.valid",
+          "receiver.fresh",
+          "buffer.fresh",
+          "move.transfer",
+          "move.frame",
+          "swap.exchange",
+          "swap.frame",
+          "swap.self",
+          "retire.frame",
+          "shared_backing.rejected"
+        ]
+      }
+    },
+    "owned-transfer10-public-v2-profile/compiler-runtime.json": {
+      "bytes": 3285,
+      "sha256": "f75dd02df8bc985b634d2df5aebae5231fb9d4aa4bda6143eb556617cfc7b4ea"
+    },
+    "owned-transfer10-public-v2-profile/foundation.json": {
+      "bytes": 2519,
+      "sha256": "846356e905ce990e179e89c00ec0d7af9b0b89c4b067d979f8f9e39397daa808"
+    },
+    "owned-transfer10-public-v2-profile/method.json": {
+      "bytes": 8938,
+      "sha256": "f6cac19d90c318fd479cc72e646110c9b5bdfe9e995425cfc625fa734c9d6263",
+      "summary": {
+        "flags": [
+          "-wp",
+          "-wp-rte",
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+real",
+          "-wp-par",
+          "1",
+          "-machdep",
+          "x86_64",
+          "-rte-initialized",
+          "@all",
+          "-wp-no-filter-init",
+          "-machdep",
+          "x86_64",
+          "-wp-prover",
+          "alt-ergo,z3,cvc5",
+          "-wp-timeout",
+          "30",
+          "-wp-par",
+          "1",
+          "-wp-smoke-tests",
+          "-wp-status-all",
+          "-wp-out",
+          "prover-files",
+          "-wp-print",
+          "-wp-msg-key",
+          "print-generated,why3:compile,why3:import,prover:pp_task"
+        ],
+        "pin": {
+          "id": "method.wp-owned-transfer10-v1",
+          "sha256": "e08fae4deba6c3827dbc6f3860ca0b6e56fb08d5755417a966c030efa406215d"
+        },
+        "tool_versions": {
+          "provers": [
+            "alt-ergo",
+            "z3",
+            "cvc5"
+          ],
+          "seconds": 30
+        }
+      }
+    },
+    "owned-transfer10-public-v2-profile/runtime.json": {
+      "bytes": 37237,
+      "sha256": "1caf6827b1ce560abc4346fccd1dd32f23adbac8699bdfd00df789cf25942601"
+    },
+    "owned-transfer10-public-v2-profile/source-consumers-0.json": {
+      "bytes": 141190,
+      "sha256": "b14eb2e47819768db8bbbc89a5bc4625130418f8e77f44e48b1f00c6a91c2f54",
+      "summary": {
+        "count": 420,
+        "physical_git_blob_equality": true,
+        "source_commit": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08",
+        "total_bytes": 6142777
+      }
+    },
+    "owned-transfer10-public-v2-profile/source-consumers-1.json": {
+      "bytes": 141190,
+      "sha256": "b14eb2e47819768db8bbbc89a5bc4625130418f8e77f44e48b1f00c6a91c2f54",
+      "summary": {
+        "count": 420,
+        "physical_git_blob_equality": true,
+        "source_commit": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08",
+        "total_bytes": 6142777
+      }
+    }
+  },
+  "raw_extent_observation": {
+    "directories": 54,
+    "entries": 238,
+    "hard_whole_limit_bytes": 2147483648,
+    "post_exit_reserve_bytes": 524288,
+    "producer_result_raw_bytes_is_prefinal_not_final_whole_extent": 20497894,
+    "profile_limit_bytes": 2143289344,
+    "profile_regular_bytes": 20557157,
+    "profile_regular_files": 165,
+    "regular_bytes": 21000828,
+    "regular_files": 184,
+    "root_after_guard_snapshot_is_within_budget": true,
+    "root_headroom_bytes": 4194304,
+    "root_sibling_regular_bytes": 443671,
+    "root_sibling_regular_files": 19,
+    "specials": 0,
+    "symlinks": 0
+  },
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-d7f685c6-owned-transfer10-public-v2",
+  "result_pin": {
+    "bytes": 21620,
+    "sha256": "fbf8cad3c862edc1755bb8faa92a990bbcdc8a8f9e79b1aff710b1d27dabe0d9"
+  },
+  "retention_index_metadata_reconciliation": {
+    "advertised_profile_files": 164,
+    "all_names_and_sizes_reconciled": true,
+    "current_profile_regular_files": 165,
+    "missing": [],
+    "raw_file_contents_not_rehashed": true,
+    "receipt": {
+      "bytes": 2418,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-transfer10-v2-retention-index-metadata-20261016.json",
+      "sha256": "4ef9397b48e15dda7a945dcde533aed7b45cfe9c1a6820495bc2e8bf0e6c1dd7"
+    },
+    "size_differences": [],
+    "unadvertised_excluding_index": []
+  },
+  "schema": "owned-transfer10-v2-passive-producer-status-decision-1",
+  "selected_metadata_pins": {
+    "bytes": 4792,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-transfer10-v2-actual-passive-metadata-pins-20261016.json",
+    "sha256": "710d9915e8f6e169b93fcd5c48e33ecce4b5638a3ee5dc5feef00e1add0a3f38"
+  },
+  "source_admission_root_reference": "2b7933e4 (root supplied; this metadata pass does not recreate root admission)",
+  "source_commit": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08"
+}

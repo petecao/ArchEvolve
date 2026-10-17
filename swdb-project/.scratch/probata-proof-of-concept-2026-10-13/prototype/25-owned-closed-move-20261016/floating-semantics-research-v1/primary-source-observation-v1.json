@@ -1,0 +1,61 @@
+{
+  "classification": "PRIMARY_SOURCE_RESEARCH_LOGIC_EQUALITY_VERSUS_C_IEEE_NONFINITE_COVERAGE",
+  "compiler_prover_native_version_or_SSH_execution": false,
+  "date": "2026-10-16 ET",
+  "exact_static_route": [
+    "logic_typing.ml conditional_conversion lines1942..1980 chooses Lreal for arithmetic comparison; type_relation lines3243..3267 applies mk_cast on both arguments",
+    "LogicSemantics.ml eqsort_of_type classifies Lreal as EQ_plain; term_equal uses logical p_equal for that case; the separate EQ_float branch cannot be assumed for the original uncast surface comparison",
+    "Cfloat.ml model Real selects Logic.Real, real_of_float/float_of_real are identity, and fclass returns finite=true/NaN/infinities=false",
+    "wp_parameters.ml selector help distinguishes +real and +float; selected historical methods freeze +real",
+    "cfloat.mlw Float theory instead references Why3 ieee_float Float32/Float64 classifications and IEEE eq predicates; importing it alone does not prove the actual source/store/payload relation"
+  ],
+  "inference_boundary": "Static installed source plus primary manual; no new parser or solver observation. Planned actual controls remain independently admitted.",
+  "kernel_AST_or_current_generated_goal_observation": false,
+  "physical_local_source_pins": [
+    {
+      "bytes": 190280,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_queries/logic_typing.ml",
+      "sha256": "5fd962e6211e36336c3c59586ee81092f42ce4b250c412db9a1374d27f84b310"
+    },
+    {
+      "bytes": 41615,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03"
+    },
+    {
+      "bytes": 16404,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cfloat.ml",
+      "sha256": "fe077203e3ba53a06c8cc620c133f610cb391c0966e928a9bee766db0143ad38"
+    },
+    {
+      "bytes": 39279,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "bytes": 6729,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cfloat.mlw",
+      "sha256": "c885fef3fda7754a95f44d5ef8480cf278dc8fe35c6797866713c820697654de"
+    }
+  ],
+  "primary_manual": {
+    "claims": [
+      "ACSL comparison of float/double expressions is logical equality of real_of_float/double promotions, whose nonfinite results are unspecified",
+      "IEEE C equality is expressible with eq_float/eq_double, and differs from reflexive logical equality",
+      "the C expression NaN==NaN alone does not falsify the original plain ACSL annotation"
+    ],
+    "printed_pages": [
+      19,
+      20
+    ],
+    "section": "2.2.5",
+    "url": "https://www.frama-c.com/download/frama-c-acsl-implementation.pdf"
+  },
+  "research_conclusions": [
+    "Preserve original clauses, byte pins and conditional historical results. No established original-annotation NaN counterexample is claimed.",
+    "The historical +real model cannot by itself establish IEEE NaN/infinity/source-copy behavior. A complete explicit nonfinite/class/value source relation and actual controls are needed for that claim.",
+    "Exact bit/payload preservation is stronger than numerical/class preservation and needs selected implementation/store/representation correspondence; generic signaling NaN copy must not be assumed bit-preserving.",
+    "No new caller finite/non-NaN requires, model edits, axioms or old-proof promotion follow from this research."
+  ],
+  "selected_implementation": "Frama-C33.0; ACSL1.24"
+}

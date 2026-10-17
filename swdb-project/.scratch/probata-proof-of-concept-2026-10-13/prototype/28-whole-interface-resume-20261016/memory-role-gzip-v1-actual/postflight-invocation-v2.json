@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=5s 35s /usr/bin/python3 -I -B -"
+  ],
+  "ended_utc": "2026-10-16T23:51:20.475550+00:00",
+  "local_refusal": null,
+  "returncode": 0,
+  "schema": "passive-memory-transform-postflight-invocation-1",
+  "scope": "read-only finite postflight and compact role metadata; no source/API/ABI/public admission",
+  "source": {
+    "bytes": 178664,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1-actual/root-derived-scoped-postflight-v2.py",
+    "sha256": "ea49c8df3032c12a8ea771bed708c34ae12dc111306fb68710c4b6468bf9b197"
+  },
+  "source_unchanged": true,
+  "started_utc": "2026-10-16T23:51:19.456416+00:00",
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 192481,
+    "sha256": "0a9a1b1643e9528d5a87caebfa4ad61b8fa2b6709699ddb59862e7c1497f29a5"
+  },
+  "wall_seconds": 1.0190556670422666
+}

@@ -1,0 +1,52 @@
+{
+  "actual_execution": false,
+  "date": "2026-10-16 ET",
+  "expected": "normal complete WP/RTE/init/ordinary/smoke/CFG public record and task closure; no filters or proof-task cache; no caller admission",
+  "inputs": [
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1411,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_int_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_int_ctor.original.c",
+      "sha256": "9e4b81e87ab91f0e51d686553615cdccf721a861203bb175d8bca8e7c1dee440"
+    },
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1439,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_float_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_float_ctor.original.c",
+      "sha256": "2dc1ac63a6768f8acb8bd44f0704a8471aa05d7fc3f38b9b10cb44e678802ac0"
+    },
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1453,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_double_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_double_ctor.original.c",
+      "sha256": "9f3d9c0076c0de97097d75b2a69118c0390cedb2794259e48ee8a954bbade8d1"
+    },
+    {
+      "allocation_or_release": false,
+      "buffer_payload_accessed": false,
+      "bytes": 1461,
+      "caller_admitted": false,
+      "contract": "complete unchanged original; requires valid(this), assigns *this, ensures valid(this) and size zero",
+      "name": "std_vector_int_ptr_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_int_ptr_ctor.original.c",
+      "sha256": "e908921cd7e6637a8d24bc1f0cfd0b78a113955bc754f96390b01dede83e8e57"
+    }
+  ],
+  "source_commit": "a102e275cd23352aea8c268be3761d8a330b9be0",
+  "unchanged_parent_model": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  }
+}

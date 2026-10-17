@@ -1,0 +1,122 @@
+{
+  "created": "2026-10-16 ET",
+  "status": "ADMITTED_ONCE_CONDITIONAL_ON_FRESH_LIVE_LANE_CHECK",
+  "packet": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/compiler-capture-source-packet-v7.json",
+    "bytes": 9983,
+    "sha256": "d4806992407d16e3b2cdb3d8305af42f50fd4a5cfed54b91416465a5a406836f"
+  },
+  "independent_reviews": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-capture-v6-independent-static-review-20261016.json",
+      "bytes": 6549,
+      "sha256": "bc1ca8ff08552c84cb53972d3852fe31c42d8b9727f469302d6e31da874662ec"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-capture-v7-independent-static-review-20261016.json",
+      "bytes": 6679,
+      "sha256": "b81d5a7d80e41569544e73101c0632504079989b0613fa14d6215504b717b646"
+    }
+  ],
+  "checked_packet_pin_rows": 28,
+  "controls": [
+    {
+      "bytes": 22220,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/linux_compiler_capture_v7.py",
+      "sha256": "1dac57837a079b54d58b58cf2cf01c2b406099cff3ab9fdbc3f311463ee5a781",
+      "name": "linux_compiler_capture_v7.py"
+    },
+    {
+      "bytes": 23441,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v4.py",
+      "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721",
+      "name": "linux_native86_entry_v4.py"
+    },
+    {
+      "bytes": 14281,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v2.py",
+      "sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317",
+      "name": "compiler_unit_adapter_v2.py"
+    },
+    {
+      "bytes": 34803,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+      "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8",
+      "name": "whole_interface_v4.py"
+    },
+    {
+      "bytes": 4524,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+      "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd",
+      "name": "source_call_fixture_v2.cpp"
+    },
+    {
+      "bytes": 1588,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_abi_probe_v1.cpp",
+      "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34",
+      "name": "compiler_abi_probe_v1.cpp"
+    },
+    {
+      "bytes": 133,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_include_v1/gem5/m5ops.h",
+      "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a",
+      "name": "m5ops.h"
+    },
+    {
+      "bytes": 18385,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+      "name": "closed_python_surface.py"
+    },
+    {
+      "bytes": 9610,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+      "name": "python_startup_roles_v2.py"
+    },
+    {
+      "bytes": 2709,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b",
+      "name": "python_role_observer_v2.py"
+    },
+    {
+      "bytes": 116503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0",
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json"
+    },
+    {
+      "bytes": 664401,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/linux_compiler_capture_policy_v7.json",
+      "sha256": "c62c9f6c2e69cc6da79e6a9068eff271a0213fbe3257cf75acc7524d7f877117",
+      "name": "linux_compiler_capture_policy_v7.json"
+    }
+  ],
+  "command_argv": [
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7/control/linux_compiler_capture_v7.py",
+    "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7/control/linux_compiler_capture_policy_v7.json",
+    "c62c9f6c2e69cc6da79e6a9068eff271a0213fbe3257cf75acc7524d7f877117"
+  ],
+  "guard": {
+    "disk_floor_bytes": 53687091200,
+    "external_timeout_seconds": 300,
+    "per_file_limit_bytes": 134217728,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 4294967296,
+    "whole_tree_seconds": 180,
+    "workers": 1
+  },
+  "checks": [
+    "V6 stable metadata excludes only atime, keeping physical/canonical/hash/device/inode/mode/link/uid/gid/size/mtime/ctime gates.",
+    "All11 V6 function ASTs unchanged; V7 exact lane/raw namespace rebind independently reviewed.",
+    "Complete four-phase original TU and separate ABI recipe, source/runtime/dependency/finalization/output/time caps unchanged.",
+    "Actual execution uses reviewed V9 4GiB guard adaptation and removes LIBRARY_PATH; live target/legacy leases rechecked by launcher."
+  ],
+  "scope": "Clang-only capture preparation; no source theorem, public proof or ticket completion is admitted."
+}

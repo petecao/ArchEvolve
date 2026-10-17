@@ -1,0 +1,378 @@
+{
+  "actual_profile_acceptance": false,
+  "at_utc": "2026-10-16T18:10:11.362322+00:00",
+  "byte_identical_prior_closure_rechecked": true,
+  "candidate_policy_fields": {
+    "bytes": 462484,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-runtime-candidate-policy-fields.json",
+    "sha256": "0c14cbbdde56cf824c48c908689d5675b32e07ffd0aefc1b128023b28e3daf4a"
+  },
+  "candidate_runtime_files": 2568,
+  "cbmc_deployment_archive": {
+    "archive_present": false,
+    "archive_to_extracted_equality_reconstructed": false,
+    "current_tool_version_executed": false,
+    "declared_sha256": "b3721aa541038384d7801ea3aeabbcddc3e8845ac8f1cbff637cf8dec7481ac8",
+    "historical_deployment_version": "6.11.0 (cbmc-6.11.0)",
+    "url": "https://github.com/diffblue/cbmc/releases/download/cbmc-6.11.0/ubuntu-24.04-cbmc-6.11.0-Linux.deb"
+  },
+  "cbmc_direct_tool": {
+    "bytes": 19468160,
+    "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+    "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+    "sha256": "a62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995",
+    "symlink": null
+  },
+  "created": "2026-10-16 ET",
+  "decision": "PASS fresh passive runtime/component metadata; NOT actual launch admission",
+  "evidence_pins": [
+    {
+      "bytes": 20010,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-passive-discovery.json",
+      "sha256": "4d013f97db058e4b5990dc4aeb48e2efdb906aaac53867968c3982f4c539248e"
+    },
+    {
+      "bytes": 3375085,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-python-root-discovery.json",
+      "sha256": "5cf37e6a23072130c6d7a4dab9492b5dc23a0656f0b6d9709cde44d09d09a211"
+    },
+    {
+      "bytes": 142983,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-python-link-startup-pins.json",
+      "sha256": "75182f1d6b5253dbf10613f7dc23edfddc32a5154f75b1b810460c91dc305429"
+    },
+    {
+      "bytes": 5382,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-canonical-python-inventory.py",
+      "sha256": "44b6e9b5e14cda600e6ad59e0949aeb18fdc6942dd2887e16f516799b7945904"
+    },
+    {
+      "bytes": 3991172,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-canonical-python-inventory.json",
+      "sha256": "4b03a892ea82cd3eb77735661e3c861c36f55629ce9d5b256647810cf3cbf3d7"
+    },
+    {
+      "bytes": 9416,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-canonical-python-policy-fields.json",
+      "sha256": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda"
+    },
+    {
+      "bytes": 818135,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-prior-frama-clang-fresh-rehash.json",
+      "sha256": "178ed17a8a6328138e736fe95a57448f63f527bc59cb2c8a84541628432d2db6"
+    },
+    {
+      "bytes": 4402,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-elf-passive-reader.py",
+      "sha256": "10864f052034dde2e7acaf38c92d6170dcb7fec7f8a6a74ddb992bd0dad5072f"
+    },
+    {
+      "bytes": 302078,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-elf-extended-static-closure.json",
+      "sha256": "fb9da4b8c15b626d09626925e7369a729e35897990cadc00970fc2ec8892e194"
+    },
+    {
+      "bytes": 5455,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-gcc-alias-deployment-pins.json",
+      "sha256": "c7f96680126e9f5735035b86f723b79e6903b4928408cc60a0d087c30f824a59"
+    },
+    {
+      "bytes": 462484,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-runtime-candidate-policy-fields.json",
+      "sha256": "0c14cbbdde56cf824c48c908689d5675b32e07ffd0aefc1b128023b28e3daf4a"
+    }
+  ],
+  "explicit_TCB_or_limits": [
+    "Static ELF DT_NEEDED/PT_INTERP resolution under recorded paths is not an observed loader trace; dynamic dlopen/OCaml/Python extension plugin and locale/NSS behavior remain OS/loader/runtime trust.",
+    "Host /etc/ld.so.cache and configuration physical hashes are retained; no loader command was executed. Future execution must preserve closed environment and pin the selected runtime.",
+    "CBMC may execute an external preprocessor/driver. GCC aliases, cc1/cc1plus/collect2 and shared dependencies are pinned candidates; actual child selection still requires controlled PATH/recorded runtime.",
+    "The original V2 policy was a baseline metadata template. Rehashing components grants no retroactive initializedV3 execution, proof or acceptance.",
+    "Complete Python inventories include code caches because -I -B alone can read existing pyc. Fresh raw cache prefix remains required and must be bound by the actual controller.",
+    "Raw AST/C/SMT or scientific record contents were not transferred or semantically read. Only filenames/bytes/hashes/import/loader/deployment metadata were captured."
+  ],
+  "fresh_ocaml_package_candidates": {
+    "findlib": {
+      "bytes": 1160134,
+      "count": 34,
+      "exists": true,
+      "inventory_sha256": "bd4970eb40f07ff6aa2e5150eee48acf0389da56f41e576c31b0fa6241e5619f",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/findlib"
+    },
+    "frama-c-wp.core": {
+      "bytes": 45089806,
+      "count": 771,
+      "exists": true,
+      "inventory_sha256": "a509b2b8fb8c682ac6c3435859438611a076ab73b4d5d2e79605290bb825c1b1",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core"
+    },
+    "frama-c.kernel": {
+      "bytes": 165005558,
+      "count": 1427,
+      "exists": true,
+      "inventory_sha256": "6532b791a41bce6220374976ad396d5c1a364caf0e08d0bc60ea65ca2953bcbf",
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel"
+    }
+  },
+  "goto_instrument_direct_tool": {
+    "bytes": 16463920,
+    "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+    "resolved": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/goto-instrument",
+    "sha256": "e2323b81b8403efbaf69909ac834a79484f556578e94cf56b89ee45133870f06",
+    "symlink": null
+  },
+  "pending_actual_guarded_admission": [
+    "exact published next source commit, source consumer roots/Git blobs and entry/policy bytes",
+    "current CBMC complete version string and declared6.11 release family; Frama33.0 complete version",
+    "selected interpreter actual isolated sys.path, pycache prefix, enabled startup modules and exact whitelisted environment",
+    "actual OCaml package query results versus passively pinned exact candidate roots",
+    "live socket wrapper ancestry, held lease, NUMA affinity/memory, watchdog, fresh namespace and control packet"
+  ],
+  "prior_component_tool_config_pins": 15,
+  "prior_header_aggregate": {
+    "files": 1983,
+    "id": "llvm-standard-resource-headers",
+    "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+  },
+  "prior_policy_baseline": {
+    "bytes": 84710,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_policy_2baf722f_v2.json",
+    "sha256": "2bb4b7fca5e88b5e78c073bc6ae451af37282a323a0d5377a42c35b16b7a9913"
+  },
+  "prior_portable_surfaces": {
+    "why3_drivers": 93,
+    "why3_stdlib": 57,
+    "wp_why3_support": 30
+  },
+  "python_actual_sys_path_observed": false,
+  "python_interpreter": {
+    "chain": [
+      {
+        "path": "/data1/yanruj/venvs/swdb-test/bin/python",
+        "target": "python3"
+      },
+      {
+        "path": "/data1/yanruj/venvs/swdb-test/bin/python3",
+        "target": "/usr/bin/python3"
+      },
+      {
+        "path": "/usr/bin/python3",
+        "target": "python3.12"
+      }
+    ],
+    "path": "/data1/yanruj/venvs/swdb-test/bin/python",
+    "resolved": "/usr/bin/python3.12",
+    "target_pin": {
+      "bytes": 8020928,
+      "path": "/usr/bin/python3.12",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+    }
+  },
+  "python_inventory_order": "sorted(Path(root).rglob(\"*\")); equivalently PurePosixPath(relative).parts tuple order",
+  "python_root_and_external_target_full_rehash_pre_post_equal": true,
+  "python_startup_pins": [
+    {
+      "bytes": 23903,
+      "path": "/usr/lib/python3.12/site.py",
+      "sha256": "619436355cbe91c3b29681ab486ee63f5f2e0a7d6274dfae747bdb94e60bca55"
+    },
+    {
+      "bytes": 155,
+      "path": "/etc/python3.12/sitecustomize.py",
+      "sha256": "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e"
+    },
+    {
+      "bytes": 190,
+      "path": "/data1/yanruj/venvs/swdb-test/pyvenv.cfg",
+      "sha256": "b113229cb7f8401efedaec27ac5b6db5467d92ca84468a51b6475bb682d12c45"
+    },
+    {
+      "bytes": 151,
+      "path": "/usr/lib/python3/dist-packages/distutils-precedence.pth",
+      "sha256": "2638ce9e2500e572a5e0de7faed6661eb569d1b696fcba07b0dd223da5f5d224"
+    },
+    {
+      "bytes": 6299,
+      "path": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py",
+      "sha256": "46849a60a7cc85189cf6b5ac62b3f135004862ce6a96540a81c95ef6fbc4dc3e"
+    },
+    {
+      "bytes": 44,
+      "path": "/usr/lib/python3/dist-packages/_distutils_hack/override.py",
+      "sha256": "12efecf8d17a5486780aa774b5b6c0e70b56932d8864f35df1eb7a18bb759b3a"
+    },
+    {
+      "bytes": 8695,
+      "path": "/usr/lib/python3/dist-packages/apport_python_hook.py",
+      "sha256": "2aac4de740babcc6038483cccc7fa71f7f06405da9b9d102aafe8ac55f509c4b"
+    }
+  ],
+  "python_surfaces": {
+    "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages": {
+      "counts": {
+        "directories": 162,
+        "entries": 1489,
+        "files": 1327,
+        "symlinks": 0
+      },
+      "inventory_sha256": "e83f0adf4285014f004dc597c6983be2e1b14f5bbd272650a3a3d1efd04d98ce",
+      "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages",
+      "symlinks": {},
+      "total_bytes": 17316054
+    },
+    "/usr/lib/python3.12": {
+      "counts": {
+        "directories": 96,
+        "entries": 1342,
+        "files": 1243,
+        "symlinks": 3
+      },
+      "inventory_sha256": "9cee85090e390d334b8224767a26259781bf4b9ea175ee93496ea8d31238b1f2",
+      "path": "/usr/lib/python3.12",
+      "symlinks": {
+        "_sysconfigdata__linux_x86_64-linux-gnu.py": {
+          "bytes": 49505,
+          "chain": [
+            {
+              "path": "/usr/lib/python3.12/_sysconfigdata__linux_x86_64-linux-gnu.py",
+              "target": "_sysconfigdata__x86_64-linux-gnu.py"
+            }
+          ],
+          "resolved": "/usr/lib/python3.12/_sysconfigdata__x86_64-linux-gnu.py",
+          "sha256": "ee5bb5493fa4575f7788e1b0e8a067b9c463f9705dcb36f5eb571d1c0812ea82",
+          "target": "_sysconfigdata__x86_64-linux-gnu.py",
+          "target_kind": "file"
+        },
+        "config-3.12-x86_64-linux-gnu/libpython3.12.so": {
+          "bytes": 9061000,
+          "chain": [
+            {
+              "path": "/usr/lib/python3.12/config-3.12-x86_64-linux-gnu/libpython3.12.so",
+              "target": "../../x86_64-linux-gnu/libpython3.12.so.1"
+            },
+            {
+              "path": "/usr/lib/x86_64-linux-gnu/libpython3.12.so.1",
+              "target": "libpython3.12.so.1.0"
+            }
+          ],
+          "resolved": "/usr/lib/x86_64-linux-gnu/libpython3.12.so.1.0",
+          "sha256": "1021f236227334ded6d1bbbc4bb6f5d933f793d8397c969896cfbdf03ce96223",
+          "target": "../../x86_64-linux-gnu/libpython3.12.so.1",
+          "target_kind": "file"
+        },
+        "sitecustomize.py": {
+          "bytes": 155,
+          "chain": [
+            {
+              "path": "/usr/lib/python3.12/sitecustomize.py",
+              "target": "/etc/python3.12/sitecustomize.py"
+            }
+          ],
+          "resolved": "/etc/python3.12/sitecustomize.py",
+          "sha256": "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e",
+          "target": "/etc/python3.12/sitecustomize.py",
+          "target_kind": "file"
+        }
+      },
+      "total_bytes": 54223883
+    },
+    "/usr/lib/python3/dist-packages": {
+      "counts": {
+        "directories": 2102,
+        "entries": 16367,
+        "files": 14261,
+        "symlinks": 4
+      },
+      "inventory_sha256": "0ac8c1ec7f2b1a44db171e93cc376338e7656926a5fb86308395b482fcc9b905",
+      "path": "/usr/lib/python3/dist-packages",
+      "symlinks": {
+        "babel/global.dat": {
+          "bytes": 258639,
+          "chain": [
+            {
+              "path": "/usr/lib/python3/dist-packages/babel/global.dat",
+              "target": "../../../../share/python-babel-localedata/global.dat"
+            }
+          ],
+          "resolved": "/usr/share/python-babel-localedata/global.dat",
+          "sha256": "799c4d9f865d6a6eaf1555e000cec46441f5e0d17f8b0b326c11736e096e8edb",
+          "target": "../../../../share/python-babel-localedata/global.dat",
+          "target_kind": "file"
+        },
+        "babel/locale-data": {
+          "chain": [
+            {
+              "path": "/usr/lib/python3/dist-packages/babel/locale-data",
+              "target": "../../../../share/python-babel-localedata/locale-data"
+            }
+          ],
+          "resolved": "/usr/share/python-babel-localedata/locale-data",
+          "target": "../../../../share/python-babel-localedata/locale-data",
+          "target_counts": {
+            "directories": 0,
+            "entries": 803,
+            "files": 803,
+            "symlinks": 0
+          },
+          "target_inventory_sha256": "7c7a4b099f2dce0552d6e464269f9f95dbe5b59578d54a81408101bdd6d1c0f5",
+          "target_kind": "directory",
+          "target_total_bytes": 29251054
+        },
+        "netaddr/eui/iab.txt": {
+          "bytes": 2453481,
+          "chain": [
+            {
+              "path": "/usr/lib/python3/dist-packages/netaddr/eui/iab.txt",
+              "target": "/var/lib/ieee-data/iab.txt"
+            },
+            {
+              "path": "/var/lib/ieee-data/iab.txt",
+              "target": "/usr/share/ieee-data/iab.txt"
+            }
+          ],
+          "resolved": "/usr/share/ieee-data/iab.txt",
+          "sha256": "bf150cf159ab30aacda530ae2bfa51437c08598ab4be64e3393c72efea25a2e5",
+          "target": "/var/lib/ieee-data/iab.txt",
+          "target_kind": "file"
+        },
+        "netaddr/eui/oui.txt": {
+          "bytes": 5243370,
+          "chain": [
+            {
+              "path": "/usr/lib/python3/dist-packages/netaddr/eui/oui.txt",
+              "target": "/var/lib/ieee-data/oui.txt"
+            },
+            {
+              "path": "/var/lib/ieee-data/oui.txt",
+              "target": "/usr/share/ieee-data/oui.txt"
+            }
+          ],
+          "resolved": "/usr/share/ieee-data/oui.txt",
+          "sha256": "910e3987fba8287a7081de8cbf697c564c6dccdd26c95218a001d9bb95f0cd47",
+          "target": "/var/lib/ieee-data/oui.txt",
+          "target_kind": "file"
+        }
+      },
+      "total_bytes": 263902188
+    },
+    "/usr/local/lib/python3.12/dist-packages": {
+      "counts": {
+        "directories": 0,
+        "entries": 0,
+        "files": 0,
+        "symlinks": 0
+      },
+      "inventory_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "path": "/usr/local/lib/python3.12/dist-packages",
+      "symlinks": {},
+      "total_bytes": 0
+    }
+  },
+  "source_admission_pending": true,
+  "static_elf": {
+    "actual_loader_trace_observed": false,
+    "closure_files": 291,
+    "multiple_static_candidates": [],
+    "root_paths": 180,
+    "unresolved": []
+  }
+}

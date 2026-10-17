@@ -1,0 +1,1241 @@
+{
+  "activity": {
+    "Git": false,
+    "SSH": false,
+    "actual_apply_or_producer_workflow": false,
+    "native_compiler_verifier_or_solver": false,
+    "shared_or_frozen_source_edits": false
+  },
+  "axis": "Standards complementary composition/lineage subset",
+  "builder_review": {
+    "current": {
+      "bytes": 48461,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/profile/profile_builder_union_v1.py",
+      "sha256": "ccfae164c219b1b27acd1c36d3bcc43768a89123bed600ddd54609e185880120"
+    },
+    "fresh_full_builder_reread_claimed": false,
+    "full_two_edit_inverse_exact": true,
+    "only_basis_SHA_and_filename_changed": true,
+    "only_changed_function_AST": "producer_snapshot (basis filename only)",
+    "previous": {
+      "bytes": 48455,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v5/profile/profile_builder_v4.py",
+      "sha256": "9490ee97744a87c3fd22c8e7c05f4d7e57b0744919e6d0d4ec811565e4bcf677"
+    },
+    "prior_full_Standards_reused": {
+      "bytes": 112086,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-coherent-v5-complementary-standards-helper-lineage-20261016.json",
+      "sha256": "318d1c083c004da7a8cbd0b4c129c18eff4319afa8ecd2c982847eba9ac988c0"
+    }
+  },
+  "composition": {
+    "all19_new_shared_paths_physically_absent": true,
+    "all43_unchanged_current_shared_bytes_exact": true,
+    "all_proposed_Python_AST_parse": true,
+    "classification": {
+      "modified": [
+        "swdb/_dx100_whole/normalized_capture_ingress_v2.py",
+        "swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+        "swdb/cbmc_adapter.py",
+        "swdb/dx100_checked_source.py",
+        "swdb/formal_frame.py",
+        "swdb/proof_semantics.py",
+        "swdb/proof_setup.py"
+      ],
+      "new": [
+        "swdb/_dx100_finite/__init__.py",
+        "swdb/_dx100_finite/context_rule_scope_v1.py",
+        "swdb/_dx100_finite/event_plan_v1.py",
+        "swdb/_dx100_finite/event_plan_v2.py",
+        "swdb/_dx100_finite/finite_checks_v1.py",
+        "swdb/_dx100_finite/finite_owned_receiver_v3.py",
+        "swdb/_dx100_finite/finite_owned_receiver_v4.py",
+        "swdb/_dx100_finite/receiver_state_draws_basis_v2.py",
+        "swdb/_dx100_finite/whole_model_v3.py",
+        "swdb/_dx100_whole/abi_role_transport_v1.py",
+        "swdb/_dx100_whole/capture_family_dispatch_v1.py",
+        "swdb/_dx100_whole/compiler_unit_adapter_v4.py",
+        "swdb/_dx100_whole/memory_capture_facts_v1.json",
+        "swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py",
+        "swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py",
+        "swdb/_dx100_whole/memory_source_preparation_v1.py",
+        "swdb/_dx100_whole/strict_minify_v2.py",
+        "swdb/dx100_finite_trace.py",
+        "swdb/dx100_finite_trace_adapter.py"
+      ],
+      "unchanged": [
+        "swdb/_dx100_whole/__init__.py",
+        "swdb/_dx100_whole/basis/compiler_unit_adapter_v2.py.source.txt",
+        "swdb/_dx100_whole/basis/harness/cbmc_translator.py.source.txt",
+        "swdb/_dx100_whole/basis/model-entry-v1/whole_model_v1.py.source.txt",
+        "swdb/_dx100_whole/basis/model-entry-v3/whole_model_v3.py.source.txt",
+        "swdb/_dx100_whole/basis/source-integration-schema-v2.json.source.txt",
+        "swdb/_dx100_whole/basis/source_argument_staging_v2.py.source.txt",
+        "swdb/_dx100_whole/basis/source_dispatch_v3.py.source.txt",
+        "swdb/_dx100_whole/basis/source_program_globals_v1.py.source.txt",
+        "swdb/_dx100_whole/basis/source_statements_v2.py.source.txt",
+        "swdb/_dx100_whole/basis/whole_adapters.h.source.txt",
+        "swdb/_dx100_whole/basis/whole_closed_routes_v1.h.source.txt",
+        "swdb/_dx100_whole/basis/whole_interface_v4.py.source.txt",
+        "swdb/_dx100_whole/basis/whole_value_backend_v1.h.source.txt",
+        "swdb/_dx100_whole/basis/whole_value_builders_v1.h.source.txt",
+        "swdb/_dx100_whole/closed_python_surface.py",
+        "swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+        "swdb/_dx100_whole/lossless_gzip_v1.py",
+        "swdb/_dx100_whole/lossless_gzip_v2.py",
+        "swdb/_dx100_whole/model_primitives.py",
+        "swdb/_dx100_whole/receiver-memory-v1/receiver_memory_v1.py",
+        "swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+        "swdb/_dx100_whole/receiver_memory_v1.py",
+        "swdb/_dx100_whole/receiver_state_draws_v2.py",
+        "swdb/_dx100_whole/resource_profile_v2.py",
+        "swdb/_dx100_whole/role_normalized_gzip_v2.py",
+        "swdb/_dx100_whole/runtime_projection_v2.py",
+        "swdb/_dx100_whole/runtime_projection_v3.py",
+        "swdb/_dx100_whole/runtime_projection_v4.py",
+        "swdb/_dx100_whole/source-memory-selection-v1/source_memory_selection_v1.py",
+        "swdb/_dx100_whole/source_argument_staging_v2.py",
+        "swdb/_dx100_whole/source_dispatch_v3.py",
+        "swdb/_dx100_whole/source_memory_selection_v1.py",
+        "swdb/_dx100_whole/source_program_globals_v1.py",
+        "swdb/_dx100_whole/source_statements_v2.py",
+        "swdb/_dx100_whole/unit_policy_registry_v2.py",
+        "swdb/_dx100_whole/whole_interface_v4.py",
+        "swdb/c_lowering.py",
+        "swdb/cbmc_translator.py",
+        "swdb/dx100_checked_adapter.py",
+        "swdb/dx100_checked_native.py",
+        "swdb/dx100_checked_registry.py",
+        "swdb/dx100_whole_checked.py"
+      ]
+    },
+    "every_proposal_exact_selected_frozen_source": true,
+    "no_unselected_WP_or_other_live_hunk_changed": true,
+    "paths": 69,
+    "proposed_file_membership_exact": true,
+    "seven_modified_shared_base_bytes_exact": true
+  },
+  "controls": {
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "fresh_command": "python3 -I -B /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/test_union_v1.py",
+    "fresh_elapsed_seconds": 0.103,
+    "fresh_tests": 8,
+    "no_child_native_network_and_no_installed_swdb_import_audit": true,
+    "retained_author_control_receipt": {
+      "bytes": 532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/pure-controls-v1.json",
+      "sha256": "0623737f2d41d1f5eb775f50464fde014b15fe25cedc0d1be0349fae1d25b64a"
+    },
+    "retained_log": {
+      "bytes": 1406,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/pure-controls-v1.log",
+      "sha256": "420b763d4058e97510fac7dd69848719cbc7c700ae48512fea695b3cee5497bc"
+    },
+    "scope": "Pure exact-file/AST/producer-closure/role recipe/patch reconstruction, not shared apply or actual producer workflow.",
+    "skips": 0
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_SCOPED_UNION_COMPOSITION_AND_PRODUCER_RECIPE_ROOT_BODY_REVIEW_STILL_REQUIRED",
+  "exact_data_read": [
+    {
+      "bytes": 79543,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/production-paths-and-bases-v1.json",
+      "sha256": "2734c190ce4c0db1e97a04760e3db9b9895a7778adf8b0e99215c30ef09ec681"
+    },
+    {
+      "bytes": 26958,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/producer-member-recipe-v1.json",
+      "sha256": "e9e1801dc204517709ced376a89bfba8e5885806609fd6c8d203061240345736"
+    },
+    {
+      "bytes": 14551,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/profile/normal-producer-basis-union-v1.json",
+      "sha256": "4baf904bca3694f898a8209b57484a5fbd0dfbf45ab438df1bbfa10d38652e00"
+    }
+  ],
+  "excluded_root_full_body_review": {
+    "reason": "Pins, origins, inverse recipes and source-role closure are reconciled here. Root owns full source/semantic/operational Standards reading of these modified/new bodies; this subset PASS cannot substitute for it.",
+    "remaining_new_ABI_memory_source_paths": [
+      "swdb/_dx100_whole/abi_role_transport_v1.py",
+      "swdb/_dx100_whole/capture_family_dispatch_v1.py",
+      "swdb/_dx100_whole/compiler_unit_adapter_v4.py",
+      "swdb/_dx100_whole/memory_capture_facts_v1.json",
+      "swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py",
+      "swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py",
+      "swdb/_dx100_whole/memory_source_preparation_v1.py",
+      "swdb/_dx100_whole/strict_minify_v2.py"
+    ],
+    "seven_modified_source_paths": [
+      "swdb/_dx100_whole/normalized_capture_ingress_v2.py",
+      "swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+      "swdb/cbmc_adapter.py",
+      "swdb/dx100_checked_source.py",
+      "swdb/formal_frame.py",
+      "swdb/proof_semantics.py",
+      "swdb/proof_setup.py"
+    ]
+  },
+  "findings": [],
+  "full_read": [
+    {
+      "bytes": 8399,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/build_union_v1.py",
+      "sha256": "38f83bba348e9ce8f573ac79754a2f48d23b14d00b2170cc3518acaa23f58b76"
+    },
+    {
+      "bytes": 10503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/test_union_v1.py",
+      "sha256": "4180678a2d28e9cd794a77c01e4b9130deac3c73ab838d9481f04319c4754167"
+    },
+    {
+      "bytes": 2766,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/PLAN.md",
+      "sha256": "b35ca75616855d621523cad5917a9f7dd6acc69963ae1f631f6f2d78b2bf657f"
+    },
+    {
+      "bytes": 817,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/builder-inverse-v1.json",
+      "sha256": "640bc86977c54a63ab393837b30bb7abb47c9b838682be759004c0e9790b6ccc"
+    }
+  ],
+  "lineage": {
+    "finite_V4_hooks_core_and_typed_scope_exact": true,
+    "generic_reader_v3_and_semantic_reader_v4_separate": true,
+    "prior_receipts": [
+      {
+        "bytes": 112086,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-coherent-v5-complementary-standards-helper-lineage-20261016.json",
+        "sha256": "318d1c083c004da7a8cbd0b4c129c18eff4319afa8ecd2c982847eba9ac988c0"
+      },
+      {
+        "bytes": 3602,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-coherent-v5-root-standards-review-20261016.json",
+        "sha256": "a6f7a422f33ed3ebc77bf424270f8d4b74941b3a84e419ff63e52beddd809d87"
+      },
+      {
+        "bytes": 47626,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-finite-helpers-independent-standards-review-v1-20261016.json",
+        "sha256": "6fa893db90a14aee772313bae38f7c2808a37eab1da59222cd578b0e643c01a5"
+      },
+      {
+        "bytes": 5973,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-finite-v4-root-core-standards-review-20261016.json",
+        "sha256": "ee28e3b5884f61fb3ec70dfef8e0bbc9f96ed3691b2e1a34bc5fb0cc6dfadeca"
+      },
+      {
+        "bytes": 4547,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v4-independent-review/independent-finite-public-v4-spec-review-20261016.json",
+        "sha256": "e8b8f3dbf1ff071391bd429ec0d599c82bd6a21ea0c262c77648859762427b7e"
+      },
+      {
+        "bytes": 6199,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-enum-repair-v1-independent-review/independent-ABI-enum-reader-v1-spec-review-20261016.json",
+        "sha256": "33dc1ac17ed70297a319ae1a587063d913e1253b7a285221dfba30beaef01bf3"
+      },
+      {
+        "bytes": 6289,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-memory-production-v1-independent-review/independent-ABI-memory-production-v1-spec-review-20261016.json",
+        "sha256": "8bbac0092304ab923f88d149e3ac0e3b0ec27b8ec2aac8d0e0b6bf8283af6c45"
+      },
+      {
+        "bytes": 7252,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1-independent-review/independent-production-union-v1-spec-review-20261016.json",
+        "sha256": "7740e82bca922819a70ed9fa1c6238c41567c1ec4e24c9fa3c823c223e8af5d1"
+      }
+    ],
+    "semantic_dependency_inverse_exact": true,
+    "semantic_or_ABI_prior_Spec_not_counted_as_fresh_Standards_body_review": true
+  },
+  "physical_checks": {
+    "all_packet_pins_exact": true,
+    "canonical_regular_nine_field_before_after_and_SHA": true,
+    "expanded_data_pin_occurrences_checked": 293,
+    "packet_direct_rows": [
+      {
+        "bytes": 8977,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v5/source-packet-v5.json",
+        "sha256": "60d69b94c7dddc9040adee699cfdda17503aff66f295b90565401f90ddbc119b"
+      },
+      {
+        "bytes": 34472,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v4/source-packet-v4.json",
+        "sha256": "2431067f155a79266ee6cd2afbe95fad2532f024632c93028462e5d8cb8bc260"
+      },
+      {
+        "bytes": 14851,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-enum-repair-v1/source-packet-v1.json",
+        "sha256": "bd81c1eb8d68968373a0bcd88cc171f542484ae34c2aace641379c60b692973f"
+      },
+      {
+        "bytes": 12379,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-memory-production-v1/source-packet-v1.json",
+        "sha256": "d3f6895e58a49f8d3f7134d0b8a43ffc0f5e171e0fe096dca625cc94188a700f"
+      },
+      {
+        "bytes": 18548,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5/source-packet-v5.json",
+        "sha256": "eb932238f0504c3330cc67aa1728f40fcc6956d0a18947c13693cdd40fdaa873"
+      },
+      {
+        "bytes": 8010,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-semantic-dependents-v1/exact-inverses-v1.json",
+        "sha256": "f25a2fc7e0778710c27e2ab0171775368d523d6fbff7b25f46739ddc324bbf78"
+      },
+      {
+        "bytes": 2766,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/PLAN.md",
+        "sha256": "b35ca75616855d621523cad5917a9f7dd6acc69963ae1f631f6f2d78b2bf657f"
+      },
+      {
+        "bytes": 8399,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/build_union_v1.py",
+        "sha256": "38f83bba348e9ce8f573ac79754a2f48d23b14d00b2170cc3518acaa23f58b76"
+      },
+      {
+        "bytes": 817,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/builder-inverse-v1.json",
+        "sha256": "640bc86977c54a63ab393837b30bb7abb47c9b838682be759004c0e9790b6ccc"
+      },
+      {
+        "bytes": 4107,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/freeze_union_v1.py",
+        "sha256": "e07404bb6f337dd49f9fabcfe7f4be1d227e7b4def14e5caa9c5f9947ae8dabd"
+      },
+      {
+        "bytes": 26958,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/producer-member-recipe-v1.json",
+        "sha256": "e9e1801dc204517709ced376a89bfba8e5885806609fd6c8d203061240345736"
+      },
+      {
+        "bytes": 79543,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/production-paths-and-bases-v1.json",
+        "sha256": "2734c190ce4c0db1e97a04760e3db9b9895a7778adf8b0e99215c30ef09ec681"
+      },
+      {
+        "bytes": 322820,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/production-union-v1.patch",
+        "sha256": "fcc2068fda0b73d4725a3936d1eb61fe799ef190d6af77aaac94e712f8d52488"
+      },
+      {
+        "bytes": 14551,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/profile/normal-producer-basis-union-v1.json",
+        "sha256": "4baf904bca3694f898a8209b57484a5fbd0dfbf45ab438df1bbfa10d38652e00"
+      },
+      {
+        "bytes": 48461,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/profile/profile_builder_union_v1.py",
+        "sha256": "ccfae164c219b1b27acd1c36d3bcc43768a89123bed600ddd54609e185880120"
+      },
+      {
+        "bytes": 0,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 9371,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/context_rule_scope_v1.py",
+        "sha256": "23d5e4480c67557c201fc506fc3e25a23cdd9dd9eb63ff66cf1db14881b9e05b"
+      },
+      {
+        "bytes": 23943,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/event_plan_v1.py",
+        "sha256": "07c94720ec30625d9b934dea2685d49e75a949661c8852ae0997b0d8070b488b"
+      },
+      {
+        "bytes": 25404,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/event_plan_v2.py",
+        "sha256": "d50ed0afe5861ceb4cacfd070f40fceebfb3475d51ea98fc28d111cc54341ec4"
+      },
+      {
+        "bytes": 16500,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/finite_checks_v1.py",
+        "sha256": "29067ff3590fa8ed31c8cbd821a9e5835b9e319bc7c806f5676aa8efcf15fd38"
+      },
+      {
+        "bytes": 17678,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/finite_owned_receiver_v3.py",
+        "sha256": "5cf81486d5b43192277f1d1ab8043d3b8865453b3575a5e753a2c08c88a951d6"
+      },
+      {
+        "bytes": 18451,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/finite_owned_receiver_v4.py",
+        "sha256": "9ee3a649d291d928f2e49575fc9ce81660ef5fccf2b062c39a746d0a4aa76a2f"
+      },
+      {
+        "bytes": 34554,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/receiver_state_draws_basis_v2.py",
+        "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+      },
+      {
+        "bytes": 9975,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_finite/whole_model_v3.py",
+        "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+      },
+      {
+        "bytes": 98,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/__init__.py",
+        "sha256": "f5f61c5460fa264b8d8a5690e3be19e60b592a162eed6b33614276b66853016e"
+      },
+      {
+        "bytes": 7892,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/abi_role_transport_v1.py",
+        "sha256": "ea2e7e26ae154ccb9bd40204f75571ddca8fe50591a862d36abb140ec0893f8e"
+      },
+      {
+        "bytes": 14281,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/compiler_unit_adapter_v2.py.source.txt",
+        "sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317"
+      },
+      {
+        "bytes": 63276,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/harness/cbmc_translator.py.source.txt",
+        "sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3"
+      },
+      {
+        "bytes": 9623,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/model-entry-v1/whole_model_v1.py.source.txt",
+        "sha256": "75c99c39664fc9b7b40838622b8fa03835977c7afbf35c5aab2a5704c4f538f4"
+      },
+      {
+        "bytes": 9975,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/model-entry-v3/whole_model_v3.py.source.txt",
+        "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+      },
+      {
+        "bytes": 6468,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/source-integration-schema-v2.json.source.txt",
+        "sha256": "433e3e6149b0cc3be9f4f7e16db6bfdc3b1dc912115dee88783f5bed1052f792"
+      },
+      {
+        "bytes": 23687,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/source_argument_staging_v2.py.source.txt",
+        "sha256": "79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178"
+      },
+      {
+        "bytes": 25681,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/source_dispatch_v3.py.source.txt",
+        "sha256": "d05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703"
+      },
+      {
+        "bytes": 6179,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/source_program_globals_v1.py.source.txt",
+        "sha256": "17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77"
+      },
+      {
+        "bytes": 30246,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/source_statements_v2.py.source.txt",
+        "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+      },
+      {
+        "bytes": 15884,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/whole_adapters.h.source.txt",
+        "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+      },
+      {
+        "bytes": 3881,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/whole_closed_routes_v1.h.source.txt",
+        "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+      },
+      {
+        "bytes": 34803,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/whole_interface_v4.py.source.txt",
+        "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+      },
+      {
+        "bytes": 69747,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/whole_value_backend_v1.h.source.txt",
+        "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+      },
+      {
+        "bytes": 13765,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/basis/whole_value_builders_v1.h.source.txt",
+        "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+      },
+      {
+        "bytes": 1002,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/capture_family_dispatch_v1.py",
+        "sha256": "3551c955a48625708246d0af7a71a56969b9ecdb05105d858a56bcc749f378c5"
+      },
+      {
+        "bytes": 18385,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/closed_python_surface.py",
+        "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+      },
+      {
+        "bytes": 15063,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+        "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+      },
+      {
+        "bytes": 23873,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/compiler_unit_adapter_v4.py",
+        "sha256": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6"
+      },
+      {
+        "bytes": 5976,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/lossless_gzip_v1.py",
+        "sha256": "f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193"
+      },
+      {
+        "bytes": 6812,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/lossless_gzip_v2.py",
+        "sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef"
+      },
+      {
+        "bytes": 21487,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/memory_capture_facts_v1.json",
+        "sha256": "9862edaf233ebb7d6146dfdb7e825864e1c4314bd5e034a9a8800c97b20a3f3a"
+      },
+      {
+        "bytes": 24961,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py",
+        "sha256": "6e01c75ca17d9feff04263d4963cf7ee3a1c46e9d30c03bf4b0282812f8bd599"
+      },
+      {
+        "bytes": 5462,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py",
+        "sha256": "f05980d1cc52fce7026247eea0b625af734ed42526ebcb337c270090071b1a47"
+      },
+      {
+        "bytes": 7724,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/memory_source_preparation_v1.py",
+        "sha256": "1915ff999594a5af95a005a4ef3caa42c4d7067646c54b1e61c7f213366ad611"
+      },
+      {
+        "bytes": 2550,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/model_primitives.py",
+        "sha256": "56e7ff7f8e9f6317ad3573c1c916891e328a12c1f189b716392a588e12dd5df1"
+      },
+      {
+        "bytes": 26153,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/normalized_capture_ingress_v2.py",
+        "sha256": "02a556b74d81594b8bc637fe8f085bc6e8f8df7642ecdad2267b2cc6f09a9bd4"
+      },
+      {
+        "bytes": 4490,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+        "sha256": "4bdeb0b2761fcc9b3721ee770d8eb8b33534ec7df22cc07cc42f1345b5bd285f"
+      },
+      {
+        "bytes": 34554,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/receiver-memory-v1/receiver_memory_v1.py",
+        "sha256": "f8cf91dee0e7b442812065b7935e176df48a417a308eb3798104b4320f654f23"
+      },
+      {
+        "bytes": 34554,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+        "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+      },
+      {
+        "bytes": 34554,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/receiver_memory_v1.py",
+        "sha256": "f8cf91dee0e7b442812065b7935e176df48a417a308eb3798104b4320f654f23"
+      },
+      {
+        "bytes": 34554,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/receiver_state_draws_v2.py",
+        "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+      },
+      {
+        "bytes": 4576,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/resource_profile_v2.py",
+        "sha256": "6381bfb8b7b3813c25d6f994332a67c72b811c63f3665f2a10edc2584bfdafc5"
+      },
+      {
+        "bytes": 27967,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/role_normalized_gzip_v2.py",
+        "sha256": "6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941"
+      },
+      {
+        "bytes": 23198,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/runtime_projection_v2.py",
+        "sha256": "645b34878191a695fb61bd6dbf2dd3bcb0f984199482c9611a19b9f9a3a4e69b"
+      },
+      {
+        "bytes": 23244,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/runtime_projection_v3.py",
+        "sha256": "e60e1ed82a0bbc4983bb4acd9ca0204fd4238ef8ed555c9dc4a2ab8800a07284"
+      },
+      {
+        "bytes": 37560,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/runtime_projection_v4.py",
+        "sha256": "56077c3476ba0f4af3b06089e937a0a5723318f7927ba81ea45c8556251cb7de"
+      },
+      {
+        "bytes": 11959,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/source-memory-selection-v1/source_memory_selection_v1.py",
+        "sha256": "498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767"
+      },
+      {
+        "bytes": 23687,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/source_argument_staging_v2.py",
+        "sha256": "79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178"
+      },
+      {
+        "bytes": 25681,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/source_dispatch_v3.py",
+        "sha256": "d05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703"
+      },
+      {
+        "bytes": 11959,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/source_memory_selection_v1.py",
+        "sha256": "498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767"
+      },
+      {
+        "bytes": 6179,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/source_program_globals_v1.py",
+        "sha256": "17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77"
+      },
+      {
+        "bytes": 30246,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/source_statements_v2.py",
+        "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+      },
+      {
+        "bytes": 7959,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/strict_minify_v2.py",
+        "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897"
+      },
+      {
+        "bytes": 15158,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/unit_policy_registry_v2.py",
+        "sha256": "4f943d2e4f8f629d6599f236fb7d0fbb798f6bfa48b496e525ae319db8505c5d"
+      },
+      {
+        "bytes": 34803,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/_dx100_whole/whole_interface_v4.py",
+        "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+      },
+      {
+        "bytes": 171522,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/c_lowering.py",
+        "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+      },
+      {
+        "bytes": 78520,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/cbmc_adapter.py",
+        "sha256": "da0bb637b37e5102c8bd130447ee2868262a758f4a502e848607fe17c8d53bcf"
+      },
+      {
+        "bytes": 64545,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/cbmc_translator.py",
+        "sha256": "9319dea126f186f64aeec28d51ac6732fa50b8ad4b70787a977ab5bb5f9c3fbb"
+      },
+      {
+        "bytes": 13654,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/dx100_checked_adapter.py",
+        "sha256": "420c9a622e81934aef6bc9099d29911c2f84557c6f1d1c2e1c4a7bb32a15692b"
+      },
+      {
+        "bytes": 3920,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/dx100_checked_native.py",
+        "sha256": "31224732087efeea58d06d9e7eecc63d0c1da1a0ead1e86ffcf15241e6932c1c"
+      },
+      {
+        "bytes": 5487,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/dx100_checked_registry.py",
+        "sha256": "5b8799e8e6d0b05c8b1d321d9558d4d0fc1d27aa5ab59019afa3313cde487848"
+      },
+      {
+        "bytes": 42588,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/dx100_checked_source.py",
+        "sha256": "63e30bde41178e552df44ddc934ece78aa8c4f189159b3d82230a41ccbb8a28a"
+      },
+      {
+        "bytes": 22617,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/dx100_finite_trace.py",
+        "sha256": "a03209809120260f0bec23037447635dcae46e1694106d18eab7a4c8ea090c34"
+      },
+      {
+        "bytes": 15926,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/dx100_finite_trace_adapter.py",
+        "sha256": "c943fa303fc0f037cfed93a8444718b9dbfd9358f716b1a8caadb18fd1e04246"
+      },
+      {
+        "bytes": 13395,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/dx100_whole_checked.py",
+        "sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105"
+      },
+      {
+        "bytes": 27535,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/formal_frame.py",
+        "sha256": "60075ac8103f8765d47bc52f30a01910e9250b7ba3ce7a80d5580a1db3f01e78"
+      },
+      {
+        "bytes": 36366,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/proof_semantics.py",
+        "sha256": "9c81d8ae45481813c9ce9ff837b7d000d38cad51f3e51fbbeb7281e270e0bbcd"
+      },
+      {
+        "bytes": 55719,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/proposed/swdb/proof_setup.py",
+        "sha256": "888754054d142c6beec78dea1d15f0daa3857fa33d7d2c2c17aaa39c74280841"
+      },
+      {
+        "bytes": 532,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/pure-controls-v1.json",
+        "sha256": "0623737f2d41d1f5eb775f50464fde014b15fe25cedc0d1be0349fae1d25b64a"
+      },
+      {
+        "bytes": 1406,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/pure-controls-v1.log",
+        "sha256": "420b763d4058e97510fac7dd69848719cbc7c700ae48512fea695b3cee5497bc"
+      },
+      {
+        "bytes": 10503,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/test_union_v1.py",
+        "sha256": "4180678a2d28e9cd794a77c01e4b9130deac3c73ab838d9481f04319c4754167"
+      }
+    ],
+    "packet_pin_occurrences": 93
+  },
+  "producer_recipe": {
+    "SourceUnit_role_count": 47,
+    "SourceUnit_roles": {
+      "_dx100_finite/__init__.py": "swdb/_dx100_finite/__init__.py",
+      "_dx100_whole/__init__.py": "swdb/_dx100_whole/__init__.py",
+      "abi_role_transport_v1.py": "swdb/_dx100_whole/abi_role_transport_v1.py",
+      "c_lowering.py": "swdb/c_lowering.py",
+      "capture_family_dispatch_v1.py": "swdb/_dx100_whole/capture_family_dispatch_v1.py",
+      "cbmc_adapter.py": "swdb/cbmc_adapter.py",
+      "cbmc_translator.py": "swdb/cbmc_translator.py",
+      "closed_python_surface.py": "swdb/_dx100_whole/closed_python_surface.py",
+      "compiler_unit_adapter_v3.py": "swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+      "compiler_unit_adapter_v4.py": "swdb/_dx100_whole/compiler_unit_adapter_v4.py",
+      "context_rule_scope_v1.py": "swdb/_dx100_finite/context_rule_scope_v1.py",
+      "dx100_checked_adapter.py": "swdb/dx100_checked_adapter.py",
+      "dx100_checked_native.py": "swdb/dx100_checked_native.py",
+      "dx100_checked_registry.py": "swdb/dx100_checked_registry.py",
+      "dx100_checked_source.py": "swdb/dx100_checked_source.py",
+      "dx100_whole_checked.py": "swdb/dx100_whole_checked.py",
+      "formal_frame.py": "swdb/formal_frame.py",
+      "lossless_gzip_v1.py": "swdb/_dx100_whole/lossless_gzip_v1.py",
+      "lossless_gzip_v2.py": "swdb/_dx100_whole/lossless_gzip_v2.py",
+      "memory_capture_facts_v1.json": "swdb/_dx100_whole/memory_capture_facts_v1.json",
+      "memory_normalized_capture_ingress_v1.py": "swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py",
+      "memory_normalized_compiler_adapter_v1.py": "swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py",
+      "memory_source_preparation_v1.py": "swdb/_dx100_whole/memory_source_preparation_v1.py",
+      "model_primitives.py": "swdb/_dx100_whole/model_primitives.py",
+      "normalized_capture_ingress_v2.py": "swdb/_dx100_whole/normalized_capture_ingress_v2.py",
+      "normalized_compiler_adapter_v1.py": "swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+      "package/__init__.py": "swdb/__init__.py",
+      "proof_semantics.py": "swdb/proof_semantics.py",
+      "proof_setup.py": "swdb/proof_setup.py",
+      "receiver-memory-v1/receiver_memory_v1.py": "swdb/_dx100_whole/receiver-memory-v1/receiver_memory_v1.py",
+      "receiver-state-draws-v2/receiver_state_draws_v2.py": "swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+      "receiver_memory_v1.py": "swdb/_dx100_whole/receiver_memory_v1.py",
+      "receiver_state_draws_v2.py": "swdb/_dx100_whole/receiver_state_draws_v2.py",
+      "resource_profile_v2.py": "swdb/_dx100_whole/resource_profile_v2.py",
+      "role_normalized_gzip_v2.py": "swdb/_dx100_whole/role_normalized_gzip_v2.py",
+      "runtime_projection_v2.py": "swdb/_dx100_whole/runtime_projection_v2.py",
+      "runtime_projection_v3.py": "swdb/_dx100_whole/runtime_projection_v3.py",
+      "runtime_projection_v4.py": "swdb/_dx100_whole/runtime_projection_v4.py",
+      "source-memory-selection-v1/source_memory_selection_v1.py": "swdb/_dx100_whole/source-memory-selection-v1/source_memory_selection_v1.py",
+      "source_argument_staging_v2.py": "swdb/_dx100_whole/source_argument_staging_v2.py",
+      "source_dispatch_v3.py": "swdb/_dx100_whole/source_dispatch_v3.py",
+      "source_memory_selection_v1.py": "swdb/_dx100_whole/source_memory_selection_v1.py",
+      "source_program_globals_v1.py": "swdb/_dx100_whole/source_program_globals_v1.py",
+      "source_statements_v2.py": "swdb/_dx100_whole/source_statements_v2.py",
+      "strict_minify_v2.py": "swdb/_dx100_whole/strict_minify_v2.py",
+      "unit_policy_registry_v2.py": "swdb/_dx100_whole/unit_policy_registry_v2.py",
+      "whole_interface_v4.py": "swdb/_dx100_whole/whole_interface_v4.py"
+    },
+    "TraceUnit_role_count": 70,
+    "TraceUnit_roles": {
+      "c_lowering.py": "swdb/c_lowering.py",
+      "cbmc_adapter.py": "swdb/cbmc_adapter.py",
+      "cbmc_translator.py": "swdb/cbmc_translator.py",
+      "checked-package/_dx100_finite/__init__.py": "swdb/_dx100_finite/__init__.py",
+      "checked-package/_dx100_whole/__init__.py": "swdb/_dx100_whole/__init__.py",
+      "checked-package/abi_role_transport_v1.py": "swdb/_dx100_whole/abi_role_transport_v1.py",
+      "checked-package/c_lowering.py": "swdb/c_lowering.py",
+      "checked-package/capture_family_dispatch_v1.py": "swdb/_dx100_whole/capture_family_dispatch_v1.py",
+      "checked-package/cbmc_adapter.py": "swdb/cbmc_adapter.py",
+      "checked-package/cbmc_translator.py": "swdb/cbmc_translator.py",
+      "checked-package/closed_python_surface.py": "swdb/_dx100_whole/closed_python_surface.py",
+      "checked-package/compiler_unit_adapter_v3.py": "swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+      "checked-package/compiler_unit_adapter_v4.py": "swdb/_dx100_whole/compiler_unit_adapter_v4.py",
+      "checked-package/context_rule_scope_v1.py": "swdb/_dx100_finite/context_rule_scope_v1.py",
+      "checked-package/dx100_checked_adapter.py": "swdb/dx100_checked_adapter.py",
+      "checked-package/dx100_checked_native.py": "swdb/dx100_checked_native.py",
+      "checked-package/dx100_checked_registry.py": "swdb/dx100_checked_registry.py",
+      "checked-package/dx100_checked_source.py": "swdb/dx100_checked_source.py",
+      "checked-package/dx100_whole_checked.py": "swdb/dx100_whole_checked.py",
+      "checked-package/formal_frame.py": "swdb/formal_frame.py",
+      "checked-package/lossless_gzip_v1.py": "swdb/_dx100_whole/lossless_gzip_v1.py",
+      "checked-package/lossless_gzip_v2.py": "swdb/_dx100_whole/lossless_gzip_v2.py",
+      "checked-package/memory_capture_facts_v1.json": "swdb/_dx100_whole/memory_capture_facts_v1.json",
+      "checked-package/memory_normalized_capture_ingress_v1.py": "swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py",
+      "checked-package/memory_normalized_compiler_adapter_v1.py": "swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py",
+      "checked-package/memory_source_preparation_v1.py": "swdb/_dx100_whole/memory_source_preparation_v1.py",
+      "checked-package/model_primitives.py": "swdb/_dx100_whole/model_primitives.py",
+      "checked-package/normalized_capture_ingress_v2.py": "swdb/_dx100_whole/normalized_capture_ingress_v2.py",
+      "checked-package/normalized_compiler_adapter_v1.py": "swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+      "checked-package/package/__init__.py": "swdb/__init__.py",
+      "checked-package/proof_semantics.py": "swdb/proof_semantics.py",
+      "checked-package/proof_setup.py": "swdb/proof_setup.py",
+      "checked-package/receiver-memory-v1/receiver_memory_v1.py": "swdb/_dx100_whole/receiver-memory-v1/receiver_memory_v1.py",
+      "checked-package/receiver-state-draws-v2/receiver_state_draws_v2.py": "swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+      "checked-package/receiver_memory_v1.py": "swdb/_dx100_whole/receiver_memory_v1.py",
+      "checked-package/receiver_state_draws_v2.py": "swdb/_dx100_whole/receiver_state_draws_v2.py",
+      "checked-package/resource_profile_v2.py": "swdb/_dx100_whole/resource_profile_v2.py",
+      "checked-package/role_normalized_gzip_v2.py": "swdb/_dx100_whole/role_normalized_gzip_v2.py",
+      "checked-package/runtime_projection_v2.py": "swdb/_dx100_whole/runtime_projection_v2.py",
+      "checked-package/runtime_projection_v3.py": "swdb/_dx100_whole/runtime_projection_v3.py",
+      "checked-package/runtime_projection_v4.py": "swdb/_dx100_whole/runtime_projection_v4.py",
+      "checked-package/source-memory-selection-v1/source_memory_selection_v1.py": "swdb/_dx100_whole/source-memory-selection-v1/source_memory_selection_v1.py",
+      "checked-package/source_argument_staging_v2.py": "swdb/_dx100_whole/source_argument_staging_v2.py",
+      "checked-package/source_dispatch_v3.py": "swdb/_dx100_whole/source_dispatch_v3.py",
+      "checked-package/source_memory_selection_v1.py": "swdb/_dx100_whole/source_memory_selection_v1.py",
+      "checked-package/source_program_globals_v1.py": "swdb/_dx100_whole/source_program_globals_v1.py",
+      "checked-package/source_statements_v2.py": "swdb/_dx100_whole/source_statements_v2.py",
+      "checked-package/strict_minify_v2.py": "swdb/_dx100_whole/strict_minify_v2.py",
+      "checked-package/unit_policy_registry_v2.py": "swdb/_dx100_whole/unit_policy_registry_v2.py",
+      "checked-package/whole_interface_v4.py": "swdb/_dx100_whole/whole_interface_v4.py",
+      "context_rule_scope_v1.py": "swdb/_dx100_finite/context_rule_scope_v1.py",
+      "dx100_finite_trace.py": "swdb/dx100_finite_trace.py",
+      "dx100_finite_trace_adapter.py": "swdb/dx100_finite_trace_adapter.py",
+      "dx100_whole_checked.py": "swdb/dx100_whole_checked.py",
+      "event_plan_v2.py": "swdb/_dx100_finite/event_plan_v2.py",
+      "finite/__init__.py": "swdb/_dx100_finite/__init__.py",
+      "finite_checks_v1.py": "swdb/_dx100_finite/finite_checks_v1.py",
+      "finite_owned_receiver_v4.py": "swdb/_dx100_finite/finite_owned_receiver_v4.py",
+      "formal_frame.py": "swdb/formal_frame.py",
+      "level_rule.py": "swdb/level_rule.py",
+      "library.py": "swdb/library.py",
+      "package/__init__.py": "swdb/__init__.py",
+      "proof.py": "swdb/proof.py",
+      "proof_semantics.py": "swdb/proof_semantics.py",
+      "proof_setup.py": "swdb/proof_setup.py",
+      "receiver_state_draws_basis_v2.py": "swdb/_dx100_finite/receiver_state_draws_basis_v2.py",
+      "rss_watchdog.py": "swdb/rss_watchdog.py",
+      "stdlib_provenance.py": "swdb/stdlib_provenance.py",
+      "whole_model_v3.py": "swdb/_dx100_finite/whole_model_v3.py",
+      "yamlio.py": "swdb/yamlio.py"
+    },
+    "all69_proposals_plus10_unchanged_shared_members_bound": true,
+    "all_checked_package_roles_equal_full_source_role_map": true,
+    "all_members": [
+      {
+        "bytes": 54,
+        "relative": "swdb/__init__.py",
+        "sha256": "bcbd2c199a6b63c92302a8daf37c26909a76332b89452797351082ddba66b743"
+      },
+      {
+        "bytes": 0,
+        "relative": "swdb/_dx100_finite/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 9371,
+        "relative": "swdb/_dx100_finite/context_rule_scope_v1.py",
+        "sha256": "23d5e4480c67557c201fc506fc3e25a23cdd9dd9eb63ff66cf1db14881b9e05b"
+      },
+      {
+        "bytes": 23943,
+        "relative": "swdb/_dx100_finite/event_plan_v1.py",
+        "sha256": "07c94720ec30625d9b934dea2685d49e75a949661c8852ae0997b0d8070b488b"
+      },
+      {
+        "bytes": 25404,
+        "relative": "swdb/_dx100_finite/event_plan_v2.py",
+        "sha256": "d50ed0afe5861ceb4cacfd070f40fceebfb3475d51ea98fc28d111cc54341ec4"
+      },
+      {
+        "bytes": 16500,
+        "relative": "swdb/_dx100_finite/finite_checks_v1.py",
+        "sha256": "29067ff3590fa8ed31c8cbd821a9e5835b9e319bc7c806f5676aa8efcf15fd38"
+      },
+      {
+        "bytes": 17678,
+        "relative": "swdb/_dx100_finite/finite_owned_receiver_v3.py",
+        "sha256": "5cf81486d5b43192277f1d1ab8043d3b8865453b3575a5e753a2c08c88a951d6"
+      },
+      {
+        "bytes": 18451,
+        "relative": "swdb/_dx100_finite/finite_owned_receiver_v4.py",
+        "sha256": "9ee3a649d291d928f2e49575fc9ce81660ef5fccf2b062c39a746d0a4aa76a2f"
+      },
+      {
+        "bytes": 34554,
+        "relative": "swdb/_dx100_finite/receiver_state_draws_basis_v2.py",
+        "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+      },
+      {
+        "bytes": 9975,
+        "relative": "swdb/_dx100_finite/whole_model_v3.py",
+        "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+      },
+      {
+        "bytes": 98,
+        "relative": "swdb/_dx100_whole/__init__.py",
+        "sha256": "f5f61c5460fa264b8d8a5690e3be19e60b592a162eed6b33614276b66853016e"
+      },
+      {
+        "bytes": 7892,
+        "relative": "swdb/_dx100_whole/abi_role_transport_v1.py",
+        "sha256": "ea2e7e26ae154ccb9bd40204f75571ddca8fe50591a862d36abb140ec0893f8e"
+      },
+      {
+        "bytes": 14281,
+        "relative": "swdb/_dx100_whole/basis/compiler_unit_adapter_v2.py.source.txt",
+        "sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317"
+      },
+      {
+        "bytes": 63276,
+        "relative": "swdb/_dx100_whole/basis/harness/cbmc_translator.py.source.txt",
+        "sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3"
+      },
+      {
+        "bytes": 9623,
+        "relative": "swdb/_dx100_whole/basis/model-entry-v1/whole_model_v1.py.source.txt",
+        "sha256": "75c99c39664fc9b7b40838622b8fa03835977c7afbf35c5aab2a5704c4f538f4"
+      },
+      {
+        "bytes": 9975,
+        "relative": "swdb/_dx100_whole/basis/model-entry-v3/whole_model_v3.py.source.txt",
+        "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+      },
+      {
+        "bytes": 6468,
+        "relative": "swdb/_dx100_whole/basis/source-integration-schema-v2.json.source.txt",
+        "sha256": "433e3e6149b0cc3be9f4f7e16db6bfdc3b1dc912115dee88783f5bed1052f792"
+      },
+      {
+        "bytes": 23687,
+        "relative": "swdb/_dx100_whole/basis/source_argument_staging_v2.py.source.txt",
+        "sha256": "79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178"
+      },
+      {
+        "bytes": 25681,
+        "relative": "swdb/_dx100_whole/basis/source_dispatch_v3.py.source.txt",
+        "sha256": "d05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703"
+      },
+      {
+        "bytes": 6179,
+        "relative": "swdb/_dx100_whole/basis/source_program_globals_v1.py.source.txt",
+        "sha256": "17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77"
+      },
+      {
+        "bytes": 30246,
+        "relative": "swdb/_dx100_whole/basis/source_statements_v2.py.source.txt",
+        "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+      },
+      {
+        "bytes": 15884,
+        "relative": "swdb/_dx100_whole/basis/whole_adapters.h.source.txt",
+        "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+      },
+      {
+        "bytes": 3881,
+        "relative": "swdb/_dx100_whole/basis/whole_closed_routes_v1.h.source.txt",
+        "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+      },
+      {
+        "bytes": 34803,
+        "relative": "swdb/_dx100_whole/basis/whole_interface_v4.py.source.txt",
+        "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+      },
+      {
+        "bytes": 69747,
+        "relative": "swdb/_dx100_whole/basis/whole_value_backend_v1.h.source.txt",
+        "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+      },
+      {
+        "bytes": 13765,
+        "relative": "swdb/_dx100_whole/basis/whole_value_builders_v1.h.source.txt",
+        "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+      },
+      {
+        "bytes": 1002,
+        "relative": "swdb/_dx100_whole/capture_family_dispatch_v1.py",
+        "sha256": "3551c955a48625708246d0af7a71a56969b9ecdb05105d858a56bcc749f378c5"
+      },
+      {
+        "bytes": 18385,
+        "relative": "swdb/_dx100_whole/closed_python_surface.py",
+        "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+      },
+      {
+        "bytes": 15063,
+        "relative": "swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+        "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+      },
+      {
+        "bytes": 23873,
+        "relative": "swdb/_dx100_whole/compiler_unit_adapter_v4.py",
+        "sha256": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6"
+      },
+      {
+        "bytes": 5976,
+        "relative": "swdb/_dx100_whole/lossless_gzip_v1.py",
+        "sha256": "f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193"
+      },
+      {
+        "bytes": 6812,
+        "relative": "swdb/_dx100_whole/lossless_gzip_v2.py",
+        "sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef"
+      },
+      {
+        "bytes": 21487,
+        "relative": "swdb/_dx100_whole/memory_capture_facts_v1.json",
+        "sha256": "9862edaf233ebb7d6146dfdb7e825864e1c4314bd5e034a9a8800c97b20a3f3a"
+      },
+      {
+        "bytes": 24961,
+        "relative": "swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py",
+        "sha256": "6e01c75ca17d9feff04263d4963cf7ee3a1c46e9d30c03bf4b0282812f8bd599"
+      },
+      {
+        "bytes": 5462,
+        "relative": "swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py",
+        "sha256": "f05980d1cc52fce7026247eea0b625af734ed42526ebcb337c270090071b1a47"
+      },
+      {
+        "bytes": 7724,
+        "relative": "swdb/_dx100_whole/memory_source_preparation_v1.py",
+        "sha256": "1915ff999594a5af95a005a4ef3caa42c4d7067646c54b1e61c7f213366ad611"
+      },
+      {
+        "bytes": 2550,
+        "relative": "swdb/_dx100_whole/model_primitives.py",
+        "sha256": "56e7ff7f8e9f6317ad3573c1c916891e328a12c1f189b716392a588e12dd5df1"
+      },
+      {
+        "bytes": 26153,
+        "relative": "swdb/_dx100_whole/normalized_capture_ingress_v2.py",
+        "sha256": "02a556b74d81594b8bc637fe8f085bc6e8f8df7642ecdad2267b2cc6f09a9bd4"
+      },
+      {
+        "bytes": 4490,
+        "relative": "swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+        "sha256": "4bdeb0b2761fcc9b3721ee770d8eb8b33534ec7df22cc07cc42f1345b5bd285f"
+      },
+      {
+        "bytes": 34554,
+        "relative": "swdb/_dx100_whole/receiver-memory-v1/receiver_memory_v1.py",
+        "sha256": "f8cf91dee0e7b442812065b7935e176df48a417a308eb3798104b4320f654f23"
+      },
+      {
+        "bytes": 34554,
+        "relative": "swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+        "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+      },
+      {
+        "bytes": 34554,
+        "relative": "swdb/_dx100_whole/receiver_memory_v1.py",
+        "sha256": "f8cf91dee0e7b442812065b7935e176df48a417a308eb3798104b4320f654f23"
+      },
+      {
+        "bytes": 34554,
+        "relative": "swdb/_dx100_whole/receiver_state_draws_v2.py",
+        "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+      },
+      {
+        "bytes": 4576,
+        "relative": "swdb/_dx100_whole/resource_profile_v2.py",
+        "sha256": "6381bfb8b7b3813c25d6f994332a67c72b811c63f3665f2a10edc2584bfdafc5"
+      },
+      {
+        "bytes": 27967,
+        "relative": "swdb/_dx100_whole/role_normalized_gzip_v2.py",
+        "sha256": "6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941"
+      },
+      {
+        "bytes": 23198,
+        "relative": "swdb/_dx100_whole/runtime_projection_v2.py",
+        "sha256": "645b34878191a695fb61bd6dbf2dd3bcb0f984199482c9611a19b9f9a3a4e69b"
+      },
+      {
+        "bytes": 23244,
+        "relative": "swdb/_dx100_whole/runtime_projection_v3.py",
+        "sha256": "e60e1ed82a0bbc4983bb4acd9ca0204fd4238ef8ed555c9dc4a2ab8800a07284"
+      },
+      {
+        "bytes": 37560,
+        "relative": "swdb/_dx100_whole/runtime_projection_v4.py",
+        "sha256": "56077c3476ba0f4af3b06089e937a0a5723318f7927ba81ea45c8556251cb7de"
+      },
+      {
+        "bytes": 11959,
+        "relative": "swdb/_dx100_whole/source-memory-selection-v1/source_memory_selection_v1.py",
+        "sha256": "498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767"
+      },
+      {
+        "bytes": 23687,
+        "relative": "swdb/_dx100_whole/source_argument_staging_v2.py",
+        "sha256": "79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178"
+      },
+      {
+        "bytes": 25681,
+        "relative": "swdb/_dx100_whole/source_dispatch_v3.py",
+        "sha256": "d05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703"
+      },
+      {
+        "bytes": 11959,
+        "relative": "swdb/_dx100_whole/source_memory_selection_v1.py",
+        "sha256": "498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767"
+      },
+      {
+        "bytes": 6179,
+        "relative": "swdb/_dx100_whole/source_program_globals_v1.py",
+        "sha256": "17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77"
+      },
+      {
+        "bytes": 30246,
+        "relative": "swdb/_dx100_whole/source_statements_v2.py",
+        "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+      },
+      {
+        "bytes": 7959,
+        "relative": "swdb/_dx100_whole/strict_minify_v2.py",
+        "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897"
+      },
+      {
+        "bytes": 15158,
+        "relative": "swdb/_dx100_whole/unit_policy_registry_v2.py",
+        "sha256": "4f943d2e4f8f629d6599f236fb7d0fbb798f6bfa48b496e525ae319db8505c5d"
+      },
+      {
+        "bytes": 34803,
+        "relative": "swdb/_dx100_whole/whole_interface_v4.py",
+        "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+      },
+      {
+        "bytes": 171522,
+        "relative": "swdb/c_lowering.py",
+        "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+      },
+      {
+        "bytes": 78520,
+        "relative": "swdb/cbmc_adapter.py",
+        "sha256": "da0bb637b37e5102c8bd130447ee2868262a758f4a502e848607fe17c8d53bcf"
+      },
+      {
+        "bytes": 64545,
+        "relative": "swdb/cbmc_translator.py",
+        "sha256": "9319dea126f186f64aeec28d51ac6732fa50b8ad4b70787a977ab5bb5f9c3fbb"
+      },
+      {
+        "bytes": 13654,
+        "relative": "swdb/dx100_checked_adapter.py",
+        "sha256": "420c9a622e81934aef6bc9099d29911c2f84557c6f1d1c2e1c4a7bb32a15692b"
+      },
+      {
+        "bytes": 3920,
+        "relative": "swdb/dx100_checked_native.py",
+        "sha256": "31224732087efeea58d06d9e7eecc63d0c1da1a0ead1e86ffcf15241e6932c1c"
+      },
+      {
+        "bytes": 5487,
+        "relative": "swdb/dx100_checked_registry.py",
+        "sha256": "5b8799e8e6d0b05c8b1d321d9558d4d0fc1d27aa5ab59019afa3313cde487848"
+      },
+      {
+        "bytes": 42588,
+        "relative": "swdb/dx100_checked_source.py",
+        "sha256": "63e30bde41178e552df44ddc934ece78aa8c4f189159b3d82230a41ccbb8a28a"
+      },
+      {
+        "bytes": 22617,
+        "relative": "swdb/dx100_finite_trace.py",
+        "sha256": "a03209809120260f0bec23037447635dcae46e1694106d18eab7a4c8ea090c34"
+      },
+      {
+        "bytes": 15926,
+        "relative": "swdb/dx100_finite_trace_adapter.py",
+        "sha256": "c943fa303fc0f037cfed93a8444718b9dbfd9358f716b1a8caadb18fd1e04246"
+      },
+      {
+        "bytes": 13395,
+        "relative": "swdb/dx100_whole_checked.py",
+        "sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105"
+      },
+      {
+        "bytes": 27535,
+        "relative": "swdb/formal_frame.py",
+        "sha256": "60075ac8103f8765d47bc52f30a01910e9250b7ba3ce7a80d5580a1db3f01e78"
+      },
+      {
+        "bytes": 32753,
+        "relative": "swdb/level_rule.py",
+        "sha256": "5353e6b33e1a4648c4cb77b1bd39ec2c57ef4f554ffe98cbc4e2e048a24aea7a"
+      },
+      {
+        "bytes": 46103,
+        "relative": "swdb/library.py",
+        "sha256": "70a22a19c7baee1a5f1562d99023d67486957f3e21c84d9f60ab491b9f3b8c3a"
+      },
+      {
+        "bytes": 51186,
+        "relative": "swdb/proof.py",
+        "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+      },
+      {
+        "bytes": 36366,
+        "relative": "swdb/proof_semantics.py",
+        "sha256": "9c81d8ae45481813c9ce9ff837b7d000d38cad51f3e51fbbeb7281e270e0bbcd"
+      },
+      {
+        "bytes": 55719,
+        "relative": "swdb/proof_setup.py",
+        "sha256": "888754054d142c6beec78dea1d15f0daa3857fa33d7d2c2c17aaa39c74280841"
+      },
+      {
+        "bytes": 7623,
+        "relative": "swdb/rss_watchdog.py",
+        "sha256": "8cbe4f803951cee080581862b69a0b7bf21e35c554dc5cfde4db7d9f2779e5b6"
+      },
+      {
+        "bytes": 10126,
+        "relative": "swdb/standard_vector_member_view.py",
+        "sha256": "6636e5857616e8b93e26c1f0b9c0fed26ef5e9ec565e116586c683625c6fe966"
+      },
+      {
+        "bytes": 30455,
+        "relative": "swdb/stdlib_provenance.py",
+        "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+      },
+      {
+        "bytes": 104308,
+        "relative": "swdb/wp_adapter.py",
+        "sha256": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229"
+      },
+      {
+        "bytes": 64171,
+        "relative": "swdb/wp_pointer_bounds.py",
+        "sha256": "62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241"
+      },
+      {
+        "bytes": 2336,
+        "relative": "swdb/yamlio.py",
+        "sha256": "8c92d644f5abca0f7031ce52e1577892cf1b7c79bc730484112eedb3e39439c0"
+      }
+    ],
+    "distinct_physical_members": 79,
+    "final_published_producer_commit": null,
+    "projected_role_function_execution_only": "Root/test controls execute only exact AST leaves with explicit physical module-path stand-ins. It proves the recipe, not imported origin or published-source/driver attestation.",
+    "snapshot_basis_same_complete_rows": true
+  },
+  "remaining": [
+    "Fresh exact shared overlap check and root full-body review before applying. This reviewer performs no apply, Git readback or mutation.",
+    "Actual final published producer commit must be root-selected and all commit-bound identities regenerated/reviewed. Current001 base is reported metadata; later docs-only publication does not itself attest actual producer identity.",
+    "Actual original TU/ABI/memory preparation, runtime/imported module origin, selected driver capability, same-entry Library/context/receiver and public proofs remain separately pending. No source/native/compiler/driver capability is inferred from file identity."
+  ],
+  "reviewer": "ticket25/caller_assess, independent of union author",
+  "scientific_or_source_or_driver_or_public_or_ticket_admission": false,
+  "source_packet": {
+    "bytes": 33066,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-union-v1/source-packet-v1.json",
+    "sha256": "042ecc522453617d946e9d05f6834e972929aa4d339f32dcd937fe05a64bbd45"
+  },
+  "standards_judgment": [
+    "The composition builder has one explicit precedence order: coherent applied bytes, reviewed finite V4 overlay, then exact semantic ABI dependencies. Every selected path names an exact frozen origin, current base or absence, and prospective destination. No coherent base path is silently dropped.",
+    "Both role maps are independently regenerated from actual producer_paths leaves, including the entire checked-package SourceUnit closure inside TraceUnit. Their complete79-file basis replaces the old54-member identity and keeps final producer commit null.",
+    "The previously reviewed48455-byte builder changes by only the basis SHA and filename. Existing closed physical source membership checks and imported-origin/normal-runtime/entry/receiver gates are not bypassed by this metadata update.",
+    "Versioned finite helper copies and separately named reader v3/v4 preserve content-addressed protocol identities. The generic v3 reader is not overwritten, and semantic import rebinding has exact retained inverses.",
+    "The no-child controls test exact current base/absent-path state, four finite hooks, typed scope, source producer closure missing/wrong-path/hash/extra mutations, all79 snapshot members, complete patch generation and unchanged WP/public recorder boundaries."
+  ]
+}

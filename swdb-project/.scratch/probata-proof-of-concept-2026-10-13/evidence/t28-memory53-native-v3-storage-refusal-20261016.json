@@ -1,0 +1,62 @@
+{
+  "created": "2026-10-16 ET",
+  "status": "REFUSED_STORAGE_FLOOR_BEFORE_COMPILER",
+  "root": {
+    "exit_code": 1,
+    "outer_timeout": false,
+    "wall_s": 0.7179509169654921,
+    "raw": "/private/tmp/probata-resume-20261016-t28-memory53-native-v3",
+    "scope": "Mac private53 preparation controls per language; no public source/value/history/proof/hardware acceptance"
+  },
+  "guard_summary": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-I",
+      "-B",
+      "-X",
+      "pycache_prefix=/private/tmp/probata-resume-20261016-t28-memory53-native-v3/entry-cache",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v3.py",
+      "--output",
+      "/private/tmp/probata-resume-20261016-t28-memory53-native-v3/component",
+      "--source-policy",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source_policy_v2.json",
+      "--runtime-policy",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json"
+    ],
+    "exit_code": 1,
+    "wall_s": 0.4577174166915938,
+    "peak_rss_mb": 27.53125,
+    "cap_gb": 4.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 180.0,
+    "queue_timeout_s": 300.0,
+    "lock_wait_s": 0.0003527916851453483,
+    "runner_pid": 7236,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-resume-20261016-t28-memory53-native-v3/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "7655967b1c1bbb1527eb0240a6a42654da716411308e3f510b469228cc5aa515",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 13:46:20 EDT"
+  },
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v3.py\", line 212, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v3.py\", line 106, in main\n    raise ValueError('50GiB free floor plus256MiB allowance required')\nValueError: 50GiB free floor plus256MiB allowance required\n",
+  "compiler_or_native_executed": false,
+  "next": "independently reviewed V4 admission with32GiB floor plus256MiB allowance, unchanged native criteria/caps; no cleanup/deletion"
+}

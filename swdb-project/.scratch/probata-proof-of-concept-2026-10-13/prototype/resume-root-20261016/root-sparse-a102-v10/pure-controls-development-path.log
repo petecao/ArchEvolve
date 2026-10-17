@@ -1,0 +1,29 @@
+test_Git_inventory_refuses_symlinks_submodules_escape_duplicate_and_control_names (__main__.Controls.test_Git_inventory_refuses_symlinks_submodules_escape_duplicate_and_control_names) ... ok
+test_derived_source_budget_plus_unchanged10GiB_floor_refuses_before_clone (__main__.Controls.test_derived_source_budget_plus_unchanged10GiB_floor_refuses_before_clone) ... ok
+test_exact_V9_inverse_and_nested_remote_syntax (__main__.Controls.test_exact_V9_inverse_and_nested_remote_syntax) ... ok
+test_existing_destination_refuses_before_any_Git_or_write (__main__.Controls.test_existing_destination_refuses_before_any_Git_or_write) ... ok
+test_primary_and_parent_alias_configs_cannot_be_pinned (__main__.Controls.test_primary_and_parent_alias_configs_cannot_be_pinned) ... ok
+test_public13_consumer_and_Linux_admission_have_no_common_dir_assumption (__main__.Controls.test_public13_consumer_and_Linux_admission_have_no_common_dir_assumption) ... ERROR
+test_source_spec_exact424regular_leaves_336package_and_derived_budget (__main__.Controls.test_source_spec_exact424regular_leaves_336package_and_derived_budget) ... ok
+test_sparse_mutations_are_only_new_clone_and_its_private_config (__main__.Controls.test_sparse_mutations_are_only_new_clone_and_its_private_config) ... ok
+
+======================================================================
+ERROR: test_public13_consumer_and_Linux_admission_have_no_common_dir_assumption (__main__.Controls.test_public13_consumer_and_Linux_admission_have_no_common_dir_assumption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/root-sparse-a102-v10/pure_controls.py", line 102, in test_public13_consumer_and_Linux_admission_have_no_common_dir_assumption
+    source=old.read_text();selected={n.name:ast.get_source_segment(source,n)for n in ast.parse(source).body if isinstance(n,ast.FunctionDef)and n.name in ('linux_admission','consumer_closure')}
+           ^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1/entry.py'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.011s
+
+FAILED (errors=1)
+{"actual_clone_launcher_or_SSH": false, "child_native_network_attempts": [], "date": "2026-10-16 ET", "errors": 1, "failures": 0, "passed": 7}

@@ -1,0 +1,109 @@
+{
+  "actual_Library_or_profile_preparation": false,
+  "actual_public_execution": false,
+  "all_packet_pins_match": true,
+  "confirmed_scope": [
+    "Original 18 Plan source identities are preserved; literal public corpus is 30 cases.",
+    "No fairness or eventual-one premise is introduced; logical readiness is an explicitly assumed finite model.",
+    "Distinct finite TraceUnit routing, same checked entry rule assumptions, method/runtime source checks and source-only composition controls are present.",
+    "Source model, native model execution/replay, original-C++ correspondence and hardware implementation remain separately stated."
+  ],
+  "date": "2026-10-16T21:14:01.155905-04:00",
+  "decision": "REQUEST_CHANGES",
+  "findings": [
+    {
+      "evidence": "Four native sample rows are retained before the CBMC query. native() permits a recognized failed assertion with end=check. The proven branch adopts proven without requiring all four sample rows to have empty failed lists and normal completion.",
+      "file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/proposed/swdb/dx100_finite_trace_adapter.py",
+      "id": "FINITE-01",
+      "line": 163,
+      "priority": 1,
+      "required_change": "A known native sample failure must block proven adoption independently of expected fixture verdict. Add a public run-boundary control with native failure and an otherwise proven CBMC outcome.",
+      "title": "Native counterexample is ignored when CBMC reports proven"
+    },
+    {
+      "evidence": "Replay equality compares failed=[failure.property]. Multiple Plan assertions use finite-event-property, so the same label alone does not identify the failed assertion instance.",
+      "file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/proposed/swdb/dx100_finite_trace_adapter.py",
+      "id": "FINITE-02",
+      "line": 168,
+      "priority": 1,
+      "required_change": "Bind actual native assertion function and source line, or an equally closed unique source-event identity, to the retained actual CBMC sourceLocation. Reject a witness replay failing another assertion with the same description. Retain unknown/RTE/capacity refusal.",
+      "title": "Replay matches only a reused assertion description"
+    },
+    {
+      "evidence": "contract.proof_unit.source is compared using its declared hash and Library.resolve(...).resolve(), without passing the portable source row through contracts.pinned. Real Library.resolve canonicalizes and can erase an in-root alias before this comparison.",
+      "file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/proposed/swdb/dx100_finite_trace.py",
+      "id": "FINITE-03",
+      "line": 199,
+      "priority": 2,
+      "required_change": "Apply the checked bounded portable pin reader to the original contract source row before resolving; compare exact selected Plan bytes as well as the physical identity. Add a control with real resolver semantics and a portable alias.",
+      "title": "Portable Plan source pin bypasses the physical-component check"
+    }
+  ],
+  "packet_pin_occurrences": 80,
+  "production_application_authorized_by_this_review": false,
+  "retained_predecessor": "All finite public V1 bytes remain frozen; repair must be a successor.",
+  "review_inputs": [
+    {
+      "bytes": 21878,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/proposed/swdb/dx100_finite_trace.py",
+      "sha256": "a2e291a080d9273e3bf23f080eb290a818df3bbf00e348881051feb19357499e"
+    },
+    {
+      "bytes": 14137,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/proposed/swdb/dx100_finite_trace_adapter.py",
+      "sha256": "5ae2b4c7eccc0ef8325e2fd5083786ef289ea2873738f63e69a29e4ad6254329"
+    },
+    {
+      "bytes": 13664,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/proposed/swdb/_dx100_finite/finite_checks_v1.py",
+      "sha256": "62f89f8494ab0ccffae3bafaf05d2c0b2aa7b7764313bb8e98bb1a076b8f699f"
+    },
+    {
+      "bytes": 6309,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/finite-hooks.patch",
+      "sha256": "d55ca5fa0edfb7c3bec682008e66922637faea61a5b2f5cbaf3676846d0ba3b0"
+    },
+    {
+      "bytes": 23080,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/test_finite_public.py",
+      "sha256": "d85be424449abb6d0707e4fed972baa55ef6c0128c221e9959e2eeaf75e9022e"
+    },
+    {
+      "bytes": 5359,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/README.md",
+      "sha256": "6f759d5fa29e6a5800b6cf9dc9430206f457d92d92632c7af515de14be343b42"
+    },
+    {
+      "bytes": 5887,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/acceptance-map.json",
+      "sha256": "01faaf10998142784cfc33f0641ed3c0b3d0cca783e1ea3858664e447bdfaf86"
+    }
+  ],
+  "review_scope": "Frozen finite public V1 source/Spec and no-child controls only",
+  "schema": "ticket28-finite-public-independent-spec-review-1",
+  "scientific_acceptance": false,
+  "source_packet": {
+    "bytes": 24846,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1/source-packet-v1.json",
+    "sha256": "ed131ac718f20c2b04be19f6d0cbf45095380be7e405fec2fcc502a5f7f8fa6f"
+  },
+  "validation": {
+    "child_native_network_execution": false,
+    "command": "python3 /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1-independent-review/review_controls_v1.py",
+    "errors": 0,
+    "failures": 0,
+    "project_imports": false,
+    "retained_log": {
+      "bytes": 2210,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1-independent-review/independent-pure-controls-v1.log",
+      "sha256": "e610765676730c8766f3ce9545252b0a46c9107a51309a9c181683dbe606d25b"
+    },
+    "reviewer_control": {
+      "bytes": 2496,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v1-independent-review/review_controls_v1.py",
+      "sha256": "22ba5d03940b23fa88d68be9558c2cb2252d74ce73e4180d85980fd42ea0f3dd"
+    },
+    "skips": 0,
+    "tests": 13
+  }
+}

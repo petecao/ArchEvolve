@@ -1,0 +1,536 @@
+{
+  "CBMC_reachability_boundary": "swdb_reach.end failure is the expected nonvacuous reachability control in cbmc_adapter.read_outcome; safe has no other failed property, wrong also fails its exact post.ensures1 and its original C++ counterexample replays.",
+  "WP_complete_status_census": {
+    "ordinary:timeout": 1,
+    "ordinary:valid": 80,
+    "smoke:valid": 22
+  },
+  "boundaries": {
+    "compiler_native_verifier_solver_rerun": false,
+    "complete_hypothesis_import_proofterm_semantic_audit": false,
+    "eight_contract_fixture_records_retained": true,
+    "general_source_caller_Heap_Typed_lifetime_allocator_default_catalog_or_ticket_admission": false,
+    "independent_scientific_cold_acceptance": false,
+    "next_science_requires_root_admission": true,
+    "raw_C_AST_SMT_or_binary_copied": false,
+    "remote_raw_source_mutation": false
+  },
+  "collection": {
+    "bytes": 237348,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-mixed-v8-actual-passive-settlement-v2-20261016.json",
+    "sha256": "25094840f2dd1460d3bcca972103ac1fffb79c28efce71734f3a0edb1854ce86"
+  },
+  "collector": {
+    "bytes": 11439,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/collect_mixed_v8_passive_v2.py",
+    "sha256": "f1b5d225ee8da1e8daeb4118b5f66e0ebc01aec21c28048fc1e7c8506b058833"
+  },
+  "collector_v1_export_cap_refusal": {
+    "bytes": 360,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-mixed-v8-passive-collector-v1-refusal-20261016.json",
+    "sha256": "224115536c791c40b96f647c1e7aad94315c7082981345cceaff8db2126847ea"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_ACTUAL_SCOPED_EIGHT_RECORD_FIXTURE_WORKFLOW_COLD_SEMANTICS_PENDING",
+  "exact_model_dependencies_match_actual4records": true,
+  "fresh_host": {
+    "disk_free": {
+      "/data": 72049819648,
+      "/data1": 12399882240
+    },
+    "lease_release_alone_used_as_producer_success": false,
+    "leases": {
+      "mbit10-evaluation": {
+        "generation": 77,
+        "released_at": "2026-09-12T04:49:11Z",
+        "state": "released"
+      },
+      "mbit10-evaluation-node0": {
+        "generation": 622,
+        "released_at": "2026-10-16T22:12:07Z",
+        "state": "released"
+      },
+      "mbit10-evaluation-node1": {
+        "generation": 640,
+        "released_at": "2026-10-16T22:22:58Z",
+        "state": "released"
+      }
+    },
+    "load": [
+      0.16796875,
+      0.1865234375,
+      0.3974609375
+    ],
+    "selected_tool_processes": []
+  },
+  "frozen_packet": {
+    "bytes": 16402,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/source-packet.json",
+    "sha256": "c017689a64b3e505e574e801ecb0378d778ff0a19f008b3c78f7b8a419dabb39"
+  },
+  "guards": {
+    "lane.json": {
+      "bytes": 828,
+      "sha256": "49a30d192c5b8ea831d8d92f28ec5921220300481a8b5872341caf0896a50723",
+      "value": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "1320",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/run.sh"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-16T22:12:07Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "probata-resume-20261016-36266e10-mixed-pair-public-v8",
+          "lease_generation": 622,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 0.15,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-16T22:04:42Z"
+        }
+      }
+    },
+    "outer-resources.json": {
+      "bytes": 174,
+      "sha256": "4b169b91a7234a9d0433be6143270299a384bafb953ab41f6e6732be3d614672",
+      "value": {
+        "cpu_seconds": 598.5644149999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 1175068672,
+        "timed_out": false,
+        "wall_seconds": 444.9364973148331
+      }
+    },
+    "resources.json": {
+      "bytes": 168,
+      "sha256": "5a186de4f07836d15accc5f0394730ec306781b6a37c635a02b0997f1dbadce9",
+      "value": {
+        "cpu_seconds": 509.041285,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 1121591296,
+        "timed_out": false,
+        "wall_seconds": 442.93195821810514
+      }
+    }
+  },
+  "junit": {
+    "bytes": 384,
+    "case_names": [
+      {
+        "classname": "tests.test_pair_pointer_workflow",
+        "name": "test_actual_mixed_pair_bodies_callers_and_bounded_cpp_replay",
+        "time": "384.977"
+      }
+    ],
+    "cases": 1,
+    "errors": 0,
+    "failure_messages": [],
+    "failures": 0,
+    "sha256": "5a91a56c524889c9b8358e403146816ff4bac736c4148d09f4d3c4cf620dca07",
+    "skips": 0
+  },
+  "next": "Independent source-reviewed passive mixed V8 cold interpretation reader; no tool rerun. Actual available proof-task retention must be reconciled honestly, not inferred from eight producer verdicts.",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8",
+  "record_census": {
+    "bytes": 2466,
+    "sha256": "b96aa653ef7c80eb0062192622b2c7f78f37b97b8e764db748b496e414011c82",
+    "value": {
+      "CBMC_callers": 2,
+      "WP_callers": 2,
+      "independent_cold_acceptance": false,
+      "junit": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 1
+      },
+      "models": 4,
+      "physical_records": [
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81.yaml",
+          "sha256": "83cf778a129ce2edf212a449c70778a0181c1330a9bc37b24976e96c8922f4bc"
+        },
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2.yaml",
+          "sha256": "bfa837ea9148a1b1b218ad6c6a61ccd6dda569797432a4726136bfbb86f9de76"
+        },
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5.yaml",
+          "sha256": "e0ec27bc97e8249532f79b4878186d2f4a48e55db279a642c3f2990abc0eb80f"
+        },
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168.yaml",
+          "sha256": "64fb9baf3ba13b322d21a1bfb5b4ce04b22293b8fe8f1de42ae662019ff4ea4d"
+        },
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec.yaml",
+          "sha256": "282cbf3bb673fe75db4ac1194722053daf8e79d0a6f8127973b91aa28a83b6b5"
+        },
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981.yaml",
+          "sha256": "c61e49a7747c5f731400bdfc8cebefe9fdf2aadf5a87564814bfe0c6e17c4321"
+        },
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640.yaml",
+          "sha256": "28bcb1f2a8fb3ee1e21787fb5861d2ce689f59db54ab747c9d4b4935da5a7a50"
+        },
+        {
+          "path": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56.yaml",
+          "sha256": "4999d4919a90e6ba0d9edb38bbfe50b25b9eb627971373f4abd9f89d80a7abb8"
+        }
+      ],
+      "records": 8,
+      "verdicts": [
+        "proven",
+        "proven",
+        "proven",
+        "proven",
+        "proven",
+        "not_proven",
+        "proven",
+        "refuted"
+      ]
+    }
+  },
+  "records": [
+    {
+      "adapter": "wp",
+      "counterexample_replay": {},
+      "failure_class": null,
+      "forms": null,
+      "goal_status_census": {
+        "ordinary:valid": 8,
+        "smoke:valid": 1
+      },
+      "id": "proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640",
+      "native_agreement": null,
+      "subject": {
+        "id": "std_pair_int_int_ptr_ctor_default",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "adapter": "wp",
+      "counterexample_replay": {},
+      "failure_class": null,
+      "forms": null,
+      "goal_status_census": {
+        "ordinary:valid": 8,
+        "smoke:valid": 1
+      },
+      "id": "proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981",
+      "native_agreement": null,
+      "subject": {
+        "id": "std_pair_int_int_ptr_ctor",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "adapter": "wp",
+      "counterexample_replay": {},
+      "failure_class": null,
+      "forms": null,
+      "goal_status_census": {
+        "ordinary:valid": 7,
+        "smoke:valid": 1
+      },
+      "id": "proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec",
+      "native_agreement": null,
+      "subject": {
+        "id": "std_pair_int_int_ptr_copy_ctor",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "adapter": "wp",
+      "counterexample_replay": {},
+      "failure_class": null,
+      "forms": null,
+      "goal_status_census": {
+        "ordinary:valid": 8,
+        "smoke:valid": 1
+      },
+      "id": "proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56",
+      "native_agreement": null,
+      "subject": {
+        "id": "std_pair_int_int_ptr_operator_assign",
+        "kind": "c_model"
+      },
+      "verdict": "proven"
+    },
+    {
+      "adapter": "wp",
+      "counterexample_replay": {},
+      "failure_class": null,
+      "forms": null,
+      "goal_status_census": {
+        "ordinary:valid": 25,
+        "smoke:valid": 9
+      },
+      "id": "proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81",
+      "native_agreement": null,
+      "subject": {
+        "id": "contract.fixture_pair_pointer_values",
+        "kind": "library_summary"
+      },
+      "verdict": "proven"
+    },
+    {
+      "adapter": "wp",
+      "counterexample_replay": {},
+      "failure_class": "timeout",
+      "forms": null,
+      "goal_status_census": {
+        "ordinary:timeout": 1,
+        "ordinary:valid": 24,
+        "smoke:valid": 9
+      },
+      "id": "proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5",
+      "native_agreement": null,
+      "subject": {
+        "id": "contract.fixture_pair_pointer_wrong_identity",
+        "kind": "library_summary"
+      },
+      "verdict": "not_proven"
+    },
+    {
+      "adapter": "cbmc",
+      "counterexample_replay": {},
+      "failure_class": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "goal_status_census": {
+        "ordinary:failure": 1,
+        "ordinary:success": 69
+      },
+      "id": "proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2",
+      "native_agreement": {
+        "c_output_sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97",
+        "cxx_output_sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97",
+        "domain": {
+          "x": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          },
+          "y": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          }
+        },
+        "runs": 49,
+        "sampled": false,
+        "verdict": "agree"
+      },
+      "subject": {
+        "id": "contract.fixture_pair_pointer_values",
+        "kind": "library_summary"
+      },
+      "verdict": "proven"
+    },
+    {
+      "adapter": "cbmc",
+      "counterexample_replay": {
+        "replayed": true
+      },
+      "failure_class": null,
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "goal_status_census": {
+        "ordinary:failure": 2,
+        "ordinary:success": 68
+      },
+      "id": "proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168",
+      "native_agreement": {
+        "c_output_sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0",
+        "cxx_output_sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0",
+        "domain": {
+          "x": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          },
+          "y": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          }
+        },
+        "runs": 49,
+        "sampled": false,
+        "verdict": "agree"
+      },
+      "subject": {
+        "id": "contract.fixture_pair_pointer_wrong_identity",
+        "kind": "library_summary"
+      },
+      "verdict": "refuted"
+    }
+  ],
+  "result": {
+    "bytes": 1178,
+    "sha256": "758503b0f15d275db5fad1b236d6424c42dfeed98a88e2bc142e793e1e86b40d",
+    "value": {
+      "exit_code": 0,
+      "finalization": {
+        "before": {
+          "aliases": [
+            {
+              "literal_target": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0",
+              "relative": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_current",
+              "target_relative": "mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0"
+            }
+          ],
+          "bytes": 10894375,
+          "regular_files": 140
+        },
+        "controller_exit_zero_requires_post_fsync_extent_and_time_checks": true,
+        "elapsed_seconds_before": 442.814445,
+        "margin_seconds": 1.0,
+        "projected_total_bytes": 10895553,
+        "remaining_reserve_covers_bounded_stdout_and_root_guard_metadata": true,
+        "reserve_bytes": 65536,
+        "result_byte_cap": 16384,
+        "result_bytes": 1178,
+        "whole_seconds": 1200
+      },
+      "independent_cold_acceptance": false,
+      "records": 8,
+      "scope": "Original mixed-pair public fixture workflow only; no source/caller/universal or ticket acceptance",
+      "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85",
+      "status": "PRODUCER_WORKFLOW_COMPLETE",
+      "tests": 1
+    }
+  },
+  "retention": {
+    "all19_staged_controller_filepins_match": true,
+    "all_regular_raw_files_physically_rehashed_twice": true,
+    "closed_pytest_aliases": 1,
+    "final_root_extent_after_guard_metadata_within_budget": true,
+    "hard_budget_bytes": 268435456,
+    "physical8proof_yaml_equal_incremental_progress": true,
+    "raw_directories": 32,
+    "raw_pre_post_identical": true,
+    "raw_regular_files": 144,
+    "regular_bytes": 10897771,
+    "retained_solver_term_files_outside_control": 0,
+    "source_bytecode_cache_absent": true,
+    "two_reviewed_guard_hashes_match": true,
+    "unexpected_specials_or_links": 0
+  },
+  "schema": "mixed-pair-v8-passive-producer-decision-1",
+  "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85",
+  "source_runtime_boundary": {
+    "TCB": "Producer-retained pre/post admission snapshots and pinned controller source only. No complete dynamic loader/dlopen/continuous/source-to-binary claim; fresh Why3server pins never retroactively establish old historical closure.",
+    "evaluated_source_current_exact_clean": true,
+    "fresh_current_installed2717_file_rehash_by_collector": false,
+    "fresh_source_checker_identities_match_policy": true,
+    "historical_root30_receipt_source_preserved": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+    "primary_remote_checkout": {
+      "branch": "yanrujhou_main",
+      "sha": "c978393b119a3614229a37f0f2c8ca2a097c750b"
+    },
+    "recorded_native_runtime_before_after_sha256": "c1de993d778ff01b19f2d1dc9b803d164dbff698eeadf0d42852227fd5922f86",
+    "recorded_python_runtime_before_after_sha256": "65b00322ec1aa97394b675cb519378e4189dd4b85ad5b768f69ed5004abc966c",
+    "recorded_source_consumers": {
+      "count": 1672,
+      "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85",
+      "total_bytes": 1348939661,
+      "trees": {
+        "apps/dx100/benchmarks/API": {
+          "oid": "737ac6eaf0a51804715f0a26b3aa73a74689fb44"
+        },
+        "library": {
+          "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+        },
+        "pyproject.toml": {
+          "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+        },
+        "records": {
+          "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+        },
+        "schemas": {
+          "oid": "b5f08b1b538eddb3cc455bb48b749a4479eb974d"
+        },
+        "swdb": {
+          "oid": "578b438231e836bac8a6b9fbfa9c5426d6e353c1"
+        },
+        "tests/conftest.py": {
+          "oid": "291b55cb406443fc19e7dc16beac445429b3409d"
+        },
+        "tests/fixtures": {
+          "oid": "711884befb2229a5fbf799434498a137a96da24e"
+        },
+        "tests/test_dx100_initialized_register_actual.py": {
+          "oid": "f3c8d4b1598eee1fcdc7526b13bd05db0db7a81b"
+        },
+        "tests/test_pair_pointer_initialization.py": {
+          "oid": "305c4972abbd6d6f911062f75b62a0fb8f2c9972"
+        },
+        "tests/test_pair_pointer_workflow.py": {
+          "oid": "79233832ca7f1036f704420ad1b042cd752e3325"
+        },
+        "tests/test_pair_workflow.py": {
+          "oid": "936cdb3078b51a18e32ad7c252fbc07ff5719fda"
+        },
+        "tests/testkit": {
+          "oid": "8a582aa1aa67532d6bad93948e7c6311e157e6c9"
+        },
+        "vocab": {
+          "oid": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+        }
+      }
+    },
+    "recorded_why3_package_before_after_sha256": "4578c1aea2708aca3cef416729f95431047668a626a325e7fe9b3a1b6fb1f285",
+    "retained_source_before_after_sha256": "4ced840b3cc2e1e8d27539804d98c8eebcd1a1c030204aa92d5e01bfc46bedc4"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/env -i PATH=/usr/bin:/bin LANG=C LC_ALL=C PYTHONDONTWRITEBYTECODE=1 /usr/bin/timeout --signal=TERM --kill-after=3s 20s /usr/bin/python3 -I -B -"
+  ],
+  "local_refusal": null,
+  "local_wall_seconds": 0.9491289580473676,
+  "returncode": 0,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-small-artifact-transfer-v1/stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdin": {
+    "bytes": 3730,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-small-artifact-transfer-v1/read_exact_small_artifacts_v1.py",
+    "sha256": "1b30ab3eb9b5ed12ca950d95221a288953a7d644bae2624c64205f11b0c704db"
+  },
+  "stdout": {
+    "bytes": 263933,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-small-artifact-transfer-v1/wire.bin",
+    "sha256": "bcc288296e748a0a438242bbffa7ed8eb247de0c06036a10a32850c471a8c622"
+  },
+  "writer_errors": []
+}

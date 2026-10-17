@@ -1,0 +1,38 @@
+{
+  "additional_concrete_spec_blockers_found": false,
+  "date": "2026-10-16 ET",
+  "embedded_context_and_semantic_helper_exact": true,
+  "entry": {
+    "bytes": 121770,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v1/entry.py",
+    "sha256": "8e7e3dfdeb4b72261995f0fd0d2b8daeb7fa5d70d9f6ce95311a810b35e6b2be"
+  },
+  "findings": [
+    {
+      "function": "guards",
+      "id": "COLD-SPEC-01",
+      "problem": "digest(launch.command) is a compact semantic resolved-argv digest, while COMMAND_SHA12bcda64 is the physical pretty unresolved root-command.json file SHA. Even the unresolved canonical list hashes differently; actual SOURCE/OUTPUT substitutions add another required domain distinction.",
+      "required_repair": "Retain frozen command file SHA independently. Reconstruct exact actual resolved argv using the reviewed SOURCE/OUTPUT replacement rule and compare full actual semantic argv, binding canonical resolved digest separately. Add actual-shaped no-child regression; preserve this reader.",
+      "severity": "P2",
+      "unresolved_compact_list_sha256": "db906e7f5bd27447299449ff45d79f3e260d949d23df9cdfbd73482d0368a697"
+    }
+  ],
+  "otherwise_reviewed": [
+    "All184 raw files/20 tasks and canonical21 membership/hash before/after; exact native one-goal/per-target report/property/CSV/command/export maps",
+    "Full ten source goal and definition transcriptions preserve antecedents; standard support uses exact source-attributed hashes, no sibling theorem premise",
+    "All actual unknown Owners state-record/empty-map definitions and unclassified support remain unresolved; complete capture exits2 and grants no proof/source/body/caller/Typed/default/public adoption",
+    "Full source consumers/Git blobs, runtime/package/header/alias/foundation references and guard/lane identities have explicitly qualified point-observation boundaries",
+    "Normal global checklemma zero smokes is not empirical satisfiability; independent constructive source-model argument remains conditional on actual driver interpretation",
+    "Generated stdin embeds exact reviewed context/term module; no compiler/verifier/native helper/project import or raw term transfer, bounded output and read-only metadata only"
+  ],
+  "review": "independent complete first-capture reader Spec review",
+  "reviewer_runtime_or_tests_or_SSH": false,
+  "scientific_acceptance": false,
+  "source_packet": {
+    "bytes": 5901,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v1/source-packet.json",
+    "sha256": "60328fdd8f488e1e81d0819443e872c7db7f9f3c07943c4b30419a1e59388137"
+  },
+  "verdict": "HOLD_ONE_MECHANICAL_FINDING",
+  "verified_pin_rows": 15
+}

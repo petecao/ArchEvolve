@@ -1,0 +1,74 @@
+{
+  "files": {
+    "swdb/_dx100_whole/normalized_capture_ingress_v2.py": [
+      {
+        "count": 1,
+        "new": "NORMALIZED_COMPILER_SHA='8acf26651a1e682bb6857128f1a0d5e184b52f489cccd32ea60eb471c1a65ff3'",
+        "old": "NORMALIZED_COMPILER_SHA='0bbf572196677dbc926bb5d331022c2766e44c287bd1ea3cce0ef077153a8a01'"
+      }
+    ],
+    "swdb/_dx100_whole/normalized_compiler_adapter_v1.py": [
+      {
+        "new": "from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy\nfrom swdb._dx100_whole import abi_role_transport_v1 as abi_transport",
+        "old": "from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy"
+      },
+      {
+        "new": "    derived_abi, abi_receipt=abi_transport.normalize_abi(abi_raw)\n    need(abi_receipt['selected_family']=='first-source-v10','exact first-source original ABI family required')\n    prepared=legacy.prepare_unit(api,full_tu_raw=full_tu_raw,abi_raw=derived_abi,source_path=source_path,source_bytes=source_bytes,",
+        "old": "    prepared=legacy.prepare_unit(api,full_tu_raw=full_tu_raw,abi_raw=abi_raw,source_path=source_path,source_bytes=source_bytes,"
+      },
+      {
+        "new": "    need(prepared['abi_observation']['raw_probe_sha256']==abi_receipt['derived_strict_sha256'],\n        'unchanged legacy ABI reader must identify its actual derived strict input')\n    return {**prepared,'schema':'whole-interface-normalized-original-tu-preparation-1',\n        'abi_observation':{**prepared['abi_observation'],\n            'original_raw_probe_sha256':abi_receipt['original_sha256'],\n            'paired_type_role_transport':abi_receipt},",
+        "old": "    return {**prepared,'schema':'whole-interface-normalized-original-tu-preparation-1',"
+      },
+      {
+        "new": "are the same already checked full-TU object. The ABI inlet separately retains\n    its original identity and passes an explicitly derived strict stream. The\n    legacy function is not modified.",
+        "old": "are the same already checked object. The legacy function is not modified."
+      }
+    ],
+    "swdb/dx100_checked_source.py": [
+      {
+        "count": 3,
+        "new": "from swdb._dx100_whole import capture_family_dispatch_v1 as ingress",
+        "old": "from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress"
+      },
+      {
+        "count": 1,
+        "new": "need(capture.get('kind') in ingress.NORMALIZED_KINDS, 'unknown complete capture input roles')",
+        "old": "need(capture.get('kind') == ingress.KIND, 'unknown complete capture input roles')"
+      },
+      {
+        "count": 1,
+        "new": "    from swdb._dx100_whole import runtime_projection_v3, normalized_compiler_adapter_v1\n    from swdb._dx100_whole import normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1\n    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1\n",
+        "old": "    from swdb._dx100_whole import runtime_projection_v3, normalized_compiler_adapter_v1\n"
+      },
+      {
+        "count": 1,
+        "new": "        ingress, normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1,\n        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,\n        closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)",
+        "old": "        ingress, closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)"
+      },
+      {
+        "count": 1,
+        "new": "        'dx100_checked_source.py': Path(__file__), 'dx100_whole_checked.py': Path(contracts.__file__),\n        'memory_capture_facts_v1.json': Path(__file__).parent / '_dx100_whole/memory_capture_facts_v1.json',",
+        "old": "        'dx100_checked_source.py': Path(__file__), 'dx100_whole_checked.py': Path(contracts.__file__),"
+      },
+      {
+        "count": 1,
+        "new": "    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1\n    from swdb._dx100_whole import abi_role_transport_v1, strict_minify_v2\n",
+        "old": "    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1\n"
+      },
+      {
+        "count": 1,
+        "new": "        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,\n        abi_role_transport_v1, strict_minify_v2,\n",
+        "old": "        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,\n"
+      }
+    ]
+  },
+  "finite_hook_files_not_written": [
+    "cbmc_adapter.py",
+    "formal_frame.py",
+    "proof_semantics.py",
+    "proof_setup.py"
+  ],
+  "generic_compiler_and_every_nonselected_path_unchanged": true,
+  "schema": "ABI-memory-integration-source-inverses-1"
+}

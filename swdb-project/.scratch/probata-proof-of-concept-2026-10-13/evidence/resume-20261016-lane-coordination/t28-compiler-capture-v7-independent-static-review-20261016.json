@@ -1,0 +1,88 @@
+{
+  "actual_execution_by_reviewer": false,
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact inert V6-to-V7 lane rebind; root owns live admission",
+  "findings": [],
+  "full_ticket28": false,
+  "independently_checked": {
+    "complete_json_inverse_edits": {
+      "command": 32,
+      "policy": 25
+    },
+    "entry": "Exactly one RAW_NAME v6-to-v7 literal substitution reconstructs full V6 bytes. All eleven function ASTs, including pin/main and the stable-stat helper, are identical.",
+    "json": "Both complete inverse lists reconstruct frozen V6 objects; no unlisted field differences survive. Policy/command both select node1; predecessor selected node0. Source2baf, compiler, adapter/binder and passive consumers remain exact.",
+    "namespace": "All command argv/control/policy/raw/root-required output and verifier-lock metadata use the same fresh V7 namespace. Controller_files plus policy equals the unique exact staged input census.",
+    "node_binding": "The unchanged main passes policy[node] to the exact reviewed verified_linux_lane helper and retains that node in its evidence. The helper checks actual ancestor/socket lease generation/fd9 and exact selected NUMA CPU/memory binding; node1 cannot be accepted from metadata alone.",
+    "physical_packet_pin_occurrences": 28,
+    "stable_metadata": "The nine retained identity/change fields and full/expected SHA checks are unchanged from reviewed V6; access time remains excluded only from read stability.",
+    "unchanged_resource": "Exact V6 root_guard, execute/watch hashes and environment-unset list; 4 GiB RSS, 180 s whole guard, 165 s entry, 128 MiB per file/256 MiB total, 1 MiB final reserve and all finalization/dependency/source/runtime/role logic remain unchanged.",
+    "unique_physical_pins": 27
+  },
+  "limits": [
+    "This review does not assert node1 is currently free or that any live lease/launch/source/runtime/guard check has passed. Root must verify current lane ownership and actual source/runtime identity before dispatch.",
+    "Complete actual command/exit and final source/dependency/control/runtime/artifact/extent and healthy watchdog/RSS/time/OOM settlement remain mandatory for capture observation. V5/V6 histories remain preserved.",
+    "A verifier-lock environment path is metadata, not proof of held advisory locking. Compiler capture remains preparation without public/source/caller/model/receiver/CPU proof or full ticket28 acceptance."
+  ],
+  "pins": {
+    "compiler-capture-source-packet-v7.json": {
+      "bytes": 9983,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/compiler-capture-source-packet-v7.json",
+      "sha256": "d4806992407d16e3b2cdb3d8305af42f50fd4a5cfed54b91416465a5a406836f"
+    },
+    "compiler-capture-v7-inverse.json": {
+      "bytes": 26539,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/compiler-capture-v7-inverse.json",
+      "sha256": "7504905bad16b5b343fca58cf0cc6b28c0384b605216dedeaf0a090eb8307150"
+    },
+    "linux_compiler_capture_command_v7.json": {
+      "bytes": 12322,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/linux_compiler_capture_command_v7.json",
+      "sha256": "13420d90b51d7e746a30f167179fcfb46afd5f91a8ef526ae19ba0bb7105b4b7"
+    },
+    "linux_compiler_capture_policy_v7.json": {
+      "bytes": 664401,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/linux_compiler_capture_policy_v7.json",
+      "sha256": "c62c9f6c2e69cc6da79e6a9068eff271a0213fbe3257cf75acc7524d7f877117"
+    },
+    "linux_compiler_capture_v7.py": {
+      "bytes": 22220,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/linux_compiler_capture_v7.py",
+      "sha256": "1dac57837a079b54d58b58cf2cf01c2b406099cff3ab9fdbc3f311463ee5a781"
+    },
+    "pure-capture-v7-controls-red.log": {
+      "bytes": 3750,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/pure-capture-v7-controls-red.log",
+      "sha256": "0e24575e309e59577d65a72e7dca5b89db6afc28e87f1a79d8be308d752429fa"
+    },
+    "pure-capture-v7-controls.log": {
+      "bytes": 2794,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/pure-capture-v7-controls.log",
+      "sha256": "1b06dbdf877347c06d7d8819753869625d2370d7c532c39daeff9cfafa9966ae"
+    },
+    "test_capture_v7.py": {
+      "bytes": 19001,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/test_capture_v7.py",
+      "sha256": "d895d8926aa43c9fdae756f24af27e5a7f6233e2c4400b315e1ced880d783f16"
+    }
+  },
+  "public_proof": false,
+  "retained_controls": {
+    "child_events": [],
+    "errors": 0,
+    "failures": 0,
+    "new_case": "Checks node1 policy/command agreement, unchanged guard/wrappers/environment apart from namespace and policy-selected live lane call.",
+    "provenance": "Read source and pinned retained logs only; not rerun by reviewer.",
+    "reported_tests": 16,
+    "retained_red": "Preserved source control failure was a stale expected root-required raw namespace; the frozen runtime entry differs from V6 only by RAW_NAME. No actual compiler result is inferred from that local control history.",
+    "skips": 0
+  },
+  "review_basis": {
+    "bytes": 6549,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-capture-v6-independent-static-review-20261016.json",
+    "sha256": "bc1ca8ff08552c84cb53972d3852fe31c42d8b9727f469302d6e31da874662ec"
+  },
+  "reviewer": "caller_assess",
+  "schema": "t28-capture-node1-rebind-independent-static-review-7",
+  "scope": "Read-only source/AST/JSON/hash review. No entry main, tests, compiler/native/audit/verifier/solver, project import, SSH or scientific execution.",
+  "source_call_admission": false
+}

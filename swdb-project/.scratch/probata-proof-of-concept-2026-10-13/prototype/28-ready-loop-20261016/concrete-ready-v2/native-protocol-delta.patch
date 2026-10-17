@@ -1,0 +1,105 @@
+--- v1
++++ v2
+@@ -279,17 +279,41 @@
+     return 0;
+ }
+ #else
++/* Canonical decimal protocol, checked before narrowing or backend entry. */
++static int dxb_decimal(const char *input, unsigned long long maximum,
++                       unsigned long long *output) {
++    if (!input || !input[0] || (input[0] == '0' && input[1])) return 0;
++    unsigned long long value = 0;
++    unsigned count = 0;
++    for (const char *cursor = input; *cursor; ++cursor) {
++        if (++count > 20 || *cursor < '0' || *cursor > '9') return 0;
++        unsigned digit = (unsigned)(*cursor - '0');
++        if (digit > maximum || value > (maximum - digit) / 10) return 0;
++        value = value * 10 + digit;
++    }
++    *output = value;
++    return 1;
++}
+ int main(int argc, char **argv) {
+     if (argc != 5) return 64;
+-    uint32_t before = (uint32_t)strtoull(argv[3], 0, 10);
+-    uint32_t issued = (uint32_t)strtoull(argv[4], 0, 10);
++    unsigned long long before_value, issued_value, count;
++    if (!dxb_decimal(argv[3], UINT32_MAX, &before_value) ||
++        !dxb_decimal(argv[4], UINT32_MAX, &issued_value)) return 64;
++    unsigned long long maximum;
++    if (strcmp(argv[1], "step") == 0) maximum = 3;
++    else if (strcmp(argv[1], "poll") == 0) maximum = 1000000;
++    else if (strcmp(argv[1], "zero-read") == 0) maximum = 0;
++    else return 64;
++    if (!dxb_decimal(argv[2], maximum, &count)) return 64;
++    uint32_t before = (uint32_t)before_value, issued = (uint32_t)issued_value;
++    printf("ready_begin mode=%s count=%llu before=%u issued=%u\n",
++        argv[1], count, (unsigned)before, (unsigned)issued);
++    fflush(stdout);
+     if (strcmp(argv[1], "step") == 0) {
+-        unsigned selector = (unsigned)strtoul(argv[2], 0, 10);
+-        if (selector > 3) return 64;
++        unsigned selector = (unsigned)count;
+         dxb_step(selector / 2, before, issued, selector % 2);
+     } else if (strcmp(argv[1], "poll") == 0) {
+-        dxb_prefix = strtoull(argv[2], 0, 10);
+-        if (dxb_prefix > 1000000) return 64;
++        dxb_prefix = count;
+         dxb_poll = 1;
+         DXM_CHECK(fixture_ready_until_one(before, issued) == issued, "ready.poll.result");
+         DXM_CHECK(dxb_calls == dxb_prefix + 1, "ready.poll.prefix");
+@@ -297,7 +321,7 @@
+         dxb_answer = 0;
+         (void)fixture_ready_after_zero(before, issued);
+         return 18;
+-    } else return 64;
++    }
+     printf("ready_complete calls=%u\n", dxb_calls);
+     return 0;
+ }
+@@ -319,7 +343,7 @@
+     concrete = CONCRETE_PREFIX + text + '\n' + CONCRETE_SUFFIX + CALLER + ZERO_CALLER + CONCRETE_MAIN
+     return {
+         'date': '2026-10-16 ET',
+-        'schema': 'prospective-concrete-readiness-refinement-1',
++        'schema': 'prospective-concrete-readiness-refinement-2',
+         'backend_sha256': BACKEND_SHA,
+         'concrete_functions': functions,
+         'concrete_c': concrete,
+@@ -335,6 +359,7 @@
+         'correctness': 'partial correctness; infinite zero observations remain permitted',
+         'same_entry_logical_rule': 'finite_logical_ready',
+         'original_header_query': None,
++        'native_control_plan': native_controls(),
+         'required_acceptance': [
+             'An actual complete one-step CBMC result with every property and actual loop unwinding checks; all states in the stated relation, including completed/stuttering states.',
+             'An actual ordinary WP ledger for every quotient helper and the unbounded caller, all RTE/init/frame goals and healthy nonproof smokes.',
+@@ -345,3 +370,28 @@
+         'refinement_accepted': False,
+         'public_adoption': False,
+     }
++
++
++def native_controls():
++    """Prospective fixed argv/readback checks; none is executed by preparation."""
++    rows = []
++    def add(argv, exit_code):
++        rows.append({'argv': list(argv), 'expected_exit': exit_code,
++                     'actual_execution': False})
++    for selector in range(4):
++        for before, issued in ((0, 0), (0, 4294967295), (4294967295, 0), (3, 7)):
++            add(('step', str(selector), str(before), str(issued)), 0)
++    for prefix in (0, 1, 17, 10000):
++        add(('poll', str(prefix), '3', '7'), 0)
++    for before in (3, 7):
++        add(('zero-read', '0', str(before), '7'), 17)
++    for value in ('', '-1', '+1', '00', '7junk', '4294967296', '18446744073709551616'):
++        add(('step', '0', value, '7'), 64)
++        add(('step', '0', '3', value), 64)
++    for value in ('', '00', '4', '4294967296', '18446744073709551616', '0junk'):
++        add(('step', value, '3', '7'), 64)
++    for value in ('1000001', '-1', '1junk'):
++        add(('poll', value, '3', '7'), 64)
++    add(('zero-read', '1', '3', '7'), 64)
++    add(('other-mode', '0', '3', '7'), 64)
++    return rows

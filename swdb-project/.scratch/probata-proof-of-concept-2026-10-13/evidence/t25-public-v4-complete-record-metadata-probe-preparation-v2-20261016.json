@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 1116497,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/record-probe-v2.py",
+      "sha256": "3d0fcd54e24766886543684b842850c2ba7868dad69eed30920f1d7710cca9e9"
+    },
+    {
+      "bytes": 1024,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/command.json",
+      "sha256": "31188c95ac592723e89b092449064ac842410bafe332f00ba3356598a5aee41f"
+    },
+    {
+      "bytes": 1732,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/function-lineage.json",
+      "sha256": "8a6d370be542b692a75bc32ceff8646af9ab577abb0f2a56f117e8c5970651b5"
+    },
+    {
+      "bytes": 1342,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/source-plan-lineage.json",
+      "sha256": "d32c8fea72e6e2c6cf394fbfd410be44a049a356f10e04986f0cba82f26cecad"
+    },
+    {
+      "bytes": 5974,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/pure_controls.py",
+      "sha256": "f54875a0e9eb9451bdeb6ea42551c136e769480d7012c9d7ef01e1f1b5485ead"
+    },
+    {
+      "bytes": 3974,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/pure-controls-v1.log",
+      "sha256": "cfa9536dca2740d404a66609cb19524eaf09bae59ad48089e33187a81cbecebf"
+    },
+    {
+      "bytes": 1811,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/pure-controls-v2.log",
+      "sha256": "7eb784b66e756989e2cabe9812178076d4636cf7b869a1b9d8981625e2d7dee0"
+    },
+    {
+      "bytes": 2773,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/README.md",
+      "sha256": "b6ccbc66279c971e4afc333e22504e108fe30d01459227b95e7e9ddac122da17"
+    },
+    {
+      "bytes": 15806,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/prepare_record_probe_v2.py",
+      "sha256": "7729f59dc56b67e04fec7f4740ade6c175f8b5b8cb321abe3cd2da5a9beafa2a"
+    }
+  ],
+  "function_lineage": {
+    "all_other_extracted_function_class_AST_exact": true,
+    "date": "2026-10-16 ET",
+    "diagnostic_only_semantic_functions": [
+      {
+        "function": "bundle_check",
+        "semantic_need_sites": 4,
+        "typed_equality_sites": 7
+      },
+      {
+        "function": "source_result_check",
+        "semantic_need_sites": 15,
+        "typed_equality_sites": 24
+      },
+      {
+        "function": "record_check",
+        "semantic_need_sites": 43,
+        "typed_equality_sites": 67
+      },
+      {
+        "function": "root_before",
+        "semantic_need_sites": 12,
+        "typed_equality_sites": 31
+      },
+      {
+        "function": "root_junit",
+        "semantic_need_sites": 3,
+        "typed_equality_sites": 8
+      },
+      {
+        "function": "root_after",
+        "semantic_need_sites": 6,
+        "typed_equality_sites": 7
+      }
+    ],
+    "exact_extracted_names": [
+      "H",
+      "Physical",
+      "bundle_check",
+      "digest",
+      "expected_contract_entry",
+      "need",
+      "plain_tree",
+      "raw_snapshot",
+      "record_check",
+      "source_result_check",
+      "stable",
+      "strict_json",
+      "yaml_load"
+    ],
+    "function_bytes_sha256": "1b2005f8a58aa57d4a16d011099291dc9d2d12b9059a7c7d18497c71d68d2a6d",
+    "hard_literal_reasons": [
+      "adapter log path",
+      "one physical proof YAML per case",
+      "report escapes exact case run",
+      "unregistered historical evidence document"
+    ],
+    "preserved_original_integer_budget_plan": true,
+    "source": {
+      "bytes": 1090100,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+      "sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666"
+    }
+  },
+  "preserved_full_refusal": {
+    "bytes": 3140,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-refusal-decision-20261016.json",
+    "sha256": "10a48d0a30fa2cfcdd797f5ceb06a2c47708d3464b4aa4b63314214182c2ecc7"
+  },
+  "prospective_bounds": {
+    "CPU_seconds": 40,
+    "address_space_bytes": 536870912,
+    "alarm_seconds": 45,
+    "complete_output_bytes": 4194304,
+    "local_transport_seconds": 70,
+    "outer_seconds": 55
+  },
+  "scope": [
+    "Replay all five complete original record/scientific/source-result/preflight contracts and root before/after metadata.",
+    "Original integer-budget predicate remains; exact float300.0 matrix is separate, with full source SHA lineage.",
+    "Collect false semantic assertions without granting acceptance; preserve hard physical/hash/path/raw/scratch gates.",
+    "Trace executed Eq/NotEq values for strict JSON type differences while preserving original chained evaluation and short circuit.",
+    "Complete raw before/after hash and all final physical content/nine-stat checks; full external source/runtime rehash remains omitted."
+  ],
+  "source_expected_context": {
+    "bytes": 778795,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/expected.json",
+    "sha256": "1fc969264f7dddc624ca5e27bfdeba7289045aa460125bcb335a5d6c9543da77"
+  },
+  "source_full_observer": {
+    "bytes": 1090100,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+    "sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666"
+  },
+  "source_or_scientific_or_Typed_or_caller_admission": false,
+  "source_plan_lineage": {
+    "arbitrary_numeric_coercion_allowed": false,
+    "date": "2026-10-16 ET",
+    "exact_job_budget_expression": "None if budget_minutes is None else budget_minutes * 60",
+    "exact_job_plan_function": "def _job_plan(job, adapter):\n    return {\"bounds\": job.bounds, \"budget_seconds\": job.budget_seconds,\n            \"defines\": list(getattr(adapter, \"defines\", ())), \"function\": job.unit.function,\n            \"contract\": job.unit.contract, \"contract_sha256\": job.unit.contract_sha256}",
+    "exact_source_budget_argument": "gate.add_argument(\"--budget-minutes\", type=float, help=\"the job's wall budget in minutes\")",
+    "frozen_public_argument": "--budget-minutes 5",
+    "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+    "source_inputs": [
+      {
+        "bytes": 51186,
+        "relative": "swdb/proof.py",
+        "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+      },
+      {
+        "bytes": 52371,
+        "relative": "swdb/proof_setup.py",
+        "sha256": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16"
+      },
+      {
+        "bytes": 4382,
+        "relative": "tests/test_vector_reallocation_closed_public_workflow.py",
+        "sha256": "bdc7720b3ea32379494e102dd0785332aa94a544b4367309ea39296a09bbcd2b"
+      }
+    ],
+    "source_python_type": "float",
+    "source_python_value": 300.0
+  },
+  "source_reader": {
+    "bytes": 9903,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/strict-yaml-repair-v1/record_yaml_subset_v3.py",
+    "sha256": "d06565898c7350e3df500c51c8f84b936174574b09b9d5e30601f27b36367938"
+  },
+  "status": "FROZEN_UNEXECUTED_DIAGNOSTIC_REQUIRES_PARENT_SOURCE_REVIEW_AND_NEW_ROOT_ADMISSION",
+  "validation": {
+    "actual_probe_main_or_remote_project_execution": false,
+    "child_events": [],
+    "errors": 0,
+    "failures": 0,
+    "preserved_first_controls": {
+      "cause": [
+        "Missing copied JUnit CASE_IDS/SELECTION constants.",
+        "Control used Linux O_CREAT numeric64 on Mac; changed control to platform os.O_CREAT."
+      ],
+      "errors": 1,
+      "failures": 1
+    },
+    "skips": 0,
+    "tests": 10
+  }
+}

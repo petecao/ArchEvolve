@@ -1,0 +1,44 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "55s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "command": {
+    "bytes": 1001,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v1/command.json",
+    "sha256": "9aae3cd6b94517cea712588fd9b33cd960e338794941388add0201cf43693aba"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "ONCE_PASSIVE_DIAGNOSTIC_AFTER_INDEPENDENT_SOURCE_PASS",
+  "local_timeout_seconds": 70,
+  "required_before_execution": "Independent caller_assess source review PASS with exact7911583b source/command pins; executor must record review receipt in actual invocation.",
+  "root_review": "Read source/main/read/locate/shape/audit. Exact15physicalYAMLplus5recordfilenameJSON, no values returned, boundedstats/hash/identity reread, nofollowphysicalpaths, read-onlyaudit allmutations/children/native/network/projectimports refused. Fixedreaderembeddedbyteshashbound.256MiBAS40sCPU45salarm55souter.",
+  "scientific_rerun": false,
+  "scope": "Locate unsupported emitted YAML shape only; no record/admission/verdict promotion.",
+  "source": {
+    "bytes": 19493,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v1/diagnostic-v1.py",
+    "sha256": "7911583b3e7ab87a76f20a5fc6ab7bed5edd8c37dc419e89f1446d67266f5ec4"
+  },
+  "stdout_maximum_bytes": 32768
+}

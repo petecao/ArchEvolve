@@ -1,0 +1,216 @@
+{
+  "actual_public_or_native_admission": false,
+  "cases": [
+    {
+      "actual_verdict": null,
+      "id": "history_latest_positive",
+      "pair": "history",
+      "prediction": "predicted_valid",
+      "reason": "Other-thread CAS extends first read history; second issue sees latest value3."
+    },
+    {
+      "actual_verdict": null,
+      "id": "history_exact_issue_negative",
+      "pair": "history",
+      "prediction": "predicted_invalid",
+      "reason": "History choice3 refutes exact-at-issue2."
+    },
+    {
+      "actual_verdict": null,
+      "id": "other_thread_cpu_read_positive",
+      "pair": "cpu_access",
+      "prediction": "predicted_valid",
+      "reason": "Pending device read permits other-thread ordinary CPU read."
+    },
+    {
+      "actual_verdict": null,
+      "id": "pending_store_cpu_read_negative",
+      "pair": "cpu_access",
+      "prediction": "predicted_invalid",
+      "reason": "Pending device store forbids CPU read from either thread."
+    },
+    {
+      "actual_verdict": null,
+      "id": "same_region_write_cover_positive",
+      "pair": "region_cover",
+      "prediction": "predicted_valid",
+      "reason": "Same-region writing conflict covers the earlier other-thread store."
+    },
+    {
+      "actual_verdict": null,
+      "id": "same_region_read_read_noncover_negative",
+      "pair": "region_cover",
+      "prediction": "predicted_invalid",
+      "reason": "Read/read in the same region does not cover the earlier command."
+    },
+    {
+      "actual_verdict": null,
+      "id": "different_region_noncover_negative",
+      "pair": "region_cover",
+      "prediction": "predicted_invalid",
+      "reason": "Different-region commands with disjoint memory and tiles do not cover."
+    },
+    {
+      "actual_verdict": null,
+      "id": "owned_tile_positive",
+      "pair": "ownership",
+      "prediction": "predicted_valid",
+      "reason": "Tile0 is separately owned by thread0 in the receiver premise."
+    },
+    {
+      "actual_verdict": null,
+      "id": "wrong_owner_negative",
+      "pair": "ownership",
+      "prediction": "predicted_invalid",
+      "reason": "Thread1 tile0 access retains the model ownership check."
+    },
+    {
+      "actual_verdict": null,
+      "id": "disjoint_owned_tiles_positive",
+      "pair": "ownership",
+      "prediction": "predicted_valid",
+      "reason": "Disjoint tiles retain independent thread ownership."
+    },
+    {
+      "actual_verdict": null,
+      "id": "u64_second_half_conflict_negative",
+      "pair": "physical_half",
+      "prediction": "predicted_invalid",
+      "reason": "An8-byte counted destination covers physical half1; a4-byte destination does not."
+    },
+    {
+      "actual_verdict": null,
+      "id": "u32_disjoint_half_positive",
+      "pair": "physical_half",
+      "prediction": "predicted_valid",
+      "reason": "An8-byte counted destination covers physical half1; a4-byte destination does not."
+    },
+    {
+      "actual_verdict": null,
+      "id": "prior_cpu_store_visible_positive",
+      "pair": "visibility",
+      "prediction": "predicted_valid",
+      "reason": "Writes completed before issue supply the latest issue snapshot."
+    },
+    {
+      "actual_verdict": null,
+      "id": "covered_store_next_thread_load_positive",
+      "pair": "visibility",
+      "prediction": "predicted_valid",
+      "reason": "Same-region cover publishes the store before next-thread issue snapshot."
+    },
+    {
+      "actual_verdict": null,
+      "id": "critical_end_wait_positive",
+      "pair": "critical_end",
+      "prediction": "predicted_valid",
+      "reason": "Critical-end requires completion of stores issued since its explicit frontier."
+    },
+    {
+      "actual_verdict": null,
+      "id": "critical_end_without_wait_negative",
+      "pair": "critical_end",
+      "prediction": "predicted_invalid",
+      "reason": "Critical-end requires completion of stores issued since its explicit frontier."
+    },
+    {
+      "actual_verdict": null,
+      "id": "outside_critical_store_positive",
+      "pair": "critical_end",
+      "prediction": "predicted_valid",
+      "reason": "The scoped critical-end check excludes an unrelated preexisting store."
+    },
+    {
+      "actual_verdict": null,
+      "id": "pending_read_lifetime_end_negative",
+      "pair": "lifetime",
+      "prediction": "predicted_invalid",
+      "reason": "Pending read footprint prevents lifetime end independently of critical stores."
+    },
+    {
+      "actual_verdict": null,
+      "id": "pair_owned_positive",
+      "pair": "pair_ownership",
+      "prediction": "predicted_valid",
+      "reason": "Both physical halves require the same issuing owner."
+    },
+    {
+      "actual_verdict": null,
+      "id": "pair_wrong_owner_negative",
+      "pair": "pair_ownership",
+      "prediction": "predicted_invalid",
+      "reason": "Both physical halves require the same issuing owner."
+    },
+    {
+      "actual_verdict": null,
+      "id": "command_wrong_owner_negative",
+      "pair": "command_ownership",
+      "prediction": "predicted_invalid",
+      "reason": "An issued command retains the destination tile owner check."
+    },
+    {
+      "actual_verdict": null,
+      "id": "pair_command_half_negative",
+      "pair": "pair_command",
+      "prediction": "predicted_invalid",
+      "reason": "Second-half hazard and its exact4-byte counterpart; no cover is inserted."
+    },
+    {
+      "actual_verdict": null,
+      "id": "u32_command_half_positive",
+      "pair": "pair_command",
+      "prediction": "predicted_valid",
+      "reason": "Second-half hazard and its exact4-byte counterpart; no cover is inserted."
+    },
+    {
+      "actual_verdict": null,
+      "id": "pair_cpu_half_read_negative",
+      "pair": "pair_cpu_read",
+      "prediction": "predicted_invalid",
+      "reason": "Second-half hazard and its exact4-byte counterpart; no cover is inserted."
+    },
+    {
+      "actual_verdict": null,
+      "id": "u32_cpu_half_read_positive",
+      "pair": "pair_cpu_read",
+      "prediction": "predicted_valid",
+      "reason": "Second-half hazard and its exact4-byte counterpart; no cover is inserted."
+    },
+    {
+      "actual_verdict": null,
+      "id": "ready_relation_positive",
+      "pair": "finite_ready",
+      "prediction": "predicted_valid",
+      "reason": "Logical readiness may choose0pending or1cover; this is absent the original header and has no fairness claim."
+    },
+    {
+      "actual_verdict": null,
+      "id": "ready_always_one_negative",
+      "pair": "finite_ready",
+      "prediction": "predicted_invalid",
+      "reason": "Logical readiness may choose0pending or1cover; this is absent the original header and has no fairness claim."
+    },
+    {
+      "actual_verdict": null,
+      "id": "ready_always_zero_negative",
+      "pair": "finite_ready",
+      "prediction": "predicted_invalid",
+      "reason": "Logical readiness may choose0pending or1cover; this is absent the original header and has no fairness claim."
+    },
+    {
+      "actual_verdict": null,
+      "id": "ready_cpu_read_negative",
+      "pair": "finite_ready",
+      "prediction": "predicted_invalid",
+      "reason": "Logical readiness may choose0pending or1cover; this is absent the original header and has no fairness claim."
+    },
+    {
+      "actual_verdict": null,
+      "id": "prior_cpu_store_old_value_negative",
+      "pair": "visibility",
+      "prediction": "predicted_invalid",
+      "reason": "An older value before the completed pre-issue CPU write is excluded."
+    }
+  ],
+  "date": "2026-10-16 ET"
+}

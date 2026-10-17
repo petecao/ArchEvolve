@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=5s 20s /usr/bin/python3 -I -B -"
+  ],
+  "ended_utc": "2026-10-17T00:13:44.515949+00:00",
+  "local_refusal": null,
+  "returncode": 0,
+  "schema": "passive-observer-status-invocation-1",
+  "source": {
+    "bytes": 4367,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v2-actual/passive_status_v2.py",
+    "sha256": "37ad4b3f0c08008a3c2e4184264acb0d6e123576a20d7bc3a4da67ef4b08a8f5"
+  },
+  "source_unchanged": true,
+  "started_utc": "2026-10-17T00:13:43.872957+00:00",
+  "stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 12281,
+    "sha256": "5d1899125884f11ad6a31e9e5ca79a6382e1c271815b728f28676b45406f9b77"
+  },
+  "wall_seconds": 0.6430106249754317
+}

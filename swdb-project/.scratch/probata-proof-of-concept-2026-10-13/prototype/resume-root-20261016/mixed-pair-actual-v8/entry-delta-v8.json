@@ -1,0 +1,85 @@
+{
+  "actual_profile_executed": false,
+  "changed_function": {
+    "inverse": "CONTROL_SOURCE -> SOURCE recovers the exact predecessor function; old actual control receipt stays bound to literal dcd source.",
+    "name": "root_control_gate"
+  },
+  "date": "2026-10-16 ET",
+  "line_edits": [
+    {
+      "new_lines": [
+        "SOURCE = \"36266e101e0484f3c2cf5f3fae4322d5de648d85\"\n",
+        "CONTROL_SOURCE = \"dcdecf317a0e9b34f3ce12d5b914eb823c439fbc\"\n",
+        "RAW_NAME = \"probata-resume-20261016-36266e10-mixed-pair-public-v8\"\n"
+      ],
+      "new_range": [
+        20,
+        23
+      ],
+      "old_lines": [
+        "SOURCE = \"dcdecf317a0e9b34f3ce12d5b914eb823c439fbc\"\n",
+        "RAW_NAME = \"probata-resume-20261016-dcdecf31-mixed-pair-public-v7\"\n"
+      ],
+      "old_range": [
+        20,
+        22
+      ]
+    },
+    {
+      "new_lines": [
+        "         and control[\"source_commit\"] == CONTROL_SOURCE\n"
+      ],
+      "new_range": [
+        79,
+        80
+      ],
+      "old_lines": [
+        "         and control[\"source_commit\"] == SOURCE\n"
+      ],
+      "old_range": [
+        78,
+        79
+      ]
+    }
+  ],
+  "new_functions": [],
+  "parent": {
+    "bytes": 46289,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v7/entry.py",
+    "sha256": "e08eeac02b30ff2a04ecf6ced49b8381e57a1a0a79671b523cf816c968dd1ba2"
+  },
+  "schema": "mixed-pair-v8-source-binding-inverse-1",
+  "successor": {
+    "bytes": 46357,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/entry.py",
+    "sha256": "bd5b1ebadd7db245660499d03a9d99395f645316db548ca752e8e8fae6b0ae34"
+  },
+  "unchanged_functions": [
+    "need",
+    "sha",
+    "policy_gate",
+    "save",
+    "pytest_alias_policy",
+    "pytest_source_check",
+    "native_c_wrapper_check",
+    "runtime_ipc_policy",
+    "physical_ancestors",
+    "proof_job_attribution",
+    "runtime_ipc",
+    "missing_owned_live_entry",
+    "raw_extent",
+    "failure_extent",
+    "preserve_primary_error",
+    "primary_error_summary",
+    "console_failure",
+    "emit_console",
+    "final_console",
+    "final_payload",
+    "finalize_result",
+    "why3_runtime_check",
+    "junit_census",
+    "check_eight_records",
+    "stop_tree",
+    "main"
+  ]
+}

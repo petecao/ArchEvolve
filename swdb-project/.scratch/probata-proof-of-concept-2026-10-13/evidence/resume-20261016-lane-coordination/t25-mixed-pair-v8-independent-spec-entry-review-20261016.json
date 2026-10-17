@@ -1,0 +1,76 @@
+{
+  "boundaries": {
+    "SSH": false,
+    "actual_dispatch": false,
+    "compiler_native_solver_execution": false,
+    "root_fresh_lane_and_runtime_admission_required": true,
+    "runtime": "2717 declared prospective physical pins; OS loader/dlopen/source-to-binary/between-check TCB retained. Fresh Why3server pins do not retroactively close historical runtime gaps.",
+    "scientific_acceptance": false,
+    "source_caller_or_ticket_admission": false
+  },
+  "checks": {
+    "added_isolated_source_files": [
+      "swdb/vector_owned_effects.mlw",
+      "swdb/vector_owned_source_view.py",
+      "swdb/vector_owned_state.mlw",
+      "swdb/vector_owned_transfer.py"
+    ],
+    "all_other_27_functions_byte_identical": true,
+    "all_packet_and_staged_physical_pins": true,
+    "command_policy_and_staging_exact": true,
+    "complete_entry_byte_inverse_to_v7": true,
+    "historical_root30_source_and_receipt_preserved": {
+      "bytes": 2798,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/root30-control-admission.json",
+      "sha256": "3ba333bebdd77c6117f4bfeb6981cafda249248a3323d6ab48b02f55ef12a9ae"
+    },
+    "only_changed_function": "root_control_gate",
+    "opaque_consumer_oids_verified": 14,
+    "proof_setup_ordered_composite_recomputed": "e65fbdff00c807e4b7d74b1d4b9493a791d25569350a441e3872c50cc5b9fd0e",
+    "runtime_files_identical_to_v7": 2717,
+    "source_existing_changes": [
+      "swdb/proof.py",
+      "tests/fixtures/proof/lowering/pair_pointer.cc"
+    ],
+    "source_git_blobs_verified": 513
+  },
+  "command": {
+    "bytes": 11094,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/command.json",
+    "sha256": "c13ec3fcec7b5c0c34b7ecbbb4cdf9319f8bd3d19a668ae67171aeeb3b8f5263"
+  },
+  "controls": {
+    "author_reported_no_child_controls": 37,
+    "retained_author_log": {
+      "bytes": 5700,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/pure-controls.log",
+      "sha256": "077ca2132fdfbba1899d1cc23a8741b2b1d1b80ebb6fad0ea6aa0e95acd2771c"
+    },
+    "reviewer_executed": false
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_SOURCE_AND_ENTRY_DELTA_ONLY",
+  "entry": {
+    "bytes": 46357,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/entry.py",
+    "sha256": "bd5b1ebadd7db245660499d03a9d99395f645316db548ca752e8e8fae6b0ae34"
+  },
+  "packet": {
+    "bytes": 16402,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/source-packet.json",
+    "sha256": "c017689a64b3e505e574e801ecb0378d778ff0a19f008b3c78f7b8a419dabb39"
+  },
+  "policy": {
+    "bytes": 718063,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/policy.json",
+    "sha256": "0e7df71c422e83137d9fc18737233c756dab772cd3aca5b495008dc1f5a20f97"
+  },
+  "reviewer": "lane_coordination",
+  "schema": "mixed-pair-v8-independent-spec-entry-review-1",
+  "scientific_review": [
+    "All eight record criteria, exact model/caller dependency identities, normal WP goal/negative/vacuity checks, CBMC counterexample/native replay checks and JUnit zero-skip gate retain V7 function bytes.",
+    "Two current-source proof.py calls now forward explicit method_version; no proof semantics changed there.",
+    "Fixture ternary 3/9 becomes 9-6*bool with identical positive and wrong-identity predicates; bounded retained input domain avoids introduced arithmetic overflow. Independent fixture Spec/readiness b4727df8 remains required context.",
+    "The literal CONTROL_SOURCE binds the historical dcdecf root30 success. It does not relabel those30 controls as executed on36266; this prospective profile freshly evaluates all8records."
+  ]
+}

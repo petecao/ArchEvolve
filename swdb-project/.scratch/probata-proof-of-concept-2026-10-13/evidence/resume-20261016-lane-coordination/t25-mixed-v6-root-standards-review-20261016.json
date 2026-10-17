@@ -1,0 +1,29 @@
+{
+  "created": "2026-10-16 ET",
+  "axis": "Standards",
+  "decision": "CHANGES_REQUESTED_BOUNDED_FAILURE_CONSOLE",
+  "source": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v6/entry.py",
+    "sha256": "779137d3b98814a6aa8fd0bd993d4aaee2b92946f3507358d72fdfbb129b7d3a"
+  },
+  "findings": [
+    {
+      "priority": "P2",
+      "line": 781,
+      "title": "Enforce the declared8KiB console limit on the settled failure path",
+      "observation": "console_failure truncates diagnostic output on initial/finalizer refusal paths, but successful finalization reaches the unchanged final print(json.dumps(result)). A retained failure result may approach the16KiB result_file cap, exceeding the policy8KiB per-console-record claim. With primary/secondary diagnostics it is also not structurally bounded by console_failure.",
+      "requested_change": "Preserve frozenV6. Version a narrow successor that uses bounded console_failure for finalized non-complete status (full result remains retained in mixed-result.json), enforces an8KiB encoded limit on every console record, and adds a worst-case successfully-finalized failure regression. Preserve exact science/runtime/source/caps and root20kentry/finalreserve accounting."
+    }
+  ],
+  "passed_checks": [
+    "Exact selected6WP/2CBMC source-attributed transient socket/scratch and source-cited lock/queue lifecycles; strict zero-special/absentlock/emptyqueue/scratch settlement.",
+    "Prospective Why3 package/dependency/ELF bindings retain historical unbound helper/loader/source-to-binary TCB.",
+    "Scientific gates, helper definitions and native/JUnit/dependency acceptance remain byte-identical."
+  ],
+  "actual_admission": false,
+  "scope": "Small resource-contract mismatch only; no new scientific or runtime weakening is requested.",
+  "counterexample": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-mixed-v6-console-pure-counterexample-20261016.json",
+    "sha256": "ada6b78b0f468194f15dea4165f8156c3965953c25f4780866fec8a31c6663a1"
+  }
+}

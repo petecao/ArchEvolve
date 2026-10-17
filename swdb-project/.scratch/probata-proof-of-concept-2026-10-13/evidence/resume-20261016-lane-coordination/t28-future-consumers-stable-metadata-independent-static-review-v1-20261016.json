@@ -1,0 +1,113 @@
+{
+  "actual_execution_by_reviewer": false,
+  "checked": {
+    "helper_identity": "Both consumers add byte-identical stable_metadata helpers with exactly the same nine identity/change fields as the reviewed capture V6 rule. Neither helper excludes modification/change time or content identity.",
+    "model_read": "Only its post-read stat comparison changes; canonical physical regular-file check, complete byte read, byte length/hash descriptor, optional expected SHA and all assembly body/design/ABI/object/source/non-grant checks are exact. The prior 1..256 draw count and corrected alternatives domain are unchanged.",
+    "new_controls": "Three source controls mock both exact read seams: retained predecessors reject atime-only metadata, successors accept it, all nine retained field mutations refuse, and complete inverses bind both modules. Their no-child audit rejects subprocess/native/network events. No actual entry main runs in these test definitions.",
+    "physical_packet_rows": 6,
+    "read_semantics": "Read-updated access time is observational. Device/inode/type+permissions/link count/ownership/size and nanosecond modification/change metadata remain checked, plus expected bytes/hash. This sampled check still carries the explicit transient-filesystem/loader/compiler TCB; it does not prove continuous immutability.",
+    "retained_control_evidence": "The pinned packet reports 3 new and 22 inherited pure cases, all exit0/no skips/no-child guards. This reviewer read sources/packet only and did not rerun or independently attest an unpinned external test log.",
+    "stable_fields": [
+      "st_dev",
+      "st_ino",
+      "st_mode",
+      "st_nlink",
+      "st_uid",
+      "st_gid",
+      "st_size",
+      "st_mtime_ns",
+      "st_ctime_ns"
+    ],
+    "statement_read": "Only _assertion_profile post-read stat equality changes. Its physical canonical regular header rule, exact byte count/SHA and complete assertion macro profile regex are unchanged. Every other Lowerer method and top-level statement function/class remains identical."
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact source-only read-boundary delta",
+  "files": [
+    {
+      "bytes": 9975,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/model-entry-v3/whole_model_v3.py",
+      "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+    },
+    {
+      "bytes": 30246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_statements_v2.py",
+      "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+    },
+    {
+      "bytes": 4117,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_read_stable_metadata_v1.py",
+      "sha256": "d9c652a470d3c3780d309d3c1666b5135d7809b5383cbd8ac016ebf429811e2a"
+    },
+    {
+      "bytes": 1374,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/README-read-stable-metadata-v1.md",
+      "sha256": "ab6480203e51e0dc86716c51c18c1b006ac66ddf5fd58865213cec3bf48ebbc4"
+    }
+  ],
+  "findings": [],
+  "full_ticket28": false,
+  "inverses": [
+    {
+      "added_helper_only": "stable_metadata",
+      "changed_existing_top_level": [
+        "read_pin"
+      ],
+      "exact_full_text_and_ast_inverse": true,
+      "predecessor": {
+        "bytes": 9676,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/model-entry-v2/whole_model_v2.py",
+        "sha256": "7ddff742ec78573dec9ee53c071f57d88ed8fd4d4f819a05118456f72acafe61"
+      },
+      "successor": {
+        "bytes": 9975,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/model-entry-v3/whole_model_v3.py",
+        "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+      }
+    },
+    {
+      "added_helper_only": "stable_metadata",
+      "changed_existing_top_level": [
+        "Lowerer"
+      ],
+      "exact_full_text_and_ast_inverse": true,
+      "predecessor": {
+        "bytes": 29947,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_statements_v1.py",
+        "sha256": "333148951b8e1c634600a7a0deb2abf312c4d708b1ca69fdd04429959518c0d1"
+      },
+      "successor": {
+        "bytes": 30246,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_statements_v2.py",
+        "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+      }
+    }
+  ],
+  "limits": [
+    "Predecessor modules and packets remain unchanged. This is an inert successor, without any automatic rebinding of future actual controller consumption.",
+    "Public source/method/compiler/ABI/receiver/draw/statement/effect admission remains external and pending. No payload/pointee/ownership/fresh state guarantee is added.",
+    "No compiler observation, native/formal result, production registration, source/public proof or current0.2/full ticket28 acceptance follows."
+  ],
+  "packet": {
+    "bytes": 2534,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/read-stable-metadata-source-packet-v1.json",
+    "sha256": "40c9197e26a4a9851af8fe5092163a8fec6d9f97621b053bccd10f872222f4fe"
+  },
+  "production_edited": false,
+  "public_admission": false,
+  "review_basis": [
+    {
+      "bytes": 5062,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-model-entry-v2-choice-domain-independent-static-review-20261016.json",
+      "sha256": "1e8a0f542d08a138266a6a30932074c8c573358fc6abd0a1fdab3de0960de275"
+    },
+    {
+      "bytes": 6549,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-capture-v6-independent-static-review-20261016.json",
+      "sha256": "bc1ca8ff08552c84cb53972d3852fe31c42d8b9727f469302d6e31da874662ec"
+    }
+  ],
+  "reviewer": "caller_assess",
+  "schema": "t28-future-consumer-stable-metadata-independent-static-review-1",
+  "scope": "Read-only source/AST/JSON/hash review. No consumer imports/main, tests, compiler/native/audit/verifier/solver, SSH, production edits or scientific execution.",
+  "source_admission": false
+}
