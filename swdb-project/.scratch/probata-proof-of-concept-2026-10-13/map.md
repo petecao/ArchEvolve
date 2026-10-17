@@ -283,8 +283,6 @@ Current dispatch, evidence and blockers: [resume.md](resume.md).
 
 ## Context pointers
 
-- 07 resolved 2026-10-16 19:05 ET: spike (c) **FAIL** (runs 27-30, method24 family); see the ticket's "Final Answer": false `pushed_are_new` corrected, bounded hint falsifier, WP throughput and tool gaps for A3.
-
 - Selected remaining original acceptance restarted16:06ET on node0 generation571
   at `9b75f4a2`, with fresh dependencies, exact case filter and1800s outer command
   limit; per-goal30s, RTE/init/smoke and8GiB unchanged. It stopped/released16:45ET
