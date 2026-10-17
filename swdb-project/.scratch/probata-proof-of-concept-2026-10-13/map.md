@@ -22,6 +22,8 @@ Next action: read [the exact pause handoff](pause-20261016.md), reclaim the chos
 ticket and inspect current source/resources before running anything.
 Source checkpoint **`bfc3d5df`** is verified on GitHub and the mbit10 primary.
 [Publication and sync record](evidence/pause-20261016/delivery.json).
+Local cleanup removed29 idle worktrees and47 merged branches; only the primary checkout remains.
+[Recovery tag and restore instructions](../worktree-cleanup-2026-10-16/README.md).
 Older dated sections are historical; this current section supersedes active claims below.
 
 ## Verified delivery and bounded cleanup — 2026-10-16 ET
