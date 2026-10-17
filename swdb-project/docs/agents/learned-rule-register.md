@@ -141,7 +141,7 @@ it instead of adding another nearly identical rule.
 4. For a user-requested update, apply only supported changes to the learned-rule
    files and this register within the granted scope. Existing human/owner rule files
    require their own applicable authorization. Validate links and active IDs afterward.
-5. Keep the combined active rule files near their initial 450-word budget. This
+5. Keep the rule files compact: one meaning per sentence, no fixed word count. This
    register can retain retired rationale. Record substantive changes with date,
    evidence and why the change preserves the original requirement; unchanged
    audits need neither a report file nor a commit.
@@ -173,3 +173,6 @@ date alone is not an actionable defect or permission to remove a rule.
   in its own worktree; the shared primary checkout keeps other sessions' work and stash entries); added
   LR-09 (check the target first) and LR-10 (convergence checkpoint). Scientific acceptance criteria,
   owner policies and permissions are unchanged; LR-01's evidence requirement still binds every verdict.
+- 2026-10-16 22:40 ET (Yan-Ru approved): the audit procedure's 450-word budget (set 2026-10-09 in
+  `cf62317e`, no measurement behind it) is replaced by compactness: one meaning per sentence, no fixed
+  word count.
