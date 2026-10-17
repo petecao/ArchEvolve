@@ -1,0 +1,23 @@
+{
+  "schema": "probata-pause-staged-audit-v1",
+  "date_et": "2026-10-16",
+  "head": "e0f48726441bc29b31d2a1ef9423459d436031a6",
+  "staged_blobs_and_working_bytes_exact": 3921,
+  "all_source_paths_within_scope": true,
+  "production_paths": [
+    "swdb-project/swdb/vector_allocating_payload.py",
+    "swdb-project/swdb/vector_float_mode.py",
+    "swdb-project/swdb/vector_owned_swap_header_witness.py",
+    "swdb-project/swdb/vector_typed_payload.mlw",
+    "swdb-project/tests/test_vector_allocating_payload.py",
+    "swdb-project/tests/test_vector_float_mode.py",
+    "swdb-project/tests/test_vector_owned_swap_header_witness.py"
+  ],
+  "production_ast_parse": "PASS",
+  "production_whitespace": "PASS",
+  "artifact_whitespace_exit": 2,
+  "artifact_whitespace_lines": 210,
+  "artifact_whitespace_log_sha256": "e8777770ca521e1bcaa8ebb9c4ddd7b4851d85a42c83e0119f7df6cbfc0ff35b",
+  "artifact_bytes_preserved": true,
+  "no_new_tests_or_proof_claims": true
+}

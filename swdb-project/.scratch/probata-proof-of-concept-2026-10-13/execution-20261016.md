@@ -12,7 +12,7 @@ External Claude ticket7 merge and subsequent documentation/rule commits are pres
 2. [x] Release tickets25/28 to ready-for-agent and delete this effort heartbeat.
 3. [x] Save exact review gaps, stale commands, raw evidence pointers and resume steps.
 4. [x] Run14 focused checkpoint controls; full default suite/final review deferred.
-5. [ ] Publish and verify the pause checkpoint; see the delivery record for completion.
+5. [x] Publish and verify source checkpointbfc3d5df; retain the delivery/sync record.
 
 ## Current checkpoint — 2026-10-16 22:08 ET
 
@@ -31,6 +31,7 @@ The effort heartbeat was deleted. No automatic work or evaluation remains schedu
 
 Next action: read [the exact pause handoff](pause-20261016.md), reclaim the chosen
 ticket and inspect current source/resources before running anything.
+Source checkpoint **`bfc3d5df`** is verified on GitHub and the mbit10 primary.
 [Publication and sync record](evidence/pause-20261016/delivery.json).
 Older dated sections are historical; this current section supersedes active claims below.
 

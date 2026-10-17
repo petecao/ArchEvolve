@@ -19,6 +19,7 @@ The effort heartbeat was deleted. No automatic work or evaluation remains schedu
 
 Next action: read [the exact pause handoff](pause-20261016.md), reclaim the chosen
 ticket and inspect current source/resources before running anything.
+Source checkpoint **`bfc3d5df`** is verified on GitHub and the mbit10 primary.
 [Publication and sync record](evidence/pause-20261016/delivery.json).
 Older dated sections are historical; this current section supersedes active claims below.
 

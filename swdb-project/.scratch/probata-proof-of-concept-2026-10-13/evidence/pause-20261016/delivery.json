@@ -1,16 +1,81 @@
 {
   "schema": "probata-pause-delivery-v1",
-  "date_et": "2026-10-16",
-  "state": "prepared_not_yet_published",
+  "observed_et": "2026-10-16 22:14 ET",
+  "state": "source_checkpoint_published_and_primary_synced",
   "branch": "yanrujhou_main",
-  "pre_checkpoint_head": "e0f48726441bc29b31d2a1ef9423459d436031a6",
+  "checkpoint": "bfc3d5df3278415403a25e3547b838f7f9c991e8",
+  "published_head_at_observation": "bfc3d5df3278415403a25e3547b838f7f9c991e8",
+  "pre_checkpoint_Claude_head": "e0f48726441bc29b31d2a1ef9423459d436031a6",
+  "checkpoint_selection": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/pause-20261016/checkpoint-selection-v1.json",
+    "bytes": 1257061,
+    "sha256": "a46aba6598409ec49d042ada33f5f0e06106b45d0728b8eebc5ceb3070d790b3"
+  },
+  "commit_readback": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/pause-20261016/checkpoint-readback-v1.json",
+    "bytes": 379,
+    "sha256": "8ae33a45763d4cf18f2addce536b6207fdb3bd6418d0596e7c4183cceabd245b"
+  },
+  "selected_blobs_exact": 3921,
+  "primary_git_sync": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/pause-20261016/primary-sync-v1.stdout.json",
+    "bytes": 6499,
+    "sha256": "1b7892e608c6723f4152d14e7acc6b097c6b43d5cbbdf6370da596a05724be84"
+  },
+  "primary_sync_invocation": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/pause-20261016/primary-sync-invocation-v1.json",
+    "bytes": 732,
+    "sha256": "209507cfadf16e40acbd049b585fb1447d802fc22b3099c68681893c8fcdac21"
+  },
+  "primary_after": {
+    "branch": "yanrujhou_main",
+    "head": "bfc3d5df3278415403a25e3547b838f7f9c991e8",
+    "status": "?? swdb-project/records/.retention.lock"
+  },
+  "immutable_sources_preserved": 25,
+  "primary_retention_lock_preserved": {
+    "bytes": 0,
+    "gid": 0,
+    "mode": 33206,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "uid": 114316761
+  },
+  "leases_at_sync": {
+    "mbit10-evaluation-node0.meta.json": "released",
+    "mbit10-evaluation-node1.meta.json": "released",
+    "mbit10-evaluation.meta.json": "released"
+  },
   "implementation_paused": true,
-  "ticket_status": {
+  "all_agents_stopped": true,
+  "tickets": {
     "25": "ready-for-agent",
     "28": "ready-for-agent"
   },
+  "counts": {
+    "resolved": 36,
+    "ready-for-agent": 27,
+    "claimed": 0
+  },
+  "acceptance_boxes_unchanged": true,
   "heartbeat_deleted": "probata-tickets-25-and-28-progress",
-  "full_default_suite": "deferred at explicit user stop",
-  "focused_checks": "14 passed; source/preparation only",
-  "publication_receipt_to_follow": true
+  "heartbeat_file_absent": true,
+  "older_paused_heartbeats_untouched": true,
+  "focused_checks": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/pause-20261016/focused-checks.json",
+    "bytes": 2323,
+    "sha256": "1bc5eb14d6ca1aa90ade5593519cd1ba03d87629e3cb1fbf2ab93d9440f92cc5"
+  },
+  "full_default_suite": "deferred at explicit user stop; not claimed passed",
+  "production_ast_and_whitespace": "PASS",
+  "retained_artifact_whitespace": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/pause-20261016/retained-artifact-whitespace-v1.log",
+    "bytes": 27031,
+    "sha256": "e8777770ca521e1bcaa8ebb9c4ddd7b4851d85a42c83e0119f7df6cbfc0ff35b"
+  },
+  "unrelated_files_excluded": [
+    "swdb-project/.scratch/worktree-cleanup-2026-10-15/agent-a012fcac5f347a306.json",
+    "swdb-project/.scratch/worktree-cleanup-2026-10-15/remaining-cleanup.json"
+  ],
+  "subsequent_commit_scope": "This record and accompanying sync metadata/docs are committed after the verified source checkpoint; final metadata tip will be pushed and Git-only fast-forwarded separately. This record does not predict its own commit.",
+  "scientific_boundary": "Applied source, inert proposals and all failures preserved. No additional compiler, native or proof evaluation admitted. G626 stronger raw/source/wrapper-after postflight remains pending."
 }

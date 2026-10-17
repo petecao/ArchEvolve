@@ -1,0 +1,27 @@
+{
+  "date_et": "2026-10-16",
+  "command": [
+    "/usr/bin/ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "35s",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "source": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/pause-20261016/sync-idle-primary-v1.py",
+    "sha256": "6a206f2c0522f208a3f9d155c354435df898a6bf3cdf4726fc9b9f296c2ec078"
+  },
+  "exit_code": 0,
+  "wall_seconds": 6.9289292090106755,
+  "stdout_sha256": "1b7892e608c6723f4152d14e7acc6b097c6b43d5cbbdf6370da596a05724be84",
+  "stderr_sha256": "e27f082986fef0a78291e25ba3ca849911b449c6d332e2b8d80866909d606444"
+}
